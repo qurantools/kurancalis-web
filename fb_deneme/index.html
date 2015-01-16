@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html data-ng-app="app">
+
+  <head>
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0-rc2/css/bootstrap.min.css" type="text/css" />
+    <script id="angularScript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular.min.js"></script>
+
+    <script src="lib/angular-facebook.js"></script>
+    <script>
+
+
+      angular.module('app', ['facebook'])
+
+        .config(function(FacebookProvider) {
+          FacebookProvider.init('295857580594128');
+        })
+
+        .controller('mainCtrl', function ($scope, Facebook) {
+
+          $scope.loginStatus = 'disconnected';
+          $scope.facebookIsReady = false;
+          $scope.user = null;
+
+
+
+          $scope.login = function () {
+            Facebook.login(function(response) {
+              $scope.loginStatus = response.status;
+              $scope.token = response.authResponse.accessToken;
+            },{scope: 'email'});
+          };
+
+          $scope.removeAuth = function () {
+            Facebook.api({
+              method: 'Auth.revokeAuthorization'
+            }, function(response) {
+              Facebook.getLoginStatus(function(response) {
+                $scope.loginStatus = response.status;
+              });
+            });
+          };
+
+          $scope.api = function () {
+            Facebook.api('/me', {fields: 'email'},function(response) {
+              $scope.user = response.email;
+            });
+          };
+
+          $scope.$watch(function() {
+              return Facebook.isReady();
+            }, function(newVal) {
+              if (newVal) {
+                $scope.facebookIsReady = true;
+              }
+            }
+          );
+        });
+
+    </script>
+  </head>
+
+  <body ng-controller="mainCtrl">
+    <button type="button" id="login" ng-click="login()">login</button>
+    <button type="button" id="api" ng-click="api()">api user data call</button>
+    <button type="button" id="remove_auth" ng-click="removeAuth()">remove auth</button>
+    <pre>isReady: <span id="is_ready" ng-bind="facebookIsReady"></span></pre>
+    <pre>status: <span id="login_status" ng-bind="loginStatus"></span></pre>
+    <pre>token: <span id="token" ng-bind="token"></span></pre>
+    <pre>username: <span id="api_first_name" ng-bind="user.first_name"></span></pre>
+  </body>
+
+</html>
