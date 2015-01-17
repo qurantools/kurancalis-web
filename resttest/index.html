@@ -11,8 +11,7 @@
         angular.module('ionicApp', ['ngResource'])
 
                 .factory('Post', function($resource) {
-                    return $resource('http://localhost:8080/QuranToolsApp/rest/chapters/1/authors/16');
-                    // return $resource('https://securewebserver.net/jetty/qt/rest/chapters/1/authors/16');
+                    return $resource('https://securewebserver.net/jetty/qt/rest/chapters/1/authors/16');
                 })
 
                 .controller('MainCtrl', function($scope, Post) {
