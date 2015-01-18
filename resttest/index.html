@@ -3,32 +3,34 @@
 <head>
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0-rc2/css/bootstrap.min.css" type="text/css" />
     <script id="angularScript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular.min.js"></script>
-    <script id="angularScript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.8/angular-resource.js"></script>
+    <script id="angularResourceScript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.8/angular-resource.js"></script>
 
 
     <script>
 
         angular.module('ionicApp', ['ngResource'])
 
-                .factory('Post', function($resource) {
-                    return $resource('https://securewebserver.net/jetty/qt/rest/chapters/1/authors/16');
+                .factory('ChapterVerses', function($resource){
+
+                    //return $resource('http://localhost:8080/QuranToolsApp/rest/chapters/:chapter_id/authors/:author_mask',
+                    return $resource('https://securewebserver.net/jetty/qt/rest/chapters/:chapter_id/authors/:author_mask',
+                            {chapter_id:'@chapter_id', author_mask:'@author_mask'},
+                            {
+                            query: {method: 'GET', params: {chapter_id:'@chapter_id', author_mask:'@author_mask'}, isArray: true},
+                            post: {method: 'POST'},
+                            update: {method: 'PUT'},
+                            remove: {method: 'DELETE'}
+                            });
                 })
 
-                .controller('MainCtrl', function($scope, Post) {
-                    //$scope.translations = Post.query();
 
-                    // Our form data for creating a new post with ng-model
-                    $scope.postData = {};
 
-                    $scope.newPost = function() {
-                        var post = new Post($scope.postData);
-                        post.$save();
-                    }
+                .controller('MainCtrl', function($scope, ChapterVerses) {
+
 
                     // Get all posts
                     $scope.list_translations = function () {
-                        self.translationList = Post.query();
-                        $scope.translations =  Post.query();
+                        $scope.verses = ChapterVerses.query({chapter_id:$scope.chapter_id, author_mask:$scope.author_mask});
                     }
 
             });
@@ -37,28 +39,33 @@
 
     </head>
 <body ng-app="ionicApp" ng-controller="MainCtrl">
+Ornek: chapter_id=1 author_mask=48
+<input type="text" ng-model="chapter_id" value="1"/>
+<input type="text" ng-model="author_mask" value="48"/>
 <button type="button" id="list_translations" ng-click="list_translations()">list_translations</button>
 
 
 --
 <table>
-<tr ng-repeat="translation in translations">
-    <td>{{translation.chapter}}:{{translation.verse}}</td><td>{{translation.content}}</td><td>{{translation}}</td>
+<tr ng-repeat="verse in verses">
+    <td>{{verse.id}}</td>
+    <td>
+        <table>
+            <tr ng-repeat="translation in verse.translations">
+                <td>{{translation.chapter}}:{{translation.verse}}</td><td>{{translation.content}}</td><td>{{translation}}</td>
+            </tr>
+        </table>
+
+    </td>
+
 
 </tr>
 </table>
---
 
-
-    <form ng-submit="newPost()">
-        <label>New Post:</label>
-        <textarea ng-model="postData.text"></textarea>
-        <button type="submit" class="button button-positive button-block">Create</button>
-    </form>
 
 <h3>Nesneler</h3>
-<pre>translationList = {{translations| json}}</pre>
-<pre>size = {{translations.length}}</pre>
+<pre>translationList = {{verses| json}}</pre>
+<pre>size = {{verses.length}}</pre>
 
 </body>
 </html>
