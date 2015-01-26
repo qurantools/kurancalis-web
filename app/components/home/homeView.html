@@ -29,32 +29,7 @@
     </div><!-- /.navbar-collapse -->
 </nav><!-- /navbar -->
 
-    <div class="modal" id="myModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" data-dismiss="modal" aria-hidden="true" style="float:right;"><i class="fa fa-close"></i></button>
-                    <h4 class="modal-title">Yazarlar</h4>
-                </div>
 
-                <div class="modal-body">
-                    <label ng-repeat="author in authors">
-                        <input
-                                type="checkbox"
-                                name="selectedauthors[]"
-                                value="{{author.id}}"
-                                ng-checked="selection.indexOf(author.id) > -1"
-                                ng-click="toggleSelection(author.id)"
-                                > {{author.name}}
-                    </label>
-                </div>
-
-                <div class="modal-footer">
-                    <a href="#" class="btn btn-primary btn-wide" data-target="#myModal" data-toggle="modal" ng-click="list_translations()" >Tamam</a>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <div class="row">
         <div class="col-xs-9 col-md-9">
@@ -62,7 +37,7 @@
 <button type="button" id="list_authors" ng-click="list_authors()">list_authors</button>
 
 <div ng-repeat="verse in verses" class="well">
-    <div ng-repeat="translation in verse.translations">
+    <div ng-repeat="translation in verse.translations | orderBy: 'translation.authorId'">
         <div ng-if="$first"><h3>{{translation.chapter}}:{{translation.verse}}</h3></div>
             <div class="row">
                 <div class="col-xs-3">
@@ -104,6 +79,45 @@
 </div><!-- /row-->
 
 </div><!-- /container-->
+
+
+
+
+
+
+
+
+
+
+<div class="modal" id="myModal">
+    <div class="modal-dialog fixed-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" data-dismiss="modal" aria-hidden="true" style="float:right;"><i class="fa fa-close"></i></button>
+                <h4 class="modal-title">Yazarlar</h4>
+            </div>
+
+            <div class="modal-body">
+                <label ng-repeat="author in authors">
+                    <input
+                            type="checkbox"
+                            name="selectedauthors[]"
+                            value="{{author.id}}"
+                            ng-checked="selection.indexOf(author.id) > -1"
+                            ng-click="toggleSelection(author.id)"
+                            > {{author.name}}
+                </label>
+            </div>
+
+            <div class="modal-footer">
+                <a href="#" class="btn btn-primary btn-wide" data-target="#myModal" data-toggle="modal" ng-click="list_translations()" >Tamam</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 
 <!-- jQuery (necessary for Flat UI's JavaScript plugins) -->
 <script src="http://kurancalis.com/include/flat_ui/dist/js/vendor/jquery.min.js"></script>

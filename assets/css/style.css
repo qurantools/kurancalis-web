@@ -1,4 +1,12 @@
 /* flat ui modal fix*/
 .modal-dialog {
+/*
     position:static !important;
+*/
+
+}
+.fixed-dialog{
+  position: fixed;
+  top: 20px;
+  left: 20px;
 }
