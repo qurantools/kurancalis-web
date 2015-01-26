@@ -22,7 +22,7 @@
 <nav class="navbar navbar-default" role="navigation">
 
     <div class="collapse navbar-collapse" id="navbar-collapse-01">
-        <input type="text" ng-model="chapter_id" value="1" placeholder="Chapter"/>
+        <input type="text" ng-model="chapter_id" value="1" />
         <input type="hidden" ng-model="author_mask" value="48"/>
 
         <button class="btn btn-primary" data-target="#myModal" data-toggle="modal" type="button"><i class="fa fa-user"></i></button>
@@ -50,14 +50,28 @@
                 </div>
 
                 <div class="modal-footer">
-                    <a href="#" class="btn btn-primary btn-wide" data-target="#myModal" data-toggle="modal" >Tamam</a>
+                    <a href="#" class="btn btn-primary btn-wide" data-target="#myModal" data-toggle="modal" ng-click="list_translations()" >Tamam</a>
                 </div>
             </div>
         </div>
     </div>
 
+    <div class="row">
+        <div class="col-xs-9 col-md-9">
 <button type="button" id="list_translations" ng-click="list_translations()">list_translations</button>
 <button type="button" id="list_authors" ng-click="list_authors()">list_authors</button>
+
+<div ng-repeat="verse in verses" class="well">
+    <div ng-repeat="translation in verse.translations">
+        <div ng-if="$first"><h3>{{translation.chapter}}:{{translation.verse}}</h3></div>
+            <div class="row">
+                <div class="col-xs-3">
+                {{ (authors | filter:{id: translation.authorId})[0].name }}
+                </div>
+                <div class="col-xs-6"><span ng-bind-html="translation.content | to_trusted"></span></div>
+            </div>
+    </div>
+</div>
 
 
 <table>
@@ -69,10 +83,7 @@
                     <td>{{translation.chapter}}:{{translation.verse}}</td><td>{{translation.content}}</td><td>{{translation}}</td>
                 </tr>
             </table>
-
         </td>
-
-
     </tr>
 </table>
 
@@ -85,6 +96,12 @@
 <pre>size = {{verses.length}}</pre>
 
 
+            </div><!-- /sol-->
+        <div class="col-xs-3 col-md-3">
+            Sağ
+        </div><!-- /sağ-->
+
+</div><!-- /row-->
 
 </div><!-- /container-->
 

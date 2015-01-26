@@ -1,4 +1,10 @@
-angular.module('ionicApp', ['ngResource']).factory('ChapterVerses', function($resource) {
+angular.module('ionicApp', ['ngResource'])
+.filter('to_trusted', ['$sce', function($sce){
+        return function(text) {
+            return $sce.trustAsHtml(text);
+        };
+    }])
+.factory('ChapterVerses', function($resource) {
 	//return $resource('http://localhost:8080/QuranToolsApp/rest/chapters/:chapter_id/authors/:author_mask',
 	return $resource('https://securewebserver.net/jetty/qt/rest/chapters/:chapter_id/authors/:author_mask', {
 		chapter_id : '@chapter_id',
@@ -54,7 +60,6 @@ angular.module('ionicApp', ['ngResource']).factory('ChapterVerses', function($re
 			id : $scope.id,
 			name : $scope.name
 		});
-
 	}
 
     //selected authors
@@ -76,7 +81,7 @@ angular.module('ionicApp', ['ngResource']).factory('ChapterVerses', function($re
 	$scope.author_mask = 48;
 
 	//selected authors
-	$scope.selection = [];
+	$scope.selection = ["16","32"];
 /* end of init */
 
 	//toggle selection for an author id
