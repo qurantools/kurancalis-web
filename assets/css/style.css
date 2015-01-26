@@ -1,0 +1,4 @@
+/* flat ui modal fix*/
+.modal-dialog {
+    position:static !important;
+}
