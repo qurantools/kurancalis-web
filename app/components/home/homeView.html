@@ -50,8 +50,8 @@
         <div ng-repeat="translation in verse.translations | orderBy: 'translation.authorId'">
             <div ng-if="$first"><h3>{{translation.chapter}}:{{translation.verse}}</h3></div>
                 <div class="row">
-                    <div class="col-xs-3 authorDiv_{{ (authors | filter:{id: translation.authorId})[0].color }}">
-                    {{ (authors | filter:{id: translation.authorId})[0].name }}
+                    <div class="col-xs-3 authorDiv_{{authorMap[translation.authorId].color}}">
+                    {{authorMap[translation.authorId].name}}
                     </div>
                     <div class="col-xs-9"><span ng-bind-html="translation.content | to_trusted"></span></div>
 
@@ -75,28 +75,6 @@
 </div>
 
 
-<table>
-    <tr ng-repeat="verse in verses">
-        <td>{{verse.id}}</td>
-        <td>
-            <table>
-                <tr ng-repeat="translation in verse.translations">
-                    <td>{{translation.chapter}}:{{translation.verse}}</td><td>{{translation.content}}</td><td>{{translation}}</td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-</table>
-
-
-<h3>Nesneler</h3>
-    author ids:{{selection}}
-    author mask: {{author_mask}}
-
-<pre>translationList = {{verses| json}}</pre>
-<pre>size = {{verses.length}}</pre>
-
-
             </div><!-- /sol-->
         <div class="col-xs-3 col-md-3">
             Sağ
@@ -105,12 +83,6 @@
 </div><!-- /row-->
 
 </div><!-- /container-->
-
-
-
-
-
-
 
 
 
@@ -149,5 +121,6 @@
 <script src="http://kurancalis.com/include/flat_ui/dist/js/vendor/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="http://kurancalis.com/include/flat_ui/dist/js/flat-ui-pro.js"></script>
+
 </body>
 </html>

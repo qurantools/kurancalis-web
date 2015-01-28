@@ -33,7 +33,28 @@
                         $scope.verses = ChapterVerses.query({chapter_id:$scope.chapter_id, author_mask:$scope.author_mask});
                     }
 
-            });
+
+                    $scope.fruits = ['apple', 'orange', 'pear', 'naartjie'];
+
+                    // selected fruits
+                    $scope.selection = ['apple', 'pear'];
+
+                    // toggle selection for a given fruit by name
+                    $scope.toggleSelection = function toggleSelection(fruitName) {
+                        var idx = $scope.selection.indexOf(fruitName);
+
+                        // is currently selected
+                        if (idx > -1) {
+                            $scope.selection.splice(idx, 1);
+                        }
+
+                        // is newly selected
+                        else {
+                            $scope.selection.push(fruitName);
+                        }
+                    };
+
+                });
 
 </script>
 
@@ -61,6 +82,20 @@ Ornek: chapter_id=1 author_mask=48
 
 </tr>
 </table>
+
+
+
+<label ng-repeat="fruitName in fruits">
+    <input
+            type="checkbox"
+            name="selectedFruits[]"
+            value="{{fruitName}}"
+            ng-checked="selection.indexOf(fruitName) > -1"
+            ng-click="toggleSelection(fruitName)"
+            > {{fruitName}}
+</label>
+
+{{selection}}
 
 
 <h3>Nesneler</h3>

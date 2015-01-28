@@ -55,18 +55,34 @@ angular.module('ionicApp', ['ngResource'])
 
     //list authors
 	$scope.list_authors = function() {
-		$scope.authors = ListAuthors.query({
-			id : $scope.id,
-			name : $scope.name,
-			color : $scope.color
-		});
+		$scope.authorMap = new Object();
+
+		$scope.authors = ListAuthors.query(
+			{
+				id : $scope.id,  //bunlari cikart
+				name : $scope.name, //bunlar authorlarin tumu istenirken kullanilmiyor
+				color : $scope.color  //soru varsa sor bana
+			},
+
+			function (data){
+				var arrayLength = data.length;
+					for (var i = 0; i < arrayLength; i++) {
+						$scope.authorMap[data[i].id] = data[i];
+					}
+			}
+
+		);
+
+
+
+
 	}
 
     //selected authors
 	$scope.setAuthors = function() {
-		for (var index in $scope.authors) {
-			if ($scope.author_mask & $scope.authors[index].id) {
-				$scope.selection.push($scope.authors[index].id);
+		for (var index in $scope.authorMap) {
+			if ($scope.author_mask & $scope.authorMap[index].id) {
+				$scope.selection.push($scope.authorMap[index].id);
 			}
 		}
 	}
