@@ -1,12 +1,45 @@
 /* flat ui modal fix*/
-.modal-dialog {
-/*
-    position:static !important;
-*/
-
-}
 .fixed-dialog{
   position: fixed;
   top: 20px;
   left: 20px;
+}
+
+hr {
+    border-color:#7f8c8d !important;
+    width: 80%;
+ }
+
+.authorDiv_1{
+    background-color: #1abc9c;
+}
+.authorDiv_2{
+    background-color: #2ecc71;
+}
+.authorDiv_3{
+    background-color: #3498db;
+}
+.authorDiv_4{
+    background-color: #9b59b6;
+}
+.authorDiv_5{
+    background-color: #f1c40f;
+}
+.authorDiv_6{
+    background-color: #e67e22;
+}
+.authorDiv_7{
+    background-color: #e74c3c;
+}
+.authorDiv_8{
+    background-color: #1abc9c;
+}
+.authorDiv_9{
+    background-color: #2ecc71;
+}
+.authorDiv_10{
+    background-color: #3498db;
+}
+.authorDiv_11{
+    background-color: #9b59b6;
 }

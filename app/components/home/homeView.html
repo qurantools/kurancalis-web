@@ -26,26 +26,52 @@
         <input type="hidden" ng-model="author_mask" value="48"/>
 
         <button class="btn btn-primary" data-target="#myModal" data-toggle="modal" type="button"><i class="fa fa-user"></i></button>
+        <div class="input-group col-xs-3" style="float:right;">
+            <input type="text" id="search-query" placeholder="Ara" class="form-control" />
+                  <span class="input-group-btn">
+                    <button class="btn" type="submit"><span class="fa fa-search"></span></button>
+                  </span>
+        </div>
+
+
+
     </div><!-- /.navbar-collapse -->
 </nav><!-- /navbar -->
 
 
 
     <div class="row">
-        <div class="col-xs-9 col-md-9">
+        <div class="col-xs-9">
 <button type="button" id="list_translations" ng-click="list_translations()">list_translations</button>
-<button type="button" id="list_authors" ng-click="list_authors()">list_authors</button>
+            <button type="button" id="list_authors" ng-click="list_authors()">list_authors</button>
 
-<div ng-repeat="verse in verses" class="well">
-    <div ng-repeat="translation in verse.translations | orderBy: 'translation.authorId'">
-        <div ng-if="$first"><h3>{{translation.chapter}}:{{translation.verse}}</h3></div>
-            <div class="row">
-                <div class="col-xs-3">
-                {{ (authors | filter:{id: translation.authorId})[0].name }}
+<div ng-repeat="verse in verses">
+    <div class="well col-xs-11">
+        <div ng-repeat="translation in verse.translations | orderBy: 'translation.authorId'">
+            <div ng-if="$first"><h3>{{translation.chapter}}:{{translation.verse}}</h3></div>
+                <div class="row">
+                    <div class="col-xs-3 authorDiv_{{ (authors | filter:{id: translation.authorId})[0].color }}">
+                    {{ (authors | filter:{id: translation.authorId})[0].name }}
+                    </div>
+                    <div class="col-xs-9"><span ng-bind-html="translation.content | to_trusted"></span></div>
+
                 </div>
-                <div class="col-xs-6"><span ng-bind-html="translation.content | to_trusted"></span></div>
-            </div>
+                <div class="row" ng-if="!$last">
+                    <hr />
+                </div>
+        </div>
     </div>
+    <div class="col-xs-1">
+
+        <div class="btn-group-vertical" role="group" aria-label="...">
+
+            <div style="text-align:center"><input type="checkbox" /></div>
+            <button class="btn btn-xs"><i class="fa fa-arrow-right"></i></button>
+            <button class="btn btn-xs"><i class="fa fa-arrow-left"></i></button>
+            <button class="btn btn-xs"><i class="fa fa-link"></i></button>
+            <button class="btn btn-xs"><i class="fa fa-share-alt"></i></button>
+        </div>
+         </div>
 </div>
 
 

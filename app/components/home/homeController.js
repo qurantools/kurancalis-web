@@ -5,7 +5,6 @@ angular.module('ionicApp', ['ngResource'])
         };
     }])
 .factory('ChapterVerses', function($resource) {
-	//return $resource('http://localhost:8080/QuranToolsApp/rest/chapters/:chapter_id/authors/:author_mask',
 	return $resource('https://securewebserver.net/jetty/qt/rest/chapters/:chapter_id/authors/:author_mask', {
 		chapter_id : '@chapter_id',
 		author_mask : '@author_mask'
@@ -44,7 +43,7 @@ angular.module('ionicApp', ['ngResource'])
 			method : 'DELETE'
 		}
 	});
-}).controller('MainCtrl', function($scope, ListAuthors, ChapterVerses) {
+}).controller('MainCtrl', function($scope, $q, ListAuthors, ChapterVerses) {
 
 	//list translations
 	$scope.list_translations = function() {
@@ -58,7 +57,8 @@ angular.module('ionicApp', ['ngResource'])
 	$scope.list_authors = function() {
 		$scope.authors = ListAuthors.query({
 			id : $scope.id,
-			name : $scope.name
+			name : $scope.name,
+			color : $scope.color
 		});
 	}
 
@@ -70,6 +70,7 @@ angular.module('ionicApp', ['ngResource'])
 			}
 		}
 	}
+
 /* init */
     //hide list of authors div
     $scope.showAuthorsList=false
@@ -82,6 +83,7 @@ angular.module('ionicApp', ['ngResource'])
 
 	//selected authors
 	$scope.selection = ["16","32"];
+
 /* end of init */
 
 	//toggle selection for an author id
