@@ -1,9 +1,14 @@
-angular.module('ionicApp', ['ngResource'])
-.filter('to_trusted', ['$sce', function($sce){
-        return function(text) {
-            return $sce.trustAsHtml(text);
-        };
-    }])
+angular.module('ionicApp', ['ngResource']).filter('to_trusted', ['$sce',
+function($sce) {
+	return function(text) {
+		return $sce.trustAsHtml(text);
+	};
+}]).filter('with_footnote_link', [
+function() {
+	return function(text, translation_id) {
+		return text.replace("*", "<a href='javascript:list_fn(" + translation_id + ")'>*</a");
+	};
+}])
 .factory('ChapterVerses', function($resource) {
 	return $resource('https://securewebserver.net/jetty/qt/rest/chapters/:chapter_id/authors/:author_mask', {
 		chapter_id : '@chapter_id',
@@ -14,6 +19,27 @@ angular.module('ionicApp', ['ngResource'])
 			params : {
 				chapter_id : '@chapter_id',
 				author_mask : '@author_mask'
+			},
+			isArray : true
+		},
+		post : {
+			method : 'POST'
+		},
+		update : {
+			method : 'PUT'
+		},
+		remove : {
+			method : 'DELETE'
+		}
+	});
+}).factory('Footnotes', function($resource) {
+	return $resource('https://securewebserver.net/jetty/qt/rest/translations/:id/footnotes', {
+		chapter_id : '@translation_id'
+	}, {
+		query : {
+			method : 'GET',
+			params : {
+				id : '@translation_id'
 			},
 			isArray : true
 		},
@@ -43,7 +69,7 @@ angular.module('ionicApp', ['ngResource'])
 			method : 'DELETE'
 		}
 	});
-}).controller('MainCtrl', function($scope, $q, ListAuthors, ChapterVerses) {
+}).controller('MainCtrl', function($scope, $q, ListAuthors, ChapterVerses, Footnotes) {
 
 	//list translations
 	$scope.list_translations = function() {
@@ -52,33 +78,38 @@ angular.module('ionicApp', ['ngResource'])
 			author_mask : $scope.author_mask
 		});
 	}
-
-    //list authors
+	//list authors
 	$scope.list_authors = function() {
 		$scope.authorMap = new Object();
+		$scope.authors = ListAuthors.query(function(data) {
+			var arrayLength = data.length;
+			for (var i = 0; i < arrayLength; i++) {
+				$scope.authorMap[data[i].id] = data[i];
+			}
+		});
+	}
+	//list footnotes
+	$scope.list_footnotes = function(translation_id) {
 
-		$scope.authors = ListAuthors.query(
-			{
-				id : $scope.id,  //bunlari cikart
-				name : $scope.name, //bunlar authorlarin tumu istenirken kullanilmiyor
-				color : $scope.color  //soru varsa sor bana
-			},
-
-			function (data){
-				var arrayLength = data.length;
-					for (var i = 0; i < arrayLength; i++) {
-						$scope.authorMap[data[i].id] = data[i];
-					}
+		$scope.footnotes = Footnotes.query({
+			id : translation_id
+		}, function(data) {
+			var footnoteDivElement=document.getElementById('t_' + translation_id);
+			//don't list if already listed
+			if (!document.getElementById("fn_" + translation_id)) {
+				var html = "<div class='footnote' id='fn_" + translation_id+"'>";
+				var dataLength = data.length;
+				for ( index = 0; index < dataLength; ++index) {
+					html += "<div class='row'><div class='col-xs-1'>" + (index + 1) + "</div><div class='col-xs-11'>" + data[index] + "</div></div>";
+				}
+				html += '</div>';
+				footnoteDivElement.innerHTML = footnoteDivElement.innerHTML + html;
 			}
 
-		);
-
-
-
+		});
 
 	}
-
-    //selected authors
+	//selected authors
 	$scope.setAuthors = function() {
 		for (var index in $scope.authorMap) {
 			if ($scope.author_mask & $scope.authorMap[index].id) {
@@ -86,21 +117,20 @@ angular.module('ionicApp', ['ngResource'])
 			}
 		}
 	}
+	/* init */
+	//hide list of authors div
+	$scope.showAuthorsList = false
 
-/* init */
-    //hide list of authors div
-    $scope.showAuthorsList=false
-
-    //list the authors on page load
+	//list the authors on page load
 	$scope.list_authors();
 
-    //get author mask
+	//get author mask
 	$scope.author_mask = 48;
 
 	//selected authors
-	$scope.selection = ["16","32"];
+	$scope.selection = ["16", "32"];
 
-/* end of init */
+	/* end of init */
 
 	//toggle selection for an author id
 	$scope.toggleSelection = function toggleSelection(author_id) {
@@ -121,3 +151,6 @@ angular.module('ionicApp', ['ngResource'])
 
 });
 
+function list_fn(id) {
+	angular.element(document.getElementById('MainCtrl')).scope().list_footnotes(id);
+}

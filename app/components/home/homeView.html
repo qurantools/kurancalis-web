@@ -15,7 +15,7 @@
     <link href="http://kurancalis.com/include/flat_ui/dist/css/flat-ui-pro.css" rel="stylesheet">
 
 </head>
-<body ng-app="ionicApp" ng-controller="MainCtrl">
+<body ng-app="ionicApp" ng-controller="MainCtrl" id="MainCtrl">
 
 <div class="container">
 
@@ -34,10 +34,8 @@
         </div>
 
 
-
     </div><!-- /.navbar-collapse -->
 </nav><!-- /navbar -->
-
 
 
     <div class="row">
@@ -47,14 +45,13 @@
 
 <div ng-repeat="verse in verses">
     <div class="well col-xs-11">
-        <div ng-repeat="translation in verse.translations | orderBy: 'translation.authorId'">
+        <div ng-repeat="translation in verse.translations">
             <div ng-if="$first"><h3>{{translation.chapter}}:{{translation.verse}}</h3></div>
-                <div class="row">
+                <div class="row" id="t_{{translation.id}}">
                     <div class="col-xs-3 authorDiv_{{authorMap[translation.authorId].color}}">
                     {{authorMap[translation.authorId].name}}
                     </div>
-                    <div class="col-xs-9"><span ng-bind-html="translation.content | to_trusted"></span></div>
-
+                    <div class="col-xs-9"><span ng-bind-html="translation.content | with_footnote_link:translation.id | to_trusted"></span></div>
                 </div>
                 <div class="row" ng-if="!$last">
                     <hr />
@@ -83,7 +80,6 @@
 </div><!-- /row-->
 
 </div><!-- /container-->
-
 
 
 
