@@ -1,83 +1,67 @@
-<html ng-app="ionicApp" ng-controller="MainCtrl">
 
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0-rc2/css/bootstrap.min.css" type="text/css" />
-    <link rel="stylesheet" href="../../../assets/css/font-awesome.min.css">
-    <link rel="stylesheet" href="../../../assets/css/style.css">
-    <script id="angularScript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular.min.js"></script>
-    <script id="angularResourceScript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.8/angular-resource.js"></script>
-    <script id="homeController" src="homeController.js"></script>
-
-    <!-- Loading Bootstrap -->
-    <link href="http://kurancalis.com/include/flat_ui/dist/css/vendor/bootstrap.min.css" rel="stylesheet">
-    <!-- Loading Flat UI Pro -->
-    <link href="http://kurancalis.com/include/flat_ui/dist/css/flat-ui-pro.css" rel="stylesheet">
-
-</head>
 <body ng-app="ionicApp" ng-controller="MainCtrl" id="MainCtrl">
 
 <div class="container">
 
-<nav class="navbar navbar-default" role="navigation">
+    <nav class="navbar navbar-default" role="navigation">
 
-    <div class="collapse navbar-collapse" id="navbar-collapse-01">
-        <input type="text" ng-model="chapter_id" value="1" />
-        <input type="hidden" ng-model="author_mask" value="48"/>
+        <div class="collapse navbar-collapse" id="navbar-collapse-01">
+            <input type="text" ng-model="chapter_id" value="1" />
+            <input type="hidden" ng-model="author_mask" value="48"/>
 
-        <button class="btn btn-primary" data-target="#myModal" data-toggle="modal" type="button"><i class="fa fa-user"></i></button>
-        <div class="input-group col-xs-3" style="float:right;">
-            <input type="text" id="search-query" placeholder="Ara" class="form-control" />
+            <button class="btn btn-primary" data-target="#myModal" data-toggle="modal" type="button"><i class="fa fa-user"></i></button>
+            <div class="input-group col-xs-3" style="float:right;">
+                <input type="text" id="search-query" placeholder="Ara" class="form-control" />
                   <span class="input-group-btn">
                     <button class="btn" type="submit"><span class="fa fa-search"></span></button>
                   </span>
-        </div>
+            </div>
 
 
-    </div><!-- /.navbar-collapse -->
-</nav><!-- /navbar -->
+        </div><!-- /.navbar-collapse -->
+    </nav><!-- /navbar -->
 
 
     <div class="row">
         <div class="col-xs-9">
-<button type="button" id="list_translations" ng-click="list_translations()">list_translations</button>
+            <button type="button" id="list_translations" ng-click="list_translations()">list_translations</button>
             <button type="button" id="list_authors" ng-click="list_authors()">list_authors</button>
 
-<div ng-repeat="verse in verses">
-    <div class="well col-xs-11">
-        <div ng-repeat="translation in verse.translations">
-            <div ng-if="$first"><h3>{{translation.chapter}}:{{translation.verse}}</h3></div>
-                <div class="row" id="t_{{translation.id}}">
-                    <div class="col-xs-3 authorDiv_{{authorMap[translation.authorId].color}}">
-                    {{authorMap[translation.authorId].name}}
+            <div ng-repeat="verse in verses">
+                <div class="well col-xs-11">
+                    <div ng-repeat="translation in verse.translations">
+                        <div ng-if="$first"><h3>{{translation.chapter}}:{{translation.verse}}</h3></div>
+                        <div class="row" id="t_{{translation.id}}">
+                            <div class="col-xs-3 authorDiv_{{authorMap[translation.authorId].color}}">
+                                {{authorMap[translation.authorId].name}}
+                            </div>
+                            <div class="col-xs-9"><span ng-bind-html="translation.content | with_footnote_link:translation.id | to_trusted"></span></div>
+                        </div>
+                        <div class="row" ng-if="!$last">
+                            <hr />
+                        </div>
                     </div>
-                    <div class="col-xs-9"><span ng-bind-html="translation.content | with_footnote_link:translation.id | to_trusted"></span></div>
                 </div>
-                <div class="row" ng-if="!$last">
-                    <hr />
+                <div class="col-xs-1">
+
+                    <div class="btn-group-vertical" role="group" aria-label="...">
+
+                        <div style="text-align:center"><input type="checkbox" /></div>
+                        <button class="btn btn-xs"><i class="fa fa-arrow-right"></i></button>
+                        <button class="btn btn-xs"><i class="fa fa-arrow-left"></i></button>
+                        <button class="btn btn-xs"><i class="fa fa-link"></i></button>
+                        <button class="btn btn-xs"><i class="fa fa-share-alt"></i></button>
+                    </div>
                 </div>
-        </div>
-    </div>
-    <div class="col-xs-1">
-
-        <div class="btn-group-vertical" role="group" aria-label="...">
-
-            <div style="text-align:center"><input type="checkbox" /></div>
-            <button class="btn btn-xs"><i class="fa fa-arrow-right"></i></button>
-            <button class="btn btn-xs"><i class="fa fa-arrow-left"></i></button>
-            <button class="btn btn-xs"><i class="fa fa-link"></i></button>
-            <button class="btn btn-xs"><i class="fa fa-share-alt"></i></button>
-        </div>
-         </div>
-</div>
+            </div>
 
 
-            </div><!-- /sol-->
+        </div><!-- /sol-->
         <div class="col-xs-3 col-md-3">
             Sağ
         </div><!-- /sağ-->
 
-</div><!-- /row-->
+    </div><!-- /row-->
 
 </div><!-- /container-->
 
@@ -119,4 +103,3 @@
 <script src="http://kurancalis.com/include/flat_ui/dist/js/flat-ui-pro.js"></script>
 
 </body>
-</html>
