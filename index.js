@@ -10,19 +10,30 @@ angular.module('ionicApp', ['ngResource','ngRoute']).filter('to_trusted', ['$sce
             return text.replace("*", "<a class='footnote_asterisk' href='javascript:list_fn(" + translation_id + ")'>*</a");
         };
     }])
+    .run(['$route', '$rootScope', '$location', function ($route, $rootScope, $location) {
+        var original = $location.path;
+        $location.path = function (path, reload) {
+            if (reload === false) {
+                var lastRoute = $route.current;
+                var un = $rootScope.$on('$locationChangeSuccess', function () {
+                    $route.current = lastRoute;
+                    un();
+                });
+            }
+            return original.apply($location, [path]);
+        };
+    }])
     .config(function($routeProvider) {
         $routeProvider
             .when('/', {
                 controller:'MainCtrl',
-                templateUrl:'app/components/home/homeView.html'
+                templateUrl:'app/components/home/homeView.html',
+                reloadOnSearch: false
             })
-            .when('/edit/:projectId', {
-                controller:'EditCtrl',
-                templateUrl:'detail.html'
-            })
-            .when('/new', {
-                controller:'CreateCtrl',
-                templateUrl:'detail.html'
+            .when('/sure/:chapterId', {
+                controller:'MainCtrl',
+                templateUrl:'app/components/home/homeView.html',
+                reloadOnSearch: false
             })
             .otherwise({
                 redirectTo:'/'
@@ -88,11 +99,16 @@ angular.module('ionicApp', ['ngResource','ngRoute']).filter('to_trusted', ['$sce
                 method : 'DELETE'
             }
         });
-    }).controller('MainCtrl', function($scope, $q, ListAuthors, ChapterVerses, Footnotes) {
+    }).controller('MainCtrl', function($scope, $q, $routeParams, $location, ListAuthors, ChapterVerses, Footnotes) {
+        var chapterId=1;
+        if(typeof $routeParams.chapterId !== 'undefined'){
+            chapterId = $routeParams.chapterId;
+        }
+        $scope.chapter_id=chapterId;
 
         //list translations
         $scope.list_translations = function() {
-            $scope.verses = ChapterVerses.query({
+               $scope.verses = ChapterVerses.query({
                 chapter_id : $scope.chapter_id,
                 author_mask : $scope.author_mask
             });
@@ -136,6 +152,9 @@ angular.module('ionicApp', ['ngResource','ngRoute']).filter('to_trusted', ['$sce
                 }
             }
         }
+
+
+
         /* init */
         //hide list of authors div
         $scope.showAuthorsList = false
@@ -148,6 +167,8 @@ angular.module('ionicApp', ['ngResource','ngRoute']).filter('to_trusted', ['$sce
 
         //selected authors
         $scope.selection = ["16", "32"];
+
+        $scope.list_translations();
 
         /* end of init */
 
@@ -166,6 +187,13 @@ angular.module('ionicApp', ['ngResource','ngRoute']).filter('to_trusted', ['$sce
             for (var index in $scope.selection) {
                 $scope.author_mask = $scope.author_mask | $scope.selection[index];
             }
+        };
+
+        //go to chapter
+        $scope.goToChapter = function () {
+          //  alert('/sure/' + $scope.chapter_id)
+            $location.path('/sure/' + $scope.chapter_id, false);
+            $scope.list_translations();
         };
 
     });

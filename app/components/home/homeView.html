@@ -1,12 +1,12 @@
 
-<body ng-app="ionicApp" ng-controller="MainCtrl" id="MainCtrl">
+<body>
 
 <div class="container">
 
     <nav class="navbar navbar-default" role="navigation">
 
         <div class="collapse navbar-collapse" id="navbar-collapse-01">
-            <input type="text" ng-model="chapter_id" value="1" />
+            <input type="text" ng-model="chapter_id"/>
             <input type="hidden" ng-model="author_mask" value="48"/>
 
             <button class="btn btn-primary" data-target="#myModal" data-toggle="modal" type="button"><i class="fa fa-user"></i></button>
@@ -24,7 +24,7 @@
 
     <div class="row">
         <div class="col-xs-9">
-            <button type="button" id="list_translations" ng-click="list_translations()">list_translations</button>
+            <button type="button" id="list_translations" ng-click="goToChapter()">Sureye git</button>
             <button type="button" id="list_authors" ng-click="list_authors()">list_authors</button>
 
             <div ng-repeat="verse in verses">
@@ -88,18 +88,10 @@
             </div>
 
             <div class="modal-footer">
-                <a href="#" class="btn btn-primary btn-wide" data-target="#myModal" data-toggle="modal" ng-click="list_translations()" >Tamam</a>
+                <a href="#" class="btn btn-primary btn-wide" data-dismiss="modal" ng-click="goToChapter()" >Tamam</a>
             </div>
         </div>
     </div>
 </div>
-
-
-
-
-<!-- jQuery (necessary for Flat UI's JavaScript plugins) -->
-<script src="http://kurancalis.com/include/flat_ui/dist/js/vendor/jquery.min.js"></script>
-<!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="http://kurancalis.com/include/flat_ui/dist/js/flat-ui-pro.js"></script>
 
 </body>
