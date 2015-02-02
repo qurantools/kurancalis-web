@@ -125,7 +125,6 @@ angular.module('ionicApp', ['ngResource','ngRoute']).filter('to_trusted', ['$sce
         }
         //list footnotes
         $scope.list_footnotes = function(translation_id) {
-
             $scope.footnotes = Footnotes.query({
                 id : translation_id
             }, function(data) {
@@ -135,10 +134,13 @@ angular.module('ionicApp', ['ngResource','ngRoute']).filter('to_trusted', ['$sce
                     var html = "<div class='footnote' id='fn_" + translation_id+"'>";
                     var dataLength = data.length;
                     for ( index = 0; index < dataLength; ++index) {
-                        html += "<div class='row'><div class='col-xs-1'>" + (index + 1) + "</div><div class='col-xs-11'>" + data[index] + "</div></div>";
+                        html += "<div class='row'><div class='col-xs-1 footnote_bullet'>&#149;</div><div class='col-xs-11'>" + data[index] + "</div></div>";
                     }
                     html += '</div>';
                     footnoteDivElement.innerHTML = footnoteDivElement.innerHTML + html;
+                }else{
+                    var el = document.getElementById( 'fn_'+ translation_id);
+                    el.parentNode.removeChild( el );
                 }
 
             });
@@ -191,7 +193,6 @@ angular.module('ionicApp', ['ngResource','ngRoute']).filter('to_trusted', ['$sce
 
         //go to chapter
         $scope.goToChapter = function () {
-          //  alert('/sure/' + $scope.chapter_id)
             $location.path('/sure/' + $scope.chapter_id, false);
             $scope.list_translations();
         };

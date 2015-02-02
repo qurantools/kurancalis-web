@@ -49,3 +49,15 @@ hr {
 .footnote_asterisk{
 
 }
+.footnote_bullet{
+    text-align: center;
+    vertical-align: middle;
+}
+
+.container {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+.translations{
+    padding-top:0 !important;
+}
