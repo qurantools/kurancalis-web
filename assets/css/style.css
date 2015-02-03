@@ -61,3 +61,7 @@ hr {
 .translations{
     padding-top:0 !important;
 }
+.facebook_area{
+    float: right;
+    padding-right:20px;
+}

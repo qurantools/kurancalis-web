@@ -1,5 +1,5 @@
 
-angular.module('ionicApp', ['ngResource','ngRoute']).filter('to_trusted', ['$sce',
+angular.module('ionicApp', ['ngResource','ngRoute','facebook']).filter('to_trusted', ['$sce',
     function($sce) {
         return function(text) {
             return $sce.trustAsHtml(text);
@@ -23,7 +23,8 @@ angular.module('ionicApp', ['ngResource','ngRoute']).filter('to_trusted', ['$sce
             return original.apply($location, [path]);
         };
     }])
-    .config(function($routeProvider) {
+    .config(function($routeProvider,FacebookProvider) {
+        //route
         $routeProvider
             .when('/', {
                 controller:'MainCtrl',
@@ -38,6 +39,9 @@ angular.module('ionicApp', ['ngResource','ngRoute']).filter('to_trusted', ['$sce
             .otherwise({
                 redirectTo:'/'
             });
+
+        //facebook
+        FacebookProvider.init('295857580594128');
     })
     .factory('ChapterVerses', function($resource) {
         return $resource('https://securewebserver.net/jetty/qt/rest/chapters/:chapter_id/authors/:author_mask', {
@@ -99,13 +103,32 @@ angular.module('ionicApp', ['ngResource','ngRoute']).filter('to_trusted', ['$sce
                 method : 'DELETE'
             }
         });
-    }).controller('MainCtrl', function($scope, $q, $routeParams, $location, ListAuthors, ChapterVerses, Footnotes) {
+    }).factory('User', function($resource,token) {
+    return $resource('https://securewebserver.net/jetty/qt/rest/users', {
+        query : {
+            method : 'GET',
+            isArray : true,
+            headers : {
+                'access_token' :token
+            }
+        }
+    });
+})
+
+.controller('MainCtrl', function($scope, $q, $routeParams, $location, ListAuthors, ChapterVerses, Footnotes, Facebook) {
         var chapterId=1;
         if(typeof $routeParams.chapterId !== 'undefined'){
             chapterId = $routeParams.chapterId;
         }
         $scope.chapter_id=chapterId;
 
+        //get user info
+        $scope.get_user = function() {
+            $scope.user = User.query({
+                chapter_id : $scope.chapter_id,
+                author_mask : $scope.author_mask
+            });
+        }
         //list translations
         $scope.list_translations = function() {
                $scope.verses = ChapterVerses.query({
@@ -196,6 +219,49 @@ angular.module('ionicApp', ['ngResource','ngRoute']).filter('to_trusted', ['$sce
             $location.path('/sure/' + $scope.chapter_id, false);
             $scope.list_translations();
         };
+
+
+
+        /* facebook login */
+        $scope.loginStatus = 'disconnected';
+        $scope.facebookIsReady = false;
+        $scope.user = null;
+
+        $scope.login = function () {
+            Facebook.login(function(response) {
+                $scope.loginStatus = response.status;
+                $scope.token = response.authResponse.accessToken;
+                if($scope.token!=""){ $scope.get_user();}
+            },{scope: 'email'});
+        };
+
+        $scope.removeAuth = function () {
+            Facebook.api({
+                method: 'Auth.revokeAuthorization'
+            }, function(response) {
+                Facebook.getLoginStatus(function(response) {
+                    $scope.loginStatus = response.status;
+                });
+            });
+        };
+
+        $scope.api = function () {
+            Facebook.api('/me', {fields: 'email'},function(response) {
+                $scope.user = response.email;
+            });
+        };
+
+        $scope.$watch(function() {
+                return Facebook.isReady();
+            }, function(newVal) {
+                if (newVal) {
+                    $scope.facebookIsReady = true;
+                }
+            }
+        );
+        /* end of facebook login */
+
+
 
     });
 

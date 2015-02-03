@@ -1,28 +1,50 @@
 <body>
 <div class="container">
 
+
+
+    <button type="button" id="login" ng-click="login()">login</button>
+    <button type="button" id="api" ng-click="api()">api user data call</button>
+    <button type="button" id="remove_auth" ng-click="removeAuth()">remove auth</button>
+    <pre>isReady: <span id="is_ready" ng-bind="facebookIsReady"></span></pre>
+    <pre>status: <span id="login_status" ng-bind="loginStatus"></span></pre>
+    <pre>token: <span id="token" ng-bind="token"></span></pre>
+    <pre>username: <span id="api_first_name" ng-bind="user.first_name"></span></pre>
     <nav class="navbar navbar-default" role="navigation">
+
+
+
+
 
         <div >
             <form>
                 <div class="row" style="padding-left: 15px;">
-            <div style="float: left">
-                <input type="text" ng-model="chapter_id" size="12"/>
-            </div>
-            <input type="hidden" ng-model="author_mask" value="48"/>
-            <div  style="float: left; padding-left:15px; ">
-                <button type="button" id="list_translations" ng-click="goToChapter()" class="btn btn-primary">Sureye git</button>
-                <button class="btn btn-primary" data-target="#myModal" data-toggle="modal" type="button"><i class="fa fa-user"></i></button>
-            </div>
+                    <div style="float: left">
+                        <input type="text" ng-model="chapter_id" size="12"/>
+                    </div>
+                    <input type="hidden" ng-model="author_mask" value="48"/>
+                    <div  style="float: left; padding-left:15px; ">
+                        <button type="button" id="list_translations" ng-click="goToChapter()" class="btn btn-primary">
+                            Sureye git
+                        </button>
+                        <button class="btn btn-primary" data-target="#myModal" data-toggle="modal" type="button">
+                            <i class="fa fa-user"></i>
+                        </button>
+                    </div>
+                    <div ng-show="facebookIsReady" class="facebook_area">
+                        <div ng-if="loginStatus!='connected'">
+                            <button type="button" id="login" ng-click="login()" class="btn btn-primary">
+                                Giriş
+                            </button>
+                        </div>
+                        <div ng-if="loginStatus=='connected'">
+                            a{{user.name}}b
+                            <button type="button" id="remove_auth" ng-click="removeAuth()" class="btn btn-primary">
+                                Çıkış
+                            </button>
+                        </div>
+                    </div>
                 </div>
-           <!--
-            <div class="input-group col-xs-3" style="float:right;">
-                <input type="text" id="search-query" placeholder="Ara" class="form-control" />
-                <span class="input-group-btn">
-                    <button class="btn" type="submit"><span class="fa fa-search"></span></button>
-                </span>
-            </div>
-            -->
             </form>
         </div><!-- /.navbar-collapse -->
     </nav><!-- /navbar -->
@@ -45,17 +67,6 @@
                         </div>
                     </div>
                 </div>
-                <!--
-                <div class="col-xs-12 col-sm-1">
-                    <div class="btn-group-vertical" role="group" aria-label="...">
-                        <div style="text-align:center"><input type="checkbox" /></div>
-                        <button class="btn btn-xs"><i class="fa fa-arrow-right"></i></button>
-                        <button class="btn btn-xs"><i class="fa fa-arrow-left"></i></button>
-                        <button class="btn btn-xs"><i class="fa fa-link"></i></button>
-                        <button class="btn btn-xs"><i class="fa fa-share-alt"></i></button>
-                    </div>
-                </div>
-                -->
             </div>
 
 
