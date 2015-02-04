@@ -1,10 +1,12 @@
 
-angular.module('ionicApp', ['ngResource','ngRoute','facebook']).filter('to_trusted', ['$sce',
+angular.module('ionicApp', ['ngResource','ngRoute','facebook'])
+    .filter('to_trusted', ['$sce',
     function($sce) {
         return function(text) {
             return $sce.trustAsHtml(text);
         };
-    }]).filter('with_footnote_link', [
+    }])
+    .filter('with_footnote_link', [
     function() {
         return function(text, translation_id) {
             return text.replace("*", "<a class='footnote_asterisk' href='javascript:list_fn(" + translation_id + ")'>*</a");
@@ -103,19 +105,21 @@ angular.module('ionicApp', ['ngResource','ngRoute','facebook']).filter('to_trust
                 method : 'DELETE'
             }
         });
-    }).factory('User', function($resource,token) {
-    return $resource('https://securewebserver.net/jetty/qt/rest/users', {
-        query : {
-            method : 'GET',
-            isArray : true,
-            headers : {
-                'access_token' :token
+    }).factory('User', function($resource) {
+        return $resource('https://securewebserver.net/jetty/qt/rest/users', {
+            query : {
+                method : 'GET',
+                headers : {
+                    'access_token' :'@access_token'
+                }
+            },
+            save : {
+                method : 'POST'
             }
-        }
-    });
-})
+        });
+    })
 
-.controller('MainCtrl', function($scope, $q, $routeParams, $location, ListAuthors, ChapterVerses, Footnotes, Facebook) {
+.controller('MainCtrl', function($scope, $q, $routeParams, $location, ListAuthors, ChapterVerses, User, Footnotes, Facebook) {
         var chapterId=1;
         if(typeof $routeParams.chapterId !== 'undefined'){
             chapterId = $routeParams.chapterId;
@@ -123,10 +127,9 @@ angular.module('ionicApp', ['ngResource','ngRoute','facebook']).filter('to_trust
         $scope.chapter_id=chapterId;
 
         //get user info
-        $scope.get_user = function() {
-            $scope.user = User.query({
-                chapter_id : $scope.chapter_id,
-                author_mask : $scope.author_mask
+        $scope.get_user_info = function() {
+            $scope.User = User.query({
+                access_token : $scope.access_token
             });
         }
         //list translations
@@ -230,8 +233,13 @@ angular.module('ionicApp', ['ngResource','ngRoute','facebook']).filter('to_trust
         $scope.login = function () {
             Facebook.login(function(response) {
                 $scope.loginStatus = response.status;
-                $scope.token = response.authResponse.accessToken;
-                if($scope.token!=""){ $scope.get_user();}
+                $scope.tokenFb = response.authResponse.accessToken;
+                if($scope.tokenFb!=""){
+                    //get token from facebook token
+                    $scope.access_token= User.save({
+                        fb_access_token : $scope.tokenFb
+                    });
+                }
             },{scope: 'email'});
         };
 

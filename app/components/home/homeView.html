@@ -8,9 +8,13 @@
     <button type="button" id="remove_auth" ng-click="removeAuth()">remove auth</button>
     <pre>isReady: <span id="is_ready" ng-bind="facebookIsReady"></span></pre>
     <pre>status: <span id="login_status" ng-bind="loginStatus"></span></pre>
-    <pre>token: <span id="token" ng-bind="token"></span></pre>
+    <pre>token: <span id="tokenFb" ng-bind="tokenFb"></span></pre>
+    <pre>access token: <span id="accessToken" ng-bind="access_token | json"></span></pre>
     <pre>username: <span id="api_first_name" ng-bind="user.first_name"></span></pre>
     <nav class="navbar navbar-default" role="navigation">
+
+
+
 
 
 
@@ -38,7 +42,7 @@
                             </button>
                         </div>
                         <div ng-if="loginStatus=='connected'">
-                            a{{user.name}}b
+                            <button type="button" id="login" ng-click="get_user_info()">get_user_info</button>
                             <button type="button" id="remove_auth" ng-click="removeAuth()" class="btn btn-primary">
                                 Çıkış
                             </button>
