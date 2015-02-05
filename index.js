@@ -56,16 +56,8 @@ angular.module('ionicApp', ['ngResource','ngRoute','facebook'])
                     chapter_id : '@chapter_id',
                     author_mask : '@author_mask'
                 },
+                headers: {"Accept-Encoding": "gzip,deflated"},
                 isArray : true
-            },
-            post : {
-                method : 'POST'
-            },
-            update : {
-                method : 'PUT'
-            },
-            remove : {
-                method : 'DELETE'
             }
         });
     }).factory('Footnotes', function($resource) {
@@ -78,15 +70,6 @@ angular.module('ionicApp', ['ngResource','ngRoute','facebook'])
                     id : '@translation_id'
                 },
                 isArray : true
-            },
-            post : {
-                method : 'POST'
-            },
-            update : {
-                method : 'PUT'
-            },
-            remove : {
-                method : 'DELETE'
             }
         });
     }).factory('ListAuthors', function($resource) {
@@ -94,29 +77,45 @@ angular.module('ionicApp', ['ngResource','ngRoute','facebook'])
             query : {
                 method : 'GET',
                 isArray : true
-            },
-            post : {
-                method : 'POST'
-            },
-            update : {
-                method : 'PUT'
-            },
-            remove : {
-                method : 'DELETE'
             }
         });
     }).factory('User', function($resource) {
-        return $resource('https://securewebserver.net/jetty/qt/rest/users', {
-            query : {
-                method : 'GET',
-                headers : {
-                    'access_token' :'@access_token'
+        //return $resource('https://securewebserver.net/jetty/qt/rest/users',
+
+        return $resource('http://localhost:8080/QuranToolsApp/rest/users',
+            { },
+
+            {
+                query : {
+                    method : 'GET',
+                    headers : {
+                        "access_token" : this.accessToken
+                    },
+                    params : {
+                        "access_tokeni" : this.accessToken
+                    },
+/*                    transformRequest: function(obj) {
+                        var str = [];
+                        for(var p in obj)
+                            str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                        return str.join("&");
+                    },
+          */
+                    isArray: false
+                },
+                save : {
+                    method : 'POST',
+                    headers : {    "Content-Type":"application/x-www-form-urlencoded" },
+                    transformRequest: function(obj) {
+                        var str = [];
+                        for(var p in obj)
+                            str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                        return str.join("&");
+                    },
+                    isArray: false
                 }
-            },
-            save : {
-                method : 'POST'
             }
-        });
+        );
     })
 
 .controller('MainCtrl', function($scope, $q, $routeParams, $location, ListAuthors, ChapterVerses, User, Footnotes, Facebook) {
@@ -128,9 +127,21 @@ angular.module('ionicApp', ['ngResource','ngRoute','facebook'])
 
         //get user info
         $scope.get_user_info = function() {
-            $scope.User = User.query({
-                access_token : $scope.access_token
-            });
+            var userResource = new User();
+            userResource.accessToken = $scope.access_token;
+            $scope.sessionUser = userResource.$query(
+                {
+                    a_t : $scope.access_token
+                },
+                function(data,header){
+                    $scope.requestResponse=data;
+                    console.log(data);
+                },
+                function(error) {
+                    $scope.requestResponse = error;
+                    console.log(error);
+                }
+            );
         }
         //list translations
         $scope.list_translations = function() {
@@ -235,10 +246,20 @@ angular.module('ionicApp', ['ngResource','ngRoute','facebook'])
                 $scope.loginStatus = response.status;
                 $scope.tokenFb = response.authResponse.accessToken;
                 if($scope.tokenFb!=""){
+                    $scope.access_token = "";
                     //get token from facebook token
-                    $scope.access_token= User.save({
-                        fb_access_token : $scope.tokenFb
-                    });
+                    //$scope.access_token=
+                    var user = new User();
+                    user.fb_access_token = $scope.tokenFb;
+                        user.$save({fb_access_token: $scope.tokenFb },
+                        function(data,headers) {
+                           $scope.access_token = data.token;
+                        },
+                        function(error) {
+                            $scope.access_token = error;
+                        }
+
+                    );
                 }
             },{scope: 'email'});
         };
