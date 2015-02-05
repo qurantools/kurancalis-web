@@ -7,5 +7,6 @@
     <orderEntry type="library" name="angular" level="application" />
     <orderEntry type="library" name="angular-resource" level="application" />
     <orderEntry type="library" name="angular-route" level="application" />
+    <orderEntry type="library" name="restangular" level="application" />
   </component>
 </module>

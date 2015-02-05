@@ -1,5 +1,6 @@
 
-angular.module('ionicApp', ['ngResource','ngRoute','facebook'])
+angular.module('ionicApp', ['ngResource','ngRoute','facebook','restangular'
+                             ])
     .filter('to_trusted', ['$sce',
     function($sce) {
         return function(text) {
@@ -25,7 +26,9 @@ angular.module('ionicApp', ['ngResource','ngRoute','facebook'])
             return original.apply($location, [path]);
         };
     }])
-    .config(function($routeProvider,FacebookProvider) {
+    .config(function($routeProvider,FacebookProvider,RestangularProvider
+                         ) {
+        RestangularProvider.setBaseUrl('https://securewebserver.net/jetty/qt/rest');
         //route
         $routeProvider
             .when('/', {
@@ -107,7 +110,8 @@ angular.module('ionicApp', ['ngResource','ngRoute','facebook'])
         );
     })
 
-.controller('MainCtrl', function($scope, $q, $routeParams, $location, ListAuthors, ChapterVerses, User, Footnotes, Facebook) {
+.controller('MainCtrl', function($scope, $q, $routeParams, $location, ListAuthors, ChapterVerses, User, Footnotes, Facebook , Restangular
+     ) {
         var chapterId=1;
         if(typeof $routeParams.chapterId !== 'undefined'){
             chapterId = $routeParams.chapterId;
@@ -116,6 +120,7 @@ angular.module('ionicApp', ['ngResource','ngRoute','facebook'])
 
         //get user info
         $scope.get_user_info = function() {
+            /*
             var userResource = new User();
             userResource.accessToken = $scope.access_token;
             $scope.sessionUser = userResource.$query(
@@ -131,6 +136,17 @@ angular.module('ionicApp', ['ngResource','ngRoute','facebook'])
                     console.log(error);
                 }
             );
+            */
+
+            var usersRestangular = Restangular.all("users");
+            //TODO: document knowhow: custom get with custom header
+            usersRestangular.customGET("",{},{'access_token': $scope.access_token}).then( function(user){
+                    $scope.validation_response=user;
+                    console.log(user)},function(error){
+                        console.log(error);
+                }
+            );
+
         }
         //list translations
         $scope.list_translations = function() {
