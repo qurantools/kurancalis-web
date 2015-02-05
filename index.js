@@ -80,9 +80,8 @@ angular.module('ionicApp', ['ngResource','ngRoute','facebook'])
             }
         });
     }).factory('User', function($resource) {
-        //return $resource('https://securewebserver.net/jetty/qt/rest/users',
 
-        return $resource('http://localhost:8080/QuranToolsApp/rest/users',
+        return $resource('https://securewebserver.net/jetty/qt/rest/users',
             { },
 
             {
@@ -91,16 +90,6 @@ angular.module('ionicApp', ['ngResource','ngRoute','facebook'])
                     headers : {
                         "access_token" : this.accessToken
                     },
-                    params : {
-                        "access_tokeni" : this.accessToken
-                    },
-/*                    transformRequest: function(obj) {
-                        var str = [];
-                        for(var p in obj)
-                            str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                        return str.join("&");
-                    },
-          */
                     isArray: false
                 },
                 save : {
