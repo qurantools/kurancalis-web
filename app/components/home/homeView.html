@@ -1,33 +1,25 @@
 <body>
 <div class="container">
 
-
-
-  <!--  <button type="button" id="login" ng-click="login()">login</button>
-    <button type="button" id="api" ng-click="api()">api user data call</button>
-    <button type="button" id="remove_auth" ng-click="removeAuth()">remove auth</button>-->
+    <!--
     <pre>isReady: <span id="is_ready" ng-bind="facebookIsReady"></span></pre>
     <pre>status: <span id="login_status" ng-bind="loginStatus"></span></pre>
     <pre>token: <span id="tokenFb" ng-bind="tokenFb"></span></pre>
-    <pre>access token: <span id="accessToken" ng-bind="access_token | json"></span></pre>
+    <pre>access token: <span id="accessToken" ng-bind="access_token"></span></pre>
     <pre>validation_response: <span id="api_first_name" ng-bind="validation_response | json"></span></pre>
+    <pre>user: <span id="user_info" ng-bind="user | json"></span></pre>
+    -->
+
     <nav class="navbar navbar-default" role="navigation">
-
-
-
-
-
-
-
-
-        <div >
+        <div>
             <form>
                 <div class="row" style="padding-left: 15px;">
                     <div style="float: left">
                         <input type="text" ng-model="chapter_id" size="12"/>
                     </div>
                     <input type="hidden" ng-model="author_mask" value="48"/>
-                    <div  style="float: left; padding-left:15px; ">
+
+                    <div style="float: left; padding-left:15px; ">
                         <button type="button" id="list_translations" ng-click="goToChapter()" class="btn btn-primary">
                             Sureye git
                         </button>
@@ -36,22 +28,24 @@
                         </button>
                     </div>
                     <div ng-show="facebookIsReady" class="facebook_area">
-                        <div ng-if="loginStatus!='connected'">
+                        <div ng-if="user==null">
                             <button type="button" id="login" ng-click="login()" class="btn btn-primary">
                                 Giriş
                             </button>
                         </div>
-                        <div ng-if="loginStatus=='connected'">
-                            <button type="button" id="get_info" ng-click="get_user_info()">get_user_info</button>
-                            <button type="button" id="remove_auth" ng-click="removeAuth()" class="btn btn-primary">
+                        <div ng-if="user!=null">
+                            {{user.name}}
+                            <button type="button" id="remove_auth" ng-click="log_out()" class="btn btn-primary">
                                 Çıkış
                             </button>
                         </div>
                     </div>
                 </div>
             </form>
-        </div><!-- /.navbar-collapse -->
-    </nav><!-- /navbar -->
+        </div>
+        <!-- /.navbar-collapse -->
+    </nav>
+    <!-- /navbar -->
 
 
     <div class="row">
@@ -64,52 +58,58 @@
                             <div class="col-xs-12 col-sm-3 authorDiv_{{authorMap[translation.authorId].color}}">
                                 {{authorMap[translation.authorId].name}}
                             </div>
-                            <div class="col-xs-12 col-sm-9"><span ng-bind-html="translation.content | with_footnote_link:translation.id | to_trusted"></span></div>
+                            <div class="col-xs-12 col-sm-9"><span
+                                    ng-bind-html="translation.content | with_footnote_link:translation.id | to_trusted"></span>
+                            </div>
                         </div>
                         <div class="row" ng-if="!$last">
-                            <hr />
+                            <hr/>
                         </div>
                     </div>
                 </div>
             </div>
 
 
-        </div><!-- /sol-->
+        </div>
+        <!-- /sol-->
         <div>
-        </div><!-- /sağ-->
+        </div>
+        <!-- /sağ-->
 
-    </div><!-- /row-->
+    </div>
+    <!-- /row-->
 
-</div><!-- /container-->
-
+</div>
+<!-- /container-->
 
 
 <div class="modal" id="myModal">
     <div class="modal-dialog fixed-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" data-dismiss="modal" aria-hidden="true" style="float:right;"><i class="fa fa-close"></i></button>
+                <button type="button" data-dismiss="modal" aria-hidden="true" style="float:right;"><i
+                        class="fa fa-close"></i></button>
                 <h4 class="modal-title">Yazarlar</h4>
             </div>
 
             <div class="modal-body">
                 <ul>
-                <li ng-repeat="author in authors">
-                    <label>
-                    <input
-                            type="checkbox"
-                            name="selectedauthors[]"
-                            value="{{author.id}}"
-                            ng-checked="selection.indexOf(author.id) > -1"
-                            ng-click="toggleSelection(author.id)"
-                            > {{author.name}}
-                    </label>
-                </li>
+                    <li ng-repeat="author in authors">
+                        <label>
+                            <input
+                                    type="checkbox"
+                                    name="selectedauthors[]"
+                                    value="{{author.id}}"
+                                    ng-checked="selection.indexOf(author.id) > -1"
+                                    ng-click="toggleSelection(author.id)"
+                                    > {{author.name}}
+                        </label>
+                    </li>
                 </ul>
             </div>
 
             <div class="modal-footer">
-                <a href="#" class="btn btn-primary btn-wide" data-dismiss="modal" ng-click="goToChapter()" >Tamam</a>
+                <a href="#" class="btn btn-primary btn-wide" data-dismiss="modal" ng-click="goToChapter()">Tamam</a>
             </div>
         </div>
     </div>
