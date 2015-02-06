@@ -3,9 +3,9 @@
 
 
 
-    <button type="button" id="login" ng-click="login()">login</button>
+  <!--  <button type="button" id="login" ng-click="login()">login</button>
     <button type="button" id="api" ng-click="api()">api user data call</button>
-    <button type="button" id="remove_auth" ng-click="removeAuth()">remove auth</button>
+    <button type="button" id="remove_auth" ng-click="removeAuth()">remove auth</button>-->
     <pre>isReady: <span id="is_ready" ng-bind="facebookIsReady"></span></pre>
     <pre>status: <span id="login_status" ng-bind="loginStatus"></span></pre>
     <pre>token: <span id="tokenFb" ng-bind="tokenFb"></span></pre>
@@ -42,7 +42,7 @@
                             </button>
                         </div>
                         <div ng-if="loginStatus=='connected'">
-                            <button type="button" id="login" ng-click="get_user_info()">get_user_info</button>
+                            <button type="button" id="get_info" ng-click="get_user_info()">get_user_info</button>
                             <button type="button" id="remove_auth" ng-click="removeAuth()" class="btn btn-primary">
                                 Çıkış
                             </button>
