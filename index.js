@@ -184,7 +184,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
 
         /* init */
         //hide list of authors div
-        $scope.showAuthorsList = false
+        $scope.showAuthorsList = false;
 
         //list the authors on page load
         $scope.list_authors();
@@ -196,6 +196,8 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         $scope.selection = ["16", "32"];
 
         $scope.list_translations();
+
+
 
         /* end of init */
 
@@ -224,13 +226,13 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
 
 
         /* facebook login */
-        $scope.loginStatus = 'disconnected';
+        $scope.fbLoginStatus = 'disconnected';
         $scope.facebookIsReady = false;
         //    $scope.user = null;
 
         $scope.login = function () {
             Facebook.login(function (response) {
-                $scope.loginStatus = response.status;
+                $scope.fbLoginStatus = response.status;
                 $scope.tokenFb = response.authResponse.accessToken;
                 if ($scope.tokenFb != "") {
                     $scope.access_token = "";
@@ -246,6 +248,8 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
                             $cookieStore.put('access_token', $scope.access_token);
                             //get user information
                             $scope.get_user_info();
+
+                            $scope.loggedIn = true;
                         },
                         function (error) {
                             $scope.access_token = error;
@@ -260,7 +264,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
                 method: 'Auth.revokeAuthorization'
             }, function (response) {
                 Facebook.getLoginStatus(function (response) {
-                    $scope.loginStatus = response.status;
+                    $scope.fbLoginStatus = response.status;
                 });
             });
         };
@@ -291,6 +295,17 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             $cookieStore.remove('access_token');
 
         }
+
+        $scope.checkUserLoginStatus = function (){
+            var access_token = $scope.get_access_token_cookie();
+            if(access_token!=null && access_token!=""){
+                $scope.access_token=access_token;
+                $scope.loggedIn = true;
+                $scope.get_user_info();
+            }
+        }
+        $scope.loggedIn = false;
+        $scope.checkUserLoginStatus();
         /* end of login - access token */
 
 
