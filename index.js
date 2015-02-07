@@ -1,18 +1,16 @@
-
-angular.module('ionicApp', ['ngResource','ngRoute','facebook','restangular'
-                             ])
+angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 'ngCookies'])
     .filter('to_trusted', ['$sce',
-    function($sce) {
-        return function(text) {
-            return $sce.trustAsHtml(text);
-        };
-    }])
+        function ($sce) {
+            return function (text) {
+                return $sce.trustAsHtml(text);
+            };
+        }])
     .filter('with_footnote_link', [
-    function() {
-        return function(text, translation_id) {
-            return text.replace("*", "<a class='footnote_asterisk' href='javascript:list_fn(" + translation_id + ")'>*</a");
-        };
-    }])
+        function () {
+            return function (text, translation_id) {
+                return text.replace("*", "<a class='footnote_asterisk' href='javascript:list_fn(" + translation_id + ")'>*</a");
+            };
+        }])
     .run(['$route', '$rootScope', '$location', function ($route, $rootScope, $location) {
         var original = $location.path;
         $location.path = function (path, reload) {
@@ -26,80 +24,79 @@ angular.module('ionicApp', ['ngResource','ngRoute','facebook','restangular'
             return original.apply($location, [path]);
         };
     }])
-    .config(function($routeProvider,FacebookProvider,RestangularProvider
-                         ) {
+    .config(function ($routeProvider, FacebookProvider, RestangularProvider) {
         RestangularProvider.setBaseUrl('https://securewebserver.net/jetty/qt/rest');
         //route
         $routeProvider
             .when('/', {
-                controller:'MainCtrl',
-                templateUrl:'app/components/home/homeView.html',
+                controller: 'MainCtrl',
+                templateUrl: 'app/components/home/homeView.html',
                 reloadOnSearch: false
             })
             .when('/sure/:chapterId', {
-                controller:'MainCtrl',
-                templateUrl:'app/components/home/homeView.html',
+                controller: 'MainCtrl',
+                templateUrl: 'app/components/home/homeView.html',
                 reloadOnSearch: false
             })
             .otherwise({
-                redirectTo:'/'
+                redirectTo: '/'
             });
 
         //facebook
         FacebookProvider.init('295857580594128');
     })
-    .factory('ChapterVerses', function($resource) {
+    .factory('ChapterVerses', function ($resource) {
         return $resource('https://securewebserver.net/jetty/qt/rest/chapters/:chapter_id/authors/:author_mask', {
-            chapter_id : '@chapter_id',
-            author_mask : '@author_mask'
+            chapter_id: '@chapter_id',
+            author_mask: '@author_mask'
         }, {
-            query : {
-                method : 'GET',
-                params : {
-                    chapter_id : '@chapter_id',
-                    author_mask : '@author_mask'
+            query: {
+                method: 'GET',
+                params: {
+                    chapter_id: '@chapter_id',
+                    author_mask: '@author_mask'
                 },
                 isArray : true
             }
         });
-    }).factory('Footnotes', function($resource) {
+    }).factory('Footnotes', function ($resource) {
         return $resource('https://securewebserver.net/jetty/qt/rest/translations/:id/footnotes', {
-            chapter_id : '@translation_id'
+            chapter_id: '@translation_id'
         }, {
-            query : {
-                method : 'GET',
-                params : {
-                    id : '@translation_id'
+            query: {
+                method: 'GET',
+                params: {
+                    id: '@translation_id'
                 },
-                isArray : true
+                isArray: true
             }
         });
-    }).factory('ListAuthors', function($resource) {
+    }).factory('ListAuthors', function ($resource) {
         return $resource('https://securewebserver.net/jetty/qt/rest/authors', {
-            query : {
-                method : 'GET',
-                isArray : true
+            query: {
+                method: 'GET',
+                isArray: true
             }
         });
-    }).factory('User', function($resource) {
+    }).factory('User', function ($resource) {
 
         return $resource('https://securewebserver.net/jetty/qt/rest/users',
-            { },
+            {},
 
             {
-                query : {
-                    method : 'GET',
-                    headers : {
-                        "access_token" : this.accessToken
+                query: {
+                    method: 'GET',
+                    headers: {
+                        "access_token": this.accessToken
                     },
                     isArray: false
                 },
-                save : {
-                    method : 'POST',
-                    headers : {    "Content-Type":"application/x-www-form-urlencoded" },
-                    transformRequest: function(obj) {
+                save: {
+                    method: 'POST',
+                    headers: {"Content-Type": "application/x-www-form-urlencoded"},
+                    transformRequest: function (obj) {
                         var str = [];
-                        for(var p in obj)
+                        for (var p in obj)
                             str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
                         return str.join("&");
                     },
@@ -109,55 +106,42 @@ angular.module('ionicApp', ['ngResource','ngRoute','facebook','restangular'
         );
     })
 
-.controller('MainCtrl', function($scope, $q, $routeParams, $location, ListAuthors, ChapterVerses, User, Footnotes, Facebook , Restangular
-     ) {
-        var chapterId=1;
-        if(typeof $routeParams.chapterId !== 'undefined'){
+    .controller('MainCtrl', function ($scope, $q, $routeParams, $location, ListAuthors, ChapterVerses, User, Footnotes, Facebook, Restangular, $cookieStore) {
+        var chapterId = 1;
+        if (typeof $routeParams.chapterId !== 'undefined') {
             chapterId = $routeParams.chapterId;
         }
-        $scope.chapter_id=chapterId;
+        $scope.chapter_id = chapterId;
 
         //get user info
-        $scope.get_user_info = function() {
-            /*
-            var userResource = new User();
-            userResource.accessToken = $scope.access_token;
-            $scope.sessionUser = userResource.$query(
-                {
-                    a_t : $scope.access_token
-                },
-                function(data,header){
-                    $scope.requestResponse=data;
-                    console.log(data);
-                },
-                function(error) {
-                    $scope.requestResponse = error;
-                    console.log(error);
-                }
-            );
-            */
+        $scope.get_user_info = function () {
 
             var usersRestangular = Restangular.all("users");
             //TODO: document knowhow: custom get with custom header
-            usersRestangular.customGET("",{},{'access_token': $scope.access_token}).then( function(user){
-                    $scope.validation_response=user;
-                    console.log(user)},function(error){
-                        console.log(error);
+            usersRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (user) {
+                    $scope.user = user;
+                    /*
+                     $scope.validation_response=user;
+                     console.log(user)},function(error){
+                     console.log(error);
+                     */
                 }
             );
 
         }
+
+
         //list translations
-        $scope.list_translations = function() {
-               $scope.verses = ChapterVerses.query({
-                chapter_id : $scope.chapter_id,
-                author_mask : $scope.author_mask
+        $scope.list_translations = function () {
+            $scope.verses = ChapterVerses.query({
+                chapter_id: $scope.chapter_id,
+                author_mask: $scope.author_mask
             });
         }
         //list authors
-        $scope.list_authors = function() {
+        $scope.list_authors = function () {
             $scope.authorMap = new Object();
-            $scope.authors = ListAuthors.query(function(data) {
+            $scope.authors = ListAuthors.query(function (data) {
                 var arrayLength = data.length;
                 for (var i = 0; i < arrayLength; i++) {
                     $scope.authorMap[data[i].id] = data[i];
@@ -165,37 +149,36 @@ angular.module('ionicApp', ['ngResource','ngRoute','facebook','restangular'
             });
         }
         //list footnotes
-        $scope.list_footnotes = function(translation_id) {
+        $scope.list_footnotes = function (translation_id) {
             $scope.footnotes = Footnotes.query({
-                id : translation_id
-            }, function(data) {
-                var footnoteDivElement=document.getElementById('t_' + translation_id);
+                id: translation_id
+            }, function (data) {
+                var footnoteDivElement = document.getElementById('t_' + translation_id);
                 //don't list if already listed
                 if (!document.getElementById("fn_" + translation_id)) {
-                    var html = "<div class='footnote' id='fn_" + translation_id+"'>";
+                    var html = "<div class='footnote' id='fn_" + translation_id + "'>";
                     var dataLength = data.length;
-                    for ( index = 0; index < dataLength; ++index) {
+                    for (index = 0; index < dataLength; ++index) {
                         html += "<div class='row'><div class='col-xs-1 footnote_bullet'>&#149;</div><div class='col-xs-11'>" + data[index] + "</div></div>";
                     }
                     html += '</div>';
                     footnoteDivElement.innerHTML = footnoteDivElement.innerHTML + html;
-                }else{
-                    var el = document.getElementById( 'fn_'+ translation_id);
-                    el.parentNode.removeChild( el );
+                } else {
+                    var el = document.getElementById('fn_' + translation_id);
+                    el.parentNode.removeChild(el);
                 }
 
             });
 
         }
         //selected authors
-        $scope.setAuthors = function() {
+        $scope.setAuthors = function () {
             for (var index in $scope.authorMap) {
                 if ($scope.author_mask & $scope.authorMap[index].id) {
                     $scope.selection.push($scope.authorMap[index].id);
                 }
             }
         }
-
 
 
         /* init */
@@ -239,54 +222,57 @@ angular.module('ionicApp', ['ngResource','ngRoute','facebook','restangular'
         };
 
 
-
         /* facebook login */
         $scope.loginStatus = 'disconnected';
         $scope.facebookIsReady = false;
-        $scope.user = null;
+        //    $scope.user = null;
 
         $scope.login = function () {
-            Facebook.login(function(response) {
+            Facebook.login(function (response) {
                 $scope.loginStatus = response.status;
                 $scope.tokenFb = response.authResponse.accessToken;
-                if($scope.tokenFb!=""){
+                if ($scope.tokenFb != "") {
                     $scope.access_token = "";
                     //get token from facebook token
                     //$scope.access_token=
                     var user = new User();
                     user.fb_access_token = $scope.tokenFb;
-                        user.$save({fb_access_token: $scope.tokenFb },
-                        function(data,headers) {
-                           $scope.access_token = data.token;
+                    user.$save({fb_access_token: $scope.tokenFb},
+                        function (data, headers) {
+                            //get token
+                            $scope.access_token = data.token;
+                            //set cookie
+                            $cookieStore.put('access_token', $scope.access_token);
+                            //get user information
+                            $scope.get_user_info();
                         },
-                        function(error) {
+                        function (error) {
                             $scope.access_token = error;
                         }
-
                     );
                 }
-            },{scope: 'email'});
+            }, {scope: 'email'});
         };
 
         $scope.removeAuth = function () {
             Facebook.api({
                 method: 'Auth.revokeAuthorization'
-            }, function(response) {
-                Facebook.getLoginStatus(function(response) {
+            }, function (response) {
+                Facebook.getLoginStatus(function (response) {
                     $scope.loginStatus = response.status;
                 });
             });
         };
 
         $scope.api = function () {
-            Facebook.api('/me', {fields: 'email'},function(response) {
-                $scope.user = response.email;
+            Facebook.api('/me', {fields: 'email'}, function (response) {
+                //   $scope.user = response.email;
             });
         };
 
-        $scope.$watch(function() {
+        $scope.$watch(function () {
                 return Facebook.isReady();
-            }, function(newVal) {
+            }, function (newVal) {
                 if (newVal) {
                     $scope.facebookIsReady = true;
                 }
@@ -294,6 +280,17 @@ angular.module('ionicApp', ['ngResource','ngRoute','facebook','restangular'
         );
         /* end of facebook login */
 
+        /* login - access token */
+        $scope.get_access_token_cookie = function () {
+            return $cookieStore.get('access_token');
+        }
+        $scope.log_out = function () {
+            $scope.user = null;
+            $scope.removeAuth();
+            $cookieStore.remove('access_token');
+
+        }
+        /* end of login - access token */
 
 
     });
