@@ -247,6 +247,10 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
                             $scope.get_user_info();
                         },
                         function (error) {
+                            if(error.data.code=='209'){
+                                alert("Sisteme giriş yapabilmek için e-posta adresi paylaşımına izin vermeniz gerekmektedir.");
+                            }
+                            $scope.log_out();
                             $scope.access_token = error;
                         }
                     );
