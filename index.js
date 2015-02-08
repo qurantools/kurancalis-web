@@ -1,4 +1,4 @@
-angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 'ngCookies'])
+angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 'LocalStorageModule'])
     .filter('to_trusted', ['$sce',
         function ($sce) {
             return function (text) {
@@ -24,8 +24,9 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             return original.apply($location, [path]);
         };
     }])
-    .config(function ($routeProvider, FacebookProvider, RestangularProvider) {
+    .config(function ($routeProvider, FacebookProvider, RestangularProvider, localStorageServiceProvider) {
         RestangularProvider.setBaseUrl('https://securewebserver.net/jetty/qt/rest');
+        localStorageServiceProvider.setStorageCookie(0, '/');
         //route
         $routeProvider
             .when('/', {
@@ -106,7 +107,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         );
     })
 
-    .controller('MainCtrl', function ($scope, $q, $routeParams, $location, ListAuthors, ChapterVerses, User, Footnotes, Facebook, Restangular, $cookieStore) {
+    .controller('MainCtrl', function ($scope, $q, $routeParams, $location, ListAuthors, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService) {
         var chapterId = 1;
         if (typeof $routeParams.chapterId !== 'undefined') {
             chapterId = $routeParams.chapterId;
@@ -242,7 +243,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
                             //get token
                             $scope.access_token = data.token;
                             //set cookie
-                            $cookieStore.put('access_token', $scope.access_token);
+                            localStorageService.set('access_token', $scope.access_token);
                             //get user information
                             $scope.get_user_info();
                         },
@@ -286,16 +287,15 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
 
         /* login - access token */
         $scope.get_access_token_cookie = function () {
-            return $cookieStore.get('access_token');
+            return localStorageService.get('access_token');
         }
         $scope.log_out = function () {
             $scope.user = null;
             $scope.removeAuth();
-            $cookieStore.remove('access_token');
+            localStorageService.remove('access_token');
 
         }
         /* end of login - access token */
-
 
     });
 
