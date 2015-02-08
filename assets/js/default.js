@@ -3,12 +3,13 @@
 
 jQuery(function ($) {
     var rest_url='https://securewebserver.net/jetty/qt/rest/';
-    $('#mealler').annotator('addPlugin', 'Store', {
+    $('#translations').annotator('addPlugin', 'Store', {
+        prefix: 'https://securewebserver.net/jetty/qt/rest',
         urls: {
             // These are the default URLs.
-            create:  rest_url+'annotations',
-            update:  rest_url+'annotations/:id',
-            destroy: rest_url+'annotations/:id',
+            create:  '/annotations',
+            update:  '/anotations/:id',
+            destroy: '/annotations/:id',
             search:  '/search'
         }
     });
