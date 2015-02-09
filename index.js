@@ -131,7 +131,6 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
 
         }
 
-
         //list translations
         $scope.list_translations = function () {
             $scope.verses = ChapterVerses.query({
