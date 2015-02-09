@@ -131,12 +131,29 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
 
         }
 
+
+        //jQuery(function ($) {
+        $scope.annotate_it = function (){
+            $('#translations').annotator('addPlugin', 'Store', {
+
+                prefix: 'https://securewebserver.net/jetty/qt/rest',
+                urls: {
+                    // These are the default URLs.
+                    create:  '/annotations',
+                    update:  '/anotations/:id',
+                    destroy: '/annotations/:id',
+                    search:  '/search'
+                }
+            });
+        }
+
         //list translations
         $scope.list_translations = function () {
             $scope.verses = ChapterVerses.query({
                 chapter_id: $scope.chapter_id,
                 author_mask: $scope.author_mask
             });
+           //$scope.annotate_it();
         }
         //list authors
         $scope.list_authors = function () {
@@ -311,8 +328,14 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         $scope.checkUserLoginStatus();
         /* end of login - access token */
 
+
+
+
+
+
     });
 
 function list_fn(id) {
     angular.element(document.getElementById('MainCtrl')).scope().list_footnotes(id);
 }
+
