@@ -135,7 +135,6 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         //jQuery(function ($) {
         $scope.annotate_it = function (){
             $('#translations').annotator('addPlugin', 'Store', {
-
                 prefix: 'https://securewebserver.net/jetty/qt/rest',
                 urls: {
                     // These are the default URLs.
