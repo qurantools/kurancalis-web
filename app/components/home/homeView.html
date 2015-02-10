@@ -50,7 +50,7 @@
     <div class="row">
         <div class="col-xs-12" id="translations">
             <div ng-repeat="verse in verses">
-                <div class="well translations col-xs-12">
+                <div class="well translations col-xs-12" id="v_{{verse.id}}">
                     <div ng-repeat="translation in verse.translations">
                         <div ng-if="$first"><h4>{{translation.chapter}}:{{translation.verse}}</h4></div>
                         <div class="row" id="t_{{translation.id}}">
