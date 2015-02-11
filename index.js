@@ -132,7 +132,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         }
 
 
-        //jQuery(function ($) {
+/*
         $scope.annotate_it = function (){
             $('#translations').annotator('addPlugin', 'Store', {
                 prefix: 'https://securewebserver.net/jetty/qt/rest',
@@ -145,14 +145,35 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
                 }
             });
         }
+*/
 
+        $scope.annotate_it = function (){
+            $('#translations').annotator();
+            $('#translations').annotator('addPlugin', 'Store', {
+                prefix: 'https://securewebserver.net/jetty/qt/rest',
+                urls: {
+                    // These are the default URLs.
+                    create:  '/annotations',
+                    update:  '/anotations/:id',
+                    destroy: '/annotations/:id',
+                    search:  '/search'
+                },
+                customData:{
+                    chapter: $scope.chapter_id,
+                    author: $scope.author_mask,
+                    access_token: $scope.access_token
+                }
+            });
+        }
         //list translations
         $scope.list_translations = function () {
             $scope.verses = ChapterVerses.query({
                 chapter_id: $scope.chapter_id,
                 author_mask: $scope.author_mask
             });
-           //$scope.annotate_it();
+
+          // $scope.annotate_it();
+
         }
         //list authors
         $scope.list_authors = function () {
@@ -210,7 +231,15 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         //selected authors
         $scope.selection = ["16", "32"];
 
+
+
+
+
         $scope.list_translations();
+
+
+
+
 
 
 

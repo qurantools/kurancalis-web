@@ -629,10 +629,10 @@
           // hack
           var translation_div=nr.commonAncestor.parentNode.parentNode;
           var translation_div_id=translation_div.id;
-          nr.translation_id=translation_div_id.substr(2);
+          nr.translationId=translation_div_id.substr(2);
 
           var verse_div_id=translation_div.parentNode.parentNode.id;
-          nr.verse_id=verse_div_id.substr(2);
+          nr.verseId=verse_div_id.substr(2);
 
           // /hack
       }
@@ -653,8 +653,8 @@
       this.start = obj.start;
       this.end = obj.end;
       // hack
-      this.translation_id = obj.translation_id;
-      this.verse_id = obj.verse_id;
+      this.translationId = obj.translationId;
+      this.verseId = obj.verseId;
       // /hack
     }
 
@@ -1062,8 +1062,8 @@
         annotation.quote.push($.trim(normed.text()));
         annotation.ranges.push(normed.serialize(this.wrapper[0], '.annotator-hl'));
           // hack
-          annotation.translation_id=normed.translation_id;
-          annotation.verse_id=normed.verse_id;
+          annotation.translationId=normed.translationId;
+          annotation.verseId=normed.verseId;
           // /hack
         $.merge(annotation.highlights, this.highlightRange(normed));
       }
