@@ -196,19 +196,24 @@
         Store.prototype._apiRequestOptions = function (action, obj, onSuccess) {
             console.log("this.options: " + JSON.stringify(this.options));
 
-            var data, method, opts;
+            var data, method, opts, formData;
+            var postData =[];
             method = this._methodFor(action);
+
+
+
             opts = {
                 type: method,
                 headers: this.element.data('annotator:headers'),
-                dataType: "json",
+                dataType: "text",
                 success: onSuccess || function () {
-                }, transformRequest: function (obj) {
+                },
+                /* transformRequest: function (obj) {
                     var str = [];
                     for (var p in obj)
                         str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
                     return str.join("&");
-                },
+                },*/
                 error: this._onError
             };
             opts.headers = $.extend(opts.headers, {
@@ -230,6 +235,25 @@
                 return opts;
             }
             data = obj && this._dataFor(obj);
+
+
+            if(method == "POST"){
+                var jsonData = JSON.parse(data);
+                postData.push(encodeURIComponent("start")+"="+ encodeURIComponent(jsonData.ranges[0].start));
+                postData.push(encodeURIComponent("end")+"="+ encodeURIComponent(jsonData.ranges[0].end));
+                postData.push(encodeURIComponent("startOffset")+"="+ encodeURIComponent(jsonData.ranges[0].startOffset));
+                postData.push(encodeURIComponent("endOffset")+"="+ encodeURIComponent(jsonData.ranges[0].endOffset));
+                postData.push(encodeURIComponent("quote")+"="+ encodeURIComponent(jsonData.quote));
+                postData.push(encodeURIComponent("content")+"="+ encodeURIComponent(jsonData.content));
+                postData.push(encodeURIComponent("colour")+"="+ encodeURIComponent(jsonData.color));
+                postData.push(encodeURIComponent("translationVersion")+"="+ encodeURIComponent(jsonData.translationVersion));
+                postData.push(encodeURIComponent("translationId")+"="+ encodeURIComponent(jsonData.translationId));
+                postData.push(encodeURIComponent("verseId")+"="+ encodeURIComponent(jsonData.verseId));
+
+                data=postData.join("&");
+            }
+
+
             if (this.options.emulateJSON) {
                 opts.data = {
                     json: data
@@ -240,8 +264,8 @@
                 return opts;
             }
             opts = $.extend(opts, {
-                data: data,
-                contentType: "application/json; charset=utf-8"
+                data: data
+                //contentType: "application/json; charset=utf-8"
             });
             return opts;
         };
