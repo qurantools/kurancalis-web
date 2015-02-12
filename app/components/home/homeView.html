@@ -33,6 +33,7 @@
                             </button>
                         </div>
                         <div ng-if="user!=null">
+                            <img ng-src="{{user.photo}}" height="30" />
                             {{user.name}}
                             <button type="button" id="remove_auth" ng-click="log_out()" class="btn btn-primary">
                                 Çıkış
