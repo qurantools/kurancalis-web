@@ -131,32 +131,15 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
 
         }
 
-
-/*
-        $scope.annotate_it = function (){
-            $('#translations').annotator('addPlugin', 'Store', {
-                prefix: 'http://localhost:8080/QuranToolsApp/rest',
-                //prefix: 'https://securewebserver.net/jetty/qt/rest',
-                urls: {
-                    // These are the default URLs.
-                    create:  '/annotations',
-                    update:  '/anotations/:id',
-                    destroy: '/annotations/:id',
-                    search:  '/annotations'
-                }
-            });
-        }
-*/
-
         $scope.annotate_it = function (){
             $('#translations').annotator();
             $('#translations').annotator('addPlugin', 'Store', {
-                //prefix: 'https://securewebserver.net/jetty/qt/rest',
-                prefix: 'http://localhost:8080/QuranToolsApp/rest',
+                prefix: 'https://securewebserver.net/jetty/qt/rest',
+                //prefix: 'http://localhost:8080/QuranToolsApp/rest',
                 urls: {
                     // These are the default URLs.
                     create:  '/annotations',
-                    update:  '/anotations/:id',
+                    update:  '/annotations/:id',
                     destroy: '/annotations/:id',
                     search:  '/search'
                 },
