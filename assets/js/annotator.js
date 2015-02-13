@@ -1301,7 +1301,6 @@
             this.adder.hide();
             annotation = this.setupAnnotation(this.createAnnotation());
 
-//        console.log("save::"+JSON.stringify(annotation));
             $(annotation.highlights).addClass('annotator-hl-temporary');
             save = (function (_this) {
                 return function () {

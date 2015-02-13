@@ -141,6 +141,7 @@
             }
             annotationMap = {};
             _ref = this.annotations;
+
             for (_i = 0, _len = _ref.length; _i < _len; _i++) {
                 a = _ref[_i];
                 annotationMap[a.id] = a;
@@ -155,6 +156,7 @@
                     newData.push(a);
                 }
             }
+
             this.annotations = this.annotations.concat(newData);
             return this.annotator.loadAnnotations(newData.slice());
         };
@@ -193,12 +195,9 @@
         };
 
         Store.prototype._apiRequestOptions = function (action, obj, onSuccess) {
-            //console.log("this.options: " + JSON.stringify(this.options));
-
             var data, method, opts, formData;
             var postData =[];
             method = this._methodFor(action);
-
 
 
             opts = {
@@ -210,7 +209,7 @@
                 error: this._onError
             };
             opts.headers = $.extend(opts.headers, {
-                'access_token': this.options.customData.access_token
+                'access_token': angular.element(document.getElementById('MainCtrl')).scope().access_token
             });
 
             if(opts.type == 'POST') {
@@ -237,7 +236,6 @@
                 return opts;
             }
             data = obj && this._dataFor(obj);
-
 
             if(method == "POST"){
                 var jsonData = JSON.parse(data);
@@ -300,8 +298,9 @@
             $.extend(annotation, this.options.annotationData);
 
             // hack
-            annotation.chapterId = this.options.customData.chapterId;
-            annotation.author = this.options.customData.author;
+            annotation.chapterId = angular.element(document.getElementById('MainCtrl')).scope().chapterId;
+
+            annotation.author = angular.element(document.getElementById('MainCtrl')).scope().author;
 
             annotation.content = annotation.text;
             annotation.color = "red";
@@ -313,7 +312,6 @@
             // /hack
 
             data = JSON.stringify(annotation);
-            console.log("data :" + data);
 
             if (highlights) {
                 annotation.highlights = highlights;
