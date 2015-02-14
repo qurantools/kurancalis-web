@@ -1,3 +1,7 @@
+body{
+    font-family: Arial, Helvetica, sans-serif !important;
+}
+
 /* flat ui modal fix*/
 .fixed-dialog{
   position: fixed;
@@ -53,6 +57,8 @@ hr {
     text-align: center;
     vertical-align: middle;
 }
+
+
 
 .container {
     padding-left: 0 !important;

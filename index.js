@@ -107,7 +107,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         );
     })
 
-    .controller('MainCtrl', function ($scope, $q, $routeParams, $location, ListAuthors, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService) {
+    .controller('MainCtrl', function ($scope, $q, $routeParams, $location, $timeout, ListAuthors, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService) {
         var chapterId = 1;
         if (typeof $routeParams.chapterId !== 'undefined') {
             chapterId = $routeParams.chapterId;
@@ -121,6 +121,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             //TODO: document knowhow: custom get with custom header
             usersRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (user) {
                     $scope.user = user;
+
                     /*
                      $scope.validation_response=user;
                      console.log(user)},function(error){
@@ -131,13 +132,42 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
 
         }
 
+        $scope.annotate_it = function () {
+            if ($scope.annotatorActivated == 1) {
+                delete annotator;
+                $('#translations').data('annotator').plugins['Store'].destroy();
+            }
 
+            annotator = $('#translations').annotator();
+       //     if ($scope.annotatorActivated != 1) {
+                annotator = $('#translations').annotator('addPlugin', 'Store', {
+                    prefix: 'https://securewebserver.net/jetty/qt/rest',
+                    //prefix: 'http://localhost:8080/QuranToolsApp/rest',
+                    urls: {
+                        // These are the default URLs.
+                        create: '/annotations',
+                        update: '/annotations/:id',
+                        destroy: '/annotations/:id',
+                        search: '/search'
+                    }
+                });
+      /*      }else{
+                //TODO: GET annotations
+            }
+        */
+            $scope.annotatorActivated = 1;
+        }
         //list translations
         $scope.list_translations = function () {
             $scope.verses = ChapterVerses.query({
                 chapter_id: $scope.chapter_id,
                 author_mask: $scope.author_mask
             });
+
+            $timeout(function () {
+                $scope.annotate_it()
+            }, 2000);
+
         }
         //list authors
         $scope.list_authors = function () {
@@ -195,8 +225,8 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         //selected authors
         $scope.selection = ["16", "32"];
 
-        $scope.list_translations();
 
+        $scope.list_translations();
 
 
         /* end of init */
@@ -252,7 +282,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
                             $scope.loggedIn = true;
                         },
                         function (error) {
-                            if(error.data.code=='209'){
+                            if (error.data.code == '209') {
                                 alert("Sisteme giriş yapabilmek için e-posta adresi paylaşımına izin vermeniz gerekmektedir.");
                             }
                             $scope.log_out();
@@ -300,10 +330,10 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
 
         }
 
-        $scope.checkUserLoginStatus = function (){
+        $scope.checkUserLoginStatus = function () {
             var access_token = $scope.get_access_token_cookie();
-            if(access_token!=null && access_token!=""){
-                $scope.access_token=access_token;
+            if (access_token != null && access_token != "") {
+                $scope.access_token = access_token;
                 $scope.loggedIn = true;
                 $scope.get_user_info();
             }
@@ -311,6 +341,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         $scope.loggedIn = false;
         $scope.checkUserLoginStatus();
         /* end of login - access token */
+
 
     });
 
