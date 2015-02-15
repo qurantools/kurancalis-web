@@ -153,6 +153,9 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
                         search: '/search'
                     }
                 });
+                annotator.addPlugin('Touch', {
+
+                });
       /*      }else{
                 //TODO: GET annotations
             }
