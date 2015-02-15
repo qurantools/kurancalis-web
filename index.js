@@ -134,13 +134,15 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
 
         $scope.annotate_it = function () {
             if ($scope.annotatorActivated == 1) {
+                annotator.destroy();
+                //$('#translations').data('annotator').plugins['Store'].destroy();
                 delete annotator;
-                $('#translations').data('annotator').plugins['Store'].destroy();
             }
 
-            annotator = $('#translations').annotator();
+            //annotator = $('#translations').annotator();
+            annotator = new Annotator($('#translations'));
        //     if ($scope.annotatorActivated != 1) {
-                annotator = $('#translations').annotator('addPlugin', 'Store', {
+                annotator.addPlugin( 'Store', {
                     prefix: 'https://securewebserver.net/jetty/qt/rest',
                     //prefix: 'http://localhost:8080/QuranToolsApp/rest',
                     urls: {
@@ -211,6 +213,13 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             }
         }
 
+        $scope.getAuthorMask = function () {
+            return $scope.author_mask;
+        }
+
+        $scope.getChapterId = function () {
+            return $scope.chapter_id;
+        }
 
         /* init */
         //hide list of authors div
