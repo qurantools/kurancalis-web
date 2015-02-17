@@ -34,7 +34,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
                 templateUrl: 'app/components/home/homeView.html',
                 reloadOnSearch: false
             })
-            .when('/sure/:chapterId', {
+            .when('/chapter/:chapterId/author/:authorMask', {
                 controller: 'MainCtrl',
                 templateUrl: 'app/components/home/homeView.html',
                 reloadOnSearch: false
@@ -109,10 +109,16 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
 
     .controller('MainCtrl', function ($scope, $q, $routeParams, $location, $timeout, ListAuthors, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService) {
         var chapterId = 1;
+        var authorMask= 48;
         if (typeof $routeParams.chapterId !== 'undefined') {
             chapterId = $routeParams.chapterId;
         }
+        if (typeof $routeParams.authorMask !== 'undefined') {
+            authorMask = $routeParams.authorMask;
+        }
         $scope.chapter_id = chapterId;
+        $scope.author_mask = authorMask;
+
 
         //get user info
         $scope.get_user_info = function () {
@@ -188,6 +194,8 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
                 $scope.annotate_it()
             }, 2000);
 
+            //annotation map doldur
+
         }
         //list authors
         $scope.list_authors = function () {
@@ -196,9 +204,12 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
                 var arrayLength = data.length;
                 for (var i = 0; i < arrayLength; i++) {
                     $scope.authorMap[data[i].id] = data[i];
+                    $scope.setAuthors();
                 }
             });
         }
+
+
         //list footnotes
         $scope.list_footnotes = function (translation_id) {
             $scope.footnotes = Footnotes.query({
@@ -247,9 +258,11 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         $scope.list_authors();
 
         //get author mask
-        $scope.author_mask = 48;
+   //     $scope.author_mask = 48;
 
         //selected authors
+
+
         $scope.selection = ["16", "32"];
 
 
@@ -277,7 +290,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
 
         //go to chapter
         $scope.goToChapter = function () {
-            $location.path('/sure/' + $scope.chapter_id, false);
+            $location.path('/chapter/' + $scope.chapter_id+ '/author/'+$scope.author_mask, false);
             $scope.list_translations();
         };
 
@@ -307,6 +320,8 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
                             $scope.get_user_info();
 
                             $scope.loggedIn = true;
+                            $scope.list_translations();
+
                         },
                         function (error) {
                             if (error.data.code == '209') {

@@ -620,6 +620,7 @@
                 r.end = this.endContainer;
                 r.endOffset = this.endOffset;
             }
+            console.log("r.start"+ JSON.stringify(r.start));
             nr = {};
             if (r.startOffset > 0) {
                 if (r.start.nodeValue.length > r.startOffset) {
@@ -1076,19 +1077,32 @@
             annotation.quote = [];
             annotation.ranges = [];
             annotation.highlights = [];
-
+//console.log("annotation1:"+JSON.stringify(annotation));
             for (_l = 0, _len3 = normedRanges.length; _l < _len3; _l++) {
                 normed = normedRanges[_l];
+
                 annotation.quote.push($.trim(normed.text()));
                 annotation.ranges.push(normed.serialize(this.wrapper[0], '.annotator-hl'));
                 // hack
                 annotation.translationId = normed.translationId;
                 annotation.verseId = normed.verseId;
                 // /hack
+                normed.startOffset=annotation.startOffset;
+                normed.endOffset=annotation.endOffset;
+
+     //           console.log("normed"+JSON.stringify(normed));
+      //          console.log("annotation.highlights"+annotation.highlights)
+                var dd=this.highlightRange(normed)
+   //             console.log("this.highlightRange(normed)"+dd.innerHTML);
+
                 $.merge(annotation.highlights, this.highlightRange(normed));
+               console.log("annotation.highlights2"+annotation.highlights)
             }
+    //        console.log("annotation2:"+JSON.stringify(annotation));
             annotation.quote = annotation.quote.join(' / ');
+            //console.log("annotation.highlights"+JSON.stringify(annotation.highlights));
             $(annotation.highlights).data('annotation', annotation);
+            console.log("annotation.highlights"+JSON.stringify(annotation));
             return annotation;
         };
 
@@ -1162,13 +1176,37 @@
             white = /^\s*$/;
             hl = $("<span class='" + cssClass + "'></span>");
             _ref1 = normedRange.textNodes();
+
+
             _results = [];
+
             for (_k = 0, _len2 = _ref1.length; _k < _len2; _k++) {
+
                 node = _ref1[_k];
                 if (!white.test(node.nodeValue)) {
                     _results.push($(node).wrapAll(hl).parent().show()[0]);
                 }
+
+                var myDiv=$('#t_'+normedRange.translationId).children('.translation_content').children(':first');
+                myDivContent=myDiv.html();
+               // myDiv="<span>aaa_ "+myDiv+"</span>";
+                var newDivContent="";
+
+    newDivContent=myDivContent.substring(0,normedRange.startOffset)
+   // + "<span class='"+cssClass+"'>"
+        +"["
+    + myDivContent.substring(normedRange.startOffset,normedRange.endOffset)
+        +"]"
+   // + "</span>"
+    + myDivContent.substring(normedRange.endOffset,myDivContent.length)
+    ;
+          //      myDiv.html(newDivContent);
+
+        //        console.log("mydiv"+myDivContent);
+                console.log("mynewdiv"+newDivContent);
             }
+
+         //   console.log("results"+JSON.stringify(_results));
             return _results;
         };
 
