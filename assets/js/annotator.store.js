@@ -198,12 +198,12 @@
             var data, method, opts, formData;
             var postData =[];
             method = this._methodFor(action);
-
+            angular.element(document.getElementById('MainCtrl')).scope().$apply();
 
             opts = {
                 type: method,
                 headers: this.element.data('annotator:headers'),
-                dataType: "json",
+                dataType: "text",
                 success: onSuccess || function () {
                 },
                 error: this._onError
@@ -212,32 +212,36 @@
                 'access_token': angular.element(document.getElementById('MainCtrl')).scope().access_token
             });
 
-            if(opts.type == 'POST') {
+            if(opts.type == "GET"){
+                opts.headers = $.extend(opts.headers, {
+                    'Content-Type': 'application/json; charset=utf-8'
+                });
+
+                var _chapter=angular.element(document.getElementById('theView')).scope().chapter_id;
+                var _author = angular.element(document.getElementById('theView')).scope().author_mask;
+                data={
+                    chapter: _chapter ,
+                    author:  _author
+                };
+
+                opts.dataType='json';
+
+            }
+            else if(opts.type == "DELETE"){
+                opts.headers = $.extend(opts.headers, {
+                    'Content-Type': 'application/json; charset=utf-8'
+                });
+
+                opts.dataType='text';
+
+            }
+            else  if(opts.type == 'POST' || opts.type == 'PUT') {
+                data = obj && this._dataFor(obj);
                 opts.headers = $.extend(opts.headers, {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 });
                 opts.dataType='text';
-            }else{
-                opts.headers = $.extend(opts.headers, {
-                    'Content-Type': 'application/json; charset=utf-8'
-                });
-            }
 
-            if (this.options.emulateHTTP && (method === 'PUT' || method === 'DELETE')) {
-                opts.headers = $.extend(opts.headers, {
-                    'X-HTTP-Method-Override': method
-                });
-                opts.type = 'POST';
-            }
-            if (action === "search") {
-                opts = $.extend(opts, {
-                    data: obj
-                });
-                return opts;
-            }
-            data = obj && this._dataFor(obj);
-
-            if(method == "POST"){
                 var jsonData = JSON.parse(data);
                 postData.push(encodeURIComponent("start")+"="+ encodeURIComponent(jsonData.ranges[0].start));
                 postData.push(encodeURIComponent("end")+"="+ encodeURIComponent(jsonData.ranges[0].end));
@@ -251,21 +255,22 @@
                 postData.push(encodeURIComponent("verseId")+"="+ encodeURIComponent(jsonData.verseId));
 
                 data=postData.join("&");
+
             }
 
 
-            if (this.options.emulateJSON) {
-                opts.data = {
-                    json: data
-                };
-                if (this.options.emulateHTTP) {
-                    opts.data._method = method;
-                }
+            if (action === "search") {
+                opts = $.extend(opts, {
+                    data: obj
+                });
                 return opts;
             }
+
+
+
+
             opts = $.extend(opts, {
                 data: data
-                //contentType: "application/json; charset=utf-8"
             });
             return opts;
         };
