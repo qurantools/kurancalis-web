@@ -131,6 +131,10 @@
         };
 
         Store.prototype.loadAnnotations = function () {
+            var accessToken = angular.element(document.getElementById('theView')).scope().access_token;
+            if(typeof accessToken === 'undefined'){
+                return;
+            };
             return this._apiRequest('read', null, this._onLoadAnnotations);
         };
 
@@ -203,6 +207,8 @@
         Store.prototype._apiRequestOptions = function (action, obj, onSuccess) {
             var data, method, opts, formData;
             var postData =[];
+            var accessToken = angular.element(document.getElementById('theView')).scope().access_token;
+
             method = this._methodFor(action);
             angular.element(document.getElementById('MainCtrl')).scope().$apply();
 
@@ -215,7 +221,7 @@
                 error: this._onError
             };
             opts.headers = $.extend(opts.headers, {
-                'access_token': angular.element(document.getElementById('MainCtrl')).scope().access_token
+                'access_token': accessToken
             });
 
             if(opts.type == "GET"){

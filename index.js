@@ -185,7 +185,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
                             ilkimi = 1;
                         }
                         else{ ilkimi = 0; }
-                        $scope.translationDivMap[vid] = "/div["+(i+1)+"]/div["+(j+1)+"]/div[1]/div["+(1+ilkimi)+"]/div[2]/span[1]";
+                        $scope.translationDivMap[vid] = "/div["+(i+1)+"]/div[1]/div["+(j+1)+"]/div["+(1+ilkimi)+"]/div[2]/span[1]";
                     }
                 }
             });
@@ -193,8 +193,6 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             $timeout(function () {
                 $scope.annotate_it()
             }, 2000);
-
-            //annotation map doldur
 
         }
         //list authors
