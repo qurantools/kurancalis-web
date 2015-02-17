@@ -143,8 +143,8 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             annotator = new Annotator($('#translations'));
        //     if ($scope.annotatorActivated != 1) {
                 annotator.addPlugin( 'Store', {
-                    prefix: 'https://securewebserver.net/jetty/qt/rest',
-                    //prefix: 'http://localhost:8080/QuranToolsApp/rest',
+                    //prefix: 'https://securewebserver.net/jetty/qt/rest',
+                    prefix: 'http://localhost:8080/QuranToolsApp/rest',
                     urls: {
                         // These are the default URLs.
                         create: '/annotations',
@@ -154,14 +154,13 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
                     }
                 });
                 annotator.addPlugin('Touch', {
-
+                    //force: true
                 });
-      /*      }else{
-                //TODO: GET annotations
-            }
-        */
+                annotator.addPlugin('Tags');
+
             $scope.annotatorActivated = 1;
         }
+
         //list translations
         $scope.list_translations = function () {
             $scope.verses = ChapterVerses.query({

@@ -253,7 +253,8 @@
                 postData.push(encodeURIComponent("translationVersion")+"="+ encodeURIComponent(jsonData.translationVersion));
                 postData.push(encodeURIComponent("translationId")+"="+ encodeURIComponent(jsonData.translationId));
                 postData.push(encodeURIComponent("verseId")+"="+ encodeURIComponent(jsonData.verseId));
-
+                var tags = jsonData.tags.join(",");
+                postData.push(encodeURIComponent("tags")+"="+ encodeURIComponent(tags));
                 data=postData.join("&");
 
             }
