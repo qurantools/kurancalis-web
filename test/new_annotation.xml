@@ -1,0 +1,110 @@
+<RestClientRequest>
+  <option name="biscuits">
+    <list />
+  </option>
+  <option name="httpMethod" value="POST" />
+  <option name="urlBase" value="http://localhost:8080" />
+  <option name="urlPath" value="QuranToolsApp/rest/annotations" />
+  <option name="headers">
+    <list>
+      <KeyValuePair>
+        <option name="key" value="Accept" />
+        <option name="value" value="application/json" />
+      </KeyValuePair>
+      <KeyValuePair>
+        <option name="key" value="Cache-Control" />
+        <option name="value" value="no-cache" />
+      </KeyValuePair>
+      <KeyValuePair>
+        <option name="key" value="Accept-Encoding" />
+        <option name="value" value="*" />
+      </KeyValuePair>
+      <KeyValuePair>
+        <option name="key" value="access_token" />
+        <option name="value" value="eyJhbGciOiJSU0EtT0FFUCIsImVuYyI6IkExMjhHQ00ifQ.Z-mHWz6aYk-IDiPYBna6f9QDahJM5SgeT9J13SVBv3PNnR-RCkGNZiast3cFenSsUPisqbwPOFF1HAWgBiZOd_zx6O7W2fXFVZAFjo0HDselW1xND0KTFDRpp_o1-IwJp_rSsu5MdK_LFkjhfNyAshvlTR8gzjAz9g8eNoSWbFY.ktISgJahBt1p8xS0.Rw0bejFmbyb_tAf_ncQqyOqDDHZV_ClX7EpDXahcSivQavKAdjuMfnBoa0fROfK_0CMmoyvO5MSOMnCmkPMrRiYHN-06qBa_y8UxDmBIgEzSsUMU_sdK9Zdou4WYlr0.wqhD-S1NHLcnT3zZqbX9cA" />
+      </KeyValuePair>
+    </list>
+  </option>
+  <option name="parameters">
+    <list>
+      <KeyValuePair>
+        <option name="key" value="colour" />
+        <option name="value" value="YELLOW" />
+      </KeyValuePair>
+      <KeyValuePair>
+        <option name="key" value="content" />
+        <option name="value" value="deneme içeriği" />
+      </KeyValuePair>
+      <KeyValuePair>
+        <option name="key" value="end" />
+        <option name="value" value="15" />
+      </KeyValuePair>
+      <KeyValuePair>
+        <option name="key" value="quote" />
+        <option name="value" value="te buraları hep karalandı" />
+      </KeyValuePair>
+      <KeyValuePair>
+        <option name="key" value="start" />
+        <option name="value" value="3" />
+      </KeyValuePair>
+      <KeyValuePair>
+        <option name="key" value="startOffset" />
+        <option name="value" value="1" />
+      </KeyValuePair>
+      <KeyValuePair>
+        <option name="key" value="start" />
+        <option name="value" value="4" />
+      </KeyValuePair>
+      <KeyValuePair>
+        <option name="key" value="consumer" />
+        <option name="value" value="web" />
+      </KeyValuePair>
+      <KeyValuePair>
+        <option name="key" value="verseId" />
+        <option name="value" value="1002" />
+      </KeyValuePair>
+      <KeyValuePair>
+        <option name="key" value="endOffset" />
+        <option name="value" value="4" />
+      </KeyValuePair>
+      <KeyValuePair>
+        <option name="key" value="translationId" />
+        <option name="value" value="2233" />
+      </KeyValuePair>
+      <KeyValuePair>
+        <option name="key" value="translationVersion" />
+        <option name="value" value="1" />
+      </KeyValuePair>
+      <KeyValuePair>
+        <option name="key" value="" />
+        <option name="value" value="" />
+      </KeyValuePair>
+      <KeyValuePair>
+        <option name="key" value="" />
+        <option name="value" value="" />
+      </KeyValuePair>
+      <KeyValuePair>
+        <option name="key" value="" />
+        <option name="value" value="" />
+      </KeyValuePair>
+      <KeyValuePair>
+        <option name="key" value="" />
+        <option name="value" value="" />
+      </KeyValuePair>
+      <KeyValuePair>
+        <option name="key" value="" />
+        <option name="value" value="" />
+      </KeyValuePair>
+      <KeyValuePair>
+        <option name="key" value="" />
+        <option name="value" value="" />
+      </KeyValuePair>
+    </list>
+  </option>
+  <option name="parametersEnabled" value="true" />
+  <option name="haveTextToSend" value="false" />
+  <option name="haveFileToSend" value="false" />
+  <option name="isFileUpload" value="false" />
+  <option name="textToSend" value="" />
+  <option name="filesToSend" value="" />
+</RestClientRequest>
