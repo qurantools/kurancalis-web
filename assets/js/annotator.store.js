@@ -148,6 +148,12 @@
             }
             newData = [];
             for (_j = 0, _len1 = data.length; _j < _len1; _j++) {
+
+                //add translation DIV prefix to annotations
+                var tidBlock = angular.element(document.getElementById('theView')).scope().translationDivMap[data[_j].translationId];
+                data[_j].ranges[0].start = tidBlock+data[_j].ranges[0].start;
+                data[_j].ranges[0].end = tidBlock+data[_j].ranges[0].end;
+
                 a = data[_j];
                 if (annotationMap[a.id]) {
                     annotation = annotationMap[a.id];
@@ -303,6 +309,9 @@
             delete annotation.highlights;
             $.extend(annotation, this.options.annotationData);
 
+            var tidBlock = angular.element(document.getElementById('theView')).scope().translationDivMap[annotation.translationId];
+            annotation.ranges[0].start = annotation.ranges[0].start.replace(tidBlock,"");
+            annotation.ranges[0].end = annotation.ranges[0].end.replace(tidBlock,"");
             // hack
             annotation.chapterId = angular.element(document.getElementById('MainCtrl')).scope().chapterId;
 
@@ -315,6 +324,7 @@
             annotation.startOffset = annotation.ranges[0].startOffset;
             annotation.endOffset = annotation.ranges[0].endOffset;
             annotation.translationVersion = 1;
+
             // /hack
 
             data = JSON.stringify(annotation);

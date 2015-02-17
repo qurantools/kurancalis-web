@@ -163,9 +163,25 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
 
         //list translations
         $scope.list_translations = function () {
+            $scope.translationDivMap = [];
             $scope.verses = ChapterVerses.query({
                 chapter_id: $scope.chapter_id,
                 author_mask: $scope.author_mask
+            }, function(data){
+                //prepare translation_id - div block map
+
+                var arrayLength = data.length;
+                for (var i = 0; i < data.length; i++) {
+                    for (var j = 0; j < data[i].translations.length; j++) {
+                        var vid = data[i].translations[j].id;
+                        var ilkimi;
+                        if(j==0) {
+                            ilkimi = 1;
+                        }
+                        else{ ilkimi = 0; }
+                        $scope.translationDivMap[vid] = "/div["+(i+1)+"]/div["+(j+1)+"]/div[1]/div["+(1+ilkimi)+"]/div[2]/span[1]";
+                    }
+                }
             });
 
             $timeout(function () {
