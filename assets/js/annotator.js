@@ -620,6 +620,7 @@
                 r.end = this.endContainer;
                 r.endOffset = this.endOffset;
             }
+            console.log("r.start"+ JSON.stringify(r.start));
             nr = {};
             if (r.startOffset > 0) {
                 if (r.start.nodeValue.length > r.startOffset) {
