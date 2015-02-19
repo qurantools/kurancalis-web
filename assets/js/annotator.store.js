@@ -252,7 +252,8 @@
                 opts.headers = $.extend(opts.headers, {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 });
-                opts.dataType='text';
+                //TODO: check the type for retrieving id after post.
+                opts.dataType='json';
 
                 var jsonData = JSON.parse(data);
                 postData.push(encodeURIComponent("start")+"="+ encodeURIComponent(jsonData.ranges[0].start));
