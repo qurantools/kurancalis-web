@@ -655,7 +655,6 @@
             var verse_div_id = translation_div.parentNode.parentNode.id;
             nr.verseId = verse_div_id.substr(2);
             // /hack
-
             return new Range.NormalizedRange(nr);
         };
 
@@ -1532,9 +1531,9 @@
             hide: 'annotator-hide',
             focus: 'annotator-focus'
         };
-
-        Editor.prototype.html = "<div class=\"annotator-outer annotator-editor\">\n  <form class=\"annotator-widget\">\n    <ul class=\"annotator-listing\"></ul>\n    <div class=\"annotator-controls\">\n      <a href=\"#cancel\" class=\"annotator-cancel\">" + _t('Cancel') + "</a>\n<a href=\"#save\" class=\"annotator-save annotator-focus\">" + _t('Save') + "</a>\n    </div>\n  </form>\n</div>";
-
+        Editor.prototype.html = "<div class=\"annotator-outer annotator-editor\">\n  <form class=\"annotator-widget\">\n"
+        + "<div id='annotationData_header'></div>"
+        + "<ul class=\"annotator-listing\"></ul>\n    <div class=\"annotator-controls\">\n      <a href=\"#cancel\" class=\"annotator-cancel\">" + _t('Cancel') + "</a>\n<a href=\"#save\" class=\"annotator-save annotator-focus\">" + _t('Save') + "</a>\n    </div>\n  </form>\n</div>";
         Editor.prototype.options = {};
 
         function Editor(options) {
@@ -1566,6 +1565,13 @@
         };
 
         Editor.prototype.load = function (annotation) {
+            //hack
+            var verseId = Math.floor(annotation.verseId / 1000) + ":" + annotation.verseId % 1000;
+            var annotationData_header = '<strong>' + verseId + '</strong> '
+                + annotation.quote;
+            $('#annotationData_header').html(annotationData_header);
+            // /hack
+
             var field, _k, _len2, _ref2;
             this.annotation = annotation;
             this.publish('load', [this.annotation]);

@@ -109,7 +109,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
 
     .controller('MainCtrl', function ($scope, $q, $routeParams, $location, $timeout, ListAuthors, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService) {
         var chapterId = 1;
-        var authorMask= 48;
+        var authorMask = 48;
         if (typeof $routeParams.chapterId !== 'undefined') {
             chapterId = $routeParams.chapterId;
         }
@@ -147,22 +147,22 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
 
             //annotator = $('#translations').annotator();
             annotator = new Annotator($('#translations'));
-       //     if ($scope.annotatorActivated != 1) {
-                annotator.addPlugin( 'Store', {
-                    prefix: 'https://securewebserver.net/jetty/qt/rest',
-                    //prefix: 'http://localhost:8080/QuranToolsApp/rest',
-                    urls: {
-                        // These are the default URLs.
-                        create: '/annotations',
-                        update: '/annotations/:id',
-                        destroy: '/annotations/:id',
-                        search: '/search'
-                    }
-                });
-                annotator.addPlugin('Touch', {
-                    //force: true
-                });
-                annotator.addPlugin('Tags');
+            //     if ($scope.annotatorActivated != 1) {
+            annotator.addPlugin('Store', {
+                prefix: 'https://securewebserver.net/jetty/qt/rest',
+                //prefix: 'http://localhost:8080/QuranToolsApp/rest',
+                urls: {
+                    // These are the default URLs.
+                    create: '/annotations',
+                    update: '/annotations/:id',
+                    destroy: '/annotations/:id',
+                    search: '/search'
+                }
+            });
+            annotator.addPlugin('Touch', {
+                //force: true
+            });
+            annotator.addPlugin('Tags');
 
             $scope.annotatorActivated = 1;
         }
@@ -256,7 +256,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         $scope.list_authors();
 
         //get author mask
-   //     $scope.author_mask = 48;
+        //     $scope.author_mask = 48;
 
         //selected authors
 
@@ -288,7 +288,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
 
         //go to chapter
         $scope.goToChapter = function () {
-            $location.path('/chapter/' + $scope.chapter_id+ '/author/'+$scope.author_mask, false);
+            $location.path('/chapter/' + $scope.chapter_id + '/author/' + $scope.author_mask, false);
             $scope.list_translations();
         };
 

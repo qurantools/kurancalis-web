@@ -71,3 +71,16 @@ hr {
     float: right;
     padding-right:20px;
 }
+
+
+/* annotation editor */
+#annotationData_header{
+    padding:5px 3px;
+    font-size: 18px;
+    overflow: hidden;
+    color: black;
+}
+#annotationData_header strong{
+    color: black;
+}
+/* end of annotation editor */
