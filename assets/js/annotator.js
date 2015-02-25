@@ -1533,7 +1533,11 @@
         };
         Editor.prototype.html = "<div class=\"annotator-outer annotator-editor\">\n  <form class=\"annotator-widget\">\n"
         + "<div id='annotationData_header'></div>"
-        + "<ul class=\"annotator-listing\"></ul>\n    <div class=\"annotator-controls\">\n      <a href=\"#cancel\" class=\"annotator-cancel\">" + _t('Cancel') + "</a>\n<a href=\"#save\" class=\"annotator-save annotator-focus\">" + _t('Save') + "</a>\n    </div>\n  </form>\n</div>";
+        + "<ul class=\"annotator-listing\"></ul>\n    <div class=\"annotator-controls\">\n   "
+            +"<button onclick=\"location.href('#cancel')\" class=\"btn annotator-cancel\">" + _t('İptal') + "</button>\n"
+        +"<button onclick=\"location.href('#save')\" type=\"button\" class=\"btn btn-primary annotator-save annotator-focus\">" + _t('Kaydet') + "</button>\n"
+       // +"<a href=\"#cancel\" class=\"annotator-cancel\">" + _t('Cancel') + "</a>\n<a href=\"#save\" type=\"button\" class=\"btn btn-primary annotator-save annotator-focus\">" + _t('Save') + "</a>\n "
+        +"</div>\n  </form>\n</div>";
         Editor.prototype.options = {};
 
         function Editor(options) {
