@@ -1204,10 +1204,23 @@
         };
 
         Annotator.prototype.showEditor = function (annotation, location) {
+/*
             this.editor.element.css(location);
             this.editor.load(annotation);
             this.publish('annotationEditorShown', [this.editor, annotation]);
             return this;
+*/
+
+//new annotation editor
+            var verseId = Math.floor(annotation.verseId / 1000) + ":" + annotation.verseId % 1000;
+            var annotationData_header = '<strong>' + verseId + '</strong> '
+                + annotation.quote;
+            $('#annotationData_header').html(annotationData_header);
+            $('#annotationData_text').val(annotation.text);
+
+            $('#annotationModal').modal('show');
+
+
         };
 
         Annotator.prototype.onEditorHide = function () {
@@ -1323,6 +1336,9 @@
             })(this);
             this.subscribe('annotationEditorHidden', cancel);
             this.subscribe('annotationEditorSubmit', save);
+
+
+
             return this.showEditor(annotation, position);
         };
 
@@ -1532,7 +1548,7 @@
             focus: 'annotator-focus'
         };
         Editor.prototype.html = "<div class=\"annotator-outer annotator-editor\">\n  <form class=\"annotator-widget\">\n"
-        + "<div id='annotationData_header'></div>"
+   //     + "<div id='annotationData_header'></div>"
         + "<ul class=\"annotator-listing\"></ul>\n    <div class=\"annotator-controls\">\n   "
             +"<button onclick=\"location.href('#cancel')\" class=\"btn annotator-cancel\">" + _t('İptal') + "</button>\n"
         +"<button onclick=\"location.href('#save')\" type=\"button\" class=\"btn btn-primary annotator-save annotator-focus\">" + _t('Kaydet') + "</button>\n"
