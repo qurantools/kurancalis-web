@@ -125,21 +125,23 @@
     <div class="modal-dialog fixed-dialog">
         <div class="modal-content">
             <div class="modal-header" id="annotationData_header">
+                <strong>{{annotationModalDataVerse}}</strong>
+                {{annotationModalData.quote}}
                 <button type="button" data-dismiss="modal" aria-hidden="true" style="float:right;"><i
                         class="fa fa-close"></i></button>
                 <h4 class="modal-title">{{annotationModal.title}}</h4>
             </div>
 
             <div class="modal-body">
-                <textarea class="form-control" id="annotationData_text">{{annotationModal.content}}</textarea>
+                <textarea class="form-control" id="annotationData_text" ng-model="annotationModalData.text"></textarea>
             </div>
 
             <div class="modal-footer">
-                <button type="button" data-dismiss="modal" aria-hidden="true" class="btn" onclick="annotator.editorAction('cancel');">Vazgeç</button>
+                <button type="button" data-dismiss="modal" aria-hidden="true" class="btn" ng-click="hideEditor()">Vazgeç</button>
 <!--
  $('.annotator-hl-temporary').removeClass('annotator-hl');$('span').removeClass('annotator-hl-temporary');
  -->
-                <a href="#" class="btn btn-primary btn-wide" data-dismiss="modal" ng-click="goToChapter()">Tamam</a>
+                <a href="#" class="btn btn-primary btn-wide" data-dismiss="modal" ng-click="submitEditor()">Tamam</a>
             </div>
         </div>
     </div>
