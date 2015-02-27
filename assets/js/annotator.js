@@ -1204,14 +1204,29 @@
         };
 
         Annotator.prototype.showEditor = function (annotation, location) {
-/*
-            this.editor.element.css(location);
-            this.editor.load(annotation);
-            this.publish('annotationEditorShown', [this.editor, annotation]);
-            return this;
-*/
+            /*
+             this.editor.element.css(location);
+             this.editor.load(annotation);
+             this.publish('annotationEditorShown', [this.editor, annotation]);
+             return this;
+             */
 
 //new annotation editor
+            /*
+             cancel = (function (_this) {
+             return function () {
+             cleanup();
+             return _this.deleteAnnotation(annotation);
+             };
+             })(this);
+             */
+            /*
+             var scope = angular.element($("#MainCtrl")).scope();
+             scope.$apply(function(){
+             scope.annotation = annotation;
+             })
+             */
+
             var verseId = Math.floor(annotation.verseId / 1000) + ":" + annotation.verseId % 1000;
             var annotationData_header = '<strong>' + verseId + '</strong> '
                 + annotation.quote;
@@ -1222,6 +1237,62 @@
 
 
         };
+
+        Annotator.prototype.editorAction = function (action) {
+            console.log("editorAction");
+            /*
+             cancel=(function (_this) {
+             if(action=="cancel") {
+             _this.unsubscribe('annotationEditorHidden', cancel);
+             _this.unsubscribe('annotationEditorSubmit', save);
+             return _this.deleteAnnotation(annotation);
+             }
+
+             })(this);
+             */
+
+            myAction = (function (_this) {
+                if (action == "cancel") {
+                    cleanup();
+                    _this.deleteAnnotation(annotation);
+                }
+            });
+
+            save = (function (_this) {
+                return function () {
+                    cleanup();
+                    $(annotation.highlights).removeClass('annotator-hl-temporary');
+                    return _this.publish('annotationCreated', [annotation]);
+                };
+
+            })(this);
+            cancel = (function (_this) {
+                console.log("cancel");
+                console.log("editoraction annotation:" + JSON.stringify(annotation));
+                return function () {
+                    cleanup();
+                    return _this.deleteAnnotation(annotation);
+                };
+            })(this);
+            cleanup = (function (_this) {
+                console.log("cleanup");
+                return function () {
+                    _this.unsubscribe('annotationEditorHidden', cancel);
+                    return _this.unsubscribe('annotationEditorSubmit', save);
+                };
+            })(this);
+
+            /*
+             cleanup = (function (_this) {
+             console.log("cleanup");
+             return function () {
+             _this.unsubscribe('annotationEditorHidden', cancel);
+             return _this.unsubscribe('annotationEditorSubmit', save);
+             };
+             })(this);
+             */
+
+        }
 
         Annotator.prototype.onEditorHide = function () {
             this.publish('annotationEditorHidden', [this.editor]);
@@ -1314,6 +1385,7 @@
             annotation = this.setupAnnotation(this.createAnnotation());
 
             $(annotation.highlights).addClass('annotator-hl-temporary');
+
             save = (function (_this) {
                 return function () {
                     cleanup();
@@ -1338,8 +1410,9 @@
             this.subscribe('annotationEditorSubmit', save);
 
 
-
             return this.showEditor(annotation, position);
+
+
         };
 
         Annotator.prototype.onEditAnnotation = function (annotation) {
@@ -1548,12 +1621,12 @@
             focus: 'annotator-focus'
         };
         Editor.prototype.html = "<div class=\"annotator-outer annotator-editor\">\n  <form class=\"annotator-widget\">\n"
-   //     + "<div id='annotationData_header'></div>"
+            //     + "<div id='annotationData_header'></div>"
         + "<ul class=\"annotator-listing\"></ul>\n    <div class=\"annotator-controls\">\n   "
-            +"<button onclick=\"location.href('#cancel')\" class=\"btn annotator-cancel\">" + _t('İptal') + "</button>\n"
-        +"<button onclick=\"location.href('#save')\" type=\"button\" class=\"btn btn-primary annotator-save annotator-focus\">" + _t('Kaydet') + "</button>\n"
-       // +"<a href=\"#cancel\" class=\"annotator-cancel\">" + _t('Cancel') + "</a>\n<a href=\"#save\" type=\"button\" class=\"btn btn-primary annotator-save annotator-focus\">" + _t('Save') + "</a>\n "
-        +"</div>\n  </form>\n</div>";
+        + "<button onclick=\"location.href('#cancel')\" class=\"btn annotator-cancel\">" + _t('İptal') + "</button>\n"
+        + "<button onclick=\"location.href('#save')\" type=\"button\" class=\"btn btn-primary annotator-save annotator-focus\">" + _t('Kaydet') + "</button>\n"
+            // +"<a href=\"#cancel\" class=\"annotator-cancel\">" + _t('Cancel') + "</a>\n<a href=\"#save\" type=\"button\" class=\"btn btn-primary annotator-save annotator-focus\">" + _t('Save') + "</a>\n "
+        + "</div>\n  </form>\n</div>";
         Editor.prototype.options = {};
 
         function Editor(options) {

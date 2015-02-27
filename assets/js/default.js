@@ -22,3 +22,6 @@ jQuery(function ($) {
     $('#translations').annotator();
 });
     */
+function acleanup(){
+
+}
