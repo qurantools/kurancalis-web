@@ -1233,10 +1233,16 @@
             $('#annotationData_header').html(annotationData_header);
             $('#annotationData_text').val(annotation.text);
 
-            $('#annotationModal').modal('show');
-
+           $('#annotationModal').modal('show');
+            console.log("annotationx"+JSON.stringify(annotation));
 
         };
+
+        Annotator.prototype.setAnnotationColor=function(annotation){
+
+
+
+        }
 
         Annotator.prototype.editorAction = function (action) {
             console.log("editorAction");

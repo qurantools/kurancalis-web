@@ -383,6 +383,9 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         /* end of login - access token */
 
 
+
+        $scope.selectedTags=["Afghanistan", "Albania", "Algeria", "American Samoa", "Andorra"];
+
     });
 
 function list_fn(id) {

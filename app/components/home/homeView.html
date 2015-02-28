@@ -1,14 +1,14 @@
 <body>
 <div class="container">
-<!--
-    <pre>isReady: <span id="is_ready" ng-bind="facebookIsReady"></span></pre>
-    <pre>status: <span id="login_status" ng-bind="loginStatus"></span></pre>
-    <pre>token: <span id="tokenFb" ng-bind="tokenFb"></span></pre>
-    <pre>access token: <span id="accessToken" ng-bind="access_token"></span></pre>
-    <pre>validation_response: <span id="api_first_name" ng-bind="validation_response | json"></span></pre>
-    <pre>user: <span id="user_info" ng-bind="user | json"></span></pre>
--->
-    <pre>annotation: <span id="annotation" ng-bind="annotation | json"></span></pre>
+    <!--
+        <pre>isReady: <span id="is_ready" ng-bind="facebookIsReady"></span></pre>
+        <pre>status: <span id="login_status" ng-bind="loginStatus"></span></pre>
+        <pre>token: <span id="tokenFb" ng-bind="tokenFb"></span></pre>
+        <pre>access token: <span id="accessToken" ng-bind="access_token"></span></pre>
+        <pre>validation_response: <span id="api_first_name" ng-bind="validation_response | json"></span></pre>
+        <pre>user: <span id="user_info" ng-bind="user | json"></span></pre>
+    -->
+    <pre>annotation: <span id="annotation" ng-bind="annotations | json"></span></pre>
     <button onclick="annotator.testEditor();">test editor</button>
     <nav class="navbar navbar-default" role="navigation">
         <div>
@@ -34,7 +34,7 @@
                             </button>
                         </div>
                         <div ng-if="user!=null">
-                            <img ng-src="{{user.photo}}" height="30" />
+                            <img ng-src="{{user.photo}}" height="30"/>
                             {{user.name}}
                             <button type="button" id="remove_auth" ng-click="log_out()" class="btn btn-primary">
                                 Çıkış
@@ -117,10 +117,6 @@
 </div>
 
 
-
-
-
-
 <div class="modal" id="annotationModal">
     <div class="modal-dialog fixed-dialog">
         <div class="modal-content">
@@ -132,19 +128,39 @@
 
             <div class="modal-body">
                 <textarea class="form-control" id="annotationData_text">{{annotationModal.content}}</textarea>
+
+                <div class="row">
+                    <div class="col-xs-6">
+                        <h3>etiketler</h3>
+                        <input type="text" class="form-input" placeholder="etiket" />
+                        <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#myModal">
+                            <i class="fa fa-plus"></i>
+                        </button>
+
+
+                        <ul ng-repeat="selectedTag in selectedTags">
+<li>{{selectedTag}}</li>
+                            </ul>
+
+                    </div>
+                    <div class="col-xs-6">
+                        <h3>görünüm</h3>
+                    </div>
+                </div>
             </div>
 
             <div class="modal-footer">
-                <button type="button" data-dismiss="modal" aria-hidden="true" class="btn" onclick="annotator.editorAction('cancel');">Vazgeç</button>
-<!--
- $('.annotator-hl-temporary').removeClass('annotator-hl');$('span').removeClass('annotator-hl-temporary');
- -->
+                <button type="button" data-dismiss="modal" aria-hidden="true" class="btn"
+                        onclick="annotator.editorAction('cancel');">Vazgeç
+                </button>
+                <!--
+                 $('.annotator-hl-temporary').removeClass('annotator-hl');$('span').removeClass('annotator-hl-temporary');
+                 -->
                 <a href="#" class="btn btn-primary btn-wide" data-dismiss="modal" ng-click="goToChapter()">Tamam</a>
             </div>
         </div>
     </div>
 </div>
-
 
 
 </body>
