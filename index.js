@@ -378,6 +378,30 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
                 $scope.get_user_info();
             }
         }
+
+        /* Editor operations */
+        $scope.hideEditor = function(){
+            annotator.onEditorHide();
+
+        }
+
+        $scope.submitEditor = function(){
+            return annotator.publish('annotationEditorSubmit', [annotator.editor, $scope.annotationModalData]);
+        }
+
+
+        $scope.showEditor = function(annotation, position){
+            $scope.annotationModalData = annotation;
+            $scope.annotationModalData.tags=[];
+            $scope.annotationModalDataVerse = Math.floor(annotation.verseId / 1000) + ":" + annotation.verseId % 1000;
+
+            $scope.$apply();
+            $('#annotationModal').modal('show');
+
+        }
+
+
+
         $scope.loggedIn = false;
         $scope.checkUserLoginStatus();
         /* end of login - access token */

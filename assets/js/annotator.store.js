@@ -210,7 +210,6 @@
             var accessToken = angular.element(document.getElementById('theView')).scope().access_token;
 
             method = this._methodFor(action);
-            angular.element(document.getElementById('MainCtrl')).scope().$apply();
 
             opts = {
                 type: method,
@@ -252,7 +251,6 @@
                 opts.headers = $.extend(opts.headers, {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 });
-                //TODO: check the type for retrieving id after post.
                 opts.dataType='json';
 
                 var jsonData = JSON.parse(data);
