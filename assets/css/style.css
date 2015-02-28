@@ -73,6 +73,20 @@ hr {
 }
 
 
+.a_hl_red{
+    background-color: rgba(255, 0, 0, 0.3);
+}
+.a_hl_yellow{
+    background-color: rgba(255, 255, 10, 0.3)
+}
+.a_hl_green{
+    background-color: rgba(0, 255, 0, 0.3);
+}
+.a_hl_blue{
+    background-color: rgba(0, 0, 255, 0.3);
+}
+
+
 /* annotation editor */
 #annotationData_header{
     padding:5px 3px;
