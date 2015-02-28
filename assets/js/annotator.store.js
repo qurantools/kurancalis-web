@@ -131,7 +131,12 @@
         };
 
         Store.prototype.loadAnnotations = function () {
-            var accessToken = angular.element(document.getElementById('theView')).scope().access_token;
+            var theScope = angular.element(document.getElementById('theView')).scope();
+            var accessToken;
+            if(theScope){
+
+                accessToken = theScope.access_token;
+            }
             if(typeof accessToken === 'undefined'){
                 return;
             };

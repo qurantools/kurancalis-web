@@ -130,7 +130,7 @@
 
             <div class="modal-body">
                 <textarea class="form-control" id="annotationData_text" ng-model="annotationModalData.text"></textarea>
-                <textarea class="form-control" id="annotationData_text">{{annotationModal.content}}</textarea>
+
 
                 <div class="row">
                     <div class="col-xs-6">
@@ -147,7 +147,9 @@
 
                     </div>
                     <div class="col-xs-6">
-                        <h3>görünüm</h3>
+                        <input type="radio" ng-model="annotationModalData.colour" value="red">  Red <br/>
+                        <input type="radio" ng-model="annotationModalData.colour" value="green"> Green <br/>
+                        <input type="radio" ng-model="annotationModalData.colour" value="blue"> Blue <br/>
                     </div>
                 </div>
             </div>

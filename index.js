@@ -165,6 +165,10 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             annotator.addPlugin('Tags');
 
             $scope.annotatorActivated = 1;
+
+            annotator.subscribe("annotationCreated",$scope.colorTheAnnotation);
+            annotator.subscribe("annotationUpdated",$scope.colorTheAnnotation);
+
         }
 
         //list translations
@@ -191,7 +195,8 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             });
 
             $timeout(function () {
-                $scope.annotate_it()
+                $scope.annotate_it();
+
             }, 2000);
 
         }
@@ -398,6 +403,28 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             $scope.$apply();
             $('#annotationModal').modal('show');
 
+        }
+
+        $scope.colorTheAnnotation = function(annotation){
+            console.log("coloring the anno");
+            var cat = annotation.colour;
+            var highlights = annotation.highlights;
+            if (cat){
+                for(var h in highlights){
+                    var classes = highlights[h].className.split(" ");
+                    var newClass="";
+
+                    //remove the class if already coloured
+                    for(var theClass in classes){
+                        if(classes[theClass].indexOf("a_hl_") > -1){ //the class is a colour class
+                            classes.splice(theClass,1);
+                        }
+                    }
+                    newClass = classes.join(" ");
+                    newClass=newClass + ' a_hl_' + cat;
+                    highlights[h].className  = newClass;
+                }
+            }
         }
 
 
