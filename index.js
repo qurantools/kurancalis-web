@@ -168,6 +168,8 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
 
             annotator.subscribe("annotationCreated",$scope.colorTheAnnotation);
             annotator.subscribe("annotationUpdated",$scope.colorTheAnnotation);
+            annotator.subscribe("annotationsLoaded",$scope.colorAnnotations);
+
 
         }
 
@@ -406,7 +408,6 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         }
 
         $scope.colorTheAnnotation = function(annotation){
-            console.log("coloring the anno");
             var cat = annotation.colour;
             var highlights = annotation.highlights;
             if (cat){
@@ -424,6 +425,12 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
                     newClass=newClass + ' a_hl_' + cat;
                     highlights[h].className  = newClass;
                 }
+            }
+        }
+
+        $scope.colorAnnotations = function (annotations) {
+            for (var annotationIndex in annotations){
+                $scope.colorTheAnnotation(annotations[annotationIndex]);
             }
         }
 

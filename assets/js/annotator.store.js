@@ -265,7 +265,7 @@
                 postData.push(encodeURIComponent("endOffset")+"="+ encodeURIComponent(jsonData.ranges[0].endOffset));
                 postData.push(encodeURIComponent("quote")+"="+ encodeURIComponent(jsonData.quote));
                 postData.push(encodeURIComponent("content")+"="+ encodeURIComponent(jsonData.content));
-                postData.push(encodeURIComponent("colour")+"="+ encodeURIComponent(jsonData.color));
+                postData.push(encodeURIComponent("colour")+"="+ encodeURIComponent(jsonData.colour));
                 postData.push(encodeURIComponent("translationVersion")+"="+ encodeURIComponent(jsonData.translationVersion));
                 postData.push(encodeURIComponent("translationId")+"="+ encodeURIComponent(jsonData.translationId));
                 postData.push(encodeURIComponent("verseId")+"="+ encodeURIComponent(jsonData.verseId));
@@ -328,7 +328,7 @@
             annotation.author = angular.element(document.getElementById('MainCtrl')).scope().author;
 
             annotation.content = annotation.text;
-            annotation.color = "red";
+            annotation.colour = annotation.colour;
             annotation.start = annotation.ranges[0].start;
             annotation.end = annotation.ranges[0].end;
             annotation.startOffset = annotation.ranges[0].startOffset;
