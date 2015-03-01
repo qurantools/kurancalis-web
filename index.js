@@ -170,6 +170,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             annotator.subscribe("annotationUpdated", $scope.colorTheAnnotation);
             annotator.subscribe("annotationsLoaded", $scope.colorAnnotations);
 
+
         }
 
         $scope.search_tags = function () {
@@ -420,8 +421,9 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
 
         }
 
-        $scope.submitEditor = function () {
-            return annotator.publish('annotationEditorSubmit', [annotator.editor, $scope.annotationModalData]);
+        $scope.submitEditor = function(){
+            annotator.publish('annotationEditorSubmit', [annotator.editor, $scope.annotationModalData]);
+            return annotator.ignoreMouseup = false;
         }
 
 
@@ -471,7 +473,6 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         /* end of login - access token */
 
 
-        $scope.allTags = ["Afghanistan", "Albania", "Algeria", "American Samoa", "Andorra"];
 
     });
 

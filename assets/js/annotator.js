@@ -646,15 +646,6 @@
                 nr.commonAncestor = nr.commonAncestor.parentNode;
             }
 
-
-            // hack
-            var translation_div = this.startContainer.parentNode.parentNode.parentNode;
-            var translation_div_id = translation_div.id;
-            nr.translationId = translation_div_id.substr(2);
-
-            var verse_div_id = translation_div.parentNode.parentNode.id;
-            nr.verseId = verse_div_id.substr(2);
-            // /hack
             return new Range.NormalizedRange(nr);
         };
 
@@ -1238,6 +1229,7 @@
         };
 
         Annotator.prototype.checkForEndSelection = function (event) {
+
             var container, range, _k, _len2, _ref1;
             this.mouseIsDown = false;
             if (this.ignoreMouseup) {
@@ -1256,11 +1248,53 @@
                 }
             }
             if (event && this.selectedRanges.length) {
-                return this.adder.css(Util.mousePosition(event, this.wrapper[0])).show();
+
+                //check translation id
+                if(this.selectedRanges.length == 1){
+                    var translation_start_id = this.getElementIdOfSelection(this.selectedRanges[0].start,"t_");
+                    var translation_end_id = this.getElementIdOfSelection(this.selectedRanges[0].end,"t_");
+
+                    if(translation_end_id == translation_start_id && translation_start_id !=0){
+                        this.selectedRanges[0].translationId = translation_start_id;
+                        this.selectedRanges[0].verseId  = this.getElementIdOfSelection(this.selectedRanges[0].start,"v_");
+                        return this.adder.css(Util.mousePosition(event, this.wrapper[0])).show();
+                    }
+                    else{
+                        Annotator.showNotification("Sadece meal içerisini karalamalısınız", Annotator.Notification.ERROR);
+                        this.adder.hide();
+                        return;
+                    }
+
+                }
+                else{
+                    Annotator.showNotification("Sadece meal içerisini karalamalısınız", Annotator.Notification.ERROR);
+                    this.adder.hide();
+                    return;
+
+                }
             } else {
                 return this.adder.hide();
             }
         };
+
+        Annotator.prototype.getElementIdOfSelection = function (endPoint,elementIdentifier){
+            if(typeof(endPoint.parentNode.id) == 'undefined' )
+                return 0;
+
+            var parentId = endPoint.parentNode.id;
+
+            if( parentId.indexOf(elementIdentifier)==0){
+                return parentId.substr(2);
+            }
+            else{
+                if (typeof(endPoint.parentNode) != 'undefined') {
+                    return this.getElementIdOfSelection(endPoint.parentNode,elementIdentifier);
+                }
+                else{
+                    return 0; //not found
+                }
+            }
+        }
 
         Annotator.prototype.isAnnotator = function (element) {
             return !!$(element).parents().addBack().filter('[class^=annotator-]').not(this.wrapper).length;
