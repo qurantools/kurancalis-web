@@ -8,8 +8,6 @@
         <pre>validation_response: <span id="api_first_name" ng-bind="validation_response | json"></span></pre>
         <pre>user: <span id="user_info" ng-bind="user | json"></span></pre>
     -->
-    <pre>annotation: <span id="annotation" ng-bind="annotations | json"></span></pre>
-    <button onclick="annotator.testEditor();">test editor</button>
     <nav class="navbar navbar-default" role="navigation">
         <div>
             <form>
@@ -135,36 +133,44 @@
                 <div class="row">
                     <div class="col-xs-6">
                         <h3>etiketler</h3>
-                        <input type="text" class="form-input" placeholder="etiket" />
+                        <input type="text" class="form-input" placeholder="etiket" ng-model="tag_search"
+                               ng-change="search_tags()" typeahead="i.name for i in tagSearchResult"/>
+
+                        <select id="tagSearchResult" ng-model="selectedItem" ng-options="i.name for i in tagSearchResult"  multiple="multiple" class="form-control multiselect multiselect-info mbl" data-toggle="select">
+                        <option value="0" label="0"> </option>
+                        </select>
+
                         <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#myModal">
                             <i class="fa fa-plus"></i>
                         </button>
 
 
                         <ul ng-repeat="selectedTag in selectedTags">
-<li>{{selectedTag}}</li>
-                            </ul>
+                            <li>{{selectedTag}}</li>
+                        </ul>
 
                     </div>
                     <div class="col-xs-6">
-                        <input type="radio" ng-model="annotationModalData.colour" value="red">  Red <br/>
-                        <input type="radio" ng-model="annotationModalData.colour" value="green"> Green <br/>
-                        <input type="radio" ng-model="annotationModalData.colour" value="blue"> Blue <br/>
+                        <input type="radio" ng-model="annotationModalData.colour" value="yellow"> Sarı <br/>
+                        <input type="radio" ng-model="annotationModalData.colour" value="red"> Kırmızı <br/>
+                        <input type="radio" ng-model="annotationModalData.colour" value="green"> Yeşil <br/>
+                        <input type="radio" ng-model="annotationModalData.colour" value="blue"> Mavi <br/>
                     </div>
                 </div>
             </div>
 
             <div class="modal-footer">
-                <button type="button" data-dismiss="modal" aria-hidden="true" class="btn" ng-click="hideEditor()">Vazgeç</button>
-<!--
- $('.annotator-hl-temporary').removeClass('annotator-hl');$('span').removeClass('annotator-hl-temporary');
- -->
+                <button type="button" data-dismiss="modal" aria-hidden="true" class="btn" ng-click="hideEditor()">
+                    Vazgeç
+                </button>
+                <!--
+                 $('.annotator-hl-temporary').removeClass('annotator-hl');$('span').removeClass('annotator-hl-temporary');
+                 -->
                 <a href="#" class="btn btn-primary btn-wide" data-dismiss="modal" ng-click="submitEditor()">Tamam</a>
             </div>
         </div>
     </div>
 </div>
-
 
 
 </body>

@@ -173,6 +173,15 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
 
         }
 
+        $scope.search_tags = function(){
+            var tagsRestangular = Restangular.one('tags',$scope.tag_search);
+            tagsRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (tags) {
+                    $scope.tagSearchResult = tags;
+                }
+            );
+            $('#tagSearchResult').select2();
+        }
+
         //list translations
         $scope.list_translations = function () {
             $scope.translationDivMap = [];
@@ -442,7 +451,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
 
 
 
-        $scope.selectedTags=["Afghanistan", "Albania", "Algeria", "American Samoa", "Andorra"];
+        $scope.allTags=["Afghanistan", "Albania", "Algeria", "American Samoa", "Andorra"];
 
     });
 
