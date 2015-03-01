@@ -402,7 +402,8 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         }
 
         $scope.submitEditor = function(){
-            return annotator.publish('annotationEditorSubmit', [annotator.editor, $scope.annotationModalData]);
+            annotator.publish('annotationEditorSubmit', [annotator.editor, $scope.annotationModalData]);
+            return annotator.ignoreMouseup = false;
         }
 
 
