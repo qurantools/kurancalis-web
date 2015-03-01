@@ -166,20 +166,33 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
 
             $scope.annotatorActivated = 1;
 
-            annotator.subscribe("annotationCreated",$scope.colorTheAnnotation);
-            annotator.subscribe("annotationUpdated",$scope.colorTheAnnotation);
-            annotator.subscribe("annotationsLoaded",$scope.colorAnnotations);
-
+            annotator.subscribe("annotationCreated", $scope.colorTheAnnotation);
+            annotator.subscribe("annotationUpdated", $scope.colorTheAnnotation);
+            annotator.subscribe("annotationsLoaded", $scope.colorAnnotations);
 
         }
 
-        $scope.search_tags = function(){
-            var tagsRestangular = Restangular.one('tags',$scope.tag_search);
+        $scope.search_tags = function () {
+            var tagsRestangular = Restangular.one('tags', $scope.tag_search);
             tagsRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (tags) {
                     $scope.tagSearchResult = tags;
                 }
             );
-            $('#tagSearchResult').select2();
+
+            if ($scope.tagSearchActive != 1) {
+                $('#tagSearchResult').select2();
+                $scope.tagSearchActive = 1;
+                runSelect2();
+            }
+            /*
+            var data = $scope.tagSearchResult; 
+            console.log("data" + JSON.stringify(data)); var newData = []; 
+            for (var i = 0; i < data.length; i++) { 
+                newData.push({id: data[i].id, text :data[i].name} ); 
+            }
+            console.log("newData" + JSON.stringify(newData)); 
+            $("#tagSearchResult").select2('data', newData);
+            */
         }
 
         //list translations
@@ -188,7 +201,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             $scope.verses = ChapterVerses.query({
                 chapter_id: $scope.chapter_id,
                 author_mask: $scope.author_mask
-            }, function(data){
+            }, function (data) {
                 //prepare translation_id - div block map
 
                 var arrayLength = data.length;
@@ -196,11 +209,13 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
                     for (var j = 0; j < data[i].translations.length; j++) {
                         var vid = data[i].translations[j].id;
                         var ilkimi;
-                        if(j==0) {
+                        if (j == 0) {
                             ilkimi = 1;
                         }
-                        else{ ilkimi = 0; }
-                        $scope.translationDivMap[vid] = "/div["+(i+1)+"]/div[1]/div["+(j+1)+"]/div["+(1+ilkimi)+"]/div[2]/span[1]";
+                        else {
+                            ilkimi = 0;
+                        }
+                        $scope.translationDivMap[vid] = "/div[" + (i + 1) + "]/div[1]/div[" + (j + 1) + "]/div[" + (1 + ilkimi) + "]/div[2]/span[1]";
                     }
                 }
             });
@@ -265,6 +280,10 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         }
 
         /* init */
+
+        $scope.tagSearchResult = [];
+
+
         //hide list of authors div
         $scope.showAuthorsList = false;
 
@@ -396,53 +415,55 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         }
 
         /* Editor operations */
-        $scope.hideEditor = function(){
+        $scope.hideEditor = function () {
             annotator.onEditorHide();
 
         }
 
-        $scope.submitEditor = function(){
+        $scope.submitEditor = function () {
             return annotator.publish('annotationEditorSubmit', [annotator.editor, $scope.annotationModalData]);
         }
 
 
-        $scope.showEditor = function(annotation, position){
+        $scope.showEditor = function (annotation, position) {
             $scope.annotationModalData = annotation;
-            $scope.annotationModalData.tags=[];
+            $scope.annotationModalData.tags = [];
             $scope.annotationModalDataVerse = Math.floor(annotation.verseId / 1000) + ":" + annotation.verseId % 1000;
 
             $scope.$apply();
             $('#annotationModal').modal('show');
-
+            // checktags();
+            $('#tagSearchResult').select2();
+            $scope.tagSearchActive = 1;
+            runSelect2();
         }
 
-        $scope.colorTheAnnotation = function(annotation){
+        $scope.colorTheAnnotation = function (annotation) {
             var cat = annotation.colour;
             var highlights = annotation.highlights;
-            if (cat){
-                for(var h in highlights){
+            if (cat) {
+                for (var h in highlights) {
                     var classes = highlights[h].className.split(" ");
-                    var newClass="";
+                    var newClass = "";
 
                     //remove the class if already coloured
-                    for(var theClass in classes){
-                        if(classes[theClass].indexOf("a_hl_") > -1){ //the class is a colour class
-                            classes.splice(theClass,1);
+                    for (var theClass in classes) {
+                        if (classes[theClass].indexOf("a_hl_") > -1) { //the class is a colour class
+                            classes.splice(theClass, 1);
                         }
                     }
                     newClass = classes.join(" ");
-                    newClass=newClass + ' a_hl_' + cat;
-                    highlights[h].className  = newClass;
+                    newClass = newClass + ' a_hl_' + cat;
+                    highlights[h].className = newClass;
                 }
             }
         }
 
         $scope.colorAnnotations = function (annotations) {
-            for (var annotationIndex in annotations){
+            for (var annotationIndex in annotations) {
                 $scope.colorTheAnnotation(annotations[annotationIndex]);
             }
         }
-
 
 
         $scope.loggedIn = false;
@@ -450,11 +471,20 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         /* end of login - access token */
 
 
-
-        $scope.allTags=["Afghanistan", "Albania", "Algeria", "American Samoa", "Andorra"];
+        $scope.allTags = ["Afghanistan", "Albania", "Algeria", "American Samoa", "Andorra"];
 
     });
 
 function list_fn(id) {
     angular.element(document.getElementById('MainCtrl')).scope().list_footnotes(id);
 }
+
+function runSelect2() {
+    $(".select2-input").bind('keyup', function (e) {
+        angular.element(document.getElementById('MainCtrl')).scope().tag_search = $('.select2-sizer').html();
+        angular.element(document.getElementById('MainCtrl')).scope().search_tags();
+
+    });
+}
+
+
