@@ -133,6 +133,16 @@
                 <div class="row">
                     <div class="col-xs-6">
                         <h3>etiketler</h3>
+
+
+                        <tags-input ng-model="tags" display-property="name">
+
+                            <auto-complete source="loadTags($query)"></auto-complete>
+
+                        </tags-input>
+
+                        <hr />
+
                         <input type="text" class="form-input" placeholder="etiket" ng-model="tag_search"
                                ng-change="search_tags()" typeahead="i.name for i in tagSearchResult"/>
                         <!--

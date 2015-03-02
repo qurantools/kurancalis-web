@@ -1,4 +1,4 @@
-angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 'LocalStorageModule'])
+angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 'LocalStorageModule', 'ngTagsInput'])
     .filter('to_trusted', ['$sce',
         function ($sce) {
             return function (text) {
@@ -173,6 +173,28 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
 
         }
 
+
+
+
+        $scope.tags = [
+            { name: 'Tag1' },
+            { name: 'Tag2' }
+        ];
+
+
+        $scope.loadTags = function(query) {
+            var tagsRestangular = Restangular.one('tags', query);
+            tagsRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (tags) {
+                   // $scope.tagSearchResult = tags;
+                    return tags;
+                }
+            );
+        };
+
+
+
+/*
+eski
         $scope.search_tags = function () {
             var tagsRestangular = Restangular.one('tags', $scope.tag_search);
             tagsRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (tags) {
@@ -185,16 +207,8 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
                 $scope.tagSearchActive = 1;
                 runSelect2();
             }
-            /*
-            var data = $scope.tagSearchResult; 
-            console.log("data" + JSON.stringify(data)); var newData = []; 
-            for (var i = 0; i < data.length; i++) { 
-                newData.push({id: data[i].id, text :data[i].name} ); 
-            }
-            console.log("newData" + JSON.stringify(newData)); 
-            $("#tagSearchResult").select2('data', newData);
-            */
         }
+        */
 
         //list translations
         $scope.list_translations = function () {
@@ -474,6 +488,18 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
     });
 
 function list_fn(id) {
@@ -484,7 +510,6 @@ function runSelect2() {
     $(".select2-input").bind('keyup', function (e) {
         angular.element(document.getElementById('MainCtrl')).scope().tag_search = $('.select2-sizer').html();
         angular.element(document.getElementById('MainCtrl')).scope().search_tags();
-
     });
 }
 
