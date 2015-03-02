@@ -439,22 +439,34 @@ eski
         }
 
         $scope.submitEditor = function(){
+            var tags=$scope.tags;
+            var newTags=[];
+            for (var i = 0; i < tags.length; i++) {
+                newTags.push(tags[i].name);
+            }
+            $scope.annotationModalData.tags=newTags;
             annotator.publish('annotationEditorSubmit', [annotator.editor, $scope.annotationModalData]);
             return annotator.ignoreMouseup = false;
         }
 
 
         $scope.showEditor = function (annotation, position) {
+
+            var newTags=[];
+            if (typeof annotation.tags != 'undefined') {
+                var tags = annotation.tags;
+                var tagsSplit = tags.toString().split(",");
+                for (var i = 0; i < tagsSplit.length; i++) {
+                    newTags.push({"name": tagsSplit[i]});
+                }
+            }
+
             $scope.annotationModalData = annotation;
-            $scope.annotationModalData.tags = [];
+            angular.element(document.getElementById('theView')).scope().tags=newTags;
             $scope.annotationModalDataVerse = Math.floor(annotation.verseId / 1000) + ":" + annotation.verseId % 1000;
 
             $scope.$apply();
             $('#annotationModal').modal('show');
-            // checktags();
-            $('#tagSearchResult').select2();
-            $scope.tagSearchActive = 1;
-            runSelect2();
         }
 
         $scope.colorTheAnnotation = function (annotation) {
@@ -509,12 +521,4 @@ eski
 function list_fn(id) {
     angular.element(document.getElementById('MainCtrl')).scope().list_footnotes(id);
 }
-
-function runSelect2() {
-    $(".select2-input").bind('keyup', function (e) {
-        angular.element(document.getElementById('MainCtrl')).scope().tag_search = $('.select2-sizer').html();
-        angular.element(document.getElementById('MainCtrl')).scope().search_tags();
-    });
-}
-
 
