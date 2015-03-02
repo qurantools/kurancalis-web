@@ -174,21 +174,24 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         }
 
 
-
+/*
 
         $scope.tags = [
             { name: 'Tag1' },
             { name: 'Tag2' }
         ];
-
+*/
 
         $scope.loadTags = function(query) {
             var tagsRestangular = Restangular.one('tags', query);
+            //var tagsRestangular = Restangular.all('tags');
             tagsRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (tags) {
-                   // $scope.tagSearchResult = tags;
-                    return tags;
+                    $scope.tagSearchResult = tags;
                 }
             );
+            var deferred = $q.defer();
+            deferred.resolve($scope.tagSearchResult);
+            return deferred.promise;
         };
 
 
@@ -484,6 +487,7 @@ eski
 
         $scope.loggedIn = false;
         $scope.checkUserLoginStatus();
+        $scope.tagSearchResult = [];
         /* end of login - access token */
 
 

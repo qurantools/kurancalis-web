@@ -135,11 +135,14 @@
                         <h3>etiketler</h3>
 
 
-                        <tags-input ng-model="tags" display-property="name">
+                        <tags-input ng-model="tags" display-property="name" replace-spaces-with-dashes=false min-length="2">
 
-                            <auto-complete source="loadTags($query)"></auto-complete>
+                            <auto-complete source="loadTags($query)" min-length="2"></auto-complete>
 
                         </tags-input>
+
+
+                        tags:{{tagSearchResult}}
 
                         <hr />
 
