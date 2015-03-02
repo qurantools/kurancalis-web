@@ -1072,8 +1072,10 @@
                 annotation.quote.push($.trim(normed.text()));
                 annotation.ranges.push(normed.serialize(this.wrapper[0], '.annotator-hl'));
                 // hack
-                annotation.translationId = normed.translationId;
-                annotation.verseId = normed.verseId;
+                if(typeof(normed.translationId) != 'undefined' && typeof(normed.verseId) != 'undefined') {
+                    annotation.translationId = normed.translationId;
+                    annotation.verseId = normed.verseId;
+                }
                 // /hack
                 $.merge(annotation.highlights, this.highlightRange(normed));
             }
