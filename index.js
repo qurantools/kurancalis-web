@@ -454,14 +454,15 @@ eski
 
             var newTags=[];
             if (typeof annotation.tags != 'undefined') {
-                var tags = annotation.tags;
-                var tagsSplit = tags.toString().split(",");
-                for (var i = 0; i < tagsSplit.length; i++) {
-                    newTags.push({"name": tagsSplit[i]});
+                for(var i=0; i<annotation.tags.length; i++){
+                    newTags.push({"name": annotation.tags[i]});
                 }
             }
 
             $scope.annotationModalData = annotation;
+            if (typeof $scope.annotationModalData.text == 'undefined') {
+                $scope.annotationModalData.text = "";
+            }
             angular.element(document.getElementById('theView')).scope().tags=newTags;
             $scope.annotationModalDataVerse = Math.floor(annotation.verseId / 1000) + ":" + annotation.verseId % 1000;
 
