@@ -25,7 +25,8 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         };
     }])
     .config(function ($routeProvider, FacebookProvider, RestangularProvider, localStorageServiceProvider) {
-        RestangularProvider.setBaseUrl('https://securewebserver.net/jetty/qt/rest');
+        //RestangularProvider.setBaseUrl('https://securewebserver.net/jetty/qt/rest');
+        RestangularProvider.setBaseUrl('http://localhost:8080/QuranToolsApp/rest');
         localStorageServiceProvider.setStorageCookie(0, '/');
         //route
         $routeProvider
@@ -174,44 +175,11 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         }
 
 
-/*
-
-        $scope.tags = [
-            { name: 'Tag1' },
-            { name: 'Tag2' }
-        ];
-*/
-
         $scope.loadTags = function(query) {
             var tagsRestangular = Restangular.one('tags', query);
-            //var tagsRestangular = Restangular.all('tags');
-            tagsRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (tags) {
-                    $scope.tagSearchResult = tags;
-                }
-            );
-            var deferred = $q.defer();
-            deferred.resolve($scope.tagSearchResult);
-            return deferred.promise;
+            return tagsRestangular.customGET("", {}, {'access_token': $scope.access_token});
         };
 
-
-
-/*
-eski
-        $scope.search_tags = function () {
-            var tagsRestangular = Restangular.one('tags', $scope.tag_search);
-            tagsRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (tags) {
-                    $scope.tagSearchResult = tags;
-                }
-            );
-
-            if ($scope.tagSearchActive != 1) {
-                $('#tagSearchResult').select2();
-                $scope.tagSearchActive = 1;
-                runSelect2();
-            }
-        }
-        */
 
         //list translations
         $scope.list_translations = function () {
