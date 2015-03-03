@@ -25,8 +25,8 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         };
     }])
     .config(function ($routeProvider, FacebookProvider, RestangularProvider, localStorageServiceProvider) {
-        //RestangularProvider.setBaseUrl('https://securewebserver.net/jetty/qt/rest');
-        RestangularProvider.setBaseUrl('http://localhost:8080/QuranToolsApp/rest');
+        RestangularProvider.setBaseUrl('https://securewebserver.net/jetty/qt/rest');
+        //RestangularProvider.setBaseUrl('http://localhost:8080/QuranToolsApp/rest');
         localStorageServiceProvider.setStorageCookie(0, '/');
         //route
         $routeProvider
