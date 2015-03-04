@@ -128,12 +128,6 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             //TODO: document knowhow: custom get with custom header
             usersRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (user) {
                     $scope.user = user;
-
-                    /*
-                     $scope.validation_response=user;
-                     console.log(user)},function(error){
-                     console.log(error);
-                     */
                 }
             );
 
@@ -250,6 +244,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         }
         //selected authors
         $scope.setAuthors = function () {
+            $scope.selection=[];
             for (var index in $scope.authorMap) {
                 if ($scope.author_mask & $scope.authorMap[index].id) {
                     $scope.selection.push($scope.authorMap[index].id);
@@ -292,7 +287,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
 
         //toggle selection for an author id
         $scope.toggleSelection = function toggleSelection(author_id) {
-            var idx = $scope.selection.indexOf(author_id);
+            var idx = $scope.selection.indexOf(author_id);;
             // is currently selected
             if (idx > -1) {
                 $scope.selection.splice(idx, 1);
