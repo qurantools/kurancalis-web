@@ -1041,6 +1041,7 @@
             var annotation;
             annotation = {};
             this.publish('beforeAnnotationCreated', [annotation]);
+            angular.element(document.getElementById('MainCtrl')).scope().addAnnotation(annotation);
             return annotation;
         };
 
@@ -1104,6 +1105,7 @@
                 }
             }
             this.publish('annotationDeleted', [annotation]);
+            angular.element(document.getElementById('MainCtrl')).scope().removeAnnotation(annotation);
             return annotation;
         };
 

@@ -165,6 +165,14 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             annotator.subscribe("annotationUpdated", $scope.colorTheAnnotation);
             annotator.subscribe("annotationsLoaded", $scope.colorAnnotations);
 
+            //annotator.subscribe("annotationCreated", $scope.loadAnnotations);
+            //annotator.subscribe("annotationUpdated", $scope.loadAnnotations);
+
+
+            annotator.subscribe("annotationsLoaded", $scope.loadAnnotations);
+
+
+
 
         }
 
@@ -260,8 +268,28 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             return $scope.chapter_id;
         }
 
-        /* init */
+        $scope.toggleSidebar = function () {
+            var translationsDiv = angular.element(document.querySelector('#translations'));
+            var sidebarDiv = angular.element(document.querySelector('#sidebar'));
+            if ($scope.sidebarActive == 0) {
+                sidebarDiv.removeClass('col-xs-0');
+                sidebarDiv.removeClass('hide');
+                translationsDiv.removeClass('col-xs-12');
+                sidebarDiv.addClass('col-xs-3');
+                translationsDiv.addClass('col-xs-9');
+                $scope.sidebarActive = 1;
+            } else {
+                sidebarDiv.removeClass('col-xs-3');
+                sidebarDiv.addClass('hide');
+                translationsDiv.removeClass('col-xs-9');
+                translationsDiv.addClass('col-xs-12');
 
+                $scope.sidebarActive = 0;
+            }
+        }
+
+        /* init */
+        $scope.sidebarActive = 0;
         $scope.tagSearchResult = [];
 
 
@@ -281,7 +309,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
 
 
         $scope.list_translations();
-
+        $scope.toggleSidebar();
 
         /* end of init */
 
@@ -458,6 +486,30 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             for (var annotationIndex in annotations) {
                 $scope.colorTheAnnotation(annotations[annotationIndex]);
             }
+        }
+
+        $scope.loadAnnotations = function (annotations) {
+            $scope.annotations = annotations;
+            $scope.$apply();
+        }
+
+        $scope.removeAnnotation = function (annotation){
+            var arrLen= $scope.annotations.length;
+            var annotationId=annotation.annotationId;
+            var annotationIndex=0;
+            for (var i = 0; i < arrLen; i++) {
+                if($scope.annotations[i].annotationId==annotationId){
+                    annotationIndex=i;
+                }
+            }
+            if(annotationIndex!=0){
+                $scope.annotations.splice(annotationIndex, 1);
+                $scope.$apply();
+            }
+        }
+
+        $scope.addAnnotation = function (annotation){
+            $scope.annotations.push(annotation);
         }
 
 
