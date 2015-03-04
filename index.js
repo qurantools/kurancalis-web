@@ -169,7 +169,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         }
 
 
-        $scope.loadTags = function(query) {
+        $scope.loadTags = function (query) {
             var tagsRestangular = Restangular.one('tags', query);
             return tagsRestangular.customGET("", {}, {'access_token': $scope.access_token});
         };
@@ -244,7 +244,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         }
         //selected authors
         $scope.setAuthors = function () {
-            $scope.selection=[];
+            $scope.selection = [];
             for (var index in $scope.authorMap) {
                 if ($scope.author_mask & $scope.authorMap[index].id) {
                     $scope.selection.push($scope.authorMap[index].id);
@@ -287,7 +287,8 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
 
         //toggle selection for an author id
         $scope.toggleSelection = function toggleSelection(author_id) {
-            var idx = $scope.selection.indexOf(author_id);;
+            var idx = $scope.selection.indexOf(author_id);
+            ;
             // is currently selected
             if (idx > -1) {
                 $scope.selection.splice(idx, 1);
@@ -383,7 +384,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             $scope.user = null;
             $scope.removeAuth();
             localStorageService.remove('access_token');
-
+            annotator.destroy();
         }
 
         $scope.checkUserLoginStatus = function () {
@@ -398,16 +399,15 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         /* Editor operations */
         $scope.hideEditor = function () {
             annotator.onEditorHide();
-
         }
 
-        $scope.submitEditor = function(){
-            var tags=$scope.tags;
-            var newTags=[];
+        $scope.submitEditor = function () {
+            var tags = $scope.tags;
+            var newTags = [];
             for (var i = 0; i < tags.length; i++) {
                 newTags.push(tags[i].name);
             }
-            $scope.annotationModalData.tags=newTags;
+            $scope.annotationModalData.tags = newTags;
             annotator.publish('annotationEditorSubmit', [annotator.editor, $scope.annotationModalData]);
             return annotator.ignoreMouseup = false;
         }
@@ -415,9 +415,9 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
 
         $scope.showEditor = function (annotation, position) {
 
-            var newTags=[];
+            var newTags = [];
             if (typeof annotation.tags != 'undefined') {
-                for(var i=0; i<annotation.tags.length; i++){
+                for (var i = 0; i < annotation.tags.length; i++) {
                     newTags.push({"name": annotation.tags[i]});
                 }
             }
@@ -426,7 +426,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             if (typeof $scope.annotationModalData.text == 'undefined') {
                 $scope.annotationModalData.text = "";
             }
-            angular.element(document.getElementById('theView')).scope().tags=newTags;
+            angular.element(document.getElementById('theView')).scope().tags = newTags;
             $scope.annotationModalDataVerse = Math.floor(annotation.verseId / 1000) + ":" + annotation.verseId % 1000;
 
             $scope.$apply();
@@ -465,19 +465,6 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         $scope.checkUserLoginStatus();
         $scope.tagSearchResult = [];
         /* end of login - access token */
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     });
