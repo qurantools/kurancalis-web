@@ -1073,7 +1073,7 @@
                 annotation.quote.push($.trim(normed.text()));
                 annotation.ranges.push(normed.serialize(this.wrapper[0], '.annotator-hl'));
                 // hack
-                if(typeof(normed.translationId) != 'undefined' && typeof(normed.verseId) != 'undefined') {
+                if (typeof(normed.translationId) != 'undefined' && typeof(normed.verseId) != 'undefined') {
                     annotation.translationId = normed.translationId;
                     annotation.verseId = normed.verseId;
                 }
@@ -1254,23 +1254,23 @@
             if (event && this.selectedRanges.length) {
 
                 //check translation id
-                if(this.selectedRanges.length == 1){
-                    var translation_start_id = this.getElementIdOfSelection(this.selectedRanges[0].start,"t_");
-                    var translation_end_id = this.getElementIdOfSelection(this.selectedRanges[0].end,"t_");
+                if (this.selectedRanges.length == 1) {
+                    var translation_start_id = this.getElementIdOfSelection(this.selectedRanges[0].start, "t_");
+                    var translation_end_id = this.getElementIdOfSelection(this.selectedRanges[0].end, "t_");
 
-                    if(translation_end_id == translation_start_id && translation_start_id !=0){
+                    if (translation_end_id == translation_start_id && translation_start_id != 0) {
                         this.selectedRanges[0].translationId = translation_start_id;
-                        this.selectedRanges[0].verseId  = this.getElementIdOfSelection(this.selectedRanges[0].start,"v_");
+                        this.selectedRanges[0].verseId = this.getElementIdOfSelection(this.selectedRanges[0].start, "v_");
                         return this.adder.css(Util.mousePosition(event, this.wrapper[0])).show();
                     }
-                    else{
+                    else {
                         Annotator.showNotification("Sadece meal içerisini karalamalısınız", Annotator.Notification.ERROR);
                         this.adder.hide();
                         return;
                     }
 
                 }
-                else{
+                else {
                     Annotator.showNotification("Sadece meal içerisini karalamalısınız", Annotator.Notification.ERROR);
                     this.adder.hide();
                     return;
@@ -1281,20 +1281,20 @@
             }
         };
 
-        Annotator.prototype.getElementIdOfSelection = function (endPoint,elementIdentifier){
-            if(typeof(endPoint.parentNode.id) == 'undefined' )
+        Annotator.prototype.getElementIdOfSelection = function (endPoint, elementIdentifier) {
+            if (typeof(endPoint.parentNode.id) == 'undefined')
                 return 0;
 
             var parentId = endPoint.parentNode.id;
 
-            if( parentId.indexOf(elementIdentifier)==0){
+            if (parentId.indexOf(elementIdentifier) == 0) {
                 return parentId.substr(2);
             }
-            else{
+            else {
                 if (typeof(endPoint.parentNode) != 'undefined') {
-                    return this.getElementIdOfSelection(endPoint.parentNode,elementIdentifier);
+                    return this.getElementIdOfSelection(endPoint.parentNode, elementIdentifier);
                 }
-                else{
+                else {
                     return 0; //not found
                 }
             }
@@ -1358,7 +1358,6 @@
             this.subscribe('annotationEditorSubmit', save);
 
             angular.element(document.getElementById('MainCtrl')).scope().showEditor(annotation, position);
-
 
 
         };
