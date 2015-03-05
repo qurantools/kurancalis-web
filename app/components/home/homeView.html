@@ -1,10 +1,8 @@
 <body>
- <a href="#0" class="cd-btn">Fire Panel</a>
-
+<a href="#0" class="cd-btn">Fire Panel</a>
 
 
 <div class="container">
-
 
 
     <!--
@@ -99,7 +97,8 @@
                 <div class="row">
                     <div style="float: left">{{annotation.created | date: 'dd/MM/yyyy HH:mm:ss'}}</div>
                     <div style="float: right">
-                        <button type="button" class="btn btn-primary btn-xs"><i class="fa fa-pencil-square-o"></i></button>
+                        <button type="button" class="btn btn-primary btn-xs"><i class="fa fa-pencil-square-o"></i>
+                        </button>
                         <button type="button" class="btn btn-primary btn-xs"><i class="fa fa-trash-o"></i></button>
                     </div>
                 </div>
@@ -205,36 +204,39 @@
     </div>
 </div>
 
- <div class="cd-panel from-right">
-     <a href="#0" class="cd-panel-close">Close</a>
+<div class="cd-panel from-right">
+    <!--     <a href="#0" class="cd-panel-close">Close</a>-->
+    <div class="cd-panel-container">
+        <div class="cd-panel-content">
+            <div ng-repeat="annotation in annotations" class="sidebar_annotation box"><!-- s_a -->
+                <div class="s_a_header">
+                    {{annotation.verseId / 1000 | number:0}}:{{annotation.verseId % 1000}}
+                </div>
+                <div>
+                    {{annotation.quote}}
+                </div>
+                <div class="well s_a_text">
+                    {{annotation.text}}
+                </div>
+                <div ng-repeat="annotationTag in annotation.tags" class="tag label label-info s_a_tag">
+                    {{annotationTag}}
+                </div>
+                <div class="row" style="padding:0 15px">
+                    <div style="float: left">{{annotation.created | date: 'dd/MM/yyyy HH:mm:ss'}}</div>
+                    <div style="float: right">
+                        <button type="button" class="btn btn-primary btn-xs"><i class="fa fa-pencil-square-o"></i>
+                        </button>
+                        <button type="button" class="btn btn-primary btn-xs"><i class="fa fa-trash-o"></i></button>
+                    </div>
+                </div>
 
-     <div class="cd-panel-container">
-         <div class="cd-panel-content">
-             <div ng-repeat="annotation in annotations" class="sidebar_annotation"><!-- s_a -->
-                 <div class="s_a_header">
-                     {{annotation.verseId / 1000 | number:0}}:{{annotation.verseId % 1000}}
-                 </div>
-                 <div>
-                     {{annotation.quote}}
-                 </div>
-                 <div class="well s_a_text">
-                     {{annotation.text}}
-                 </div>
-                 <div ng-repeat="annotationTag in annotation.tags" class="tag label label-info s_a_tag">
-                     {{annotationTag}}
-                 </div>
-                 <div class="row">
-                     <div style="float: left">{{annotation.created | date: 'dd/MM/yyyy HH:mm:ss'}}</div>
-                     <div style="float: right">
-                         <button type="button" class="btn btn-primary btn-xs"><i class="fa fa-pencil-square-o"></i></button>
-                         <button type="button" class="btn btn-primary btn-xs"><i class="fa fa-trash-o"></i></button>
-                     </div>
-                 </div>
-
-             </div>
-                   </div> <!-- cd-panel-content -->
-     </div> <!-- cd-panel-container -->
- </div> <!-- cd-panel -->
+            </div>
+        </div>
+        <!-- cd-panel-content -->
+    </div>
+    <!-- cd-panel-container -->
+</div>
+<!-- cd-panel -->
 
 
 </body>
