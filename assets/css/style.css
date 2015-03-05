@@ -98,3 +98,10 @@ hr {
     color: black;
 }
 /* end of annotation editor */
+
+.s_a_tag{ /* sidebar annotation tag */
+    margin-left:5px !important;
+}
+.s_a_text{
+    margin-bottom: 0 !important;
+}

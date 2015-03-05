@@ -172,8 +172,6 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             annotator.subscribe("annotationsLoaded", $scope.loadAnnotations);
 
 
-
-
         }
 
 
@@ -309,7 +307,8 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
 
 
         $scope.list_translations();
-        $scope.toggleSidebar();
+       // $scope.toggleSidebar();
+        sidebarInıt();
 
         /* end of init */
 
@@ -489,26 +488,27 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         }
 
         $scope.loadAnnotations = function (annotations) {
+            console.log(JSON.stringify(annotations));
             $scope.annotations = annotations;
             $scope.$apply();
         }
 
-        $scope.removeAnnotation = function (annotation){
-            var arrLen= $scope.annotations.length;
-            var annotationId=annotation.annotationId;
-            var annotationIndex=0;
+        $scope.removeAnnotation = function (annotation) {
+            var arrLen = $scope.annotations.length;
+            var annotationId = annotation.annotationId;
+            var annotationIndex = 0;
             for (var i = 0; i < arrLen; i++) {
-                if($scope.annotations[i].annotationId==annotationId){
-                    annotationIndex=i;
+                if ($scope.annotations[i].annotationId == annotationId) {
+                    annotationIndex = i;
                 }
             }
-            if(annotationIndex!=0){
+            if (annotationIndex != 0) {
                 $scope.annotations.splice(annotationIndex, 1);
                 $scope.$apply();
             }
         }
 
-        $scope.addAnnotation = function (annotation){
+        $scope.addAnnotation = function (annotation) {
             $scope.annotations.push(annotation);
         }
 
@@ -525,3 +525,16 @@ function list_fn(id) {
     angular.element(document.getElementById('MainCtrl')).scope().list_footnotes(id);
 }
 
+function sidebarInıt() {
+    $('.cd-btn').on('click', function (event) {
+        event.preventDefault();
+        $('.cd-panel').addClass('is-visible');
+    });
+//clode the lateral panel
+    $('.cd-panel').on('click', function (event) {
+        if ($(event.target).is('.cd-panel') || $(event.target).is('.cd-panel-close')) {
+            $('.cd-panel').removeClass('is-visible');
+            event.preventDefault();
+        }
+    });
+}
