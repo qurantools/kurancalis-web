@@ -843,7 +843,8 @@
             ".annotator-adder button click": "onAdderClick",
             ".annotator-adder button mousedown": "onAdderMousedown",
             ".annotator-hl mouseover": "onHighlightMouseover",
-            ".annotator-hl mouseout": "startViewerHideTimer"
+            ".annotator-hl mouseout": "startViewerHideTimer",
+            ".annotator-hl click": "onHighlightClick",
         };
 
         Annotator.prototype.html = {
@@ -875,6 +876,7 @@
             this.onAdderClick = __bind(this.onAdderClick, this);
             this.onAdderMousedown = __bind(this.onAdderMousedown, this);
             this.onHighlightMouseover = __bind(this.onHighlightMouseover, this);
+            this.onHighlightClick = __bind(this.onHighlightClick, this);
             this.checkForEndSelection = __bind(this.checkForEndSelection, this);
             this.checkForStartSelection = __bind(this.checkForStartSelection, this);
             this.clearViewerHideTimer = __bind(this.clearViewerHideTimer, this);
@@ -1305,15 +1307,38 @@
         };
 
         Annotator.prototype.onHighlightMouseover = function (event) {
+
             var annotations;
             this.clearViewerHideTimer();
-            if (this.mouseIsDown || this.viewer.isShown()) {
-                return false;
-            }
+            /*if (this.mouseIsDown || this.viewer.isShown()) {
+             return false;
+             }
+             annotations = $(event.target).parents('.annotator-hl').addBack().map(function () {
+             return $(this).data("annotation");
+             });
+             return this.showViewer($.makeArray(annotations), Util.mousePosition(event, this.wrapper[0]));
+             */
+        };
+        Annotator.prototype.onHighlightClick = function (event) {
+
+            var annotations;
+            /*
+             this.clearViewerHideTimer();
+
+
+             if (this.mouseIsDown || this.viewer.isShown()) {
+             console.log(3)
+             return false;
+             console.log(4)
+             }*/
             annotations = $(event.target).parents('.annotator-hl').addBack().map(function () {
+
                 return $(this).data("annotation");
             });
-            return this.showViewer($.makeArray(annotations), Util.mousePosition(event, this.wrapper[0]));
+            angular.element(document.getElementById('theView')).scope().filteredAnnotations = annotations;
+            angular.element(document.getElementById('theView')).scope().$apply();
+            openPanel();
+            //  return this.showViewer($.makeArray(annotations), Util.mousePosition(event, this.wrapper[0]));
         };
 
         Annotator.prototype.onAdderMousedown = function (event) {

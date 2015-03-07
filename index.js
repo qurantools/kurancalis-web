@@ -11,6 +11,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
                 return text.replace("*", "<a class='footnote_asterisk' href='javascript:list_fn(" + translation_id + ")'>*</a");
             };
         }])
+
     .run(['$route', '$rootScope', '$location', function ($route, $rootScope, $location) {
         var original = $location.path;
         $location.path = function (path, reload) {
@@ -23,8 +24,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             }
             return original.apply($location, [path]);
         };
-    }])
-    .config(function ($routeProvider, FacebookProvider, RestangularProvider, localStorageServiceProvider) {
+    }]).config(function ($routeProvider, FacebookProvider, RestangularProvider, localStorageServiceProvider) {
         RestangularProvider.setBaseUrl('https://securewebserver.net/jetty/qt/rest');
         //RestangularProvider.setBaseUrl('http://localhost:8080/QuranToolsApp/rest');
         localStorageServiceProvider.setStorageCookie(0, '/');
@@ -307,7 +307,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
 
 
         $scope.list_translations();
-       // $scope.toggleSidebar();
+        // $scope.toggleSidebar();
         sidebarInıt();
 
         /* end of init */
@@ -441,7 +441,6 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
 
 
         $scope.showEditor = function (annotation, position) {
-
             var newTags = [];
             if (typeof annotation.tags != 'undefined') {
                 for (var i = 0; i < annotation.tags.length; i++) {
@@ -455,8 +454,10 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             }
             angular.element(document.getElementById('theView')).scope().tags = newTags;
             $scope.annotationModalDataVerse = Math.floor(annotation.verseId / 1000) + ":" + annotation.verseId % 1000;
-
-            $scope.$apply();
+            //Error: [$rootScope:inprog]
+            if (!$scope.$$phase) {
+                $scope.$apply();
+            }
             $('#annotationModal').modal('show');
         }
 
@@ -488,9 +489,10 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         }
 
         $scope.loadAnnotations = function (annotations) {
-            console.log(JSON.stringify(annotations));
             $scope.annotations = annotations;
             $scope.$apply();
+
+//            $scope.showEditor($scope.annotations[0],0);
         }
 
         $scope.removeAnnotation = function (annotation) {
@@ -504,7 +506,9 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             }
             if (annotationIndex != 0) {
                 $scope.annotations.splice(annotationIndex, 1);
-                $scope.$apply();
+                if (!$scope.$$phase) {
+                    $scope.$apply();
+                }
             }
         }
 
@@ -512,12 +516,53 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             $scope.annotations.push(annotation);
         }
 
+        $scope.editAnnotation = function (index) {
+            if($scope.filteredAnnotations.length>0){
+                index=$scope.getAnnotationIndexFromFilteredAnnotationIndex(index);
+            }
+            $scope.showEditor($scope.annotations[index], 0);
+        }
+        $scope.deleteAnnotation = function (index) {
+            if($scope.filteredAnnotations.length>0){
+                index=$scope.getAnnotationIndexFromFilteredAnnotationIndex(index);
+            }
+            annotator.deleteAnnotation($scope.annotations[index]);
+        }
 
         $scope.loggedIn = false;
         $scope.checkUserLoginStatus();
         $scope.tagSearchResult = [];
         /* end of login - access token */
 
+        $scope.annotationFilter = function (item) {
+            if (typeof $scope.filteredAnnotations == 'undefined' || $scope.filteredAnnotations.length == 0) {
+                return true;
+            } else {
+                var found = 0;
+                for (i = 0; i < $scope.filteredAnnotations.length; i++) {
+                    if (item.annotationId == $scope.filteredAnnotations[i].annotationId) {
+                        found++;
+                    }
+                }
+                if (found > 0)return true; else return false;
+            }
+        }
+
+        $scope.getAnnotationIndexFromFilteredAnnotationIndex=function(filteredAnnotationIndex){
+            var arrLen=$scope.annotations.length;
+            var filteredAnnotationId=$scope.filteredAnnotations[filteredAnnotationIndex].annotationId;
+            var annotationIndex=0;
+            for (var i = 0; i < arrLen; i++) {
+                if ($scope.annotations[i].annotationId == filteredAnnotationId) {
+                    annotationIndex = i;
+                }
+            }
+            return annotationIndex;
+        }
+
+        $scope.resetAnnotationFilter = function () {
+            $scope.filteredAnnotations = [];
+        }
 
     });
 
@@ -530,7 +575,6 @@ function sidebarInıt() {
         event.preventDefault();
         $('.cd-panel').addClass('is-visible');
     });
-//clode the lateral panel
     $('.cd-panel').on('click', function (event) {
         if ($(event.target).is('.cd-panel') || $(event.target).is('.cd-panel-close')) {
             $('.cd-panel').removeClass('is-visible');
@@ -538,3 +582,11 @@ function sidebarInıt() {
         }
     });
 }
+
+function openPanel() {
+    $('.cd-panel').addClass('is-visible');
+}
+function closePanel() {
+    $('.cd-panel').removeClass('is-visible');
+}
+
