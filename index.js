@@ -308,7 +308,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
 
         $scope.list_translations();
         // $scope.toggleSidebar();
-        sidebarInıt();
+        sidebarInit();
 
         /* end of init */
 
@@ -454,7 +454,6 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             }
             angular.element(document.getElementById('theView')).scope().tags = newTags;
             $scope.annotationModalDataVerse = Math.floor(annotation.verseId / 1000) + ":" + annotation.verseId % 1000;
-            //Error: [$rootScope:inprog]
             if (!$scope.$$phase) {
                 $scope.$apply();
             }
@@ -491,8 +490,6 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         $scope.loadAnnotations = function (annotations) {
             $scope.annotations = annotations;
             $scope.$apply();
-
-//            $scope.showEditor($scope.annotations[0],0);
         }
 
         $scope.removeAnnotation = function (annotation) {
@@ -570,7 +567,7 @@ function list_fn(id) {
     angular.element(document.getElementById('MainCtrl')).scope().list_footnotes(id);
 }
 
-function sidebarInıt() {
+function sidebarInit() {
     $('.cd-btn').on('click', function (event) {
         event.preventDefault();
         $('.cd-panel').addClass('is-visible');
