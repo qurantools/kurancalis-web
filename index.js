@@ -517,7 +517,8 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             if($scope.filteredAnnotations.length>0){
                 index=$scope.getAnnotationIndexFromFilteredAnnotationIndex(index);
             }
-            $scope.showEditor($scope.annotations[index], 0);
+            annotator.onEditAnnotation($scope.annotations[index]);
+
         }
         $scope.deleteAnnotation = function (index) {
             if($scope.filteredAnnotations.length>0){
