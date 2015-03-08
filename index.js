@@ -495,13 +495,13 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         $scope.removeAnnotation = function (annotation) {
             var arrLen = $scope.annotations.length;
             var annotationId = annotation.annotationId;
-            var annotationIndex = 0;
+            var annotationIndex = -1;
             for (var i = 0; i < arrLen; i++) {
                 if ($scope.annotations[i].annotationId == annotationId) {
                     annotationIndex = i;
                 }
             }
-            if (annotationIndex != 0) {
+            if (annotationIndex != -1) {
                 $scope.annotations.splice(annotationIndex, 1);
                 if (!$scope.$$phase) {
                     $scope.$apply();
@@ -514,15 +514,15 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         }
 
         $scope.editAnnotation = function (index) {
-            if($scope.filteredAnnotations.length>0){
-                index=$scope.getAnnotationIndexFromFilteredAnnotationIndex(index);
+            if (typeof $scope.filteredAnnotations != 'undefined' && $scope.filteredAnnotations.length > 0) {
+                index = $scope.getAnnotationIndexFromFilteredAnnotationIndex(index);
             }
             annotator.onEditAnnotation($scope.annotations[index]);
 
         }
         $scope.deleteAnnotation = function (index) {
-            if($scope.filteredAnnotations.length>0){
-                index=$scope.getAnnotationIndexFromFilteredAnnotationIndex(index);
+            if (typeof $scope.filteredAnnotations != 'undefined' && $scope.filteredAnnotations.length > 0) {
+                index = $scope.getAnnotationIndexFromFilteredAnnotationIndex(index);
             }
             annotator.deleteAnnotation($scope.annotations[index]);
         }
@@ -546,10 +546,10 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             }
         }
 
-        $scope.getAnnotationIndexFromFilteredAnnotationIndex=function(filteredAnnotationIndex){
-            var arrLen=$scope.annotations.length;
-            var filteredAnnotationId=$scope.filteredAnnotations[filteredAnnotationIndex].annotationId;
-            var annotationIndex=0;
+        $scope.getAnnotationIndexFromFilteredAnnotationIndex = function (filteredAnnotationIndex) {
+            var arrLen = $scope.annotations.length;
+            var filteredAnnotationId = $scope.filteredAnnotations[filteredAnnotationIndex].annotationId;
+            var annotationIndex = -1;
             for (var i = 0; i < arrLen; i++) {
                 if ($scope.annotations[i].annotationId == filteredAnnotationId) {
                     annotationIndex = i;
@@ -562,7 +562,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             $scope.filteredAnnotations = [];
         }
 
-        $scope.scrollToElement = function (elementId){
+        $scope.scrollToElement = function (elementId) {
             var destination = angular.element(document.getElementById(elementId));
             $document.scrollToElement(destination, 30, 1000);
         }
