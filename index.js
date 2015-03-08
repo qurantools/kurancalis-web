@@ -1,4 +1,4 @@
-angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 'LocalStorageModule', 'ngTagsInput'])
+angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 'LocalStorageModule', 'ngTagsInput', 'duScroll'])
     .filter('to_trusted', ['$sce',
         function ($sce) {
             return function (text) {
@@ -108,7 +108,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         );
     })
 
-    .controller('MainCtrl', function ($scope, $q, $routeParams, $location, $timeout, ListAuthors, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService) {
+    .controller('MainCtrl', function ($scope, $q, $routeParams, $location, $timeout, ListAuthors, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService, $document) {
         var chapterId = 1;
         var authorMask = 48;
         if (typeof $routeParams.chapterId !== 'undefined') {
@@ -559,6 +559,11 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
 
         $scope.resetAnnotationFilter = function () {
             $scope.filteredAnnotations = [];
+        }
+
+        $scope.scrollToElement = function (elementId){
+            var destination = angular.element(document.getElementById(elementId));
+            $document.scrollToElement(destination, 30, 1000);
         }
 
     });

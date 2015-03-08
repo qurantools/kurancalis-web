@@ -128,3 +128,7 @@ hr {
     margin-top: 15px;
     padding: 10px 8px;
 }
+
+.sidebar_annotation{
+    cursor:pointer;
+}
