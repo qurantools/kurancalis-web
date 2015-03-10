@@ -28,6 +28,8 @@
                         <button class="btn btn-primary" data-target="#myModal" data-toggle="modal" type="button">
                             <i class="fa fa-user"></i>
                         </button>
+                        <a class="btn btn-primary" type="button" href="#annotations/">annotations
+                        </a>
                     </div>
 
                     <div ng-show="facebookIsReady" class="facebook_area">
@@ -119,62 +121,8 @@
 </div>
 
 
-<div class="modal" id="annotationModal">
-    <div class="modal-dialog fixed-dialog">
-        <div class="modal-content">
-            <div class="modal-header" id="annotationData_header">
-                <strong>{{annotationModalDataVerse}}</strong>
-                {{annotationModalData.quote}}
-                <h4 class="modal-title">{{annotationModal.title}}</h4>
-            </div>
 
-            <div class="modal-body">
-                <textarea class="form-control" id="annotationData_text" ng-model="annotationModalData.text"></textarea>
-
-
-                <div class="row">
-                    <div class="col-xs-6">
-                        <h3>etiketler</h3>
-
-
-                        <tags-input ng-model="tags" display-property="name" replace-spaces-with-dashes=false
-                                    min-length="2">
-
-                            <auto-complete source="loadTags($query)" min-length="2"></auto-complete>
-
-                        </tags-input>
-
-
-                        <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#myModal">
-                            <i class="fa fa-plus"></i>
-                        </button>
-
-
-                        <ul ng-repeat="selectedTag in selectedTags">
-                            <li>{{selectedTag}}</li>
-                        </ul>
-
-                    </div>
-                    <div class="col-xs-6">
-                        <input type="radio" ng-model="annotationModalData.colour" value="yellow"> Sarı <br/>
-                        <input type="radio" ng-model="annotationModalData.colour" value="red"> Kırmızı <br/>
-                        <input type="radio" ng-model="annotationModalData.colour" value="green"> Yeşil <br/>
-                    </div>
-                </div>
-            </div>
-
-            <div class="modal-footer">
-                <button type="button" data-dismiss="modal" aria-hidden="true" class="btn" ng-click="hideEditor()">
-                    Vazgeç
-                </button>
-                <!--
-                 $('.annotator-hl-temporary').removeClass('annotator-hl');$('span').removeClass('annotator-hl-temporary');
-                 -->
-                <a href="#" class="btn btn-primary btn-wide" data-dismiss="modal" ng-click="submitEditor()">Tamam</a>
-            </div>
-        </div>
-    </div>
-</div>
+<div ng-include="'app/components/partials/editor_modal.html'"></div>
 
 <div class="cd-panel from-right">
     <!--     <a href="#0" class="cd-panel-close">Close</a>-->

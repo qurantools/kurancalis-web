@@ -1,0 +1,79 @@
+<body>
+
+
+<div class="container">
+<!--
+
+        <pre>isReady: <span id="is_ready" ng-bind="facebookIsReady"></span></pre>
+        <pre>status: <span id="login_status" ng-bind="loginStatus"></span></pre>
+        <pre>token: <span id="tokenFb" ng-bind="tokenFb"></span></pre>
+        <pre>access token: <span id="accessToken" ng-bind="access_token"></span></pre>
+        <pre>validation_response: <span id="api_first_name" ng-bind="validation_response | json"></span></pre>
+
+
+    <pre>allAnnotations: <span id="allAnnotatio" ng-bind="annotations | json"></span></pre>
+    -->
+
+
+    <nav class="navbar navbar-default" role="navigation">
+        <div>
+            <form>
+                <div class="row" style="padding-left: 15px;">
+                    <div ng-show="facebookIsReady" class="facebook_area">
+                        <div ng-if="user==null">
+                            <button type="button" id="login" ng-click="login()" class="btn btn-primary">
+                                Giriş
+                            </button>
+                        </div>
+                        <div ng-if="user!=null">
+
+                            <img ng-src="{{user.photo}}" height="30"/>
+                            {{user.name}}
+                            <button type="button" id="remove_auth" ng-click="log_out()" class="btn btn-primary">
+                                Çıkış
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- /.navbar-collapse -->
+    </nav>
+    <!-- /navbar -->
+
+
+
+    <div>
+        <div ng-repeat="annotation in annotations">
+            <div class="s_a_header">
+                {{annotation.verseId / 1000 | number:0}}:{{annotation.verseId % 1000}}
+            </div>
+            <div>
+                {{annotation.quote}}
+            </div>
+            <div class="well s_a_text">
+                {{annotation.text}}
+            </div>
+            <div ng-repeat="annotationTag in annotation.tags" class="tag label label-info s_a_tag">
+                {{annotationTag}}
+            </div>
+            <div class="row" style="padding:0 15px">
+                <div style="float: left">{{annotation.updated | date: 'dd/MM/yyyy HH:mm:ss'}}</div>
+                <div style="float: right">
+                    <button type="button" class="btn btn-primary btn-xs" ng-click="editAnnotation($index)"><i
+                            class="fa fa-pencil-square-o"></i>
+                    </button>
+                    <button type="button" class="btn btn-primary btn-xs" ng-click="deleteAnnotation($index)"><i
+                            class="fa fa-trash-o"></i></button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <button ng-click="get_all_annotations()">get_all_annotations</button>
+    <div ng-include="'app/components/partials/editor_modal.html'"></div>
+
+
+
+</body>

@@ -40,6 +40,11 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
                 templateUrl: 'app/components/home/homeView.html',
                 reloadOnSearch: false
             })
+            .when('/annotations/', {
+                controller: 'MainCtrl',
+                templateUrl: 'app/components/annotations/annotationsView.html',
+                reloadOnSearch: false
+            })
             .otherwise({
                 redirectTo: '/'
             });
@@ -286,9 +291,33 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             }
         }
 
+        $scope.get_all_annotations = function () {
+            var usersRestangular = Restangular.all("annotations");
+            $scope.allAnnotationsParams = [];
+            $scope.allAnnotationsParams.start = $scope.allAnnotationsOpts.start;
+            $scope.allAnnotationsParams.limit = $scope.allAnnotationsOpts.limit;
+
+            usersRestangular.customGET("", $scope.allAnnotationsParams, {'access_token': $scope.access_token}).then(function (annotations) {
+                    if (annotations != "") {
+                        $scope.annotations = $scope.annotations.concat(annotations)
+                        $scope.allAnnotationsOpts.start += $scope.allAnnotationsOpts.limit;
+                    } else {
+                        $scope.allAnnotationsOpts.hasMore = false;
+                    }
+                }
+            );
+        }
+
         /* init */
         $scope.sidebarActive = 0;
         $scope.tagSearchResult = [];
+
+        // all annotations
+        $scope.annotations = [];
+        $scope.allAnnotationsOpts = [];
+        $scope.allAnnotationsOpts.hasMore = true;
+        $scope.allAnnotationsOpts.start = 0;
+        $scope.allAnnotationsOpts.limit = 10;
 
 
         //hide list of authors div
@@ -501,6 +530,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
                     annotationIndex = i;
                 }
             }
+
             if (annotationIndex != -1) {
                 $scope.annotations.splice(annotationIndex, 1);
                 if (!$scope.$$phase) {
@@ -566,7 +596,6 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             var destination = angular.element(document.getElementById(elementId));
             $document.scrollToElement(destination, 30, 1000);
         }
-
     });
 
 function list_fn(id) {
