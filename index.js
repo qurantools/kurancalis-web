@@ -458,6 +458,10 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         }
 
         $scope.submitEditor = function () {
+
+            console.log("scope.tags"+JSON.stringify($scope.tags));
+            console.log("theview.tags"+JSON.stringify(angular.element(document.getElementById('theView')).scope().tags))
+            console.log("MainCtrl.tags"+JSON.stringify(angular.element(document.getElementById('MainCtrl')).scope().tags))
             var tags = $scope.tags;
             var newTags = [];
             for (var i = 0; i < tags.length; i++) {
@@ -548,13 +552,19 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
                 index = $scope.getAnnotationIndexFromFilteredAnnotationIndex(index);
             }
             annotator.onEditAnnotation($scope.annotations[index]);
+            annotator.updateAnnotation( $scope.annotations[index] );
+
 
         }
         $scope.deleteAnnotation = function (index) {
             if (typeof $scope.filteredAnnotations != 'undefined' && $scope.filteredAnnotations.length > 0) {
                 index = $scope.getAnnotationIndexFromFilteredAnnotationIndex(index);
             }
+            //FIXME
             annotator.deleteAnnotation($scope.annotations[index]);
+           // annotator.annotationDeleted($scope.annotations[index]);
+            annotator.plugins['Store'].annotationDeleted($scope.annotations[index])
+
         }
 
         $scope.loggedIn = false;
