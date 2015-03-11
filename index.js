@@ -459,13 +459,13 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
 
         $scope.submitEditor = function () {
 
-            console.log("scope.tags"+JSON.stringify($scope.tags));
-            console.log("theview.tags"+JSON.stringify(angular.element(document.getElementById('theView')).scope().tags))
-            console.log("MainCtrl.tags"+JSON.stringify(angular.element(document.getElementById('MainCtrl')).scope().tags))
-            var tags = $scope.tags;
+            console.log("scope.tags"+JSON.stringify($scope.theTags));
+            console.log("theview.tags"+angular.element(document.getElementById('theView')).scope().theTags)
+            console.log("MainCtrl.tags"+angular.element(document.getElementById('MainCtrl')).scope().theTags)
+            var jsTags = $scope.theTags;
             var newTags = [];
-            for (var i = 0; i < tags.length; i++) {
-                newTags.push(tags[i].name);
+            for (var i = 0; i < jsTags.length; i++) {
+                newTags.push(jsTags[i].name);
             }
             $scope.annotationModalData.tags = newTags;
             annotator.publish('annotationEditorSubmit', [annotator.editor, $scope.annotationModalData]);
@@ -485,7 +485,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             if (typeof $scope.annotationModalData.text == 'undefined') {
                 $scope.annotationModalData.text = "";
             }
-            angular.element(document.getElementById('theView')).scope().tags = newTags;
+            angular.element(document.getElementById('theView')).scope().theTags = newTags;
             $scope.annotationModalDataVerse = Math.floor(annotation.verseId / 1000) + ":" + annotation.verseId % 1000;
             if (!$scope.$$phase) {
                 $scope.$apply();
