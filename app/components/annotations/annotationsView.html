@@ -41,9 +41,6 @@
     </nav>
     <!-- /navbar -->
 
-    <pre>tags: <span id="user_info" ng-bind="annotations | json"></span></pre>
-
-
     <div>
         <div ng-repeat="annotation in annotations">
             <div class="s_a_header">
@@ -64,7 +61,7 @@
                     <button type="button" class="btn btn-primary btn-xs" ng-click="editAnnotation2($index)"><i
                             class="fa fa-pencil-square-o"></i>
                     </button>
-                    <button type="button" class="btn btn-primary btn-xs" ng-click="deleteAnnotation2($index)"><i
+                    <button type="button" class="btn btn-primary btn-xs" ng-click="deleteAnnotation2(annotation)"><i
                             class="fa fa-trash-o"></i></button>
                 </div>
             </div>

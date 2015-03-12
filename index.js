@@ -569,7 +569,9 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
 
 
         $scope.deleteAnnotation2 = function (annotation) {
-            Restangular.all("annotations", [annotation.annotationId, {'access_token': $scope.access_token}]).remove();
+            var annotationRestangular = Restangular.one("annotations", annotation.annotationId);
+            return annotationRestangular.customDELETE("", {}, {'access_token': $scope.access_token});
+            //annotationTobeDeleted.remove();
 
         }
 
