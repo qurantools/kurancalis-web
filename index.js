@@ -459,7 +459,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
 
         $scope.submitEditor = function () {
 
-            console.log("scope.tags"+JSON.stringify($scope.theTags));
+            console.log("scope.tags" + JSON.stringify($scope.theTags));
             var jsTags = $scope.theTags;
             var newTags = [];
             for (var i = 0; i < jsTags.length; i++) {
@@ -549,8 +549,9 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             if (typeof $scope.filteredAnnotations != 'undefined' && $scope.filteredAnnotations.length > 0) {
                 index = $scope.getAnnotationIndexFromFilteredAnnotationIndex(index);
             }
+
             annotator.onEditAnnotation($scope.annotations[index]);
-            annotator.updateAnnotation( $scope.annotations[index] );
+            annotator.updateAnnotation($scope.annotations[index]);
 
 
         }
@@ -559,10 +560,40 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
                 index = $scope.getAnnotationIndexFromFilteredAnnotationIndex(index);
             }
             //FIXME
+            $scope.deleteAnnotation2(scope.annotations[index]);
             annotator.deleteAnnotation($scope.annotations[index]);
-           // annotator.annotationDeleted($scope.annotations[index]);
+            // annotator.annotationDeleted($scope.annotations[index]);
             annotator.plugins['Store'].annotationDeleted($scope.annotations[index])
 
+        }
+
+
+        $scope.deleteAnnotation2 = function (annotation) {
+            Restangular.all("annotations", [annotation.annotationId, {'access_token': $scope.access_token}]).remove();
+
+        }
+
+        $scope.editAnnotation2 = function (annotation) {
+
+            var headers = {'Content-Type': 'application/x-www-form-urlencoded', 'access_token': $scope.access_token};
+
+            var jsonData = JSON.parse(annotation);
+            var postData = [];
+            postData.push(encodeURIComponent("start") + "=" + encodeURIComponent(jsonData.ranges[0].start));
+            postData.push(encodeURIComponent("end") + "=" + encodeURIComponent(jsonData.ranges[0].end));
+            postData.push(encodeURIComponent("startOffset") + "=" + encodeURIComponent(jsonData.ranges[0].startOffset));
+            postData.push(encodeURIComponent("endOffset") + "=" + encodeURIComponent(jsonData.ranges[0].endOffset));
+            postData.push(encodeURIComponent("quote") + "=" + encodeURIComponent(jsonData.quote));
+            postData.push(encodeURIComponent("content") + "=" + encodeURIComponent(jsonData.content));
+            postData.push(encodeURIComponent("colour") + "=" + encodeURIComponent(jsonData.colour));
+            postData.push(encodeURIComponent("translationVersion") + "=" + encodeURIComponent(jsonData.translationVersion));
+            postData.push(encodeURIComponent("translationId") + "=" + encodeURIComponent(jsonData.translationId));
+            postData.push(encodeURIComponent("verseId") + "=" + encodeURIComponent(jsonData.verseId));
+            var tags = jsonData.tags.join(",");
+            postData.push(encodeURIComponent("tags") + "=" + encodeURIComponent(tags));
+            var data = postData.join("&");
+
+            //restangular update
         }
 
         $scope.loggedIn = false;
