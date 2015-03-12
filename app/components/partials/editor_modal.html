@@ -8,8 +8,7 @@
             </div>
 
             <div class="modal-body">
-                <pre>tags: <span id="user_info" ng-bind="theTags | json"></span></pre>
-
+                <!--<pre>tags: <span id="user_info" ng-bind="theTags | json"></span></pre>-->
 
                 <textarea class="form-control" id="annotationData_text" ng-model="annotationModalData.text"></textarea>
 
@@ -19,7 +18,7 @@
                         <h3>etiketler</h3>
 
 
-                        <tags-input ng-model="theTags" display-property="name" replace-spaces-with-dashes=false
+                        <tags-input ng-model="$parent.theTags" display-property="name" replace-spaces-with-dashes=false
                                     min-length="2">
 
                             <auto-complete source="loadTags($query)" min-length="2"></auto-complete>

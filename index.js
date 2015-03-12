@@ -460,8 +460,6 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         $scope.submitEditor = function () {
 
             console.log("scope.tags"+JSON.stringify($scope.theTags));
-            console.log("theview.tags"+angular.element(document.getElementById('theView')).scope().theTags)
-            console.log("MainCtrl.tags"+angular.element(document.getElementById('MainCtrl')).scope().theTags)
             var jsTags = $scope.theTags;
             var newTags = [];
             for (var i = 0; i < jsTags.length; i++) {
