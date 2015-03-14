@@ -18,7 +18,7 @@
             <form>
                 <div class="row" style="padding-left: 15px;">
                     <div style="float: left">
-                        <input type="text" ng-model="chapter_id" size="12"/>
+                        <input type="text" ng-model="chapter_id" size="12"  ng-enter="goToChapter()"/>
                     </div>
                     <input type="hidden" ng-model="author_mask" value="48"/>
 
@@ -29,7 +29,7 @@
                         <button class="btn btn-primary" data-target="#myModal" data-toggle="modal" type="button">
                             <i class="fa fa-user"></i>
                         </button>
-                        <a class="btn btn-primary" type="button" href="#annotations/">annotations
+                        <a class="btn btn-primary" type="button" href="#annotations/"  ng-if="user!=null">Tüm notlar
                         </a>
                     </div>
 
@@ -130,14 +130,13 @@
     <div class="cd-panel-container">
 
         <div class="cd-panel-content">
-            <button onclick="closePanel()" class="btn btn-primary btn-xs" style="float: right; margin-right:20px"><i
-                    class="fa fa-eye-slash"></i></button>
-            <div ng-show='filteredAnnotations.length > 0'>
-                <button class="btn btn-warning btn-xs" ng-click="resetAnnotationFilter()"><i class="fa fa-trash-o"></i> Filtreyi
+            <div style="padding-bottom:10px;" >
+            <button onclick="closePanel()" class="btn btn-default btn-xs" style="float: left;"><i
+                    class="fa fa-undo"></i></button>
+                <button class="btn btn-warning btn-xs" ng-click="resetAnnotationFilter()" ng-show='filteredAnnotations.length > 0' style="float: right"><i class="fa fa-trash-o"></i> Filtreyi
                     kaldır
                 </button>
             </div>
-
             <div ng-repeat="annotation in annotations | filter:annotationFilter" class="sidebar_annotation box" ng-click="scrollToElement('t_'+annotation.translationId)">
                 <!-- s_a -->
                 <div class="s_a_header">

@@ -24,7 +24,19 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             }
             return original.apply($location, [path]);
         };
-    }]).config(function ($routeProvider, FacebookProvider, RestangularProvider, localStorageServiceProvider) {
+    }]).directive('ngEnter', function () {
+        return function (scope, element, attrs) {
+            element.bind("keydown keypress", function (event) {
+                if(event.which === 13) {
+                    scope.$apply(function (){
+                        scope.$eval(attrs.ngEnter);
+                    });
+
+                    event.preventDefault();
+                }
+            });
+        };
+    }).config(function ($routeProvider, FacebookProvider, RestangularProvider, localStorageServiceProvider) {
         RestangularProvider.setBaseUrl('https://securewebserver.net/jetty/qt/rest');
         //RestangularProvider.setBaseUrl('http://localhost:8080/QuranToolsApp/rest');
         localStorageServiceProvider.setStorageCookie(0, '/');
@@ -490,9 +502,15 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             }
             angular.element(document.getElementById('theView')).scope().theTags = newTags;
             $scope.annotationModalDataVerse = Math.floor(annotation.verseId / 1000) + ":" + annotation.verseId % 1000;
+
+            //set default color
+            if (typeof $scope.annotationModalData.colour == 'undefined')$scope.annotationModalData.colour = 'yellow';
+
             if (!$scope.$$phase) {
                 $scope.$apply();
             }
+
+
             $('#annotationModal').modal('show');
         }
 
@@ -575,8 +593,8 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             annotationRestangular.customDELETE("", {}, {'access_token': $scope.access_token}).then(function (result) {
 
                 if (result.code == '200') {
-                   var annotationIndex= $scope.getIndexOfArrayByElement($scope.annotations,'annotationId',annotation.annotationId);
-                    if(annotationIndex>-1){
+                    var annotationIndex = $scope.getIndexOfArrayByElement($scope.annotations, 'annotationId', annotation.annotationId);
+                    if (annotationIndex > -1) {
                         $scope.annotations.splice(annotationIndex, 1);
                     }
                 }
@@ -657,6 +675,10 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
                 }
             }
             return foundOnIndex;
+        }
+
+        if ($location.path() == '/annotations/') {
+            $scope.get_all_annotations();
         }
     });
 

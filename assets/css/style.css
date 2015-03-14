@@ -110,6 +110,13 @@ hr {
     color: black;
 }
 
+.tag_colour{
+    float: left;
+    width: 20px;
+    height: 20px;
+    margin-left:10px;
+}
+
 /* end of annotation editor */
 
 .s_a_tag {

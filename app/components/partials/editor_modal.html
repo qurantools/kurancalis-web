@@ -10,14 +10,11 @@
             <div class="modal-body">
                 <!--<pre>tags: <span id="user_info" ng-bind="theTags | json"></span></pre>-->
 
-                <textarea class="form-control" id="annotationData_text" ng-model="annotationModalData.text"></textarea>
+                <textarea class="form-control" id="annotationData_text" ng-model="annotationModalData.text" placeholder="Yorum ekleyin"></textarea>
 
 
                 <div class="row">
                     <div class="col-xs-6">
-                        <h3>etiketler</h3>
-
-
                         <tags-input ng-model="$parent.theTags" display-property="name" replace-spaces-with-dashes=false
                                     min-length="2">
 
@@ -25,21 +22,15 @@
 
                         </tags-input>
 
-
-                        <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#myModal">
-                            <i class="fa fa-plus"></i>
-                        </button>
-
-
                         <ul ng-repeat="selectedTag in selectedTags">
                             <li>{{selectedTag}}</li>
                         </ul>
 
                     </div>
-                    <div class="col-xs-6">
-                        <input type="radio" ng-model="annotationModalData.colour" value="yellow"> Sarı <br/>
-                        <input type="radio" ng-model="annotationModalData.colour" value="red"> Kırmızı <br/>
-                        <input type="radio" ng-model="annotationModalData.colour" value="green"> Yeşil <br/>
+                    <div class="col-xs-6" style="padding-top:5px;">
+                        <input type="radio" ng-model="annotationModalData.colour" value="yellow" style="float: left;"> <div class="tag_colour a_hl_yellow">&nbsp;</div> <br/>
+                        <input type="radio" ng-model="annotationModalData.colour" value="red" style="float: left;">  <div class="tag_colour a_hl_red">&nbsp;</div>  <br/>
+                        <input type="radio" ng-model="annotationModalData.colour" value="green" style="float: left;">  <div class="tag_colour a_hl_green">&nbsp;</div>  <br/>
                     </div>
                 </div>
             </div>

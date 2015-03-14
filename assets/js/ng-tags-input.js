@@ -218,7 +218,7 @@ tagsInput.directive('tagsInput', ["$timeout","$document","tagsInputConfig", func
 
             tagsInputConfig.load('tagsInput', $scope, $attrs, {
                 type: [String, 'text', validateType],
-                placeholder: [String, 'Add a tag'],
+                placeholder: [String, 'Bir etiket ekleyin'],
                 tabindex: [Number, null],
                 removeTagSymbol: [String, String.fromCharCode(215)],
                 replaceSpacesWithDashes: [Boolean, true],
