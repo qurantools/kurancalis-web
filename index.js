@@ -5,6 +5,13 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
                 return $sce.trustAsHtml(text);
             };
         }])
+    .filter('newLineAllowed', [
+        function () {
+            return function (text) {
+
+                return text.replace(/(?:\r\n|\r|\n)/g, '<br />');
+            };
+        }])
     .filter('with_footnote_link', [
         function () {
             return function (text, translation_id) {
@@ -27,8 +34,8 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
     }]).directive('ngEnter', function () {
         return function (scope, element, attrs) {
             element.bind("keydown keypress", function (event) {
-                if(event.which === 13) {
-                    scope.$apply(function (){
+                if (event.which === 13) {
+                    scope.$apply(function () {
                         scope.$eval(attrs.ngEnter);
                     });
 
@@ -126,6 +133,14 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
     })
 
     .controller('MainCtrl', function ($scope, $q, $routeParams, $location, $timeout, ListAuthors, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService, $document) {
+        //currentPage
+        $scope.currentPage = '';
+        if ($location.path() == '/annotations/') {
+            $scope.currentPage = 'annotations';
+        } else {
+            $scope.currentPage = 'home';
+        }
+
         var chapterId = 1;
         var authorMask = 48;
         if (typeof $routeParams.chapterId !== 'undefined') {
@@ -313,6 +328,9 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
                     if (annotations != "") {
                         $scope.annotations = $scope.annotations.concat(annotations)
                         $scope.allAnnotationsOpts.start += $scope.allAnnotationsOpts.limit;
+                        if (annotations.length < $scope.allAnnotationsOpts.limit) {
+                            $scope.allAnnotationsOpts.hasMore = false;
+                        }
                     } else {
                         $scope.allAnnotationsOpts.hasMore = false;
                     }
@@ -356,7 +374,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         //toggle selection for an author id
         $scope.toggleSelection = function toggleSelection(author_id) {
             var idx = $scope.selection.indexOf(author_id);
-            ;
+
             // is currently selected
             if (idx > -1) {
                 $scope.selection.splice(idx, 1);
@@ -373,8 +391,12 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
 
         //go to chapter
         $scope.goToChapter = function () {
-            $location.path('/chapter/' + $scope.chapter_id + '/author/' + $scope.author_mask, false);
-            $scope.list_translations();
+            if ($scope.currentPage == 'home') {
+                $location.path('/chapter/' + $scope.chapter_id + '/author/' + $scope.author_mask, false);
+                $scope.list_translations();
+            } else {
+                window.location.href = '#/chapter/' + $scope.chapter_id + '/author/' + $scope.author_mask;
+            }
         };
 
 
@@ -470,7 +492,6 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         }
 
         $scope.submitEditor = function () {
-
             var jsTags = $scope.theTags;
             var newTags = [];
             for (var i = 0; i < jsTags.length; i++) {
@@ -478,9 +499,12 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             }
             $scope.annotationModalData.tags = newTags;
             annotator.publish('annotationEditorSubmit', [annotator.editor, $scope.annotationModalData]);
-
-            if ($location.path() == '/annotations/') { //annotations page update
+            if ($scope.currentPage == 'annotations') { //annotations page update
                 $scope.editAnnotation2($scope.annotationModalData);
+            }
+            //coming from another page fix
+            if ($scope.annotations[$scope.annotations.length - 1] != $scope.annotationModalData && $scope.getIndexOfArrayByElement($scope.annotations, 'annotationId', $scope.annotationModalData.annotationId) == -1) {
+                $scope.addAnnotation($scope.annotationModalData);
             }
 
             return annotator.ignoreMouseup = false;
@@ -505,11 +529,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
 
             //set default color
             if (typeof $scope.annotationModalData.colour == 'undefined')$scope.annotationModalData.colour = 'yellow';
-
-            if (!$scope.$$phase) {
-                $scope.$apply();
-            }
-
+            $scope.scopeApply();
 
             $('#annotationModal').modal('show');
         }
@@ -543,7 +563,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
 
         $scope.loadAnnotations = function (annotations) {
             $scope.annotations = annotations;
-            $scope.$apply();
+            $scope.scopeApply();
         }
 
         $scope.removeAnnotation = function (annotation) {
@@ -558,9 +578,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
 
             if (annotationIndex != -1) {
                 $scope.annotations.splice(annotationIndex, 1);
-                if (!$scope.$$phase) {
-                    $scope.$apply();
-                }
+                $scope.scopeApply();
             }
         }
 
@@ -572,7 +590,6 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             if (typeof $scope.filteredAnnotations != 'undefined' && $scope.filteredAnnotations.length > 0) {
                 index = $scope.getAnnotationIndexFromFilteredAnnotationIndex(index);
             }
-
             annotator.onEditAnnotation($scope.annotations[index]);
             annotator.updateAnnotation($scope.annotations[index]);
 
@@ -619,7 +636,6 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             var tags = jsonData.tags.join(",");
             postData.push(encodeURIComponent("tags") + "=" + encodeURIComponent(tags));
             var data = postData.join("&");
-
             var annotationRestangular = Restangular.one("annotations", jsonData.annotationId);
             return annotationRestangular.customPUT(data, '', '', headers);
         }
@@ -676,10 +692,16 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             }
             return foundOnIndex;
         }
-
-        if ($location.path() == '/annotations/') {
+        if ($scope.currentPage == 'annotations') {
             $scope.get_all_annotations();
         }
+
+        $scope.scopeApply = function () {
+            if (!$scope.$$phase) {
+                $scope.$apply();
+            }
+        }
+
     });
 
 function list_fn(id) {

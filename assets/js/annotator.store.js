@@ -133,13 +133,14 @@
         Store.prototype.loadAnnotations = function () {
             var theScope = angular.element(document.getElementById('theView')).scope();
             var accessToken;
-            if(theScope){
+            if (theScope) {
 
                 accessToken = theScope.access_token;
             }
-            if(typeof accessToken === 'undefined'){
+            if (typeof accessToken === 'undefined') {
                 return;
-            };
+            }
+            ;
             return this._apiRequest('read', null, this._onLoadAnnotations);
         };
 
@@ -160,8 +161,8 @@
 
                 //add translation DIV prefix to annotations
                 var tidBlock = angular.element(document.getElementById('theView')).scope().translationDivMap[data[_j].translationId];
-                data[_j].ranges[0].start = tidBlock+data[_j].ranges[0].start;
-                data[_j].ranges[0].end = tidBlock+data[_j].ranges[0].end;
+                data[_j].ranges[0].start = tidBlock + data[_j].ranges[0].start;
+                data[_j].ranges[0].end = tidBlock + data[_j].ranges[0].end;
 
                 a = data[_j];
                 if (annotationMap[a.id]) {
@@ -211,7 +212,7 @@
 
         Store.prototype._apiRequestOptions = function (action, obj, onSuccess) {
             var data, method, opts, formData;
-            var postData =[];
+            var postData = [];
             var accessToken = angular.element(document.getElementById('theView')).scope().access_token;
 
             method = this._methodFor(action);
@@ -228,50 +229,50 @@
                 'access_token': accessToken
             });
 
-            if(opts.type == "GET"){
+            if (opts.type == "GET") {
                 opts.headers = $.extend(opts.headers, {
                     'Content-Type': 'application/json; charset=utf-8'
                 });
 
-                var _chapter=angular.element(document.getElementById('theView')).scope().chapter_id;
+                var _chapter = angular.element(document.getElementById('theView')).scope().chapter_id;
                 var _author = angular.element(document.getElementById('theView')).scope().author_mask;
-                data={
-                    chapter: _chapter ,
-                    author:  _author
+                data = {
+                    chapter: _chapter,
+                    author: _author
                 };
 
-                opts.dataType='json';
+                opts.dataType = 'json';
 
             }
-            else if(opts.type == "DELETE"){
+            else if (opts.type == "DELETE") {
                 opts.headers = $.extend(opts.headers, {
                     'Content-Type': 'application/json; charset=utf-8'
                 });
 
-                opts.dataType='text';
+                opts.dataType = 'text';
 
             }
-            else  if(opts.type == 'POST' || opts.type == 'PUT') {
+            else if (opts.type == 'POST' || opts.type == 'PUT') {
                 data = obj && this._dataFor(obj);
                 opts.headers = $.extend(opts.headers, {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 });
-                opts.dataType='json';
+                opts.dataType = 'json';
 
                 var jsonData = JSON.parse(data);
-                postData.push(encodeURIComponent("start")+"="+ encodeURIComponent(jsonData.ranges[0].start));
-                postData.push(encodeURIComponent("end")+"="+ encodeURIComponent(jsonData.ranges[0].end));
-                postData.push(encodeURIComponent("startOffset")+"="+ encodeURIComponent(jsonData.ranges[0].startOffset));
-                postData.push(encodeURIComponent("endOffset")+"="+ encodeURIComponent(jsonData.ranges[0].endOffset));
-                postData.push(encodeURIComponent("quote")+"="+ encodeURIComponent(jsonData.quote));
-                postData.push(encodeURIComponent("content")+"="+ encodeURIComponent(jsonData.content));
-                postData.push(encodeURIComponent("colour")+"="+ encodeURIComponent(jsonData.colour));
-                postData.push(encodeURIComponent("translationVersion")+"="+ encodeURIComponent(jsonData.translationVersion));
-                postData.push(encodeURIComponent("translationId")+"="+ encodeURIComponent(jsonData.translationId));
-                postData.push(encodeURIComponent("verseId")+"="+ encodeURIComponent(jsonData.verseId));
+                postData.push(encodeURIComponent("start") + "=" + encodeURIComponent(jsonData.ranges[0].start));
+                postData.push(encodeURIComponent("end") + "=" + encodeURIComponent(jsonData.ranges[0].end));
+                postData.push(encodeURIComponent("startOffset") + "=" + encodeURIComponent(jsonData.ranges[0].startOffset));
+                postData.push(encodeURIComponent("endOffset") + "=" + encodeURIComponent(jsonData.ranges[0].endOffset));
+                postData.push(encodeURIComponent("quote") + "=" + encodeURIComponent(jsonData.quote));
+                postData.push(encodeURIComponent("content") + "=" + encodeURIComponent(jsonData.content));
+                postData.push(encodeURIComponent("colour") + "=" + encodeURIComponent(jsonData.colour));
+                postData.push(encodeURIComponent("translationVersion") + "=" + encodeURIComponent(jsonData.translationVersion));
+                postData.push(encodeURIComponent("translationId") + "=" + encodeURIComponent(jsonData.translationId));
+                postData.push(encodeURIComponent("verseId") + "=" + encodeURIComponent(jsonData.verseId));
                 var tags = jsonData.tags.join(",");
-                postData.push(encodeURIComponent("tags")+"="+ encodeURIComponent(tags));
-                data=postData.join("&");
+                postData.push(encodeURIComponent("tags") + "=" + encodeURIComponent(tags));
+                data = postData.join("&");
 
             }
 
@@ -282,8 +283,6 @@
                 });
                 return opts;
             }
-
-
 
 
             opts = $.extend(opts, {
@@ -320,8 +319,8 @@
             $.extend(annotation, this.options.annotationData);
 
             var tidBlock = angular.element(document.getElementById('theView')).scope().translationDivMap[annotation.translationId];
-            annotation.ranges[0].start = annotation.ranges[0].start.replace(tidBlock,"");
-            annotation.ranges[0].end = annotation.ranges[0].end.replace(tidBlock,"");
+            annotation.ranges[0].start = annotation.ranges[0].start.replace(tidBlock, "");
+            annotation.ranges[0].end = annotation.ranges[0].end.replace(tidBlock, "");
             // hack
             annotation.chapterId = angular.element(document.getElementById('MainCtrl')).scope().chapterId;
 
@@ -352,7 +351,9 @@
             if (xhr._action === 'search') {
                 message = Annotator._t("Sorry we could not search the store for annotations");
             } else if (xhr._action === 'read' && !xhr._id) {
-                message = Annotator._t("Sorry we could not ") + action + Annotator._t(" the annotations from the store");
+                //  message = Annotator._t("Sorry we could not ") + action + Annotator._t(" the annotations from the store");
+                message = Annotator._t("Oturum süresi dolmuştur");
+                angular.element(document.getElementById('theView')).scope().log_out();
             }
             switch (xhr.status) {
                 case 401:

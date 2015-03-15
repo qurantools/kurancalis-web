@@ -13,33 +13,7 @@
 
     <pre>allAnnotations: <span id="allAnnotatio" ng-bind="annotations | json"></span></pre>
     -->
-
-
-    <nav class="navbar navbar-default" role="navigation">
-        <div>
-            <form>
-                <div class="row" style="padding-left: 15px;">
-                    <div ng-show="facebookIsReady" class="facebook_area">
-                        <div ng-if="user==null">
-                            <button type="button" id="login" ng-click="login()" class="btn btn-primary">
-                                Giriş
-                            </button>
-                        </div>
-                        <div ng-if="user!=null">
-
-                            <img ng-src="{{user.photo}}" height="30"/>
-                            {{user.name}}
-                            <button type="button" id="remove_auth" ng-click="log_out()" class="btn btn-primary">
-                                Çıkış
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
-        <!-- /.navbar-collapse -->
-    </nav>
-    <!-- /navbar -->
+    <div ng-include="'app/components/partials/navigation.html'"></div>
 
     <div>
         <div ng-repeat="annotation in annotations">
@@ -50,7 +24,7 @@
                 {{annotation.quote}}
             </div>
             <div class="well s_a_text">
-                {{annotation.text}}
+                <span ng-bind-html="annotation.text | newLineAllowed | to_trusted"></span>
             </div>
             <div ng-repeat="annotationTag in annotation.tags" class="tag label label-info s_a_tag">
                 {{annotationTag}}
@@ -69,7 +43,9 @@
         </div>
 
     </div>
-    <button ng-click="get_all_annotations()">get_all_annotations</button>
+    <div style="text-align: center; padding-top:10px;" ng-if="allAnnotationsOpts.hasMore==true"><button ng-click="get_all_annotations()" class="btn btn-info btn-hg">Daha fazla</button></div>
+
+    <div ng-include="'app/components/partials/authors_modal.html'"></div>
     <div ng-include="'app/components/partials/editor_modal.html'"></div>
 
 

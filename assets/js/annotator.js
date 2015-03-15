@@ -1336,7 +1336,7 @@
                 return $(this).data("annotation");
             });
             angular.element(document.getElementById('theView')).scope().filteredAnnotations = annotations;
-            angular.element(document.getElementById('theView')).scope().$apply();
+            angular.element(document.getElementById('theView')).scope().scopeApply();
             openPanel();
             //  return this.showViewer($.makeArray(annotations), Util.mousePosition(event, this.wrapper[0]));
         };
