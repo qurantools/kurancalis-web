@@ -562,7 +562,10 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         }
 
         $scope.loadAnnotations = function (annotations) {
+
+            console.log("geldi");
             $scope.annotations = annotations;
+            $scope.loadVerseTags();
             $scope.scopeApply();
         }
 
@@ -692,9 +695,88 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             }
             return foundOnIndex;
         }
+
+
         if ($scope.currentPage == 'annotations') {
             $scope.get_all_annotations();
         }
+
+        $scope.loadVerseTags = function () {
+
+            $scope.verseTagsTmp = [];
+            var arrLen = $scope.annotations.length;
+            for (var i = 0; i < arrLen; i++) {
+
+
+                var verseId = $scope.annotations[i].verseId;
+                var translationId = $scope.annotations[i].translationId;
+                var tags = $scope.annotations[i].tags;
+
+                if (tags != "" && tags != null) {
+                    if (typeof $scope.verseTagsTmp[verseId] == 'undefined') {
+                        $scope.verseTagsTmp[verseId] = [];
+                    }
+                    if (typeof $scope.verseTagsTmp[verseId][translationId] == 'undefined') {
+                        $scope.verseTagsTmp[verseId][translationId] = [];
+                    }
+
+                    if ($scope.verseTagsTmp[verseId][translationId] == null) {
+                        $scope.verseTagsTmp[verseId][translationId] = tags;
+                    } else {
+                        $scope.verseTagsTmp[verseId][translationId].push(tags);
+                    }
+                }
+            }
+            console.log("verseTagsTmp: " + $scope.verseTagsTmp);
+            $scope.updateVerseTags();
+        }
+
+
+        $scope.updateVerseTags = function () {
+            var arrLen = $scope.verseTagsTmp.length;
+            //     console.log(JSON.stringify($scope.verseTagsTmp));
+            $scope.verseTags = [];
+            //   $scope.verseTagsTmp = $scope.verseTagsTmp2;
+            for (var verseId in $scope.verseTagsTmp) {
+                if ($scope.verseTagsTmp.hasOwnProperty(verseId)) {
+                    // alert("Key: " + key + ", Value: " + $scope.verseTagsTmp[key]);
+
+                    for (var translationId in $scope.verseTagsTmp[verseId]) {
+
+                        var arrLenTranslations = $scope.verseTagsTmp[verseId][translationId].length;
+
+                        for (var i = 0; i < arrLenTranslations; i++) {
+                            var arrLenTranslationTags = $scope.verseTagsTmp[verseId][translationId][i].length;
+                            for (var j = 0; j < arrLenTranslationTags; j++) {
+                                if (typeof $scope.verseTags[verseId] == 'undefined') {
+                                    $scope.verseTags[verseId] = [];
+                                }
+                                //  console.log("the tag" + i + ":" + $scope.verseTagsTmp[verseId][translationId][i][j]);
+                                if ($scope.verseTags[verseId].indexOf($scope.verseTagsTmp[verseId][translationId][i][j]) == -1) {
+
+
+                                    //    console.log("tagz:" + $scope.verseTagsTmp[verseId][translationId][i][j])
+                                    $scope.verseTags[verseId].push($scope.verseTagsTmp[verseId][translationId][i][j]);
+                                }
+                            }
+                        }
+
+                    }
+                }
+            }
+
+
+            for (var keyv in $scope.verseTags) {
+                for (var key2 in $scope.verseTags[keyv]) {
+                    console.log("k2 " + keyv + ":" + $scope.verseTags[keyv][key2])
+
+                }
+            }
+
+
+            //  console.log(JSON.stringify($scope.verseTags));
+        }
+
 
         $scope.scopeApply = function () {
             if (!$scope.$$phase) {

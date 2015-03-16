@@ -11,6 +11,8 @@
         <pre>validation_response: <span id="api_first_name" ng-bind="validation_response | json"></span></pre>
   -->
 
+    <pre>validation_response: <span id="verseTags" ng-bind="verseTags | json"></span></pre>
+
 
     <div ng-include="'app/components/partials/navigation.html'"></div>
 
@@ -32,22 +34,15 @@
                         <div class="row" ng-if="!$last">
                             <hr/>
                         </div>
-
                     </div>
                 </div>
             </div>
-
-
         </div>
-
     </div>
     <!-- /row-->
 
 </div>
 <!-- /container-->
-
-
-
 
 
 <div ng-include="'app/components/partials/authors_modal.html'"></div>
@@ -58,14 +53,17 @@
     <div class="cd-panel-container">
 
         <div class="cd-panel-content">
-            <div style="padding-bottom:10px;" >
-            <button onclick="closePanel()" class="btn btn-default btn-xs" style="float: left;"><i
-                    class="fa fa-undo"></i></button>
-                <button class="btn btn-warning btn-xs" ng-click="resetAnnotationFilter()" ng-show='filteredAnnotations.length > 0' style="float: right"><i class="fa fa-trash-o"></i> Filtreyi
+            <div style="padding-bottom:10px;">
+                <button onclick="closePanel()" class="btn btn-default btn-xs" style="float: left;"><i
+                        class="fa fa-undo"></i></button>
+                <button class="btn btn-warning btn-xs" ng-click="resetAnnotationFilter()"
+                        ng-show='filteredAnnotations.length > 0' style="float: right"><i class="fa fa-trash-o"></i>
+                    Filtreyi
                     kaldır
                 </button>
             </div>
-            <div ng-repeat="annotation in annotations | filter:annotationFilter" class="sidebar_annotation box" ng-click="scrollToElement('t_'+annotation.translationId)">
+            <div ng-repeat="annotation in annotations | filter:annotationFilter" class="sidebar_annotation box"
+                 ng-click="scrollToElement('t_'+annotation.translationId)">
                 <!-- s_a -->
                 <div class="s_a_header">
                     {{annotation.verseId / 1000 | number:0}}:{{annotation.verseId % 1000}}
