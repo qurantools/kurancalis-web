@@ -16,7 +16,7 @@
     <div ng-include="'app/components/partials/navigation.html'"></div>
 
     <div>
-        <div ng-repeat="annotation in annotations">
+        <div ng-repeat="annotation in annotations" class="box">
             <div class="s_a_header">
                 {{annotation.verseId / 1000 | number:0}}:{{annotation.verseId % 1000}}
             </div>

@@ -503,7 +503,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
                 $scope.editAnnotation2($scope.annotationModalData);
             }
             //coming from another page fix
-            if ($scope.annotations[$scope.annotations.length - 1] != $scope.annotationModalData && $scope.getIndexOfArrayByElement($scope.annotations, 'annotationId', $scope.annotationModalData.annotationId) == -1) {
+            if ($scope.getIndexOfArrayByElement($scope.annotations, 'annotationId', $scope.annotationModalData.annotationId) == -1) {
                 $scope.addAnnotation($scope.annotationModalData);
             }
 
