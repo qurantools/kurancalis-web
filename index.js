@@ -711,13 +711,17 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
                 var tags = $scope.annotations[i].tags;
 
                 if (tags != null && tags != "" ) {
-                    $scope.verseTags[verseId] = [];
+                    if(typeof $scope.verseTags[verseId] == 'undefined'){
+                        $scope.verseTags[verseId] = [];
+                    }
 
                     for( var tag in tags){
-                        if(typeof $scope.verseTags[verseId][tag] == 'undefined'){
-                            $scope.verseTags[verseId][tags[tag]]=0;
+                        var theTag = tags[tag];
+                        if(typeof $scope.verseTags[verseId][theTag] == 'undefined'){
+                            $scope.verseTags[verseId][theTag]=0;
                         }
-                        $scope.verseTags[verseId][tags[tag]]++;
+
+                        $scope.verseTags[verseId][theTag] = $scope.verseTags[verseId][theTag] +1;
                     }
                 }
             }
