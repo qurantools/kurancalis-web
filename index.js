@@ -703,78 +703,56 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
 
         $scope.loadVerseTags = function () {
 
-            $scope.verseTagsTmp = [];
+            $scope.verseTags = [];
             var arrLen = $scope.annotations.length;
             for (var i = 0; i < arrLen; i++) {
 
-
                 var verseId = $scope.annotations[i].verseId;
-                var translationId = $scope.annotations[i].translationId;
                 var tags = $scope.annotations[i].tags;
 
-                if (tags != "" && tags != null) {
-                    if (typeof $scope.verseTagsTmp[verseId] == 'undefined') {
-                        $scope.verseTagsTmp[verseId] = [];
-                    }
-                    if (typeof $scope.verseTagsTmp[verseId][translationId] == 'undefined') {
-                        $scope.verseTagsTmp[verseId][translationId] = [];
-                    }
+                if (tags != null && tags != "" ) {
+                    $scope.verseTags[verseId] = [];
 
-                    if ($scope.verseTagsTmp[verseId][translationId] == null) {
-                        $scope.verseTagsTmp[verseId][translationId] = tags;
-                    } else {
-                        $scope.verseTagsTmp[verseId][translationId].push(tags);
+                    for( var tag in tags){
+                        if(typeof $scope.verseTags[verseId][tag] == 'undefined'){
+                            $scope.verseTags[verseId][tags[tag]]=0;
+                        }
+                        $scope.verseTags[verseId][tags[tag]]++;
                     }
                 }
             }
-            console.log("verseTagsTmp: " + $scope.verseTagsTmp);
-            $scope.updateVerseTags();
+
+
+            //burada icerigi basiyor.
+            for( var verseId in $scope.verseTags){
+                console.log("verseId:" + verseId);
+                for(var tag in $scope.verseTags[verseId]){
+
+                  console.log("tag:" +tag+ " count:" + $scope.verseTags[verseId][tag]);
+                }
+
+            }
+
         }
 
 
-        $scope.updateVerseTags = function () {
-            var arrLen = $scope.verseTagsTmp.length;
-            //     console.log(JSON.stringify($scope.verseTagsTmp));
-            $scope.verseTags = [];
-            //   $scope.verseTagsTmp = $scope.verseTagsTmp2;
-            for (var verseId in $scope.verseTagsTmp) {
-                if ($scope.verseTagsTmp.hasOwnProperty(verseId)) {
-                    // alert("Key: " + key + ", Value: " + $scope.verseTagsTmp[key]);
-
-                    for (var translationId in $scope.verseTagsTmp[verseId]) {
-
-                        var arrLenTranslations = $scope.verseTagsTmp[verseId][translationId].length;
-
-                        for (var i = 0; i < arrLenTranslations; i++) {
-                            var arrLenTranslationTags = $scope.verseTagsTmp[verseId][translationId][i].length;
-                            for (var j = 0; j < arrLenTranslationTags; j++) {
-                                if (typeof $scope.verseTags[verseId] == 'undefined') {
-                                    $scope.verseTags[verseId] = [];
-                                }
-                                //  console.log("the tag" + i + ":" + $scope.verseTagsTmp[verseId][translationId][i][j]);
-                                if ($scope.verseTags[verseId].indexOf($scope.verseTagsTmp[verseId][translationId][i][j]) == -1) {
-
-
-                                    //    console.log("tagz:" + $scope.verseTagsTmp[verseId][translationId][i][j])
-                                    $scope.verseTags[verseId].push($scope.verseTagsTmp[verseId][translationId][i][j]);
-                                }
-                            }
-                        }
-
-                    }
+        $scope.updateVerseTags = function (verseId,oldTags,newTags) {
+            for(var tag in oldTags){
+                if(typeof $scope.verseTags[verseId][tag] != 'undefined'){ //zaten olması lazım
+                    $scope.verseTags[verseId][tag]--;
+                }
+                if($scope.verseTags[verseId][tag]==0){
+                    delete $scope.verseTags[verseId][tag];
                 }
             }
-
-
-            for (var keyv in $scope.verseTags) {
-                for (var key2 in $scope.verseTags[keyv]) {
-                    console.log("k2 " + keyv + ":" + $scope.verseTags[keyv][key2])
-
+            for(var tag in newTags){
+                if(typeof $scope.verseTags[verseId][tag] == 'undefined'){ //henuz yok
+                    //yoksa count=0 olustur
+                    $scope.verseTags[verseId][tag]=0;
                 }
+
+                $scope.verseTags[verseId][tag]++;
             }
-
-
-            //  console.log(JSON.stringify($scope.verseTags));
         }
 
 

@@ -11,7 +11,7 @@
         <pre>validation_response: <span id="api_first_name" ng-bind="validation_response | json"></span></pre>
   -->
 
-    <pre>validation_response: <span id="verseTags" ng-bind="verseTags | json"></span></pre>
+<!--    <pre>validation_response: <span id="verseTags" ng-bind="verseTags"></span></pre> -->
 
 
     <div ng-include="'app/components/partials/navigation.html'"></div>
@@ -20,6 +20,7 @@
     <div class="row">
         <div class="col-xs-12" id="translations">
             <div ng-repeat="verse in verses">
+
                 <div class="well translations col-xs-12" id="v_{{verse.id}}">
                     <div ng-repeat="translation in verse.translations">
                         <div ng-if="$first"><h4>{{translation.chapter}}:{{translation.verse}}</h4></div>
@@ -35,7 +36,10 @@
                             <hr/>
                         </div>
                     </div>
+
                 </div>
+                Tags:<div ng-repeat="(tag,count) in verseTags[verse.id]">{{key}} </div>
+
             </div>
         </div>
     </div>
