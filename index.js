@@ -710,55 +710,60 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
                 var verseId = $scope.annotations[i].verseId;
                 var tags = $scope.annotations[i].tags;
 
-                if (tags != null && tags != "" ) {
-                    if(typeof $scope.verseTags[verseId] == 'undefined'){
+                if (tags != null && tags != "") {
+                    if (typeof $scope.verseTags[verseId] == 'undefined') {
                         $scope.verseTags[verseId] = [];
                     }
 
-                    for( var tag in tags){
+                    for (var tag in tags) {
                         var theTag = tags[tag];
-                        if(typeof $scope.verseTags[verseId][theTag] == 'undefined'){
-                            $scope.verseTags[verseId][theTag]=0;
+                        if (typeof $scope.verseTags[verseId][theTag] == 'undefined') {
+                            $scope.verseTags[verseId][theTag] = 0;
                         }
 
-                        $scope.verseTags[verseId][theTag] = $scope.verseTags[verseId][theTag] +1;
+                        $scope.verseTags[verseId][theTag] = $scope.verseTags[verseId][theTag] + 1;
                     }
                 }
             }
+            $scope.generateVerseTags();
+        }
 
-
-            //burada icerigi basiyor.
-            for( var verseId in $scope.verseTags){
-                console.log("verseId:" + verseId);
-                for(var tag in $scope.verseTags[verseId]){
-
-                  console.log("tag:" +tag+ " count:" + $scope.verseTags[verseId][tag]);
+        $scope.generateVerseTags = function () {
+            var verseTagsJSON = [];
+            for (var verseId in $scope.verseTags) {
+                var thisVerse = {verseId: verseId, tags: []};
+                for (var tag in $scope.verseTags[verseId]) {
+                    thisVerse['tags'].push({
+                        tag: tag,
+                        count: $scope.verseTags[verseId][tag]
+                    });
                 }
-
+                verseTagsJSON.push(thisVerse);
             }
-
+            console.log(JSON.stringify(verseTagsJSON))
+            $scope.verseTagsJSON = verseTagsJSON;
         }
 
 
-        $scope.updateVerseTags = function (verseId,oldTags,newTags) {
-            for(var tag in oldTags){
-                if(typeof $scope.verseTags[verseId][tag] != 'undefined'){ //zaten olması lazım
+        $scope.updateVerseTags = function (verseId, oldTags, newTags) {
+            for (var tag in oldTags) {
+                if (typeof $scope.verseTags[verseId][tag] != 'undefined') { //zaten olması lazım
                     $scope.verseTags[verseId][tag]--;
                 }
-                if($scope.verseTags[verseId][tag]==0){
+                if ($scope.verseTags[verseId][tag] == 0) {
                     delete $scope.verseTags[verseId][tag];
                 }
             }
-            for(var tag in newTags){
-                if(typeof $scope.verseTags[verseId][tag] == 'undefined'){ //henuz yok
+            for (var tag in newTags) {
+                if (typeof $scope.verseTags[verseId][tag] == 'undefined') { //henuz yok
                     //yoksa count=0 olustur
-                    $scope.verseTags[verseId][tag]=0;
+                    $scope.verseTags[verseId][tag] = 0;
                 }
 
                 $scope.verseTags[verseId][tag]++;
             }
-        }
 
+        }
 
         $scope.scopeApply = function () {
             if (!$scope.$$phase) {
@@ -766,7 +771,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             }
         }
 
-    });
+    })
 
 function list_fn(id) {
     angular.element(document.getElementById('MainCtrl')).scope().list_footnotes(id);

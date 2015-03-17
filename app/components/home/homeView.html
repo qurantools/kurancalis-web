@@ -11,7 +11,7 @@
         <pre>validation_response: <span id="api_first_name" ng-bind="validation_response | json"></span></pre>
   -->
 
-<!--    <pre>validation_response: <span id="verseTags" ng-bind="verseTags"></span></pre> -->
+    <!--    <pre>validation_response: <span id="verseTags" ng-bind="verseTags"></span></pre> -->
 
 
     <div ng-include="'app/components/partials/navigation.html'"></div>
@@ -36,10 +36,14 @@
                             <hr/>
                         </div>
                     </div>
-
+                    <div ng-repeat="(verseTagsKey, verseTagsVal) in verseTagsJSON"
+                         ng-if="verseTagsVal.verseId==verse.id">
+                        {{vval}}
+                        <div ng-repeat="verseTag in verseTagsVal.tags" class="tag label label-info s_a_tag">
+                            {{verseTag.tag}}({{verseTag.count}})
+                        </div>
+                    </div>
                 </div>
-                Tags:<div ng-repeat="(tag,count) in verseTags[verse.id]">{{key}} </div>
-
             </div>
         </div>
     </div>
