@@ -48,7 +48,8 @@
                         </select>
                         {{verseAuthor}}
                         <div ng-repeat="verseTagContent in verseTagContents">
-                            <div ng-repeat="verseTagContentTranslation in verseTagContent.translations">
+                            <div ng-repeat="verseTagContentTranslation in verseTagContent.translations"
+                                 ng-if="verseTagContentTranslation.authorId==verseTagContentAuthor">
                                 <strong>{{verseTagContentTranslation.verseId / 1000 |
                                     number:0}}:{{verseTagContentTranslation.verseId % 1000}}</strong>
                                 {{verseTagContentTranslation.content}}
