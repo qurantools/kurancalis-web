@@ -11,12 +11,7 @@
         <pre>validation_response: <span id="api_first_name" ng-bind="validation_response | json"></span></pre>
   -->
 
-    <!--    <pre>validation_response: <span id="verseTags" ng-bind="verseTags"></span></pre> -->
-
-    <pre>access token: <span id="accessToken" ng-bind="access_token"></span></pre>
     <div ng-include="'app/components/partials/navigation.html'"></div>
-
-
     <div class="row">
         <div class="col-xs-12" id="translations">
             <div ng-repeat="verse in verses">
@@ -38,9 +33,27 @@
                     </div>
                     <div ng-repeat="(verseTagsKey, verseTagsVal) in verseTagsJSON"
                          ng-if="verseTagsVal.verseId==verse.id" style="text-align: right;width:100%">
-                            <hr/>
-                        <div ng-repeat="verseTag in verseTagsVal.tags" class="tag label label-info s_a_tag">
-                            {{verseTag.tag}}({{verseTag.count}})
+                        <hr/>
+                        <button ng-repeat="verseTag in verseTagsVal.tags" class="btn btn-xs btn-info"
+                                ng-click="goToVerseTag(verse.id,verseTag.tag)">{{verseTag.tag}}({{verseTag.count}})
+                        </button>
+                    </div>
+
+                    <div ng-if="targetVerseForTagContent==verse.id">
+                        {{selectedauthors}}
+                        <select ng-model="verseTagContentAuthor" ng-init="verseTagContentAuthor=selection[0]">
+                            <option ng-repeat="author in authors" value="{{author.id}}"
+                                    ng-if="selection.indexOf(author.id) > -1">{{author.name}}
+                            </option>
+                        </select>
+                        {{verseAuthor}}
+                        <div ng-repeat="verseTagContent in verseTagContents">
+                            <div ng-repeat="verseTagContentTranslation in verseTagContent.translations">
+                                <strong>{{verseTagContentTranslation.verseId / 1000 |
+                                    number:0}}:{{verseTagContentTranslation.verseId % 1000}}</strong>
+                                {{verseTagContentTranslation.content}}
+                            </div>
+
                         </div>
                     </div>
                 </div>

@@ -59,6 +59,11 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
                 templateUrl: 'app/components/home/homeView.html',
                 reloadOnSearch: false
             })
+            .when('/chapter/:chapterId/author/:authorMask/tag/:tag/tag-author/:tagAuthor/target-verse/:targetVerse', {
+                controller: 'MainCtrl',
+                templateUrl: 'app/components/home/homeView.html',
+                reloadOnSearch: false
+            })
             .when('/annotations/', {
                 controller: 'MainCtrl',
                 templateUrl: 'app/components/annotations/annotationsView.html',
@@ -152,10 +157,25 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         $scope.chapter_id = chapterId;
         $scope.author_mask = authorMask;
 
+        $scope.myRoute = [];
+        $scope.myRoute['tag'] = '';
+        $scope.myRoute['tagAuthor'] = '';
+        $scope.myRoute['targetVerse'] = '';
+        $scope.targetVerseForTagContent = 0;
+
+        if (typeof $routeParams.tag !== 'undefined') {
+            $scope.myRoute['tag'] = $routeParams.tag;
+        }
+        if (typeof $routeParams.tagAuthor !== 'undefined') {
+            $scope.myRoute['tagAuthor'] = $routeParams.tagAuthor;
+        }
+        if (typeof $routeParams.targetVerse !== 'undefined') {
+            $scope.targetVerseForTagContent = $routeParams.targetVerse;
+        }
+
 
         //get user info
         $scope.get_user_info = function () {
-
             var usersRestangular = Restangular.all("users");
             //TODO: document knowhow: custom get with custom header
             usersRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (user) {
@@ -392,8 +412,9 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         //go to chapter
         $scope.goToChapter = function () {
             if ($scope.currentPage == 'home') {
-                $location.path('/chapter/' + $scope.chapter_id + '/author/' + $scope.author_mask, false);
+                $location.path('/chapter/' + $scope.chapter_id + '/author/' + $scope.author_mask + "/tag/tags", false);
                 $scope.list_translations();
+                $scope.updateVerseTagContent();
             } else {
                 window.location.href = '#/chapter/' + $scope.chapter_id + '/author/' + $scope.author_mask;
             }
@@ -570,7 +591,6 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
 
         $scope.loadAnnotations = function (annotations) {
 
-            console.log("geldi");
             $scope.annotations = annotations;
             $scope.loadVerseTags();
             $scope.scopeApply();
@@ -747,7 +767,6 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
                 }
                 verseTagsJSON.push(thisVerse);
             }
-            console.log(JSON.stringify(verseTagsJSON))
             $scope.verseTagsJSON = verseTagsJSON;
         }
 
@@ -772,6 +791,33 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
                 $scope.verseTags[verseId][newTags[i]]++;
             }
             $scope.generateVerseTags();
+        }
+
+        $scope.loadVerseTagContent = function (verseTagContentParams, verseId) {
+            var verseTagContentRestangular = Restangular.all("translations");
+            $scope.verseTagContent = [];
+            verseTagContentRestangular.customGET("", verseTagContentParams, {'access_token': $scope.access_token}).then(function (verseTagContent) {
+                $scope.targetVerseForTagContent = verseId;
+                $scope.verseTagContents = verseTagContent;
+                $scope.scopeApply();
+            });
+        }
+        if ($scope.myRoute['tag'] != "") {
+            $scope.goToVerseTag($scope.targetVerseForTagContent, $scope.myRoute['tag']);
+        }
+
+        $scope.goToVerseTag = function (verseId, tag) {
+            $scope.verseTagContentParams = [];
+            $scope.verseTagContentParams.author = $scope.author_mask;
+            $scope.verseTagContentParams.verse_tags = tag;
+            $scope.loadVerseTagContent($scope.verseTagContentParams, verseId);
+        }
+
+        $scope.updateVerseTagContent = function () {
+            if ($scope.targetVerseForTagContent != 0 && typeof $scope.verseTagContentParams.verse_tags != 'undefined') {
+                $scope.goToVerseTag($scope.targetVerseForTagContent, $scope.verseTagContentParams.verse_tags);
+            }
+
         }
 
         $scope.scopeApply = function () {
