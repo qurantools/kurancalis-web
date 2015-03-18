@@ -493,12 +493,19 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
 
         $scope.submitEditor = function () {
             var jsTags = $scope.theTags;
+            var oldTags = [];
+            if (typeof $scope.annotationModalData.annotationId != 'undefined') {
+                oldTags = $scope.annotationModalData.tags;
+            }
             var newTags = [];
             for (var i = 0; i < jsTags.length; i++) {
                 newTags.push(jsTags[i].name);
             }
             $scope.annotationModalData.tags = newTags;
             annotator.publish('annotationEditorSubmit', [annotator.editor, $scope.annotationModalData]);
+            //update verse tags
+            $scope.updateVerseTags($scope.annotationModalData.verseId, oldTags, newTags);
+
             if ($scope.currentPage == 'annotations') { //annotations page update
                 $scope.editAnnotation2($scope.annotationModalData);
             }
@@ -746,23 +753,25 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
 
 
         $scope.updateVerseTags = function (verseId, oldTags, newTags) {
-            for (var tag in oldTags) {
-                if (typeof $scope.verseTags[verseId][tag] != 'undefined') { //zaten olması lazım
-                    $scope.verseTags[verseId][tag]--;
+            var arrLen = oldTags.length;
+            for (var i = 0; i < arrLen; i++) {
+                if (typeof $scope.verseTags[verseId][oldTags[i]] != 'undefined') { //zaten olması lazım
+                    $scope.verseTags[verseId][oldTags[i]]--;
                 }
-                if ($scope.verseTags[verseId][tag] == 0) {
-                    delete $scope.verseTags[verseId][tag];
+                if ($scope.verseTags[verseId][oldTags[i]] == 0) {
+                    delete $scope.verseTags[verseId][oldTags[i]];
                 }
             }
-            for (var tag in newTags) {
-                if (typeof $scope.verseTags[verseId][tag] == 'undefined') { //henuz yok
+            arrLen = newTags.length;
+            for (var i = 0; i < arrLen; i++) {
+                if (typeof $scope.verseTags[verseId][newTags[i]] == 'undefined') { //henuz yok
                     //yoksa count=0 olustur
-                    $scope.verseTags[verseId][tag] = 0;
+                    $scope.verseTags[verseId][newTags[i]] = 0;
                 }
 
-                $scope.verseTags[verseId][tag]++;
+                $scope.verseTags[verseId][newTags[i]]++;
             }
-
+            $scope.generateVerseTags();
         }
 
         $scope.scopeApply = function () {

@@ -13,7 +13,7 @@
 
     <!--    <pre>validation_response: <span id="verseTags" ng-bind="verseTags"></span></pre> -->
 
-
+    <pre>access token: <span id="accessToken" ng-bind="access_token"></span></pre>
     <div ng-include="'app/components/partials/navigation.html'"></div>
 
 
@@ -37,8 +37,8 @@
                         </div>
                     </div>
                     <div ng-repeat="(verseTagsKey, verseTagsVal) in verseTagsJSON"
-                         ng-if="verseTagsVal.verseId==verse.id">
-                        {{vval}}
+                         ng-if="verseTagsVal.verseId==verse.id" style="text-align: right;width:100%">
+                            <hr/>
                         <div ng-repeat="verseTag in verseTagsVal.tags" class="tag label label-info s_a_tag">
                             {{verseTag.tag}}({{verseTag.count}})
                         </div>
