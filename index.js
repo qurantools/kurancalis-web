@@ -59,11 +59,6 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
                 templateUrl: 'app/components/home/homeView.html',
                 reloadOnSearch: false
             })
-            .when('/chapter/:chapterId/author/:authorMask/tag/:tag/tag-author/:tagAuthor/target-verse/:targetVerse', {
-                controller: 'MainCtrl',
-                templateUrl: 'app/components/home/homeView.html',
-                reloadOnSearch: false
-            })
             .when('/annotations/', {
                 controller: 'MainCtrl',
                 templateUrl: 'app/components/annotations/annotationsView.html',
@@ -412,7 +407,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         //go to chapter
         $scope.goToChapter = function () {
             if ($scope.currentPage == 'home') {
-                $location.path('/chapter/' + $scope.chapter_id + '/author/' + $scope.author_mask + "/tag/tags", false);
+                $location.path('/chapter/' + $scope.chapter_id + '/author/' + $scope.author_mask, false);
                 $scope.list_translations();
                 $scope.updateVerseTagContent();
             } else {
@@ -799,7 +794,6 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             verseTagContentRestangular.customGET("", verseTagContentParams, {'access_token': $scope.access_token}).then(function (verseTagContent) {
                 $scope.targetVerseForTagContent = verseId;
                 $scope.verseTagContents = verseTagContent;
-                $scope.scopeApply();
             });
         }
         if ($scope.myRoute['tag'] != "") {
@@ -817,7 +811,18 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             if ($scope.targetVerseForTagContent != 0 && typeof $scope.verseTagContentParams.verse_tags != 'undefined') {
                 $scope.goToVerseTag($scope.targetVerseForTagContent, $scope.verseTagContentParams.verse_tags);
             }
+        }
+        $scope.selectedVerseTagContentAuthor = function () {
+            if (typeof $scope.activeVerseTagContentAuthor != 'undefined') {
+                return $scope.activeVerseTagContentAuthor;
+            } else {
+                return $scope.selection[0];
+            }
 
+        }
+
+        $scope.verseTagContentAuthorUpdate = function (item) {
+            $scope.activeVerseTagContentAuthor = item;
         }
 
         $scope.scopeApply = function () {

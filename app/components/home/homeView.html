@@ -38,10 +38,8 @@
                                 ng-click="goToVerseTag(verse.id,verseTag.tag)">{{verseTag.tag}}({{verseTag.count}})
                         </button>
                     </div>
-
                     <div ng-if="targetVerseForTagContent==verse.id">
-                        {{selectedauthors}}
-                        <select ng-model="verseTagContentAuthor" ng-init="verseTagContentAuthor=selection[0]">
+                        <select class="verseTagContentAuthor" ng-model="verseTagContentAuthor"  ng-init="verseTagContentAuthor=selectedVerseTagContentAuthor()" ng-change="verseTagContentAuthorUpdate(verseTagContentAuthor)">
                             <option ng-repeat="author in authors" value="{{author.id}}"
                                     ng-if="selection.indexOf(author.id) > -1">{{author.name}}
                             </option>
