@@ -738,12 +738,12 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
                     }
 
                     for (var tag in tags) {
-                        var theTag = tags[tag];
-                        if (typeof $scope.verseTags[verseId][theTag] == 'undefined') {
+                        var theTag = String(tags[tag]);
+                        if ( $scope.verseTags[verseId].indexOf(theTag) == -1) {
                             $scope.verseTags[verseId][theTag] = 0;
                         }
 
-                        $scope.verseTags[verseId][theTag] = $scope.verseTags[verseId][theTag] + 1;
+                        $scope.verseTags[verseId][theTag]++;// = $scope.verseTags[verseId][theTag] + 1;
                     }
                 }
             }
