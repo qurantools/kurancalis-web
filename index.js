@@ -338,19 +338,38 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             $scope.allAnnotationsParams = [];
             $scope.allAnnotationsParams.start = $scope.allAnnotationsOpts.start;
             $scope.allAnnotationsParams.limit = $scope.allAnnotationsOpts.limit;
+            $scope.allAnnotationsParams.author = $scope.author_mask;
+
+            if($scope.allAnnotationsSearch==true){
+                $scope.allAnnotationsParams.verse_keyword = $scope.allAnnotationsSearchInput;
+            }
 
             usersRestangular.customGET("", $scope.allAnnotationsParams, {'access_token': $scope.access_token}).then(function (annotations) {
+                    if($scope.allAnnotationsParams.start==0){
+                        $scope.annotations=[];
+                    }
                     if (annotations != "") {
                         $scope.annotations = $scope.annotations.concat(annotations)
                         $scope.allAnnotationsOpts.start += $scope.allAnnotationsOpts.limit;
+
+
                         if (annotations.length < $scope.allAnnotationsOpts.limit) {
                             $scope.allAnnotationsOpts.hasMore = false;
+                        }else{
+                            $scope.allAnnotationsOpts.hasMore = true;
                         }
                     } else {
                         $scope.allAnnotationsOpts.hasMore = false;
                     }
                 }
             );
+            $scope.allAnnotationsSearch=false;
+        }
+
+        $scope.search_all_annotations=function(){
+            $scope.allAnnotationsOpts.start=0;
+            $scope.allAnnotationsSearch=true;
+            $scope.get_all_annotations();
         }
 
         /* init */
@@ -414,6 +433,15 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
                 window.location.href = '#/chapter/' + $scope.chapter_id + '/author/' + $scope.author_mask;
             }
         };
+
+        $scope.updateAuthors=function(){
+            if($scope.currentPage=='home'){
+                $scope.goToChapter();
+            }else if($scope.currentPage=='annotations'){
+                $scope.allAnnotationsOpts.start = 0;
+                $scope.get_all_annotations();
+            }
+        }
 
 
         /* facebook login */

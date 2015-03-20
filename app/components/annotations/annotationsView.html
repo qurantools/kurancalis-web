@@ -15,6 +15,14 @@
     -->
     <div ng-include="'app/components/partials/navigation.html'"></div>
 
+    <div >
+        <input type="text" ng-model="allAnnotationsSearchInput" size="12"  ng-enter="search_all_annotations()"/>
+
+    <button type="button" ng-click="search_all_annotations()" class="btn btn-primary">
+        Ara
+    </button>
+    </div>
+
     <div>
         <div ng-repeat="annotation in annotations" class="box">
             <div class="s_a_header">
