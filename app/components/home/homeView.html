@@ -82,7 +82,16 @@
                     kaldır
                 </button>
             </div>
-            <div ng-repeat="annotation in annotations | filter:annotationFilter" class="sidebar_annotation box"
+
+            <div>
+                <input ng-model="searchText" />
+                <select ng-model="filterOrderSelect" ng-init="filterOrderSelect='verseId'" ng-change="annotationFilterOrder(filterOrderSelect)">
+                    <option value="verseId">Ayet</option>
+                    <option value="-updated">Zaman</option>
+                </select>
+            </div>
+<!--| filter: {quote:searchText}-->
+            <div ng-repeat="annotation in annotations | filter:annotationFilter | filter: annotationTextSearch" class="sidebar_annotation box"
                  ng-click="scrollToElement('t_'+annotation.translationId)">
                 <!-- s_a -->
                 <div class="s_a_header">

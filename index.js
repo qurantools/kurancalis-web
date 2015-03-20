@@ -132,7 +132,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         );
     })
 
-    .controller('MainCtrl', function ($scope, $q, $routeParams, $location, $timeout, ListAuthors, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService, $document) {
+    .controller('MainCtrl', function ($scope, $q, $routeParams, $location, $timeout, ListAuthors, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService, $document, $filter) {
         //currentPage
         $scope.currentPage = '';
         if ($location.path() == '/annotations/') {
@@ -340,13 +340,13 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             $scope.allAnnotationsParams.limit = $scope.allAnnotationsOpts.limit;
             $scope.allAnnotationsParams.author = $scope.author_mask;
 
-            if($scope.allAnnotationsSearch==true){
+            if ($scope.allAnnotationsSearch == true) {
                 $scope.allAnnotationsParams.verse_keyword = $scope.allAnnotationsSearchInput;
             }
 
             usersRestangular.customGET("", $scope.allAnnotationsParams, {'access_token': $scope.access_token}).then(function (annotations) {
-                    if($scope.allAnnotationsParams.start==0){
-                        $scope.annotations=[];
+                    if ($scope.allAnnotationsParams.start == 0) {
+                        $scope.annotations = [];
                     }
                     if (annotations != "") {
                         $scope.annotations = $scope.annotations.concat(annotations)
@@ -355,7 +355,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
 
                         if (annotations.length < $scope.allAnnotationsOpts.limit) {
                             $scope.allAnnotationsOpts.hasMore = false;
-                        }else{
+                        } else {
                             $scope.allAnnotationsOpts.hasMore = true;
                         }
                     } else {
@@ -363,18 +363,19 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
                     }
                 }
             );
-            $scope.allAnnotationsSearch=false;
+            $scope.allAnnotationsSearch = false;
         }
 
-        $scope.search_all_annotations=function(){
-            $scope.allAnnotationsOpts.start=0;
-            $scope.allAnnotationsSearch=true;
+        $scope.search_all_annotations = function () {
+            $scope.allAnnotationsOpts.start = 0;
+            $scope.allAnnotationsSearch = true;
             $scope.get_all_annotations();
         }
 
         /* init */
         $scope.sidebarActive = 0;
         $scope.tagSearchResult = [];
+        $scope.searchText = "";
 
         // all annotations
         $scope.annotations = [];
@@ -434,10 +435,10 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             }
         };
 
-        $scope.updateAuthors=function(){
-            if($scope.currentPage=='home'){
+        $scope.updateAuthors = function () {
+            if ($scope.currentPage == 'home') {
                 $scope.goToChapter();
-            }else if($scope.currentPage=='annotations'){
+            } else if ($scope.currentPage == 'annotations') {
                 $scope.allAnnotationsOpts.start = 0;
                 $scope.get_all_annotations();
             }
@@ -712,6 +713,20 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             }
         }
 
+        $scope.annotationFilterOrder = function (predicate) {
+            var orderBy = $filter('orderBy');
+            $scope.annotations = orderBy($scope.annotations, predicate);
+        }
+
+        $scope.annotationTextSearch = function (item) {
+            var searchText = $scope.searchText.toLowerCase();
+            if (item.quote.toLowerCase().indexOf(searchText) > -1 || item.text.toLowerCase().indexOf(searchText) > -1) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
         $scope.getAnnotationIndexFromFilteredAnnotationIndex = function (filteredAnnotationIndex) {
             //TODO use getIndexOfArrayByElement
             var arrLen = $scope.annotations.length;
@@ -767,7 +782,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
 
                     for (var tag in tags) {
                         var theTag = String(tags[tag]);
-                        if ( $scope.verseTags[verseId].indexOf(theTag) == -1) {
+                        if ($scope.verseTags[verseId].indexOf(theTag) == -1) {
                             $scope.verseTags[verseId][theTag] = 0;
                         }
 
