@@ -399,6 +399,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
 
         $scope.selection = ["16", "32"];
 
+        $scope.verseTagContentAuthor = $scope.selection[0];
 
         $scope.list_translations();
         // $scope.toggleSidebar();
@@ -713,6 +714,10 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             }
         }
 
+        $scope.authorFilter = function(item) {
+            return $scope.selection.indexOf(item.id) > -1;
+        }
+
         $scope.annotationFilterOrder = function (predicate) {
             var orderBy = $filter('orderBy');
             $scope.annotations = orderBy($scope.annotations, predicate);
@@ -844,10 +849,13 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         }
 
         $scope.goToVerseTag = function (verseId, tag) {
+
             $scope.verseTagContentParams = [];
-            $scope.verseTagContentParams.author = $scope.author_mask;
+            $scope.verseTagContentParams.author = $scope.getSelectedVerseTagContentAuthor();
             $scope.verseTagContentParams.verse_tags = tag;
             $scope.loadVerseTagContent($scope.verseTagContentParams, verseId);
+            $scope.verseTagContentAuthor = $scope.getSelectedVerseTagContentAuthor(); //set combo
+            $scope.scopeApply();
         }
 
         $scope.updateVerseTagContent = function () {
@@ -855,23 +863,27 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
                 $scope.goToVerseTag($scope.targetVerseForTagContent, $scope.verseTagContentParams.verse_tags);
             }
         }
-        $scope.selectedVerseTagContentAuthor = function () {
-            if (typeof $scope.activeVerseTagContentAuthor != 'undefined') {
-                return $scope.activeVerseTagContentAuthor;
-            } else {
-                return $scope.selection[0];
+        $scope.getSelectedVerseTagContentAuthor = function () {
+            if (typeof $scope.activeVerseTagContentAuthor == 'undefined') {
+                $scope.activeVerseTagContentAuthor = $scope.selection[0];
             }
-
+            return $scope.activeVerseTagContentAuthor;
         }
 
         $scope.verseTagContentAuthorUpdate = function (item) {
             $scope.activeVerseTagContentAuthor = item;
+            $scope.verseTagContentAuthor = $scope.activeVerseTagContentAuthor; //comboda seciliyi degistiriyor
+            $scope.updateVerseTagContent();
         }
 
         $scope.scopeApply = function () {
             if (!$scope.$$phase) {
                 $scope.$apply();
             }
+        }
+
+        $scope.deneme= function(){
+            $scope.verseTagContentAuthor="32";
         }
 
     })

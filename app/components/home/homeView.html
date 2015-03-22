@@ -39,12 +39,12 @@
                         </button>
                     </div>
                     <div ng-if="targetVerseForTagContent==verse.id">
-                        <select class="verseTagContentAuthor" ng-model="verseTagContentAuthor"  ng-init="verseTagContentAuthor=selectedVerseTagContentAuthor()" ng-change="verseTagContentAuthorUpdate(verseTagContentAuthor)">
-                            <option ng-repeat="author in authors" value="{{author.id}}"
-                                    ng-if="selection.indexOf(author.id) > -1">{{author.name}}
-                            </option>
-                        </select>
-                        {{verseAuthor}}
+
+                        <select class="verseTagContentAuthor"
+                                 ng-options="author.id as author.name for author in authors | filter:authorFilter" ng-model="verseTagContentAuthor" ng-change="verseTagContentAuthorUpdate(verseTagContentAuthor)" >
+                            </select>
+
+
                         <div ng-repeat="verseTagContent in verseTagContents">
                             <div ng-repeat="verseTagContentTranslation in verseTagContent.translations"
                                  ng-if="verseTagContentTranslation.authorId==verseTagContentAuthor">
