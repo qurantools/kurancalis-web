@@ -77,14 +77,6 @@
                     </div>
 
                     <div>
-                        <tags-input ng-model="theTags" display-property="name" replace-spaces-with-dashes=false
-                                    min-length="2" placeholder="Bir kişi ekleyin">
-                            <auto-complete source="loadTags($query)" min-length="2"></auto-complete>
-                        </tags-input>
-                    </div>
-
-
-                    <div>
                         <ul class="selectable_list">
                             <li ng-repeat="author in authors"
                                 ng-click="annotationSearchAuthorToggleSelection(author.id)"
