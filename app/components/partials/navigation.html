@@ -16,6 +16,7 @@
                     </button>
                     <a class="btn btn-primary" type="button" href="#/annotations/"  ng-if="user!=null && currentPage!='annotations'">Tüm notlar
                     </a>
+                    <a class="btn btn-primary" data-target="#annotationsFilterModal" data-toggle="modal" ng-if="user!=null && currentPage=='annotations'"><i class="fa fa-filter"></i></a>
                 </div>
 
                 <div ng-show="facebookIsReady" class="facebook_area">
@@ -25,7 +26,6 @@
                         </button>
                     </div>
                     <div ng-if="user!=null">
-
                         <button onclick="openPanel()" class="btn btn-primary btn-xs" ng-if="currentPage=='home'"><i class="fa fa-eye"></i>
                         </button>
                         <img ng-src="{{user.photo}}" height="30"/>

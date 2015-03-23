@@ -2,26 +2,19 @@
 
 
 <div class="container">
-<!--
+    <!--
 
-        <pre>isReady: <span id="is_ready" ng-bind="facebookIsReady"></span></pre>
-        <pre>status: <span id="login_status" ng-bind="loginStatus"></span></pre>
-        <pre>token: <span id="tokenFb" ng-bind="tokenFb"></span></pre>
-        <pre>access token: <span id="accessToken" ng-bind="access_token"></span></pre>
-        <pre>validation_response: <span id="api_first_name" ng-bind="validation_response | json"></span></pre>
+            <pre>isReady: <span id="is_ready" ng-bind="facebookIsReady"></span></pre>
+            <pre>status: <span id="login_status" ng-bind="loginStatus"></span></pre>
+            <pre>token: <span id="tokenFb" ng-bind="tokenFb"></span></pre>
+            <pre>access token: <span id="accessToken" ng-bind="access_token"></span></pre>
+            <pre>validation_response: <span id="api_first_name" ng-bind="validation_response | json"></span></pre>
 
 
-    <pre>allAnnotations: <span id="allAnnotatio" ng-bind="annotations | json"></span></pre>
-    -->
+        <pre>allAnnotations: <span id="allAnnotatio" ng-bind="annotations | json"></span></pre>
+        -->
     <div ng-include="'app/components/partials/navigation.html'"></div>
 
-    <div >
-        <input type="text" ng-model="allAnnotationsSearchInput" size="12"  ng-enter="search_all_annotations()"/>
-
-    <button type="button" ng-click="search_all_annotations()" class="btn btn-primary">
-        Ara
-    </button>
-    </div>
 
     <div>
         <div ng-repeat="annotation in annotations" class="box">
@@ -51,11 +44,53 @@
         </div>
 
     </div>
-    <div style="text-align: center; padding-top:10px;" ng-if="allAnnotationsOpts.hasMore==true"><button ng-click="get_all_annotations()" class="btn btn-info btn-hg">Daha fazla</button></div>
+    <div style="text-align: center; padding-top:10px;" ng-if="allAnnotationsOpts.hasMore==true">
+        <button ng-click="get_all_annotations()" class="btn btn-info btn-hg">Daha fazla</button>
+    </div>
 
     <div ng-include="'app/components/partials/authors_modal.html'"></div>
     <div ng-include="'app/components/partials/editor_modal.html'"></div>
 
+
+    <div class="modal" id="annotationsFilterModal">
+        <div class="modal-dialog fixed-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" data-dismiss="modal" aria-hidden="true" style="float:right;"><i
+                            class="fa fa-close"></i></button>
+                    <h4 class="modal-title">Filtre seçenekleri</h4>
+                </div>
+
+                <div class="modal-body">
+
+                    <div>
+                        <input type="text" ng-model="allAnnotationsSearchInput" size="12" class="form-control" placeholder="Aranacak kelime"/>
+                        <!-- ng-enter="search_all_annotations()" -->
+                    </div>
+
+                    <div>
+                        <tags-input ng-model="theTags" display-property="name" replace-spaces-with-dashes=false
+                                    min-length="2">
+                            <auto-complete source="loadTags($query)" min-length="2"></auto-complete>
+                        </tags-input>
+                    </div>
+
+                    <div>
+                        <tags-input ng-model="theTags" display-property="name" replace-spaces-with-dashes=false
+                                    min-length="2">
+                            <auto-complete source="loadTags($query)" min-length="2"></auto-complete>
+                        </tags-input>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <a href="#" class="btn btn-primary btn-wide" data-dismiss="modal"
+                       ng-click="search_all_annotations()">Tamam</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 </body>

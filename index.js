@@ -714,7 +714,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             }
         }
 
-        $scope.authorFilter = function(item) {
+        $scope.authorFilter = function (item) {
             return $scope.selection.indexOf(item.id) > -1;
         }
 
@@ -724,6 +724,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         }
 
         $scope.annotationTextSearch = function (item) {
+
             var searchText = $scope.searchText.toLowerCase();
             if (item.quote.toLowerCase().indexOf(searchText) > -1 || item.text.toLowerCase().indexOf(searchText) > -1) {
                 return true;
@@ -747,6 +748,8 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
 
         $scope.resetAnnotationFilter = function () {
             $scope.filteredAnnotations = [];
+            $scope.searchText='';
+            $scope.filterOrderSelect='verseId';
         }
 
         $scope.scrollToElement = function (elementId) {
@@ -882,10 +885,6 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             }
         }
 
-        $scope.deneme= function(){
-            $scope.verseTagContentAuthor="32";
-        }
-
     })
 
 function list_fn(id) {
@@ -910,5 +909,14 @@ function openPanel() {
 }
 function closePanel() {
     $('.cd-panel').removeClass('is-visible');
+}
+function verseTagClicked(elem) {
+
+
+  //  //disable previous active element
+    $('.verse_tag.btn-success').removeClass('btn-success').removeClass('btn-sm').addClass("btn-info").addClass("btn-xs");
+
+    // //activate element
+    $(elem).addClass("btn-success").addClass("btn-sm").removeClass('btn-info').removeClass('btn-xs');
 }
 

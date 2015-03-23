@@ -139,3 +139,7 @@ hr {
 .sidebar_annotation{
     cursor:pointer;
 }
+
+.verse_tag{
+    margin-right:5px;
+}

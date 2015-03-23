@@ -34,15 +34,18 @@
                     <div ng-repeat="(verseTagsKey, verseTagsVal) in verseTagsJSON"
                          ng-if="verseTagsVal.verseId==verse.id" style="text-align: right;width:100%">
                         <hr/>
-                        <button ng-repeat="verseTag in verseTagsVal.tags" class="btn btn-xs btn-info"
-                                ng-click="goToVerseTag(verse.id,verseTag.tag)">{{verseTag.tag}}({{verseTag.count}})
+                        <button ng-repeat="verseTag in verseTagsVal.tags" class="btn btn-xs btn-info verse_tag"
+                                ng-click="goToVerseTag(verse.id,verseTag.tag)" onclick="verseTagClicked(this)">
+                            {{verseTag.tag}}
                         </button>
                     </div>
                     <div ng-if="targetVerseForTagContent==verse.id">
 
                         <select class="verseTagContentAuthor"
-                                 ng-options="author.id as author.name for author in authors | filter:authorFilter" ng-model="verseTagContentAuthor" ng-change="verseTagContentAuthorUpdate(verseTagContentAuthor)" >
-                            </select>
+                                ng-options="author.id as author.name for author in authors | filter:authorFilter"
+                                ng-model="verseTagContentAuthor"
+                                ng-change="verseTagContentAuthorUpdate(verseTagContentAuthor)">
+                        </select>
 
 
                         <div ng-repeat="verseTagContent in verseTagContents">
@@ -72,26 +75,36 @@
     <!--     <a href="#0" class="cd-panel-close">Close</a>-->
     <div class="cd-panel-container">
 
+
         <div class="cd-panel-content">
+
             <div style="padding-bottom:10px;">
                 <button onclick="closePanel()" class="btn btn-default btn-xs" style="float: left;"><i
                         class="fa fa-undo"></i></button>
                 <button class="btn btn-warning btn-xs" ng-click="resetAnnotationFilter()"
-                        ng-show='filteredAnnotations.length > 0' style="float: right"><i class="fa fa-trash-o"></i>
+                        ng-show='filteredAnnotations.length > 0 || searchText!="" || filterOrderSelect !="verseId"' style="float: right"><i class="fa fa-trash-o"></i>
                     Filtreyi
                     kaldır
                 </button>
+
+
+                <div style="display: block;">
+                    <!--    <input ng-model="searchText" />-->
+                    <input style="width: 150px" type="text" placeholder="ara" ng-model="searchText">
+                    <select ng-model="filterOrderSelect" ng-init="filterOrderSelect='verseId'"
+                            ng-change="annotationFilterOrder(filterOrderSelect)">
+                        <option value="verseId">Ayet</option>
+                        <option value="-updated">Zaman</option>
+                    </select>
+                </div>
+
+
             </div>
 
-            <div>
-                <input ng-model="searchText" />
-                <select ng-model="filterOrderSelect" ng-init="filterOrderSelect='verseId'" ng-change="annotationFilterOrder(filterOrderSelect)">
-                    <option value="verseId">Ayet</option>
-                    <option value="-updated">Zaman</option>
-                </select>
-            </div>
-<!--| filter: {quote:searchText}-->
-            <div ng-repeat="annotation in annotations | filter:annotationFilter | filter: annotationTextSearch" class="sidebar_annotation box"
+
+            <!--| filter: {quote:searchText}-->
+            <div ng-repeat="annotation in annotations | filter:annotationFilter | filter: annotationTextSearch"
+                 class="sidebar_annotation box"
                  ng-click="scrollToElement('t_'+annotation.translationId)">
                 <!-- s_a -->
                 <div class="s_a_header">

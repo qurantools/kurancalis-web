@@ -17,11 +17,8 @@
                     <div class="col-xs-6">
                         <tags-input ng-model="$parent.theTags" display-property="name" replace-spaces-with-dashes=false
                                     min-length="2">
-
                             <auto-complete source="loadTags($query)" min-length="2"></auto-complete>
-
                         </tags-input>
-
                         <ul ng-repeat="selectedTag in selectedTags">
                             <li>{{selectedTag}}</li>
                         </ul>
