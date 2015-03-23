@@ -64,7 +64,8 @@
                 <div class="modal-body">
 
                     <div>
-                        <input type="text" ng-model="allAnnotationsSearchInput" size="12" class="form-control" placeholder="Aranacak kelime"/>
+                        <input type="text" ng-model="allAnnotationsSearchInput" size="12" class="form-control"
+                               placeholder="Aranacak kelime"/>
                         <!-- ng-enter="search_all_annotations()" -->
                     </div>
 
@@ -77,11 +78,22 @@
 
                     <div>
                         <tags-input ng-model="theTags" display-property="name" replace-spaces-with-dashes=false
-                                    min-length="2">
+                                    min-length="2" placeholder="Bir kişi ekleyin">
                             <auto-complete source="loadTags($query)" min-length="2"></auto-complete>
                         </tags-input>
                     </div>
 
+
+                    <div>
+                        <ul class="selectable_list">
+                            <li ng-repeat="author in authors"
+                                ng-click="annotationSearchAuthorToggleSelection(author.id)"
+                                ng-class="{ 'selected_list_item': annotationSearchAuthorSelection.indexOf(author.id) > -1}">
+                                {{author.name}}
+                            </li>
+                        </ul>
+
+                    </div>
                 </div>
 
                 <div class="modal-footer">

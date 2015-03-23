@@ -401,6 +401,8 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
 
         $scope.verseTagContentAuthor = $scope.selection[0];
 
+        $scope.annotationSearchAuthorSelection=$scope.selection;
+
         $scope.list_translations();
         // $scope.toggleSidebar();
         sidebarInit();
@@ -422,6 +424,20 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             $scope.author_mask = 0;
             for (var index in $scope.selection) {
                 $scope.author_mask = $scope.author_mask | $scope.selection[index];
+            }
+        };
+
+        $scope.annotationSearchAuthorToggleSelection = function annotationSearchAuthorToggleSelection(author_id) {
+            var idx = $scope.annotationSearchAuthorSelection.indexOf(author_id);
+            if (idx > -1) {
+                $scope.annotationSearchAuthorSelection.splice(idx, 1);
+            }
+            else {
+                $scope.annotationSearchAuthorSelection.push(author_id);
+            }
+            $scope.annotationSearchAuthorMask = 0;
+            for (var index in $scope.annotationSearchAuthorSelection) {
+                $scope.annotationSearchAuthorMask = $scope.annotationSearchAuthorMask | $scope.annotationSearchAuthorSelection[index];
             }
         };
 

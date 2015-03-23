@@ -110,11 +110,11 @@ hr {
     color: black;
 }
 
-.tag_colour{
+.tag_colour {
     float: left;
     width: 20px;
     height: 20px;
-    margin-left:10px;
+    margin-left: 10px;
 }
 
 /* end of annotation editor */
@@ -136,10 +136,23 @@ hr {
     padding: 10px 8px;
 }
 
-.sidebar_annotation{
-    cursor:pointer;
+.sidebar_annotation {
+    cursor: pointer;
 }
 
-.verse_tag{
-    margin-right:5px;
+.verse_tag {
+    margin-right: 5px;
+}
+
+.selected_list_item {
+    background-color: rgba(0, 255, 0, 0.3);
+}
+
+.selectable_list {
+    list-style-type: none;
+}
+
+.selectable_list li {
+    cursor: pointer;
+    cursor: hand;
 }
