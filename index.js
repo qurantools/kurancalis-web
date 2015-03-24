@@ -338,10 +338,27 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             $scope.allAnnotationsParams = [];
             $scope.allAnnotationsParams.start = $scope.allAnnotationsOpts.start;
             $scope.allAnnotationsParams.limit = $scope.allAnnotationsOpts.limit;
-            $scope.allAnnotationsParams.author = $scope.author_mask;
+            //   $scope.allAnnotationsParams.author = $scope.author_mask;
+
 
             if ($scope.allAnnotationsSearch == true) {
+
+
+                //filter
+                $scope.allAnnotationsParams.author = 0;
+                for (var index in $scope.annotationSearchAuthorSelection) {
+                    $scope.allAnnotationsParams.author = $scope.allAnnotationsParams.author | $scope.annotationSearchAuthorSelection[index];
+                }
+
                 $scope.allAnnotationsParams.verse_keyword = $scope.allAnnotationsSearchInput;
+                $scope.allAnnotationsParams.verse_tags = "";
+
+                var newTags = [];
+                var filterTags = $scope.filterTags;
+                for (var i = 0; i < filterTags.length; i++) {
+                    newTags.push(filterTags[i].name);
+                }
+                $scope.allAnnotationsParams.verse_tags = newTags;
             }
 
             usersRestangular.customGET("", $scope.allAnnotationsParams, {'access_token': $scope.access_token}).then(function (annotations) {
@@ -351,7 +368,6 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
                     if (annotations != "") {
                         $scope.annotations = $scope.annotations.concat(annotations)
                         $scope.allAnnotationsOpts.start += $scope.allAnnotationsOpts.limit;
-
 
                         if (annotations.length < $scope.allAnnotationsOpts.limit) {
                             $scope.allAnnotationsOpts.hasMore = false;
@@ -401,7 +417,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
 
         $scope.verseTagContentAuthor = $scope.selection[0];
 
-        $scope.annotationSearchAuthorSelection=$scope.selection;
+        $scope.annotationSearchAuthorSelection = $scope.selection;
 
         $scope.list_translations();
         // $scope.toggleSidebar();
@@ -537,6 +553,11 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             $scope.removeAuth();
             localStorageService.remove('access_token');
             annotator.destroy();
+            $scope.verseTagsJSON={};
+            if($scope.currentPage!="home"){
+                $scope.chapter_id=1;
+                $scope.goToChapter();
+            }
         }
 
         $scope.checkUserLoginStatus = function () {
@@ -764,8 +785,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
 
         $scope.resetAnnotationFilter = function () {
             $scope.filteredAnnotations = [];
-            $scope.searchText='';
-            $scope.filterOrderSelect='verseId';
+            $scope.searchText = '';
         }
 
         $scope.scrollToElement = function (elementId) {
@@ -787,6 +807,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
 
 
         if ($scope.currentPage == 'annotations') {
+            $scope.filterTags = [];
             $scope.get_all_annotations();
         }
 
@@ -845,6 +866,9 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             }
             arrLen = newTags.length;
             for (var i = 0; i < arrLen; i++) {
+                if(typeof $scope.verseTags[verseId]=='undefined'){
+                    $scope.verseTags[verseId]=[];
+                }
                 if (typeof $scope.verseTags[verseId][newTags[i]] == 'undefined') { //henuz yok
                     //yoksa count=0 olustur
                     $scope.verseTags[verseId][newTags[i]] = 0;
@@ -868,13 +892,17 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         }
 
         $scope.goToVerseTag = function (verseId, tag) {
+            if ($scope.targetVerseForTagContent != -1) {
+                $scope.verseTagContentParams = [];
+                $scope.verseTagContentParams.author = $scope.getSelectedVerseTagContentAuthor();
+                $scope.verseTagContentParams.verse_tags = tag;
+                $scope.loadVerseTagContent($scope.verseTagContentParams, verseId);
+                $scope.verseTagContentAuthor = $scope.getSelectedVerseTagContentAuthor(); //set combo
+                $scope.scopeApply();
+            } else {
+                $scope.targetVerseForTagContent = 0;
+            }
 
-            $scope.verseTagContentParams = [];
-            $scope.verseTagContentParams.author = $scope.getSelectedVerseTagContentAuthor();
-            $scope.verseTagContentParams.verse_tags = tag;
-            $scope.loadVerseTagContent($scope.verseTagContentParams, verseId);
-            $scope.verseTagContentAuthor = $scope.getSelectedVerseTagContentAuthor(); //set combo
-            $scope.scopeApply();
         }
 
         $scope.updateVerseTagContent = function () {
@@ -882,6 +910,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
                 $scope.goToVerseTag($scope.targetVerseForTagContent, $scope.verseTagContentParams.verse_tags);
             }
         }
+
         $scope.getSelectedVerseTagContentAuthor = function () {
             if (typeof $scope.activeVerseTagContentAuthor == 'undefined') {
                 $scope.activeVerseTagContentAuthor = $scope.selection[0];
@@ -927,12 +956,18 @@ function closePanel() {
     $('.cd-panel').removeClass('is-visible');
 }
 function verseTagClicked(elem) {
+    var closeClick = false;
+    if ($(elem).hasClass('btn-warning')) {
+        angular.element(document.getElementById('theView')).scope().targetVerseForTagContent = -1;
+        closeClick = true;
+    }
 
+    //disable previous active element
+    $('.verse_tag.btn-warning').removeClass('btn-warning').removeClass('btn-sm').addClass("btn-info").addClass("btn-xs");
 
-  //  //disable previous active element
-    $('.verse_tag.btn-success').removeClass('btn-success').removeClass('btn-sm').addClass("btn-info").addClass("btn-xs");
-
-    // //activate element
-    $(elem).addClass("btn-success").addClass("btn-sm").removeClass('btn-info').removeClass('btn-xs');
+    //activate element
+    if (!closeClick) {
+        $(elem).addClass("btn-warning").addClass("btn-sm").removeClass('btn-info').removeClass('btn-xs');
+    }
 }
 
