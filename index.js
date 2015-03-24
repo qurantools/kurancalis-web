@@ -342,8 +342,6 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
 
 
             if ($scope.allAnnotationsSearch == true) {
-
-
                 //filter
                 $scope.allAnnotationsParams.author = 0;
                 for (var index in $scope.annotationSearchAuthorSelection) {
@@ -353,13 +351,15 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
                 $scope.allAnnotationsParams.verse_keyword = $scope.allAnnotationsSearchInput;
                 $scope.allAnnotationsParams.verse_tags = "";
 
-                var newTags = [];
+                var newTags = "";
                 var filterTags = $scope.filterTags;
                 for (var i = 0; i < filterTags.length; i++) {
-                    newTags.push(filterTags[i].name);
+                    if (i != 0)newTags += ",";
+                    newTags += filterTags[i].name;
                 }
                 $scope.allAnnotationsParams.verse_tags = newTags;
             }
+            $scope.allAnnotationsParams.orderby = $scope.allAnnotationsOrderBy;
 
             usersRestangular.customGET("", $scope.allAnnotationsParams, {'access_token': $scope.access_token}).then(function (annotations) {
                     if ($scope.allAnnotationsParams.start == 0) {
@@ -388,6 +388,12 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             $scope.get_all_annotations();
         }
 
+        $scope.allAnnotationsOrderByChanged = function (selectedOrderOption) {
+            $scope.allAnnotationsOrderBy = selectedOrderOption;
+            $scope.allAnnotationsOpts.start = 0;
+            $scope.get_all_annotations();
+        }
+
         /* init */
         $scope.sidebarActive = 0;
         $scope.tagSearchResult = [];
@@ -399,6 +405,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         $scope.allAnnotationsOpts.hasMore = true;
         $scope.allAnnotationsOpts.start = 0;
         $scope.allAnnotationsOpts.limit = 10;
+        $scope.allAnnotationsSortBy = "verse";
 
 
         //hide list of authors div
@@ -553,9 +560,9 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             $scope.removeAuth();
             localStorageService.remove('access_token');
             annotator.destroy();
-            $scope.verseTagsJSON={};
-            if($scope.currentPage!="home"){
-                $scope.chapter_id=1;
+            $scope.verseTagsJSON = {};
+            if ($scope.currentPage != "home") {
+                $scope.chapter_id = 1;
                 $scope.goToChapter();
             }
         }
@@ -866,8 +873,8 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             }
             arrLen = newTags.length;
             for (var i = 0; i < arrLen; i++) {
-                if(typeof $scope.verseTags[verseId]=='undefined'){
-                    $scope.verseTags[verseId]=[];
+                if (typeof $scope.verseTags[verseId] == 'undefined') {
+                    $scope.verseTags[verseId] = [];
                 }
                 if (typeof $scope.verseTags[verseId][newTags[i]] == 'undefined') { //henuz yok
                     //yoksa count=0 olustur
