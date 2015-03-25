@@ -31,8 +31,8 @@
                             {{verseTag.tag}}
                         </button>
                     </div>
-                    <div ng-if="targetVerseForTagContent==verse.id">
-
+                    <div ng-if="targetVerseForTagContent==verse.id" class="verse_tag_content">
+                        <h4>Etiketli Ayetler</h4>
                         <select class="verseTagContentAuthor"
                                 ng-options="author.id as author.name for author in authors | filter:authorFilter"
                                 ng-model="verseTagContentAuthor"
@@ -74,7 +74,8 @@
                 <button onclick="closePanel()" class="btn btn-default btn-xs" style="float: left;"><i
                         class="fa fa-undo"></i></button>
                 <button class="btn btn-warning btn-xs" ng-click="resetAnnotationFilter()"
-                        ng-show='filteredAnnotations.length > 0 || searchText!="" || filterOrderSelect !="verseId"' style="float: right"><i class="fa fa-trash-o"></i>
+                        ng-show='filteredAnnotations.length > 0 || searchText!=""' style="float: right"><i
+                        class="fa fa-trash-o"></i>
                     Filtreyi
                     kaldır
                 </button>

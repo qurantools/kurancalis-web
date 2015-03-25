@@ -14,8 +14,6 @@
         <pre>allAnnotations: <span id="allAnnotatio" ng-bind="annotations | json"></span></pre>
         -->
     <div ng-include="'app/components/partials/navigation.html'"></div>
-
-
     <div>
         <div ng-repeat="annotation in annotations" class="box">
             <div class="s_a_header">
@@ -63,6 +61,12 @@
 
                 <div class="modal-body">
 
+                    <!--
+                    <pre>allAnnotationsSearchInput: <span  ng-bind="allAnnotationsSearchInput | json"></span></pre>
+                    <pre>filterTags: <span id="filterTags" ng-bind="filterTags | json"></span></pre>
+                    <pre>annotationSearchAuthorSelection: <span  ng-bind="allAnnotationsParams.verse_tags"></span></pre>
+                    -->
+
                     <div>
                         <input type="text" ng-model="allAnnotationsSearchInput" size="12" class="form-control"
                                placeholder="Aranacak kelime"/>
@@ -70,7 +74,7 @@
                     </div>
 
                     <div>
-                        <tags-input ng-model="theTags" display-property="name" replace-spaces-with-dashes=false
+                        <tags-input ng-model="filterTags" display-property="name" replace-spaces-with-dashes=false
                                     min-length="2">
                             <auto-complete source="loadTags($query)" min-length="2"></auto-complete>
                         </tags-input>

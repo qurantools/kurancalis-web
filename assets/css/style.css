@@ -156,3 +156,8 @@ hr {
     cursor: pointer;
     cursor: hand;
 }
+
+.verse_tag_content {
+    background-color: #eeeeee;
+    padding: 10px;
+}
