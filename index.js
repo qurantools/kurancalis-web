@@ -183,40 +183,34 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         $scope.annotate_it = function () {
             if ($scope.annotatorActivated == 1) {
                 annotator.destroy();
-                //$('#translations').data('annotator').plugins['Store'].destroy();
                 delete annotator;
             }
 
-            //annotator = $('#translations').annotator();
-            annotator = new Annotator($('#translations'));
-            //     if ($scope.annotatorActivated != 1) {
-            annotator.addPlugin('Store', {
-                prefix: 'https://securewebserver.net/jetty/qt/rest',
-                //prefix: 'http://localhost:8080/QuranToolsApp/rest',
-                urls: {
-                    // These are the default URLs.
-                    create: '/annotations',
-                    update: '/annotations/:id',
-                    destroy: '/annotations/:id',
-                    search: '/search'
-                }
-            });
-            annotator.addPlugin('Touch', {
-                //force: true
-            });
-            annotator.addPlugin('Tags');
+            if($scope.loggedIn) {  //giris yapilmadiysa yukleme, kavga olmasin.
 
-            $scope.annotatorActivated = 1;
+                annotator = new Annotator($('#translations'));
+                annotator.addPlugin('Store', {
+                    prefix: 'https://securewebserver.net/jetty/qt/rest',
+                    //prefix: 'http://localhost:8080/QuranToolsApp/rest',
+                    urls: {
+                        create: '/annotations',
+                        update: '/annotations/:id',
+                        destroy: '/annotations/:id',
+                        search: '/search'
+                    }
+                });
+                annotator.addPlugin('Touch', {
+                    //force: true
+                });
+                annotator.addPlugin('Tags');
 
-            annotator.subscribe("annotationCreated", $scope.colorTheAnnotation);
-            annotator.subscribe("annotationUpdated", $scope.colorTheAnnotation);
-            annotator.subscribe("annotationsLoaded", $scope.colorAnnotations);
+                $scope.annotatorActivated = 1;
 
-            //annotator.subscribe("annotationCreated", $scope.loadAnnotations);
-            //annotator.subscribe("annotationUpdated", $scope.loadAnnotations);
-
-
-            annotator.subscribe("annotationsLoaded", $scope.loadAnnotations);
+                annotator.subscribe("annotationCreated", $scope.colorTheAnnotation);
+                annotator.subscribe("annotationUpdated", $scope.colorTheAnnotation);
+                annotator.subscribe("annotationsLoaded", $scope.colorAnnotations);
+                annotator.subscribe("annotationsLoaded", $scope.loadAnnotations);
+            }
 
 
         }
@@ -568,12 +562,15 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         }
 
         $scope.checkUserLoginStatus = function () {
+            var status = false;
             var access_token = $scope.get_access_token_cookie();
             if (access_token != null && access_token != "") {
                 $scope.access_token = access_token;
                 $scope.loggedIn = true;
                 $scope.get_user_info();
+                status = true;
             }
+            return status;
         }
 
         /* Editor operations */
