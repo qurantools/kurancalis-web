@@ -4,6 +4,20 @@
 <div class="container">
 
     <div ng-include="'app/components/partials/navigation.html'"></div>
+<button onclick="createSelect()">createSelect</button>
+    <p>Selected: {{chapter.selected.nameTr}}</p>
+    <ui-select ng-model="chapter.selected"
+               theme="bootstrap"
+               ng-disabled="disabled"
+               reset-search-input="false"
+               style="width: 300px;">
+        <ui-select-match placeholder="Enter an address...">{{$select.selected.nameTr}}</ui-select-match>
+        <ui-select-choices repeat="chapter in chapters track by $index" refresh="refreshAddresses($select.search)" refresh-delay="0">
+        <div ng-bind-html="chapter.nameTr"></div>
+</ui-select-choices>
+</ui-select>
+
+
     <div class="row">
         <div class="col-xs-12" id="translations">
             <div ng-repeat="verse in verses">

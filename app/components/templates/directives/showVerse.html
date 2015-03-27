@@ -1,0 +1,15 @@
+<div>
+    <select>
+        <option ng-repeat="author in $parent.authors" value="author.id" ng-selected="author.id == data.authorId">{{author.name}}</option>
+    </select>
+    <input type="text" style="width: 50px" placeholder="Sure" value="{{data.chapter}}"/>
+    <input type="text" style="width: 50px" placeholder="Ayet" value="{{data.verse}}"/>
+    <button class="btn btn-primary">Git</button>
+    <button class="btn"><i class="fa fa-arrow-circle-o-left"></i></button>
+    <button class="btn"><i class="fa fa-arrow-circle-o-right"></i></button>
+
+    <div>
+{{data.content}}
+    </div>
+</div>
+<hr />

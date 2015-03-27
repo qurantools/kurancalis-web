@@ -17,8 +17,10 @@
     <div>
         <div ng-repeat="annotation in annotations" class="box">
             <div class="s_a_header">
-                {{annotation.verseId / 1000 | number:0}}:{{annotation.verseId % 1000}}
+                {{annotation.verseId / 1000 | number:0}}:{{annotation.verseId % 1000}} <button ng-click="showVerse(annotation)" class="btn">Ayeti göster</button>
             </div>
+            <show-verse data="showVerseData.data" ng-if="showVerseData.annotationId==annotation.annotationId"></show-verse>
+
             <div>
                 {{annotation.quote}}
             </div>

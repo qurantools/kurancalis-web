@@ -1,4 +1,4 @@
-angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 'LocalStorageModule', 'ngTagsInput', 'duScroll'])
+angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 'LocalStorageModule', 'ngTagsInput', 'duScroll', 'directives.showVerse'])
     .filter('to_trusted', ['$sce',
         function ($sce) {
             return function (text) {
@@ -186,7 +186,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
                 delete annotator;
             }
 
-            if($scope.loggedIn) {  //giris yapilmadiysa yukleme, kavga olmasin.
+            if ($scope.loggedIn) {  //giris yapilmadiysa yukleme, kavga olmasin.
 
                 annotator = new Annotator($('#translations'));
                 annotator.addPlugin('Store', {
@@ -928,11 +928,36 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             $scope.updateVerseTagContent();
         }
 
+        $scope.showVerse = function (annotation) {
+            // var translationParams = [];
+            // translationParams.id = annotation.translationId;
+            /*
+             var translationsRestangular = Restangular.all("translations");
+             translationsRestangular.customGET("", translationParams, {'access_token': $scope.access_token}).then(function (translations) {
+             });
+             */
+
+            //static for now
+            //        var verse=Restangular.one('authors', verseAuthorId).one('verse', annotation.verseId).get();
+            //        console.log("verse:"+JSON.stringify(verse));
+            $scope.showVerseData ={};
+
+            Restangular.one('translations', annotation.translationId).get().then(function(translation){
+                $scope.showVerseData.annotationId = annotation.annotationId;
+                //  $scope.showVerseData.data = {authorId: 16, quote: "testQuote"};
+                console.log(JSON.stringify(translation));
+                $scope.showVerseData.data = translation;
+            });
+
+
+        }
+
         $scope.scopeApply = function () {
             if (!$scope.$$phase) {
                 $scope.$apply();
             }
         }
+
 
     })
 
@@ -974,4 +999,8 @@ function verseTagClicked(elem) {
         $(elem).addClass("btn-warning").addClass("btn-sm").removeClass('btn-info').removeClass('btn-xs');
     }
 }
-
+/*
+ function createSelect(){
+ document.createElement('ui-select');
+ }
+ */
