@@ -1,22 +1,9 @@
 <body>
 <div class="container">
     <div ng-include="'app/components/partials/navigation.html'"></div>
-    <ui-select ng-model="chapterSelected"
-               theme="bootstrap"
-               reset-search-input="false"
-               style="width: 200px;"
-               on-select="setSelectedChapter($item)"
-            >
-        <ui-select-match placeholder="Sure">{{$select.selected.nameTr}}</ui-select-match>
-        <ui-select-choices repeat="chapter in chapters | selectionFilter: {id: $select.search,nameTr: $select.search}">
-            {{chapter.id}}: {{chapter.nameTr}}
-        </ui-select-choices>
-    </ui-select>
-
     <div class="row">
         <div class="col-xs-12" id="translations">
             <div ng-repeat="verse in verses">
-
                 <div class="well translations col-xs-12" id="v_{{verse.id}}">
                     <div ng-repeat="translation in verse.translations">
                         <div ng-if="$first"><h4>{{translation.chapter}}:{{translation.verse}}</h4></div>

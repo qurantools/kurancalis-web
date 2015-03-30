@@ -3,7 +3,21 @@
         <form>
             <div class="row" style="padding-left: 15px;">
                 <div style="float: left">
-                    <input type="text" ng-model="$parent.chapter_id" size="12"  ng-enter="goToChapter()"/>
+                <ui-select ng-model="chapterSelected"
+                           theme="bootstrap"
+                           reset-search-input="false"
+                           style="width: 200px;"
+                           on-select="setSelectedChapter($item)"
+                        >
+                    <ui-select-match placeholder="Sure">{{$select.selected.id}}: {{$select.selected.nameTr}}</ui-select-match>
+                    <ui-select-choices repeat="chapter in chapters | selectionFilter: {id: $select.search,nameTr: $select.search}">
+                        {{chapter.id}}: {{chapter.nameTr}}
+                    </ui-select-choices>
+                </ui-select>
+                </div>
+
+                <div style="float: left">
+                    <input type="hidden" ng-model="$parent.chapter_id" size="12"  ng-enter="goToChapter()"/>
                 </div>
                 <input type="hidden" ng-model="$parent.author_mask" value="48"/>
 
