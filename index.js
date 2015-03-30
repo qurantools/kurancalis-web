@@ -1,4 +1,4 @@
-angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 'LocalStorageModule', 'ngTagsInput', 'duScroll', 'directives.showVerse'])
+angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 'LocalStorageModule', 'ngTagsInput', 'duScroll', 'directives.showVerse', 'ui.select'])
     .filter('to_trusted', ['$sce',
         function ($sce) {
             return function (text) {
@@ -18,7 +18,36 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
                 return text.replace("*", "<a class='footnote_asterisk' href='javascript:list_fn(" + translation_id + ")'>*</a");
             };
         }])
+    .filter('selectionFilter', function () {
+        return function (items, props) {
+            var out = [];
 
+            if (angular.isArray(items)) {
+                items.forEach(function (item) {
+                    var itemMatches = false;
+
+                    var keys = Object.keys(props);
+                    for (var i = 0; i < keys.length; i++) {
+                        var prop = keys[i];
+                        var text = props[prop].toLowerCase();
+                        if (item[prop].toString().toLowerCase().indexOf(text) !== -1) {
+                            itemMatches = true;
+                            break;
+                        }
+                    }
+
+                    if (itemMatches) {
+                        out.push(item);
+                    }
+                });
+            } else {
+                // Let the output be the input untouched
+                out = items;
+            }
+
+            return out;
+        }
+    })
     .run(['$route', '$rootScope', '$location', function ($route, $rootScope, $location) {
         var original = $location.path;
         $location.path = function (path, reload) {
@@ -929,27 +958,33 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         }
 
         $scope.showVerse = function (annotation) {
-            // var translationParams = [];
-            // translationParams.id = annotation.translationId;
-            /*
-             var translationsRestangular = Restangular.all("translations");
-             translationsRestangular.customGET("", translationParams, {'access_token': $scope.access_token}).then(function (translations) {
-             });
-             */
-
-            //static for now
-            //        var verse=Restangular.one('authors', verseAuthorId).one('verse', annotation.verseId).get();
-            //        console.log("verse:"+JSON.stringify(verse));
-            $scope.showVerseData ={};
-
-            Restangular.one('translations', annotation.translationId).get().then(function(translation){
+            $scope.showVerseData = {};
+            Restangular.one('translations', annotation.translationId).get().then(function (translation) {
                 $scope.showVerseData.annotationId = annotation.annotationId;
                 //  $scope.showVerseData.data = {authorId: 16, quote: "testQuote"};
                 console.log(JSON.stringify(translation));
                 $scope.showVerseData.data = translation;
             });
+        }
 
+        //list of chapters
+        $scope.chapters = [];
+        var chaptersVersion = 1;
+        var localChaptersVersion = localStorageService.get('chaptersVersion');
 
+        if (localChaptersVersion == null || localChaptersVersion < chaptersVersion) {
+            Restangular.all('chapters').getList().then(function (data) {
+                $scope.chapters = data;
+                localStorageService.set('chapters', data);
+                localStorageService.set('chaptersVersion', chaptersVersion);
+            });
+        } else {
+            $scope.chapters = localStorageService.get('chapters');
+        }
+
+        $scope.setSelectedChapter = function (selectedItem) {
+            $scope.chapterSelected = selectedItem;
+            $scope.chapter_id = selectedItem.id;
         }
 
         $scope.scopeApply = function () {
@@ -957,8 +992,6 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
                 $scope.$apply();
             }
         }
-
-
     })
 
 function list_fn(id) {
@@ -999,8 +1032,3 @@ function verseTagClicked(elem) {
         $(elem).addClass("btn-warning").addClass("btn-sm").removeClass('btn-info').removeClass('btn-xs');
     }
 }
-/*
- function createSelect(){
- document.createElement('ui-select');
- }
- */
