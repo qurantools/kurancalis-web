@@ -161,3 +161,8 @@ hr {
     background-color: #eeeeee;
     padding: 10px;
 }
+
+.ui-select-match span, .ui-select-match span:hover{
+    background-color:#ffffff;
+    color:#000000;
+}

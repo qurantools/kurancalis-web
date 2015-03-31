@@ -174,6 +174,10 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         var authorMask = 48;
         if (typeof $routeParams.chapterId !== 'undefined') {
             chapterId = $routeParams.chapterId;
+
+            $scope.initChapterSelect = true;
+
+
         }
         if (typeof $routeParams.authorMask !== 'undefined') {
             authorMask = $routeParams.authorMask;
@@ -985,6 +989,15 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         $scope.setSelectedChapter = function (selectedItem) {
             $scope.chapterSelected = selectedItem;
             $scope.chapter_id = selectedItem.id;
+        }
+
+        //init chapter select box
+        var chaptersLen = $scope.chapters.length;
+        for (var chaptersIndex = 0; chaptersIndex < chaptersLen; chaptersIndex++) {
+            if ($scope.chapters[chaptersIndex].id == $scope.chapter_id) {
+                $scope.chapterSelected = $scope.chapters[chaptersIndex];
+                break;
+            }
         }
 
         $scope.scopeApply = function () {

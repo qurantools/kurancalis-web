@@ -2,24 +2,37 @@
 
 
 <div class="container">
-    <!--
-
-            <pre>isReady: <span id="is_ready" ng-bind="facebookIsReady"></span></pre>
-            <pre>status: <span id="login_status" ng-bind="loginStatus"></span></pre>
-            <pre>token: <span id="tokenFb" ng-bind="tokenFb"></span></pre>
-            <pre>access token: <span id="accessToken" ng-bind="access_token"></span></pre>
-            <pre>validation_response: <span id="api_first_name" ng-bind="validation_response | json"></span></pre>
-
-
-        <pre>allAnnotations: <span id="allAnnotatio" ng-bind="annotations | json"></span></pre>
-        -->
     <div ng-include="'app/components/partials/navigation.html'"></div>
+    <div class="dialog dialog-warning" style="padding:0 20px 10px 20px"
+         ng-if="allAnnotationsSearchInput ||filterTags.length >0|| annotationSearchAuthorSelection.length>0 ">
+        <div class="container" style="text-align: left;">
+            <h6>Filtre seçenekleri</h6>
+
+            <div ng-if="allAnnotationsSearchInput">Kelime: {{allAnnotationsSearchInput}}</div>
+            <div ng-if="filterTags.length>0">Etiket:
+                <div ng-repeat="filterTag in filterTags" class="tag label label-info s_a_tag">{{filterTag.name}}</div>
+            </div>
+
+            <div ng-if="annotationSearchAuthorSelection.length>0">
+                <div style="float:left;">Yazar:</div>
+                <div ng-repeat="authorSearch in annotationSearchAuthorSelection" style="float: left">
+                    <span ng-repeat="author in authors" ng-if="author.id==authorSearch"
+                          style="float: left; padding-left:5px">
+                        {{author.name}}
+                    </span>{{$last ? '' : ', '}}
+                </div>
+            </div>
+
+        </div>
+    </div>
     <div>
         <div ng-repeat="annotation in annotations" class="box">
             <div class="s_a_header">
-                {{annotation.verseId / 1000 | number:0}}:{{annotation.verseId % 1000}} <button ng-click="showVerse(annotation)" class="btn">Ayeti göster</button>
+                {{annotation.verseId / 1000 | number:0}}:{{annotation.verseId % 1000}}
+                <button ng-click="showVerse(annotation)" class="btn">Ayeti göster</button>
             </div>
-            <show-verse data="showVerseData.data" ng-if="showVerseData.annotationId==annotation.annotationId"></show-verse>
+            <show-verse data="showVerseData.data"
+                        ng-if="showVerseData.annotationId==annotation.annotationId"></show-verse>
 
             <div>
                 {{annotation.quote}}
@@ -62,17 +75,9 @@
                 </div>
 
                 <div class="modal-body">
-
-                    <!--
-                    <pre>allAnnotationsSearchInput: <span  ng-bind="allAnnotationsSearchInput | json"></span></pre>
-                    <pre>filterTags: <span id="filterTags" ng-bind="filterTags | json"></span></pre>
-                    <pre>annotationSearchAuthorSelection: <span  ng-bind="allAnnotationsParams.verse_tags"></span></pre>
-                    -->
-
                     <div>
                         <input type="text" ng-model="allAnnotationsSearchInput" size="12" class="form-control"
                                placeholder="Aranacak kelime"/>
-                        <!-- ng-enter="search_all_annotations()" -->
                     </div>
 
                     <div>
