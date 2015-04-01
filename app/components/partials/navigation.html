@@ -17,6 +17,10 @@
                 </div>
 
                 <div style="float: left">
+                    <input type="text" ng-model="$parent.verse_id" size="12"  ng-enter="goToChapter()" placeholder="Ayet"/>
+                </div>
+
+                <div style="float: left">
                     <input type="hidden" ng-model="$parent.chapter_id" size="12"  ng-enter="goToChapter()"/>
                 </div>
                 <input type="hidden" ng-model="$parent.author_mask" value="48"/>

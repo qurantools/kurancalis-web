@@ -281,7 +281,14 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             });
 
             $timeout(function () {
+                //mark annotations
                 $scope.annotate_it();
+
+                //scroll to verse
+                if (typeof $scope.verse_id != 'undefined' && $scope.verse_id > 1) {
+                    var verseId = parseInt($scope.chapter_id * 1000) + parseInt($scope.verse_id);
+                    $scope.scrollToElement('v_' + verseId);
+                }
 
             }, 2000);
 
@@ -827,7 +834,9 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
 
         $scope.scrollToElement = function (elementId) {
             var destination = angular.element(document.getElementById(elementId));
-            $document.scrollToElement(destination, 30, 1000);
+            if (destination.length > 0) {
+                $document.scrollToElement(destination, 30, 1000);
+            }
         }
 
 
