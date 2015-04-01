@@ -67,7 +67,6 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
                     scope.$apply(function () {
                         scope.$eval(attrs.ngEnter);
                     });
-
                     event.preventDefault();
                 }
             });
@@ -84,6 +83,9 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
                 reloadOnSearch: false
             })
             .when('/chapter/:chapterId/author/:authorMask', {
+                redirectTo: '/chapter/:chapterId/author/:authorMask/verse/1'
+            })
+            .when('/chapter/:chapterId/author/:authorMask/verse/:verseNumber', {
                 controller: 'MainCtrl',
                 templateUrl: 'app/components/home/homeView.html',
                 reloadOnSearch: false
@@ -172,18 +174,22 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
 
         var chapterId = 1;
         var authorMask = 48;
+        var verseNumber = 1;
         if (typeof $routeParams.chapterId !== 'undefined') {
             chapterId = $routeParams.chapterId;
 
             $scope.initChapterSelect = true;
-
-
         }
         if (typeof $routeParams.authorMask !== 'undefined') {
             authorMask = $routeParams.authorMask;
         }
+        if (typeof $routeParams.verseNumber !== 'undefined') {
+            verseNumber = $routeParams.verseNumber;
+        }
+
         $scope.chapter_id = chapterId;
         $scope.author_mask = authorMask;
+        $scope.verse_number = verseNumber;
 
         $scope.myRoute = [];
         $scope.myRoute['tag'] = '';
@@ -284,10 +290,10 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
                 //mark annotations
                 $scope.annotate_it();
 
-                //scroll to verse
-                if (typeof $scope.verse_id != 'undefined' && $scope.verse_id > 1) {
-                    var verseId = parseInt($scope.chapter_id * 1000) + parseInt($scope.verse_id);
-                    $scope.scrollToElement('v_' + verseId);
+                //scroll to verse if user is not logged in.
+                //if user is logged in, they will scroll on tag generation.
+                if ($scope.user == null) {
+                    $scope.scrollToVerse();
                 }
 
             }, 2000);
@@ -501,7 +507,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         //go to chapter
         $scope.goToChapter = function () {
             if ($scope.currentPage == 'home') {
-                $location.path('/chapter/' + $scope.chapter_id + '/author/' + $scope.author_mask, false);
+                $location.path('/chapter/' + $scope.chapter_id + '/author/' + $scope.author_mask + '/verse/' + $scope.verse_number, false);
                 $scope.list_translations();
                 $scope.updateVerseTagContent();
             } else {
@@ -835,7 +841,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         $scope.scrollToElement = function (elementId) {
             var destination = angular.element(document.getElementById(elementId));
             if (destination.length > 0) {
-                $document.scrollToElement(destination, 30, 1000);
+                $document.scrollToElement(destination, 70, 1000);
             }
         }
 
@@ -897,6 +903,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
                 verseTagsJSON.push(thisVerse);
             }
             $scope.verseTagsJSON = verseTagsJSON;
+            $scope.scrollToVerse();
         }
 
 
@@ -1008,7 +1015,15 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
                 break;
             }
         }
-
+        $scope.scrollToVerse = function () {
+            if (typeof $scope.verse_number != 'undefined') {
+                var verseId = parseInt($scope.chapter_id * 1000) + parseInt($scope.verse_number);
+                $scope.scrollToElement('v_' + verseId);
+            }
+        }
+        $scope.activateTooltips = function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        }
         $scope.scopeApply = function () {
             if (!$scope.$$phase) {
                 $scope.$apply();
@@ -1021,16 +1036,19 @@ function list_fn(id) {
 }
 
 function sidebarInit() {
-    $('.cd-btn').on('click', function (event) {
-        event.preventDefault();
-        $('.cd-panel').addClass('is-visible');
-    });
+    /*
+     $('.cd-btn').on('click', function (event) {
+     event.preventDefault();
+     $('.cd-panel').addClass('is-visible');
+     });
+     */
     $('.cd-panel').on('click', function (event) {
         if ($(event.target).is('.cd-panel') || $(event.target).is('.cd-panel-close')) {
             $('.cd-panel').removeClass('is-visible');
             event.preventDefault();
         }
     });
+
 }
 
 function openPanel() {

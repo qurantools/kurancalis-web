@@ -1,27 +1,30 @@
-<nav class="navbar navbar-default" role="navigation">
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div>
         <form>
             <div class="row" style="padding-left: 15px;">
                 <div style="float: left">
-                <ui-select ng-model="chapterSelected"
-                           theme="bootstrap"
-                           reset-search-input="false"
-                           style="width: 200px;"
-                           on-select="setSelectedChapter($item)"
-                        >
-                    <ui-select-match placeholder="Sure">{{$select.selected.id}}: {{$select.selected.nameTr}}</ui-select-match>
-                    <ui-select-choices repeat="chapter in chapters | selectionFilter: {id: $select.search,nameTr: $select.search}">
-                        {{chapter.id}}: {{chapter.nameTr}}
-                    </ui-select-choices>
-                </ui-select>
+                    <ui-select ng-model="chapterSelected"
+                               theme="bootstrap"
+                               reset-search-input="false"
+                               style="width: 200px;"
+                               on-select="setSelectedChapter($item)"
+                               ng-enter="return false;"
+                            >
+                        <ui-select-match placeholder="Sure">{{$select.selected.id}}: {{$select.selected.nameTr}}
+                        </ui-select-match>
+                        <ui-select-choices
+                                repeat="chapter in chapters | selectionFilter: {id: $select.search,nameTr: $select.search}">
+                            {{chapter.id}}: {{chapter.nameTr}}
+                        </ui-select-choices>
+                    </ui-select>
                 </div>
-
-                <div style="float: left">
-                    <input type="text" ng-model="$parent.verse_id" size="12"  ng-enter="goToChapter()" placeholder="Ayet"/>
+                <div style="float: left" data-toggle="tooltip" title="Ayet" data-placement="bottom"
+                    >
+                    <input type="text" ng-model="$parent.verse_number" size="12" ng-enter="goToChapter()"
+                           placeholder="Ayet"/>
                 </div>
-
                 <div style="float: left">
-                    <input type="hidden" ng-model="$parent.chapter_id" size="12"  ng-enter="goToChapter()"/>
+                    <input type="hidden" ng-model="$parent.chapter_id" size="12" ng-enter="goToChapter()"/>
                 </div>
                 <input type="hidden" ng-model="$parent.author_mask" value="48"/>
 
@@ -29,13 +32,23 @@
                     <button type="button" id="list_translations" ng-click="goToChapter()" class="btn btn-primary">
                         Sureye git
                     </button>
-                    <button class="btn btn-primary" data-target="#myModal" data-toggle="modal" type="button"  ng-if="currentPage!='annotations'">
+                    <span data-toggle="tooltip" title="Yazarlar" data-placement="bottom">
+                    <button class="btn btn-primary" data-target="#myModal" data-toggle="modal" type="button"
+                            ng-if="currentPage!='annotations'">
                         <i class="fa fa-user"></i>
                     </button>
-                    <a class="btn btn-primary" type="button" href="#/annotations/"  ng-if="user!=null && currentPage!='annotations'">Tüm notlar
+                    </span>
+                    <a class="btn btn-primary" type="button" href="#/annotations/"
+                       ng-if="user!=null && currentPage!='annotations'">Tüm notlar
                     </a>
-                    <a class="btn btn-primary" data-target="#annotationsFilterModal" data-toggle="modal" ng-if="user!=null && currentPage=='annotations'"><i class="fa fa-search"></i></a>
-                    <select ng-model="allAnnotationsOrderBy" ng-init="allAnnotationsOrderBy='verse'" ng-if="currentPage=='annotations'" ng-change="$parent.allAnnotationsOrderByChanged(this.allAnnotationsOrderBy)"><option value="verse">Ayet</option><option value="time">Zaman</option> </select>
+                    <a class="btn btn-primary" data-target="#annotationsFilterModal" data-toggle="modal"
+                       ng-if="user!=null && currentPage=='annotations'"><i class="fa fa-search"></i></a>
+                    <select ng-model="allAnnotationsOrderBy" ng-init="allAnnotationsOrderBy='verse'"
+                            ng-if="currentPage=='annotations'"
+                            ng-change="$parent.allAnnotationsOrderByChanged(this.allAnnotationsOrderBy)">
+                        <option value="verse">Ayet</option>
+                        <option value="time">Zaman</option>
+                    </select>
                 </div>
 
                 <div ng-show="facebookIsReady" class="facebook_area">
@@ -45,7 +58,8 @@
                         </button>
                     </div>
                     <div ng-if="user!=null">
-                        <button onclick="openPanel()" class="btn btn-primary btn-xs" ng-if="currentPage=='home'"><i class="fa fa-eye"></i>
+                        <button onclick="openPanel()" class="btn btn-primary btn-xs" ng-if="currentPage=='home'"><i
+                                class="fa fa-edit"></i>
                         </button>
                         <img ng-src="{{user.photo}}" height="30"/>
                         {{user.name}}
@@ -60,3 +74,4 @@
     <!-- /.navbar-collapse -->
 </nav>
 <!-- /navbar -->
+<span id="navBarInıt" data-ng-init="activateTooltips()"></span>

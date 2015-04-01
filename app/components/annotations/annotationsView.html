@@ -3,18 +3,17 @@
 
 <div class="container">
     <div ng-include="'app/components/partials/navigation.html'"></div>
+    <div class="nav-bottom"></div>
     <div class="dialog dialog-warning" style="padding:0 20px 10px 20px"
          ng-if="allAnnotationsSearchInput ||filterTags.length >0|| annotationSearchAuthorSelection.length>0 ">
         <div class="container" style="text-align: left;">
-            <h6>Filtre seçenekleri</h6>
-
-            <div ng-if="allAnnotationsSearchInput">Kelime: {{allAnnotationsSearchInput}}</div>
-            <div ng-if="filterTags.length>0">Etiket:
+            <div ng-if="allAnnotationsSearchInput"><strong>Kelime:</strong> {{allAnnotationsSearchInput}}</div>
+            <div ng-if="filterTags.length>0"><strong>Etiket:</strong>
                 <div ng-repeat="filterTag in filterTags" class="tag label label-info s_a_tag">{{filterTag.name}}</div>
             </div>
 
             <div ng-if="annotationSearchAuthorSelection.length>0">
-                <div style="float:left;">Yazar:</div>
+                <div style="float:left;"><strong>Yazar:</strong></div>
                 <div ng-repeat="authorSearch in annotationSearchAuthorSelection" style="float: left">
                     <span ng-repeat="author in authors" ng-if="author.id==authorSearch"
                           style="float: left; padding-left:5px">
@@ -33,7 +32,6 @@
             </div>
             <show-verse data="showVerseData.data"
                         ng-if="showVerseData.annotationId==annotation.annotationId"></show-verse>
-
             <div>
                 {{annotation.quote}}
             </div>

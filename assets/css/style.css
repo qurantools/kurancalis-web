@@ -162,7 +162,11 @@ hr {
     padding: 10px;
 }
 
-.ui-select-match span, .ui-select-match span:hover{
-    background-color:#ffffff;
-    color:#000000;
+.ui-select-match span, .ui-select-match span:hover {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+.nav-bottom {
+    height: 70px;
 }
