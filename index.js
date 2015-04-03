@@ -311,7 +311,6 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             });
         }
 
-
         //list footnotes
         $scope.list_footnotes = function (translation_id) {
             $scope.footnotes = Footnotes.query({
