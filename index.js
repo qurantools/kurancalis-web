@@ -988,7 +988,6 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         $scope.showVerseByParameters = function (action) {
             var showVerseRestangular = Restangular.all("translations");
             var showVerseParameters = [];
-            showVerseParameters.author = $scope.showVerseData.data.authorId;
 
             if (action == 'next') {
                 $scope.showVerseData.data.verse++;
@@ -1027,7 +1026,6 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         } else {
             $scope.chapters = localStorageService.get('chapters');
         }
-        console.log(JSON.stringify($scope.chapters));
 
         $scope.setSelectedChapter = function (selectedItem) {
             $scope.chapterSelected = selectedItem;

@@ -1,6 +1,6 @@
 <div>
-    <select>
-        <option ng-repeat="author in $parent.authors" value="author.id" ng-selected="author.id == data.authorId">
+    <select ng-model="$parent.showVerseData.data.authorId">
+        <option ng-repeat="author in $parent.authors" value="{{author.id}}" ng-selected="author.id == data.authorId">
             {{author.name}}
         </option>
     </select>
@@ -13,7 +13,7 @@
     <button class="btn" ng-click="$parent.showVerseByParameters('next')"><i class="fa fa-arrow-circle-o-right"></i>
     </button>
     <div>
-        {{data.content}}
+        <span ng-bind-html="data.content | newLineAllowed | to_trusted"></span>
     </div>
 </div>
 <hr/>
