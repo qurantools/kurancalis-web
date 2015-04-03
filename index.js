@@ -1046,9 +1046,6 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
                 $scope.scrollToElement('v_' + verseId);
             }
         }
-        $scope.activateTooltips = function () {
-            $('[data-toggle="tooltip"]').tooltip();
-        }
         $scope.scopeApply = function () {
             if (!$scope.$$phase) {
                 $scope.$apply();
