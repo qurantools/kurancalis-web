@@ -91,8 +91,6 @@
 
             </div>
 
-
-            <!--| filter: {quote:searchText}-->
             <div ng-repeat="annotation in annotations | filter:annotationFilter | filter: annotationTextSearch"
                  class="sidebar_annotation box"
                  ng-click="scrollToElement('t_'+annotation.translationId)">

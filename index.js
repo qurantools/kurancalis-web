@@ -323,6 +323,9 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
                     var html = "<div class='footnote' id='fn_" + translation_id + "'>";
                     var dataLength = data.length;
                     for (index = 0; index < dataLength; ++index) {
+                        //add verse links
+                        data[index]=data[index].replace("27:30", "<a href='javascript: alert(\"oldu\");'>___27:30___</a>");
+
                         html += "<div class='row'><div class='col-xs-1 footnote_bullet'>&#149;</div><div class='col-xs-11'>" + data[index] + "</div></div>";
                     }
                     html += '</div>';

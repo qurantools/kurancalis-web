@@ -1,5 +1,5 @@
 <div>
-    <select ng-model="$parent.showVerseData.data.authorId">
+    <select ng-model="$parent.showVerseData.data.authorId" ng-change="$parent.showVerseByParameters('go')">
         <option ng-repeat="author in $parent.authors" value="{{author.id}}" ng-selected="author.id == data.authorId">
             {{author.name}}
         </option>
