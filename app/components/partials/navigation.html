@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+<nav class="navbar navbar-default navbar-fixed-top container" role="navigation">
     <div>
         <form>
             <div class="row" style="padding-left: 15px;">
@@ -18,10 +18,9 @@
                         </ui-select-choices>
                     </ui-select>
                 </div>
-                <div style="float: left" data-toggle="tooltip" title="Ayet" data-placement="bottom"
-                    >
+                <div style="float: left" data-placement="bottom">
                     <input type="text" ng-model="$parent.verse_number" size="12" ng-enter="goToChapter()"
-                           placeholder="Ayet"/>
+                           placeholder="Ayet" class="form-control"/>
                 </div>
                 <div style="float: left">
                     <input type="hidden" ng-model="$parent.chapter_id" size="12" ng-enter="goToChapter()"/>
@@ -32,10 +31,10 @@
                     <button type="button" id="list_translations" ng-click="goToChapter()" class="btn btn-primary">
                         Sureye git
                     </button>
-                    <span data-toggle="tooltip" title="Yazarlar" data-placement="bottom">
+                    <span data-toggle="tooltip" data-placement="bottom">
                     <button class="btn btn-primary" data-target="#myModal" data-toggle="modal" type="button"
                             ng-if="currentPage!='annotations'">
-                        <i class="fa fa-user"></i>
+                        <i class="fa fa-user"></i> Yazarlar
                     </button>
                     </span>
                     <a class="btn btn-primary" type="button" href="#/annotations/"

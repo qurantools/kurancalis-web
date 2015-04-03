@@ -981,13 +981,39 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             $scope.showVerseData = {};
             Restangular.one('translations', annotation.translationId).get().then(function (translation) {
                 $scope.showVerseData.annotationId = annotation.annotationId;
-                //  $scope.showVerseData.data = {authorId: 16, quote: "testQuote"};
-                console.log(JSON.stringify(translation));
                 $scope.showVerseData.data = translation;
             });
         }
 
-        //list of chapters
+        $scope.showVerseByParameters = function (action) {
+            var showVerseRestangular = Restangular.all("translations");
+            var showVerseParameters = [];
+            showVerseParameters.author = $scope.showVerseData.data.authorId;
+
+            if (action == 'next') {
+                $scope.showVerseData.data.verse++;
+            } else if (action == 'previous') {
+                $scope.showVerseData.data.verse--;
+            } else if (action == 'go') {
+
+            }
+            showVerseParameters.chapter = $scope.showVerseData.data.chapter;
+            showVerseParameters.verse = $scope.showVerseData.data.verse;
+
+            showVerseParameters = {
+                chapter: $scope.showVerseData.data.chapter,
+                verse: $scope.showVerseData.data.verse,
+                author: $scope.showVerseData.data.authorId
+            };
+
+            showVerseRestangular.customGET("", showVerseParameters, {'access_token': $scope.access_token}).then(function (verse) {
+                $scope.showVerseData.data = verse[0].translations[0];
+            });
+
+        }
+
+
+//list of chapters
         $scope.chapters = [];
         var chaptersVersion = 1;
         var localChaptersVersion = localStorageService.get('chaptersVersion');
@@ -1001,13 +1027,14 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         } else {
             $scope.chapters = localStorageService.get('chapters');
         }
+        console.log(JSON.stringify($scope.chapters));
 
         $scope.setSelectedChapter = function (selectedItem) {
             $scope.chapterSelected = selectedItem;
             $scope.chapter_id = selectedItem.id;
         }
 
-        //init chapter select box
+//init chapter select box
         var chaptersLen = $scope.chapters.length;
         for (var chaptersIndex = 0; chaptersIndex < chaptersLen; chaptersIndex++) {
             if ($scope.chapters[chaptersIndex].id == $scope.chapter_id) {
