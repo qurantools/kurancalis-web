@@ -48,6 +48,22 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             return out;
         }
     })
+    .filter('mark_verse_annotation', [
+        function () {
+            return function (translation, annotation) {
+                var startOffset = annotation.ranges[0].startOffset;
+                var endOffset = annotation.ranges[0].endOffset;
+
+                var newText =
+                        translation.substring(0, startOffset) +
+                        "<span class='annotator-hl a_hl_" + annotation.colour + "'>" +
+                        translation.substring(startOffset, endOffset) +
+                        "</span>" +
+                        translation.substring(endOffset, translation.length)
+                    ;
+                return newText;
+            };
+        }])
     .run(['$route', '$rootScope', '$location', function ($route, $rootScope, $location) {
         var original = $location.path;
         $location.path = function (path, reload) {
@@ -323,7 +339,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
                     var dataLength = data.length;
                     for (index = 0; index < dataLength; ++index) {
                         //add verse links
-                        dataContent=data[index].replace( /(\d{1,3}:\d{1,3})/g, "<a href='javascript: alert(\"oldu\");'>$1</a>");
+                        dataContent = data[index].replace(/(\d{1,3}:\d{1,3})/g, "<a href='javascript: redirectToVerseByChapterAndVerse(\"$1\");'>$1</a>");
 
                         html += "<div class='row'><div class='col-xs-1 footnote_bullet'>&#149;</div><div class='col-xs-11'>" + dataContent + "</div></div>";
                     }
@@ -335,8 +351,9 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
                 }
 
             });
-
         }
+
+
         //selected authors
         $scope.setAuthors = function () {
             $scope.selection = [];
@@ -992,9 +1009,19 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             var showVerseParameters = [];
 
             if (action == 'next') {
-                $scope.showVerseData.data.verse++;
+                if ($scope.showVerseData.data.verse != ($scope.chapters[$scope.showVerseData.data.chapter - 1].verseCount)) {
+                    $scope.showVerseData.data.verse++;
+                } else {
+                    $scope.showVerseData.data.chapter++;
+                    $scope.showVerseData.data.verse = 0;
+                }
             } else if (action == 'previous') {
-                $scope.showVerseData.data.verse--;
+                if ($scope.showVerseData.data.verse != 0) {
+                    $scope.showVerseData.data.verse--;
+                } else {
+                    $scope.showVerseData.data.chapter--;
+                    $scope.showVerseData.data.verse = $scope.chapters[$scope.showVerseData.data.chapter - 1].verseCount;
+                }
             } else if (action == 'go') {
 
             }
@@ -1008,15 +1035,15 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             };
 
             showVerseRestangular.customGET("", showVerseParameters, {'access_token': $scope.access_token}).then(function (verse) {
-                $scope.showVerseData.data = verse[0].translations[0];
+                if (verse != "") {
+                    $scope.showVerseData.data = verse[0].translations[0];
+                }
             });
-
         }
-
 
 //list of chapters
         $scope.chapters = [];
-        var chaptersVersion = 1;
+        var chaptersVersion = 2;
         var localChaptersVersion = localStorageService.get('chaptersVersion');
 
         if (localChaptersVersion == null || localChaptersVersion < chaptersVersion) {
@@ -1095,4 +1122,12 @@ function verseTagClicked(elem) {
     if (!closeClick) {
         $(elem).addClass("btn-warning").addClass("btn-sm").removeClass('btn-info').removeClass('btn-xs');
     }
+}
+
+function redirectToVerseByChapterAndVerse(data) {
+    var seperator = data.indexOf(':');
+    var chapter = data.substring(0, seperator);
+    var verse = data.substring(seperator + 1, data.length);
+    var author = angular.element(document.getElementById('theView')).scope().author_mask;
+    window.location.href = '#/chapter/' + chapter + '/author/' + author + '/verse/' + verse;
 }
