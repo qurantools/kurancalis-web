@@ -15,7 +15,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
     .filter('with_footnote_link', [
         function () {
             return function (text, translation_id) {
-                return text.replace("*", "<a class='footnote_asterisk' href='javascript:list_fn(" + translation_id + ")'>*</a");
+                return text.replace(/\*+/g, "<a class='footnote_asterisk' href='javascript:list_fn(" + translation_id + ")'>*</a>");
             };
         }])
     .filter('selectionFilter', function () {
