@@ -493,6 +493,8 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         // $scope.toggleSidebar();
         sidebarInit();
 
+
+
         /* end of init */
 
         //toggle selection for an author id
@@ -1111,7 +1113,16 @@ function sidebarInit() {
         }
     });
 
+
+
+
+
 }
+
+if(   typeof OffCanvas!='undefined'){
+    OffCanvas.hide();
+}    //hide off-canvas if it is shown
+
 
 function openPanel() {
     $('.cd-panel').addClass('is-visible');
