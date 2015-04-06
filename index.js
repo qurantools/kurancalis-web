@@ -50,18 +50,22 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
     })
     .filter('mark_verse_annotation', [
         function () {
-            return function (translation, annotation) {
-                var startOffset = annotation.ranges[0].startOffset;
-                var endOffset = annotation.ranges[0].endOffset;
+            return function (translation, annotation,markVerseAnnotations) {
+                if (markVerseAnnotations == true) {
+                    var startOffset = annotation.ranges[0].startOffset;
+                    var endOffset = annotation.ranges[0].endOffset;
 
-                var newText =
-                        translation.substring(0, startOffset) +
-                        "<span class='annotator-hl a_hl_" + annotation.colour + "'>" +
-                        translation.substring(startOffset, endOffset) +
-                        "</span>" +
-                        translation.substring(endOffset, translation.length)
-                    ;
-                return newText;
+                    var newText =
+                            translation.substring(0, startOffset) +
+                            "<span class='annotator-hl a_hl_" + annotation.colour + "'>" +
+                            translation.substring(startOffset, endOffset) +
+                            "</span>" +
+                            translation.substring(endOffset, translation.length)
+                        ;
+                    return newText;
+                } else {
+                    return translation;
+                }
             };
         }])
     .run(['$route', '$rootScope', '$location', function ($route, $rootScope, $location) {
@@ -999,8 +1003,10 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         $scope.showVerse = function (annotation) {
             $scope.showVerseData = {};
             Restangular.one('translations', annotation.translationId).get().then(function (translation) {
+                $scope.markVerseAnnotations = true;
                 $scope.showVerseData.annotationId = annotation.annotationId;
                 $scope.showVerseData.data = translation;
+
             });
         }
 
@@ -1036,6 +1042,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
 
             showVerseRestangular.customGET("", showVerseParameters, {'access_token': $scope.access_token}).then(function (verse) {
                 if (verse != "") {
+                    $scope.markVerseAnnotations=false;
                     $scope.showVerseData.data = verse[0].translations[0];
                 }
             });
@@ -1079,6 +1086,10 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             if (!$scope.$$phase) {
                 $scope.$apply();
             }
+        }
+
+        $scope.redirectPage = function (url){
+            window.location.href=url;
         }
     })
 

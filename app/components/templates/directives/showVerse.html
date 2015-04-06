@@ -13,7 +13,7 @@
     <button class="btn" ng-click="$parent.showVerseByParameters('next')" $parent.showVerseData.data.chapter==114 && $parent.showVerseData.data.verse==6><i class="fa fa-arrow-circle-o-right"></i>
     </button>
     <div>
-        <span ng-bind-html="data.content | mark_verse_annotation:$parent.annotation | newLineAllowed | to_trusted"></span>
+        <span ng-bind-html="data.content | mark_verse_annotation:$parent.annotation:$parent.markVerseAnnotations | newLineAllowed | to_trusted"></span>
     </div>
 </div>
 <hr/>
