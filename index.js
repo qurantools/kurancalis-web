@@ -1119,10 +1119,6 @@ function sidebarInit() {
 
 }
 
-if(   typeof OffCanvas!='undefined'){
-    OffCanvas.hide();
-}    //hide off-canvas if it is shown
-
 
 function openPanel() {
     $('.cd-panel').addClass('is-visible');
