@@ -1090,9 +1090,6 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             }
         }
 
-        $scope.redirectPage = function (url){
-            window.location.href=url;
-        }
     })
 
 function list_fn(id) {
@@ -1112,20 +1109,29 @@ function sidebarInit() {
             event.preventDefault();
         }
     });
-
-
-
-
-
 }
-
 
 function openPanel() {
-    $('.cd-panel').addClass('is-visible');
+    $('#cd-panel-right').addClass('is-visible');
 }
 function closePanel() {
-    $('.cd-panel').removeClass('is-visible');
+    $('#cd-panel-right').removeClass('is-visible');
 }
+function openLeftPanel() {
+    $('#cd-panel-left').addClass('is-visible');
+}
+function closeLeftPanel() {
+    $('#cd-panel-left').removeClass('is-visible');
+}
+
+function toggleLeftPanel(){
+    if($('#cd-panel-left').hasClass('is-visible')){
+        closeLeftPanel();
+    }else{
+        openLeftPanel();
+    }
+}
+
 function verseTagClicked(elem) {
     var closeClick = false;
     if ($(elem).hasClass('btn-warning')) {
@@ -1149,3 +1155,6 @@ function redirectToVerseByChapterAndVerse(data) {
     var author = angular.element(document.getElementById('theView')).scope().author_mask;
     window.location.href = '#/chapter/' + chapter + '/author/' + author + '/verse/' + verse;
 }
+
+
+

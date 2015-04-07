@@ -181,12 +181,18 @@ html, body {
   .cd-panel-container {
     width: 70%;
   }
+    #cd-panel-left .cd-panel-container {
+        width:228px;
+    }
 }
 @media only screen and (min-width: 1170px) {
   .cd-panel-container {
     /* width: 50%; */
       width:428px;
   }
+    #cd-panel-left .cd-panel-container {
+        width:228px;
+    }
 }
 
 .cd-panel-content {
