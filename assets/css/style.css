@@ -171,28 +171,19 @@ hr {
     height: 70px;
 }
 
-
-/* off-canvas menu */
-
-.navbar-toggle {
-  float: left;
-  margin-left: 15px;
+/* theme hack */
+body{
+    font-size:16px !important;
+    line-height: 1.42857 !important;
 }
 
-@media (min-width: 0) {
-  .navbar-toggle {
-    display: block;
-}
+hr{
+    margin-top:10px !important;
+    margin-bottom: 10px !important;
 }
 
-@media (min-width: 992px) {
-    body {
-        padding: 0;
-    }
-    .navbar {
-        right: auto;
-        background: none;
-        border: none;
-    }
+.well{
+    padding-top:0 !important;
+    padding-bottom:0 !important;
 }
-/* end of off-canvas menu */
+/* end of theme hack */
