@@ -177,6 +177,11 @@ body{
     line-height: 1.42857 !important;
 }
 
+p{
+    font-size:16px !important;
+    line-height: 1.42857 !important;
+}
+
 hr{
     margin-top:10px !important;
     margin-bottom: 10px !important;
@@ -184,6 +189,6 @@ hr{
 
 .well{
     padding-top:0 !important;
-    padding-bottom:0 !important;
+    padding-bottom:5px !important;
 }
 /* end of theme hack */

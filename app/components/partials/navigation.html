@@ -3,9 +3,8 @@
         <form>
             <div class="row" style="padding-left: 15px;">
                 <div style="float: left;">
-
                     <button onclick="toggleLeftPanel()" class="btn btn-primary"><i
-                            class="fa fa-edit"></i> MENÜ
+                            class="fa fa-bars"></i> MENÜ
                     </button>
                 </div>
                 <div style="float: left">
@@ -34,13 +33,14 @@
                 </div>
                 <input type="hidden" ng-model="$parent.author_mask" value="48"/>
 
-                <div style="float: left; padding-left:15px; ">
+                <div style="float: left; ">
                     <button type="button" id="list_translations" ng-click="goToChapter()" class="btn btn-primary">
                         <i class="fa fa-arrow-right" style="font-size: 1.3em"></i>
                     </button>
+                    <span style="width: 10px;">&nbsp;</span>
                     <button class="btn btn-primary" data-target="#myModal" data-toggle="modal" type="button"
                             ng-if="currentPage!='annotations'">
-                        <i class="fa fa-user"></i> Yazarlar
+                        <i class="fa fa-user" style="font-size: 1.3em"></i> Yazarlar
                     </button>
                     <!--
                     <a class="btn btn-primary" type="button" href="#/annotations/"
@@ -48,10 +48,12 @@
                     </a>
                     -->
                     <a class="btn btn-primary" data-target="#annotationsFilterModal" data-toggle="modal"
-                       ng-if="user!=null && currentPage=='annotations'"><i class="fa fa-search"></i></a>
+                       ng-if="user!=null && currentPage=='annotations'"><i class="fa fa-search" style="font-size: 1.3em"></i></a>
+
                     <select ng-model="allAnnotationsOrderBy" ng-init="allAnnotationsOrderBy='verse'"
                             ng-if="currentPage=='annotations'"
-                            ng-change="$parent.allAnnotationsOrderByChanged(this.allAnnotationsOrderBy)">
+                            ng-change="$parent.allAnnotationsOrderByChanged(this.allAnnotationsOrderBy)"
+                            >
                         <option value="verse">Ayet</option>
                         <option value="time">Zaman</option>
                     </select>
@@ -65,7 +67,7 @@
                     </div>
                     <div ng-if="user!=null">
                         <button onclick="openPanel()" class="btn btn-primary" ng-if="currentPage=='home'"><i
-                                class="fa fa-edit"></i> Sayfadaki Notlar
+                                class="fa fa-edit" style="font-size: 1.3em"></i> Sayfadaki Notlar
                         </button>
                         <img ng-src="{{user.photo}}" height="30"/>
                         {{user.name}}
