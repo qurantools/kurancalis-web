@@ -13,8 +13,12 @@
                                 {{authorMap[translation.authorId].name}}
                             </div>
                             <div class="col-xs-12 col-sm-9 translation_content"><span
-                                    ng-bind-html="translation.content | with_footnote_link:translation.id | to_trusted"></span>
+                                    ng-bind-html="translation.content | with_footnote_link:translation.id:translation.authorId | to_trusted"></span>
                             </div>
+                            <pre>showVerseData.data: <span id="is_ready" ng-bind="showVerseData.data | json"></span></pre>
+
+                            <show-verse data="showVerseData.data"
+                                        ng-if="showVerseAtTranslation==translation.id"></show-verse>
                         </div>
                         <div class="row" ng-if="!$last">
                             <hr/>

@@ -14,8 +14,8 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         }])
     .filter('with_footnote_link', [
         function () {
-            return function (text, translation_id) {
-                return text.replace(/\*+/g, "<a class='footnote_asterisk' href='javascript:list_fn(" + translation_id + ")'>*</a>");
+            return function (text, translation_id,author_id) {
+                return text.replace(/\*+/g, "<a class='footnote_asterisk' href='javascript:angular.element(document.getElementById(\"MainCtrl\")).scope().list_footnotes(" + translation_id+","+author_id +")'>*</a>");
             };
         }])
     .filter('selectionFilter', function () {
@@ -50,7 +50,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
     })
     .filter('mark_verse_annotation', [
         function () {
-            return function (translation, annotation,markVerseAnnotations) {
+            return function (translation, annotation, markVerseAnnotations) {
                 if (markVerseAnnotations == true) {
                     var startOffset = annotation.ranges[0].startOffset;
                     var endOffset = annotation.ranges[0].endOffset;
@@ -332,7 +332,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         }
 
         //list footnotes
-        $scope.list_footnotes = function (translation_id) {
+        $scope.list_footnotes = function (translation_id, author_id) {
             $scope.footnotes = Footnotes.query({
                 id: translation_id
             }, function (data) {
@@ -343,7 +343,9 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
                     var dataLength = data.length;
                     for (index = 0; index < dataLength; ++index) {
                         //add verse links
-                        dataContent = data[index].replace(/(\d{1,3}:\d{1,3})/g, "<a href='javascript: redirectToVerseByChapterAndVerse(\"$1\");'>$1</a>");
+                        //   dataContent = data[index].replace(/(\d{1,3}:\d{1,3})/g, "<a href='javascript: redirectToVerseByChapterAndVerse(\"$1\");'>$1</a>");
+                        dataContent = data[index].replace(/(\d{1,3}:\d{1,3})/g, "<a href='javascript: angular.element(document.getElementById(\"theView\")).scope().showVerseFromFootnote(\"$1\","+author_id+","+translation_id+");'>$1</a>");
+
 
                         html += "<div class='row'><div class='col-xs-1 footnote_bullet'>&#149;</div><div class='col-xs-11'>" + dataContent + "</div></div>";
                     }
@@ -492,7 +494,6 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         $scope.list_translations();
         // $scope.toggleSidebar();
         sidebarInit();
-
 
 
         /* end of init */
@@ -1012,6 +1013,21 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             });
         }
 
+
+        $scope.showVerseFromFootnote = function (chapterVerse, author,translationId) {
+            $scope.showVerseData={};
+            $scope.showVerseData.data={};
+
+            var chapterAndVerse=seperateChapterAndVerse(chapterVerse);
+            $scope.showVerseData.data.chapter = chapterAndVerse.chapter;
+            $scope.showVerseData.data.verse = chapterAndVerse.verse;
+            $scope.showVerseData.data.authorId = author;
+            $scope.showVerseData.data.translationId=translationId;
+            console.log("showVerseFromFootnote"+$scope.showVerseData.data);
+            $scope.showVerseByParameters('go');
+
+        }
+
         $scope.showVerseByParameters = function (action) {
             var showVerseRestangular = Restangular.all("translations");
             var showVerseParameters = [];
@@ -1041,14 +1057,22 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
                 verse: $scope.showVerseData.data.verse,
                 author: $scope.showVerseData.data.authorId
             };
+           // console.log(showVerseParameters);
 
             showVerseRestangular.customGET("", showVerseParameters, {'access_token': $scope.access_token}).then(function (verse) {
+                console.log("verse:"+JSON.stringify(verse));
                 if (verse != "") {
-                    $scope.markVerseAnnotations=false;
+                    if(typeof $scope.showVerseData.data.translationId!="undefined"){
+                        $scope.showVerseAtTranslation=$scope.showVerseData.data.translationId;
+                    }
+                    $scope.markVerseAnnotations = false;
                     $scope.showVerseData.data = verse[0].translations[0];
+
+                    console.log("showVerseData.data"+JSON.stringify($scope.showVerseData.data));
                 }
             });
         }
+
 
 //list of chapters
         $scope.chapters = [];
@@ -1092,8 +1116,8 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
 
     })
 
-function list_fn(id) {
-    angular.element(document.getElementById('MainCtrl')).scope().list_footnotes(id);
+function list_fn(id,authorId) {
+    angular.element(document.getElementById('MainCtrl')).scope().list_footnotes(id,authorId);
 }
 
 function sidebarInit() {
@@ -1124,10 +1148,10 @@ function closeLeftPanel() {
     $('#cd-panel-left').removeClass('is-visible');
 }
 
-function toggleLeftPanel(){
-    if($('#cd-panel-left').hasClass('is-visible')){
+function toggleLeftPanel() {
+    if ($('#cd-panel-left').hasClass('is-visible')) {
         closeLeftPanel();
-    }else{
+    } else {
         openLeftPanel();
     }
 }
@@ -1148,12 +1172,12 @@ function verseTagClicked(elem) {
     }
 }
 
-function redirectToVerseByChapterAndVerse(data) {
+function seperateChapterAndVerse(data) {
+    var ret = [];
     var seperator = data.indexOf(':');
-    var chapter = data.substring(0, seperator);
-    var verse = data.substring(seperator + 1, data.length);
-    var author = angular.element(document.getElementById('theView')).scope().author_mask;
-    window.location.href = '#/chapter/' + chapter + '/author/' + author + '/verse/' + verse;
+    ret.chapter = data.substring(0, seperator);
+    ret.verse = data.substring(seperator + 1, data.length);
+    return ret;
 }
 
 

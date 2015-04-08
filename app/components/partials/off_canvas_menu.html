@@ -1,14 +1,16 @@
 <div class="cd-panel from-left" id="cd-panel-left">
     <div class="cd-panel-container">
         <div class="cd-panel-content">
-            <a style="float: right" href onclick="closeLeftPanel()">kapat</a>
+            <a style="float: right" href onclick="closeLeftPanel()"><i class="fa fa-chevron-left"></i></a>
             <div style="clear: both"></div>
 
-            <ul class="nav navmenu-nav">
-                <li><a href="#/chapter/1/author/{{author_mask}}/verse/1" class="leftMenuLink">Sureler</a></li>
+            <ul class="nav nav-list nav-list-vivid">
+                <li class="active"><a href="#/chapter/1/author/{{author_mask}}/verse/1" class="leftMenuLink">Sureler</a></li>
+                <li class="divider" style="background-color: #cccccc"></li>
                 <li><a href="#/annotations/"
                        ng-if="user!=null">Tüm notlar
                 </a></li>
+                <li class="divider" style="background-color: #cccccc"></li>
                 <li ng-if="user!=null">
                     <a href ng-click="log_out()" onclick="closeLeftPanel()">Çıkış</a>
                 </li>
@@ -16,6 +18,11 @@
                     <a href ng-click="login()" onclick="closeLeftPanel()">Giriş</a>
                 </li>
             </ul>
+
+
+
+
+
         </div>
         <!-- cd-panel-content -->
     </div>
