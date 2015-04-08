@@ -1022,8 +1022,9 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             $scope.showVerseData.data.chapter = chapterAndVerse.chapter;
             $scope.showVerseData.data.verse = chapterAndVerse.verse;
             $scope.showVerseData.data.authorId = author;
-            $scope.showVerseData.data.translationId=translationId;
-            console.log("showVerseFromFootnote"+$scope.showVerseData.data);
+            $scope.showVerseAtTranslation=translationId;
+            console.log("showVerseFromFootnote"+$scope.showVerseAtTranslation);
+            $scope.scopeApply();
             $scope.showVerseByParameters('go');
 
         }
@@ -1062,9 +1063,12 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             showVerseRestangular.customGET("", showVerseParameters, {'access_token': $scope.access_token}).then(function (verse) {
                 console.log("verse:"+JSON.stringify(verse));
                 if (verse != "") {
+                    /*
                     if(typeof $scope.showVerseData.data.translationId!="undefined"){
                         $scope.showVerseAtTranslation=$scope.showVerseData.data.translationId;
                     }
+                    */
+                    console.log("showVerseAtTranslation2:"+$scope.showVerseAtTranslation);
                     $scope.markVerseAnnotations = false;
                     $scope.showVerseData.data = verse[0].translations[0];
 
