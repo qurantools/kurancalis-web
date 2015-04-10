@@ -106,6 +106,10 @@ hr {
     background-color: rgba(0, 0, 255, 0.3);
 }
 
+.large_icon{
+    font-size: 1.3em;
+}
+
 /* annotation editor */
 #annotationData_header {
     padding: 5px 3px;
