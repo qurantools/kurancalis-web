@@ -8,8 +8,11 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
     .filter('newLineAllowed', [
         function () {
             return function (text) {
-
-                return text.replace(/(?:\r\n|\r|\n)/g, '<br />');
+                if (typeof text != 'undefined') {
+                    return text.replace(/(?:\r\n|\r|\n)/g, '<br />');
+                } else {
+                    return '';
+                }
             };
         }])
     .filter('with_footnote_link', [
@@ -1016,14 +1019,11 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         $scope.showVerseFromFootnote = function (chapterVerse, author, translationId) {
             $scope.showVerseData = {};
             $scope.showVerseData.data = {};
-
             var chapterAndVerse = seperateChapterAndVerse(chapterVerse);
             $scope.showVerseData.data.chapter = chapterAndVerse.chapter;
             $scope.showVerseData.data.verse = chapterAndVerse.verse;
             $scope.showVerseData.data.authorId = author;
             $scope.showVerseAtTranslation = translationId;
-            console.log("showVerseFromFootnote" + $scope.showVerseAtTranslation);
-            $scope.scopeApply();
             $scope.showVerseByParameters('go');
 
         }
@@ -1031,7 +1031,6 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         $scope.showVerseByParameters = function (action) {
             var showVerseRestangular = Restangular.all("translations");
             var showVerseParameters = [];
-
             if (action == 'next') {
                 if ($scope.showVerseData.data.verse != ($scope.chapters[$scope.showVerseData.data.chapter - 1].verseCount)) {
                     $scope.showVerseData.data.verse++;
@@ -1051,27 +1050,15 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             }
             showVerseParameters.chapter = $scope.showVerseData.data.chapter;
             showVerseParameters.verse = $scope.showVerseData.data.verse;
-
             showVerseParameters = {
                 chapter: $scope.showVerseData.data.chapter,
                 verse: $scope.showVerseData.data.verse,
                 author: $scope.showVerseData.data.authorId
             };
-            // console.log(showVerseParameters);
-
             showVerseRestangular.customGET("", showVerseParameters, {'access_token': $scope.access_token}).then(function (verse) {
-                console.log("verse:" + JSON.stringify(verse));
                 if (verse != "") {
-                    /*
-                     if(typeof $scope.showVerseData.data.translationId!="undefined"){
-                     $scope.showVerseAtTranslation=$scope.showVerseData.data.translationId;
-                     }
-                     */
-                    console.log("showVerseAtTranslation2:" + $scope.showVerseAtTranslation);
                     $scope.markVerseAnnotations = false;
                     $scope.showVerseData.data = verse[0].translations[0];
-
-                    console.log("showVerseData.data" + JSON.stringify($scope.showVerseData.data));
                 }
             });
         }
