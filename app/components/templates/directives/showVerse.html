@@ -1,6 +1,4 @@
 <div>
-    <pre>$parent.showVerseData.data.authorId: <span id="is_ready" ng-bind="$parent.showVerseData.data.authorId"></span></pre>
-
     <select ng-model="$parent.showVerseData.data.authorId" ng-change="$parent.showVerseByParameters('go')">
         <option ng-repeat="author in $parent.authors" value="{{author.id}}" ng-selected="author.id == data.authorId">
             {{author.name}}

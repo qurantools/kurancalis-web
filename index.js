@@ -14,8 +14,8 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         }])
     .filter('with_footnote_link', [
         function () {
-            return function (text, translation_id,author_id) {
-                return text.replace(/\*+/g, "<a class='footnote_asterisk' href='javascript:angular.element(document.getElementById(\"MainCtrl\")).scope().list_footnotes(" + translation_id+","+author_id +")'>*</a>");
+            return function (text, translation_id, author_id) {
+                return text.replace(/\*+/g, "<a class='footnote_asterisk' href='javascript:angular.element(document.getElementById(\"MainCtrl\")).scope().list_footnotes(" + translation_id + "," + author_id + ")'>*</a>");
             };
         }])
     .filter('selectionFilter', function () {
@@ -339,15 +339,14 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
                 var footnoteDivElement = document.getElementById('t_' + translation_id);
                 //don't list if already listed
                 if (!document.getElementById("fn_" + translation_id)) {
-                    var html = "<div class='footnote' id='fn_" + translation_id + "'>";
+                    var html = "<div id='fn_" + translation_id + "'>";
                     var dataLength = data.length;
                     for (index = 0; index < dataLength; ++index) {
                         //add verse links
                         //   dataContent = data[index].replace(/(\d{1,3}:\d{1,3})/g, "<a href='javascript: redirectToVerseByChapterAndVerse(\"$1\");'>$1</a>");
-                        dataContent = data[index].replace(/(\d{1,3}:\d{1,3})/g, "<a href='javascript: angular.element(document.getElementById(\"theView\")).scope().showVerseFromFootnote(\"$1\","+author_id+","+translation_id+");'>$1</a>");
+                        dataContent = data[index].replace(/(\d{1,3}:\d{1,3})/g, "<a href='javascript: angular.element(document.getElementById(\"theView\")).scope().showVerseFromFootnote(\"$1\"," + author_id + "," + translation_id + ");'>$1</a>");
 
-
-                        html += "<div class='row'><div class='col-xs-1 footnote_bullet'>&#149;</div><div class='col-xs-11'>" + dataContent + "</div></div>";
+                        html += "<div><div class='col-xs-1 footnote_bullet'>&#149;</div><div class='col-xs-11 footnotebg'>" + dataContent + "</div></div>";
                     }
                     html += '</div>';
                     footnoteDivElement.innerHTML = footnoteDivElement.innerHTML + html;
@@ -1014,16 +1013,16 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         }
 
 
-        $scope.showVerseFromFootnote = function (chapterVerse, author,translationId) {
-            $scope.showVerseData={};
-            $scope.showVerseData.data={};
+        $scope.showVerseFromFootnote = function (chapterVerse, author, translationId) {
+            $scope.showVerseData = {};
+            $scope.showVerseData.data = {};
 
-            var chapterAndVerse=seperateChapterAndVerse(chapterVerse);
+            var chapterAndVerse = seperateChapterAndVerse(chapterVerse);
             $scope.showVerseData.data.chapter = chapterAndVerse.chapter;
             $scope.showVerseData.data.verse = chapterAndVerse.verse;
             $scope.showVerseData.data.authorId = author;
-            $scope.showVerseAtTranslation=translationId;
-            console.log("showVerseFromFootnote"+$scope.showVerseAtTranslation);
+            $scope.showVerseAtTranslation = translationId;
+            console.log("showVerseFromFootnote" + $scope.showVerseAtTranslation);
             $scope.scopeApply();
             $scope.showVerseByParameters('go');
 
@@ -1058,21 +1057,21 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
                 verse: $scope.showVerseData.data.verse,
                 author: $scope.showVerseData.data.authorId
             };
-           // console.log(showVerseParameters);
+            // console.log(showVerseParameters);
 
             showVerseRestangular.customGET("", showVerseParameters, {'access_token': $scope.access_token}).then(function (verse) {
-                console.log("verse:"+JSON.stringify(verse));
+                console.log("verse:" + JSON.stringify(verse));
                 if (verse != "") {
                     /*
-                    if(typeof $scope.showVerseData.data.translationId!="undefined"){
-                        $scope.showVerseAtTranslation=$scope.showVerseData.data.translationId;
-                    }
-                    */
-                    console.log("showVerseAtTranslation2:"+$scope.showVerseAtTranslation);
+                     if(typeof $scope.showVerseData.data.translationId!="undefined"){
+                     $scope.showVerseAtTranslation=$scope.showVerseData.data.translationId;
+                     }
+                     */
+                    console.log("showVerseAtTranslation2:" + $scope.showVerseAtTranslation);
                     $scope.markVerseAnnotations = false;
                     $scope.showVerseData.data = verse[0].translations[0];
 
-                    console.log("showVerseData.data"+JSON.stringify($scope.showVerseData.data));
+                    console.log("showVerseData.data" + JSON.stringify($scope.showVerseData.data));
                 }
             });
         }
@@ -1119,10 +1118,6 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         }
 
     })
-
-function list_fn(id,authorId) {
-    angular.element(document.getElementById('MainCtrl')).scope().list_footnotes(id,authorId);
-}
 
 function sidebarInit() {
     /*

@@ -15,13 +15,8 @@
                             <div class="col-xs-12 col-sm-9 translation_content"><span
                                     ng-bind-html="translation.content | with_footnote_link:translation.id:translation.authorId | to_trusted"></span>
                             </div>
-                            <pre>showVerseAtTranslation: <span ng-bind="showVerseAtTranslation"></span></pre>
-                            <pre>translation.id: <span ng-bind="translation.id"></span></pre>
-                            <!--
-                               <show-verse data="showVerseData.data" ng-if="showVerseAtTranslation==translation.id"></show-verse>>
-                            -->
-
                         </div>
+                        <show-verse data="showVerseData.data" ng-if="showVerseAtTranslation==translation.id"></show-verse>
                         <div class="row" ng-if="!$last">
                             <hr/>
                         </div>
