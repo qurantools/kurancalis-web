@@ -109,6 +109,16 @@ hr {
 .large_icon{
     font-size: 1.3em;
 }
+blockquote {
+    border-left: 3px solid #d3d3d3;
+    color: #777;
+    font-family: Georgia, "Bitstream Charter", Times, "Times New Roman", serif;
+    font-style: italic;
+    padding: 0 0.615em;
+    font-size: 15px !important;
+
+    margin:0 !important;
+}
 
 /* annotation editor */
 #annotationData_header {
@@ -138,6 +148,9 @@ hr {
 
 .s_a_text {
     margin-bottom: 0 !important;
+    text-align: left;
+    background-color: #fefae9;
+    padding: 5px;
 }
 
 .box {

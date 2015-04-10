@@ -100,9 +100,9 @@
                     {{annotation.verseId / 1000 | number:0}}:{{annotation.verseId % 1000}}
                 </div>
                 <div>
-                    {{annotation.quote}}
+                    <blockquote>{{annotation.quote}}</blockquote>
                 </div>
-                <div class="well s_a_text">
+                <div class="s_a_text">
                     <span ng-bind-html="annotation.text | newLineAllowed | to_trusted"></span>
                 </div>
                 <div ng-repeat="annotationTag in annotation.tags" class="tag label label-info s_a_tag">

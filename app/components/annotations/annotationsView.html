@@ -27,15 +27,15 @@
         <div ng-repeat="annotation in annotations" class="box">
             <div class="s_a_header">
                 {{annotation.verseId / 1000 | number:0}}:{{annotation.verseId % 1000}}
-                <button ng-click="showVerse(annotation)" class="btn" ng-if="showVerseData.annotationId!=annotation.annotationId">Ayeti göster</button>
+                <button ng-click="showVerse(annotation)" class="btn btn-warning" ng-if="showVerseData.annotationId!=annotation.annotationId">Ayeti göster</button>
                 <button ng-click="showVerseData.annotationId=-1"class="btn" ng-if="showVerseData.annotationId==annotation.annotationId">Ayeti gizle</button>
             </div>
             <show-verse data="showVerseData.data"
                         ng-if="showVerseData.annotationId==annotation.annotationId"></show-verse>
             <div ng-if="showVerseData.annotationId!=annotation.annotationId">
-                {{annotation.quote}}
+               <blockquote>{{annotation.quote}}</blockquote>
             </div>
-            <div class="well s_a_text">
+            <div class="s_a_text">
                 <span ng-bind-html="annotation.text | newLineAllowed | to_trusted"></span>
             </div>
             <div ng-repeat="annotationTag in annotation.tags" class="tag label label-info s_a_tag">
