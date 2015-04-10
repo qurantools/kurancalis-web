@@ -1,17 +1,45 @@
-body {
+
+/* theme hack */
+body{
     font-family: Arial, Helvetica, sans-serif !important;
+    font-size:16px !important;
+    line-height: 1.42857 !important;
 }
+
+p{
+    font-size:16px !important;
+    line-height: 1.42857 !important;
+}
+
+hr{
+    border-color: #7f8c8d !important;
+    width: 80%;
+    margin-top:10px !important;
+    margin-bottom: 10px !important;
+}
+
+blockquote {
+    border-left: 3px solid #d3d3d3;
+    color: #777;
+    font-family: Georgia, "Bitstream Charter", Times, "Times New Roman", serif;
+    font-style: italic;
+    padding: 0 0.615em;
+    font-size: 15px !important;
+    margin:0 !important;
+}
+
+.well{
+    padding-top:0 !important;
+    padding-bottom:5px !important;
+}
+/* end of theme hack */
+
 
 /* flat ui modal fix*/
 .fixed-dialog {
     position: fixed;
     top: 20px;
     left: 20px;
-}
-
-hr {
-    border-color: #7f8c8d !important;
-    width: 80%;
 }
 
 .authorDiv_1 {
@@ -109,16 +137,6 @@ hr {
 .large_icon{
     font-size: 1.3em;
 }
-blockquote {
-    border-left: 3px solid #d3d3d3;
-    color: #777;
-    font-family: Georgia, "Bitstream Charter", Times, "Times New Roman", serif;
-    font-style: italic;
-    padding: 0 0.615em;
-    font-size: 15px !important;
-
-    margin:0 !important;
-}
 
 /* annotation editor */
 #annotationData_header {
@@ -196,24 +214,35 @@ blockquote {
     height: 70px;
 }
 
-/* theme hack */
-body{
-    font-size:16px !important;
-    line-height: 1.42857 !important;
-}
 
-p{
-    font-size:16px !important;
-    line-height: 1.42857 !important;
-}
 
-hr{
-    margin-top:10px !important;
-    margin-bottom: 10px !important;
+/* left menu */
+.side-menu-container > .navbar-nav {
+    border-right: 1px solid #e7e7e7;
+    background-color: #f8f8f8;
+    width: 220px;
 }
+.side-menu .navbar-nav .active a {
+    background-color: transparent;
+    margin-right: -1px;
+    border-right: 5px solid #e7e7e7;
 
-.well{
-    padding-top:0 !important;
-    padding-bottom:5px !important;
 }
-/* end of theme hack */
+.side-menu .navbar-nav li {
+    display: block;
+    width: 100%;
+    border-bottom: 1px solid #e7e7e7;
+}
+.side-menu .navbar-nav li a {
+    padding: 15px;
+    color: #777;
+}
+.side-menu .navbar-nav li a .glyphicon {
+    padding-right: 10px;
+}
+/* end of left menu */
+
+
+
+
+

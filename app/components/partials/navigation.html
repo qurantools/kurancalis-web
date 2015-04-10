@@ -8,7 +8,6 @@
                     </button>
                 </div>
                 <div style="float: left">
-                    
                     <ui-select ng-model="chapterSelected"
                                theme="bootstrap"
                                reset-search-input="false"
@@ -42,13 +41,9 @@
                             ng-if="currentPage!='annotations'">
                         <i class="fa fa-user" style="font-size: 1.3em"></i> Yazarlar
                     </button>
-                    <!--
-                    <a class="btn btn-primary" type="button" href="#/annotations/"
-                       ng-if="user!=null && currentPage!='annotations'">Tüm notlar
-                    </a>
-                    -->
                     <a class="btn btn-primary" data-target="#annotationsFilterModal" data-toggle="modal"
-                       ng-if="user!=null && currentPage=='annotations'"><i class="fa fa-search" style="font-size: 1.3em"></i></a>
+                       ng-if="user!=null && currentPage=='annotations'"><i class="fa fa-search"
+                                                                           style="font-size: 1.3em"></i></a>
 
                     <select ng-model="allAnnotationsOrderBy" ng-init="allAnnotationsOrderBy='verse'"
                             ng-if="currentPage=='annotations'"
@@ -71,9 +66,6 @@
                         </button>
                         <img ng-src="{{user.photo}}" height="30"/>
                         {{user.name}}
-                        <button type="button" id="remove_auth" ng-click="log_out()" class="btn btn-primary">
-                            Çıkış
-                        </button>
                     </div>
                 </div>
             </div>

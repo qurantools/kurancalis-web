@@ -2,29 +2,26 @@
     <div class="cd-panel-container">
         <div class="cd-panel-content">
             <a style="float: right" href onclick="closeLeftPanel()"><i class="fa fa-chevron-left"></i></a>
+
             <div style="clear: both"></div>
-
-            <ul class="nav nav-list nav-list-vivid">
-                <li class="active"><a href="#/chapter/1/author/{{author_mask}}/verse/1" class="leftMenuLink">Sureler</a></li>
-                <li class="divider" style="background-color: #cccccc"></li>
-                <li><a href="#/annotations/"
-                       ng-if="user!=null">Tüm notlar
-                </a></li>
-                <li class="divider" style="background-color: #cccccc"></li>
-                <li ng-if="user!=null">
-                    <a href ng-click="log_out()" onclick="closeLeftPanel()">Çıkış</a>
-                </li>
-                <li ng-if="user==null">
-                    <a href ng-click="login()" onclick="closeLeftPanel()">Giriş</a>
-                </li>
-            </ul>
-
-
-
-
-
+            <div class="side-menu">
+                <div class="side-menu-container">
+                    <ul class="nav navbar-nav">
+                        <li ng-class="{active: currentPage == 'home'}">
+                            <a href="#/chapter/1/author/{{author_mask}}/verse/1" class="leftMenuLink">Sureler</a>
+                        </li>
+                        <li ng-class="{active: currentPage == 'annotations'}">
+                            <a href="#/annotations/" ng-if="user!=null">Tüm notlar</a>
+                        </li>
+                        <li ng-if="user!=null">
+                            <a href ng-click="log_out()" onclick="closeLeftPanel()">Çıkış</a>
+                        </li>
+                        <li ng-if="user==null">
+                            <a href ng-click="login()" onclick="closeLeftPanel()">Giriş</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
-        <!-- cd-panel-content -->
     </div>
-    <!-- cd-panel-container -->
 </div>
