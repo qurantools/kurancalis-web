@@ -336,6 +336,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
 
         //list footnotes
         $scope.list_footnotes = function (translation_id, author_id) {
+
             $scope.footnotes = Footnotes.query({
                 id: translation_id
             }, function (data) {
@@ -356,6 +357,9 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
                 } else {
                     var el = document.getElementById('fn_' + translation_id);
                     el.parentNode.removeChild(el);
+
+                    //hide show verse when footnote collapses
+                    $(".showVerseData").hide();
                 }
 
             });
@@ -1017,6 +1021,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
 
 
         $scope.showVerseFromFootnote = function (chapterVerse, author, translationId) {
+
             $scope.showVerseData = {};
             $scope.showVerseData.data = {};
             var chapterAndVerse = seperateChapterAndVerse(chapterVerse);
@@ -1025,6 +1030,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             $scope.showVerseData.data.authorId = author;
             $scope.showVerseAtTranslation = translationId;
             $scope.showVerseByParameters('go');
+            $(".showVerseData").show();
 
         }
 
