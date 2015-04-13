@@ -213,7 +213,9 @@ blockquote {
 .nav-bottom {
     height: 70px;
 }
-
+.small_space{
+    height: 5px;
+}
 
 
 /* left menu */
