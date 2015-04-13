@@ -27,8 +27,10 @@
         <div ng-repeat="annotation in annotations" class="box">
             <div class="s_a_header">
                 {{annotation.verseId / 1000 | number:0}}:{{annotation.verseId % 1000}}
-                <button ng-click="showVerse(annotation)" class="btn btn-warning" ng-if="showVerseData.annotationId!=annotation.annotationId">Ayeti göster</button>
-                <button ng-click="showVerseData.annotationId=-1"class="btn" ng-if="showVerseData.annotationId==annotation.annotationId">Ayeti gizle</button>
+                <button ng-click="showVerse(annotation)" class="btn btn-primary btn-xs" ng-if="showVerseData.annotationId!=annotation.annotationId"><i
+                        class="fa fa-cog"></i></button>
+                <button ng-click="showVerseData.annotationId=-1" class="btn btn-xs" ng-if="showVerseData.annotationId==annotation.annotationId"><i
+                        class="fa fa-cog "></i></button>
             </div>
             <show-verse data="showVerseData.data"
                         ng-if="showVerseData.annotationId==annotation.annotationId"></show-verse>
@@ -45,9 +47,9 @@
                 <div style="float: left">{{annotation.updated | date: 'dd/MM/yyyy HH:mm:ss'}}</div>
                 <div style="float: right">
                     <button type="button" class="btn btn-primary btn-xs" ng-click="showEditor(annotation)"><i
-                            class="fa fa-pencil-square-o"></i>
+                            class="fa fa-pencil-square-o "></i>
                     </button>
-                    <button type="button" class="btn btn-primary btn-xs" ng-click="deleteAnnotation2(annotation)"><i
+                    <button type="button" class="btn btn-danger btn-xs" ng-click="deleteAnnotation2(annotation)"><i
                             class="fa fa-trash-o"></i></button>
                 </div>
             </div>

@@ -69,21 +69,20 @@
         <div class="cd-panel-content">
             <div style="height:50px"></div>
             <div style="padding-bottom:10px;">
-                <button onclick="closePanel()" class="btn btn-default btn-xs" style="float: left;"><i
+                <button onclick="closePanel()" class="btn btn-default btn-xs" style="float: left; height: 30px;"><i
                         class="fa fa-undo"></i></button>
                 <button class="btn btn-warning btn-xs" ng-click="resetAnnotationFilter()"
-                        ng-show='filteredAnnotations.length > 0 || searchText!=""' style="float: right"><i
+                        ng-show='filteredAnnotations.length > 0 || searchText!=""' style="float: right; height: 30px;"><i
                         class="fa fa-trash-o"></i>
-                    Filtreyi
-                    kaldır
+                    Filtreyi kaldır
                 </button>
 
 
                 <div style="display: block;">
                     <!--    <input ng-model="searchText" />-->
-                    <input style="width: 150px" type="text" placeholder="ara" ng-model="searchText">
+                    <input style="width: 150px; height: 30px;" type="text" placeholder="ara" ng-model="searchText">
                     <select ng-model="filterOrderSelect" ng-init="filterOrderSelect='verseId'"
-                            ng-change="annotationFilterOrder(filterOrderSelect)">
+                            ng-change="annotationFilterOrder(filterOrderSelect)" style="height: 30px;">
                         <option value="verseId">Ayet</option>
                         <option value="-updated">Zaman</option>
                     </select>
