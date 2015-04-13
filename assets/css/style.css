@@ -157,6 +157,11 @@ blockquote {
     margin-left: 10px;
 }
 
+.tag_colour_description{
+    float:left;
+    padding-left:5px;
+}
+
 /* end of annotation editor */
 
 .s_a_tag {
@@ -216,6 +221,7 @@ blockquote {
 .small_space{
     height: 5px;
 }
+
 
 
 /* left menu */
