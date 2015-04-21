@@ -196,7 +196,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         }
 
         var chapterId = 1;
-        var authorMask = 48;
+        var authorMask = 1040;
         var verseNumber = 1;
         if (typeof $routeParams.chapterId !== 'undefined') {
             chapterId = $routeParams.chapterId;
