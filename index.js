@@ -310,6 +310,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             });
 
             $timeout(function () {
+
                 //mark annotations
                 $scope.annotate_it();
 
@@ -500,6 +501,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         $scope.list_translations();
         // $scope.toggleSidebar();
         sidebarInit();
+        $scope.editorSubmitted=0;
 
 
         /* end of init */
@@ -668,6 +670,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             }
             $scope.annotationModalData.tags = newTags;
             annotator.publish('annotationEditorSubmit', [annotator.editor, $scope.annotationModalData]);
+            $scope.editorSubmitted=1;
             //update verse tags
             $scope.updateVerseTags($scope.annotationModalData.verseId, oldTags, newTags);
 
@@ -680,6 +683,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             }
 
             return annotator.ignoreMouseup = false;
+
         }
 
 
@@ -935,7 +939,11 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
                 verseTagsJSON.push(thisVerse);
             }
             $scope.verseTagsJSON = verseTagsJSON;
-            $scope.scrollToVerse();
+            if ($scope.editorSubmitted == 0) {
+                $scope.scrollToVerse();
+            }else{
+                $scope.editorSubmitted = 0;
+            }
         }
 
 
