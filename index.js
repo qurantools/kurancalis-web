@@ -1127,6 +1127,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
                 $('#tutorialCarousel').carousel('prev');
                 $scope.tutorialCarouselActive--;
             }
+
         }
         //end of tutorial
 
