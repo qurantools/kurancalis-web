@@ -21,22 +21,17 @@
                     </div>
                 </div>
                 <div class="row">
-                    <button class="btn" href ng-click="tutorial('previous')"><i class="fa fa-chevron-left"> Önceki</i>
+                    <button class="btn" href ng-click="tutorial('previous')" style="float:left;"><i class="fa fa-chevron-left"> Önceki</i>
                     </button>
                     <ol class="carousel-indicators">
                         <li ng-repeat="n in [0, 1, 2] track by $index" data-target="#tutorialCarousel"
                             ng-class="($index==tutorialCarouselActive) ? 'active' : ''"></li>
                     </ol>
-                    <button class="btn" ng-click="tutorial('next')" ng-if="tutorialCarouselActive<2">Sonraki <i
+                    <button class="btn" ng-click="tutorial('next')" ng-if="tutorialCarouselActive<2" style="float:right;">Sonraki <i
                             class="fa fa-chevron-right"></i></button>
                     <button class="btn" ng-click="tutorial('close')" ng-if="tutorialCarouselActive==2"
-                            data-dismiss="modal">Kapat <i class="fa fa-close"></i></button>
+                            data-dismiss="modal" style="float: right">Kapat <i class="fa fa-close"></i></button>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" data-dismiss="modal" aria-hidden="true" class="btn">
-                    Kapat
-                </button>
             </div>
         </div>
     </div>

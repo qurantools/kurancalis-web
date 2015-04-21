@@ -1,4 +1,4 @@
-angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 'LocalStorageModule', 'ngTagsInput', 'duScroll', 'directives.showVerse', 'ui.select'])
+angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 'LocalStorageModule', 'ngTagsInput', 'duScroll', 'directives.showVerse', 'ui.select', 'myConfig'])
     .filter('to_trusted', ['$sce',
         function ($sce) {
             return function (text) {
@@ -94,8 +94,8 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
                 }
             });
         };
-    }).config(function ($routeProvider, FacebookProvider, RestangularProvider, localStorageServiceProvider) {
-        RestangularProvider.setBaseUrl('https://securewebserver.net/jetty/qt/rest');
+    }).config(function ($routeProvider, FacebookProvider, RestangularProvider, localStorageServiceProvider,webServiceUrl) {
+        RestangularProvider.setBaseUrl(webServiceUrl);
         //RestangularProvider.setBaseUrl('http://localhost:8080/QuranToolsApp/rest');
         localStorageServiceProvider.setStorageCookie(0, '/');
         //route
@@ -125,8 +125,8 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         //facebook
         FacebookProvider.init('295857580594128');
     })
-    .factory('ChapterVerses', function ($resource) {
-        return $resource('https://securewebserver.net/jetty/qt/rest/chapters/:chapter_id/authors/:author_mask', {
+    .factory('ChapterVerses', function ($resource, webServiceUrl) {
+        return $resource(webServiceUrl + '/chapters/:chapter_id/authors/:author_mask', {
             chapter_id: '@chapter_id',
             author_mask: '@author_mask'
         }, {
@@ -139,8 +139,8 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
                 isArray: true
             }
         });
-    }).factory('Footnotes', function ($resource) {
-        return $resource('https://securewebserver.net/jetty/qt/rest/translations/:id/footnotes', {
+    }).factory('Footnotes', function ($resource, webServiceUrl) {
+        return $resource(webServiceUrl + '/translations/:id/footnotes', {
             chapter_id: '@translation_id'
         }, {
             query: {
@@ -151,16 +151,16 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
                 isArray: true
             }
         });
-    }).factory('ListAuthors', function ($resource) {
-        return $resource('https://securewebserver.net/jetty/qt/rest/authors', {
+    }).factory('ListAuthors', function ($resource, webServiceUrl) {
+        return $resource(webServiceUrl + '/authors', {
             query: {
                 method: 'GET',
                 isArray: true
             }
         });
-    }).factory('User', function ($resource) {
+    }).factory('User', function ($resource, webServiceUrl) {
 
-        return $resource('https://securewebserver.net/jetty/qt/rest/users',
+        return $resource(webServiceUrl + '/users',
             {},
 
             {
@@ -186,7 +186,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         );
     })
 
-    .controller('MainCtrl', function ($scope, $q, $routeParams, $location, $timeout, ListAuthors, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService, $document, $filter) {
+    .controller('MainCtrl', function ($scope, $q, $routeParams, $location, $timeout, ListAuthors, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService, $document, $filter, webServiceUrl) {
         //currentPage
         $scope.currentPage = '';
         if ($location.path() == '/annotations/') {
@@ -252,7 +252,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
 
                 annotator = new Annotator($('#translations'));
                 annotator.addPlugin('Store', {
-                    prefix: 'https://securewebserver.net/jetty/qt/rest',
+                    prefix: webServiceUrl,
                     //prefix: 'http://localhost:8080/QuranToolsApp/rest',
                     urls: {
                         create: '/annotations',
@@ -1114,6 +1114,8 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         }
 
         //tutorial
+        $scope.showTutorial=0;
+        if($location.path()=="/"){$scope.showTutorial=1;}
         $scope.tutorialCarouselActive = 0;
         $scope.tutorial = function (parameter) {
             if (parameter == 'init') {

@@ -255,8 +255,11 @@ blockquote {
 .carousel-indicators{
     right: auto !important;
     top: auto !important;
+    left: 45% !important;
+    padding-top:15px;
 }
 .carousel-indicators li.active {
     background-color: #1abc9c !important;
 }
+
 /* end of tutorial carousel */
