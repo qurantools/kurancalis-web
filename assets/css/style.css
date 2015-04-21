@@ -251,6 +251,12 @@ blockquote {
 /* end of left menu */
 
 
-
-
-
+/* tutorial carousel */
+.carousel-indicators{
+    right: auto !important;
+    top: auto !important;
+}
+.carousel-indicators li.active {
+    background-color: #1abc9c !important;
+}
+/* end of tutorial carousel */

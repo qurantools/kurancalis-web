@@ -501,7 +501,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         $scope.list_translations();
         // $scope.toggleSidebar();
         sidebarInit();
-        $scope.editorSubmitted=0;
+        $scope.editorSubmitted = 0;
 
 
         /* end of init */
@@ -670,7 +670,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             }
             $scope.annotationModalData.tags = newTags;
             annotator.publish('annotationEditorSubmit', [annotator.editor, $scope.annotationModalData]);
-            $scope.editorSubmitted=1;
+            $scope.editorSubmitted = 1;
             //update verse tags
             $scope.updateVerseTags($scope.annotationModalData.verseId, oldTags, newTags);
 
@@ -941,7 +941,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             $scope.verseTagsJSON = verseTagsJSON;
             if ($scope.editorSubmitted == 0) {
                 $scope.scrollToVerse();
-            }else{
+            } else {
                 $scope.editorSubmitted = 0;
             }
         }
@@ -1112,6 +1112,24 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
                 $scope.scrollToElement('v_' + verseId);
             }
         }
+
+        //tutorial
+        $scope.tutorialCarouselActive = 0;
+        $scope.tutorial = function (parameter) {
+            if (parameter == 'init') {
+                if ($scope.loggedIn == false) {
+                    $('#tutorialModal').modal('show');
+                }
+            } else if (parameter == 'next') {
+                $('#tutorialCarousel').carousel('next');
+                $scope.tutorialCarouselActive++;
+            } else if (parameter == 'previous') {
+                $('#tutorialCarousel').carousel('prev');
+                $scope.tutorialCarouselActive--;
+            }
+        }
+        //end of tutorial
+
         $scope.scopeApply = function () {
             if (!$scope.$$phase) {
                 $scope.$apply();
