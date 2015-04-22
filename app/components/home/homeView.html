@@ -1,5 +1,6 @@
 <body>
 <div class="container">
+    <div ng-include="'app/components/partials/tutorial_modal.html'" ng-if="showTutorial"></div>
     <div ng-include="'app/components/partials/navigation.html'"></div>
     <div class="nav-bottom"></div>
     <div class="row">
@@ -16,7 +17,8 @@
                                     ng-bind-html="translation.content | with_footnote_link:translation.id:translation.authorId | to_trusted"></span>
                             </div>
                         </div>
-                        <show-verse data="showVerseData.data" ng-if="showVerseAtTranslation==translation.id" class="showVerseData"></show-verse>
+                        <show-verse data="showVerseData.data" ng-if="showVerseAtTranslation==translation.id"
+                                    class="showVerseData"></show-verse>
                         <div class="row" ng-if="!$last">
                             <hr/>
                         </div>
@@ -72,8 +74,9 @@
                 <button onclick="closePanel()" class="btn btn-default btn-xs" style="float: left; height: 30px;"><i
                         class="fa fa-undo"></i></button>
                 <button class="btn btn-warning btn-xs" ng-click="resetAnnotationFilter()"
-                        ng-show='filteredAnnotations.length > 0 || searchText!=""' style="float: right; height: 30px;"><i
-                        class="fa fa-trash-o"></i>
+                        ng-show='filteredAnnotations.length > 0 || searchText!=""' style="float: right; height: 30px;">
+                    <i
+                            class="fa fa-trash-o"></i>
                     Filtreyi kaldır
                 </button>
 
