@@ -18,7 +18,7 @@ describe('ceviri gosterimi', function() {
 
     beforeEach(function() {
         browser.get('http://kurancalis.com/#/chapter/1/author/1040/verse/1');
-        //browser.sleep(50000); // if your test is outrunning the browser
+        browser.sleep(50000); // if your test is outrunning the browser
         // browser.waitForAngular();
         // pageLoadedStatus = true;
     });
@@ -106,14 +106,14 @@ describe('ceviri gosterimi', function() {
 
     it('should get chapter translations', function() {
 
-        //Sure numarası ve yazar row numaralarını göndererek sayfada oluşan ayet, yazar sayısının ve ayet içeriğinin kontrolü.
+        //Sure numarasÄ± ve yazar row numaralarÄ±nÄ± gÃ¶ndererek sayfada oluÅŸan ayet, yazar sayÄ±sÄ±nÄ±n ve ayet iÃ§eriÄŸinin kontrolÃ¼.
 
         listTranslations(2, 0, 6, 9 );
         expect(theVerses.count()).toEqual(287);
         expect(authors.count()).toEqual(861);
 
         element(by.id('t_12482')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).getText().then(function(text) {
-            expect(text).toBe('???');
+            expect(text).toBe('Ø§Ù„Ù…');
         });
 
         element(by.id('t_37421')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).getText().then(function(text) {
@@ -121,11 +121,11 @@ describe('ceviri gosterimi', function() {
         });
 
         element(by.id('t_56238')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).getText().then(function(text) {
-            expect(text).toBe('Elif-Lâm-Mîm.');
+            expect(text).toBe('Elif-LÃ¢m-MÃ®m.');
         });
 
         element(by.id('t_12625')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).getText().then(function(text) {
-            expect(text).toBe('?? ??? ???? ???? ?? ?????? ???????? ???? ?????? ??? ???? ??? ?????? ?????? ???? ?? ???? ????? ?????? ???? ??? ????? ????? ????? ??????? ??? ???? ?? ???? ??? ???? ???? ??? ??????');
+            expect(text).toBe('Ù‚Ø¯ Ù†Ø±Ù‰ ØªÙ‚Ù„Ø¨ ÙˆØ¬Ù‡Ùƒ ÙÙ‰ Ø§Ù„Ø³Ù…Ø§Ø¡ ÙÙ„Ù†ÙˆÙ„ÙŠÙ†Ùƒ Ù‚Ø¨Ù„Ø© ØªØ±Ø¶Ù‰Ù‡Ø§ ÙÙˆÙ„ ÙˆØ¬Ù‡Ùƒ Ø´Ø·Ø± Ø§Ù„Ù…Ø³Ø¬Ø¯ Ø§Ù„Ø­Ø±Ø§Ù… ÙˆØ­ÙŠØ« Ù…Ø§ ÙƒÙ†ØªÙ… ÙÙˆÙ„ÙˆØ§ ÙˆØ¬ÙˆÙ‡ÙƒÙ… Ø´Ø·Ø±Ù‡ ÙˆØ§Ù† Ø§Ù„Ø°ÙŠÙ† Ø§ÙˆØªÙˆØ§ Ø§Ù„ÙƒØªØ¨ Ù„ÙŠØ¹Ù„Ù…ÙˆÙ† Ø§Ù†Ù‡ Ø§Ù„Ø­Ù‚ Ù…Ù† Ø±Ø¨Ù‡Ù… ÙˆÙ…Ø§ Ø§Ù„Ù„Ù‡ Ø¨ØºÙÙ„ Ø¹Ù…Ø§ ÙŠØ¹Ù…Ù„ÙˆÙ†');
         });
 
         element(by.id('t_37564')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).getText().then(function(text) {
@@ -133,11 +133,11 @@ describe('ceviri gosterimi', function() {
         });
 
         element(by.id('t_56381')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).getText().then(function(text) {
-            expect(text).toBe('Biz, (ey Peygamber) senin sık sık yüzünü (bir kılavuz arayışı içinde) göğe çevirdiğini görüyoruz: ve şimdi seni tam tatmin edecek bir kıbleye döndürüyoruz. Artık yüzünü Mescid-i Harâm\'a çevir; ve siz, hepiniz, nerede olursanız olun, yüzünüzü (namaz esnasında) o yöne döndürün. Doğrusu, daha önce kendilerine vahiy tevdî edilmiş olanlar, bu emrin Rablerinden gelen bir hakikat olduğunu çok iyi bilirler; ve Allah onların yaptıklarından habersiz değildir.');
+            expect(text).toBe('Biz, (ey Peygamber) senin sÄ±k sÄ±k yÃ¼zÃ¼nÃ¼ (bir kÄ±lavuz arayÄ±ÅŸÄ± iÃ§inde) gÃ¶ÄŸe Ã§evirdiÄŸini gÃ¶rÃ¼yoruz: ve ÅŸimdi seni tam tatmin edecek bir kÄ±bleye dÃ¶ndÃ¼rÃ¼yoruz. ArtÄ±k yÃ¼zÃ¼nÃ¼ Mescid-i HarÃ¢m\'a Ã§evir; ve siz, hepiniz, nerede olursanÄ±z olun, yÃ¼zÃ¼nÃ¼zÃ¼ (namaz esnasÄ±nda) o yÃ¶ne dÃ¶ndÃ¼rÃ¼n. DoÄŸrusu, daha Ã¶nce kendilerine vahiy tevdÃ® edilmiÅŸ olanlar, bu emrin Rablerinden gelen bir hakikat olduÄŸunu Ã§ok iyi bilirler; ve Allah onlarÄ±n yaptÄ±klarÄ±ndan habersiz deÄŸildir.');
         });
 
         element(by.id('t_12767')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).getText().then(function(text) {
-            expect(text).toBe('?? ???? ???? ???? ??? ????? ??? ?? ???? ?????? ?? ?????? ???? ?? ??????? ?? ????? ?? ?????? ???? ??? ???? ????? ???? ??? ????? ??? ????? ?? ????? ???? ??? ?????? ?? ?? ???? ??? ?? ???? ??? ????? ??? ??????? ??? ?????? ??????? ??? ????? ???????');
+            expect(text).toBe('Ù„Ø§ ÙŠÙƒÙ„Ù Ø§Ù„Ù„Ù‡ Ù†ÙØ³Ø§ Ø§Ù„Ø§ ÙˆØ³Ø¹Ù‡Ø§ Ù„Ù‡Ø§ Ù…Ø§ ÙƒØ³Ø¨Øª ÙˆØ¹Ù„ÙŠÙ‡Ø§ Ù…Ø§ Ø§ÙƒØªØ³Ø¨Øª Ø±Ø¨Ù†Ø§ Ù„Ø§ ØªÙˆØ§Ø®Ø°Ù†Ø§ Ø§Ù† Ù†Ø³ÙŠÙ†Ø§ Ø§Ùˆ Ø§Ø®Ø·Ø§Ù†Ø§ Ø±Ø¨Ù†Ø§ ÙˆÙ„Ø§ ØªØ­Ù…Ù„ Ø¹Ù„ÙŠÙ†Ø§ Ø§ØµØ±Ø§ ÙƒÙ…Ø§ Ø­Ù…Ù„ØªÙ‡ Ø¹Ù„Ù‰ Ø§Ù„Ø°ÙŠÙ† Ù…Ù† Ù‚Ø¨Ù„Ù†Ø§ Ø±Ø¨Ù†Ø§ ÙˆÙ„Ø§ ØªØ­Ù…Ù„Ù†Ø§ Ù…Ø§ Ù„Ø§ Ø·Ø§Ù‚Ø© Ù„Ù†Ø§ Ø¨Ù‡ ÙˆØ§Ø¹Ù Ø¹Ù†Ø§ ÙˆØ§ØºÙØ± Ù„Ù†Ø§ ÙˆØ§Ø±Ø­Ù…Ù†Ø§ Ø§Ù†Øª Ù…ÙˆÙ„Ù‰Ù†Ø§ ÙØ§Ù†ØµØ±Ù†Ø§ Ø¹Ù„Ù‰ Ø§Ù„Ù‚ÙˆÙ… Ø§Ù„ÙƒÙØ±ÙŠÙ†');
         });
 
         element(by.id('t_37706')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).getText().then(function(text) {
@@ -145,7 +145,7 @@ describe('ceviri gosterimi', function() {
         });
 
         element(by.id('t_56523')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).getText().then(function(text) {
-            expect(text).toBe('\"Allah hiç kimseye taşiyabileceginden daha fazlasini yüklemez: kişinin yaptigi her iyilik kendi lehinedir, her kötülük de kendi aleyhine." "Ey Rabbimiz! Unutur veya bilmeden hata yaparsak bizi sorgulama!" "Ey Rabbimiz! Bizden öncekilere yüklediğin gibi bize de ağır yükler yükleme! Ey Rabbimiz! Güç yetiremeyeceğimiz yükleri bize taşıtma!" "Ve günahlarımızı affet, bizi bağışla ve rahmetini yağdır üstümüze! Sen Yüce Mevlâmızsın, hakikati inkar eden topluma karşı bize yardım et!\"');
+            expect(text).toBe('\"Allah hiÃ§ kimseye taÅŸiyabileceginden daha fazlasini yÃ¼klemez: kiÅŸinin yaptigi her iyilik kendi lehinedir, her kÃ¶tÃ¼lÃ¼k de kendi aleyhine." "Ey Rabbimiz! Unutur veya bilmeden hata yaparsak bizi sorgulama!" "Ey Rabbimiz! Bizden Ã¶ncekilere yÃ¼klediÄŸin gibi bize de aÄŸÄ±r yÃ¼kler yÃ¼kleme! Ey Rabbimiz! GÃ¼Ã§ yetiremeyeceÄŸimiz yÃ¼kleri bize taÅŸÄ±tma!" "Ve gÃ¼nahlarÄ±mÄ±zÄ± affet, bizi baÄŸÄ±ÅŸla ve rahmetini yaÄŸdÄ±r Ã¼stÃ¼mÃ¼ze! Sen YÃ¼ce MevlÃ¢mÄ±zsÄ±n, hakikati inkar eden topluma karÅŸÄ± bize yardÄ±m et!\"');
         });
 
 
@@ -154,7 +154,7 @@ describe('ceviri gosterimi', function() {
         expect(authors.count()).toEqual(531);
 
         element(by.id('t_64373')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).getText().then(function(text) {
-            expect(text).toBe('Bismillâhir rahmânir rahîm.');
+            expect(text).toBe('BismillÃ¢hir rahmÃ¢nir rahÃ®m.');
         });
 
         element(by.id('t_64372')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).getText().then(function(text) {
@@ -162,11 +162,11 @@ describe('ceviri gosterimi', function() {
         });
 
         element(by.id('t_64376')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).getText().then(function(text) {
-            expect(text).toBe('Rahman ve Rahim Allah\'ın adıyla...');
+            expect(text).toBe('Rahman ve Rahim Allah\'Ä±n adÄ±yla...');
         });
 
         element(by.id('t_25524')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).getText().then(function(text) {
-            expect(text).toBe('Fe mâ lekum fil munâfikîne fieteyni vallâhu erkesehum bi mâ kesebû e turîdûne en tehdû men edallallâh|u|, ve men yudlilillâhu fe len tecide lehu sebîlâ(sebîlen).');
+            expect(text).toBe('Fe mÃ¢ lekum fil munÃ¢fikÃ®ne fieteyni vallÃ¢hu erkesehum bi mÃ¢ kesebÃ» e turÃ®dÃ»ne en tehdÃ» men edallallÃ¢h|u|, ve men yudlilillÃ¢hu fe len tecide lehu sebÃ®lÃ¢(sebÃ®len).');
         });
 
         element(by.id('t_19291')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).getText().then(function(text) {
@@ -174,11 +174,11 @@ describe('ceviri gosterimi', function() {
         });
 
         element(by.id('t_50575')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).getText().then(function(text) {
-            expect(text).toBe('Size ne oluyor da münafıklar hakkında iki gruba ayrılıyorsunuz? Allah onları kazandıkları yüzünden baş aşağı etmişken, Allah\'ın saptırdığını yola getirmek mi istiyorsunuz? Allah\'ın şaşırttığına sen asla yol sağlayamazsın.');
+            expect(text).toBe('Size ne oluyor da mÃ¼nafÄ±klar hakkÄ±nda iki gruba ayrÄ±lÄ±yorsunuz? Allah onlarÄ± kazandÄ±klarÄ± yÃ¼zÃ¼nden baÅŸ aÅŸaÄŸÄ± etmiÅŸken, Allah\'Ä±n saptÄ±rdÄ±ÄŸÄ±nÄ± yola getirmek mi istiyorsunuz? Allah\'Ä±n ÅŸaÅŸÄ±rttÄ±ÄŸÄ±na sen asla yol saÄŸlayamazsÄ±n.');
         });
 
         element(by.id('t_25612')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).getText().then(function(text) {
-            expect(text).toBe('Yesteftûnek|e|, kulillâhu yuftîkum fîl kelâleh(kelâleti) inimruun heleke leyse lehû veled(veledun), ve lehû uhtun fe lehâ nısfu mâ terak|e|, ve huve yerisuhâ in lem yekun lehâ veled(veledun), fe in kânetesneteyni fe le humes sulusâni mimmâ terak|e| ve in kânû ıhveten ricâlen ve nisâen fe liz zekeri mislu hazzıl unseyeyn|i|, yubeyyinullâhu lekum en tadıllû vallâhu bi kulli şey’in alîm(alîmun).');
+            expect(text).toBe('YesteftÃ»nek|e|, kulillÃ¢hu yuftÃ®kum fÃ®l kelÃ¢leh(kelÃ¢leti) inimruun heleke leyse lehÃ» veled(veledun), ve lehÃ» uhtun fe lehÃ¢ nÄ±sfu mÃ¢ terak|e|, ve huve yerisuhÃ¢ in lem yekun lehÃ¢ veled(veledun), fe in kÃ¢netesneteyni fe le humes sulusÃ¢ni mimmÃ¢ terak|e| ve in kÃ¢nÃ» Ä±hveten ricÃ¢len ve nisÃ¢en fe liz zekeri mislu hazzÄ±l unseyeyn|i|, yubeyyinullÃ¢hu lekum en tadÄ±llÃ» vallÃ¢hu bi kulli ÅŸeyâ€™in alÃ®m(alÃ®mun).');
         });
 
         element(by.id('t_19379')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).getText().then(function(text) {
@@ -186,7 +186,7 @@ describe('ceviri gosterimi', function() {
         });
 
         element(by.id('t_50663')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).getText().then(function(text) {
-            expect(text).toBe('Fetva istiyorlar senden. De ki: "Allah size, ana-babasız ve çocuksuz kişi hakkında şöyle fetva veriyor: ?Çocuğu olmayan, bir kızkardeşi bulunan kişi öldüğünde, onun terekesinin yarısı kızkardeşinindir. Böyle bir kişi, çocuğu olmayan kızkardeşi öldüğünde, onun terekesinin tamamına mirasçı olur. Eğer ölenin iki kızkardeşi varsa terekenin üçte ikisi onlarındır. Eğer mirasçılar, kadın-erkek, birçok kardeşlerse bu durumda erkek kardeşe, iki kızkardeşin payı kadar verilir." Allah size açık-seçik bildiriyor ki sapmayasınız. Allah, herşeyi gereğince bilmektedir.');
+            expect(text).toBe('Fetva istiyorlar senden. De ki: "Allah size, ana-babasÄ±z ve Ã§ocuksuz kiÅŸi hakkÄ±nda ÅŸÃ¶yle fetva veriyor: Â‘Ã‡ocuÄŸu olmayan, bir kÄ±zkardeÅŸi bulunan kiÅŸi Ã¶ldÃ¼ÄŸÃ¼nde, onun terekesinin yarÄ±sÄ± kÄ±zkardeÅŸinindir. BÃ¶yle bir kiÅŸi, Ã§ocuÄŸu olmayan kÄ±zkardeÅŸi Ã¶ldÃ¼ÄŸÃ¼nde, onun terekesinin tamamÄ±na mirasÃ§Ä± olur. EÄŸer Ã¶lenin iki kÄ±zkardeÅŸi varsa terekenin Ã¼Ã§te ikisi onlarÄ±ndÄ±r. EÄŸer mirasÃ§Ä±lar, kadÄ±n-erkek, birÃ§ok kardeÅŸlerse bu durumda erkek kardeÅŸe, iki kÄ±zkardeÅŸin payÄ± kadar verilir." Allah size aÃ§Ä±k-seÃ§ik bildiriyor ki sapmayasÄ±nÄ±z. Allah, herÅŸeyi gereÄŸince bilmektedir.');
         });
 
         listTranslations(7, 3, 8 ,10);
@@ -214,7 +214,7 @@ describe('ceviri gosterimi', function() {
         });
 
         element(by.id('t_51051')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).getText().then(function(text) {
-            expect(text).toBe('Onların ardından Musa\'yı, ayetlerimizle Firavun\'a ve kodamanlarına gönderdik de ayetlerimiz karşısında zalimce davrandılar. Bir bak, nasıl olmuştur bozguncuların sonu!');
+            expect(text).toBe('OnlarÄ±n ardÄ±ndan Musa\'yÄ±, ayetlerimizle Firavun\'a ve kodamanlarÄ±na gÃ¶nderdik de ayetlerimiz karÅŸÄ±sÄ±nda zalimce davrandÄ±lar. Bir bak, nasÄ±l olmuÅŸtur bozguncularÄ±n sonu!');
         });
 
 
@@ -227,10 +227,10 @@ describe('ceviri gosterimi', function() {
         });
 
         element(by.id('t_51154')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).getText().then(function(text) {
-            expect(text).toBe('Rabbinin katında olanlar, büyüklük taslayıp O\'na kulluktan yüz çevirmezler; O\'nu tespih ederler ve yalnız O\'na secde ederler.');
+            expect(text).toBe('Rabbinin katÄ±nda olanlar, bÃ¼yÃ¼klÃ¼k taslayÄ±p O\'na kulluktan yÃ¼z Ã§evirmezler; O\'nu tespih ederler ve yalnÄ±z O\'na secde ederler.');
         });
 
-        //Ayet içinde bulunan * buttonu açılımı ve içerik kontrolu
+        //Ayet iÃ§inde bulunan * buttonu aÃ§Ä±lÄ±mÄ± ve iÃ§erik kontrolu
 
         var result="Besmele";
 
@@ -245,13 +245,13 @@ describe('ceviri gosterimi', function() {
 
     it('Not ekleme', function() {
 
-        //Burada üye girişi için işlem pause edilmesi
+        //Burada Ã¼ye giriÅŸi iÃ§in iÅŸlem pause edilmesi
 
         browser.sleep(50000);
 
-        //Üyenin not yazabilmesi ve yazdığı notla ilgili kelimenin aldığı renk seçtiği renkle eşit olma durumu kontrolu.
+        //Ãœyenin not yazabilmesi ve yazdÄ±ÄŸÄ± notla ilgili kelimenin aldÄ±ÄŸÄ± renk seÃ§tiÄŸi renkle eÅŸit olma durumu kontrolu.
 
-        var not_deger='ASlaskalfjoasjfFIOJıoefj.:/*\'ffefefelöcşcöl,;üğşçöi!^+%&/()=?_é<">@>£#$½6{}\;`lkkvd';
+        var not_deger='ASlaskalfjoasjfFIOJÄ±oefj.:/*\'ffefefelÃ¶cÅŸcÃ¶l,;Ã¼ÄŸÅŸÃ§Ã¶i!^+%&/()=?_Ã©<">@>Â£#$Â½6{}\;`lkkvd';
 
         not_yaz(not_deger);
 
@@ -259,7 +259,7 @@ describe('ceviri gosterimi', function() {
             expect(text).toBe('Rahim');
         });
 
-        //Üyenin yazdığı notun sağda açılan ekranda görüldüğünün kontrolu.
+        //Ãœyenin yazdÄ±ÄŸÄ± notun saÄŸda aÃ§Ä±lan ekranda gÃ¶rÃ¼ldÃ¼ÄŸÃ¼nÃ¼n kontrolu.
 
         var elm = element(by.id('t_31180')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).element(by.css('span')).element(by.css('[class="annotator-hl a_hl_red"]'));
         karala(elm, 0, 0);
@@ -268,22 +268,22 @@ describe('ceviri gosterimi', function() {
             expect(text).toBe(not_deger);
         });
 
-        //Üyenin yazdığı notu silme ve panel kapama işlemi.
+        //Ãœyenin yazdÄ±ÄŸÄ± notu silme ve panel kapama iÅŸlemi.
 
         element(by.repeater('annotation in annotations | filter:annotationFilter | filter: annotationTextSearch').row(0)).element(by.css('[class="fa fa-trash-o"]')).click();
         element(by.id('cd-panel-right')).click();
 
-        //Üyenin yaptığı karalamada karalama alanını aştığında uyarı vermesinin kontrolu.
+        //Ãœyenin yaptÄ±ÄŸÄ± karalamada karalama alanÄ±nÄ± aÅŸtÄ±ÄŸÄ±nda uyarÄ± vermesinin kontrolu.
 
         elm = element(by.id('t_31180')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).element(by.css('span'));
         karala(elm, 0, 10);
 
         element(by.css('[class="annotator-notice annotator-notice-show annotator-notice-error"]')).getText().then(function(text) {
-            expect(text).toBe('Sadece meal içerisini karalamalısınız');
+            expect(text).toBe('Sadece meal iÃ§erisini karalamalÄ±sÄ±nÄ±z');
         });
     });
 
-    it('Silinen not doğrulanması', function() {
+    it('Silinen not doÄŸrulanmasÄ±', function() {
 
         browser.refresh();
 
@@ -293,13 +293,13 @@ describe('ceviri gosterimi', function() {
         expect(element(by.id('cd-panel-right')).isDisplayed()).toBe(false);
     });
 
-    it('Etiket işlemleri', function() {
+    it('Etiket iÅŸlemleri', function() {
 
-        var not_deger='ASlaskalfjoasjfFIOJıoefj.:/*\'ffefefelöcşcöl,;üğşçöi!^+%&/()=?_é<">@>£#$½6{}\;`lkkvd';
+        var not_deger='ASlaskalfjoasjfFIOJÄ±oefj.:/*\'ffefefelÃ¶cÅŸcÃ¶l,;Ã¼ÄŸÅŸÃ§Ã¶i!^+%&/()=?_Ã©<">@>Â£#$Â½6{}\;`lkkvd';
 
         elm = element(by.id('t_31180')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).element(by.css('span'));
 
-        //karalama yapıyor not ve etiket ekliyor
+        //karalama yapÄ±yor not ve etiket ekliyor
 
         karala(elm, -12, 0);
         element(by.css('[class="annotator-adder"]')).element(by.css('button')).click();
@@ -310,7 +310,7 @@ describe('ceviri gosterimi', function() {
 
         element(by.id('t_31180')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).element(by.css('span')).element(by.css('[class="annotator-hl a_hl_red"]')).click();
 
-        //eklenen etiketi sağ paneli açıp kontrol ediyor.
+        //eklenen etiketi saÄŸ paneli aÃ§Ä±p kontrol ediyor.
 
         var lcnt = element.all(by.repeater('annotationTag in annotation.tags'));
         expect(lcnt.count()).toEqual(1);
@@ -328,13 +328,13 @@ describe('ceviri gosterimi', function() {
         element(by.id('cd-panel-right')).click();
         element(by.id('t_31180')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).element(by.css('span')).element(by.css('[class="annotator-hl a_hl_red"]')).click();
 
-        //eklenen etiketleri sağ paneli açıp kontrol ediyor.
+        //eklenen etiketleri saÄŸ paneli aÃ§Ä±p kontrol ediyor.
 
         expect(lcnt.count()).toEqual(3);
 
         element(by.repeater('annotation in annotations | filter:annotationFilter | filter: annotationTextSearch').row(0)).element(by.css('[class="fa fa-pencil-square-o"]')).click();
 
-        //eklenen etiketten ortada olanı siliyor.
+        //eklenen etiketten ortada olanÄ± siliyor.
 
         element(by.repeater('tag in tagList.items track by track(tag)').row(1)).element(by.css('[class="remove-button ng-binding"]')).click();
         element(by.css('[ng-click="submitEditor()"]')).click();
@@ -342,19 +342,19 @@ describe('ceviri gosterimi', function() {
         element(by.id('cd-panel-right')).click();
         element(by.id('t_31180')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).element(by.css('span')).element(by.css('[class="annotator-hl a_hl_red"]')).click();
 
-        //silinen etiketi sağ paneli açıp kontrol ediyor.
+        //silinen etiketi saÄŸ paneli aÃ§Ä±p kontrol ediyor.
 
         expect(lcnt.count()).toEqual(2);
 
         element(by.repeater('annotation in annotations | filter:annotationFilter | filter: annotationTextSearch').row(0)).element(by.css('[class="fa fa-pencil-square-o"]')).click();
 
-        //eklenen diğer etiketleri siliyor.
+        //eklenen diÄŸer etiketleri siliyor.
 
         element(by.repeater('tag in tagList.items track by track(tag)').row(0)).element(by.css('[class="remove-button ng-binding"]')).click();
         element(by.repeater('tag in tagList.items track by track(tag)').row(0)).element(by.css('[class="remove-button ng-binding"]')).click();
         element(by.css('[ng-click="submitEditor()"]')).click();
 
-        //silinen etiketleri sağ paneli açıp kontrol ediyor.
+        //silinen etiketleri saÄŸ paneli aÃ§Ä±p kontrol ediyor.
 
         expect(lcnt.count()).toEqual(0);
 
