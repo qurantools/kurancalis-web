@@ -237,6 +237,9 @@ describe('ceviri gosterimi', function() {
             expect(text1).toBe(result);
         });
 
+    });
+
+    it('Not ekleme', function() {
 
         var not_deger='Deneme notu';
 
@@ -263,5 +266,4 @@ describe('ceviri gosterimi', function() {
             expect(text).toBe('Sadece meal içerisini karalamalýsýnýz');
         });
     });
-
 });
