@@ -9,7 +9,7 @@ describe('ceviri gosterimi', function() {
     var aramabtn = element.all(by.css('[class="caret pull-right"]'));
     var aramakutu = element(by.model('$select.search'));
 
-    var yazarbtn = element.all(by.css('[class="btn btn-primary ng-scope"]'));
+    var yazarbtn = element.all(by.css('[class="fa fa-user"]'));
     var yazargnd = element(by.css('[ng-click="updateAuthors()"]'));
 
     var tmpautid1;
@@ -17,8 +17,8 @@ describe('ceviri gosterimi', function() {
     var tmpautid3;
 
     beforeEach(function() {
-        browser.get('http://kurancalis.com/index.html#/');
-        // browser.sleep(50000); // if your test is outrunning the browser
+        browser.get('http://kurancalis.com/#/chapter/1/author/1040/verse/1');
+        browser.sleep(50000); // if your test is outrunning the browser
         // browser.waitForAngular();
         // pageLoadedStatus = true;
     });
@@ -36,7 +36,7 @@ describe('ceviri gosterimi', function() {
         if(tmpautid1==null)
         {
             element(by.repeater('author in authors').row(4)).element(by.css('[ng-click="toggleSelection(author.id)"]')).click();
-            element(by.repeater('author in authors').row(5)).element(by.css('[ng-click="toggleSelection(author.id)"]')).click();
+            element(by.repeater('author in authors').row(10)).element(by.css('[ng-click="toggleSelection(author.id)"]')).click();
         }
         else
         {
@@ -79,6 +79,29 @@ describe('ceviri gosterimi', function() {
         yazargnd.click();
 
         element.all(by.repeater('verse in verses')).get(0).element(by.linkText('*')).click();
+    }
+
+    function karala(elm, korx, kory) {
+
+        browser.actions().
+            mouseDown(elm).
+            mouseMove({x: korx, y: kory}).
+            mouseMove({x: korx, y: kory}).
+            mouseMove({x: korx, y: kory}).
+            mouseMove({x: korx, y: kory}).
+            mouseUp().
+            perform();
+    }
+
+    function not_yaz(not_deger) {
+
+        elm = element(by.id('t_31180')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).element(by.css('span'));
+
+        karala(elm, -12, 0);
+        element(by.css('[class="annotator-adder"]')).element(by.css('button')).click();
+        element(by.model('annotationModalData.text')).sendKeys(not_deger);
+        element(by.css('[value="red"]')).click();
+        element(by.css('[ng-click="submitEditor()"]')).click();
     }
 
     it('should get chapter translations', function() {
@@ -214,6 +237,31 @@ describe('ceviri gosterimi', function() {
             expect(text1).toBe(result);
         });
 
+
+        var not_deger='Deneme notu';
+
+        not_yaz(not_deger);
+
+        element(by.id('t_31180')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).element(by.css('span')).element(by.css('[class="annotator-hl a_hl_red"]')).getText().then(function(text) {
+            expect(text).toBe('Rahim');
+        });
+
+        var elm = element(by.id('t_31180')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).element(by.css('span')).element(by.css('[class="annotator-hl a_hl_red"]'));
+        karala(elm, 0, 0);
+
+        element(by.css('[class="s_a_text"]')).getText().then(function(text) {
+            expect(text).toBe(not_deger);
+        });
+
+        element(by.repeater('annotation in annotations | filter:annotationFilter | filter: annotationTextSearch').row(0)).element(by.css('[class="fa fa-trash-o"]')).click();
+        element(by.id('cd-panel-right')).click();
+
+        elm = element(by.id('t_31180')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).element(by.css('span'));
+        karala(elm, 0, 10);
+
+        element(by.css('[class="annotator-notice annotator-notice-show annotator-notice-error"]')).getText().then(function(text) {
+            expect(text).toBe('Sadece meal içerisini karalamalýsýnýz');
+        });
     });
 
 });
