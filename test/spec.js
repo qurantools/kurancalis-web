@@ -295,7 +295,7 @@ describe('ceviri gosterimi', function() {
                     expect(text).toBe(not_deger);
                 });
 
-                element(by.id('theView')).click();
+                element(by.css('[class="cd-panel from-right ng-scope is-visible"]')).click();
 
                 //Üyenin yaptığı karalamada karalama alanını aştığında uyarı vermesinin kontrolu.
 
