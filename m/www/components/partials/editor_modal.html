@@ -1,0 +1,54 @@
+<div class="modal" id="annotationModal">
+    <div class="modal-dialog fixed-dialog">
+        <div class="modal-content">
+            <div class="modal-header" id="annotationData_header">
+                <strong>{{annotationModalDataVerse}}</strong>
+                {{annotationModalData.quote}}
+                <h4 class="modal-title">{{annotationModal.title}}</h4>
+            </div>
+
+            <div class="modal-body">
+                <!--<pre>tags: <span id="user_info" ng-bind="theTags | json"></span></pre>-->
+
+                <textarea class="form-control" id="annotationData_text" ng-model="annotationModalData.text" placeholder="Yorum ekleyin"></textarea>
+
+
+                <div class="row">
+                    <div class="col-xs-6">
+                        <tags-input ng-model="$parent.theTags" display-property="name" replace-spaces-with-dashes=false
+                                    min-length="2">
+                            <auto-complete source="loadTags($query)" min-length="2"></auto-complete>
+                        </tags-input>
+                        <ul ng-repeat="selectedTag in selectedTags">
+                            <li>{{selectedTag}}</li>
+                        </ul>
+
+                    </div>
+                    <div class="col-xs-6" style="padding-top:5px;">
+                        <input type="radio" ng-model="annotationModalData.colour" value="yellow" style="float: left;">
+                        <div class="tag_colour a_hl_yellow">&nbsp;</div>
+                        <div class="tag_colour_description">Açıklama, hatırlatıcı</div>
+                        <br/>
+
+                        <input type="radio" ng-model="annotationModalData.colour" value="red" style="float: left;">
+                        <div class="tag_colour a_hl_red">&nbsp;</div>
+                        <div class="tag_colour_description">Tam olarak anlamadım</div>
+                        <br/>
+
+                        <input type="radio" ng-model="annotationModalData.colour" value="green" style="float: left;">
+                        <div class="tag_colour a_hl_green">&nbsp;</div>
+                        <div class="tag_colour_description">Önemli</div>
+                        <br/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" aria-hidden="true" class="btn" ng-click="hideEditor()">
+                    Vazgeç
+                </button>
+                <a href="#" class="btn btn-primary btn-wide" data-dismiss="modal" ng-click="submitEditor()">Tamam</a>
+            </div>
+        </div>
+    </div>
+</div>
