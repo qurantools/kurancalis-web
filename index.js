@@ -99,28 +99,54 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         //RestangularProvider.setBaseUrl('http://localhost:8080/QuranToolsApp/rest');
         localStorageServiceProvider.setStorageCookie(0, '/');
         //route
-        $routeProvider
-            .when('/', {
-                controller: 'MainCtrl',
-                templateUrl: 'app/components/home/homeView.html',
-                reloadOnSearch: false
-            })
-            .when('/chapter/:chapterId/author/:authorMask', {
-                redirectTo: '/chapter/:chapterId/author/:authorMask/verse/1'
-            })
-            .when('/chapter/:chapterId/author/:authorMask/verse/:verseNumber', {
-                controller: 'MainCtrl',
-                templateUrl: 'app/components/home/homeView.html',
-                reloadOnSearch: false
-            })
-            .when('/annotations/', {
-                controller: 'MainCtrl',
-                templateUrl: 'app/components/annotations/annotationsView.html',
-                reloadOnSearch: false
-            })
-            .otherwise({
-                redirectTo: '/'
-            });
+        if(config_data.isMobile==false){
+            $routeProvider
+                .when('/', {
+                    controller: 'MainCtrl',
+                    templateUrl: 'app/components/home/homeView.html',
+                    reloadOnSearch: false
+                })
+                .when('/chapter/:chapterId/author/:authorMask', {
+                    redirectTo: '/chapter/:chapterId/author/:authorMask/verse/1'
+                })
+                .when('/chapter/:chapterId/author/:authorMask/verse/:verseNumber', {
+                    controller: 'MainCtrl',
+                    templateUrl: 'app/components/home/homeView.html',
+                    reloadOnSearch: false
+                })
+                .when('/annotations/', {
+                    controller: 'MainCtrl',
+                    templateUrl: 'app/components/annotations/annotationsView.html',
+                    reloadOnSearch: false
+                })
+                .otherwise({
+                    redirectTo: '/'
+                });
+        }else{
+                $routeProvider
+                    .when('/', {
+                        controller: 'MainCtrl',
+                        templateUrl: 'components/home/homeView.html',
+                        reloadOnSearch: false
+                    })
+                    .when('/chapter/:chapterId/author/:authorMask', {
+                        redirectTo: '/chapter/:chapterId/author/:authorMask/verse/1'
+                    })
+                    .when('/chapter/:chapterId/author/:authorMask/verse/:verseNumber', {
+                        controller: 'MainCtrl',
+                        templateUrl: 'components/home/homeView.html',
+                        reloadOnSearch: false
+                    })
+                    .when('/annotations/', {
+                        controller: 'MainCtrl',
+                        templateUrl: 'components/annotations/annotationsView.html',
+                        reloadOnSearch: false
+                    })
+                    .otherwise({
+                        redirectTo: '/'
+                    });
+        }
+
 
         //facebook
         FacebookProvider.init('295857580594128');
