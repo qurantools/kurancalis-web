@@ -14,5 +14,8 @@ exports.config = {
         {
         browserName: 'chrome'
     }
-    ]
+    ],
+    onPrepare: function() {
+        browser.manage().window().setSize(1600, 1000);
+    }
 }

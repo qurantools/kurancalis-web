@@ -18,7 +18,7 @@ describe('ceviri gosterimi', function() {
 
     beforeEach(function() {
         browser.get('http://kurancalis.com/#/chapter/1/author/1040/verse/1');
-        //browser.sleep(50000); // if your test is outrunning the browser
+        browser.sleep(50000); // if your test is outrunning the browser
         // browser.waitForAngular();
         // pageLoadedStatus = true;
     });
@@ -72,7 +72,7 @@ describe('ceviri gosterimi', function() {
 
         element(by.repeater('author in authors').row(3)).element(by.css('[ng-click="toggleSelection(author.id)"]')).click();
         element(by.repeater('author in authors').row(8)).element(by.css('[ng-click="toggleSelection(author.id)"]')).click();
-        element(by.repeater('author in authors').row(10)).element(by.css('[ng-click="toggleSelection(author.id)"]')).click();
+        //element(by.repeater('author in authors').row(10)).element(by.css('[ng-click="toggleSelection(author.id)"]')).click();
 
         element(by.repeater('author in authors').row(4)).element(by.css('[ng-click="toggleSelection(author.id)"]')).click();
 
@@ -83,19 +83,21 @@ describe('ceviri gosterimi', function() {
 
     function karala(elm, korx, kory) {
 
-        browser.actions().
-            mouseDown(elm).
-            mouseMove({x: korx, y: kory}).
-            mouseMove({x: korx, y: kory}).
-            mouseMove({x: korx, y: kory}).
-            mouseMove({x: korx, y: kory}).
-            mouseUp().
-            perform();
+        browser.actions().doubleClick(elm).perform();
+
+        //browser.actions().
+        //   mouseDown(elm).
+        //   mouseMove({x: korx, y: kory}).
+        //   mouseMove({x: korx, y: kory}).
+        //   mouseMove({x: korx, y: kory}).
+        //   mouseMove({x: korx, y: kory}).
+        //   mouseUp().
+        //   perform();
     }
 
     function not_yaz(not_deger) {
 
-        elm = element(by.id('t_31180')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).element(by.css('span'));
+        elm = element(by.id('t_49995')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).element(by.css('[class="ng-binding"]'));
 
         karala(elm, -12, 0);
         element(by.css('[class="annotator-adder"]')).element(by.css('button')).click();
@@ -125,7 +127,7 @@ describe('ceviri gosterimi', function() {
         });
 
         element(by.id('t_12625')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).getText().then(function(text) {
-            expect(text).toBe('قد نرى تقلب وجهك �?ى السماء �?لنولينك قبلة ترضىها �?ول وجهك شطر المسجد الحرام وحيث ما كنتم �?ولوا وجوهكم شطره وان الذين اوتوا الكتب ليعلمون انه الحق من ربهم وما الله بغ�?ل عما يعملون');
+            expect(text).toBe('قد نرى تقلب وجهك فى السماء فلنولينك قبلة ترضىها فول وجهك شطر المسجد الحرام وحيث ما كنتم فولوا وجوهكم شطره وان الذين اوتوا الكتب ليعلمون انه الحق من ربهم وما الله بغفل عما يعملون');
         });
 
         element(by.id('t_37564')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).getText().then(function(text) {
@@ -137,7 +139,7 @@ describe('ceviri gosterimi', function() {
         });
 
         element(by.id('t_12767')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).getText().then(function(text) {
-            expect(text).toBe('لا يكل�? الله ن�?سا الا وسعها لها ما كسبت وعليها ما اكتسبت ربنا لا تواخذنا ان نسينا او اخطانا ربنا ولا تحمل علينا اصرا كما حملته على الذين من قبلنا ربنا ولا تحملنا ما لا طاقة لنا به واع�? عنا واغ�?ر لنا وارحمنا انت مولىنا �?انصرنا على القوم الك�?رين');
+            expect(text).toBe('لا يكلف الله نفسا الا وسعها لها ما كسبت وعليها ما اكتسبت ربنا لا تواخذنا ان نسينا او اخطانا ربنا ولا تحمل علينا اصرا كما حملته على الذين من قبلنا ربنا ولا تحملنا ما لا طاقة لنا به واعف عنا واغفر لنا وارحمنا انت مولىنا فانصرنا على القوم الكفرين');
         });
 
         element(by.id('t_37706')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).getText().then(function(text) {
@@ -247,57 +249,71 @@ describe('ceviri gosterimi', function() {
 
         //Burada üye girişi için işlem pause edilmesi
 
-        browser.sleep(50000);
+        //browser.sleep(40000);
 
         //Üyenin not yazabilmesi ve yazdığı notla ilgili kelimenin aldığı renk seçtiği renkle eşit olma durumu kontrolu.
 
-        var not_deger='ASlaskalfjoasjfFIOJıoefj.:/*\'ffefefelöcşcöl,;üğşçöi!^+%&/()=?_é<">@>£#$½6{}\;`lkkvd';
+        var not_deger='ASlqwertyuıopğü,işlkjhgfdsazxcvbnmöç.:;<>1234567890';
 
         not_yaz(not_deger);
 
-        element(by.id('t_31180')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).element(by.css('span')).element(by.css('[class="annotator-hl a_hl_red"]')).getText().then(function(text) {
+        browser.sleep(2000);
+
+        element(by.id('t_49995')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).element(by.css('[class="ng-binding"]')).element(by.css('[class="annotator-hl a_hl_red"]')).getText().then(function(text) {
             expect(text).toBe('Rahim');
         });
 
         //Üyenin yazdığı notun sağda açılan ekranda görüldüğünün kontrolu.
 
-        var elm = element(by.id('t_31180')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).element(by.css('span')).element(by.css('[class="annotator-hl a_hl_red"]'));
-        karala(elm, 0, 0);
+        element(by.id('t_49995')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).element(by.css('[class="ng-binding"]')).element(by.css('[class="annotator-hl a_hl_red"]')).click();
+        //karala(elm, 0, 0);
 
         element(by.css('[class="s_a_text"]')).getText().then(function(text) {
             expect(text).toBe(not_deger);
         });
 
-        //Üyenin yazdığı notu silme ve panel kapama işlemi.
-
-        element(by.repeater('annotation in annotations | filter:annotationFilter | filter: annotationTextSearch').row(0)).element(by.css('[class="fa fa-trash-o"]')).click();
-        element(by.id('cd-panel-right')).click();
+        element(by.id('theView')).click();
 
         //Üyenin yaptığı karalamada karalama alanını aştığında uyarı vermesinin kontrolu.
 
-        elm = element(by.id('t_31180')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).element(by.css('span'));
+        browser.sleep(2000);
+
+        elm = element(by.id('t_31181')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).element(by.css('[class="ng-binding"]'));
         karala(elm, 0, 10);
+
+        browser.actions().keyDown(protractor.Key.SHIFT).perform();
+        element(by.id('t_49996')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).element(by.css('[class="ng-binding"]')).click();
 
         element(by.css('[class="annotator-notice annotator-notice-show annotator-notice-error"]')).getText().then(function(text) {
             expect(text).toBe('Sadece meal içerisini karalamalısınız');
         });
+
     });
 
     it('Silinen not doğrulanması', function() {
 
+        browser.sleep(10000);
+        element(by.id('t_49995')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).element(by.css('[class="ng-binding"]')).element(by.css('[class="annotator-hl a_hl_red"]')).click();
+
+        browser.sleep(2000);
+        element(by.repeater('annotation in annotations | filter:annotationFilter | filter: annotationTextSearch').row(0)).element(by.css('[class="fa fa-trash-o"]')).click();
+        browser.sleep(2000);
+
         browser.refresh();
+        browser.sleep(10000);
 
-        elm = element(by.id('t_31180')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).element(by.css('span'));
+        var elm = element(by.id('t_49995')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).element(by.css('[class="ng-binding"]'));
 
-        karala(elm, -12, 0);
+        karala(elm,0,0);
+
         expect(element(by.id('cd-panel-right')).isDisplayed()).toBe(false);
     });
 
     it('Etiket işlemleri', function() {
 
-        var not_deger='ASlaskalfjoasjfFIOJıoefj.:/*\'ffefefelöcşcöl,;üğşçöi!^+%&/()=?_é<">@>£#$½6{}\;`lkkvd';
+        var not_deger='ASlqwertyuıopğü,işlkjhgfdsazxcvbnmöç.:;<>1234567890';
 
-        elm = element(by.id('t_31180')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).element(by.css('span'));
+        elm = element(by.id('t_49995')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).element(by.css('[class="ng-binding"]'));
 
         //karalama yapıyor not ve etiket ekliyor
 
@@ -308,12 +324,14 @@ describe('ceviri gosterimi', function() {
         element(by.css('[value="red"]')).click();
         element(by.css('[ng-click="submitEditor()"]')).click();
 
-        element(by.id('t_31180')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).element(by.css('span')).element(by.css('[class="annotator-hl a_hl_red"]')).click();
+        element(by.id('t_49995')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).element(by.css('[class="ng-binding"]')).element(by.css('[class="annotator-hl a_hl_red"]')).click();
 
         //eklenen etiketi sağ paneli açıp kontrol ediyor.
 
         var lcnt = element.all(by.repeater('annotationTag in annotation.tags'));
         expect(lcnt.count()).toEqual(1);
+
+        browser.sleep(2000);
 
         element(by.repeater('annotation in annotations | filter:annotationFilter | filter: annotationTextSearch').row(0)).element(by.css('[class="fa fa-pencil-square-o"]')).click();
 
@@ -325,13 +343,11 @@ describe('ceviri gosterimi', function() {
         element(by.model('annotationModalData.text')).click();
         element(by.css('[ng-click="submitEditor()"]')).click();
 
-        element(by.id('cd-panel-right')).click();
-        element(by.id('t_31180')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).element(by.css('span')).element(by.css('[class="annotator-hl a_hl_red"]')).click();
-
         //eklenen etiketleri sağ paneli açıp kontrol ediyor.
 
         expect(lcnt.count()).toEqual(3);
 
+        browser.sleep(2000);
         element(by.repeater('annotation in annotations | filter:annotationFilter | filter: annotationTextSearch').row(0)).element(by.css('[class="fa fa-pencil-square-o"]')).click();
 
         //eklenen etiketten ortada olanı siliyor.
@@ -339,8 +355,7 @@ describe('ceviri gosterimi', function() {
         element(by.repeater('tag in tagList.items track by track(tag)').row(1)).element(by.css('[class="remove-button ng-binding"]')).click();
         element(by.css('[ng-click="submitEditor()"]')).click();
 
-        element(by.id('cd-panel-right')).click();
-        element(by.id('t_31180')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).element(by.css('span')).element(by.css('[class="annotator-hl a_hl_red"]')).click();
+        browser.sleep(2000);
 
         //silinen etiketi sağ paneli açıp kontrol ediyor.
 
@@ -360,8 +375,9 @@ describe('ceviri gosterimi', function() {
 
         //notu siliyor.
         element(by.repeater('annotation in annotations | filter:annotationFilter | filter: annotationTextSearch').row(0)).element(by.css('[class="fa fa-trash-o"]')).click();
-        element(by.id('cd-panel-right')).click();
 
+        browser.sleep(3000);
     });
+
 
 });
