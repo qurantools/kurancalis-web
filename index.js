@@ -99,7 +99,7 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         //RestangularProvider.setBaseUrl('http://localhost:8080/QuranToolsApp/rest');
         localStorageServiceProvider.setStorageCookie(0, '/');
         //route
-        if(config_data.isMobile==false){
+        if (config_data.isMobile == false) {
             $routeProvider
                 .when('/', {
                     controller: 'MainCtrl',
@@ -122,29 +122,35 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
                 .otherwise({
                     redirectTo: '/'
                 });
-        }else{
-                $routeProvider
-                    .when('/', {
-                        controller: 'MainCtrl',
-                        templateUrl: 'components/home/homeView.html',
-                        reloadOnSearch: false
-                    })
-                    .when('/chapter/:chapterId/author/:authorMask', {
-                        redirectTo: '/chapter/:chapterId/author/:authorMask/verse/1'
-                    })
-                    .when('/chapter/:chapterId/author/:authorMask/verse/:verseNumber', {
-                        controller: 'MainCtrl',
-                        templateUrl: 'components/home/homeView.html',
-                        reloadOnSearch: false
-                    })
-                    .when('/annotations/', {
-                        controller: 'MainCtrl',
-                        templateUrl: 'components/annotations/annotationsView.html',
-                        reloadOnSearch: false
-                    })
-                    .otherwise({
-                        redirectTo: '/'
-                    });
+        } else {
+            var locationHref = window.location.href;
+            if (locationHref.indexOf('/m/') > -1) {
+                homeUrl = 'components/home/homeView.html';
+            } else {
+                homeUrl = 'app/components/home/mobile_on_development.html';
+            }
+            $routeProvider
+                .when('/', {
+                    controller: 'MainCtrl',
+                    templateUrl: homeUrl,
+                    reloadOnSearch: false
+                })
+                .when('/chapter/:chapterId/author/:authorMask', {
+                    redirectTo: '/chapter/:chapterId/author/:authorMask/verse/1'
+                })
+                .when('/chapter/:chapterId/author/:authorMask/verse/:verseNumber', {
+                    controller: 'MainCtrl',
+                    templateUrl: 'components/home/homeView.html',
+                    reloadOnSearch: false
+                })
+                .when('/annotations/', {
+                    controller: 'MainCtrl',
+                    templateUrl: 'components/annotations/annotationsView.html',
+                    reloadOnSearch: false
+                })
+                .otherwise({
+                    redirectTo: '/'
+                });
         }
 
 
@@ -1140,8 +1146,10 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         }
 
         //tutorial
-        $scope.showTutorial=0;
-        if($location.path()=="/"){$scope.showTutorial=1;}
+        $scope.showTutorial = 0;
+        if ($location.path() == "/") {
+            $scope.showTutorial = 1;
+        }
         $scope.tutorialCarouselActive = 0;
         $scope.tutorial = function (parameter) {
             if (parameter == 'init') {
