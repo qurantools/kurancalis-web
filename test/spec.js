@@ -486,7 +486,7 @@ describe('ceviri gosterimi', function() {
 
         browser.sleep(3000);
 
-        //Başka bir ayet işaretlenir not yazılır ve sarı işaretlenir.
+        //Başka bir ayet işaretlenir not yazılır ve sarı işaretlenir.//Başka bir ayet işaretlenir not yazılır ve sarı işaretlenir.
         elm = element(by.id('t_31183')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).element(by.css('[class="ng-binding"]'));
 
         karala(elm, 0, 0);
