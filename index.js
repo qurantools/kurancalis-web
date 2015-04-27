@@ -740,6 +740,9 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
             $scope.scopeApply();
 
             $('#annotationModal').modal('show');
+            $('#annotationModal').on('hidden.bs.modal', function () {
+                $scope.hideEditor();
+            })
         }
 
         $scope.colorTheAnnotation = function (annotation) {
@@ -1234,6 +1237,5 @@ function seperateChapterAndVerse(data) {
     ret.verse = data.substring(seperator + 1, data.length);
     return ret;
 }
-
 
 
