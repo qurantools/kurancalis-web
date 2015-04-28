@@ -451,8 +451,8 @@ describe('ceviri gosterimi', function() {
         browser.sleep(5000);
         //ilk not ile başka bir kelime beraber karalanır not eklenir. Yeşil işaretlenir.
         var elm = element(by.id('t_31181')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).element(by.css('[class="ng-binding"]'));
-        karala(elm, 0, 10);
-
+        //karala(elm, 0, 10);
+        browser.actions().mouseMove(elm,{x: 58, y: 0}).doubleClick().perform();
         browser.actions().keyDown(protractor.Key.SHIFT).perform();
         element(by.id('t_31181')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).element(by.css('[class="ng-binding"]')).element(by.css('[class="annotator-hl a_hl_red"]')).click();
 
