@@ -1,4 +1,12 @@
-angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 'LocalStorageModule', 'ngTagsInput', 'duScroll', 'directives.showVerse', 'ui.select', 'myConfig'])
+var requiredModules= ['ngResource', 'ngRoute', 'facebook', 'restangular', 'LocalStorageModule', 'ngTagsInput', 'duScroll', 'directives.showVerse', 'ui.select', 'myConfig'];
+if(config_data.isMobile){
+   var mobileModules=['ionic','ionic.contrib.drawer'];
+    mobileModules.forEach(function(item) {
+        requiredModules.push(item);
+    });
+}
+
+angular.module('ionicApp', requiredModules)
     .filter('to_trusted', ['$sce',
         function ($sce) {
             return function (text) {
@@ -1177,6 +1185,10 @@ angular.module('ionicApp', ['ngResource', 'ngRoute', 'facebook', 'restangular', 
         }
 
     })
+
+
+
+
 
 function sidebarInit() {
     /*
