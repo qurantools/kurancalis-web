@@ -448,7 +448,7 @@ describe('ceviri gosterimi', function() {
 
         //ilk karalama ile alana not yazıyor. Kırmızı işaretlenir.
         not_yaz_yeni(not_deger);
-
+        browser.sleep(5000);
         //ilk not ile başka bir kelime beraber karalanır not eklenir. Yeşil işaretlenir.
         var elm = element(by.id('t_31181')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).element(by.css('[class="ng-binding"]'));
         karala(elm, 0, 10);
@@ -457,8 +457,8 @@ describe('ceviri gosterimi', function() {
         element(by.id('t_31181')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).element(by.css('[class="ng-binding"]')).element(by.css('[class="annotator-hl a_hl_red"]')).click();
 
         element(by.css('[class="annotator-adder"]')).element(by.css('button')).click();
-        element(by.model('annotationModalData.text')).sendKeys('Test2');
-        element(by.css('[value="green"]')).click();
+        element(by.model('annotationModalData.text')).sendKeys('Test2')
+        element(by.css('[value="green"]')).click();;
         element(by.css('[ng-click="submitEditor()"]')).click();
 
         browser.sleep(5000);
@@ -514,16 +514,16 @@ describe('ceviri gosterimi', function() {
             expect(text).toBe('TEST\'');
         });
 
+
         element(by.repeater('annotation in annotations | filter:annotationFilter | filter: annotationTextSearch').row(2)).element(by.css('[class="s_a_text"]')).getText().then(function(text) {
             expect(text).toBe('Test3');
         });
-        browser.sleep(5000);
+            browser.sleep(5000);
 
         //Not değiştirilir.
         element(by.repeater('annotation in annotations | filter:annotationFilter | filter: annotationTextSearch').row(1)).element(by.css('[class="fa fa-pencil-square-o"]')).click();
         element(by.model('annotationModalData.text')).clear();
         element(by.model('annotationModalData.text')).sendKeys('Test2 Değişti');
-        element(by.css('[value="yellow"]')).click();
         element(by.css('[ng-click="submitEditor()"]')).click();
 
         element(by.repeater('annotation in annotations | filter:annotationFilter | filter: annotationTextSearch').row(1)).element(by.css('[class="s_a_text"]')).getText().then(function(text) {
@@ -533,9 +533,6 @@ describe('ceviri gosterimi', function() {
         browser.sleep(5000);
 
         browser.refresh();
-
-        browser.sleep(5000);
-
 
         element(by.id('t_31181')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).element(by.css('[class="ng-binding"]')).element(by.css('[class="annotator-hl a_hl_red"]')).click();
 
