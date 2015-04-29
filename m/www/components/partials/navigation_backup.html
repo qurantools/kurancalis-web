@@ -1,0 +1,141 @@
+<ion-side-menus enable-menu-with-back-views="false">
+    <ion-side-menu-content>
+        <!--
+
+                <ion-nav-bar class="bar-stable">
+                    <ion-nav-back-button>
+                    </ion-nav-back-button>
+
+                    <ion-nav-buttons side="left">
+                        <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
+                        </button>
+                    </ion-nav-buttons>
+
+                    <button class="button">Edit</button>
+                    <ion-nav-buttons side="right">
+                        <button class="button button-icon button-clear ion-navicon" menu-toggle="right">
+                        </button>
+                    </ion-nav-buttons>
+
+
+
+
+
+                </ion-nav-bar>
+         -->
+        <div class="bar bar-header">
+            <button class="button icon ion-navicon" menu-toggle="left"></button>
+            <div style="text-align: center;width:100%">
+                <button class="button icon ion-arrow-right-b"></button>
+                <button class="button icon ion-person"></button>
+            </div>
+
+            <div style="float: right">
+                <button class="button button-balanced">Giriş</button>
+            </div>
+            <div style="float: right">
+                <button class="button icon ion-navicon"></button>
+            </div>
+        </div>
+
+        <ion-nav-view name="menuContent"></ion-nav-view>
+    </ion-side-menu-content>
+
+    <ion-side-menu side="left">
+        <ion-header-bar class="bar-stable">
+            <h1 class="title">Left</h1>
+        </ion-header-bar>
+        <ion-content>
+            <ion-list>
+
+                <ion-item nav-clear menu-close href="#/app/search">
+                    Sureler
+                </ion-item>
+                <ion-item nav-clear menu-close href="#/app/browse">
+                    Tüm Notlar
+                </ion-item>
+                <ion-item nav-clear menu-close ng-click="login()">
+                    Login
+                </ion-item>
+            </ion-list>
+        </ion-content>
+    </ion-side-menu>
+</ion-side-menus>
+
+
+<!--
+<nav class="navbar navbar-default navbar-fixed-top container" role="navigation">
+    <div>
+        <form>
+            <div class="row" style="padding-left: 15px;">
+                <div style="float: left;">
+                    <button onclick="toggleLeftPanel()" class="btn btn-primary"><i
+                            class="fa fa-bars"></i> MENÜ
+                    </button>
+                </div>
+                <div style="float: left">
+                    <ui-select ng-model="chapterSelected"
+                               theme="bootstrap"
+                               reset-search-input="false"
+                               style="width: 200px;"
+                               on-select="setSelectedChapter($item)"
+                               ng-enter=""
+                            >
+                        <ui-select-match placeholder="Sure">{{$select.selected.id}}: {{$select.selected.nameTr}}
+                        </ui-select-match>
+                        <ui-select-choices
+                                repeat="chapter in chapters | selectionFilter: {id: $select.search,nameTr: $select.search}">
+                            {{chapter.id}}: {{chapter.nameTr}}
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+                <div style="float: left" data-placement="bottom">
+                    <input type="text" ng-model="$parent.verse_number" size="3" ng-enter="goToChapter()"
+                           placeholder="Ayet" class="form-control"/>
+                </div>
+                <div style="float: left">
+                    <input type="hidden" ng-model="$parent.chapter_id" size="12" ng-enter="goToChapter()"/>
+                </div>
+                <input type="hidden" ng-model="$parent.author_mask" value="48"/>
+
+                <div style="float: left; ">
+                    <button type="button" id="list_translations" ng-click="goToChapter()" class="btn btn-primary">
+                        <i class="fa fa-arrow-right" style="font-size: 1.3em"></i>
+                    </button>
+                    <span style="width: 10px;">&nbsp;</span>
+                    <button class="btn btn-primary" data-target="#myModal" data-toggle="modal" type="button"
+                            ng-if="currentPage!='annotations'">
+                        <i class="fa fa-user" style="font-size: 1.3em"></i> Yazarlar
+                    </button>
+                    <a class="btn btn-primary" data-target="#annotationsFilterModal" data-toggle="modal"
+                       ng-if="user!=null && currentPage=='annotations'"><i class="fa fa-search"
+                                                                           style="font-size: 1.3em"></i></a>
+
+                    <select ng-model="allAnnotationsOrderBy" ng-init="allAnnotationsOrderBy='verse'"
+                            ng-if="currentPage=='annotations'"
+                            ng-change="$parent.allAnnotationsOrderByChanged(this.allAnnotationsOrderBy)"
+                            >
+                        <option value="verse">Ayet</option>
+                        <option value="time">Zaman</option>
+                    </select>
+                </div>
+
+                <div ng-show="facebookIsReady" class="facebook_area">
+                    <div ng-if="user==null">
+                        <button type="button" id="login" ng-click="login()" class="btn btn-primary">
+                            Giriş
+                        </button>
+                    </div>
+                    <div ng-if="user!=null">
+                        <button onclick="openPanel()" class="btn btn-primary" ng-if="currentPage=='home'"><i
+                                class="fa fa-edit" style="font-size: 1.3em"></i> Sayfadaki Notlar
+                        </button>
+                        <img ng-src="{{user.photo}}" height="30"/>
+                        <span style="vertical-align: bottom;">{{user.name}}</span>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</nav>
+-->
