@@ -4,8 +4,8 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'test';
 
 exports.config = {
     seleniumAddress: 'http://localhost:4444/wd/hub',
-    specs: ['spec1.js','spec2.js','spec3.js','spec4.js','spec5.js'],
-    jasmineNodeOpts: {defaultTimeoutInterval: 180000},
+    specs: ['spec1.js','spec2.js','spec3.js','spec4.js','spec5.js','spec6.js'],
+    jasmineNodeOpts: {defaultTimeoutInterval: 360000},
     multiCapabilities: [
     /*    {
         browserName: 'firefox'
