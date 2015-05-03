@@ -21,7 +21,7 @@ exports.config = {
     */
     /*    ,*/
         {
-        browserName: 'chome'
+        browserName: 'chrome'
     }
     ],
     onPrepare: function() {
