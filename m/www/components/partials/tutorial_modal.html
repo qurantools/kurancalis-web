@@ -18,14 +18,14 @@
                     </div>
                 </div>
                 <div class="row">
-                    <button class="btn" href ng-click="tutorial('previous')" style="float:left;"><i
-                            class="fa fa-chevron-left"> Geri</i>
+                    <button class="btn btn-info" href ng-click="tutorial('previous')" style="float:left;"><i
+                            class="fa fa-chevron-left"></i> Geri
                     </button>
                     <ol class="carousel-indicators">
                         <li ng-repeat="n in [0, 1, 2] track by $index" data-target="#tutorialCarousel"
                             ng-class="($index==tutorialCarouselActive) ? 'active' : ''"></li>
                     </ol>
-                    <button class="btn" ng-click="tutorial('next')" ng-if="tutorialCarouselActive<2"
+                    <button class="btn btn-info" ng-click="tutorial('next')" ng-if="tutorialCarouselActive<2"
                             style="float:right;">İleri <i
                             class="fa fa-chevron-right"></i></button>
                     <button class="btn" ng-click="tutorial('close')" ng-if="tutorialCarouselActive==2"

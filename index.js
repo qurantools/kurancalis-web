@@ -134,6 +134,7 @@ angular.module('ionicApp', requiredModules)
             var locationHref = window.location.href;
             if (locationHref.indexOf('/m/') > -1) {
                 homeUrl = 'components/home/homeView.html';
+              //  homeUrl = 'components/home/test2.html';
             } else {
                 homeUrl = 'app/components/home/mobile_on_development.html';
             }
@@ -1186,7 +1187,34 @@ angular.module('ionicApp', requiredModules)
 
     })
 
+    .controller("CartController", function($scope) {
 
+        $scope.data = {
+            items : []
+        };
+
+        for(var i = 0; i < 25; i++) {
+            $scope.data.items.push({
+                id : i,
+                label : "Item " + i
+            })
+        }
+
+    })
+
+    .directive("ionCart", function() {
+        return {
+            restrict : "E",
+            template : "<h2>This is Ion cart</h2>"
+        }
+    })
+
+    .directive("ionPurchase", function() {
+        return {
+            restrict : "E",
+            template : "<h2>This is Ion Purchase</h2>"
+        }
+    })
 
 
 
