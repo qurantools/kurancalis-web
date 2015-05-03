@@ -1,220 +1,105 @@
-<ion-pane>
-    <!--
-            <div ng-include="'components/partials/navigation.html'"></div>
-        -->
 
-    <!--
-    <ion-side-menus>
-        <ion-side-menu-content>
-            <button ng-click="toggleLeftSideMenu()">
-                Toggle Left Side Menu
-            </button>
-
-
-
-
-
-        </ion-side-menu-content>
-
-        <ion-side-menu side="left">
-            Left Menu!
-            </ion-side-menu>
-
-    </ion-side-menus>
-
-    -->
-
-    <ion-side-menus>
-        <!-- Center content -->
-        <ion-nav-bar class="bar-positive nav-title-slide-ios7 has-tabs-top">
+<ion-side-menus>
+    <ion-side-menu-content>
+        <ion-nav-bar animation="nav-title-slide-ios7"  class="bar-positive">
             <ion-nav-buttons side="left">
-                <button class="button button-icon icon ion-navicon" drawer-toggle animate="true">
-                </button>
+                <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
             </ion-nav-buttons>
+
+
+            <h1 class="title"></h1>
             <ion-nav-buttons side="right">
-                <button class="button button-icon icon ion-navicon" drawer-toggle animate="true">
-                </button>
+                <button menu-toggle="right" class="button button-icon icon ion-navicon"></button>
             </ion-nav-buttons>
         </ion-nav-bar>
+        <ion-nav-view >
 
-        <ion-side-menu-content>
-            <ion-view title="Ionic App">
-                <ion-content>
-                    <div style="height: 30px;">&nbsp;</div>
-                    <div class="row">
-                        <div class="col-xs-12" id="translations">
-                            <div ng-repeat="verse in verses">
-                                <div class="well translations col-xs-12" id="v_{{verse.id}}">
-                                    <div ng-repeat="translation in verse.translations">
-                                        <div ng-if="$first"><h4>{{translation.chapter}}:{{translation.verse}}</h4></div>
-                                        <div class="row" id="t_{{translation.id}}">
-                                            <div class="col-xs-12 col-sm-3 authorDiv_{{authorMap[translation.authorId].color}}">
-                                                {{authorMap[translation.authorId].name}}
-                                            </div>
-                                            <div class="col-xs-12 col-sm-9 translation_content"><span
-                                                    ng-bind-html="translation.content | with_footnote_link:translation.id:translation.authorId | to_trusted"></span>
-                                            </div>
+
+
+
+
+
+
+            <ion-content>
+                <div style="height: 30px;">&nbsp;</div>
+                <div class="row">
+                    <div class="col-xs-12" id="translations">
+                        <div ng-repeat="verse in verses">
+                            <div class="well translations col-xs-12" id="v_{{verse.id}}">
+                                <div ng-repeat="translation in verse.translations">
+                                    <div ng-if="$first"><h4>{{translation.chapter}}:{{translation.verse}}</h4></div>
+                                    <div class="row" id="t_{{translation.id}}">
+                                        <div class="col-xs-12 col-sm-3 authorDiv_{{authorMap[translation.authorId].color}}">
+                                            {{authorMap[translation.authorId].name}}
                                         </div>
-                                        <!--
-                                        <show-verse data="showVerseData.data" ng-if="showVerseAtTranslation==translation.id"
-                                                    class="showVerseData"></show-verse>
-                                                    -->
-                                        <div class="row" ng-if="!$last">
-                                            <hr/>
+                                        <div class="col-xs-12 col-sm-9 translation_content"><span
+                                                ng-bind-html="translation.content | with_footnote_link:translation.id:translation.authorId | to_trusted"></span>
                                         </div>
                                     </div>
-                                    <div ng-repeat="(verseTagsKey, verseTagsVal) in verseTagsJSON"
-                                         ng-if="verseTagsVal.verseId==verse.id" style="text-align: right;width:100%">
+                                    <!--
+                                    <show-verse data="showVerseData.data" ng-if="showVerseAtTranslation==translation.id"
+                                                class="showVerseData"></show-verse>
+                                                -->
+                                    <div class="row" ng-if="!$last">
                                         <hr/>
-                                        <button ng-repeat="verseTag in verseTagsVal.tags"
-                                                class="btn btn-xs btn-info verse_tag"
-                                                ng-click="goToVerseTag(verse.id,verseTag.tag)"
-                                                onclick="verseTagClicked(this)">
-                                            {{verseTag.tag}}
-                                        </button>
-                                    </div>
-                                    <div ng-if="targetVerseForTagContent==verse.id" class="verse_tag_content">
-                                        <h4>Etiketli Ayetler</h4>
-                                        <select class="verseTagContentAuthor"
-                                                ng-options="author.id as author.name for author in authors | filter:authorFilter"
-                                                ng-model="verseTagContentAuthor"
-                                                ng-change="verseTagContentAuthorUpdate(verseTagContentAuthor)">
-                                        </select>
-
-
-                                        <div ng-repeat="verseTagContent in verseTagContents">
-                                            <div ng-repeat="verseTagContentTranslation in verseTagContent.translations"
-                                                 ng-if="verseTagContentTranslation.authorId==verseTagContentAuthor">
-                                                <strong>{{verseTagContentTranslation.verseId / 1000 |
-                                                    number:0}}:{{verseTagContentTranslation.verseId % 1000}}</strong>
-                                                {{verseTagContentTranslation.content}}
-                                            </div>
-
-                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </ion-content>
-            </ion-view>
-        </ion-side-menu-content>
-
-        <!-- Left menu -->
-        <drawer side="left">
-            <ion-view title="Menu">
-                <ion-content>
-                    <ion-list>
-                        <ion-item nav-clear menu-close href="#/app/search">
-                            Sureler
-                        </ion-item>
-                        <ion-item nav-clear menu-close href="#/app/browse">
-                            Tüm Notlar
-                        </ion-item>
-                        <ion-item nav-clear menu-close ng-click="login()">
-                            Login
-                        </ion-item>
-                    </ion-list>
-                </ion-content>
-            </ion-view>
-        </drawer>
-
-        <!--
-                <drawer side="right">
-                    <ion-view title="Menu2">
-                        <ion-content>
-                            <ion-list>
-                                <ion-item nav-clear menu-close href="#/app/search">
-                                    Sureler2
-                                </ion-item>
-                                <ion-item nav-clear menu-close href="#/app/browse">
-                                    Tüm Notlar2
-                                </ion-item>
-                                <ion-item nav-clear menu-close ng-click="login()">
-                                    Login2
-                                </ion-item>
-                            </ion-list>
-                        </ion-content>
-                    </ion-view>
-                </drawer>
-        -->
-    </ion-side-menus>
-
-
-    <ion-content>
-        <div class="container">
-
-
-            <!-- <div ng-include="'components/partials/tutorial_modal.html'" ng-if="showTutorial"></div>-->
-
-            <div class="nav-bottom"></div>
-            <div class="row">
-                <div class="col-xs-12" id="translations">
-                    <div ng-repeat="verse in verses">
-                        <div class="well translations col-xs-12" id="v_{{verse.id}}">
-                            <div ng-repeat="translation in verse.translations">
-                                <div ng-if="$first"><h4>{{translation.chapter}}:{{translation.verse}}</h4></div>
-                                <div class="row" id="t_{{translation.id}}">
-                                    <div class="col-xs-12 col-sm-3 authorDiv_{{authorMap[translation.authorId].color}}">
-                                        {{authorMap[translation.authorId].name}}
-                                    </div>
-                                    <div class="col-xs-12 col-sm-9 translation_content"><span
-                                            ng-bind-html="translation.content | with_footnote_link:translation.id:translation.authorId | to_trusted"></span>
-                                    </div>
-                                </div>
-                                <!--
-                                <show-verse data="showVerseData.data" ng-if="showVerseAtTranslation==translation.id"
-                                            class="showVerseData"></show-verse>
-                                            -->
-                                <div class="row" ng-if="!$last">
+                                <div ng-repeat="(verseTagsKey, verseTagsVal) in verseTagsJSON"
+                                     ng-if="verseTagsVal.verseId==verse.id" style="text-align: right;width:100%">
                                     <hr/>
+                                    <button ng-repeat="verseTag in verseTagsVal.tags"
+                                            class="btn btn-xs btn-info verse_tag"
+                                            ng-click="goToVerseTag(verse.id,verseTag.tag)"
+                                            onclick="verseTagClicked(this)">
+                                        {{verseTag.tag}}
+                                    </button>
                                 </div>
-                            </div>
-                            <div ng-repeat="(verseTagsKey, verseTagsVal) in verseTagsJSON"
-                                 ng-if="verseTagsVal.verseId==verse.id" style="text-align: right;width:100%">
-                                <hr/>
-                                <button ng-repeat="verseTag in verseTagsVal.tags" class="btn btn-xs btn-info verse_tag"
-                                        ng-click="goToVerseTag(verse.id,verseTag.tag)" onclick="verseTagClicked(this)">
-                                    {{verseTag.tag}}
-                                </button>
-                            </div>
-                            <div ng-if="targetVerseForTagContent==verse.id" class="verse_tag_content">
-                                <h4>Etiketli Ayetler</h4>
-                                <select class="verseTagContentAuthor"
-                                        ng-options="author.id as author.name for author in authors | filter:authorFilter"
-                                        ng-model="verseTagContentAuthor"
-                                        ng-change="verseTagContentAuthorUpdate(verseTagContentAuthor)">
-                                </select>
+                                <div ng-if="targetVerseForTagContent==verse.id" class="verse_tag_content">
+                                    <h4>Etiketli Ayetler</h4>
+                                    <select class="verseTagContentAuthor"
+                                            ng-options="author.id as author.name for author in authors | filter:authorFilter"
+                                            ng-model="verseTagContentAuthor"
+                                            ng-change="verseTagContentAuthorUpdate(verseTagContentAuthor)">
+                                    </select>
 
 
-                                <div ng-repeat="verseTagContent in verseTagContents">
-                                    <div ng-repeat="verseTagContentTranslation in verseTagContent.translations"
-                                         ng-if="verseTagContentTranslation.authorId==verseTagContentAuthor">
-                                        <strong>{{verseTagContentTranslation.verseId / 1000 |
-                                            number:0}}:{{verseTagContentTranslation.verseId % 1000}}</strong>
-                                        {{verseTagContentTranslation.content}}
+                                    <div ng-repeat="verseTagContent in verseTagContents">
+                                        <div ng-repeat="verseTagContentTranslation in verseTagContent.translations"
+                                             ng-if="verseTagContentTranslation.authorId==verseTagContentAuthor">
+                                            <strong>{{verseTagContentTranslation.verseId / 1000 |
+                                                number:0}}:{{verseTagContentTranslation.verseId % 1000}}</strong>
+                                            {{verseTagContentTranslation.content}}
+                                        </div>
+
                                     </div>
-
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <!-- /row-->
-
-        </div>
-        <!-- /container-->
-    </ion-content>
-</ion-pane>
+            </ion-content>
 
 
-<!--
-<div ng-include="'components/partials/authors_modal.html'"></div>
-<div ng-include="'components/partials/editor_modal.html'"></div>
--->
 
-<!--
-<div ng-include="'components/partials/off_canvas_menu.html'"></div>
--->
+        </ion-nav-view>
+
+    </ion-side-menu-content>
+    <ion-side-menu side="left" ng-controller="MainCtrl">
+        <ion-header-bar class="bar-assertive">
+            <h1 class="title">a</h1>
+        </ion-header-bar>
+        <ion-content>
+        </ion-content>
+    </ion-side-menu>
+    <ion-side-menu side="right" ng-controller="MainCtrl">
+        <ion-header-bar class="bar-assertive">
+            <h1 class="title">b</h1>
+        </ion-header-bar>
+        <ion-content>
+        </ion-content>
+    </ion-side-menu>
+
+</ion-side-menus>
+
+
+<script></script>
