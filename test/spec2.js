@@ -4,7 +4,8 @@
 describe('ceviri gosterimi', function() {
 	
 	  beforeEach(function() {
-	        browser.get('http://kurancalis.com/#/chapter/1/author/1040/verse/1');
+		  browser.ignoreSynchronization = false;
+		  browser.get('http://kurancalis.com/#/chapter/1/author/1040/verse/1');
 	        
 	       //browser.sleep(50000); // if your test is outrunning the browser
 	       // browser.waitForAngular(); 
