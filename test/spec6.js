@@ -89,9 +89,45 @@ function listTranslations(chapterNo, autid1, autid2, autid3) {
 		 
 		    //İlk 10 adet notun eklenmesi
 
-	    	  var tarihi='01/05/2015';
+		  var sifirekle = {
+			  "1": "01",
+			  "2": "02",
+			  "3": "03",
+			  "4": "04",
+			  "5": "05",
+			  "6": "06",
+			  "7": "07",
+			  "8": "08",
+			  "9": "09",
+			  "10": "10",
+			  "11": "11",
+			  "12": "12",
+			  "13": "13",
+			  "14": "14",
+			  "15": "15",
+			  "16": "16",
+			  "17": "17",
+			  "18": "18",
+			  "19": "19",
+			  "20": "20",
+			  "21": "21",
+			  "22": "22",
+			  "23": "23",
+			  "24": "24",
+			  "25": "25",
+			  "26": "26",
+			  "27": "27",
+			  "28": "28",
+			  "29": "29",
+			  "30": "30",
+			  "31": "31"
+		  };
 
-				listTranslations(3, 1, 5, 8);
+		  var currentDate = new Date();
+		  var tarihi = sifirekle[currentDate.getDate()] + '/' + sifirekle[currentDate.getMonth()+1] + '/' + (currentDate.getYear()+1900);
+
+
+		  listTranslations(3, 1, 5, 8);
 		    	  
 		    	  var elm = element(by.id('t_44056')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).element(by.css('[class="ng-binding"]'));
 				  not_yaz(elm, 'Test2', 'green', 30, 0, 3);
