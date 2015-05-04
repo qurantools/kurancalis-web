@@ -97,7 +97,7 @@ function not_yaz(not_deger) {
     	 
     	 browser.actions().keyDown(protractor.Key.SHIFT).perform();
     	 element(by.id('t_49996')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).element(by.css('[class="ng-binding"]')).click();
-    	 
+			  browser.actions().keyUp(protractor.Key.SHIFT).perform();
     	 element(by.css('[class="annotator-notice annotator-notice-show annotator-notice-error"]')).getText().then(function(text) {
     		 expect(text).toBe('Sadece meal içerisini karalamalısınız');	
         });	 
