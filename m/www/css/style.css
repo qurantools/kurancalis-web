@@ -1,3 +1,18 @@
+ion-content{
+    text-align: justify;
+}
+
+
 .selectable{
     -webkit-user-select: auto;
+}
+
+
+.translation{
+
+}
+
+.translations .item{
+    font-size: 14px !important;
+    padding:5px;
 }

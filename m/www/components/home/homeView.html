@@ -19,21 +19,13 @@
 
             <ion-content  overflow-scroll="true">
                 <div style="height: 30px;">&nbsp;</div>
-
-                <div class="selectable">
-                    asdf asdf asfwefawefwaef awf awefawef <br />
-                    asdf asdf asfwefawefwaef awf awefawef <br />
-                    asdf asdf asfwefawefwaef awf awefawef <br />
-                    asdf asdf asfwefawefwaef awf awefawef <br />
-
-                </div>
                 <div class="row">
                     <div class="col-xs-12" id="translations">
                         <div ng-repeat="verse in verses">
-                            <div class="well translations col-xs-12" id="v_{{verse.id}}">
-                                <div ng-repeat="translation in verse.translations">
-                                    <div ng-if="$first"><h4>{{translation.chapter}}:{{translation.verse}}</h4></div>
-                                    <div class="row" id="t_{{translation.id}}">
+                            <div class="translations" id="v_{{verse.id}}">
+                                <div ng-repeat="translation in verse.translations" class="item translation">
+                                    <div ng-if="$first"><h2>{{translation.chapter}}:{{translation.verse}}</h2></div>
+                                    <div  id="t_{{translation.id}}" >
                                         <div class="col-xs-12 col-sm-3 authorDiv_{{authorMap[translation.authorId].color}}">
                                             {{authorMap[translation.authorId].name}}
                                         </div>
@@ -45,13 +37,10 @@
                                     <show-verse data="showVerseData.data" ng-if="showVerseAtTranslation==translation.id"
                                                 class="showVerseData"></show-verse>
                                                 -->
-                                    <div class="row" ng-if="!$last">
-                                        <hr/>
-                                    </div>
+
                                 </div>
                                 <div ng-repeat="(verseTagsKey, verseTagsVal) in verseTagsJSON"
-                                     ng-if="verseTagsVal.verseId==verse.id" style="text-align: right;width:100%">
-                                    <hr/>
+                                     ng-if="verseTagsVal.verseId==verse.id" style="text-align: right;width:100%"  class="item item-divider">
                                     <button ng-repeat="verseTag in verseTagsVal.tags"
                                             class="btn btn-xs btn-info verse_tag"
                                             ng-click="goToVerseTag(verse.id,verseTag.tag)"
@@ -78,6 +67,7 @@
 
                                     </div>
                                 </div>
+                                <div style="height: 10px;">&nbsp;</div>
                             </div>
                         </div>
                     </div>
