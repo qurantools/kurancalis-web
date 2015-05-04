@@ -1,6 +1,6 @@
 var requiredModules= ['ngResource', 'ngRoute', 'facebook', 'restangular', 'LocalStorageModule', 'ngTagsInput', 'duScroll', 'directives.showVerse', 'ui.select', 'myConfig'];
 if(config_data.isMobile){
-   var mobileModules=['ionic','ionic.contrib.drawer'];
+   var mobileModules=['ionic'];
     mobileModules.forEach(function(item) {
         requiredModules.push(item);
     });
