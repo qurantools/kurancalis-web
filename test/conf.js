@@ -9,7 +9,7 @@ exports.config = {
         'spec1.js',
         'temiz.js',
         'spec2.js',
-        'spec3.js',
+        'spec3.js',//spec2 ile birlikte çalýþmalýdýr.
         'spec4.js',
         'spec5.js',
         'spec6.js',
