@@ -13,7 +13,7 @@ exports.config = {
         'spec4.js',
         'spec5.js',
         'spec6.js',
-        'spec7.js'
+        'spec8.js'
     ],
     jasmineNodeOpts: {defaultTimeoutInterval: 360000},
     multiCapabilities: [
