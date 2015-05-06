@@ -214,7 +214,7 @@ function listTranslations(chapterNo, autid1, autid2, autid3) {
 					 
 					 element(by.css('[onclick="toggleLeftPanel()"]')).click();
 					 browser.sleep("3000");
-					 element(by.css('[href="#/chapter/1/author/1040/verse/1"]')).click();
+		  //element(by.css('[href="#/chapter/1/author/1040/verse/1"]')).click();
 				 
 					 tmpautid1 = null;
 					 
@@ -373,7 +373,7 @@ donen=kontrol(19, 'green');
 		        
 		        element(by.css('[onclick="toggleLeftPanel()"]')).click();
 				 browser.sleep("3000");
-				 element(by.css('[href="#/chapter/1/author/1040/verse/1"]')).click();
+		  //element(by.css('[href="#/chapter/1/author/1040/verse/1"]')).click();
 			 
 				 tmpautid1 = null;
 				 

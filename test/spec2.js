@@ -4,7 +4,8 @@
 describe('ceviri gosterimi', function() {
 	
 	  beforeEach(function() {
-	        browser.get('http://kurancalis.com/#/chapter/1/author/1040/verse/1');
+		  browser.ignoreSynchronization = false;
+		  browser.get('http://kurancalis.com/#/chapter/1/author/1040/verse/1');
 	        
 	       //browser.sleep(50000); // if your test is outrunning the browser
 	       // browser.waitForAngular(); 
@@ -97,7 +98,7 @@ function not_yaz(not_deger) {
     	 
     	 browser.actions().keyDown(protractor.Key.SHIFT).perform();
     	 element(by.id('t_49996')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).element(by.css('[class="ng-binding"]')).click();
-    	 
+			  browser.actions().keyUp(protractor.Key.SHIFT).perform();
     	 element(by.css('[class="annotator-notice annotator-notice-show annotator-notice-error"]')).getText().then(function(text) {
     		 expect(text).toBe('Sadece meal içerisini karalamalısınız');	
         });	 
