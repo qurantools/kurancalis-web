@@ -102,7 +102,7 @@ angular.module('ionicApp', requiredModules)
                 }
             });
         };
-    }).config(function ($routeProvider, FacebookProvider, RestangularProvider, localStorageServiceProvider) {
+    }).config(function ($routeProvider, FacebookProvider, RestangularProvider, localStorageServiceProvider,$stateProvider,$urlRouterProvider) {
         RestangularProvider.setBaseUrl(config_data.webServiceUrl);
         //RestangularProvider.setBaseUrl('http://localhost:8080/QuranToolsApp/rest');
         localStorageServiceProvider.setStorageCookie(0, '/');
@@ -133,11 +133,40 @@ angular.module('ionicApp', requiredModules)
         } else {
             var locationHref = window.location.href;
             if (locationHref.indexOf('/m/') > -1) {
-                homeUrl = 'components/home/homeView.html';
-              //  homeUrl = 'components/home/test2.html';
+               // homeUrl = 'components/home/homeView.html';
+                homeUrl = 'components/home/navigation.html';
             } else {
                 homeUrl = 'app/components/home/mobile_on_development.html';
             }
+
+            $stateProvider
+                .state('app', {
+                    url: "/app",
+                    abstract: true,
+                    templateUrl: "components/home/navigation.html"
+                })
+                .state('app.home', {
+                    url: "/home",
+                    views: {
+                        'appContent' :{
+                            templateUrl: "components/home/home.html",
+                            controller : "MainCtrl"
+                        }
+                    }
+                }).state('app.annotations_on_page', {
+                    url: "/annotations_on_page",
+                    views: {
+                        'appContent' :{
+                            templateUrl: "components/home/annotations_on_page.html",
+                            controller : "MainCtrl"
+                        }
+                    }
+                })
+
+            $urlRouterProvider.otherwise("/app/home");
+//            $urlRouterProvider.otherwise("/app/home");
+
+            /*
             $routeProvider
                 .when('/', {
                     controller: 'MainCtrl',
@@ -160,6 +189,7 @@ angular.module('ionicApp', requiredModules)
                 .otherwise({
                     redirectTo: '/'
                 });
+                */
         }
 
 
