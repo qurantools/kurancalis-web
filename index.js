@@ -1,7 +1,7 @@
-var requiredModules= ['ngResource', 'ngRoute', 'facebook', 'restangular', 'LocalStorageModule', 'ngTagsInput', 'duScroll', 'directives.showVerse', 'ui.select', 'myConfig'];
-if(config_data.isMobile){
-   var mobileModules=['ionic'];
-    mobileModules.forEach(function(item) {
+var requiredModules = ['ngResource', 'ngRoute', 'facebook', 'restangular', 'LocalStorageModule', 'ngTagsInput', 'duScroll', 'directives.showVerse', 'ui.select', 'myConfig'];
+if (config_data.isMobile) {
+    var mobileModules = ['ionic'];
+    mobileModules.forEach(function (item) {
         requiredModules.push(item);
     });
 }
@@ -102,7 +102,7 @@ angular.module('ionicApp', requiredModules)
                 }
             });
         };
-    }).config(function ($routeProvider, FacebookProvider, RestangularProvider, localStorageServiceProvider,$stateProvider,$urlRouterProvider) {
+    }).config(function ($routeProvider, FacebookProvider, RestangularProvider, localStorageServiceProvider, $stateProvider, $urlRouterProvider) {
         RestangularProvider.setBaseUrl(config_data.webServiceUrl);
         //RestangularProvider.setBaseUrl('http://localhost:8080/QuranToolsApp/rest');
         localStorageServiceProvider.setStorageCookie(0, '/');
@@ -133,7 +133,6 @@ angular.module('ionicApp', requiredModules)
         } else {
             var locationHref = window.location.href;
             if (locationHref.indexOf('/m/') > -1) {
-               // homeUrl = 'components/home/homeView.html';
                 homeUrl = 'components/home/navigation.html';
             } else {
                 homeUrl = 'app/components/home/mobile_on_development.html';
@@ -148,48 +147,22 @@ angular.module('ionicApp', requiredModules)
                 .state('app.home', {
                     url: "/home",
                     views: {
-                        'appContent' :{
+                        'appContent': {
                             templateUrl: "components/home/home.html",
-                            controller : "MainCtrl"
+                            controller: "MainCtrl"
                         }
                     }
                 }).state('app.annotations_on_page', {
                     url: "/annotations_on_page",
                     views: {
-                        'appContent' :{
+                        'appContent': {
                             templateUrl: "components/home/annotations_on_page.html",
-                            controller : "MainCtrl"
+                            controller: "MainCtrl"
                         }
                     }
                 })
 
             $urlRouterProvider.otherwise("/app/home");
-//            $urlRouterProvider.otherwise("/app/home");
-
-            /*
-            $routeProvider
-                .when('/', {
-                    controller: 'MainCtrl',
-                    templateUrl: homeUrl,
-                    reloadOnSearch: false
-                })
-                .when('/chapter/:chapterId/author/:authorMask', {
-                    redirectTo: '/chapter/:chapterId/author/:authorMask/verse/1'
-                })
-                .when('/chapter/:chapterId/author/:authorMask/verse/:verseNumber', {
-                    controller: 'MainCtrl',
-                    templateUrl: 'components/home/homeView.html',
-                    reloadOnSearch: false
-                })
-                .when('/annotations/', {
-                    controller: 'MainCtrl',
-                    templateUrl: 'components/annotations/annotationsView.html',
-                    reloadOnSearch: false
-                })
-                .otherwise({
-                    redirectTo: '/'
-                });
-                */
         }
 
 
@@ -1217,35 +1190,34 @@ angular.module('ionicApp', requiredModules)
 
     })
 
-    .controller("CartController", function($scope) {
+    .controller("CartController", function ($scope) {
 
         $scope.data = {
-            items : []
+            items: []
         };
 
-        for(var i = 0; i < 25; i++) {
+        for (var i = 0; i < 25; i++) {
             $scope.data.items.push({
-                id : i,
-                label : "Item " + i
+                id: i,
+                label: "Item " + i
             })
         }
 
     })
 
-    .directive("ionCart", function() {
+    .directive("ionCart", function () {
         return {
-            restrict : "E",
-            template : "<h2>This is Ion cart</h2>"
+            restrict: "E",
+            template: "<h2>This is Ion cart</h2>"
         }
     })
 
-    .directive("ionPurchase", function() {
+    .directive("ionPurchase", function () {
         return {
-            restrict : "E",
-            template : "<h2>This is Ion Purchase</h2>"
+            restrict: "E",
+            template: "<h2>This is Ion Purchase</h2>"
         }
     })
-
 
 
 function sidebarInit() {
