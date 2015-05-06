@@ -93,7 +93,7 @@ var sureler = (function () {
 	    	
 	    	element(by.model('$parent.verse_number')).clear();
     		element(by.model('$parent.verse_number')).sendKeys(ayet);
-	    	element(by.id('list_translations')).click();
+			element(by.model('$parent.verse_number')).sendKeys(protractor.Key.ENTER);
 	    	
 	    };
 	    
