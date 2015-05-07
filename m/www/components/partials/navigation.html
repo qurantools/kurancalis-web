@@ -1,14 +1,71 @@
+
 <ion-side-menus>
     <ion-side-menu-content>
-        <button ng-click="toggleLeftSideMenu()">
-            Toggle Left Side Menu
-        </button>
-        <ion-content>
+        <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced">
+            <ion-nav-buttons side="left">
+                <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+                <button class="button button-icon icon ion-arrow-right-b"></button>
+                <a href="#/app/authors_list" class="button button-icon icon ion-person"></a>
+                A {{currentState}}B
+            </ion-nav-buttons>
 
-            ccc <br />ccc <br />ccc <br />
-        </ion-content>
+            <h1 class="title"></h1>
+            <ion-nav-buttons side="right">
+                <button class="button" ng-click="login()" ng-if="user==null">Giriş</button>
+                <a href="#/app/annotations_on_page" class="button button-icon icon ion-clipboard"
+                   ng-if="user!=null"></a>
+            </ion-nav-buttons>
+        </ion-nav-bar>
+        <ion-nav-buttons side="left">
+            <button class="button button-icon icon ion-navicon" menu-toggle="left">
+            </button>
+
+        </ion-nav-buttons>
+
+        <ion-nav-view name="appContent"></ion-nav-view>
     </ion-side-menu-content>
-    <ion-side-menu side="left">
-        Left Menu!<br/> aa
+
+
+    <ion-side-menu side="left" ng-controller="MainCtrl">
+        <ion-header-bar class="bar-assertive">
+            <h1 class="title">MENÜ</h1>
+        </ion-header-bar>
+        <ion-content>
+            <ul class="list">
+                <a href="#/event/check-in" class="item" menu-close="">Sureler</a>
+                <a href="#/event/attendees" class="item">Tüm Notlar</a>
+                <a href="#/event/attendees" class="item">Ayarlar</a>
+                <a href="#/event/attendees" class="item">Çıkış</a>
+            </ul>
+        </ion-content>
     </ion-side-menu>
 </ion-side-menus>
+
+<!--
+    <ion-side-menus ng-if="currentState == 'app.authors_list'">
+        <ion-side-menu-content>
+            <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced">
+                <ion-nav-buttons side="left">
+                    <a href="#/app/home" class="button button-icon icon ion-arrow-left-b">Tamam</a>
+                    <h1 class="title">Yazar Seçimi</h1>
+                </ion-nav-buttons>
+            </ion-nav-bar>
+
+            <ion-nav-view name="appContent"></ion-nav-view>
+        </ion-side-menu-content>
+    </ion-side-menus>
+
+    <ion-side-menus  ng-if="currentState == 'app.annotations_on_page'">
+        <ion-side-menu-content>
+            <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced">
+                <ion-nav-buttons side="left">
+                    <a href="#/app/home" class="button button-icon icon ion-arrow-left-b">Tamam</a>
+                    <h1 class="title">Sayfadaki Notlar</h1>
+                </ion-nav-buttons>
+            </ion-nav-bar>
+
+            <ion-nav-view name="appContent"></ion-nav-view>
+        </ion-side-menu-content>
+    </ion-side-menus>
+
+    -->

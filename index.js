@@ -133,7 +133,7 @@ angular.module('ionicApp', requiredModules)
         } else {
             var locationHref = window.location.href;
             if (locationHref.indexOf('/m/') > -1) {
-                homeUrl = 'components/home/navigation.html';
+                homeUrl = 'components/partials/navigation.html';
             } else {
                 homeUrl = 'app/components/home/mobile_on_development.html';
             }
@@ -142,7 +142,7 @@ angular.module('ionicApp', requiredModules)
                 .state('app', {
                     url: "/app",
                     abstract: true,
-                    templateUrl: "components/home/navigation.html"
+                    templateUrl: "components/partials/navigation.html"
                 })
                 .state('app.home', {
                     url: "/home",
@@ -157,6 +157,14 @@ angular.module('ionicApp', requiredModules)
                     views: {
                         'appContent': {
                             templateUrl: "components/home/annotations_on_page.html",
+                            controller: "MainCtrl"
+                        }
+                    }
+                }).state('app.authors_list', {
+                    url: "/authors_list",
+                    views: {
+                        'appContent': {
+                            templateUrl: "components/partials/authors_list.html",
                             controller: "MainCtrl"
                         }
                     }
@@ -230,7 +238,7 @@ angular.module('ionicApp', requiredModules)
         );
     })
 
-    .controller('MainCtrl', function ($scope, $q, $routeParams, $location, $timeout, ListAuthors, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService, $document, $filter) {
+    .controller('MainCtrl', function ($scope, $q, $routeParams, $location, $timeout, ListAuthors, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService, $document, $filter, $rootScope, $state) {
         //currentPage
         $scope.currentPage = '';
         if ($location.path() == '/annotations/') {
@@ -238,7 +246,6 @@ angular.module('ionicApp', requiredModules)
         } else {
             $scope.currentPage = 'home';
         }
-
         var chapterId = 1;
         var authorMask = 1040;
         var verseNumber = 1;
@@ -1188,45 +1195,22 @@ angular.module('ionicApp', requiredModules)
             }
         }
 
-    })
+        if (config_data.isMobile) {
+            $scope.currentState = $state.current.name;
+            console.log($scope.currentState);
+            $rootScope.$on('$stateChangeStart',
+                function (event, toState, toParams, fromState, fromParams) {
+                    $scope.currentState = toState.name;
+                    console.log($scope.currentState);
 
-    .controller("CartController", function ($scope) {
-
-        $scope.data = {
-            items: []
-        };
-
-        for (var i = 0; i < 25; i++) {
-            $scope.data.items.push({
-                id: i,
-                label: "Item " + i
-            })
+                    $scope.scopeApply();
+                })
         }
 
-    })
-
-    .directive("ionCart", function () {
-        return {
-            restrict: "E",
-            template: "<h2>This is Ion cart</h2>"
-        }
-    })
-
-    .directive("ionPurchase", function () {
-        return {
-            restrict: "E",
-            template: "<h2>This is Ion Purchase</h2>"
-        }
     })
 
 
 function sidebarInit() {
-    /*
-     $('.cd-btn').on('click', function (event) {
-     event.preventDefault();
-     $('.cd-panel').addClass('is-visible');
-     });
-     */
     $('.cd-panel').on('click', function (event) {
         if ($(event.target).is('.cd-panel') || $(event.target).is('.cd-panel-close')) {
             $('.cd-panel').removeClass('is-visible');
