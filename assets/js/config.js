@@ -7,7 +7,7 @@ var config_data = {
 
 function isMobile() {
     //test for mobile
-    return true;
+//    return true;
 
     if( navigator.userAgent.match(/Android/i)
         || navigator.userAgent.match(/webOS/i)
