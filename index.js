@@ -1,4 +1,4 @@
-var requiredModules = ['ionic','ngResource', 'ngRoute', 'facebook', 'restangular', 'LocalStorageModule', 'ngTagsInput', 'duScroll', 'directives.showVerse', 'ui.select', 'myConfig'];
+var requiredModules = ['ionic', 'ngResource', 'ngRoute', 'facebook', 'restangular', 'LocalStorageModule', 'ngTagsInput', 'duScroll', 'directives.showVerse', 'ui.select', 'myConfig'];
 
 if (config_data.isMobile) {
     var mobileModules = [];//'ionic'
@@ -104,6 +104,7 @@ var app = angular.module('ionicApp', requiredModules)
         };
     });
 if (config_data.isMobile == false) {
+    //desktop version
     app.config(function ($routeProvider, FacebookProvider, RestangularProvider, localStorageServiceProvider) {
         RestangularProvider.setBaseUrl(config_data.webServiceUrl);
         //RestangularProvider.setBaseUrl('http://localhost:8080/QuranToolsApp/rest');
@@ -132,7 +133,6 @@ if (config_data.isMobile == false) {
                 redirectTo: '/'
             });
 
-
         //facebook
         FacebookProvider.init('295857580594128');
 
@@ -142,51 +142,57 @@ if (config_data.isMobile == false) {
 
     app.config(function ($routeProvider, FacebookProvider, RestangularProvider, localStorageServiceProvider, $stateProvider, $urlRouterProvider) {
         RestangularProvider.setBaseUrl(config_data.webServiceUrl);
-        //RestangularProvider.setBaseUrl('http://localhost:8080/QuranToolsApp/rest');
         localStorageServiceProvider.setStorageCookie(0, '/');
-
 
         var locationHref = window.location.href;
         if (locationHref.indexOf('/m/') > -1) {
-            homeUrl = 'components/partials/navigation.html';
+            //mobile version
+
+            $stateProvider
+                .state('app', {
+                    url: "/app",
+                    abstract: true,
+                    templateUrl: "components/navigation/navigation.html"
+                })
+                .state('app.home', {
+                    url: "/chapter/:chapterId/author/:authorMask/verse/:verseNumber",
+                    views: {
+                        'appContent': {
+                            templateUrl: "components/home/home.html",
+                            controller: "MainCtrl"
+                        }
+                    }
+                }).state('app.annotations_on_page', {
+                    url: "/annotations_on_page",
+                    views: {
+                        'appContent': {
+                            templateUrl: "components/home/annotations_on_page.html",
+                            controller: "MainCtrl"
+                        }
+                    }
+                }).state('app.authors_list', {
+                    url: "/authors_list",
+                    views: {
+                        'appContent': {
+                            templateUrl: "components/partials/authors_list.html",
+                            controller: "MainCtrl"
+                        }
+                    }
+                })
+
+            $urlRouterProvider.otherwise("/app/chapter/1/author/48/verse/1");
         } else {
-            homeUrl = 'app/components/home/mobile_on_development.html';
+            //mobile version is not ready
+            $routeProvider
+                .when('/', {
+                    controller: 'MainCtrl',
+                    templateUrl: 'app/components/home/mobile_on_development.html',
+                    reloadOnSearch: false
+                })
+                .otherwise({
+                    redirectTo: '/'
+                });
         }
-
-        $stateProvider
-            .state('app', {
-                url: "/app",
-                abstract: true,
-                templateUrl: "components/navigation/navigation.html"
-            })
-            .state('app.home', {
-                url: "/chapter/:chapterId/author/:authorMask/verse/:verseNumber",
-                views: {
-                    'appContent': {
-                        templateUrl: "components/home/home.html",
-                        controller: "MainCtrl"
-                    }
-                }
-            }).state('app.annotations_on_page', {
-                url: "/annotations_on_page",
-                views: {
-                    'appContent': {
-                        templateUrl: "components/home/annotations_on_page.html",
-                        controller: "MainCtrl"
-                    }
-                }
-            }).state('app.authors_list', {
-                url: "/authors_list",
-                views: {
-                    'appContent': {
-                        templateUrl: "components/partials/authors_list.html",
-                        controller: "MainCtrl"
-                    }
-                }
-            })
-
-        $urlRouterProvider.otherwise("/app/chapter/1/author/48/verse/1");
-
         FacebookProvider.init('295857580594128');
 
     });
