@@ -1,7 +1,7 @@
-var requiredModules = ['ngResource', 'ngRoute', 'facebook', 'restangular', 'LocalStorageModule', 'ngTagsInput', 'duScroll', 'directives.showVerse', 'ui.select', 'myConfig'];
+var requiredModules = ['ionic','ngResource', 'ngRoute', 'facebook', 'restangular', 'LocalStorageModule', 'ngTagsInput', 'duScroll', 'directives.showVerse', 'ui.select', 'myConfig'];
 
 if (config_data.isMobile) {
-    var mobileModules = ['ionic'];
+    var mobileModules = [];//'ionic'
     mobileModules.forEach(function (item) {
         requiredModules.push(item);
     });
@@ -255,8 +255,6 @@ app.factory('ChapterVerses', function ($resource) {
 })
 
     .controller('MainCtrl', function ($scope, $q, $routeParams, $location, $timeout, ListAuthors, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService, $document, $filter, $rootScope, $state) {
-        //TODO
-        //conditional dependency injection for state.
 
         //currentPage
         $scope.currentPage = '';
