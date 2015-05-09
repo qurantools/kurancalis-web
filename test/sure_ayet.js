@@ -93,12 +93,12 @@ var sureler = (function () {
 	    	
 	    	element(by.model('$parent.verse_number')).clear();
     		element(by.model('$parent.verse_number')).sendKeys(ayet);
-			element(by.model('$parent.verse_number')).sendKeys(protractor.Key.ENTER);
+    		element(by.model('$parent.verse_number')).sendKeys(protractor.Key.ENTER);
 	    	
 	    };
 	    
 	    sureler.prototype.karala = function (elm, korx, not, renk) {
-		  
+			  
 	    	elm = element(by.id(elm)).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).element(by.css('[class="ng-binding"]'));
 	    	browser.actions().mouseMove(elm,{x: korx, y: 0}).doubleClick().perform();
 	    	
@@ -107,6 +107,30 @@ var sureler = (function () {
 	    		    element(by.css('[class="annotator-adder"]')).element(by.css('button')).click();
 		    	    element(by.model('annotationModalData.text')).sendKeys(not);
 		    	    element(by.css('[value="' + renk + '"]')).click();
+		    	    element(by.css('[ng-click="submitEditor()"]')).click();
+	    		
+	    		}
+	    
+	    };
+	    
+	    sureler.prototype.karalaetiket = function (elm, korx, not, renk, data, datalnt) {
+			  
+	    	elm = element(by.id(elm)).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).element(by.css('[class="ng-binding"]'));
+	    	browser.actions().mouseMove(elm,{x: korx, y: 0}).doubleClick().perform();
+	    	
+	    	if(not!='-')
+	    		{
+	    		    element(by.css('[class="annotator-adder"]')).element(by.css('button')).click();
+		    	    element(by.model('annotationModalData.text')).sendKeys(not);
+		    	    element(by.css('[value="' + renk + '"]')).click();
+		    	    
+		    	    for(var i=0; i < datalnt; i++)
+		    	    	{
+		    	    	element(by.model('newTag.text')).sendKeys(data[i]);
+		    	    	element(by.model('annotationModalData.text')).click();
+		    	    	
+		    	    	}
+		    	    
 		    	    element(by.css('[ng-click="submitEditor()"]')).click();
 	    		
 	    		}
