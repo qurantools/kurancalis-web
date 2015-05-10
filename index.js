@@ -180,7 +180,7 @@ if (config_data.isMobile == false) {
                     }
                 })
 
-            $urlRouterProvider.otherwise("/app/chapter/1/author/48/verse/1");
+       //     $urlRouterProvider.otherwise("/app/chapter/1/author/48/verse/1");
         } else {
             //mobile version is not ready
             $routeProvider
@@ -582,6 +582,7 @@ app.factory('ChapterVerses', function ($resource) {
 
         //toggle selection for an author id
         $scope.toggleSelection = function toggleSelection(author_id) {
+            console.log("toggle selection");
             var idx = $scope.selection.indexOf(author_id);
 
             // is currently selected
@@ -596,6 +597,8 @@ app.factory('ChapterVerses', function ($resource) {
             for (var index in $scope.selection) {
                 $scope.author_mask = $scope.author_mask | $scope.selection[index];
             }
+            $scope.scopeApply();
+            console.log("toggleselection - authormask:"+$scope.author_mask);
         };
 
         $scope.annotationSearchAuthorToggleSelection = function annotationSearchAuthorToggleSelection(author_id) {
@@ -614,6 +617,7 @@ app.factory('ChapterVerses', function ($resource) {
 
         //go to chapter
         $scope.goToChapter = function () {
+            console.log("gotochapter author_mask:"+$scope.author_mask);
             if (!config_data.isMobile) {
                 if ($scope.currentPage == 'home') {
                     $location.path('/chapter/' + $scope.chapter_id + '/author/' + $scope.author_mask + '/verse/' + $scope.verse_number, false);
@@ -623,11 +627,14 @@ app.factory('ChapterVerses', function ($resource) {
                     window.location.href = '#/chapter/' + $scope.chapter_id + '/author/' + $scope.author_mask;
                 }
             } else {
-                window.location.href = '#/app/chapter/111' + $scope.chapter_id + '/author/' + $scope.author_mask;
+                console.log("author mask:"+$scope.author_mask);
+                window.location.href = '#/app/chapter/' + $scope.chapter_id + '/author/' + $scope.author_mask+ '/verse/' + $scope.verse_number;
             }
         };
 
         $scope.updateAuthors = function () {
+
+            console.log("updateauthors author_mask:"+$scope.author_mask);
             if (!config_data.isMobile) {
                 if ($scope.currentPage == 'home') {
                     $scope.goToChapter();
