@@ -107,7 +107,6 @@ if (config_data.isMobile == false) {
     //desktop version
     app.config(function ($routeProvider, FacebookProvider, RestangularProvider, localStorageServiceProvider) {
         RestangularProvider.setBaseUrl(config_data.webServiceUrl);
-        //RestangularProvider.setBaseUrl('http://localhost:8080/QuranToolsApp/rest');
         localStorageServiceProvider.setStorageCookie(0, '/');
         //route
         $routeProvider
@@ -178,9 +177,17 @@ if (config_data.isMobile == false) {
                             controller: "MainCtrl"
                         }
                     }
+                }).state('app.annotations', {
+                    url: "/annotations",
+                    views: {
+                        'appContent': {
+                            templateUrl: "components/annotations/all_annotations.html",
+                            controller: "MainCtrl"
+                        }
+                    }
                 })
 
-       //     $urlRouterProvider.otherwise("/app/chapter/1/author/48/verse/1");
+            $urlRouterProvider.otherwise("/app/chapter/1/author/1040/verse/1");
         } else {
             //mobile version is not ready
             $routeProvider
@@ -260,7 +267,7 @@ app.factory('ChapterVerses', function ($resource) {
     );
 })
 
-    .controller('MainCtrl', function ($scope, $q, $routeParams, $location, $timeout, ListAuthors, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService, $document, $filter, $rootScope, $state) {
+    .controller('MainCtrl', function ($scope, $q, $routeParams, $location, $timeout, ListAuthors, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService, $document, $filter, $rootScope, $state, $stateParams) {
 
         //currentPage
         $scope.currentPage = '';
@@ -272,20 +279,43 @@ app.factory('ChapterVerses', function ($resource) {
         var chapterId = 1;
         var authorMask = 1040;
         var verseNumber = 1;
-        if (typeof $routeParams.chapterId !== 'undefined') {
-            chapterId = $routeParams.chapterId;
 
-            $scope.initChapterSelect = true;
+        if(!config_data.isMobile) {
+            if (typeof $routeParams.chapterId !== 'undefined') {
+                chapterId = $routeParams.chapterId;
+                $scope.initChapterSelect = true;
+            }
+            if (typeof $routeParams.authorMask !== 'undefined') {
+                authorMask = $routeParams.authorMask;
+            }
+            if (typeof $routeParams.verseNumber !== 'undefined') {
+                verseNumber = $routeParams.verseNumber;
+            }
+        }else{
+            //mobile
+
+            //author mask cookie
+            var localAuthorMask=localStorageService.get('author_mask');
+            if(localAuthorMask!=null){
+                authorMask=localAuthorMask;
+            }
+
+            if (typeof $stateParams.chapterId !== 'undefined') {
+                chapterId = $stateParams.chapterId;
+                $scope.initChapterSelect = true;
+            }
+            if (typeof $stateParams.authorMask !== 'undefined') {
+                authorMask = $stateParams.authorMask;
+            }
+            if (typeof $stateParams.verseNumber !== 'undefined') {
+                verseNumber = $stateParams.verseNumber;
+            }
         }
-        if (typeof $routeParams.authorMask !== 'undefined') {
-            authorMask = $routeParams.authorMask;
-        }
-        if (typeof $routeParams.verseNumber !== 'undefined') {
-            verseNumber = $routeParams.verseNumber;
-        }
+
 
         $scope.chapter_id = chapterId;
         $scope.author_mask = authorMask;
+        localStorageService.set('author_mask', $scope.author_mask);
         $scope.verse_number = verseNumber;
 
         $scope.myRoute = [];
@@ -582,7 +612,6 @@ app.factory('ChapterVerses', function ($resource) {
 
         //toggle selection for an author id
         $scope.toggleSelection = function toggleSelection(author_id) {
-            console.log("toggle selection");
             var idx = $scope.selection.indexOf(author_id);
 
             // is currently selected
@@ -597,8 +626,7 @@ app.factory('ChapterVerses', function ($resource) {
             for (var index in $scope.selection) {
                 $scope.author_mask = $scope.author_mask | $scope.selection[index];
             }
-            $scope.scopeApply();
-            console.log("toggleselection - authormask:"+$scope.author_mask);
+            localStorageService.set('author_mask', $scope.author_mask);
         };
 
         $scope.annotationSearchAuthorToggleSelection = function annotationSearchAuthorToggleSelection(author_id) {
@@ -617,7 +645,6 @@ app.factory('ChapterVerses', function ($resource) {
 
         //go to chapter
         $scope.goToChapter = function () {
-            console.log("gotochapter author_mask:"+$scope.author_mask);
             if (!config_data.isMobile) {
                 if ($scope.currentPage == 'home') {
                     $location.path('/chapter/' + $scope.chapter_id + '/author/' + $scope.author_mask + '/verse/' + $scope.verse_number, false);
@@ -627,14 +654,11 @@ app.factory('ChapterVerses', function ($resource) {
                     window.location.href = '#/chapter/' + $scope.chapter_id + '/author/' + $scope.author_mask;
                 }
             } else {
-                console.log("author mask:"+$scope.author_mask);
                 window.location.href = '#/app/chapter/' + $scope.chapter_id + '/author/' + $scope.author_mask+ '/verse/' + $scope.verse_number;
             }
         };
 
         $scope.updateAuthors = function () {
-
-            console.log("updateauthors author_mask:"+$scope.author_mask);
             if (!config_data.isMobile) {
                 if ($scope.currentPage == 'home') {
                     $scope.goToChapter();
@@ -643,11 +667,11 @@ app.factory('ChapterVerses', function ($resource) {
                     $scope.get_all_annotations();
                 }
             } else {
+                $scope.author_mask=localStorageService.get('author_mask');
                 $scope.goToChapter();
             }
 
         }
-
 
         /* facebook login */
         $scope.fbLoginStatus = 'disconnected';

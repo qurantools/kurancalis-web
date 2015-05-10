@@ -1,7 +1,6 @@
 <br/>
 <ion-content overflow-scroll="true">
     <br/><br/>
-    {{author_mask}}
     <ul class="list">
         <li class="item item-checkbox" ng-repeat="author in authors">
             <label class="checkbox">
@@ -9,7 +8,7 @@
                         type="checkbox"
                         name="selectedauthors[]"
                         value="{{author.id}}"
-                        ng-checked="selection.indexOf(author.id) > -1"
+                        ng-checked="$parent.selection.indexOf(author.id) > -1"
                         ng-click="toggleSelection(author.id)"
                         >
             </label>
