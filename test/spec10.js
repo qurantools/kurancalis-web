@@ -42,7 +42,7 @@ describe('ceviri gosterimi', function() {
 
 		browser.sleep(3000);
 
-		//Sure ve ayete gidilerek yazarlar seçilir sağ panel açılarak doğrulamalar yapılıyor.
+		//Sure ve ayete gidilerek yazarlar seçilir sağ panel açılarak doğrulamalar yapılıyor.//Sure ve ayete gidilerek yazarlar seçilir sağ panel açılarak doğrulamalar yapılıyor.
 		element(by.css('[onclick="openPanel()"]')).click();
 		browser.sleep(3000);
 
