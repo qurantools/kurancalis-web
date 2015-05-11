@@ -8,5 +8,6 @@
     <orderEntry type="library" name="angular-resource" level="application" />
     <orderEntry type="library" name="angular-route" level="application" />
     <orderEntry type="library" name="restangular" level="application" />
+    <orderEntry type="library" name="mykurancalis-web node_modules" level="project" />
   </component>
 </module>
