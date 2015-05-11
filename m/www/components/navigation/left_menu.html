@@ -1,0 +1,14 @@
+<ion-side-menu side="left" ng-controller="MainCtrl">
+    <ion-header-bar class="bar-assertive">
+        <h1 class="title">MENÜ</h1>
+    </ion-header-bar>
+    <ion-content>
+        <ul class="list">
+            <a href="#/app/chapter/1/author/{{author_mask}}/verse/1" class="item" menu-close="">Sureler</a>
+            <a ng-if="user!=null"href="#/app/annotations" class="item" menu-close="">Tüm Notlar</a>
+            <a href="#/event/attendees" class="item" menu-close="">Ayarlar</a>
+            <a ng-if="user!=null" href ng-click="log_out()" onclick="closeLeftPanel()" class="item" menu-close="">Çıkış</a>
+            <a ng-if="user==null" href ng-click="login()" onclick="closeLeftPanel()" class="item" menu-close="">Giriş</a>
+        </ul>
+    </ion-content>
+</ion-side-menu>

@@ -1,8 +1,8 @@
-<body>
-<div ng-include="'app/components/partials/off_canvas_menu.html'"></div>
+<ion-nav-view>
+    <ion-content  overflow-scroll="true">
+        <div style="height: 30px;">&nbsp;</div>
+
 <div class="container">
-    <div ng-include="'app/components/partials/navigation.html'"></div>
-    <div class="nav-bottom"></div>
     <div class="dialog dialog-warning" style="padding:0 20px 10px 20px"
          ng-if="allAnnotationsSearchInput ||filterTags.length >0|| annotationSearchAuthorSelection.length>0 ">
         <div class="container" style="text-align: left;">
@@ -32,11 +32,13 @@
                 <button ng-click="showVerseData.annotationId=-1" class="btn btn-xs" ng-if="showVerseData.annotationId==annotation.annotationId"><i
                         class="fa fa-cog "></i></button>
             </div>
+            <!--
             <show-verse data="showVerseData.data"
                         ng-if="showVerseData.annotationId==annotation.annotationId"></show-verse>
+            -->
             <div class="small_space">&nbsp;</div>
             <div ng-if="showVerseData.annotationId!=annotation.annotationId">
-               <blockquote ng-bind-html="annotation.translation_content | mark_verse_annotation:annotation:1 | newLineAllowed | to_trusted"></blockquote>
+                <blockquote ng-bind-html="annotation.translation_content | mark_verse_annotation:annotation:1 | newLineAllowed | to_trusted"></blockquote>
             </div>
             <div class="small_space">&nbsp;</div>
             <div class="s_a_text">
@@ -61,14 +63,16 @@
         </div>
 
     </div>
+
+
     <div style="text-align: center; padding-top:10px;" ng-if="allAnnotationsOpts.hasMore==true">
         <button ng-click="get_all_annotations()" class="btn btn-info btn-hg">Daha fazla</button>
     </div>
-
+<!--
     <div ng-include="'app/components/partials/authors_modal.html'"></div>
     <div ng-include="'app/components/partials/editor_modal.html'"></div>
-
-
+-->
+<!--
     <div class="modal" id="annotationsFilterModal">
         <div class="modal-dialog fixed-dialog">
             <div class="modal-content">
@@ -110,6 +114,10 @@
             </div>
         </div>
     </div>
+        -->
 
+    </div>
 
-</body>
+        <span ng-init="get_all_annotations()"></span>
+        </ion-content>
+    </ion-nav-view>

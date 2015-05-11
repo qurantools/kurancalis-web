@@ -8,8 +8,9 @@
                 <input type="hidden" ng-model="chapter_id" />
                 <input type="hidden" ng-model="verse_number" />
                 <input type="hidden" ng-model="author_mask" />
-                <!--author_mask:{{author_mask}}-->
+                Tüm Notlar
             </ion-nav-buttons>
+
             <h1 class="title"></h1>
             <ion-nav-buttons side="right">
                 <button class="button" ng-click="login()" ng-if="user==null">Giriş</button>
@@ -27,4 +28,5 @@
     </ion-side-menu-content>
 
     <div ng-include="'components/navigation/left_menu.html'"></div>
+
 </ion-side-menus>
