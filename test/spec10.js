@@ -30,15 +30,15 @@ describe('ceviri gosterimi', function() {
 
 		data[0] = 'Etk2';
 		data[1] = 'Etk3';
-		sure.karalaetiket('t_87548',100,'Not2 Not3','yellow',data, 2);
+		sure.karalaetiket('t_87548',100,'Ayet sıralamasında ilk sırada.','yellow',data, 2);
 
-		browser.sleep('3000');
+		browser.sleep('5000');
 		sure.sureayetegit(60,10)
 		browser.sleep('3000');
 
 		data[0] = 'Etk1';
 		data[1] = 'Etk3';
-		sure.karalaetiket('t_104004',100,'Not1 Not2 Not3','green',data, 2);
+		sure.karalaetiket('t_104004',100,'Zaman sıralamasında ilk sırada.','green',data, 2);
 
 		browser.sleep(3000);
 
@@ -49,7 +49,7 @@ describe('ceviri gosterimi', function() {
 		var sagsatir = element.all(by.repeater('annotation in annotations | filter:annotationFilter | filter: annotationTextSearch'));
 
 		//Ayet sıralamasına dayalı ilk Sıradaki meal doğrulaması yapılıyor.
-		expect(element(by.repeater('annotation in annotations | filter:annotationFilter | filter: annotationTextSearch').row(0)).element(by.css('[class="s_a_text"]')).getText()).toEqual('Not2 Not3');
+		expect(element(by.repeater('annotation in annotations | filter:annotationFilter | filter: annotationTextSearch').row(0)).element(by.css('[class="s_a_text"]')).getText()).toEqual('Ayet sıralamasında ilk sırada.');
 		expect(sagsatir.count()).toEqual(2);
 		browser.sleep(3000);
 
@@ -58,7 +58,7 @@ describe('ceviri gosterimi', function() {
 		element(by.css('[value="-updated"]')).click();
 		element(by.css('[class="cd-panel-content"]')).click();
 
-		expect(element(by.repeater('annotation in annotations | filter:annotationFilter | filter: annotationTextSearch').row(0)).element(by.css('[class="s_a_text"]')).getText()).toEqual('Not1 Not2 Not3');
+		expect(element(by.repeater('annotation in annotations | filter:annotationFilter | filter: annotationTextSearch').row(0)).element(by.css('[class="s_a_text"]')).getText()).toEqual('Zaman sıralamasında ilk sırada.');
 		browser.sleep(3000);
 
 		//Tekrar ayet sıralaması yapılıyor ilk sıradaki meal doğrulaması yapılıyor.
@@ -66,7 +66,7 @@ describe('ceviri gosterimi', function() {
 		element(by.css('[value="verseId"]')).click();
 		element(by.css('[class="cd-panel-content"]')).click();
 
-		expect(element(by.repeater('annotation in annotations | filter:annotationFilter | filter: annotationTextSearch').row(0)).element(by.css('[class="s_a_text"]')).getText()).toEqual('Not2 Not3');
+		expect(element(by.repeater('annotation in annotations | filter:annotationFilter | filter: annotationTextSearch').row(0)).element(by.css('[class="s_a_text"]')).getText()).toEqual('Ayet sıralamasında ilk sırada.');
 		browser.sleep(3000);
 
 		//Karalama kelimesi ile arama yapılıyor.
@@ -79,7 +79,7 @@ describe('ceviri gosterimi', function() {
 
 		//Eklenen not içinden kelime ile arama yapılıyor.
 		arama.clear();
-		arama.sendKeys('Not3');
+		arama.sendKeys('ilk');
 		expect(sagsatir.count()).toEqual(2);
 
 		browser.sleep(3000);
