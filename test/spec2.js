@@ -85,9 +85,9 @@ function not_yaz(not_deger) {
        
        	 element(by.css('[class="s_a_text"]')).getText().then(function(text) {
        		 expect(text).toBe(not_deger);	
-       	 });   	
-       
-       	element(by.css('[class="cd-panel from-right ng-scope is-visible"]')).click();
+       	 });
+
+			  element(by.css('[class="cd-panel from-right is-visible"]')).click();
        	
        //Üyenin yaptığı karalamada karalama alanını aştığında uyarı vermesinin kontrolu.
 
