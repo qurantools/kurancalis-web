@@ -1,5 +1,3 @@
-var sureler = require('./sure_ayet');
-
 describe('ceviri gosterimi', function() {
 	 
 	  it('Not ekleme', function() {
