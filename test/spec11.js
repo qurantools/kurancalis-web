@@ -18,7 +18,7 @@ describe('ceviri gosterimi', function() {
 	       
 		 var sure = new sureler();
 		 sure.sayfa();
-		
+			  
 		 		browser.sleep('5000');
 				  	 
 	    	  sure.tekyazar(12);
@@ -87,6 +87,15 @@ describe('ceviri gosterimi', function() {
 			expect(donen[2]).toBe('Not1');
 			expect(donen[3]).toBe('Rabbim');
 			
+			
+			donen=kontrol(1, 'yellow');
+	 		 
+	 		expect(donen[0]).toBe('60:4');
+			expect(donen[1]).toBe('İbrahim\'de ve onunla beraber olanlarda, sizin için gerçekten güzel bir örnek vardır. Onlar kavimlerine demişlerdi ki: "Biz sizden ve Allah\'ı bırakıp taptıklarınızdan uzağız. Sizi tanımıyoruz. Siz bir tek Allah\'a inanıncaya kadar, sizinle bizim aramızda sürekli bir düşmanlık ve öfke belirmiştir." Şu kadar var ki, İbrahim babasına: "Andolsun senin için mağfiret dileyeceğim. Fakat Allah\'tan sana gelecek herhangi bir şeyi önlemeye gücüm yetmez" demişti. (O müminler şöyle dediler:) Rabbimiz! Ancak sana dayandık, sana yöneldik. Dönüş de ancak sanadır.*');
+			expect(donen[2]).toBe('Not2 Not3');
+			expect(donen[3]).toBe('onunla');
+			
+			
 			donen=kontrol(2, 'green');
 	 		 
 	 		expect(donen[0]).toBe('86:16');
@@ -94,13 +103,23 @@ describe('ceviri gosterimi', function() {
 			expect(donen[2]).toBe('Not4');
 			expect(donen[3]).toBe('keydâ');
 			
+			
+			donen=kontrol(3, 'yellow');
+	 		 
+	 		expect(donen[0]).toBe('101:10');
+			expect(donen[1]).toBe('And how would you know what it is?');
+			expect(donen[2]).toBe('Not3 Not4');
+			expect(donen[3]).toBe('would');
+			
+			
 			donen=kontrol(4, 'red');
 	 		 
 	 		expect(donen[0]).toBe('112:2');
 			expect(donen[1]).toBe('Allah Samed\'dir.*');
 			expect(donen[2]).toBe('Not1 Not2 Not3');
 			expect(donen[3]).toBe('Samed\'dir');
-			 
+			
+			
 			browser.sleep("3000");
 	 		element(by.css('[class="fa fa-search"]')).click();
 	 		browser.sleep("3000");
@@ -224,7 +243,7 @@ describe('ceviri gosterimi', function() {
 			 }
 			 
 	  	  browser.sleep(10000);
-	     	  	  
+	     
 	 });
 	    
 });
