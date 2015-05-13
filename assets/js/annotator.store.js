@@ -131,10 +131,12 @@
         };
 
         Store.prototype.loadAnnotations = function () {
-            var theScope = angular.element(document.getElementById('theView')).scope();
+            //mobil scope değişti
+            //var theScope = angular.element(document.getElementById('theView')).scope();
+            var theScope = angular.element(document.getElementById('MainCtrl')).scope();
+
             var accessToken;
             if (theScope) {
-
                 accessToken = theScope.access_token;
             }
             if (typeof accessToken === 'undefined') {
@@ -160,7 +162,9 @@
             for (_j = 0, _len1 = data.length; _j < _len1; _j++) {
 
                 //add translation DIV prefix to annotations
-                var tidBlock = angular.element(document.getElementById('theView')).scope().translationDivMap[data[_j].translationId];
+                //mobil scope değişti
+                //theView
+                var tidBlock = angular.element(document.getElementById('MainCtrl')).scope().translationDivMap[data[_j].translationId];
                 data[_j].ranges[0].start = tidBlock + data[_j].ranges[0].start;
                 data[_j].ranges[0].end = tidBlock + data[_j].ranges[0].end;
 
@@ -213,8 +217,9 @@
         Store.prototype._apiRequestOptions = function (action, obj, onSuccess) {
             var data, method, opts, formData;
             var postData = [];
-            var accessToken = angular.element(document.getElementById('theView')).scope().access_token;
-
+           //mobil scope değişti
+           // var accessToken = angular.element(document.getElementById('theView')).scope().access_token;
+            var accessToken = angular.element(document.getElementById('MainCtrl')).scope().access_token;
             method = this._methodFor(action);
 
             opts = {
@@ -234,8 +239,11 @@
                     'Content-Type': 'application/json; charset=utf-8'
                 });
 
-                var _chapter = angular.element(document.getElementById('theView')).scope().chapter_id;
-                var _author = angular.element(document.getElementById('theView')).scope().author_mask;
+                //mobil scope değişti
+                //theView
+                var _chapter = angular.element(document.getElementById('MainCtrl')).scope().chapter_id;
+                var _author = angular.element(document.getElementById('MainCtrl')).scope().author_mask;
+
                 data = {
                     chapter: _chapter,
                     author: _author
@@ -317,7 +325,6 @@
             highlights = annotation.highlights;
             delete annotation.highlights;
             $.extend(annotation, this.options.annotationData);
-
             var tidBlock = angular.element(document.getElementById('theView')).scope().translationDivMap[annotation.translationId];
             annotation.ranges[0].start = annotation.ranges[0].start.replace(tidBlock, "");
             annotation.ranges[0].end = annotation.ranges[0].end.replace(tidBlock, "");
@@ -337,7 +344,6 @@
             // /hack
 
             data = JSON.stringify(annotation);
-
             if (highlights) {
                 annotation.highlights = highlights;
             }

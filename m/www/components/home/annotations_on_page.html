@@ -1,9 +1,5 @@
-<div class="cd-panel from-right" id="cd-panel-right">
-    <!--     <a href="#0" class="cd-panel-close">Close</a>-->
-    <div class="cd-panel-container">
-
-
-        <div class="cd-panel-content">
+<ion-nav-view>
+    <ion-content  overflow-scroll="true">
             <div style="height:50px"></div>
             <div style="padding-bottom:10px;">
                 <button onclick="closePanel()" class="btn btn-default btn-xs" style="float: left; height: 30px;"><i
@@ -28,6 +24,16 @@
 
 
             </div>
+
+        <pre>annotations: <span id="is_ready" ng-bind="annotations | json"></span></pre>
+1
+        <div ng-repeat="annotation in annotations | filter:annotationFilter | filter: annotationTextSearch"
+             class="sidebar_annotation box"
+             ng-click="scrollToElement('t_'+annotation.translationId)">
+
+            aaa
+            </div>
+2
 
             <div ng-repeat="annotation in annotations | filter:annotationFilter | filter: annotationTextSearch"
                  class="sidebar_annotation box"
@@ -57,9 +63,5 @@
                 </div>
 
             </div>
-        </div>
-        <!-- cd-panel-content -->
-    </div>
-    <!-- cd-panel-container -->
-</div>
-<!-- cd-panel -->
+</ion-content>
+</ion-nav-view>

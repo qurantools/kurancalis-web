@@ -351,9 +351,7 @@ app.factory('ChapterVerses', function ($resource) {
                 annotator.destroy();
                 delete annotator;
             }
-
             if ($scope.loggedIn) {  //giris yapilmadiysa yukleme, kavga olmasin.
-
                 annotator = new Annotator($('#translations'));
                 annotator.addPlugin('Store', {
                     prefix: config_data.webServiceUrl,
@@ -369,9 +367,7 @@ app.factory('ChapterVerses', function ($resource) {
                     //force: true
                 });
                 annotator.addPlugin('Tags');
-
                 $scope.annotatorActivated = 1;
-
                 annotator.subscribe("annotationCreated", $scope.colorTheAnnotation);
                 annotator.subscribe("annotationUpdated", $scope.colorTheAnnotation);
                 annotator.subscribe("annotationsLoaded", $scope.colorAnnotations);
@@ -381,12 +377,10 @@ app.factory('ChapterVerses', function ($resource) {
 
         }
 
-
         $scope.loadTags = function (query) {
             var tagsRestangular = Restangular.one('tags', query);
             return tagsRestangular.customGET("", {}, {'access_token': $scope.access_token});
         };
-
 
         //list translations
         $scope.list_translations = function () {
@@ -453,7 +447,7 @@ app.factory('ChapterVerses', function ($resource) {
                     for (index = 0; index < dataLength; ++index) {
                         //add verse links
                         //   dataContent = data[index].replace(/(\d{1,3}:\d{1,3})/g, "<a href='javascript: redirectToVerseByChapterAndVerse(\"$1\");'>$1</a>");
-                        dataContent = data[index].replace(/(\d{1,3}:\d{1,3})/g, "<a href='javascript: angular.element(document.getElementById(\"theView\")).scope().showVerseFromFootnote(\"$1\"," + author_id + "," + translation_id + ");'>$1</a>");
+                        dataContent = data[index].replace(/(\d{1,3}:\d{1,3})/g, "<a href='javascript: angular.element(document.getElementById(\"MainCtrl\")).scope().showVerseFromFootnote(\"$1\"," + author_id + "," + translation_id + ");'>$1</a>");
 
                         html += "<div><div class='col-xs-1 footnote_bullet'>&#149;</div><div class='col-xs-11 footnotebg'>" + dataContent + "</div></div>";
                     }
@@ -855,7 +849,6 @@ app.factory('ChapterVerses', function ($resource) {
         }
 
         $scope.loadAnnotations = function (annotations) {
-
             $scope.annotations = annotations;
             $scope.loadVerseTags();
             $scope.scopeApply();
@@ -1322,5 +1315,3 @@ function seperateChapterAndVerse(data) {
     ret.verse = data.substring(seperator + 1, data.length);
     return ret;
 }
-
-
