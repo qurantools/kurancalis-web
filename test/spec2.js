@@ -4,8 +4,9 @@
 describe('ceviri gosterimi', function() {
 	
 	  beforeEach(function() {
+		  
 		  browser.ignoreSynchronization = false;
-		  browser.get('http://kurancalis.com/#/chapter/1/author/1040/verse/1');
+	        browser.get('http://kurancalis.com/#/chapter/1/author/1040/verse/1');
 	        
 	       //browser.sleep(50000); // if your test is outrunning the browser
 	       // browser.waitForAngular(); 
@@ -40,28 +41,6 @@ function not_yaz(not_deger) {
 	  
     it('Not ekleme', function() {
        	
-    	element(by.id('login')).click();
-  	    browser.sleep(1000);
-
-  	    var handlesPromise = browser.getAllWindowHandles();
-  	    var handlesForLaterUse;
-
-  	  var errorCb = function (err) {
-  	      console.log(err);
-  	    };
-  	    
-  	  handlesPromise
-      .then(function(handles) {
-        handlesForLaterUse = handles;
-        return browser.switchTo().window(handles[1]);
-      }).then(function(handle) {
-    	  browser.driver.findElement(by.id('email')).sendKeys('kuran_calis@hotmail.com');
-	        browser.driver.findElement(by.id('pass')).sendKeys('kurancalis114');
-	        return browser.driver.findElement(by.name('login')).click();
-      }, errorCb).then(function() {
-        return browser.switchTo().window(handlesForLaterUse[0]);
-      }, errorCb).then(function () {
-      
        	//Burada üye girişi için işlem pause edilmesi
        	
        	//browser.sleep(40000);
@@ -85,10 +64,11 @@ function not_yaz(not_deger) {
        
        	 element(by.css('[class="s_a_text"]')).getText().then(function(text) {
        		 expect(text).toBe(not_deger);	
-       	 });
-
-			  element(by.css('[class="cd-panel from-right is-visible"]')).click();
-       	
+       	 });   	
+       
+       	 
+       	element(by.css('[class="cd-panel from-right is-visible"]')).click();
+       							
        //Üyenin yaptığı karalamada karalama alanını aştığında uyarı vermesinin kontrolu.
 
     	 browser.sleep(2000);
@@ -98,14 +78,12 @@ function not_yaz(not_deger) {
     	 
     	 browser.actions().keyDown(protractor.Key.SHIFT).perform();
     	 element(by.id('t_49996')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).element(by.css('[class="ng-binding"]')).click();
-			  browser.actions().keyUp(protractor.Key.SHIFT).perform();
+    	 browser.actions().keyUp(protractor.Key.SHIFT).perform();
+    	 
     	 element(by.css('[class="annotator-notice annotator-notice-show annotator-notice-error"]')).getText().then(function(text) {
     		 expect(text).toBe('Sadece meal içerisini karalamalısınız');	
-        });	 
-       	
-      });	 
-  	  
+        });	
+    	 
        });
-       
     
 });
