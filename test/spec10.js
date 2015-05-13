@@ -24,21 +24,30 @@ describe('ceviri gosterimi', function() {
 		var sure = new sureler();
 		sure.sayfa();
 
-		sure.sureayetegit(60,4)
+		sure.sureayetegit(60,1)
 		sure.yazaragit(11,12,13,15);
 		browser.sleep('5000');
 
 		data[0] = 'Etk2';
 		data[1] = 'Etk3';
-		sure.karalaetiket('t_87548',100,'Not2 Not3','yellow',data, 2);
+		sure.karalaetiket('t_95736',100,'Zaman sıralamasında üçüncü sırada. Ayet sıralamasında ilk sırada.','yellow',data, 2);
 
-		browser.sleep('3000');
-		sure.sureayetegit(60,10)
+		sure.sureayetegit(60,12)
+		sure.yazaragit(11,12,13,15);
+		browser.sleep('5000');
+
+		data[0] = 'Etk1';
+		data[1] = 'Etk2';
+		data[2] = 'Etk3';
+		sure.karalaetiket('t_95747',100,'Zaman sıralamasında ikinci sırada. Ayet sıralamasında üçüncü sırada.','yellow',data, 3);
+
+		browser.sleep('5000');
+		sure.sureayetegit(60,6)
 		browser.sleep('3000');
 
 		data[0] = 'Etk1';
 		data[1] = 'Etk3';
-		sure.karalaetiket('t_104004',100,'Not1 Not2 Not3','green',data, 2);
+		sure.karalaetiket('t_116606',100,'Zaman sıralamasında ilk sırada. Ayet sıralamasında ikinci sırada.','green',data, 2);
 
 		browser.sleep(3000);
 
@@ -48,46 +57,56 @@ describe('ceviri gosterimi', function() {
 
 		var sagsatir = element.all(by.repeater('annotation in annotations | filter:annotationFilter | filter: annotationTextSearch'));
 
-		//Ayet sıralamasına dayalı ilk Sıradaki meal doğrulaması yapılıyor.
-		expect(element(by.repeater('annotation in annotations | filter:annotationFilter | filter: annotationTextSearch').row(0)).element(by.css('[class="s_a_text"]')).getText()).toEqual('Not2 Not3');
-		expect(sagsatir.count()).toEqual(2);
+		//İlk yapılan kayıt sırasına göre gelen listeyi doğruluyoruz.
+
+		expect(element(by.repeater('annotation in annotations | filter:annotationFilter | filter: annotationTextSearch').row(0)).element(by.css('[class="s_a_header ng-binding"]')).getText()).toEqual('60:1');
+		expect(element(by.repeater('annotation in annotations | filter:annotationFilter | filter: annotationTextSearch').row(1)).element(by.css('[class="s_a_header ng-binding"]')).getText()).toEqual('60:12');
+		expect(element(by.repeater('annotation in annotations | filter:annotationFilter | filter: annotationTextSearch').row(2)).element(by.css('[class="s_a_header ng-binding"]')).getText()).toEqual('60:6');
+
+		expect(sagsatir.count()).toEqual(3);
 		browser.sleep(3000);
 
-		//Zaman sıralamasına dayalı ilk sıradaki meal doğrulaması yapılıyor.
+		//Zaman sıralamasına dayalı Sıralama doğrulaması notlar ile yapılıyor.
 		element(by.model('filterOrderSelect')).click();
 		element(by.css('[value="-updated"]')).click();
 		element(by.css('[class="cd-panel-content"]')).click();
 
-		expect(element(by.repeater('annotation in annotations | filter:annotationFilter | filter: annotationTextSearch').row(0)).element(by.css('[class="s_a_text"]')).getText()).toEqual('Not1 Not2 Not3');
+		expect(element(by.repeater('annotation in annotations | filter:annotationFilter | filter: annotationTextSearch').row(0)).element(by.css('[class="s_a_text"]')).getText()).toEqual('Zaman sıralamasında ilk sırada. Ayet sıralamasında ikinci sırada.');
+		expect(element(by.repeater('annotation in annotations | filter:annotationFilter | filter: annotationTextSearch').row(1)).element(by.css('[class="s_a_text"]')).getText()).toEqual('Zaman sıralamasında ikinci sırada. Ayet sıralamasında üçüncü sırada.');
+		expect(element(by.repeater('annotation in annotations | filter:annotationFilter | filter: annotationTextSearch').row(2)).element(by.css('[class="s_a_text"]')).getText()).toEqual('Zaman sıralamasında üçüncü sırada. Ayet sıralamasında ilk sırada.');
+
 		browser.sleep(3000);
 
-		//Tekrar ayet sıralaması yapılıyor ilk sıradaki meal doğrulaması yapılıyor.
+		//Ayet sıralaması yapılıyor Sıralama doğrulaması notlar ile yapılıyor.
 		element(by.model('filterOrderSelect')).click();
 		element(by.css('[value="verseId"]')).click();
 		element(by.css('[class="cd-panel-content"]')).click();
 
-		expect(element(by.repeater('annotation in annotations | filter:annotationFilter | filter: annotationTextSearch').row(0)).element(by.css('[class="s_a_text"]')).getText()).toEqual('Not2 Not3');
+		expect(element(by.repeater('annotation in annotations | filter:annotationFilter | filter: annotationTextSearch').row(0)).element(by.css('[class="s_a_text"]')).getText()).toEqual('Zaman sıralamasında üçüncü sırada. Ayet sıralamasında ilk sırada.');
+		expect(element(by.repeater('annotation in annotations | filter:annotationFilter | filter: annotationTextSearch').row(1)).element(by.css('[class="s_a_text"]')).getText()).toEqual('Zaman sıralamasında ilk sırada. Ayet sıralamasında ikinci sırada.');
+		expect(element(by.repeater('annotation in annotations | filter:annotationFilter | filter: annotationTextSearch').row(2)).element(by.css('[class="s_a_text"]')).getText()).toEqual('Zaman sıralamasında ikinci sırada. Ayet sıralamasında üçüncü sırada.');
+
 		browser.sleep(3000);
 
 		//Karalama kelimesi ile arama yapılıyor.
 		var arama = element(by.model('searchText'));
 		arama.clear();
-		arama.sendKeys('أَبَدًا');
+		arama.sendKeys('onlarda');
 		expect(sagsatir.count()).toEqual(1);
 
 		browser.sleep(3000);
 
 		//Eklenen not içinden kelime ile arama yapılıyor.
 		arama.clear();
-		arama.sendKeys('Not3');
-		expect(sagsatir.count()).toEqual(2);
+		arama.sendKeys('sırada');
+		expect(sagsatir.count()).toEqual(3);
 
 		browser.sleep(3000);
 
 		//Eklenen etiket ile arama yapılıyor.
 		arama.clear();
 		arama.sendKeys('etk3');
-		expect(sagsatir.count()).toEqual(2);
+		expect(sagsatir.count()).toEqual(3);
 
 		element(by.css('[ng-click="resetAnnotationFilter()"]')).click();
 
@@ -99,7 +118,7 @@ describe('ceviri gosterimi', function() {
 
 		browser.sleep(3000);
 
-		for(var x=0; x<2;x++)
+		for(var x=0; x<3;x++)
 		{
 			element(by.repeater('annotation in annotations').row(0)).element(by.css('[ng-click="deleteAnnotation2(annotation)"]')).click();
 			browser.sleep("1000");
