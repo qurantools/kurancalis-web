@@ -43,10 +43,12 @@ function not_yaz(not_deger) {
        	
        	//Burada üye girişi için işlem pause edilmesi
        	
-       	//browser.sleep(40000);
+    	//browser.sleep(40000);
        	
        	//Üyenin not yazabilmesi ve yazdığı notla ilgili kelimenin aldığı renk seçtiği renkle eşit olma durumu kontrolu.
        	
+    	browser.sleep(5000);
+    	
        	var not_deger='ASlqwertyuıopğü,işlkjhgfdsazxcvbnmöç.:;<>1234567890';
        	
        	not_yaz(not_deger);

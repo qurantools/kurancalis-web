@@ -7,7 +7,8 @@ exports.config = {
     directConnect: true,
     specs: [
         'spec1.js',
-        'temiz.js',
+        'uye_temizle.js',
+        'uye_giris.js',
         'spec2.js',
         'spec3.js',//spec2 ile birlikte çalýþmalýdýr.
         'spec4.js',
