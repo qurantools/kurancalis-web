@@ -1,5 +1,29 @@
-<ion-nav-view>
-    <ion-content  overflow-scroll="true">
+<div class="modal modal-fullscreen">
+    <!--
+    <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced">
+        <ion-nav-buttons side="left">
+            <button class="button button-icon icon ion-arrow-left-b" ng-click="closeModal()">Tamam</button>
+
+        </ion-nav-buttons>
+
+        <h1 class="title">Sayfadaki Notlar</h1>
+
+
+    </ion-nav-bar>
+-->
+
+    <div class="bar bar-balanced">
+        <div style="text-align: left; width:100px;">
+        <button class="button button-icon icon-left ion-arrow-left-b" ng-click="closeModal()" style="float: left"> Tamam</button>
+        </div>
+        <h1 class="title">Sayfadaki Notlar</h1>
+    </div>
+
+
+
+
+
+        <ion-content  overflow-scroll="true">
             <div style="height:50px"></div>
             <div style="padding-bottom:10px;">
                 <button onclick="closePanel()" class="btn btn-default btn-xs" style="float: left; height: 30px;"><i
@@ -25,15 +49,6 @@
 
             </div>
 
-        <pre>annotations: <span id="is_ready" ng-bind="annotations | json"></span></pre>
-1
-        <div ng-repeat="annotation in annotations | filter:annotationFilter | filter: annotationTextSearch"
-             class="sidebar_annotation box"
-             ng-click="scrollToElement('t_'+annotation.translationId)">
-
-            aaa
-            </div>
-2
 
             <div ng-repeat="annotation in annotations | filter:annotationFilter | filter: annotationTextSearch"
                  class="sidebar_annotation box"
@@ -63,5 +78,5 @@
                 </div>
 
             </div>
-</ion-content>
-</ion-nav-view>
+        </ion-content>
+</div>
