@@ -8,7 +8,6 @@ var config_data = {
 function isMobile() {
     //test for mobile
     var mobileTest = false;
-
     if (mobileTest == true) {
         return true;
     } else {
