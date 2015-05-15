@@ -1,4 +1,5 @@
 var sureler = require('./sure_ayet');
+var uyelik = require('./uyelik');
 
 describe('ceviri gosterimi', function() {
 	
@@ -15,8 +16,13 @@ describe('ceviri gosterimi', function() {
 	}
 	
 	 it('Arama filtreleme', function() {
-	       
+
+         var uye = new uyelik();
 		 var sure = new sureler();
+
+         uye.sil();
+         uye.giris();
+
 		 sure.sayfa();
 			  
 		 		browser.sleep('5000');
@@ -213,6 +219,7 @@ describe('ceviri gosterimi', function() {
 			 			 
 			element(by.model('allAnnotationsOrderBy')).click();
 			element(by.css('[value="time"]')).click();
+            browser.sleep('1000');
 			element(by.repeater('annotation in annotations').row(0)).click();
 			
 			donen=kontrol(0, 'red');
@@ -235,14 +242,7 @@ describe('ceviri gosterimi', function() {
 			expect(donen[1]).toBe('Dedi ki: "Rabbim, bana bir alamet (ayet) ver." Dedi ki: "Senin alametin, sapasağlam iken, üç tam gece insanlarla konuşmamandır."');
 			expect(donen[2]).toBe('Not1');
 			expect(donen[3]).toBe('Rabbim');
-			
-			 for(var x=0; x<5;x++)
-			 {
-			   element(by.repeater('annotation in annotations').row(0)).element(by.css('[ng-click="deleteAnnotation2(annotation)"]')).click();
-			   browser.sleep("1000");
-			 }
-			 
-	  	  browser.sleep(10000);
+
 	     
 	 });
 	    

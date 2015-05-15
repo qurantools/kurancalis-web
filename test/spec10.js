@@ -1,4 +1,5 @@
 var sureler = require('./sure_ayet');
+var uyelik = require('./uyelik');
 
 describe('ceviri gosterimi', function() {
 
@@ -18,6 +19,11 @@ describe('ceviri gosterimi', function() {
 
 		var data = [];
 		var sure = new sureler();
+        var uye = new uyelik();
+
+        uye.sil();
+        uye.giris();
+
 		sure.sayfa();
 
 		browser.sleep('5000');
@@ -63,6 +69,7 @@ describe('ceviri gosterimi', function() {
 		expect(element(by.repeater('annotation in annotations | filter:annotationFilter | filter: annotationTextSearch').row(1)).element(by.css('[class="s_a_header ng-binding"]')).getText()).toEqual('60:12');
 		expect(element(by.repeater('annotation in annotations | filter:annotationFilter | filter: annotationTextSearch').row(2)).element(by.css('[class="s_a_header ng-binding"]')).getText()).toEqual('60:6');
 
+        browser.sleep(10000);
 		expect(sagsatir.count()).toEqual(3);
 		browser.sleep(3000);
 
@@ -118,13 +125,7 @@ describe('ceviri gosterimi', function() {
 
 		browser.sleep(3000);
 
-		for(var x=0; x<3;x++)
-		{
-			element(by.repeater('annotation in annotations').row(0)).element(by.css('[ng-click="deleteAnnotation2(annotation)"]')).click();
-			browser.sleep("1000");
-		}
 
-		browser.sleep(10000);
 	});
 
 });

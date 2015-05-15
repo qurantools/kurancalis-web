@@ -1,7 +1,8 @@
+var sureler = require('./sure_ayet');
+
 describe('ceviri gosterimi', function() {
-	 
-	  it('Not ekleme', function() {
 	
+	 it('Üye Giriş', function() {
 		  var sure = new sureler();
 			 sure.sayfa();
 			 
@@ -26,11 +27,9 @@ describe('ceviri gosterimi', function() {
 		      }, errorCb).then(function() {
 		        return browser.switchTo().window(handlesForLaterUse[0]);
 		      }, errorCb).then(function () {
-		    	  
-		  browser.ignoreSynchronization = true;
-		  browser.get('https://securewebserver.net/jetty/qttest/rest/users/testdelete');
-	      
+		 
+		    	  browser.sleep('3000');
 		      });	
 	  });
-	  	  
+ 	  
 });
