@@ -16,6 +16,27 @@ var uyelik = (function () {
 
     };
 
+
+
+    uyelik.prototype.cikis = function () {
+        var sure = new sureler();
+        sure.sayfa();
+
+        element(by.css('[onclick="toggleLeftPanel()"]')).click();
+
+        browser.sleep('1000');
+        var cikis =  element(by.css('[ng-click="log_out()"]'));
+        cikis.isPresent().then(function(result) {
+            if ( result ) {
+                cikis.click();
+            } else {
+                //Whatever if it is false (not displayed)
+            }
+        });
+        browser.sleep('3000');
+
+    };
+
     uyelik.prototype.giris = function () {
 
 
