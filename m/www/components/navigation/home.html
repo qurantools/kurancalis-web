@@ -5,16 +5,24 @@
                 <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
                 <button class="button button-icon icon ion-arrow-right-b"></button>
                 <a href="#/app/authors_list" class="button button-icon icon ion-person"></a>
+
                 <input type="hidden" ng-model="chapter_id" />
                 <input type="hidden" ng-model="verse_number" />
                 <input type="hidden" ng-model="author_mask" />
                 <!--author_mask:{{author_mask}}-->
+
+
             </ion-nav-buttons>
             <h1 class="title"></h1>
             <ion-nav-buttons side="right">
                 <button class="button" ng-click="login()" ng-if="user==null">Giriş</button>
+                <!--
                 <a href="#/app/annotations_on_page" class="button button-icon icon ion-clipboard"
                    ng-if="user!=null"></a>
+                -->
+                <a href ng-click="openModal()" class="button button-icon icon ion-clipboard"
+                   ng-if="user!=null"></a>
+
             </ion-nav-buttons>
         </ion-nav-bar>
         <ion-nav-buttons side="left">

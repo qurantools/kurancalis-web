@@ -1,3 +1,7 @@
+body{
+    font-size:17px;
+}
+
 ion-content{
     text-align: justify;
 }
@@ -15,4 +19,12 @@ ion-content{
 .translations .item{
     font-size: 14px !important;
     padding:5px;
+}
+
+.modal-fullscreen{
+    top: 0 ;
+    bottom: 0 ;
+    left: 0 ;
+    right: 0 ;
+    width: 100% ;
 }
