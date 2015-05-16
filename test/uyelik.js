@@ -85,7 +85,7 @@ var uyelik = (function () {
                             }
                         });
                         //then in bitmesi icin burasi sart
-                        return browser.sleep('3000');
+                        return browser.sleep('1000');
                     }, errorCb)
                     .then(function() {
 
@@ -103,7 +103,7 @@ var uyelik = (function () {
                             }
                         });
                         //then in bitmesi icin burasi sart
-                        return browser.sleep('3000');
+                        return browser.sleep('1000');
 
                     },errorCb)
                     .then(function(){
@@ -126,7 +126,7 @@ var uyelik = (function () {
                         });
 
                         //then in bitmesi icin burasi sart
-                        return browser.sleep('3000');
+                        return browser.sleep('1000');
                        /*
                         console.log('Wait after last confirm');
                         console.log('Switching the window');
