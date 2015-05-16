@@ -6,20 +6,21 @@ exports.config = {
     // seleniumAddress: 'http://localhost:4444/wd/hub',
     directConnect: true,
     specs: [
-       /* 'spec1.js',
+        'spec1.js',
         'uye_temizle.js',
         'uye_giris.js',
+        'uyelik.js',
         'spec2.js',
-        'spec3.js',//spec2 ile birlikte �al��mal�d�r.
+        'spec3.js',//spec2 ile birlikte çalışmalıdır.
         'spec4.js',
         'spec5.js',
         'spec6.js',
         'spec7.js',
         'spec8.js',
-        'spec9.js',*/
-
-       // 'spec10.js',
-        'spec11.js'
+        'spec9.js',
+        'spec10.js',
+        'spec11.js',
+        'spec12.js'
     ],
     jasmineNodeOpts: {defaultTimeoutInterval: 360000},
     multiCapabilities: [
