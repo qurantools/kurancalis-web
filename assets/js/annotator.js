@@ -1235,7 +1235,6 @@
         };
 
         Annotator.prototype.checkForEndSelection = function (event) {
-
             var container, range, _k, _len2, _ref1;
             this.mouseIsDown = false;
             if (this.ignoreMouseup) {
@@ -1263,23 +1262,41 @@
                     if (translation_end_id == translation_start_id && translation_start_id != 0) {
                         this.selectedRanges[0].translationId = translation_start_id;
                         this.selectedRanges[0].verseId = this.getElementIdOfSelection(this.selectedRanges[0].start, "v_");
-                        return this.adder.css(Util.mousePosition(event, this.wrapper[0])).show();
+                        if(!config_data.isMobile){
+                            return this.adder.css(Util.mousePosition(event, this.wrapper[0])).show();
+                        }else{
+                            angular.element(document.getElementById('MainCtrl')).scope().selectionEnded();
+                        }
                     }
                     else {
                         Annotator.showNotification("Sadece meal içerisini karalamalısınız", Annotator.Notification.ERROR);
-                        this.adder.hide();
+                        if(!config_data.isMobile) {
+                            this.adder.hide();
+                        }else{
+                            angular.element(document.getElementById('MainCtrl')).scope().selectionCancel();
+                        }
                         return;
                     }
 
                 }
                 else {
                     Annotator.showNotification("Sadece meal içerisini karalamalısınız", Annotator.Notification.ERROR);
-                    this.adder.hide();
+                    if(!config_data.isMobile) {
+                        this.adder.hide();
+                    }else {
+                        angular.element(document.getElementById('MainCtrl')).scope().selectionCancel();
+                    }
                     return;
 
                 }
             } else {
-                return this.adder.hide();
+                if(!config_data.isMobile) {
+                    return this.adder.hide();
+                }else{
+                    angular.element(document.getElementById('MainCtrl')).scope().selectionCancel();
+                }
+
+
             }
         };
 

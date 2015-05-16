@@ -263,20 +263,7 @@ app.factory('ChapterVerses', function ($resource) {
 
 
 
-        $ionicModal.fromTemplateUrl('components/home/annotations_on_page_modal.html', {
-            scope: $scope,
-            animation: 'slide-in-left'
-        }).then(function(modal) {
-            $scope.modal = modal
-        })
 
-        $scope.openModal = function() {
-            $scope.modal.show()
-        }
-
-        $scope.closeModal = function() {
-            $scope.modal.hide();
-        };
 
 
 
@@ -1275,6 +1262,34 @@ app.factory('ChapterVerses', function ($resource) {
                     $scope.currentState = toState.name;
                     $scope.scopeApply();
                 })
+
+
+            $ionicModal.fromTemplateUrl('components/home/annotations_on_page_modal.html', {
+                scope: $scope,
+                animation: 'slide-in-left'
+            }).then(function(modal) {
+                $scope.modal = modal
+            })
+
+            $scope.openModal = function() {
+                $scope.modal.show()
+            }
+
+            $scope.closeModal = function() {
+                $scope.modal.hide();
+            };
+
+
+            $scope.annotationAddable=false;
+            $scope.selectionEnded = function(){
+                $scope.annotationAddable=true;
+                $scope.scopeApply();
+            }
+
+            $scope.selectionCancel=function(){
+                $scope.annotationAddable=false;
+                $scope.scopeApply();
+            }
         }
     })
 
