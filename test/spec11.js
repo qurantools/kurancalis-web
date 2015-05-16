@@ -23,7 +23,10 @@ describe('ceviri gosterimi', function() {
          uye.cikis();
          uye.sil();
          uye.giris();
-       
+         uye.cikis();
+         uye.sil();
+         uye.giris();
+
 			  
 		 		browser.sleep('5000');
 				  	 
