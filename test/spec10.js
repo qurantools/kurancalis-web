@@ -21,6 +21,7 @@ describe('ceviri gosterimi', function() {
 		var sure = new sureler();
         var uye = new uyelik();
 
+        uye.cikis();
         uye.sil();
         uye.giris();
 

@@ -1,10 +1,17 @@
 var sureler = require('./sure_ayet');
+var uyelik = require('./uyelik');
 
 describe('ceviri gosterimi', function() {
 	 
 	it('Dipnot Kontrolu', function() {
 		var sure = new sureler();
-		 //sure.sayfa();
+		//sure.sayfa();
+
+        var uye = new uyelik();
+        uye.cikis();
+        uye.sil();
+        uye.giris();
+
 	  
 		 browser.sleep(3000);
 		 
