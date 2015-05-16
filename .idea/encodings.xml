@@ -1,13 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false">
-    <file url="file://$PROJECT_DIR$/app/components/annotations/annotationsView.html" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/app/components/home/homeView.html" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/app/components/home/mobile_on_development.html" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/index.html" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/index.js" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/m/www/components/navigation/navigation.html" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/prototype/index.html" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/test/spec.js" charset="UTF-8" />
-  </component>
+  <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false" />
 </project>
