@@ -1372,12 +1372,20 @@
             if (event != null) {
                 event.preventDefault();
             }
-            position = this.adder.position();
-            this.adder.hide();
+
+            if(!config_data.isMobile){
+                position = this.adder.position();
+                this.adder.hide();
+            }else{
+                position =  '';
+            }
+
+            alert(1)
+
             annotation = this.setupAnnotation(this.createAnnotation());
-
+alert(2)
             $(annotation.highlights).addClass('annotator-hl-temporary');
-
+alert(6)
             save = (function (_this) {
                 return function () {
                     cleanup();

@@ -812,17 +812,24 @@ app.factory('ChapterVerses', function ($resource) {
             if (typeof $scope.annotationModalData.text == 'undefined') {
                 $scope.annotationModalData.text = "";
             }
+            alert(1)
             angular.element(document.getElementById('theView')).scope().theTags = newTags;
+            alert(2)
             $scope.annotationModalDataVerse = Math.floor(annotation.verseId / 1000) + ":" + annotation.verseId % 1000;
 
             //set default color
             if (typeof $scope.annotationModalData.colour == 'undefined')$scope.annotationModalData.colour = 'yellow';
             $scope.scopeApply();
 
-            $('#annotationModal').modal('show');
-            $('#annotationModal').on('hidden.bs.modal', function () {
-                $scope.hideEditor();
-            })
+            if(!config_data.isMobile){
+                $('#annotationModal').modal('show');
+                $('#annotationModal').on('hidden.bs.modal', function () {
+                    $scope.hideEditor();
+                })
+            }else{
+                openModal('editor');
+            }
+
         }
 
         $scope.colorTheAnnotation = function (annotation) {
@@ -1264,20 +1271,37 @@ app.factory('ChapterVerses', function ($resource) {
                 })
 
 
-            $ionicModal.fromTemplateUrl('components/home/annotations_on_page_modal.html', {
+            $ionicModal.fromTemplateUrl('components/partials/annotations_on_page_modal.html', {
                 scope: $scope,
-                animation: 'slide-in-left'
+                animation: 'slide-in-right',
+                id: 'annotations_on_page'
             }).then(function(modal) {
-                $scope.modal = modal
-            })
+                $scope.modal_annotations_on_page = modal
+            });
 
-            $scope.openModal = function() {
-                $scope.modal.show()
-            }
+            $ionicModal.fromTemplateUrl('components/partials/editor_modal.html', {
+                scope: $scope,
+                animation: 'slide-in-left',
+                id: 'editor'
+            }).then(function(modal) {
+                $scope.modal_editor = modal
+            });
 
-            $scope.closeModal = function() {
-                $scope.modal.hide();
+            $scope.openModal = function(id) {
+                if (id == 'annotations_on_page') {
+                    $scope.modal_annotations_on_page.show();
+                }else if (id == 'editor') {
+                    $scope.modal_editor.show();
+                }
             };
+
+            $scope.closeModal = function(id) {
+                if (id == 'annotations_on_page') {
+                    $scope.modal_annotations_on_page.hide();
+                }else if (id == 'editor') {
+                    $scope.modal_editor.hide();
+                }
+            }
 
 
             $scope.annotationAddable=false;
