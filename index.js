@@ -365,9 +365,7 @@ app.factory('ChapterVerses', function ($resource) {
                         search: '/search'
                     }
                 });
-                annotator.addPlugin('Touch', {
-                    //force: true
-                });
+
                 annotator.addPlugin('Tags');
                 $scope.annotatorActivated = 1;
                 annotator.subscribe("annotationCreated", $scope.colorTheAnnotation);

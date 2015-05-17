@@ -319,8 +319,8 @@
         }
         offset = $(offsetEl).offset();
         return {
-            top: e.pageY - offset.top,
-            left: e.pageX - offset.left
+           top: e.pageY - offset.top,
+           left: e.pageX - offset.left
         };
     };
 
@@ -1042,9 +1042,7 @@
         Annotator.prototype.createAnnotation = function () {
             var annotation;
             annotation = {};
-          if(!config_data.isMobile) { //mobile hack
               this.publish('beforeAnnotationCreated', [annotation]);
-          }
             angular.element(document.getElementById('MainCtrl')).scope().addAnnotation(annotation);
             return annotation;
         };
@@ -1237,6 +1235,7 @@
         };
 
         Annotator.prototype.checkForEndSelection = function (event) {
+
             var container, range, _k, _len2, _ref1;
             this.mouseIsDown = false;
             if (this.ignoreMouseup) {
@@ -1255,48 +1254,33 @@
                 }
             }
             if (event && this.selectedRanges.length) {
-
                 //check translation id
                 if (this.selectedRanges.length == 1) {
                     var translation_start_id = this.getElementIdOfSelection(this.selectedRanges[0].start, "t_");
                     var translation_end_id = this.getElementIdOfSelection(this.selectedRanges[0].end, "t_");
-
                     if (translation_end_id == translation_start_id && translation_start_id != 0) {
                         this.selectedRanges[0].translationId = translation_start_id;
                         this.selectedRanges[0].verseId = this.getElementIdOfSelection(this.selectedRanges[0].start, "v_");
-                        if(!config_data.isMobile){
-                            return this.adder.css(Util.mousePosition(event, this.wrapper[0])).show();
-                        }else{
-                            angular.element(document.getElementById('MainCtrl')).scope().selectionEnded();
-                        }
+                        this.adder.css(Util.mousePosition(event, this.wrapper[0])).show();
+                        return;
+
                     }
                     else {
                         Annotator.showNotification("Sadece meal içerisini karalamalısınız", Annotator.Notification.ERROR);
-                        if(!config_data.isMobile) {
                             this.adder.hide();
-                        }else{
-                            angular.element(document.getElementById('MainCtrl')).scope().selectionCancel();
-                        }
                         return;
                     }
 
                 }
                 else {
                     Annotator.showNotification("Sadece meal içerisini karalamalısınız", Annotator.Notification.ERROR);
-                    if(!config_data.isMobile) {
                         this.adder.hide();
-                    }else {
-                        angular.element(document.getElementById('MainCtrl')).scope().selectionCancel();
-                    }
                     return;
 
                 }
-            } else {
-                if(!config_data.isMobile) {
+            }
+            else {
                     return this.adder.hide();
-                }else{
-                    angular.element(document.getElementById('MainCtrl')).scope().selectionCancel();
-                }
 
 
             }
@@ -1375,18 +1359,15 @@
                 event.preventDefault();
             }
 
-            if(!config_data.isMobile){
                 position = this.adder.position();
                 this.adder.hide();
-            }else{
-                position =  '';
-            }
 
-            alert(1)
+            alert(4)
 
             annotation = this.setupAnnotation(this.createAnnotation());
 alert(2)
             $(annotation.highlights).addClass('annotator-hl-temporary');
+            alert(3)
             save = (function (_this) {
                 return function () {
                     cleanup();
