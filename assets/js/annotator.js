@@ -1042,7 +1042,9 @@
         Annotator.prototype.createAnnotation = function () {
             var annotation;
             annotation = {};
-            this.publish('beforeAnnotationCreated', [annotation]);
+          if(!config_data.isMobile) { //mobile hack
+              this.publish('beforeAnnotationCreated', [annotation]);
+          }
             angular.element(document.getElementById('MainCtrl')).scope().addAnnotation(annotation);
             return annotation;
         };
@@ -1385,7 +1387,6 @@
             annotation = this.setupAnnotation(this.createAnnotation());
 alert(2)
             $(annotation.highlights).addClass('annotator-hl-temporary');
-alert(6)
             save = (function (_this) {
                 return function () {
                     cleanup();
