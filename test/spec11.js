@@ -20,10 +20,10 @@ describe('ceviri gosterimi', function() {
          var uye = new uyelik();
 		 var sure = new sureler();
 
+         uye.cikis();
          uye.sil();
          uye.giris();
 
-		 sure.sayfa();
 			  
 		 		browser.sleep('5000');
 				  	 
