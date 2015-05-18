@@ -2,132 +2,84 @@
     <div class="bar bar-balanced">
         <div style="text-align: left; width:100px;">
             <button class="button button-icon icon-left ion-arrow-left-b" ng-click="closeModal('editor')"
-                    style="float: left"> Tamam
+                    style="float: left"> Vazgeç
             </button>
         </div>
-        <h1 class="title">Editör</h1>
+        <div  style="text-align: center; width:100px;"><h1 class="title">Not Ekle</h1></div>
+        <div style="text-align: right; width:100px;">
+            <button class="button button-icon icon-left ion-checkmark" ng-click="submitEditor()"
+                    style="float: right">
+            </button>
+        </div>
     </div>
     <ion-content overflow-scroll="true">
         <div style="height:50px"></div>
 
-
----
-        <div class="modal-header" id="annotationData_header">
-            <strong>{{annotationModalDataVerse}}</strong>
-            {{annotationModalData.quote}}
-            <h4 class="modal-title">{{annotationModal.title}}</h4>
-        </div>
-   ---
+        <strong>{{annotationModalDataVerse}}</strong>
+        {{annotationModalData.quote}}
 
 
-
-        <div style="padding-bottom:10px;">
-            <button onclick="closePanel()" class="btn btn-default btn-xs" style="float: left; height: 30px;"><i
-                    class="fa fa-undo"></i></button>
-            <button class="btn btn-warning btn-xs" ng-click="resetAnnotationFilter()"
-                    ng-show='filteredAnnotations.length > 0 || searchText!=""' style="float: right; height: 30px;">
-                <i
-                        class="fa fa-trash-o"></i>
-                Filtreyi kaldır
-            </button>
+        <label class="item item-input">
+            <textarea id="annotationData_text" ng-model="annotationModalData.text"
+                      placeholder="Yorum ekleyin"></textarea>
+        </label>
 
 
-            <div style="display: block;">
-                <!--    <input ng-model="searchText" />-->
-                <input style="width: 150px; height: 30px;" type="text" placeholder="ara" ng-model="searchText">
-                <select ng-model="filterOrderSelect" ng-init="filterOrderSelect='verseId'"
-                        ng-change="annotationFilterOrder(filterOrderSelect)" style="height: 30px;">
-                    <option value="verseId">Ayet</option>
-                    <option value="-updated">Zaman</option>
-                </select>
-            </div>
+        <tags-input ng-model="$parent.theTags" display-property="name" replace-spaces-with-dashes=false
+                    min-length="2">
+            <auto-complete source="loadTags($query)" min-length="2"></auto-complete>
+        </tags-input>
+        <br/>
+        <ul ng-repeat="selectedTag in selectedTags">
+            <li>{{selectedTag}}</li>
+        </ul>
 
+        <br/>
 
-        </div>
+        <div class="list">
 
+            <label class="item item-radio">
+                <input type="radio" ng-model="annotationModalData.colour" value="yellow" style="float: left;">
 
-        <div ng-repeat="annotation in annotations | filter:annotationFilter | filter: annotationTextSearch"
-             class="sidebar_annotation box"
-             ng-click="scrollToElement('t_'+annotation.translationId)">
-            <!-- s_a -->
-            <div class="s_a_header">
-                {{annotation.verseId / 1000 | number:0}}:{{annotation.verseId % 1000}}
-            </div>
-            <div>
-                <blockquote>{{annotation.quote}}</blockquote>
-            </div>
-            <div class="s_a_text">
-                <span ng-bind-html="annotation.text | newLineAllowed | to_trusted"></span>
-            </div>
-            <div ng-repeat="annotationTag in annotation.tags" class="tag label label-info s_a_tag">
-                {{annotationTag}}
-            </div>
-            <div class="row" style="padding:0 15px">
-                <div style="float: left">{{annotation.updated | date: 'dd/MM/yyyy HH:mm:ss'}}</div>
-                <div style="float: right">
-                    <button type="button" class="btn btn-primary btn-xs" ng-click="editAnnotation($index)"><i
-                            class="fa fa-pencil-square-o"></i>
-                    </button>
-                    <button type="button" class="btn btn-primary btn-xs" ng-click="deleteAnnotation($index)"><i
-                            class="fa fa-trash-o"></i></button>
+                <div class="item-content">
+                    <div class="tag_colour a_hl_yellow">
+
+                    </div>
+                    <div>
+                        Açıklama, hatırlatıcı
+                    </div>
                 </div>
-            </div>
+                <i class="radio-icon ion-checkmark" ng-if="annotationModalData.colour=='yellow'"></i>
+            </label>
 
+            <label class="item item-radio">
+                <input type="radio" ng-model="annotationModalData.colour" value="red" style="float: left;">
+
+                <div class="item-content">
+                    <div class="tag_colour a_hl_red">
+
+                    </div>
+                    <div>
+                        Tam olarak anlamadım
+                    </div>
+                </div>
+                <i class="radio-icon ion-checkmark" ng-if="annotationModalData.colour=='red'"></i>
+            </label>
+
+            <label class="item item-radio">
+                <input type="radio" ng-model="annotationModalData.colour" value="green" style="float: left;">
+
+                <div class="item-content">
+                    <div class="tag_colour a_hl_green">
+
+                    </div>
+                    <div>
+                        Önemli
+                    </div>
+                </div>
+                <i class="radio-icon ion-checkmark" ng-if="annotationModalData.colour=='green'"></i>
+            </label>
         </div>
+        <div style="height:20px"></div>
     </ion-content>
 </div>
-<!--
-<div class="modal" id="annotationModal">
-    <div class="modal-dialog fixed-dialog">
-        <div class="modal-content">
-            <div class="modal-header" id="annotationData_header">
-                <strong>{{annotationModalDataVerse}}</strong>
-                {{annotationModalData.quote}}
-                <h4 class="modal-title">{{annotationModal.title}}</h4>
-            </div>
-
-            <div class="modal-body">
-                <textarea class="form-control" id="annotationData_text" ng-model="annotationModalData.text" placeholder="Yorum ekleyin"></textarea>
-
-
-                <div class="row">
-                    <div class="col-xs-6">
-                        <tags-input ng-model="$parent.theTags" display-property="name" replace-spaces-with-dashes=false
-                                    min-length="2">
-                            <auto-complete source="loadTags($query)" min-length="2"></auto-complete>
-                        </tags-input>
-                        <ul ng-repeat="selectedTag in selectedTags">
-                            <li>{{selectedTag}}</li>
-                        </ul>
-
-                    </div>
-                    <div class="col-xs-6" style="padding-top:5px;">
-                        <input type="radio" ng-model="annotationModalData.colour" value="yellow" style="float: left;">
-                        <div class="tag_colour a_hl_yellow">&nbsp;</div>
-                        <div class="tag_colour_description">Açıklama, hatırlatıcı</div>
-                        <br/>
-
-                        <input type="radio" ng-model="annotationModalData.colour" value="red" style="float: left;">
-                        <div class="tag_colour a_hl_red">&nbsp;</div>
-                        <div class="tag_colour_description">Tam olarak anlamadım</div>
-                        <br/>
-
-                        <input type="radio" ng-model="annotationModalData.colour" value="green" style="float: left;">
-                        <div class="tag_colour a_hl_green">&nbsp;</div>
-                        <div class="tag_colour_description">Önemli</div>
-                        <br/>
-                    </div>
-                </div>
-            </div>
-
-            <div class="modal-footer">
-                <button type="button" data-dismiss="modal" aria-hidden="true" class="btn" ng-click="hideEditor()">
-                    Vazgeç
-                </button>
-                <a href="#" class="btn btn-primary btn-wide" data-dismiss="modal" ng-click="submitEditor()">Tamam</a>
-            </div>
-        </div>
-    </div>
-</div>
-
--->

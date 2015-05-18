@@ -28,3 +28,16 @@ ion-content{
     right: 0 ;
     width: 100% ;
 }
+
+
+.tag_colour {
+    float: left;
+    width: 40px;
+    height: 20px;
+
+}
+
+.tag_colour_description{
+    float:left;
+    padding-left:5px;
+}

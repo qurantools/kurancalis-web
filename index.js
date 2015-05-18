@@ -798,7 +798,6 @@ app.factory('ChapterVerses', function ($resource) {
 
 
         $scope.showEditor = function (annotation, position) {
-
             var newTags = [];
             if (typeof annotation.tags != 'undefined') {
                 for (var i = 0; i < annotation.tags.length; i++) {
@@ -810,22 +809,22 @@ app.factory('ChapterVerses', function ($resource) {
             if (typeof $scope.annotationModalData.text == 'undefined') {
                 $scope.annotationModalData.text = "";
             }
-            alert(1)
-            angular.element(document.getElementById('theView')).scope().theTags = newTags;
-            alert(2)
+            if(!config_data.isMobile){
+                angular.element(document.getElementById('theView')).scope().theTags = newTags;
+            }else{
+                angular.element(document.getElementById('MainCtrl')).scope().theTags = newTags;
+            }
             $scope.annotationModalDataVerse = Math.floor(annotation.verseId / 1000) + ":" + annotation.verseId % 1000;
-
             //set default color
             if (typeof $scope.annotationModalData.colour == 'undefined')$scope.annotationModalData.colour = 'yellow';
             $scope.scopeApply();
-
             if(!config_data.isMobile){
                 $('#annotationModal').modal('show');
                 $('#annotationModal').on('hidden.bs.modal', function () {
                     $scope.hideEditor();
                 })
             }else{
-                openModal('editor');
+                $scope.openModal('editor');
             }
 
         }

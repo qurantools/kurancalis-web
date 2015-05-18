@@ -1261,7 +1261,14 @@
                     if (translation_end_id == translation_start_id && translation_start_id != 0) {
                         this.selectedRanges[0].translationId = translation_start_id;
                         this.selectedRanges[0].verseId = this.getElementIdOfSelection(this.selectedRanges[0].start, "v_");
-                        this.adder.css(Util.mousePosition(event, this.wrapper[0])).show();
+
+                        if(!config_data.isMobile) {
+                            this.adder.css(Util.mousePosition(event, this.wrapper[0])).show();
+                        }else{
+                            this.onAdderClick();
+                        }
+
+
                         return;
 
                     }
@@ -1362,12 +1369,9 @@
                 position = this.adder.position();
                 this.adder.hide();
 
-            alert(4)
 
             annotation = this.setupAnnotation(this.createAnnotation());
-alert(2)
             $(annotation.highlights).addClass('annotator-hl-temporary');
-            alert(3)
             save = (function (_this) {
                 return function () {
                     cleanup();
