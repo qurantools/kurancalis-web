@@ -128,6 +128,26 @@ if (config_data.isMobile == false) {
                 templateUrl: 'app/components/annotations/annotationsView.html',
                 reloadOnSearch: false
             })
+            .when('/people/find_people/', {
+                controller: 'PeopleCtrl',
+                templateUrl: 'app/components/people/find_people.html',
+                reloadOnSearch: false
+            })
+            .when('/people/people_have_you/', {
+                controller: 'PeopleCtrl',
+                templateUrl: 'app/components/people/people_have_you.html',
+                reloadOnSearch: false
+            })
+            .when('/people/circles/', {
+                controller: 'PeopleCtrl',
+                templateUrl: 'app/components/people/circles.html',
+                reloadOnSearch: false
+            })
+            .when('/people/explore/', {
+                controller: 'PeopleCtrl',
+                templateUrl: 'app/components/people/explore.html',
+                reloadOnSearch: false
+            })
             .otherwise({
                 redirectTo: '/'
             });
@@ -809,21 +829,21 @@ app.factory('ChapterVerses', function ($resource) {
             if (typeof $scope.annotationModalData.text == 'undefined') {
                 $scope.annotationModalData.text = "";
             }
-            if(!config_data.isMobile){
+            if (!config_data.isMobile) {
                 angular.element(document.getElementById('theView')).scope().theTags = newTags;
-            }else{
+            } else {
                 angular.element(document.getElementById('MainCtrl')).scope().theTags = newTags;
             }
             $scope.annotationModalDataVerse = Math.floor(annotation.verseId / 1000) + ":" + annotation.verseId % 1000;
             //set default color
             if (typeof $scope.annotationModalData.colour == 'undefined')$scope.annotationModalData.colour = 'yellow';
             $scope.scopeApply();
-            if(!config_data.isMobile){
+            if (!config_data.isMobile) {
                 $('#annotationModal').modal('show');
                 $('#annotationModal').on('hidden.bs.modal', function () {
                     $scope.hideEditor();
                 })
-            }else{
+            } else {
                 $scope.openModal('editor');
             }
 
@@ -1272,7 +1292,7 @@ app.factory('ChapterVerses', function ($resource) {
                 scope: $scope,
                 animation: 'slide-in-right',
                 id: 'annotations_on_page'
-            }).then(function(modal) {
+            }).then(function (modal) {
                 $scope.modal_annotations_on_page = modal
             });
 
@@ -1280,35 +1300,35 @@ app.factory('ChapterVerses', function ($resource) {
                 scope: $scope,
                 animation: 'slide-in-left',
                 id: 'editor'
-            }).then(function(modal) {
+            }).then(function (modal) {
                 $scope.modal_editor = modal
             });
 
-            $scope.openModal = function(id) {
+            $scope.openModal = function (id) {
                 if (id == 'annotations_on_page') {
                     $scope.modal_annotations_on_page.show();
-                }else if (id == 'editor') {
+                } else if (id == 'editor') {
                     $scope.modal_editor.show();
                 }
             };
 
-            $scope.closeModal = function(id) {
+            $scope.closeModal = function (id) {
                 if (id == 'annotations_on_page') {
                     $scope.modal_annotations_on_page.hide();
-                }else if (id == 'editor') {
+                } else if (id == 'editor') {
                     $scope.modal_editor.hide();
                 }
             }
 
 
-            $scope.annotationAddable=false;
-            $scope.selectionEnded = function(){
-                $scope.annotationAddable=true;
+            $scope.annotationAddable = false;
+            $scope.selectionEnded = function () {
+                $scope.annotationAddable = true;
                 $scope.scopeApply();
             }
 
-            $scope.selectionCancel=function(){
-                $scope.annotationAddable=false;
+            $scope.selectionCancel = function () {
+                $scope.annotationAddable = false;
                 $scope.scopeApply();
             }
         }

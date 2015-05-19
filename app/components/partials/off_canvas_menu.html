@@ -14,6 +14,9 @@
                         <li ng-class="{active: currentPage == 'annotations'}">
                             <a href="#/annotations/" ng-if="user!=null">Tüm notlar</a>
                         </li>
+                        <li ng-class="{active: currentPage == 'people'}">
+                            <a href="#/people/find_people/" ng-if="user!=null">Kişiler</a>
+                        </li>
                         <li ng-if="user!=null">
                             <a href ng-click="log_out()" onclick="closeLeftPanel()">Çıkış</a>
                         </li>
