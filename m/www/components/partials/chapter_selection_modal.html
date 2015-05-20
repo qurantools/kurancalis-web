@@ -20,11 +20,9 @@
                 <input type="text" placeholder="Sure" ng-model="chapterFilter"/>
             </label>
             <label class="item-input-wrapper">
-                <input type="text" ng-model="$parent.verse_number" size="3" placeholder="Ayet"/>
+                <input type="text" ng-model="verse.number" size="3" placeholder="Ayet"/>
             </label>
         </div>
-
-        <pre><span ng-bind="verse_number"></span></pre>
 
         <div class="list">
             <label class="item item-radio" ng-repeat="chapter in chapters | filter: chapterFilter">
@@ -37,7 +35,6 @@
             </label>
 
         </div>
-
 
         <div style="height:20px"></div>
     </ion-content>
