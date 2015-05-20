@@ -129,22 +129,22 @@ if (config_data.isMobile == false) {
                 reloadOnSearch: false
             })
             .when('/people/find_people/', {
-                controller: 'PeopleCtrl',
+                controller: 'PeopleFindCtrl',
                 templateUrl: 'app/components/people/find_people.html',
                 reloadOnSearch: false
             })
             .when('/people/people_have_you/', {
-                controller: 'PeopleCtrl',
+                controller: 'PeopleHaveYouCtrl',
                 templateUrl: 'app/components/people/people_have_you.html',
                 reloadOnSearch: false
             })
             .when('/people/circles/', {
-                controller: 'PeopleCtrl',
+                controller: 'PeopleCirclesCtrl',
                 templateUrl: 'app/components/people/circles.html',
                 reloadOnSearch: false
             })
             .when('/people/explore/', {
-                controller: 'PeopleCtrl',
+                controller: 'PeopleExploreCtrl',
                 templateUrl: 'app/components/people/explore.html',
                 reloadOnSearch: false
             })
