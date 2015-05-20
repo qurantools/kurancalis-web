@@ -1,0 +1,33 @@
+<nav class="navbar navbar-default navbar-fixed-top container" role="navigation">
+    <div class="row" style="padding-left: 15px;">
+        <div style="float: left;">
+            <button onclick="toggleLeftPanel()" class="btn btn-primary"><i
+                    class="fa fa-bars"></i> MENÜ
+            </button>
+
+            <a href="#/people/find_people/" class="btn btn-primary">Kullanıcı Bul
+            </a>
+
+            <a href="#/people/people_have_you/" class="btn btn-primary">Sizi çevrelerine ekleyenler
+            </a>
+
+            <a href="#/people/circles/" class="btn btn-primary">Çevreleriniz
+            </a>
+
+            <a href="#/people/explore/" class="btn btn-primary">Keşfet
+            </a>
+        </div>
+
+        <div ng-show="facebookIsReady" class="facebook_area">
+            <div ng-if="user==null">
+                <button type="button" id="login" ng-click="login()" class="btn btn-primary">
+                    Giriş
+                </button>
+            </div>
+            <div ng-if="user!=null">
+                <img ng-src="{{user.photo}}" height="30"/>
+                <span style="vertical-align: bottom;">{{user.name}}</span>
+            </div>
+        </div>
+    </div>
+</nav>

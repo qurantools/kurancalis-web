@@ -168,6 +168,10 @@ blockquote {
     height: 5px;
 }
 
+.translation_rtl{
+    direction: rtl;
+    font-size: 17px;
+}
 
 
 /* left menu */

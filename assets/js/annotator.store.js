@@ -84,7 +84,12 @@
                     return function (data) {
                         if (data.id == null) {
                             console.warn(Annotator._t("Warning: No ID returned from server for annotation "), annotation);
+                        }else{
+                            if(config_data.isMobile){
+                                angular.element(document.getElementById('MainCtrl')).scope().closeModal('editor');
+                            }
                         }
+
                         return _this.updateAnnotation(annotation, data);
                     };
                 })(this));
@@ -325,7 +330,8 @@
             highlights = annotation.highlights;
             delete annotation.highlights;
             $.extend(annotation, this.options.annotationData);
-            var tidBlock = angular.element(document.getElementById('theView')).scope().translationDivMap[annotation.translationId];
+            //theView
+            var tidBlock = angular.element(document.getElementById('MainCtrl')).scope().translationDivMap[annotation.translationId];
             annotation.ranges[0].start = annotation.ranges[0].start.replace(tidBlock, "");
             annotation.ranges[0].end = annotation.ranges[0].end.replace(tidBlock, "");
             // hack
