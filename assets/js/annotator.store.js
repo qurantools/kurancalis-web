@@ -246,8 +246,13 @@
 
                 //mobil scope değişti
                 //theView
-                var _chapter = angular.element(document.getElementById('MainCtrl')).scope().chapter_id;
-                var _author = angular.element(document.getElementById('MainCtrl')).scope().author_mask;
+                if(!config_data.isMobile) {
+                    var _chapter = angular.element(document.getElementById('theView')).scope().chapter_id;
+                    var _author = angular.element(document.getElementById('theView')).scope().author_mask;
+                }else{
+                    var _chapter = angular.element(document.getElementById('MainCtrl')).scope().chapter_id;
+                    var _author = angular.element(document.getElementById('MainCtrl')).scope().author_mask;
+                }
 
                 data = {
                     chapter: _chapter,

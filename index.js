@@ -115,10 +115,10 @@ if (config_data.isMobile == false) {
                 templateUrl: 'app/components/home/homeView.html',
                 reloadOnSearch: false
             })
-            .when('/chapter/:chapterId/author/:authorMask', {
+            .when('/chapter/:chapterId/author/:authorMask/', {
                 redirectTo: '/chapter/:chapterId/author/:authorMask/verse/1'
             })
-            .when('/chapter/:chapterId/author/:authorMask/verse/:verseNumber', {
+            .when('/chapter/:chapterId/author/:authorMask/verse/:verseNumber/', {
                 controller: 'MainCtrl',
                 templateUrl: 'app/components/home/homeView.html',
                 reloadOnSearch: false
@@ -158,7 +158,6 @@ if (config_data.isMobile == false) {
     });
 
 } else {
-
     app.config(function ($routeProvider, FacebookProvider, RestangularProvider, localStorageServiceProvider, $stateProvider, $urlRouterProvider) {
         RestangularProvider.setBaseUrl(config_data.webServiceUrl);
         localStorageServiceProvider.setStorageCookie(0, '/');
@@ -174,22 +173,15 @@ if (config_data.isMobile == false) {
                     templateUrl: "components/navigation/navigation.html"
                 })
                 .state('app.home', {
-                    url: "/chapter/:chapterId/author/:authorMask/verse/:verseNumber",
+                    url: "/chapter/:chapterId/author/:authorMask/verse/:verseNumber/",
                     views: {
                         'appContent': {
                             templateUrl: "components/home/home.html",
                             controller: "MainCtrl"
                         }
                     }
-                }).state('app.authors_list', {
-                    url: "/authors_list",
-                    views: {
-                        'appContent': {
-                            templateUrl: "components/partials/authors_list.html",
-                            controller: "MainCtrl"
-                        }
-                    }
-                }).state('app.annotations', {
+                })
+                .state('app.annotations', {
                     url: "/annotations",
                     views: {
                         'appContent': {
@@ -199,7 +191,7 @@ if (config_data.isMobile == false) {
                     }
                 })
 
-            $urlRouterProvider.otherwise("/app/chapter/1/author/1040/verse/1");
+            $urlRouterProvider.otherwise("/app/chapter/1/author/1040/verse/1/");
         } else {
             //mobile version is not ready
             $routeProvider
@@ -279,16 +271,7 @@ app.factory('ChapterVerses', function ($resource) {
     );
 })
 
-    .controller('MainCtrl', function ($scope, $q, $routeParams, $location, $timeout, ListAuthors, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService, $document, $filter, $rootScope, $state, $stateParams, $ionicModal, $ionicScrollDelegate) {
-
-
-
-
-
-
-
-
-
+    .controller('MainCtrl', function ($scope, $q, $routeParams, $location, $timeout, ListAuthors, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService, $document, $filter, $rootScope, $state, $stateParams, $ionicModal, $ionicScrollDelegate, $ionicPosition) {
 
 
         //currentPage
@@ -617,7 +600,6 @@ app.factory('ChapterVerses', function ($resource) {
         $scope.verseTagContentAuthor = $scope.selection[0];
 
         $scope.annotationSearchAuthorSelection = $scope.selection;
-
         $scope.list_translations();
 
 
@@ -663,17 +645,16 @@ app.factory('ChapterVerses', function ($resource) {
 
         //go to chapter
         $scope.goToChapter = function () {
-            console.log("verse:" + $scope.verse.number);
             if (!config_data.isMobile) {
                 if ($scope.currentPage == 'home') {
-                    $location.path('/chapter/' + $scope.chapter_id + '/author/' + $scope.author_mask + '/verse/' + $scope.verse.number, false);
+                    $location.path('/chapter/' + $scope.chapter_id + '/author/' + $scope.author_mask + '/verse/' + $scope.verse.number+'/', false);
                     $scope.list_translations();
                     $scope.updateVerseTagContent();
                 } else {
-                    window.location.href = '#/chapter/' + $scope.chapter_id + '/author/' + $scope.author_mask;
+                    window.location.href = '#/chapter/' + $scope.chapter_id + '/author/' + $scope.author_mask+'/';
                 }
             } else {
-                window.location.href = '#/app/chapter/' + $scope.chapter_id + '/author/' + $scope.author_mask + '/verse/' + $scope.verse.number;
+                $state.go("app.home", { "chapterId": $scope.chapter_id, "authorMask": $scope.author_mask, "verseNumber": $scope.verse.number});
             }
         };
 
@@ -1016,19 +997,16 @@ app.factory('ChapterVerses', function ($resource) {
         }
 
         $scope.scrollToElement = function (elementId) {
-            if (!config_data.isMobile) {
                 var destination = angular.element(document.getElementById(elementId));
-                console.log("destination:" + destination);
+
                 if (destination.length > 0) {
                     $document.scrollToElement(destination, 70, 1000);
                 }
-            } else {
-                if (elementId != "v_1001") {
-                    $location.hash(elementId);
-                    var delegate = $ionicScrollDelegate.$getByHandle('content');
-                    delegate.anchorScroll();
-                }
-            }
+            /*
+             $location.hash(elementId);
+             var delegate = $ionicScrollDelegate.$getByHandle('content');
+             delegate.anchorScroll();
+             */
         }
 
 
@@ -1050,7 +1028,6 @@ app.factory('ChapterVerses', function ($resource) {
         }
 
         $scope.loadVerseTags = function () {
-
             $scope.verseTags = [];
             var arrLen = $scope.annotations.length;
             for (var i = 0; i < arrLen; i++) {
@@ -1324,6 +1301,14 @@ app.factory('ChapterVerses', function ($resource) {
                 $scope.modal_chapter_selection = modal
             });
 
+            $ionicModal.fromTemplateUrl('components/partials/authors_list_modal.html', {
+                scope: $scope,
+                animation: 'slide-in-left',
+                id: 'authors_list'
+            }).then(function (modal) {
+                $scope.modal_authors_list = modal
+            });
+
             $scope.openModal = function (id) {
                 if (id == 'annotations_on_page') {
                     $scope.modal_annotations_on_page.show();
@@ -1331,6 +1316,8 @@ app.factory('ChapterVerses', function ($resource) {
                     $scope.modal_editor.show();
                 } else if (id == 'chapter_selection') {
                     $scope.modal_chapter_selection.show();
+                } else if (id == 'authors_list') {
+                    $scope.modal_authors_list.show();
                 }
             };
 
@@ -1341,6 +1328,8 @@ app.factory('ChapterVerses', function ($resource) {
                     $scope.modal_editor.hide();
                 } else if (id == 'chapter_selection') {
                     $scope.modal_chapter_selection.hide();
+                } else if (id == 'authors_list') {
+                    $scope.modal_authors_list.hide();
                 }
             }
 
