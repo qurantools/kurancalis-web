@@ -285,6 +285,17 @@ app.factory('ChapterVerses', function ($resource) {
         var authorMask = 1040;
         var verseNumber = 1;
 
+        $scope.setChapterId = function () {
+            if (typeof annotator != 'undefined') {
+                annotator.setChapterId = $scope.chapter_id;
+            }
+        }
+        $scope.setAuthorMask = function () {
+            if (typeof annotator != 'undefined') {
+                annotator.setAuthorMask = $scope.author_mask;
+            }
+        }
+
         if (!config_data.isMobile) {
             if (typeof $routeParams.chapterId !== 'undefined') {
                 chapterId = $routeParams.chapterId;
@@ -319,7 +330,11 @@ app.factory('ChapterVerses', function ($resource) {
 
 
         $scope.chapter_id = chapterId;
+        $scope.setChapterId();
+
         $scope.author_mask = authorMask;
+        $scope.setAuthorMask();
+
         localStorageService.set('author_mask', $scope.author_mask);
 
         $scope.verse = {};
@@ -360,10 +375,12 @@ app.factory('ChapterVerses', function ($resource) {
             }
             if ($scope.loggedIn) {  //giris yapilmadiysa yukleme, kavga olmasin.
                 annotator = new Annotator($('#translations'));
+
+                //set for annotator usage
                 annotator.setAccessToken($scope.access_token);
-
-
                 annotator.setTranslationDivMap($scope.translationDivMap);
+                annotator.setChapterId($scope.chapter_id);
+                annotator.setAuthorMask($scope.author_mask);
 
                 annotator.addPlugin('Store', {
                     prefix: config_data.webServiceUrl,
@@ -375,8 +392,6 @@ app.factory('ChapterVerses', function ($resource) {
                         search: '/search'
                     }
                 });
-
-
 
 
                 annotator.addPlugin('Tags');
@@ -415,7 +430,7 @@ app.factory('ChapterVerses', function ($resource) {
                         else {
                             ilkimi = 0;
                         }
-                       $scope.translationDivMap[vid]="/div[" + (i + 1) + "]/div[1]/div[" + (j + 1) + "]/div[" + (1 + ilkimi) + "]/div[2]/span[1]";
+                        $scope.translationDivMap[vid] = "/div[" + (i + 1) + "]/div[1]/div[" + (j + 1) + "]/div[" + (1 + ilkimi) + "]/div[2]/span[1]";
                     }
                 }
             });
@@ -486,14 +501,6 @@ app.factory('ChapterVerses', function ($resource) {
                     $scope.selection.push($scope.authorMap[index].id);
                 }
             }
-        }
-
-        $scope.getAuthorMask = function () {
-            return $scope.author_mask;
-        }
-
-        $scope.getChapterId = function () {
-            return $scope.chapter_id;
         }
 
         $scope.toggleSidebar = function () {
@@ -634,6 +641,7 @@ app.factory('ChapterVerses', function ($resource) {
             for (var index in $scope.selection) {
                 $scope.author_mask = $scope.author_mask | $scope.selection[index];
             }
+            $scope.setAuthorMask();
             localStorageService.set('author_mask', $scope.author_mask);
         };
 
@@ -655,14 +663,18 @@ app.factory('ChapterVerses', function ($resource) {
         $scope.goToChapter = function () {
             if (!config_data.isMobile) {
                 if ($scope.currentPage == 'home') {
-                    $location.path('/chapter/' + $scope.chapter_id + '/author/' + $scope.author_mask + '/verse/' + $scope.verse.number+'/', false);
+                    $location.path('/chapter/' + $scope.chapter_id + '/author/' + $scope.author_mask + '/verse/' + $scope.verse.number + '/', false);
                     $scope.list_translations();
                     $scope.updateVerseTagContent();
                 } else {
-                    window.location.href = '#/chapter/' + $scope.chapter_id + '/author/' + $scope.author_mask+'/';
+                    window.location.href = '#/chapter/' + $scope.chapter_id + '/author/' + $scope.author_mask + '/';
                 }
             } else {
-                $state.go("app.home", { "chapterId": $scope.chapter_id, "authorMask": $scope.author_mask, "verseNumber": $scope.verse.number});
+                $state.go("app.home", {
+                    "chapterId": $scope.chapter_id,
+                    "authorMask": $scope.author_mask,
+                    "verseNumber": $scope.verse.number
+                });
             }
         };
 
@@ -676,6 +688,7 @@ app.factory('ChapterVerses', function ($resource) {
                 }
             } else {
                 $scope.author_mask = localStorageService.get('author_mask');
+                $scope.setAuthorMask();
                 $scope.goToChapter();
             }
 
@@ -759,6 +772,7 @@ app.factory('ChapterVerses', function ($resource) {
             $scope.verseTagsJSON = {};
             if ($scope.currentPage != "home") {
                 $scope.chapter_id = 1;
+                $scope.setChapterId();
                 $scope.goToChapter();
             }
         }
@@ -863,6 +877,7 @@ app.factory('ChapterVerses', function ($resource) {
         }
 
         $scope.colorAnnotations = function (annotations) {
+            console.log("colorannotations")
             for (var annotationIndex in annotations) {
                 $scope.colorTheAnnotation(annotations[annotationIndex]);
             }
@@ -874,7 +889,7 @@ app.factory('ChapterVerses', function ($resource) {
             $scope.scopeApply();
 
             //unbind
-            if(config_data.isMobile){
+            if (config_data.isMobile) {
                 $(document).unbind('mouseup');
                 $(document).unbind('mousedown');
             }
@@ -1011,11 +1026,11 @@ app.factory('ChapterVerses', function ($resource) {
         }
 
         $scope.scrollToElement = function (elementId) {
-                var destination = angular.element(document.getElementById(elementId));
+            var destination = angular.element(document.getElementById(elementId));
 
-                if (destination.length > 0) {
-                    $document.scrollToElement(destination, 70, 1000);
-                }
+            if (destination.length > 0) {
+                $document.scrollToElement(destination, 70, 1000);
+            }
             /*
              $location.hash(elementId);
              var delegate = $ionicScrollDelegate.$getByHandle('content');
@@ -1237,6 +1252,7 @@ app.factory('ChapterVerses', function ($resource) {
         $scope.setSelectedChapter = function (selectedItem) {
             $scope.chapterSelected = selectedItem;
             $scope.chapter_id = selectedItem.id;
+            $scope.setChapterId();
         }
 
 //init chapter select box

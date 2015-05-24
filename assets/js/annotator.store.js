@@ -248,8 +248,14 @@
                     var _chapter = angular.element(document.getElementById('theView')).scope().chapter_id;
                     var _author = angular.element(document.getElementById('theView')).scope().author_mask;
                 }else{
+/*
                     var _chapter = angular.element(document.getElementById('MainCtrl')).scope().chapter_id;
                     var _author = angular.element(document.getElementById('MainCtrl')).scope().author_mask;
+                    */
+                    var _chapter =annotator.getChapterId();
+                    var _author =annotator.getAuthorMask();
+
+                        console.log("chapter:"+_chapter);
                 }
                 data = {
                     chapter: _chapter,

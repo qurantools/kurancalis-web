@@ -915,6 +915,20 @@
             return this.translationDivMap[index];
         };
 
+        Annotator.prototype.setChapterId = function (value) {
+            this.chapterId=value;
+        };
+        Annotator.prototype.getChapterId = function () {
+            return this.chapterId;
+        };
+
+        Annotator.prototype.setAuthorMask = function (value) {
+            this.authorMask=value;
+        };
+        Annotator.prototype.getAuthorMask = function () {
+            return this.authorMask;
+        };
+
         Annotator.prototype._setupWrapper = function () {
             this.wrapper = $(this.html.wrapper);
             this.element.find('script').remove();
