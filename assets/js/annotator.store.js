@@ -85,8 +85,8 @@
                     return function (data) {
                         if (data.id == null) {
                             console.warn(Annotator._t("Warning: No ID returned from server for annotation "), annotation);
-                        }else{
-                            if(config_data.isMobile){
+                        } else {
+                            if (config_data.isMobile) {
                                 angular.element(document.getElementById('MainCtrl')).scope().closeModal('editor');
                             }
                         }
@@ -137,9 +137,10 @@
         };
 
         Store.prototype.loadAnnotations = function () {
-            if (typeof this.annotator.getAccessToken() === 'undefined' || this.annotator.getAccessToken()=='') {
+            if (typeof this.annotator.getAccessToken() === 'undefined' || this.annotator.getAccessToken() == '') {
                 return;
-            };
+            }
+            ;
             return this._apiRequest('read', null, this._onLoadAnnotations);
         };
 
@@ -163,9 +164,6 @@
                 //theView
                 //var tidBlock = angular.element(document.getElementById('theView')).scope().translationDivMap[data[_j].translationId];
                 var tidBlock = annotator.getTranslationDivMap(data[_j].translationId);
-
-
-
 
                 data[_j].ranges[0].start = tidBlock + data[_j].ranges[0].start;
                 data[_j].ranges[0].end = tidBlock + data[_j].ranges[0].end;
@@ -219,9 +217,9 @@
         Store.prototype._apiRequestOptions = function (action, obj, onSuccess) {
             var data, method, opts, formData;
             var postData = [];
-           //mobil scope değişti
+            //mobil scope değişti
 
-           // var accessToken = angular.element(document.getElementById('MainCtrl')).scope().access_token;
+            // var accessToken = angular.element(document.getElementById('MainCtrl')).scope().access_token;
             method = this._methodFor(action);
 
             opts = {
@@ -244,18 +242,18 @@
                 //mobil scope değişti
                 //theView
 
-                if(!config_data.isMobile) {
+                if (!config_data.isMobile) {
                     var _chapter = angular.element(document.getElementById('theView')).scope().chapter_id;
                     var _author = angular.element(document.getElementById('theView')).scope().author_mask;
-                }else{
-/*
-                    var _chapter = angular.element(document.getElementById('MainCtrl')).scope().chapter_id;
-                    var _author = angular.element(document.getElementById('MainCtrl')).scope().author_mask;
-                    */
-                    var _chapter =annotator.getChapterId();
-                    var _author =annotator.getAuthorMask();
+                } else {
+                    /*
+                     var _chapter = angular.element(document.getElementById('MainCtrl')).scope().chapter_id;
+                     var _author = angular.element(document.getElementById('MainCtrl')).scope().author_mask;
+                     */
+                    var _chapter = annotator.getChapterId();
+                    var _author = annotator.getAuthorMask();
 
-                        console.log("chapter:"+_chapter);
+                    console.log("chapter:" + _chapter);
                 }
                 data = {
                     chapter: _chapter,
@@ -339,15 +337,15 @@
             delete annotation.highlights;
             $.extend(annotation, this.options.annotationData);
             //theView
-           // var tidBlock = angular.element(document.getElementById('theView')).scope().translationDivMap[annotation.translationId];
+            // var tidBlock = angular.element(document.getElementById('theView')).scope().translationDivMap[annotation.translationId];
 
             var tidBlock = annotator.getTranslationDivMap(annotation.translationId);
             annotation.ranges[0].start = annotation.ranges[0].start.replace(tidBlock, "");
             annotation.ranges[0].end = annotation.ranges[0].end.replace(tidBlock, "");
             // hack
-            annotation.chapterId = angular.element(document.getElementById('MainCtrl')).scope().chapterId;
+            annotation.chapterId = this.annotator.getChapterId();
 
-            annotation.author = angular.element(document.getElementById('MainCtrl')).scope().author;
+            annotation.author = this.annotator.getAuthorMask();
 
             annotation.content = annotation.text;
             annotation.colour = annotation.colour;

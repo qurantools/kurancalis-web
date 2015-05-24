@@ -399,7 +399,12 @@ app.factory('ChapterVerses', function ($resource) {
                 annotator.subscribe("annotationCreated", $scope.colorTheAnnotation);
                 annotator.subscribe("annotationUpdated", $scope.colorTheAnnotation);
                 annotator.subscribe("annotationsLoaded", $scope.loadAnnotations);
-                annotator.subscribe("annotationsLoaded", $scope.colorAnnotations);
+
+                //unbind
+                if (config_data.isMobile) {
+                    $(document).unbind('mouseup');
+                    $(document).unbind('mousedown');
+                }
             }
 
 
@@ -440,11 +445,14 @@ app.factory('ChapterVerses', function ($resource) {
                 //mark annotations
                 $scope.annotate_it();
 
+                //$state.go($state.current, {}, {reload: true});
+
                 //scroll to verse if user is not logged in.
                 //if user is logged in, they will scroll on tag generation.
                 if ($scope.user == null) {
                     $scope.scrollToVerse();
                 }
+
 
             }, 2000);
 
@@ -674,7 +682,7 @@ app.factory('ChapterVerses', function ($resource) {
                     "chapterId": $scope.chapter_id,
                     "authorMask": $scope.author_mask,
                     "verseNumber": $scope.verse.number
-                });
+                }, {reload: true});
             }
         };
 
@@ -888,11 +896,8 @@ app.factory('ChapterVerses', function ($resource) {
             $scope.loadVerseTags();
             $scope.scopeApply();
 
-            //unbind
-            if (config_data.isMobile) {
-                $(document).unbind('mouseup');
-                $(document).unbind('mousedown');
-            }
+            $scope.colorAnnotations(annotations);
+
         }
 
         $scope.removeAnnotation = function (annotation) {

@@ -319,8 +319,8 @@
         }
         offset = $(offsetEl).offset();
         return {
-           top: e.pageY - offset.top,
-           left: e.pageX - offset.left
+            top: e.pageY - offset.top,
+            left: e.pageX - offset.left
         };
     };
 
@@ -900,7 +900,7 @@
         }
 
         Annotator.prototype.setAccessToken = function (at) {
-            this.accessToken=at;
+            this.accessToken = at;
         };
 
         Annotator.prototype.getAccessToken = function () {
@@ -908,7 +908,7 @@
         };
 
         Annotator.prototype.setTranslationDivMap = function (value) {
-            this.translationDivMap=value;
+            this.translationDivMap = value;
         };
 
         Annotator.prototype.getTranslationDivMap = function (index) {
@@ -916,14 +916,14 @@
         };
 
         Annotator.prototype.setChapterId = function (value) {
-            this.chapterId=value;
+            this.chapterId = value;
         };
         Annotator.prototype.getChapterId = function () {
             return this.chapterId;
         };
 
         Annotator.prototype.setAuthorMask = function (value) {
-            this.authorMask=value;
+            this.authorMask = value;
         };
         Annotator.prototype.getAuthorMask = function () {
             return this.authorMask;
@@ -990,15 +990,15 @@
                 style = $('<style id="annotator-dynamic-style"></style>').appendTo(document.head);
             }
             sel = '*' + ((function () {
-                var _k, _len2, _ref1, _results;
-                _ref1 = ['adder', 'outer', 'notice', 'filter'];
-                _results = [];
-                for (_k = 0, _len2 = _ref1.length; _k < _len2; _k++) {
-                    x = _ref1[_k];
-                    _results.push(":not(.annotator-" + x + ")");
-                }
-                return _results;
-            })()).join('');
+                    var _k, _len2, _ref1, _results;
+                    _ref1 = ['adder', 'outer', 'notice', 'filter'];
+                    _results = [];
+                    for (_k = 0, _len2 = _ref1.length; _k < _len2; _k++) {
+                        x = _ref1[_k];
+                        _results.push(":not(.annotator-" + x + ")");
+                    }
+                    return _results;
+                })()).join('');
             max = Util.maxZIndex($(document.body).find(sel));
             max = Math.max(max, 1000);
             style.text([".annotator-adder, .annotator-outer, .annotator-notice {", "  z-index: " + (max + 20) + ";", "}", ".annotator-filter {", "  z-index: " + (max + 10) + ";", "}"].join("\n"));
@@ -1072,7 +1072,7 @@
         Annotator.prototype.createAnnotation = function () {
             var annotation;
             annotation = {};
-              this.publish('beforeAnnotationCreated', [annotation]);
+            this.publish('beforeAnnotationCreated', [annotation]);
             angular.element(document.getElementById('MainCtrl')).scope().addAnnotation(annotation);
             return annotation;
         };
@@ -1292,9 +1292,9 @@
                         this.selectedRanges[0].translationId = translation_start_id;
                         this.selectedRanges[0].verseId = this.getElementIdOfSelection(this.selectedRanges[0].start, "v_");
 
-                        if(!config_data.isMobile) {
+                        if (!config_data.isMobile) {
                             this.adder.css(Util.mousePosition(event, this.wrapper[0])).show();
-                        }else{
+                        } else {
                             this.onAdderClick();
                         }
 
@@ -1304,20 +1304,20 @@
                     }
                     else {
                         Annotator.showNotification("Sadece meal içerisini karalamalısınız", Annotator.Notification.ERROR);
-                            this.adder.hide();
+                        this.adder.hide();
                         return;
                     }
 
                 }
                 else {
                     Annotator.showNotification("Sadece meal içerisini karalamalısınız", Annotator.Notification.ERROR);
-                        this.adder.hide();
+                    this.adder.hide();
                     return;
 
                 }
             }
             else {
-                    return this.adder.hide();
+                return this.adder.hide();
 
 
             }
@@ -1397,8 +1397,8 @@
                 event.preventDefault();
             }
 
-                position = this.adder.position();
-                this.adder.hide();
+            position = this.adder.position();
+            this.adder.hide();
 
 
             annotation = this.setupAnnotation(this.createAnnotation());
@@ -1638,12 +1638,12 @@
             focus: 'annotator-focus'
         };
         Editor.prototype.html = "<div class=\"annotator-outer annotator-editor\">\n  <form class=\"annotator-widget\">\n"
-            //     + "<div id='annotationData_header'></div>"
-        + "<ul class=\"annotator-listing\"></ul>\n    <div class=\"annotator-controls\">\n   "
-        + "<button onclick=\"location.href('#cancel')\" class=\"btn annotator-cancel\">" + _t('İptal') + "</button>\n"
-        + "<button onclick=\"location.href('#save')\" type=\"button\" class=\"btn btn-primary annotator-save annotator-focus\">" + _t('Kaydet') + "</button>\n"
-            // +"<a href=\"#cancel\" class=\"annotator-cancel\">" + _t('Cancel') + "</a>\n<a href=\"#save\" type=\"button\" class=\"btn btn-primary annotator-save annotator-focus\">" + _t('Save') + "</a>\n "
-        + "</div>\n  </form>\n</div>";
+                //     + "<div id='annotationData_header'></div>"
+            + "<ul class=\"annotator-listing\"></ul>\n    <div class=\"annotator-controls\">\n   "
+            + "<button onclick=\"location.href('#cancel')\" class=\"btn annotator-cancel\">" + _t('İptal') + "</button>\n"
+            + "<button onclick=\"location.href('#save')\" type=\"button\" class=\"btn btn-primary annotator-save annotator-focus\">" + _t('Kaydet') + "</button>\n"
+                // +"<a href=\"#cancel\" class=\"annotator-cancel\">" + _t('Cancel') + "</a>\n<a href=\"#save\" type=\"button\" class=\"btn btn-primary annotator-save annotator-focus\">" + _t('Save') + "</a>\n "
+            + "</div>\n  </form>\n</div>";
         Editor.prototype.options = {};
 
         function Editor(options) {
