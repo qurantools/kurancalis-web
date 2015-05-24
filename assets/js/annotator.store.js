@@ -29,6 +29,8 @@
     Annotator.Plugin.Store = (function (_super) {
         __extends(Store, _super);
 
+        Store.prototype.accessToken = "";
+
         Store.prototype.events = {
             'annotationCreated': 'annotationCreated',
             'annotationDeleted': 'annotationDeleted',
@@ -57,6 +59,7 @@
             Store.__super__.constructor.apply(this, arguments);
             this.annotations = [];
         }
+
 
         Store.prototype.pluginInit = function () {
             if (!Annotator.supported()) {
@@ -140,14 +143,11 @@
             var theScope = angular.element(document.getElementById('theView')).scope();
             //var theScope = angular.element(document.getElementById('MainCtrl')).scope();
 
-            var accessToken;
-            if (theScope) {
-                accessToken = theScope.access_token;
-            }
-            if (typeof accessToken === 'undefined') {
+
+            console.log("this.accessToken"+this.annotator.getAccessToken())
+            if (typeof this.annotator.getAccessToken() === 'undefined' || this.annotator.getAccessToken()=='') {
                 return;
-            }
-            ;
+            };
             return this._apiRequest('read', null, this._onLoadAnnotations);
         };
 
@@ -223,7 +223,7 @@
             var data, method, opts, formData;
             var postData = [];
            //mobil scope değişti
-            var accessToken = angular.element(document.getElementById('theView')).scope().access_token;
+
            // var accessToken = angular.element(document.getElementById('MainCtrl')).scope().access_token;
             method = this._methodFor(action);
 
@@ -236,7 +236,7 @@
                 error: this._onError
             };
             opts.headers = $.extend(opts.headers, {
-                'access_token': accessToken
+                'access_token': this.annotator.getAccessToken()
             });
 
             if (opts.type == "GET") {

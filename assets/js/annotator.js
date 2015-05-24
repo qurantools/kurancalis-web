@@ -899,6 +899,14 @@
             Annotator._instances.push(this);
         }
 
+        Annotator.prototype.setAccessToken = function (at) {
+            this.accessToken=at;
+        };
+
+        Annotator.prototype.getAccessToken = function () {
+            return this.accessToken;
+        };
+
         Annotator.prototype._setupWrapper = function () {
             this.wrapper = $(this.html.wrapper);
             this.element.find('script').remove();

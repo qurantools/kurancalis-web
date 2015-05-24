@@ -360,6 +360,8 @@ app.factory('ChapterVerses', function ($resource) {
             }
             if ($scope.loggedIn) {  //giris yapilmadiysa yukleme, kavga olmasin.
                 annotator = new Annotator($('#translations'));
+                annotator.setAccessToken($scope.access_token);
+
                 annotator.addPlugin('Store', {
                     prefix: config_data.webServiceUrl,
                     //prefix: 'http://localhost:8080/QuranToolsApp/rest',
@@ -370,6 +372,9 @@ app.factory('ChapterVerses', function ($resource) {
                         search: '/search'
                     }
                 });
+
+
+
 
                 annotator.addPlugin('Tags');
                 $scope.annotatorActivated = 1;
