@@ -137,8 +137,8 @@
 
         Store.prototype.loadAnnotations = function () {
             //mobil scope değişti
-            //var theScope = angular.element(document.getElementById('theView')).scope();
-            var theScope = angular.element(document.getElementById('MainCtrl')).scope();
+            var theScope = angular.element(document.getElementById('theView')).scope();
+            //var theScope = angular.element(document.getElementById('MainCtrl')).scope();
 
             var accessToken;
             if (theScope) {
@@ -169,7 +169,7 @@
                 //add translation DIV prefix to annotations
                 //mobil scope değişti
                 //theView
-                var tidBlock = angular.element(document.getElementById('MainCtrl')).scope().translationDivMap[data[_j].translationId];
+                var tidBlock = angular.element(document.getElementById('theView')).scope().translationDivMap[data[_j].translationId];
                 data[_j].ranges[0].start = tidBlock + data[_j].ranges[0].start;
                 data[_j].ranges[0].end = tidBlock + data[_j].ranges[0].end;
 
@@ -223,8 +223,8 @@
             var data, method, opts, formData;
             var postData = [];
            //mobil scope değişti
-           // var accessToken = angular.element(document.getElementById('theView')).scope().access_token;
-            var accessToken = angular.element(document.getElementById('MainCtrl')).scope().access_token;
+            var accessToken = angular.element(document.getElementById('theView')).scope().access_token;
+           // var accessToken = angular.element(document.getElementById('MainCtrl')).scope().access_token;
             method = this._methodFor(action);
 
             opts = {
@@ -336,7 +336,7 @@
             delete annotation.highlights;
             $.extend(annotation, this.options.annotationData);
             //theView
-            var tidBlock = angular.element(document.getElementById('MainCtrl')).scope().translationDivMap[annotation.translationId];
+            var tidBlock = angular.element(document.getElementById('theView')).scope().translationDivMap[annotation.translationId];
             annotation.ranges[0].start = annotation.ranges[0].start.replace(tidBlock, "");
             annotation.ranges[0].end = annotation.ranges[0].end.replace(tidBlock, "");
             // hack

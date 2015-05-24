@@ -864,6 +864,12 @@ app.factory('ChapterVerses', function ($resource) {
             $scope.annotations = annotations;
             $scope.loadVerseTags();
             $scope.scopeApply();
+
+            //unbind
+            if(config_data.isMobile){
+                $(document).unbind('mouseup');
+                $(document).unbind('mousedown');
+            }
         }
 
         $scope.removeAnnotation = function (annotation) {

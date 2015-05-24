@@ -1347,8 +1347,9 @@
             });
 
             //mobil theView
-            angular.element(document.getElementById('MainCtrl')).scope().filteredAnnotations = annotations;
-            angular.element(document.getElementById('MainCtrl')).scope().scopeApply();
+            angular.element(document.getElementById('theView')).scope().filteredAnnotations = annotations;
+            angular.element(document.getElementById('theView')).scope().scopeApply();
+
             openPanel();
             //  return this.showViewer($.makeArray(annotations), Util.mousePosition(event, this.wrapper[0]));
         };
