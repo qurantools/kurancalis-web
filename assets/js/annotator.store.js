@@ -161,7 +161,12 @@
                 //add translation DIV prefix to annotations
                 //mobil scope değişti
                 //theView
-                var tidBlock = angular.element(document.getElementById('theView')).scope().translationDivMap[data[_j].translationId];
+                //var tidBlock = angular.element(document.getElementById('theView')).scope().translationDivMap[data[_j].translationId];
+                var tidBlock = annotator.getTranslationDivMap(data[_j].translationId);
+
+
+
+
                 data[_j].ranges[0].start = tidBlock + data[_j].ranges[0].start;
                 data[_j].ranges[0].end = tidBlock + data[_j].ranges[0].end;
 
@@ -238,6 +243,7 @@
 
                 //mobil scope değişti
                 //theView
+
                 if(!config_data.isMobile) {
                     var _chapter = angular.element(document.getElementById('theView')).scope().chapter_id;
                     var _author = angular.element(document.getElementById('theView')).scope().author_mask;
@@ -245,7 +251,6 @@
                     var _chapter = angular.element(document.getElementById('MainCtrl')).scope().chapter_id;
                     var _author = angular.element(document.getElementById('MainCtrl')).scope().author_mask;
                 }
-
                 data = {
                     chapter: _chapter,
                     author: _author
@@ -328,7 +333,9 @@
             delete annotation.highlights;
             $.extend(annotation, this.options.annotationData);
             //theView
-            var tidBlock = angular.element(document.getElementById('theView')).scope().translationDivMap[annotation.translationId];
+           // var tidBlock = angular.element(document.getElementById('theView')).scope().translationDivMap[annotation.translationId];
+
+            var tidBlock = annotator.getTranslationDivMap(annotation.translationId);
             annotation.ranges[0].start = annotation.ranges[0].start.replace(tidBlock, "");
             annotation.ranges[0].end = annotation.ranges[0].end.replace(tidBlock, "");
             // hack

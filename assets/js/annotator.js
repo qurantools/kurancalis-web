@@ -907,6 +907,14 @@
             return this.accessToken;
         };
 
+        Annotator.prototype.setTranslationDivMap = function (value) {
+            this.translationDivMap=value;
+        };
+
+        Annotator.prototype.getTranslationDivMap = function (index) {
+            return this.translationDivMap[index];
+        };
+
         Annotator.prototype._setupWrapper = function () {
             this.wrapper = $(this.html.wrapper);
             this.element.find('script').remove();

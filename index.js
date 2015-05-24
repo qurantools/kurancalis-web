@@ -362,6 +362,9 @@ app.factory('ChapterVerses', function ($resource) {
                 annotator = new Annotator($('#translations'));
                 annotator.setAccessToken($scope.access_token);
 
+
+                annotator.setTranslationDivMap($scope.translationDivMap);
+
                 annotator.addPlugin('Store', {
                     prefix: config_data.webServiceUrl,
                     //prefix: 'http://localhost:8080/QuranToolsApp/rest',
@@ -380,8 +383,8 @@ app.factory('ChapterVerses', function ($resource) {
                 $scope.annotatorActivated = 1;
                 annotator.subscribe("annotationCreated", $scope.colorTheAnnotation);
                 annotator.subscribe("annotationUpdated", $scope.colorTheAnnotation);
-                annotator.subscribe("annotationsLoaded", $scope.colorAnnotations);
                 annotator.subscribe("annotationsLoaded", $scope.loadAnnotations);
+                annotator.subscribe("annotationsLoaded", $scope.colorAnnotations);
             }
 
 
@@ -412,7 +415,7 @@ app.factory('ChapterVerses', function ($resource) {
                         else {
                             ilkimi = 0;
                         }
-                        $scope.translationDivMap[vid] = "/div[" + (i + 1) + "]/div[1]/div[" + (j + 1) + "]/div[" + (1 + ilkimi) + "]/div[2]/span[1]";
+                       $scope.translationDivMap[vid]="/div[" + (i + 1) + "]/div[1]/div[" + (j + 1) + "]/div[" + (1 + ilkimi) + "]/div[2]/span[1]";
                     }
                 }
             });
