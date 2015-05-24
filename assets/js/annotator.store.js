@@ -29,8 +29,6 @@
     Annotator.Plugin.Store = (function (_super) {
         __extends(Store, _super);
 
-        Store.prototype.accessToken = "";
-
         Store.prototype.events = {
             'annotationCreated': 'annotationCreated',
             'annotationDeleted': 'annotationDeleted',
@@ -139,12 +137,6 @@
         };
 
         Store.prototype.loadAnnotations = function () {
-            //mobil scope değişti
-            var theScope = angular.element(document.getElementById('theView')).scope();
-            //var theScope = angular.element(document.getElementById('MainCtrl')).scope();
-
-
-            console.log("this.accessToken"+this.annotator.getAccessToken())
             if (typeof this.annotator.getAccessToken() === 'undefined' || this.annotator.getAccessToken()=='') {
                 return;
             };
