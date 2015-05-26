@@ -1,0 +1,27 @@
+<div class="modal modal-fullscreen">
+    <div class="bar bar-balanced">
+        <div style="text-align: left; width:100px;">
+            <button class="button button-icon icon-left ion-arrow-left-b" ng-click="updateAuthors();closeModal('authors_list')"
+                    style="float: left"> Tamam
+            </button>
+        </div>
+        <div style="text-align: center; width:100px;"><h1 class="title">Yazar Seçimi</h1></div>
+    </div>
+    <ion-content overflow-scroll="true">
+        <div style="height:50px"></div>
+        <ul class="list">
+            <li class="item item-checkbox" ng-repeat="author in authors">
+                <label class="checkbox">
+                    <input
+                            type="checkbox"
+                            name="selectedauthors[]"
+                            value="{{author.id}}"
+                            ng-checked="$parent.selection.indexOf(author.id) > -1"
+                            ng-click="toggleSelection(author.id)"
+                            >
+                </label>
+                {{author.name}}
+            </li>
+        </ul>
+    </ion-content>
+</div>

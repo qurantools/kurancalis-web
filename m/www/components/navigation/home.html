@@ -3,11 +3,10 @@
         <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced">
             <ion-nav-buttons side="left">
                 <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
-                <button class="button button-icon icon ion-arrow-right-b"></button>
-                <a href="#/app/authors_list" class="button button-icon icon ion-person"></a>
+                <button class="button button-icon icon ion-arrow-right-b" ng-click="openModal('chapter_selection')"></button>
+                <button class="button button-icon icon ion-person" ng-click="openModal('authors_list')"></button>
 
                 <input type="hidden" ng-model="chapter_id" />
-                <input type="hidden" ng-model="verse_number" />
                 <input type="hidden" ng-model="author_mask" />
                 <!--author_mask:{{author_mask}}-->
 
@@ -17,10 +16,6 @@
             <h1 class="title"></h1>
             <ion-nav-buttons side="right">
                 <button class="button" ng-click="login()" ng-if="user==null">Giriş</button>
-                <!--
-                <a href="#/app/annotations_on_page" class="button button-icon icon ion-clipboard"
-                   ng-if="user!=null"></a>
-                -->
                 <a href ng-click="openModal('annotations_on_page')" class="button button-icon icon ion-clipboard"
                    ng-if="user!=null"></a>
 
