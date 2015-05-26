@@ -1,11 +1,64 @@
-<body>
+<body ng-app="mymodal">
 <div class="container">
     <div ng-include="'app/components/people/people_navigation.html'"></div>
     <div class="nav-bottom"></div>
     <div class="row">
-        <h1>circles</h1>
-        <h2>controller/scope test: {{testData}}</h2>
-    </div>
+        <!--  <h1>circles</h1>
+        <h2>controller/scope test: {{testData}}</h2> -->
+        <button style="width:135px; margin: 10px 17px;"  ng-click="toggleModal()" class="btn btn-primary"><font size="7">+</font><br />Yeni Cevre</button>
+    
+    
+     <table  class="btn btn-primary" ng-repeat="item in cevreadlar" style="width:135px; height:108px; margin: 10px 17px;">
+     <td align="center" style="width:135px"><a href="#" style="color:White">{{cevreadlar[$index].name}}</a>
+     <hr />
+     <button class="btn btn-primary" ng-click="cdegistirModal('{{cevreadlar[$index].name}}','{{cevreadlar[$index].id}}')">
+     <i class="fa fa-edit"></i>
+     </button>
+     <button class="btn btn-primary" ng-click="csilModal('{{cevreadlar[$index].name}}','{{cevreadlar[$index].id}}')">
+     <i class="fa fa-trash-o"></i>
+     </button>     
+     </td>
+     </table>
+     
+     <div>
+        <modal title="Yeni Cevre Ekleme" visible="showModal">
+      <div class="form-group">
+        <label for="email">Cevre Tanýmý</label>
+        <input type="text" class="form-control" ng-model="cevread" placeholder="Cevre Tanýmý" />
+      </div>
+      <div class="modal-footer" >
+      <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal" >Ýptal</a> 
+      <a class="btn btn-primary btn-wide" ng-click="cevrekle(cevread)" data-dismiss="modal">Tamam</a>
+      </div>
+    </modal>
+  </div>
+  
+  <div>
+        <silmodal title="Çevre Sil" visible="csil">
+      <div>
+        <label for="email">{{cevreadi}} </BR>  Çevresi silinecektir. Onaylýyor musunuz?</label>
+      </div>
+      <div class="modal-footer">
+       <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal" >Ýptal</a> 
+       <a class="btn btn-primary btn-wide" ng-click="cevresil(cid)" data-dismiss="modal">Tamam</a>
+      </div>
+    </silmodal>
 </div>
+
+<div>
+        <degistirmodal title="Çevre Bilgileri" visible="cdegistir">
+      <div>
+        <input type="text" class="form-control" ng-model="cevredgsad" />
+      </div>
+      <div class="modal-footer">
+       <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal" >Ýptal</a> 
+       <a class="btn btn-primary btn-wide" ng-click="cevredegistir(cvrid,cevredgsad)" data-dismiss="modal">Tamam</a>
+      </div>
+    </degistirmodal>
+</div>
+ 
+</div>
+  </div>
 <div ng-include="'app/components/partials/off_canvas_menu.html'"></div>
+<hr />
 </body>
