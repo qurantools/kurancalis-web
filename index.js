@@ -272,7 +272,6 @@ app.factory('ChapterVerses', function ($resource) {
 })
 
     .controller('MainCtrl', function ($scope, $q, $routeParams, $location, $timeout, ListAuthors, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService, $document, $filter, $rootScope, $state, $stateParams, $ionicModal, $ionicScrollDelegate, $ionicPosition, authorization) {
-
         $scope.authorization=authorization;
 
         //currentPage
