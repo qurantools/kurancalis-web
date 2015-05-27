@@ -1,4 +1,4 @@
-var requiredModules = ['ionic', 'ngResource', 'ngRoute', 'facebook', 'restangular', 'LocalStorageModule', 'ngTagsInput', 'duScroll', 'directives.showVerse', 'ui.select', 'myConfig'];
+var requiredModules = ['ionic', 'ngResource', 'ngRoute', 'facebook', 'restangular', 'LocalStorageModule', 'ngTagsInput', 'duScroll', 'directives.showVerse', 'ui.select', 'myConfig', 'authorizationModule'];
 
 if (config_data.isMobile) {
     var mobileModules = [];//'ionic'
@@ -271,8 +271,9 @@ app.factory('ChapterVerses', function ($resource) {
     );
 })
 
-    .controller('MainCtrl', function ($scope, $q, $routeParams, $location, $timeout, ListAuthors, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService, $document, $filter, $rootScope, $state, $stateParams, $ionicModal, $ionicScrollDelegate, $ionicPosition) {
+    .controller('MainCtrl', function ($scope, $q, $routeParams, $location, $timeout, ListAuthors, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService, $document, $filter, $rootScope, $state, $stateParams, $ionicModal, $ionicScrollDelegate, $ionicPosition, authorization) {
 
+        $scope.authorization=authorization;
 
         //currentPage
         $scope.currentPage = '';
@@ -885,7 +886,6 @@ app.factory('ChapterVerses', function ($resource) {
         }
 
         $scope.colorAnnotations = function (annotations) {
-            console.log("colorannotations")
             for (var annotationIndex in annotations) {
                 $scope.colorTheAnnotation(annotations[annotationIndex]);
             }
@@ -1380,6 +1380,7 @@ app.factory('ChapterVerses', function ($resource) {
                 $scope.scopeApply();
             }
         }
+
     })
 
 
