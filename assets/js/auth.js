@@ -26,12 +26,17 @@ authorizationModule.factory('User', function ($resource) {
             }
         }
     );
-}).factory("authorization", function (Facebook,User,localStorageService) {
-       fbLoginStatus = 'disconnected';
-       facebookIsReady = false;
+}).
 
-        return {
-            login: function () {
+
+
+    factory("authorization", function (Facebook,User,localStorageService) {
+        fbLoginStatus = 'disconnected';
+        facebookIsReady = false;
+
+        var factory = {};
+
+        factory.login =  function () {
 
 
                 Facebook.login(function (response) {
@@ -49,7 +54,7 @@ authorizationModule.factory('User', function ($resource) {
                                 //set cookie
                                 localStorageService.set('access_token', access_token);
                                 //get user information
-//                                this.get_user_info();
+                                this.get_user_info();
 
 //                                $scope.loggedIn = true;
 //                                $scope.list_translations();
@@ -67,14 +72,16 @@ authorizationModule.factory('User', function ($resource) {
                     }
 
                 }, {scope: 'email'});
-            },
-            get_user_info: function () {
-                console.log("get user info");
-            },
-            logout: function () {
-                console.log("logout");
-            },
-            test: "testtt"
-        }
-    }
-);
+        };
+
+
+        factory.get_user_info =  function () {
+                    console.log("get user info");
+                };
+
+        factory.logout =  function () {
+                    console.log("logout");
+                };
+
+        return factory;
+    });
