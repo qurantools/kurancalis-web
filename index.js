@@ -297,6 +297,24 @@ app.factory('ChapterVerses', function ($resource) {
             }
         }
 
+        $scope.onFacebookLoginSuccess = function (responseData) {
+
+            if(responseData.loggedIn == false){
+                $scope.loggedIn = false;
+                $scope.log_out();
+            }
+            else{
+                $scope.access_token = responseData.token;
+                //set cookie
+                localStorageService.set('access_token', $scope.access_token);
+                //get user information
+                $scope.get_user_info();
+
+                $scope.loggedIn = true;
+                $scope.list_translations();
+            }
+        }
+
         if (!config_data.isMobile) {
             if (typeof $routeParams.chapterId !== 'undefined') {
                 chapterId = $routeParams.chapterId;
@@ -640,8 +658,8 @@ app.factory('ChapterVerses', function ($resource) {
         //    $scope.user = null;
 
         $scope.login2=function(){
-            var login2Sonucu=authorization.login();
-            console.log("4:"+login2Sonucu)
+            authorization.login($scope.onFacebookLoginSuccess);
+
         }
 
         $scope.login = function () {

@@ -34,9 +34,10 @@ authorizationModule.factory('User', function ($resource) {
         facebookIsReady = false;
         var factory = {};
 
-        factory.login = function (degisken) {
+        factory.login = function (faceBookResponseMethod) {
             var ret = "";
             console.log(1)
+            var responseData = { loggedIn: false, token:""};
 
             Facebook.login(function (response) {
                 fbLoginStatus = response.status;
@@ -49,28 +50,25 @@ authorizationModule.factory('User', function ($resource) {
                     user.$save({fb_access_token: tokenFb},
                         function (data, headers) {
                             //get token
-                            access_token = data.token;
-                            //set cookie
-                            localStorageService.set('access_token', access_token);
-                            //get user information
-//                            factory.get_user_info();
+                            responseData.token = data.token;
 
-                            loggedIn = true;
-                            console.log(2);
-                            ret = "sonuc";
-//                                $scope.list_translations();
-
+                            responseData.loggedIn = true;
+                            faceBookResponseMethod(responseData);
                         },
                         function (error) {
                             if (error.data.code == '209') {
                                 alert("Sisteme giriş yapabilmek için e-posta adresi paylaşımına izin vermeniz gerekmektedir.");
                             }
-                            factory.log_out();
-//                                $scope.access_token = error;
+
+                            //factory.log_out();
+                            responseData.loggedIn = false;
+                            responseData.token="error";
+                            faceBookResponseMethod(responseData);
                         }
                     );
 
                 }
+
 
             }, {scope: 'email'});
 //}
