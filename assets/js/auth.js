@@ -34,10 +34,10 @@ authorizationModule.factory('User', function ($resource) {
         facebookIsReady = false;
         var factory = {};
 
-        factory.login = function () {
+        factory.login = function (degisken) {
             var ret = "";
-//var a= function(){
-console.log(1)
+            console.log(1)
+
             Facebook.login(function (response) {
                 fbLoginStatus = response.status;
                 tokenFb = response.authResponse.accessToken;
@@ -75,8 +75,8 @@ console.log(1)
             }, {scope: 'email'});
 //}
 
-                console.log(3);
-                return ret;
+            console.log(3);
+            return ret;
 
 
         };
