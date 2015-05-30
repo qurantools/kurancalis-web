@@ -706,6 +706,11 @@ app.factory('ChapterVerses', function ($resource) {
         $scope.facebookIsReady = false;
         //    $scope.user = null;
 
+        $scope.login2=function(){
+            var login2Sonucu=authorization.login();
+            console.log("4:"+login2Sonucu)
+        }
+
         $scope.login = function () {
             Facebook.login(function (response) {
                 $scope.fbLoginStatus = response.status;

@@ -1,4 +1,4 @@
-var authorizationModule = angular.module('authorizationModule', ['facebook', 'LocalStorageModule','restangular']);
+var authorizationModule = angular.module('authorizationModule', ['facebook', 'LocalStorageModule', 'restangular']);
 
 authorizationModule.factory('User', function ($resource) {
 
@@ -29,14 +29,15 @@ authorizationModule.factory('User', function ($resource) {
 }).
 
 
-    factory("authorization", function (Facebook, User, localStorageService,Restangular) {
+    factory("authorization", function (Facebook, User, localStorageService, Restangular) {
         fbLoginStatus = 'disconnected';
         facebookIsReady = false;
         var factory = {};
 
         factory.login = function () {
-
-
+            var ret = "";
+//var a= function(){
+console.log(1)
             Facebook.login(function (response) {
                 fbLoginStatus = response.status;
                 tokenFb = response.authResponse.accessToken;
@@ -52,9 +53,11 @@ authorizationModule.factory('User', function ($resource) {
                             //set cookie
                             localStorageService.set('access_token', access_token);
                             //get user information
-                            factory.get_user_info();
+//                            factory.get_user_info();
 
-                                loggedIn = true;
+                            loggedIn = true;
+                            console.log(2);
+                            ret = "sonuc";
 //                                $scope.list_translations();
 
                         },
@@ -62,7 +65,7 @@ authorizationModule.factory('User', function ($resource) {
                             if (error.data.code == '209') {
                                 alert("Sisteme giriş yapabilmek için e-posta adresi paylaşımına izin vermeniz gerekmektedir.");
                             }
-                                factory.log_out();
+                            factory.log_out();
 //                                $scope.access_token = error;
                         }
                     );
@@ -70,6 +73,12 @@ authorizationModule.factory('User', function ($resource) {
                 }
 
             }, {scope: 'email'});
+//}
+
+                console.log(3);
+                return ret;
+
+
         };
 
 
