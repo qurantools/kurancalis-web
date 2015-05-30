@@ -365,7 +365,6 @@ app.factory('ChapterVerses', function ($resource) {
                     $scope.user = user;
                 }
             );
-
         }
 
         $scope.annotate_it = function () {
