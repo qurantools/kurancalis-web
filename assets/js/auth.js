@@ -33,11 +33,10 @@ authorizationModule.factory('User', function ($resource) {
         fbLoginStatus = 'disconnected';
         facebookIsReady = false;
         var factory = {};
+        factory.access_token="";
 
         factory.login = function (faceBookResponseMethod) {
-            var ret = "";
-            console.log(1)
-            var responseData = { loggedIn: false, token:""};
+            var responseData = {loggedIn: false, token: ""};
 
             Facebook.login(function (response) {
                 fbLoginStatus = response.status;
@@ -51,7 +50,6 @@ authorizationModule.factory('User', function ($resource) {
                         function (data, headers) {
                             //get token
                             responseData.token = data.token;
-
                             responseData.loggedIn = true;
                             faceBookResponseMethod(responseData);
                         },
@@ -62,21 +60,12 @@ authorizationModule.factory('User', function ($resource) {
 
                             //factory.log_out();
                             responseData.loggedIn = false;
-                            responseData.token="error";
+                            responseData.token = "error";
                             faceBookResponseMethod(responseData);
                         }
                     );
-
                 }
-
-
             }, {scope: 'email'});
-//}
-
-            console.log(3);
-            return ret;
-
-
         };
 
 
@@ -89,9 +78,25 @@ authorizationModule.factory('User', function ($resource) {
             );
         };
 
-        factory.logout = function () {
-            console.log("logout");
+        factory.logOut = function (faceBookResponseMethod) {
+            var responseData = {loggedOut: false};
+            //remove auth
+            Facebook.api({
+                method: 'Auth.revokeAuthorization'
+            }, function (response) {
+                Facebook.getLoginStatus(function (response) {
+                    fbLoginStatus = response.status;
+                });
+            });
+
+            localStorageService.remove('access_token');
+            responseData.loggedOut=true;
+            faceBookResponseMethod(responseData);
         };
+
+        factory.getAccessToken = function(){
+            return localStorageService.get('access_token');
+        }
 
         return factory;
     });
