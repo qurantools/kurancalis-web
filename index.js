@@ -662,8 +662,9 @@ app.factory('ChapterVerses', function ($resource) {
             annotator.onEditorHide();
         }
 
-        $scope.submitEditor = function () {
-            var jsTags = $scope.theTags;
+        $scope.submitEditor = function (theTags) {
+          //  var jsTags = $scope.theTags;
+            var jsTags=theTags;
             var oldTags = [];
             if (typeof $scope.annotationModalData.annotationId != 'undefined') {
                 oldTags = $scope.annotationModalData.tags;

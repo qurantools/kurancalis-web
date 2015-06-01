@@ -140,4 +140,6 @@ angular.module('ionicApp')
         }
 
         $scope.get_all_annotations();
+
+
     });
