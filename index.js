@@ -354,7 +354,6 @@ app.factory('ChapterVerses', function ($resource) {
             }
         );
         $scope.checkUserLoginStatus = function () {
-            console.log("checkuserloginstatus")
             var status = false;
             var access_token = authorization.getAccessToken();
             if (access_token != null && access_token != "") {
