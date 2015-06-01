@@ -80,6 +80,11 @@ authorizationModule.factory('User', function ($resource) {
 
         factory.logOut = function (faceBookResponseMethod) {
             var responseData = {loggedOut: false};
+            if (typeof annotator != 'undefined') {
+                annotator.destroy();
+            }
+
+
             //remove auth
             Facebook.api({
                 method: 'Auth.revokeAuthorization'

@@ -1,11 +1,8 @@
 angular.module('ionicApp')
-    .controller('AnnotationsCtrl', function ($scope, $routeParams, Facebook, Restangular, authorization, localStorageService, $window) {
+    .controller('AnnotationsCtrl', function ($scope, $routeParams, Facebook, Restangular, authorization, localStorageService) {
         console.log("annotations ctrl")
 
-
         /* auth */
-
-
         $scope.onFacebookLoginSuccess = function (responseData) {
             if (responseData.loggedIn == false) {
                 $scope.loggedIn = false;
@@ -35,9 +32,11 @@ angular.module('ionicApp')
 
                 $scope.verseTagsJSON = {};
                 if ($scope.getCurrentPage() != "home") {
+
                     $scope.chapter_id = 1;
                     $scope.setChapterId();
                     $scope.goToChapter();
+
                 }
             }
         }
@@ -56,13 +55,7 @@ angular.module('ionicApp')
             authorization.logOut($scope.onFacebookLogOutSuccess);
         }
 
-        /*
-         $scope.api = function () {
-         Facebook.api('/me', {fields: 'email'}, function (response) {
-         //   $scope.user = response.email;
-         });
-         };
-         */
+
         $scope.$watch(function () {
                 return Facebook.isReady();
             }, function (newVal) {
@@ -71,29 +64,8 @@ angular.module('ionicApp')
                 }
             }
         );
-        $scope.checkUserLoginStatus = function () {
-            var status = false;
-            var access_token = authorization.getAccessToken();
-            if (access_token != null && access_token != "") {
-                $scope.access_token = access_token;
-                $scope.loggedIn = true;
-                $scope.get_user_info();
-                status = true;
-            }
-            return status;
-        }
-
-        //get user info
-        $scope.get_user_info = function () {
-            var usersRestangular = Restangular.all("users");
-            //TODO: document knowhow: custom get with custom header
-            usersRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (user) {
-                    $scope.user = user;
-                }
-            );
-        }
-        $scope.loggedIn = false;
         $scope.checkUserLoginStatus();
+
         /* end of facebook login */
         /* end of auth */
 
