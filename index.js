@@ -606,19 +606,6 @@ app.factory('ChapterVerses', function ($resource) {
         /* end of init */
 
 
-        $scope.annotationSearchAuthorToggleSelection = function annotationSearchAuthorToggleSelection(author_id) {
-            var idx = $scope.annotationSearchAuthorSelection.indexOf(author_id);
-            if (idx > -1) {
-                $scope.annotationSearchAuthorSelection.splice(idx, 1);
-            }
-            else {
-                $scope.annotationSearchAuthorSelection.push(author_id);
-            }
-            $scope.annotationSearchAuthorMask = 0;
-            for (var index in $scope.annotationSearchAuthorSelection) {
-                $scope.annotationSearchAuthorMask = $scope.annotationSearchAuthorMask | $scope.annotationSearchAuthorSelection[index];
-            }
-        };
 
         //go to chapter
         $scope.goToChapter = function () {
@@ -652,7 +639,6 @@ app.factory('ChapterVerses', function ($resource) {
                 $scope.setAuthorMask();
                 $scope.goToChapter();
             }
-
         }
 
 
@@ -1275,7 +1261,7 @@ app.factory('ChapterVerses', function ($resource) {
 
         $scope.verseTagContentAuthor = $scope.selection[0];
 
-        $scope.annotationSearchAuthorSelection = $scope.selection;
+
 
 
         // $scope.toggleSidebar();
@@ -1295,6 +1281,7 @@ app.factory('ChapterVerses', function ($resource) {
 
         //toggle selection for an author id
         $scope.toggleSelection = function toggleSelection(author_id) {
+            console.lo
             var idx = $scope.selection.indexOf(author_id);
 
             // is currently selected

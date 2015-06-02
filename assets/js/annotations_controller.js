@@ -77,14 +77,27 @@ angular.module('ionicApp')
         $scope.allAnnotationsOpts.start = 0;
         $scope.allAnnotationsOpts.limit = 10;
         $scope.allAnnotationsSortBy = "verse";
+        $scope.annotationSearchAuthorSelection = $scope.selection;
 
+        $scope.updateAuthors = function () {
+            if (!config_data.isMobile) {
+                    $scope.allAnnotationsOpts.start = 0;
+                    $scope.get_all_annotations();
+            } else {
+                $scope.author_mask = localStorageService.get('author_mask');
+                $scope.setAuthorMask();
+                $scope.goToChapter();
+            }
+        }
 
         $scope.get_all_annotations = function () {
             var usersRestangular = Restangular.all("annotations");
             $scope.allAnnotationsParams = [];
             $scope.allAnnotationsParams.start = $scope.allAnnotationsOpts.start;
             $scope.allAnnotationsParams.limit = $scope.allAnnotationsOpts.limit;
-            //   $scope.allAnnotationsParams.author = $scope.author_mask;
+
+            //kapalýydý
+               $scope.allAnnotationsParams.author = $scope.author_mask;
 
 
             if ($scope.allAnnotationsSearch == true) {
@@ -125,6 +138,23 @@ angular.module('ionicApp')
                 }
             );
             $scope.allAnnotationsSearch = false;
+        }
+
+        $scope.annotationSearchAuthorToggleSelection = function annotationSearchAuthorToggleSelection(author_id) {
+            var idx = $scope.annotationSearchAuthorSelection.indexOf(author_id);
+            if (idx > -1) {
+                $scope.annotationSearchAuthorSelection.splice(idx, 1);
+            }
+            else {
+                $scope.annotationSearchAuthorSelection.push(author_id);
+            }
+            $scope.annotationSearchAuthorMask = 0;
+            for (var index in $scope.annotationSearchAuthorSelection) {
+                $scope.annotationSearchAuthorMask = $scope.annotationSearchAuthorMask | $scope.annotationSearchAuthorSelection[index];
+            }
+        };
+        $scope.toggleSelection = function toggleSelection(author_id) {
+            $scope.annotationSearchAuthorToggleSelection(author_id);
         }
 
         $scope.search_all_annotations = function () {
