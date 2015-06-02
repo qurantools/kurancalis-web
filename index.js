@@ -286,7 +286,6 @@ app.factory('ChapterVerses', function ($resource) {
         }
 
 
-
         /* auth */
         $scope.onFacebookLoginSuccess = function (responseData) {
             if (responseData.loggedIn == false) {
@@ -361,8 +360,8 @@ app.factory('ChapterVerses', function ($resource) {
                 $scope.loggedIn = true;
                 $scope.get_user_info();
                 status = true;
-            }else{
-                $scope.user=null;
+            } else {
+                $scope.user = null;
             }
             return status;
         }
@@ -378,7 +377,7 @@ app.factory('ChapterVerses', function ($resource) {
         }
 
         $scope.loggedIn = false;
-   //     $scope.checkUserLoginStatus();
+        //     $scope.checkUserLoginStatus();
         /* end of facebook login */
         /* end of auth */
 
@@ -663,8 +662,8 @@ app.factory('ChapterVerses', function ($resource) {
         }
 
         $scope.submitEditor = function (theTags) {
-          //  var jsTags = $scope.theTags;
-            var jsTags=theTags;
+            //  var jsTags = $scope.theTags;
+            var jsTags = theTags;
             var oldTags = [];
             if (typeof $scope.annotationModalData.annotationId != 'undefined') {
                 oldTags = $scope.annotationModalData.tags;
@@ -838,6 +837,7 @@ app.factory('ChapterVerses', function ($resource) {
         $scope.tagSearchResult = [];
         /* end of login - access token */
 
+        /* moved to HomeCtrl
         $scope.annotationFilter = function (item) {
             if (typeof $scope.filteredAnnotations == 'undefined' || $scope.filteredAnnotations.length == 0) {
                 return true;
@@ -851,7 +851,7 @@ app.factory('ChapterVerses', function ($resource) {
                 if (found > 0)return true; else return false;
             }
         }
-
+*/
         $scope.authorFilter = function (item) {
             return $scope.selection.indexOf(item.id) > -1;
         }
@@ -861,8 +861,8 @@ app.factory('ChapterVerses', function ($resource) {
             $scope.annotations = orderBy($scope.annotations, predicate);
         }
 
+        /* moved to HomeCtrl
         $scope.annotationTextSearch = function (item) {
-
             var searchText = $scope.searchText.toLowerCase();
             if (item.quote.toLowerCase().indexOf(searchText) > -1 || item.text.toLowerCase().indexOf(searchText) > -1) {
                 return true;
@@ -870,7 +870,7 @@ app.factory('ChapterVerses', function ($resource) {
                 return false;
             }
         }
-
+*/
         $scope.getAnnotationIndexFromFilteredAnnotationIndex = function (filteredAnnotationIndex) {
             //TODO use getIndexOfArrayByElement
             var arrLen = $scope.annotations.length;
@@ -884,11 +884,13 @@ app.factory('ChapterVerses', function ($resource) {
             return annotationIndex;
         }
 
-        $scope.resetAnnotationFilter = function () {
-            $scope.filteredAnnotations = [];
-            $scope.searchText = '';
-        }
-
+        /* moved to HomeCtrl
+         $scope.resetAnnotationFilter = function () {
+         console.log("resetAnnotationFilter index")
+         $scope.filteredAnnotations = [];
+         $scope.searchText = '';
+         }
+         */
         $scope.scrollToElement = function (elementId) {
             var destination = angular.element(document.getElementById(elementId));
 
