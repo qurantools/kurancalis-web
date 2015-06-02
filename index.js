@@ -1,4 +1,4 @@
-var requiredModules = ['ionic', 'ngResource', 'ngRoute', 'facebook', 'restangular', 'LocalStorageModule', 'ngTagsInput', 'duScroll', 'directives.showVerse', 'ui.select', 'myConfig'];
+var requiredModules = ['ionic', 'ngResource', 'ngRoute', 'facebook', 'restangular', 'LocalStorageModule', 'ngTagsInput', 'duScroll', 'directives.showVerse', 'ui.select', 'myConfig', 'authorizationModule'];
 
 if (config_data.isMobile) {
     var mobileModules = [];//'ionic'
@@ -26,7 +26,7 @@ var app = angular.module('ionicApp', requiredModules)
     .filter('with_footnote_link', [
         function () {
             return function (text, translation_id, author_id) {
-                return text.replace(/\*+/g, "<a class='footnote_asterisk' href='javascript:angular.element(document.getElementById(\"MainCtrl\")).scope().list_footnotes(" + translation_id + "," + author_id + ")'>*</a>");
+                return text.replace(/\*+/g, "<a class='footnote_asterisk' href='javascript:angular.element(document.getElementById(\"theView\")).scope().list_footnotes(" + translation_id + "," + author_id + ")'>*</a>");
             };
         }])
     .filter('selectionFilter', function () {
@@ -110,21 +110,13 @@ if (config_data.isMobile == false) {
         localStorageServiceProvider.setStorageCookie(0, '/');
         //route
         $routeProvider
-            .when('/', {
-                controller: 'MainCtrl',
-                templateUrl: 'app/components/home/homeView.html',
-                reloadOnSearch: false
-            })
-            .when('/chapter/:chapterId/author/:authorMask/', {
-                redirectTo: '/chapter/:chapterId/author/:authorMask/verse/1'
-            })
             .when('/chapter/:chapterId/author/:authorMask/verse/:verseNumber/', {
-                controller: 'MainCtrl',
+                controller: 'HomeCtrl',
                 templateUrl: 'app/components/home/homeView.html',
                 reloadOnSearch: false
             })
             .when('/annotations/', {
-                controller: 'MainCtrl',
+                controller: 'AnnotationsCtrl',
                 templateUrl: 'app/components/annotations/annotationsView.html',
                 reloadOnSearch: false
             })
@@ -147,6 +139,14 @@ if (config_data.isMobile == false) {
                 controller: 'PeopleExploreCtrl',
                 templateUrl: 'app/components/people/explore.html',
                 reloadOnSearch: false
+            })
+            .when('/', {
+                controller: 'HomeCtrl',
+                templateUrl: 'app/components/home/homeView.html',
+                reloadOnSearch: false
+            })
+            .when('/chapter/:chapterId/author/:authorMask/', {
+                redirectTo: '/chapter/:chapterId/author/:authorMask/verse/1/'
             })
             .otherwise({
                 redirectTo: '/'
@@ -271,16 +271,116 @@ app.factory('ChapterVerses', function ($resource) {
     );
 })
 
-    .controller('MainCtrl', function ($scope, $q, $routeParams, $location, $timeout, ListAuthors, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService, $document, $filter, $rootScope, $state, $stateParams, $ionicModal, $ionicScrollDelegate, $ionicPosition) {
-
+    .controller('MainCtrl', function ($scope, $q, $routeParams, $location, $timeout, ListAuthors, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService, $document, $filter, $rootScope, $state, $stateParams, $ionicModal, $ionicScrollDelegate, $ionicPosition, authorization) {
+        console.log("MainCtrl");
 
         //currentPage
-        $scope.currentPage = '';
-        if ($location.path() == '/annotations/') {
-            $scope.currentPage = 'annotations';
-        } else {
-            $scope.currentPage = 'home';
+        $scope.getCurrentPage = function () {
+            var retcp = "";
+            if ($location.path() == '/annotations/') {
+                retcp = 'annotations';
+            } else {
+                retcp = 'home';
+            }
+            return retcp;
         }
+
+
+        /* auth */
+        $scope.onFacebookLoginSuccess = function (responseData) {
+            if (responseData.loggedIn == false) {
+                $scope.loggedIn = false;
+                $scope.logOut();
+            }
+            else {
+                $scope.access_token = responseData.token;
+                //set cookie
+                localStorageService.set('access_token', $scope.access_token);
+                //get user information
+                $scope.get_user_info();
+
+                $scope.loggedIn = true;
+                // $scope.list_translations();
+                if ($scope.getCurrentPage() == 'home') {
+                    $scope.list_translations();
+                }
+            }
+        }
+
+        $scope.onFacebookLogOutSuccess = function (responseData) {
+            if (responseData.loggedOut == true) {
+                $scope.user = null;
+                if (typeof annotator != 'undefined') {
+                    annotator.destroy();
+                }
+
+                $scope.verseTagsJSON = {};
+                if ($scope.getCurrentPage() != "home") {
+                    $scope.chapter_id = 1;
+                    $scope.setChapterId();
+                    $scope.goToChapter();
+                }
+            }
+        }
+
+        /* facebook login */
+
+        $scope.fbLoginStatus = 'disconnected';
+        $scope.facebookIsReady = false;
+        //    $scope.user = null;
+
+        $scope.login = function () { //new
+            authorization.login($scope.onFacebookLoginSuccess);
+        }
+
+        $scope.logOut = function () { //new
+            authorization.logOut($scope.onFacebookLogOutSuccess);
+        }
+
+        /*
+         $scope.api = function () {
+         Facebook.api('/me', {fields: 'email'}, function (response) {
+         //   $scope.user = response.email;
+         });
+         };
+         */
+        $scope.$watch(function () {
+                return Facebook.isReady();
+            }, function (newVal) {
+                if (newVal) {
+                    $scope.facebookIsReady = true;
+                }
+            }
+        );
+        $scope.checkUserLoginStatus = function () {
+            var status = false;
+            var access_token = authorization.getAccessToken();
+            if (access_token != null && access_token != "") {
+                $scope.access_token = access_token;
+                $scope.loggedIn = true;
+                $scope.get_user_info();
+                status = true;
+            } else {
+                $scope.user = null;
+            }
+            return status;
+        }
+
+        //get user info
+        $scope.get_user_info = function () {
+            var usersRestangular = Restangular.all("users");
+            //TODO: document knowhow: custom get with custom header
+            usersRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (user) {
+                    $scope.user = user;
+                }
+            );
+        }
+
+        $scope.loggedIn = false;
+        //     $scope.checkUserLoginStatus();
+        /* end of facebook login */
+        /* end of auth */
+
         var chapterId = 1;
         var authorMask = 1040;
         var verseNumber = 1;
@@ -357,17 +457,6 @@ app.factory('ChapterVerses', function ($resource) {
         }
 
 
-        //get user info
-        $scope.get_user_info = function () {
-            var usersRestangular = Restangular.all("users");
-            //TODO: document knowhow: custom get with custom header
-            usersRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (user) {
-                    $scope.user = user;
-                }
-            );
-
-        }
-
         $scope.annotate_it = function () {
             if ($scope.annotatorActivated == 1) {
                 annotator.destroy();
@@ -415,6 +504,7 @@ app.factory('ChapterVerses', function ($resource) {
             return tagsRestangular.customGET("", {}, {'access_token': $scope.access_token});
         };
 
+
         //list translations
         $scope.list_translations = function () {
             $scope.translationDivMap = [];
@@ -457,17 +547,7 @@ app.factory('ChapterVerses', function ($resource) {
             }, 2000);
 
         }
-        //list authors
-        $scope.list_authors = function () {
-            $scope.authorMap = new Object();
-            $scope.authors = ListAuthors.query(function (data) {
-                var arrayLength = data.length;
-                for (var i = 0; i < arrayLength; i++) {
-                    $scope.authorMap[data[i].id] = data[i];
-                    $scope.setAuthors();
-                }
-            });
-        }
+
 
         //list footnotes
         $scope.list_footnotes = function (translation_id, author_id) {
@@ -500,16 +580,8 @@ app.factory('ChapterVerses', function ($resource) {
             });
         }
 
+        //degisti $scope.list_translations();
 
-        //selected authors
-        $scope.setAuthors = function () {
-            $scope.selection = [];
-            for (var index in $scope.authorMap) {
-                if ($scope.author_mask & $scope.authorMap[index].id) {
-                    $scope.selection.push($scope.authorMap[index].id);
-                }
-            }
-        }
 
         $scope.toggleSidebar = function () {
             var translationsDiv = angular.element(document.querySelector('#translations'));
@@ -531,146 +603,15 @@ app.factory('ChapterVerses', function ($resource) {
             }
         }
 
-        $scope.get_all_annotations = function () {
-            var usersRestangular = Restangular.all("annotations");
-            $scope.allAnnotationsParams = [];
-            $scope.allAnnotationsParams.start = $scope.allAnnotationsOpts.start;
-            $scope.allAnnotationsParams.limit = $scope.allAnnotationsOpts.limit;
-            //   $scope.allAnnotationsParams.author = $scope.author_mask;
-
-
-            if ($scope.allAnnotationsSearch == true) {
-                //filter
-                $scope.allAnnotationsParams.author = 0;
-                for (var index in $scope.annotationSearchAuthorSelection) {
-                    $scope.allAnnotationsParams.author = $scope.allAnnotationsParams.author | $scope.annotationSearchAuthorSelection[index];
-                }
-
-                $scope.allAnnotationsParams.verse_keyword = $scope.allAnnotationsSearchInput;
-                $scope.allAnnotationsParams.verse_tags = "";
-
-                var newTags = "";
-                var filterTags = $scope.filterTags;
-                for (var i = 0; i < filterTags.length; i++) {
-                    if (i != 0)newTags += ",";
-                    newTags += filterTags[i].name;
-                }
-                $scope.allAnnotationsParams.verse_tags = newTags;
-            }
-            $scope.allAnnotationsParams.orderby = $scope.allAnnotationsOrderBy;
-
-            usersRestangular.customGET("", $scope.allAnnotationsParams, {'access_token': $scope.access_token}).then(function (annotations) {
-                    if ($scope.allAnnotationsParams.start == 0) {
-                        $scope.annotations = [];
-                    }
-                    if (annotations != "") {
-                        $scope.annotations = $scope.annotations.concat(annotations)
-                        $scope.allAnnotationsOpts.start += $scope.allAnnotationsOpts.limit;
-
-                        if (annotations.length < $scope.allAnnotationsOpts.limit) {
-                            $scope.allAnnotationsOpts.hasMore = false;
-                        } else {
-                            $scope.allAnnotationsOpts.hasMore = true;
-                        }
-                    } else {
-                        $scope.allAnnotationsOpts.hasMore = false;
-                    }
-                }
-            );
-            $scope.allAnnotationsSearch = false;
-        }
-
-        $scope.search_all_annotations = function () {
-            $scope.allAnnotationsOpts.start = 0;
-            $scope.allAnnotationsSearch = true;
-            $scope.get_all_annotations();
-        }
-
-        $scope.allAnnotationsOrderByChanged = function (selectedOrderOption) {
-            $scope.allAnnotationsOrderBy = selectedOrderOption;
-            $scope.allAnnotationsOpts.start = 0;
-            $scope.get_all_annotations();
-        }
-
-        /* init */
-        $scope.sidebarActive = 0;
-        $scope.tagSearchResult = [];
-        $scope.searchText = "";
-
-        // all annotations
-        $scope.annotations = [];
-        $scope.allAnnotationsOpts = [];
-        $scope.allAnnotationsOpts.hasMore = true;
-        $scope.allAnnotationsOpts.start = 0;
-        $scope.allAnnotationsOpts.limit = 10;
-        $scope.allAnnotationsSortBy = "verse";
-
-
-        //hide list of authors div
-        $scope.showAuthorsList = false;
-
-        //list the authors on page load
-        $scope.list_authors();
-
-        //get author mask
-        //     $scope.author_mask = 48;
-
-        //selected authors
-
-
-        $scope.selection = ["16", "32"];
-
-        $scope.verseTagContentAuthor = $scope.selection[0];
-
-        $scope.annotationSearchAuthorSelection = $scope.selection;
-        $scope.list_translations();
-
-
-        // $scope.toggleSidebar();
-        sidebarInit();
-        $scope.editorSubmitted = 0;
-
 
         /* end of init */
 
-        //toggle selection for an author id
-        $scope.toggleSelection = function toggleSelection(author_id) {
-            var idx = $scope.selection.indexOf(author_id);
 
-            // is currently selected
-            if (idx > -1) {
-                $scope.selection.splice(idx, 1);
-            }
-            // is newly selected
-            else {
-                $scope.selection.push(author_id);
-            }
-            $scope.author_mask = 0;
-            for (var index in $scope.selection) {
-                $scope.author_mask = $scope.author_mask | $scope.selection[index];
-            }
-            $scope.setAuthorMask();
-            localStorageService.set('author_mask', $scope.author_mask);
-        };
-
-        $scope.annotationSearchAuthorToggleSelection = function annotationSearchAuthorToggleSelection(author_id) {
-            var idx = $scope.annotationSearchAuthorSelection.indexOf(author_id);
-            if (idx > -1) {
-                $scope.annotationSearchAuthorSelection.splice(idx, 1);
-            }
-            else {
-                $scope.annotationSearchAuthorSelection.push(author_id);
-            }
-            $scope.annotationSearchAuthorMask = 0;
-            for (var index in $scope.annotationSearchAuthorSelection) {
-                $scope.annotationSearchAuthorMask = $scope.annotationSearchAuthorMask | $scope.annotationSearchAuthorSelection[index];
-            }
-        };
 
         //go to chapter
         $scope.goToChapter = function () {
             if (!config_data.isMobile) {
-                if ($scope.currentPage == 'home') {
+                if ($scope.getCurrentPage() == 'home') {
                     $location.path('/chapter/' + $scope.chapter_id + '/author/' + $scope.author_mask + '/verse/' + $scope.verse.number + '/', false);
                     $scope.list_translations();
                     $scope.updateVerseTagContent();
@@ -688,9 +629,9 @@ app.factory('ChapterVerses', function ($resource) {
 
         $scope.updateAuthors = function () {
             if (!config_data.isMobile) {
-                if ($scope.currentPage == 'home') {
+                if ($scope.getCurrentPage() == 'home') {
                     $scope.goToChapter();
-                } else if ($scope.currentPage == 'annotations') {
+                } else if ($scope.getCurrentPage() == 'annotations') {
                     $scope.allAnnotationsOpts.start = 0;
                     $scope.get_all_annotations();
                 }
@@ -699,111 +640,17 @@ app.factory('ChapterVerses', function ($resource) {
                 $scope.setAuthorMask();
                 $scope.goToChapter();
             }
-
         }
 
-        /* facebook login */
-        $scope.fbLoginStatus = 'disconnected';
-        $scope.facebookIsReady = false;
-        //    $scope.user = null;
-
-        $scope.login = function () {
-            Facebook.login(function (response) {
-                $scope.fbLoginStatus = response.status;
-                $scope.tokenFb = response.authResponse.accessToken;
-                if ($scope.tokenFb != "") {
-                    $scope.access_token = "";
-                    //get token from facebook token
-                    //$scope.access_token=
-                    var user = new User();
-                    user.fb_access_token = $scope.tokenFb;
-                    user.$save({fb_access_token: $scope.tokenFb},
-                        function (data, headers) {
-                            //get token
-                            $scope.access_token = data.token;
-                            //set cookie
-                            localStorageService.set('access_token', $scope.access_token);
-                            //get user information
-                            $scope.get_user_info();
-
-                            $scope.loggedIn = true;
-                            $scope.list_translations();
-
-                        },
-                        function (error) {
-                            if (error.data.code == '209') {
-                                alert("Sisteme giriş yapabilmek için e-posta adresi paylaşımına izin vermeniz gerekmektedir.");
-                            }
-                            $scope.log_out();
-                            $scope.access_token = error;
-                        }
-                    );
-                }
-            }, {scope: 'email'});
-        };
-
-        $scope.removeAuth = function () {
-            Facebook.api({
-                method: 'Auth.revokeAuthorization'
-            }, function (response) {
-                Facebook.getLoginStatus(function (response) {
-                    $scope.fbLoginStatus = response.status;
-                });
-            });
-        };
-
-        $scope.api = function () {
-            Facebook.api('/me', {fields: 'email'}, function (response) {
-                //   $scope.user = response.email;
-            });
-        };
-
-        $scope.$watch(function () {
-                return Facebook.isReady();
-            }, function (newVal) {
-                if (newVal) {
-                    $scope.facebookIsReady = true;
-                }
-            }
-        );
-        /* end of facebook login */
-
-        /* login - access token */
-        $scope.get_access_token_cookie = function () {
-            return localStorageService.get('access_token');
-        }
-        $scope.log_out = function () {
-            $scope.user = null;
-            $scope.removeAuth();
-            localStorageService.remove('access_token');
-            annotator.destroy();
-            $scope.verseTagsJSON = {};
-            if ($scope.currentPage != "home") {
-                $scope.chapter_id = 1;
-                $scope.setChapterId();
-                $scope.goToChapter();
-            }
-        }
-
-        $scope.checkUserLoginStatus = function () {
-            var status = false;
-            var access_token = $scope.get_access_token_cookie();
-            if (access_token != null && access_token != "") {
-                $scope.access_token = access_token;
-                $scope.loggedIn = true;
-                $scope.get_user_info();
-                status = true;
-            }
-            return status;
-        }
 
         /* Editor operations */
         $scope.hideEditor = function () {
             annotator.onEditorHide();
         }
 
-        $scope.submitEditor = function () {
-            var jsTags = $scope.theTags;
+        $scope.submitEditor = function (theTags) {
+            //  var jsTags = $scope.theTags;
+            var jsTags = theTags;
             var oldTags = [];
             if (typeof $scope.annotationModalData.annotationId != 'undefined') {
                 oldTags = $scope.annotationModalData.tags;
@@ -818,7 +665,7 @@ app.factory('ChapterVerses', function ($resource) {
             //update verse tags
             $scope.updateVerseTags($scope.annotationModalData.verseId, oldTags, newTags);
 
-            if ($scope.currentPage == 'annotations') { //annotations page update
+            if ($scope.getCurrentPage() == 'annotations') { //annotations page update
                 $scope.editAnnotation2($scope.annotationModalData);
             }
             //coming from another page fix
@@ -885,7 +732,6 @@ app.factory('ChapterVerses', function ($resource) {
         }
 
         $scope.colorAnnotations = function (annotations) {
-            console.log("colorannotations")
             for (var annotationIndex in annotations) {
                 $scope.colorTheAnnotation(annotations[annotationIndex]);
             }
@@ -974,11 +820,11 @@ app.factory('ChapterVerses', function ($resource) {
             return annotationRestangular.customPUT(data, '', '', headers);
         }
 
-        $scope.loggedIn = false;
-        $scope.checkUserLoginStatus();
+
         $scope.tagSearchResult = [];
         /* end of login - access token */
 
+        /* moved to HomeCtrl
         $scope.annotationFilter = function (item) {
             if (typeof $scope.filteredAnnotations == 'undefined' || $scope.filteredAnnotations.length == 0) {
                 return true;
@@ -992,7 +838,7 @@ app.factory('ChapterVerses', function ($resource) {
                 if (found > 0)return true; else return false;
             }
         }
-
+*/
         $scope.authorFilter = function (item) {
             return $scope.selection.indexOf(item.id) > -1;
         }
@@ -1002,8 +848,8 @@ app.factory('ChapterVerses', function ($resource) {
             $scope.annotations = orderBy($scope.annotations, predicate);
         }
 
+        /* moved to HomeCtrl
         $scope.annotationTextSearch = function (item) {
-
             var searchText = $scope.searchText.toLowerCase();
             if (item.quote.toLowerCase().indexOf(searchText) > -1 || item.text.toLowerCase().indexOf(searchText) > -1) {
                 return true;
@@ -1011,7 +857,7 @@ app.factory('ChapterVerses', function ($resource) {
                 return false;
             }
         }
-
+*/
         $scope.getAnnotationIndexFromFilteredAnnotationIndex = function (filteredAnnotationIndex) {
             //TODO use getIndexOfArrayByElement
             var arrLen = $scope.annotations.length;
@@ -1025,11 +871,13 @@ app.factory('ChapterVerses', function ($resource) {
             return annotationIndex;
         }
 
-        $scope.resetAnnotationFilter = function () {
-            $scope.filteredAnnotations = [];
-            $scope.searchText = '';
-        }
-
+        /* moved to HomeCtrl
+         $scope.resetAnnotationFilter = function () {
+         console.log("resetAnnotationFilter index")
+         $scope.filteredAnnotations = [];
+         $scope.searchText = '';
+         }
+         */
         $scope.scrollToElement = function (elementId) {
             var destination = angular.element(document.getElementById(elementId));
 
@@ -1056,9 +904,9 @@ app.factory('ChapterVerses', function ($resource) {
         }
 
 
-        if ($scope.currentPage == 'annotations') {
+        if ($scope.getCurrentPage() == 'annotations') {
             $scope.filterTags = [];
-            $scope.get_all_annotations();
+            //   $scope.get_all_annotations();
         }
 
         $scope.loadVerseTags = function () {
@@ -1178,96 +1026,7 @@ app.factory('ChapterVerses', function ($resource) {
             $scope.updateVerseTagContent();
         }
 
-        $scope.showVerse = function (annotation) {
-            $scope.showVerseData = {};
-            Restangular.one('translations', annotation.translationId).get().then(function (translation) {
-                $scope.markVerseAnnotations = true;
-                $scope.showVerseData.annotationId = annotation.annotationId;
-                $scope.showVerseData.data = translation;
 
-            });
-        }
-
-
-        $scope.showVerseFromFootnote = function (chapterVerse, author, translationId) {
-
-            $scope.showVerseData = {};
-            $scope.showVerseData.data = {};
-            var chapterAndVerse = seperateChapterAndVerse(chapterVerse);
-            $scope.showVerseData.data.chapter = chapterAndVerse.chapter;
-            $scope.showVerseData.data.verse = chapterAndVerse.verse;
-            $scope.showVerseData.data.authorId = author;
-            $scope.showVerseAtTranslation = translationId;
-            $scope.showVerseByParameters('go');
-            $(".showVerseData").show();
-
-        }
-
-        $scope.showVerseByParameters = function (action) {
-            var showVerseRestangular = Restangular.all("translations");
-            var showVerseParameters = [];
-            if (action == 'next') {
-                if ($scope.showVerseData.data.verse != ($scope.chapters[$scope.showVerseData.data.chapter - 1].verseCount)) {
-                    $scope.showVerseData.data.verse++;
-                } else {
-                    $scope.showVerseData.data.chapter++;
-                    $scope.showVerseData.data.verse = 0;
-                }
-            } else if (action == 'previous') {
-                if ($scope.showVerseData.data.verse != 0) {
-                    $scope.showVerseData.data.verse--;
-                } else {
-                    $scope.showVerseData.data.chapter--;
-                    $scope.showVerseData.data.verse = $scope.chapters[$scope.showVerseData.data.chapter - 1].verseCount;
-                }
-            } else if (action == 'go') {
-
-            }
-            showVerseParameters.chapter = $scope.showVerseData.data.chapter;
-            showVerseParameters.verse = $scope.showVerseData.data.verse;
-            showVerseParameters = {
-                chapter: $scope.showVerseData.data.chapter,
-                verse: $scope.showVerseData.data.verse,
-                author: $scope.showVerseData.data.authorId
-            };
-            showVerseRestangular.customGET("", showVerseParameters, {'access_token': $scope.access_token}).then(function (verse) {
-                if (verse != "") {
-                    $scope.markVerseAnnotations = false;
-                    $scope.showVerseData.data = verse[0].translations[0];
-                }
-            });
-        }
-
-
-//list of chapters
-        $scope.chapters = [];
-        var chaptersVersion = 2;
-        var localChaptersVersion = localStorageService.get('chaptersVersion');
-
-        if (localChaptersVersion == null || localChaptersVersion < chaptersVersion) {
-            Restangular.all('chapters').getList().then(function (data) {
-                $scope.chapters = data;
-                localStorageService.set('chapters', data);
-                localStorageService.set('chaptersVersion', chaptersVersion);
-            });
-        } else {
-            $scope.chapters = localStorageService.get('chapters');
-        }
-
-        $scope.setSelectedChapter = function (selectedItem) {
-            $scope.chapterSelected = selectedItem;
-            $scope.chapter_id = selectedItem.id;
-            $scope.setChapterId();
-        }
-
-//init chapter select box
-        var chaptersLen = $scope.chapters.length;
-        for (var chaptersIndex = 0; chaptersIndex < chaptersLen; chaptersIndex++) {
-            if ($scope.chapters[chaptersIndex].id == $scope.chapter_id) {
-                $scope.chapterSelected = $scope.chapters[chaptersIndex];
-                break;
-            }
-        }
         $scope.scrollToVerse = function () {
             if (typeof $scope.verse.number != 'undefined') {
                 var verseId = parseInt($scope.chapter_id * 1000) + parseInt($scope.verse.number);
@@ -1380,7 +1139,170 @@ app.factory('ChapterVerses', function ($resource) {
                 $scope.scopeApply();
             }
         }
-    })
+
+        /* show verse */
+//list of chapters
+        $scope.chapters = [];
+        var chaptersVersion = 2;
+        var localChaptersVersion = localStorageService.get('chaptersVersion');
+
+        if (localChaptersVersion == null || localChaptersVersion < chaptersVersion) {
+            Restangular.all('chapters').getList().then(function (data) {
+                $scope.chapters = data;
+                localStorageService.set('chapters', data);
+                localStorageService.set('chaptersVersion', chaptersVersion);
+            });
+        } else {
+            $scope.chapters = localStorageService.get('chapters');
+        }
+
+        $scope.setSelectedChapter = function (selectedItem) {
+            $scope.chapterSelected = selectedItem;
+            $scope.chapter_id = selectedItem.id;
+            $scope.setChapterId();
+        }
+
+//init chapter select box
+        var chaptersLen = $scope.chapters.length;
+        for (var chaptersIndex = 0; chaptersIndex < chaptersLen; chaptersIndex++) {
+            if ($scope.chapters[chaptersIndex].id == $scope.chapter_id) {
+                $scope.chapterSelected = $scope.chapters[chaptersIndex];
+                break;
+            }
+        }
+
+        $scope.showVerse = function (annotation) {
+            $scope.showVerseData = {};
+            Restangular.one('translations', annotation.translationId).get().then(function (translation) {
+                $scope.markVerseAnnotations = true;
+                $scope.showVerseData.annotationId = annotation.annotationId;
+                $scope.showVerseData.data = translation;
+
+            });
+        }
+
+
+        $scope.showVerseFromFootnote = function (chapterVerse, author, translationId) {
+
+            $scope.showVerseData = {};
+            $scope.showVerseData.data = {};
+            var chapterAndVerse = seperateChapterAndVerse(chapterVerse);
+            $scope.showVerseData.data.chapter = chapterAndVerse.chapter;
+            $scope.showVerseData.data.verse = chapterAndVerse.verse;
+            $scope.showVerseData.data.authorId = author;
+            $scope.showVerseAtTranslation = translationId;
+            $scope.showVerseByParameters('go');
+            $(".showVerseData").show();
+
+        }
+
+        $scope.showVerseByParameters = function (action) {
+            var showVerseRestangular = Restangular.all("translations");
+            var showVerseParameters = [];
+            if (action == 'next') {
+                if ($scope.showVerseData.data.verse != ($scope.chapters[$scope.showVerseData.data.chapter - 1].verseCount)) {
+                    $scope.showVerseData.data.verse++;
+                } else {
+                    $scope.showVerseData.data.chapter++;
+                    $scope.showVerseData.data.verse = 0;
+                }
+            } else if (action == 'previous') {
+                if ($scope.showVerseData.data.verse != 0) {
+                    $scope.showVerseData.data.verse--;
+                } else {
+                    $scope.showVerseData.data.chapter--;
+                    $scope.showVerseData.data.verse = $scope.chapters[$scope.showVerseData.data.chapter - 1].verseCount;
+                }
+            } else if (action == 'go') {
+
+            }
+            showVerseParameters.chapter = $scope.showVerseData.data.chapter;
+            showVerseParameters.verse = $scope.showVerseData.data.verse;
+            showVerseParameters = {
+                chapter: $scope.showVerseData.data.chapter,
+                verse: $scope.showVerseData.data.verse,
+                author: $scope.showVerseData.data.authorId
+            };
+            showVerseRestangular.customGET("", showVerseParameters, {'access_token': authorization.getAccessToken()}).then(function (verse) {
+                if (verse != "") {
+                    $scope.markVerseAnnotations = false;
+                    $scope.showVerseData.data = verse[0].translations[0];
+                }
+            });
+        }
+        /* end of show verse */
+
+
+        //list authors
+        $scope.list_authors = function () {
+            $scope.authorMap = new Object();
+            $scope.authors = ListAuthors.query(function (data) {
+                var arrayLength = data.length;
+                for (var i = 0; i < arrayLength; i++) {
+                    $scope.authorMap[data[i].id] = data[i];
+                    $scope.setAuthors();
+                }
+            });
+        }
+
+        /* init */
+        $scope.sidebarActive = 0;
+        $scope.tagSearchResult = [];
+        $scope.searchText = "";
+
+
+        //hide list of authors div
+        $scope.showAuthorsList = false;
+
+        //list the authors on page load
+        $scope.list_authors();
+
+        //selected authors
+        $scope.selection = ["16", "32"];
+
+        $scope.verseTagContentAuthor = $scope.selection[0];
+
+
+
+
+        // $scope.toggleSidebar();
+        sidebarInit();
+        $scope.editorSubmitted = 0;
+
+
+        //selected authors
+        $scope.setAuthors = function () {
+            $scope.selection = [];
+            for (var index in $scope.authorMap) {
+                if ($scope.author_mask & $scope.authorMap[index].id) {
+                    $scope.selection.push($scope.authorMap[index].id);
+                }
+            }
+        }
+
+        //toggle selection for an author id
+        $scope.toggleSelection = function toggleSelection(author_id) {
+            console.lo
+            var idx = $scope.selection.indexOf(author_id);
+
+            // is currently selected
+            if (idx > -1) {
+                $scope.selection.splice(idx, 1);
+            }
+            // is newly selected
+            else {
+                $scope.selection.push(author_id);
+            }
+            $scope.author_mask = 0;
+            for (var index in $scope.selection) {
+                $scope.author_mask = $scope.author_mask | $scope.selection[index];
+            }
+            $scope.setAuthorMask();
+            localStorageService.set('author_mask', $scope.author_mask);
+        };
+
+
+    });
 
 
 function sidebarInit() {
