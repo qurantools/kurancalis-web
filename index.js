@@ -579,7 +579,8 @@ app.factory('ChapterVerses', function ($resource) {
 
             });
         }
-        $scope.list_translations();
+
+        //degisti $scope.list_translations();
 
 
         $scope.toggleSidebar = function () {

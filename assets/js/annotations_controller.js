@@ -1,7 +1,7 @@
 angular.module('ionicApp')
     .controller('AnnotationsCtrl', function ($scope, $routeParams, Facebook, Restangular, authorization, localStorageService) {
         console.log("annotations ctrl")
-
+        $scope.currentPage=$scope.getCurrentPage();
         /* auth */
         $scope.onFacebookLoginSuccess = function (responseData) {
             if (responseData.loggedIn == false) {
@@ -153,9 +153,6 @@ angular.module('ionicApp')
                 $scope.annotationSearchAuthorMask = $scope.annotationSearchAuthorMask | $scope.annotationSearchAuthorSelection[index];
             }
         };
-        $scope.toggleSelection = function toggleSelection(author_id) {
-            $scope.annotationSearchAuthorToggleSelection(author_id);
-        }
 
         $scope.search_all_annotations = function () {
             $scope.allAnnotationsOpts.start = 0;
