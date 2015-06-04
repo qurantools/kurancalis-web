@@ -172,7 +172,7 @@ console.log("mobile version")
             })
             .when('/annotations/', {
                 controller: 'AnnotationsCtrl',
-                templateUrl: 'app/components/annotations/annotationsView.html',
+                templateUrl: 'components/annotations/all_annotations.html',
                 reloadOnSearch: false
             })
             .when('/people/find_people/', {
@@ -715,6 +715,9 @@ app.factory('ChapterVerses', function ($resource) {
         $scope.submitEditor = function (theTags) {
             //  var jsTags = $scope.theTags;
             var jsTags = theTags;
+            if(typeof jsTags=='undefined'){
+                jsTags=[];
+            }
             var oldTags = [];
             if (typeof $scope.annotationModalData.annotationId != 'undefined') {
                 oldTags = $scope.annotationModalData.tags;

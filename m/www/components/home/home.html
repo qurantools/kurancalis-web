@@ -1,3 +1,4 @@
+<!-- start of side menu part 1-->
 <ion-side-menus>
     <ion-side-menu-content drag-content="false">
         <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced">
@@ -24,33 +25,15 @@
         <ion-nav-buttons side="left">
             <button class="button button-icon icon ion-navicon" menu-toggle="left">
             </button>
-
         </ion-nav-buttons>
-
         <ion-nav-view name="appContent"></ion-nav-view>
-
-
-
-
-
-
+<!-- end of side menu part 1 -->
 
 
 <ion-nav-view cache-view="true">
 
-
-
 <ion-content  overflow-scroll="true" delegate-handle="content">
-
-
- <!--
-    <div ng-include="'components/navigation/home.html'"></div>
-    -->
-
-
-
     <div class="row">
-
         <div class="col-xs-12" id="translations" >
             <div ng-repeat="verse in verses" >
                 <div class="well translations col-xs-12" id="v_{{verse.id}}" >
@@ -104,11 +87,10 @@
 
 </ion-content>
 </ion-nav-view>
-<!--
-<div ng-include="components/navigation/navigation_bottom.html"></div>
--->
+
+
+<!-- start of side menu part 2-->
 </ion-side-menu-content>
-
 <div ng-include="'components/navigation/left_menu.html'"></div>
-
 </ion-side-menus>
+<!-- end of side menu part 2-->
