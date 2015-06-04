@@ -103,7 +103,7 @@ var app = angular.module('ionicApp', requiredModules)
             });
         };
     });
-if (config_data.isMobile == false) {
+if (config_data.isMobile == false) { //false
     //desktop version
     app.config(function ($routeProvider, FacebookProvider, RestangularProvider, localStorageServiceProvider) {
         RestangularProvider.setBaseUrl(config_data.webServiceUrl);

@@ -7,7 +7,7 @@ var config_data = {
 
 function isMobile() {
     //test for mobile
-    var mobileTest = false;
+    var mobileTest = true;
     if (mobileTest == true) {
         return true;
     } else {
