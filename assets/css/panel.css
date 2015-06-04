@@ -179,7 +179,7 @@ html, body {
 }
 @media only screen and (min-width: 768px) {
   .cd-panel-container {
-    width: 70%;
+    width:428px;
   }
     #cd-panel-left .cd-panel-container {
         width:228px;
