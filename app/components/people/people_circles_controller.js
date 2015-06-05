@@ -1,16 +1,49 @@
 var mymodal = angular.module('ionicApp')
     .controller('PeopleCirclesCtrl', function ($scope, $routeParams, Facebook, Restangular, localStorageService, $window) {
+       
         $scope.testData = "circles";
         $scope.ackapakisi=true;
         $scope.ackapa=true;
-        $scope.cevreadlar = cevregoster();
-        
+        $scope.cevreadlar = cevregoster();               
+               
         var deger=[];
         var csec;
+        var tbls;
+        
+         $scope.renksec = function(yeni){
+        
+        if(yeni!=tbls)
+        {
+        var property = document.getElementById(yeni);
+        property.style.backgroundColor = "orange";
+        
+        var property1 = document.getElementById("bt1" + yeni);
+        property1.style.backgroundColor = "orange";
+         
+        var property2 = document.getElementById("bt2" + yeni);
+        property2.style.backgroundColor = "orange";
+        
+        
+        var eski = document.getElementById(tbls);
+        var eski1 = document.getElementById("bt1" + tbls);
+        var eski2 = document.getElementById("bt2" + tbls);
+        if(eski!=null)
+        {
+        eski.style.backgroundColor = "#1abc9c";
+        eski1.style.backgroundColor = "#1abc9c";
+        eski2.style.backgroundColor = "#1abc9c";
+        }
+        
+        tbls=yeni;
+        }
+        };
         
         $scope.showModal = false;
-        $scope.toggleModal = function(){
+        $scope.toggleModal = function(cevread){
         $scope.showModal = !$scope.showModal;
+        $scope.cevread = {
+        text: ''
+        };
         };
         
         $scope.csil = false;
@@ -23,13 +56,19 @@ var mymodal = angular.module('ionicApp')
         $scope.cdegistir = false;
         $scope.cdegistirModal = function(cevreadi, cvrid){
         $scope.cdegistir = !$scope.cdegistir;
-        $scope.cevredgsad=cevreadi;
+        $scope.cevredgsad = {
+        text: cevreadi
+        };
         $scope.cvrid=cvrid;
         };
         
         $scope.kisieskle = false;
         $scope.kisieskleModal = function(){
         $scope.kisieskle = !$scope.kisieskle;
+        $scope.kisieklead = {
+        text: ''
+        };
+        $scope.kisiliste=0;
         };
         
         $scope.digercevre = false;
@@ -49,14 +88,29 @@ var mymodal = angular.module('ionicApp')
             });            
         };
         
-         cevregoster = function() { 
+         cevregoster = function(circleid, cvrad) { 
             var cevregosterRestangular = Restangular.all("circles");
             cevregosterRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (cevreliste) {
-            $scope.cevreadlar = cevreliste;
+            //$scope.cevreadlar = cevreliste;
+            
+            for(var i=0;i<cevreliste.length;i++)
+            {
+            var ls=cevreliste[i].id;
+            if(ls == circleid)
+            {
+            var lbl = document.getElementById('lb'+circleid);
+            lbl.textContent= cevreliste[i].user_count;
+            
+            var lblad = document.getElementById('ad'+circleid);
+            lblad.textContent= cevreliste[i].name;
+            }
+            }
+            
             });            
         };
         
         $scope.cevrekle = function (cevread) {
+       
             var headers = {'Content-Type': 'application/x-www-form-urlencoded', 'access_token': $scope.access_token};
             var jsonData = cevread;
             var postData = [];
@@ -66,10 +120,12 @@ var mymodal = angular.module('ionicApp')
             
             var postDataL = [];
             cevreRestangular.customPOST(data, '', '', headers).then(function (circleUsers) {
-                    $scope.cevreadlar = circleUsers;
+            
+            var ln=circleUsers.length;
+                    $scope.cevreadlar.push(circleUsers[ln - 1]);
                 }
             );
-            
+               
         };
         
       $scope.cevresil = function (cid) {
@@ -78,7 +134,14 @@ var mymodal = angular.module('ionicApp')
             
             var cevrelerRestangular = Restangular.all("circles");
             cevrelerRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (cevreliste) {
-            $scope.cevreadlar = cevreliste;
+            
+            for(var i=0;i<$scope.cevreadlar.length;i++)
+            {
+            var cad=$scope.cevreadlar[i].id;
+            if(cad==cid)
+            $scope.cevreadlar.splice(i,1);
+            }
+            
             cevreidyaz("", "");
             $scope.cevrekisiler=0;
             $scope.ackapa=true;
@@ -99,7 +162,7 @@ var mymodal = angular.module('ionicApp')
     degisRestangular.customPUT(data, '', '', headers).then(function (result) {
             
             cevreidyaz(cvrid, cvrad);
-            cevregoster(); 
+            cevregoster(cvrid, cvrad); 
                
             });
         };
@@ -124,15 +187,21 @@ var mymodal = angular.module('ionicApp')
             
             kisiekleRestangular.customPOST(data, '', '', headers).then(function (circle_user) {
             
-            $scope.cevrekisiler = circle_user; 
-            cevregoster();     
+            var ln=circle_user.length;
+            
+            if($scope.cevrekisiler.length!=ln)
+            { $scope.cevrekisiler.push(circle_user[ln-1]); }
+            
+            cevregoster(circleid);     
                });
             
         };
         
         $scope.kisigoruntule = function (circleid, circlead) {
+       
         var kisialRestangular = Restangular.one("circles", circleid).all("users");
         kisialRestangular.customGET("", "", {'access_token': $scope.access_token}).then(function (kisiler) {
+        
         $scope.cevrekisiler = kisiler;
                     cevreidyaz(circleid, circlead);
                     deger.length = 0;
@@ -186,12 +255,23 @@ var mymodal = angular.module('ionicApp')
         {
          var drm=deger[i].drm;
          var kisidsi=deger[i].kisid;
+         
         if( drm==true)
         {
             var kisisilmeRestangular = Restangular.one("circles", circleid).one("users", kisidsi);
             kisisilmeRestangular.customDELETE("", "", {'access_token': $scope.access_token}).then(function (kisiler) {
             $scope.cevrekisiler = kisiler; 
-            cevregoster();                   
+            
+            for(var i=0;i<$scope.cevrekisiler.length;i++)
+            {
+            var uad=$scope.cevrekisiler[i].user_id;
+            if(uad==kisidsi)
+            $scope.cevrekisiler.splice(i,1);
+            }
+            
+            $scope.ackapa=true;
+            
+            cevregoster(circleid);                   
             });
         }
     }
@@ -199,10 +279,15 @@ var mymodal = angular.module('ionicApp')
      };
     
     $scope.kisiekcevre = function () {
+      
     for(var i=0;i<deger.length;i++)
         {
          var drm=deger[i].drm;
          var kisidsi=deger[i].kisid;
+         
+         var kapat = document.getElementById(kisidsi);
+         kapat.checked = false;
+         
             if( drm==true)
             {
             var headers = {'Content-Type': 'application/x-www-form-urlencoded', 'access_token': $scope.access_token};
@@ -214,33 +299,35 @@ var mymodal = angular.module('ionicApp')
             
             kisiekleRestangular.customPOST(data, '', '', headers);
             
-            cevregoster();
+            cevregoster(csec);
+            
             }
         }
+        
         };
     });
     
         
-mymodal.directive('modal', function () {
+ mymodal.directive('modal', function () {
     return {
-      templateUrl: 'app/components/partials/circle_add.htm',
+     templateUrl: 'app/components/partials/circle_add.htm',
       restrict: 'E',
       transclude: true,
       replace:true,
       scope:true,
+      backdrop : true,
       link: function postLink(scope, element, attrs) {
         scope.title = attrs.title;
-
         scope.$watch(attrs.visible, function(value){
           if(value == true)
-            $(element).modal('show');
+            $(element).modal('show');             
           else
             $(element).modal('hide');
         });
 
         $(element).on('shown.bs.modal', function(){
           scope.$apply(function(){
-            scope.$parent[attrs.visible] = true;
+          scope.$parent[attrs.visible] = true;            
           });
         });
 
