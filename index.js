@@ -103,7 +103,7 @@ var app = angular.module('ionicApp', requiredModules)
             });
         };
     });
-if (config_data.isMobile == false) {
+if (config_data.isMobile == false) { //false
     //desktop version
     app.config(function ($routeProvider, FacebookProvider, RestangularProvider, localStorageServiceProvider) {
         RestangularProvider.setBaseUrl(config_data.webServiceUrl);
@@ -158,55 +158,112 @@ if (config_data.isMobile == false) {
     });
 
 } else {
+
     app.config(function ($routeProvider, FacebookProvider, RestangularProvider, localStorageServiceProvider, $stateProvider, $urlRouterProvider) {
+console.log("mobile version")
         RestangularProvider.setBaseUrl(config_data.webServiceUrl);
         localStorageServiceProvider.setStorageCookie(0, '/');
+        //route
+        $routeProvider
+            .when('/chapter/:chapterId/author/:authorMask/verse/:verseNumber/', {
+                controller: 'HomeCtrl',
+                templateUrl: 'components/home/home.html',
+                reloadOnSearch: false
+            })
+            .when('/annotations/', {
+                controller: 'AnnotationsCtrl',
+                templateUrl: 'components/annotations/all_annotations.html',
+                reloadOnSearch: false
+            })
+            .when('/people/find_people/', {
+                controller: 'PeopleFindCtrl',
+                templateUrl: 'app/components/people/find_people.html',
+                reloadOnSearch: false
+            })
+            .when('/people/people_have_you/', {
+                controller: 'PeopleHaveYouCtrl',
+                templateUrl: 'app/components/people/people_have_you.html',
+                reloadOnSearch: false
+            })
+            .when('/people/circles/', {
+                controller: 'PeopleCirclesCtrl',
+                templateUrl: 'app/components/people/circles.html',
+                reloadOnSearch: false
+            })
+            .when('/people/explore/', {
+                controller: 'PeopleExploreCtrl',
+                templateUrl: 'app/components/people/explore.html',
+                reloadOnSearch: false
+            })
+            .when('/', {
+                controller: 'HomeCtrl',
+                templateUrl: 'components/home/home.html',
+                reloadOnSearch: false
+            })
+            .when('/chapter/:chapterId/author/:authorMask/', {
+                redirectTo: '/chapter/:chapterId/author/:authorMask/verse/1/'
+            })
+            .otherwise({
+                redirectTo: '/'
+            });
 
-        var locationHref = window.location.href;
-        if (locationHref.indexOf('/m/') > -1) {
-            //mobile version
-
-            $stateProvider
-                .state('app', {
-                    url: "/app",
-                    abstract: true,
-                    templateUrl: "components/navigation/navigation.html"
-                })
-                .state('app.home', {
-                    url: "/chapter/:chapterId/author/:authorMask/verse/:verseNumber/",
-                    views: {
-                        'appContent': {
-                            templateUrl: "components/home/home.html",
-                            controller: "MainCtrl"
-                        }
-                    }
-                })
-                .state('app.annotations', {
-                    url: "/annotations",
-                    views: {
-                        'appContent': {
-                            templateUrl: "components/annotations/all_annotations.html",
-                            controller: "MainCtrl"
-                        }
-                    }
-                })
-
-            $urlRouterProvider.otherwise("/app/chapter/1/author/1040/verse/1/");
-        } else {
-            //mobile version is not ready
-            $routeProvider
-                .when('/', {
-                    controller: 'MainCtrl',
-                    templateUrl: 'app/components/home/mobile_on_development.html',
-                    reloadOnSearch: false
-                })
-                .otherwise({
-                    redirectTo: '/'
-                });
-        }
+        //facebook
         FacebookProvider.init('295857580594128');
 
-    });
+
+
+
+        /*
+             RestangularProvider.setBaseUrl(config_data.webServiceUrl);
+             localStorageServiceProvider.setStorageCookie(0, '/');
+
+             var locationHref = window.location.href;
+             if (locationHref.indexOf('/m/') > -1) {
+                 //mobile version
+
+                 $stateProvider
+                     .state('app', {
+                         url: "/app",
+                         abstract: true,
+                         templateUrl: "components/navigation/navigation.html"
+                     })
+                     .state('app.home', {
+                         url: "/chapter/:chapterId/author/:authorMask/verse/:verseNumber/",
+                         views: {
+                             'appContent': {
+                                 templateUrl: "components/home/home.html",
+                                 controller: "MainCtrl"
+                             }
+                         }
+                     })
+                     .state('app.annotations', {
+                         url: "/annotations",
+                         views: {
+                             'appContent': {
+                                 templateUrl: "components/annotations/all_annotations.html",
+                                 controller: "MainCtrl"
+                             }
+                         }
+                     })
+
+                 $urlRouterProvider.otherwise("/app/chapter/1/author/1040/verse/1/");
+             } else {
+                 //mobile version is not ready
+                 $routeProvider
+                     .when('/', {
+                         controller: 'MainCtrl',
+                         templateUrl: 'app/components/home/mobile_on_development.html',
+                         reloadOnSearch: false
+                     })
+                     .otherwise({
+                         redirectTo: '/'
+                     });
+             }
+             FacebookProvider.init('295857580594128');
+         */
+         }
+
+    );
 
 }
 
@@ -396,7 +453,7 @@ app.factory('ChapterVerses', function ($resource) {
             }
         }
 
-        if (!config_data.isMobile) {
+     //   if (!config_data.isMobile) {
             if (typeof $routeParams.chapterId !== 'undefined') {
                 chapterId = $routeParams.chapterId;
                 $scope.initChapterSelect = true;
@@ -407,6 +464,7 @@ app.factory('ChapterVerses', function ($resource) {
             if (typeof $routeParams.verseNumber !== 'undefined') {
                 verseNumber = $routeParams.verseNumber;
             }
+        /*
         } else {
             //mobile
 
@@ -427,7 +485,7 @@ app.factory('ChapterVerses', function ($resource) {
                 verseNumber = $stateParams.verseNumber;
             }
         }
-
+*/
 
         $scope.chapter_id = chapterId;
         $scope.setChapterId();
@@ -491,8 +549,11 @@ app.factory('ChapterVerses', function ($resource) {
 
                 //unbind
                 if (config_data.isMobile) {
+                    console.log("unbind")
+
                     $(document).unbind('mouseup');
                     $(document).unbind('mousedown');
+
                 }
             }
 
@@ -610,7 +671,7 @@ app.factory('ChapterVerses', function ($resource) {
 
         //go to chapter
         $scope.goToChapter = function () {
-            if (!config_data.isMobile) {
+          //  if (!config_data.isMobile) {
                 if ($scope.getCurrentPage() == 'home') {
                     $location.path('/chapter/' + $scope.chapter_id + '/author/' + $scope.author_mask + '/verse/' + $scope.verse.number + '/', false);
                     $scope.list_translations();
@@ -618,6 +679,7 @@ app.factory('ChapterVerses', function ($resource) {
                 } else {
                     window.location.href = '#/chapter/' + $scope.chapter_id + '/author/' + $scope.author_mask + '/';
                 }
+            /*
             } else {
                 $state.go("app.home", {
                     "chapterId": $scope.chapter_id,
@@ -625,9 +687,11 @@ app.factory('ChapterVerses', function ($resource) {
                     "verseNumber": $scope.verse.number
                 }, {reload: true});
             }
+            */
         };
 
         $scope.updateAuthors = function () {
+            console.log("updateauthors")
             if (!config_data.isMobile) {
                 if ($scope.getCurrentPage() == 'home') {
                     $scope.goToChapter();
@@ -651,6 +715,9 @@ app.factory('ChapterVerses', function ($resource) {
         $scope.submitEditor = function (theTags) {
             //  var jsTags = $scope.theTags;
             var jsTags = theTags;
+            if(typeof jsTags=='undefined'){
+                jsTags=[];
+            }
             var oldTags = [];
             if (typeof $scope.annotationModalData.annotationId != 'undefined') {
                 oldTags = $scope.annotationModalData.tags;
@@ -693,6 +760,7 @@ app.factory('ChapterVerses', function ($resource) {
             if (!config_data.isMobile) {
                 angular.element(document.getElementById('theView')).scope().theTags = newTags;
             } else {
+                console.log("newtags")
                 angular.element(document.getElementById('MainCtrl')).scope().theTags = newTags;
             }
             $scope.annotationModalDataVerse = Math.floor(annotation.verseId / 1000) + ":" + annotation.verseId % 1000;
@@ -1063,13 +1131,14 @@ app.factory('ChapterVerses', function ($resource) {
         }
 
         if (config_data.isMobile) {
+            /*
             $scope.currentState = $state.current.name;
             $rootScope.$on('$stateChangeSuccess',
                 function (event, toState, toParams, fromState, fromParams) {
                     $scope.currentState = toState.name;
                     $scope.scopeApply();
                 })
-
+*/
 
             $ionicModal.fromTemplateUrl('components/partials/annotations_on_page_modal.html', {
                 scope: $scope,

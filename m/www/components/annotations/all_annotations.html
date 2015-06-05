@@ -1,3 +1,33 @@
+<!-- start of side menu part 1-->
+<ion-side-menus>
+    <ion-side-menu-content>
+        <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced">
+            <ion-nav-buttons side="left">
+                <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+                <button class="button button-icon icon ion-arrow-right-b" ng-click="openModal('chapter_selection')"></button>
+                <a href="#/app/authors_list" class="button button-icon icon ion-person"></a>
+                <input type="hidden" ng-model="chapter_id" />
+                <input type="hidden" ng-model="verse_number" />
+                <input type="hidden" ng-model="author_mask" />
+                Tüm Notlar
+            </ion-nav-buttons>
+
+            <h1 class="title"></h1>
+            <ion-nav-buttons side="right">
+                <button class="button" ng-click="login()" ng-if="user==null">Giriş</button>
+            </ion-nav-buttons>
+        </ion-nav-bar>
+        <ion-nav-buttons side="left">
+            <button class="button button-icon icon ion-navicon" menu-toggle="left">
+            </button>
+
+        </ion-nav-buttons>
+
+        <ion-nav-view name="appContent"></ion-nav-view>
+        <!-- end of side menu part 1 -->
+
+
+
 <ion-nav-view>
     <ion-content  overflow-scroll="true">
         <div style="height: 30px;">&nbsp;</div>
@@ -121,3 +151,11 @@
         <span ng-init="get_all_annotations()"></span>
         </ion-content>
     </ion-nav-view>
+
+
+
+        <!-- start of side menu part 2-->
+    </ion-side-menu-content>
+    <div ng-include="'components/navigation/left_menu.html'"></div>
+</ion-side-menus>
+<!-- end of side menu part 2-->
