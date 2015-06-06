@@ -48,6 +48,9 @@ var mymodal = angular.module('ionicApp')
         
         $scope.csil = false;
         $scope.csilModal = function(cevreadi, cid){
+        var lblad = document.getElementById('ad'+cid);
+            cevreadi=lblad.textContent;
+            
         $scope.csil = !$scope.csil;
         $scope.cevreadi=cevreadi;
         $scope.cid=cid;
@@ -55,6 +58,9 @@ var mymodal = angular.module('ionicApp')
         
         $scope.cdegistir = false;
         $scope.cdegistirModal = function(cevreadi, cvrid){
+        var lblad = document.getElementById('ad'+cvrid);
+            cevreadi=lblad.textContent;
+            
         $scope.cdegistir = !$scope.cdegistir;
         $scope.cevredgsad = {
         text: cevreadi
@@ -121,11 +127,12 @@ var mymodal = angular.module('ionicApp')
             var postDataL = [];
             cevreRestangular.customPOST(data, '', '', headers).then(function (circleUsers) {
             
-            var ln=circleUsers.length;
-                    $scope.cevreadlar.push(circleUsers[ln - 1]);
-                }
-            );
-               
+            var cirlist = [];
+            cirlist.push({'user_count':'0','id':circleUsers.id,'name':circleUsers.name});
+            
+            $scope.cevreadlar.push(cirlist[0]);
+          
+          }); 
         };
         
       $scope.cevresil = function (cid) {
@@ -163,7 +170,27 @@ var mymodal = angular.module('ionicApp')
             
             cevreidyaz(cvrid, cvrad);
             cevregoster(cvrid, cvrad); 
-               
+            
+//            var x=0;
+//            
+//            for(var i=0;i<$scope.cevreadlar.length;i++)
+//            {
+//            var dg=$scope.cevreadlar[i].id;
+//            
+//            if(dg==cvrid)
+//              { 
+//              x=i;
+//              //$scope.cevreadlar.splice(i,1); 
+//              }
+//            }
+//            
+//            var cvrlist=[];
+//            cvrlist.push({'user_count':result.user_count,'id':result.id,'name':result.name});
+//            $scope.cevreadlar[x]=cvrlist[0];
+//            
+//            //$scope.cevreadlar.splice(x,1);
+//            //$scope.cevreadlar.push(cvrlist[0]); 
+//            
             });
         };
         
@@ -187,10 +214,10 @@ var mymodal = angular.module('ionicApp')
             
             kisiekleRestangular.customPOST(data, '', '', headers).then(function (circle_user) {
             
-            var ln=circle_user.length;
+            var userlist = [];
+            userlist.push({'user_id':circle_user.user_id,'name':circle_user.name,'photo':circle_user.photo});
             
-            if($scope.cevrekisiler.length!=ln)
-            { $scope.cevrekisiler.push(circle_user[ln-1]); }
+            $scope.cevrekisiler.push(userlist[0]); 
             
             cevregoster(circleid);     
                });
@@ -198,11 +225,15 @@ var mymodal = angular.module('ionicApp')
         };
         
         $scope.kisigoruntule = function (circleid, circlead) {
-       
         var kisialRestangular = Restangular.one("circles", circleid).all("users");
         kisialRestangular.customGET("", "", {'access_token': $scope.access_token}).then(function (kisiler) {
         
-        $scope.cevrekisiler = kisiler;
+        var lblad = document.getElementById('ad'+circleid);
+            circlead=lblad.textContent;
+            
+            if($scope.cevretanim!=circlead)
+                    { $scope.cevrekisiler = kisiler; $scope.$apply(); }
+                    
                     cevreidyaz(circleid, circlead);
                     deger.length = 0;
                     $scope.ackapakisi=false;
@@ -258,17 +289,19 @@ var mymodal = angular.module('ionicApp')
          
         if( drm==true)
         {
-            var kisisilmeRestangular = Restangular.one("circles", circleid).one("users", kisidsi);
-            kisisilmeRestangular.customDELETE("", "", {'access_token': $scope.access_token}).then(function (kisiler) {
-            $scope.cevrekisiler = kisiler; 
-            
-            for(var i=0;i<$scope.cevrekisiler.length;i++)
+            for(var y=0;y<$scope.cevrekisiler.length;y++)
             {
-            var uad=$scope.cevrekisiler[i].user_id;
-            if(uad==kisidsi)
-            $scope.cevrekisiler.splice(i,1);
+                var uad=$scope.cevrekisiler[y].user_id;
+                if(uad==kisidsi)
+                {
+                    $scope.cevrekisiler.splice(y,1);
+                y=y-1;
+                }
             }
             
+            var kisisilmeRestangular = Restangular.one("circles", circleid).one("users", kisidsi);
+            kisisilmeRestangular.customDELETE("", "", {'access_token': $scope.access_token}).then(function (kisiler) {
+           
             $scope.ackapa=true;
             
             cevregoster(circleid);                   
@@ -297,12 +330,15 @@ var mymodal = angular.module('ionicApp')
             var data = postData.join("&");
             var kisiekleRestangular = Restangular.one("circles", csec).all("users");
             
-            kisiekleRestangular.customPOST(data, '', '', headers);
-            
-            cevregoster(csec);
+            kisiekleRestangular.customPOST(data, '', '', headers).then(function (eklekisi) {
+                cevregoster(csec);
+            });   
             
             }
         }
+        
+        deger.length=0;
+        $scope.ackapa=true;
         
         };
     });
