@@ -2,6 +2,9 @@
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'test';
 
+baseAddress='http://test.kurancalis.com';
+
+
 exports.config = {
     // seleniumAddress: 'http://localhost:4444/wd/hub',
     directConnect: true,
@@ -15,12 +18,13 @@ exports.config = {
         'spec7.js',
         'spec8.js',
         'spec9.js',
-        'spec10.js'
-        ,
-
         */
-        'spec11.js',
-        'spec12.js'
+       // 'spec10.js'
+       // ,
+
+        'spec11.js'
+        //,
+        //'spec12.js'
     ],
     jasmineNodeOpts: {defaultTimeoutInterval: 360000},
     multiCapabilities: [

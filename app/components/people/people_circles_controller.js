@@ -228,16 +228,24 @@ var mymodal = angular.module('ionicApp')
         var kisialRestangular = Restangular.one("circles", circleid).all("users");
         kisialRestangular.customGET("", "", {'access_token': $scope.access_token}).then(function (kisiler) {
         
-        var lblad = document.getElementById('ad'+circleid);
+            var lblad = document.getElementById('ad'+circleid);
             circlead=lblad.textContent;
             
             if($scope.cevretanim!=circlead)
-                    { $scope.cevrekisiler = kisiler; $scope.$apply(); }
-                    
-                    cevreidyaz(circleid, circlead);
-                    deger.length = 0;
-                    $scope.ackapakisi=false;
-          });
+            {
+                $scope.cevrekisiler = [];
+                $scope.scopeApply();
+                setTimeout(function(){
+                    //do what you need here
+                    $scope.cevrekisiler = kisiler;
+                    $scope.scopeApply();
+                }, 600);
+            }
+
+            cevreidyaz(circleid, circlead);
+            deger.length = 0;
+            $scope.ackapakisi=false;
+         });
                     
         };
         
@@ -248,7 +256,7 @@ var mymodal = angular.module('ionicApp')
         if(circlead=="")
         {$scope.circlead = "";}
         else
-        { $scope.circlead = circlead + "  çevresindeki kiþiler."; }
+        { $scope.circlead = circlead + "  Ã‡evresindeki kiÅŸiler."; }
         };
          
       $scope.kisiadd = function (kisid, drm) {
@@ -278,8 +286,14 @@ var mymodal = angular.module('ionicApp')
       $scope.cevreadd = function (csecim) {
       
          csec=csecim;
-         };
-   
+      };
+
+        $scope.scopeApply = function () {
+            if (!$scope.$$phase) {
+                $scope.$apply();
+            }
+        }
+
     
      $scope.kisisilme = function (circleid) {
         for(var i=0;i<deger.length;i++)
