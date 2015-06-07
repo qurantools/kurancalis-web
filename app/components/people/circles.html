@@ -26,7 +26,7 @@
     
      <table id='{{cevreadlar[$index].name}}' class="btn btn-primary" ng-repeat="item in cevreadlar" ng-click="kisigoruntule('{{cevreadlar[$index].id}}','{{cevreadlar[$index].name}}');renksec('{{cevreadlar[$index].name}}')" style="width:135px; height:150px; margin: 10px 15px;">
      <td align="center" style="width:135px">
-     <label id='ad{{cevreadlar[$index].id}}' style="color:White">{{cevreadlar[$index].name}}</label>
+     <label style="height:10px" id='ad{{cevreadlar[$index].id}}' style="color:White">{{cevreadlar[$index].name}}</label>
      <hr />
      <label id='lb{{cevreadlar[$index].id}}' style="color:White">{{cevreadlar[$index].user_count}} </label> Kiþi
      <BR />
@@ -130,29 +130,30 @@
 
 <div align="left" style ="width:87%">
 
- <table style="width: 220px; height: 97px; margin: 15px 33px;" class="btn btn-primary btn-wide" ng-disabled="ackapakisi" ng-click="kisieskleModal()">
+ <table style="width: 215px; margin: 10px 10px;" class="btn btn-primary btn-wide" ng-disabled="ackapakisi" ng-click="kisieskleModal()">
         <tr>
-                        <td align="center" style="width: 60px; height:80px">
-                            <span style="font-size: 32pt"><strong>+</strong></span></td>
-                        <td align="center" style="width: 160px; height:80px">
+                        <td align="center" style=" font-size:32pt; font-weight:bolder; vertical-align: middle;width: 40px;">
+                            +</td>
+                        <td align="center" style="vertical-align: middle;width: 170px;">
                         Yeni Kiþi Ekle
                         </td>
                     </tr>
     </table>
- <table  class="btn btn-primary" ng-repeat="item in cevrekisiler" cellpadding="0" cellspacing="0" style="width: 220px; margin: 15px 33px;">
+    
+ <table class="btn btn-primary btn-wide" ng-repeat="item in cevrekisiler" cellpadding="0" cellspacing="0" style=" background-color:#1abc9c; width: 215px; margin: 10px 10px; padding:0px 0px">
         <tr>
-            <td style="width: 60px; height: 70px">
-            <img width="60px" height="70px" src={{cevrekisiler[$index].photo}} />
+            <td align="left" style="width: 75px; height: 75px">
+            <img width="75px" height="75px" src={{cevrekisiler[$index].photo}} />
             </td>
-            <td style="width: 80px; height: 70px; padding-left: 8px;">
-                <table style="width: 130px">
+            <td style="width: 135px; padding-left: 8px;">
+                <table style="width: 135px">
                     <tr>
-                        <td align="right" style="width: 120px;  padding-left:10px;  padding-right:10px">
+                        <td align="right" style="width: 140px; padding-right:20px; height: 10px;">
                         <input id="{{cevrekisiler[$index].user_id}}" type="checkbox" ng-model="secimyap" ng-click="kisiadd('{{cevrekisiler[$index].user_id}}',secimyap)">
                         </td>
                     </tr>
                     <tr>
-                        <td nowrap align="left" style="width: 120px; height: 55px;">
+                        <td nowrap="nowrap" align="left" style="vertical-align: top; width: 140px; height: 40px; color:White">
                         {{cevrekisiler[$index].name}}   
                         </td>
                     </tr>

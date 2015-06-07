@@ -4,7 +4,7 @@ var mymodal = angular.module('ionicApp')
         $scope.testData = "circles";
         $scope.ackapakisi=true;
         $scope.ackapa=true;
-        $scope.cevreadlar = cevregoster();               
+        $scope.cevreadlar = cevrelisteac();               
                
         var deger=[];
         var csec;
@@ -87,7 +87,7 @@ var mymodal = angular.module('ionicApp')
         $scope.kisisil = !$scope.kisisil;
         };
         
-        function cevregoster() { 
+        function cevrelisteac() { 
             var cevregosterRestangular = Restangular.all("circles");
             cevregosterRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (cevreliste) {
             $scope.cevreadlar = cevreliste;
