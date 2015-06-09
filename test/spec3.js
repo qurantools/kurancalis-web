@@ -1,10 +1,11 @@
 // spec.js
 //
+var uyelik = require('./uyelik');
 
 describe('ceviri gosterimi', function() {
 	
   beforeEach(function() {
-	        browser.get(baseAddress + '/#/chapter/1/author/1040/verse/1');
+	        browser.get('http://kurancalis.com/#/chapter/1/author/1040/verse/1');
 	        
 	       //browser.sleep(50000); // if your test is outrunning the browser
 	       // browser.waitForAngular(); 
@@ -26,6 +27,12 @@ describe('ceviri gosterimi', function() {
     }
   
        it('Silinen not doğrulanması', function() {
+       	
+       	var uye = new uyelik();
+       	
+       	 uye.cikis();
+         //uye.sil();
+         uye.giris();
        	
     	    browser.sleep(10000);
     	    element(by.id('t_49995')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).element(by.css('[class="ng-binding"]')).element(by.css('[class="annotator-hl a_hl_red"]')).click();

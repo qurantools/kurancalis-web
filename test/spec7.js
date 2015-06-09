@@ -1,3 +1,4 @@
+var uyelik = require('./uyelik');
 describe('ceviri gosterimi', function() {
 	
 	var aramabtn = element.all(by.css('[class="caret pull-right"]'));
@@ -74,7 +75,7 @@ function listTranslations2(chapterNo, autid1, autid2) {
 }
 
 	  beforeEach(function() {
-	        browser.get(baseAddress + '/#/chapter/1/author/1040/verse/1');
+	        browser.get('http://kurancalis.com/#/chapter/1/author/1040/verse/1');
 	        
 	       //browser.sleep(50000); // if your test is outrunning the browser
 	       // browser.waitForAngular(); 
@@ -82,7 +83,13 @@ function listTranslations2(chapterNo, autid1, autid2) {
 	    });
 		  
 	 it('Not ekleme', function() {
-	       	    
+	       	   
+	       	      var uye = new uyelik();
+       	
+       	 uye.cikis();
+         uye.sil();
+         uye.giris();
+          
 	    	 listTranslations(2, 4);
 	    	  
 	    	  var elm = element(by.id('t_31193')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).element(by.css('[class="ng-binding"]'));
@@ -103,7 +110,7 @@ function listTranslations2(chapterNo, autid1, autid2) {
 	    	    element(by.css('[value="green"]')).click();
 	    	    element(by.css('[ng-click="submitEditor()"]')).click();
 			  
-	listTranslations(3, 4);
+	           listTranslations(3, 4);
 	    	  
 	    	  elm = element(by.id('t_31477')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).element(by.css('[class="ng-binding"]'));
 			  
@@ -209,12 +216,12 @@ function listTranslations2(chapterNo, autid1, autid2) {
 	    		browser.sleep('5000');
 	    		 
 	    		//Etikete tıklanarak açılıyor.
-	    		element(by.id("v_70010")).element(by.repeater('(verseTagsKey, verseTagsVal) in verseTagsJSON').row(0)).element(by.css('[class="btn btn-xs btn-info verse_tag ng-binding ng-scope"]')).click();
+	    		element(by.id("v_70010")).element(by.repeater('(verseTagsKey, verseTagsVal) in verseTagsJSON').row(0)).element(by.css('[ng-click="goToVerseTag(verse.id,verseTag.tag)"]')).click();
 	      
 	    		browser.sleep('5000');
 	    		
 	    		//Etiket ebatının ve renginin değiştirildiği doğrulanıyor.
-	    		element(by.id("v_70010")).element(by.repeater('(verseTagsKey, verseTagsVal) in verseTagsJSON').row(0)).element(by.css('[class="btn verse_tag ng-binding ng-scope btn-warning btn-sm"]')).getText().then(function(text) {
+	    		element(by.id("v_70010")).element(by.repeater('(verseTagsKey, verseTagsVal) in verseTagsJSON').row(0)).element(by.css('[class="btn verse_tag ng-binding btn-warning btn-sm"]')).getText().then(function(text) {
 		    		  expect(text).toBe('ekt1');	
 		        });
 	    		
@@ -244,12 +251,12 @@ function listTranslations2(chapterNo, autid1, autid2) {
 	    		browser.sleep('5000');
 	    		
 	    		//Diğer etiket tıklanıyor.
-	    		element(by.id("v_70010")).element(by.repeater('(verseTagsKey, verseTagsVal) in verseTagsJSON').row(0)).element(by.css('[class="btn btn-xs btn-info verse_tag ng-binding ng-scope"]')).click();
+	    		element(by.id("v_70010")).element(by.repeater('(verseTagsKey, verseTagsVal) in verseTagsJSON').row(0)).element(by.css('[class="btn btn-xs btn-info verse_tag ng-binding"]')).click();
 	  	      
 	    		browser.sleep('5000');
 	    		
 	    		//Etiket ebatının ve renginin değiştirildiği doğrulanıyor.
-	    		element(by.id("v_70010")).element(by.repeater('(verseTagsKey, verseTagsVal) in verseTagsJSON').row(0)).element(by.css('[class="btn verse_tag ng-binding ng-scope btn-warning btn-sm"]')).getText().then(function(text) {
+	    		element(by.id("v_70010")).element(by.repeater('(verseTagsKey, verseTagsVal) in verseTagsJSON').row(0)).element(by.css('[class="btn verse_tag ng-binding btn-warning btn-sm"]')).getText().then(function(text) {
 		    		  expect(text).toBe('ekt2');	
 		        });
 	    		
@@ -268,7 +275,7 @@ function listTranslations2(chapterNo, autid1, autid2) {
 		        });
 	    		
 	    		//Diğer ayetteki etiket tıklanıyor.
-	    		element(by.id("v_70011")).element(by.repeater('(verseTagsKey, verseTagsVal) in verseTagsJSON').row(0)).element(by.css('[class="btn btn-xs btn-info verse_tag ng-binding ng-scope"]')).click();
+	    		element(by.id("v_70011")).element(by.repeater('(verseTagsKey, verseTagsVal) in verseTagsJSON').row(0)).element(by.css('[class="btn btn-xs btn-info verse_tag ng-binding"]')).click();
 	  	      
 	    		browser.sleep('5000');
 	    		
@@ -276,7 +283,7 @@ function listTranslations2(chapterNo, autid1, autid2) {
 	    		expect(element(by.id("v_70010")).element(by.repeater('(verseTagsKey, verseTagsVal) in verseTagsJSON')).element(by.model('verseTagContentAuthor')).isPresent()).toBeFalsy();
 	    		
 	    		//Açık olan etiketin listesi kapatılıyor ve doğrulanıyor.
-	    		element(by.id("v_70011")).element(by.repeater('(verseTagsKey, verseTagsVal) in verseTagsJSON').row(0)).element(by.css('[class="btn verse_tag ng-binding ng-scope btn-warning btn-sm"]')).click();
+	    		element(by.id("v_70011")).element(by.repeater('(verseTagsKey, verseTagsVal) in verseTagsJSON').row(0)).element(by.css('[class="btn verse_tag ng-binding btn-warning btn-sm"]')).click();
 	    		expect(element(by.id("v_70011")).element(by.repeater('(verseTagsKey, verseTagsVal) in verseTagsJSON')).element(by.model('verseTagContentAuthor')).isPresent()).toBeFalsy();
 	      
 	    		//İşlemlerin silinmesi.

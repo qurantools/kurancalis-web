@@ -1,10 +1,11 @@
 // spec.js
 //
+var uyelik = require('./uyelik');
 
 describe('ceviri gosterimi', function() {
 
 	 beforeEach(function() {
-	        browser.get(baseAddress + '/#/chapter/1/author/1040/verse/1');
+	        browser.get('http://kurancalis.com/#/chapter/1/author/1040/verse/1');
 	 });
      
 	 function not_yaz_yeni(not_deger) {
@@ -20,8 +21,13 @@ describe('ceviri gosterimi', function() {
 
 	 it('Liste halinde not gösterim', function() {
       	 
-    	   browser.refresh();
-    	   browser.sleep(5000);
+      	   var uye = new uyelik();
+       	
+       	 uye.cikis();
+         uye.sil();
+         uye.giris();
+           
+    	   browser.sleep(2000);
     	   
     	   var not_deger='Test1';
         	
@@ -33,11 +39,11 @@ describe('ceviri gosterimi', function() {
         	//ilk not ile başka bir kelime beraber karalanır not eklenir. Yeşil işaretlenir.
            var elm = element(by.id('t_31181')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).element(by.css('[class="ng-binding"]'));
         	//karala(elm, 0, 10);
-           browser.actions().mouseMove(elm,{x: 58, y: 0}).doubleClick().perform();
            
+           browser.actions().mouseMove(elm,{x: 58, y: 0}).doubleClick().perform();
            browser.actions().keyDown(protractor.Key.SHIFT).perform();
            element(by.id('t_31181')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).element(by.css('[class="ng-binding"]')).element(by.css('[class="annotator-hl a_hl_red"]')).click();
-      	 
+      	  
            element(by.css('[class="annotator-adder"]')).element(by.css('button')).click();
            element(by.model('annotationModalData.text')).sendKeys('Test2');
            element(by.css('[value="green"]')).click();
@@ -45,7 +51,7 @@ describe('ceviri gosterimi', function() {
            
            browser.sleep(5000);
         	
-           element(by.css('[class="cd-panel from-right ng-scope is-visible"]')).click();
+           element(by.id('cd-panel-right')).click();
     	   	   	
            browser.sleep(5000);
         	
@@ -63,7 +69,7 @@ describe('ceviri gosterimi', function() {
         	
         	browser.sleep(5000);
         	
-        	element(by.css('[class="cd-panel from-right ng-scope is-visible"]')).click();
+        	element(by.id('cd-panel-right')).click();
 	   	   	
         	browser.sleep(5000);
         	

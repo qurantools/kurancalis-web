@@ -1,3 +1,4 @@
+var uyelik = require('./uyelik');
 describe('ceviri gosterimi', function() {
 	
 	var aramabtn = element.all(by.css('[class="caret pull-right"]'));
@@ -77,7 +78,7 @@ function listTranslations(chapterNo, autid1, autid2, autid3) {
 	}
 	
 	  beforeEach(function() {
-	        browser.get(baseAddress + '/#/chapter/1/author/1040/verse/1');
+	        browser.get('http://kurancalis.com/#/chapter/1/author/1040/verse/1');
 	        
 	       //browser.sleep(50000); // if your test is outrunning the browser
 	       // browser.waitForAngular(); 
@@ -87,6 +88,12 @@ function listTranslations(chapterNo, autid1, autid2, autid3) {
 
 	  it('Tüm notların sol panel uygulaması KCS-115', function() {
 		 
+		    var uye = new uyelik();
+       	
+       	 uye.cikis();
+         uye.sil();
+         uye.giris();
+         
 		    //İlk 10 adet notun eklenmesi
 
 		  var sifirekle = {
@@ -215,7 +222,7 @@ function listTranslations(chapterNo, autid1, autid2, autid3) {
 					 element(by.css('[onclick="toggleLeftPanel()"]')).click();
 					 browser.sleep("3000");
 		  //element(by.css('[href="#/chapter/1/author/1040/verse/1"]')).click();
-				 
+				 element(by.css('[class="leftMenuLink"]')).click();
 					 tmpautid1 = null;
 					 
 				 browser.refresh();
@@ -376,8 +383,8 @@ donen=kontrol(19, 'green');
 		  //element(by.css('[href="#/chapter/1/author/1040/verse/1"]')).click();
 			 
 				 tmpautid1 = null;
-				 
-			 browser.refresh();
+			element(by.css('[class="leftMenuLink"]')).click();	 
+			 //browser.refresh();
 			 
 			 browser.sleep("5000");
 			 
