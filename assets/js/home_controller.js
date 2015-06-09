@@ -18,7 +18,14 @@ angular.module('ionicApp')
 
 
         $scope.annotationTextSearch = function (item) {
-            var searchText = $scope.searchText.toLowerCase();
+//TODO: filtre çalışmıyor
+            if(config_data.isMobile){
+                if(document.getElementById("searchText") && document.getElementById("searchText").value){
+                    var searchText = document.getElementById("searchText").value.toLowerCase();
+                }
+            }else{
+                var searchText = $scope.searchText.toLowerCase();
+            }
             if (item.quote.toLowerCase().indexOf(searchText) > -1 || item.text.toLowerCase().indexOf(searchText) > -1) {
                 return true;
             } else {

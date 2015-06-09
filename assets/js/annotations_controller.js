@@ -2,6 +2,18 @@ angular.module('ionicApp')
     .controller('AnnotationsCtrl', function ($scope, $routeParams, Facebook, Restangular, authorization, localStorageService) {
         console.log("annotations ctrl")
         $scope.currentPage=$scope.getCurrentPage();
+
+
+        $scope.allAnnotationsFiltered_toggle = function(){
+            if($scope.allAnnotationsFiltered!=1){
+                $scope.allAnnotationsFiltered=1;
+            }else{
+                $scope.allAnnotationsFiltered=0;
+            }
+        }
+
+
+
         /* auth */
         $scope.onFacebookLoginSuccess = function (responseData) {
             if (responseData.loggedIn == false) {
@@ -96,7 +108,7 @@ angular.module('ionicApp')
             $scope.allAnnotationsParams.start = $scope.allAnnotationsOpts.start;
             $scope.allAnnotationsParams.limit = $scope.allAnnotationsOpts.limit;
 
-            //kapalýydý
+            //kapalï¿½ydï¿½
                $scope.allAnnotationsParams.author = $scope.author_mask;
 
 

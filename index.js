@@ -926,6 +926,8 @@ app.factory('ChapterVerses', function ($resource) {
             }
         }
 */
+
+
         $scope.getAnnotationIndexFromFilteredAnnotationIndex = function (filteredAnnotationIndex) {
             //TODO use getIndexOfArrayByElement
             var arrLen = $scope.annotations.length;
@@ -1172,6 +1174,14 @@ app.factory('ChapterVerses', function ($resource) {
                 $scope.modal_authors_list = modal
             });
 
+            $ionicModal.fromTemplateUrl('components/partials/all_annotations_sort_modal.html', {
+                scope: $scope,
+                animation: 'slide-in-left',
+                id: 'all_annotations_sort'
+            }).then(function (modal) {
+                $scope.modal_all_annotations_sort = modal
+            });
+
             $scope.openModal = function (id) {
                 if (id == 'annotations_on_page') {
                     $scope.modal_annotations_on_page.show();
@@ -1181,6 +1191,8 @@ app.factory('ChapterVerses', function ($resource) {
                     $scope.modal_chapter_selection.show();
                 } else if (id == 'authors_list') {
                     $scope.modal_authors_list.show();
+                } else if (id == 'all_annotations_search') {
+                    $scope.modal_all_annotations_sort.show();
                 }
             };
 
@@ -1193,6 +1205,8 @@ app.factory('ChapterVerses', function ($resource) {
                     $scope.modal_chapter_selection.hide();
                 } else if (id == 'authors_list') {
                     $scope.modal_authors_list.hide();
+                }else if (id == 'authors_list') {
+                    $scope.modal_all_annotations_sort.hide();
                 }
             }
 
