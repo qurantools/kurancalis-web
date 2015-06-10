@@ -1,17 +1,24 @@
 angular.module('ionicApp')
     .controller('AnnotationsCtrl', function ($scope, $routeParams, Facebook, Restangular, authorization, localStorageService, $ionicModal) {
         console.log("annotations ctrl")
-        $scope.currentPage=$scope.getCurrentPage();
+        $scope.currentPage = $scope.getCurrentPage();
 
-
-        $scope.allAnnotationsFiltered_toggle = function(){
-            if($scope.allAnnotationsFiltered!=1){
-                $scope.allAnnotationsFiltered=1;
-            }else{
-                $scope.allAnnotationsFiltered=0;
-            }
+        $scope.get_user_info2 = function () {
+            var usersRestangular = Restangular.all("users");
+            usersRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (user) {
+                    $scope.user = user;
+                    $scope.get_all_annotations();
+                }
+            );
         }
 
+        $scope.allAnnotationsFiltered_toggle = function () {
+            if ($scope.allAnnotationsFiltered != 1) {
+                $scope.allAnnotationsFiltered = 1;
+            } else {
+                $scope.allAnnotationsFiltered = 0;
+            }
+        }
 
 
         /* auth */
@@ -94,14 +101,14 @@ angular.module('ionicApp')
         $scope.updateAuthors = function () {
             console.log("updateAuthors - annotations controller");
             if (!config_data.isMobile) {
-                    $scope.allAnnotationsOpts.start = 0;
-                    $scope.get_all_annotations();
+                $scope.allAnnotationsOpts.start = 0;
+                $scope.get_all_annotations();
             } else {
                 /*
-                $scope.author_mask = localStorageService.get('author_mask');
-                $scope.setAuthorMask();
-                $scope.goToChapter();
-                */
+                 $scope.author_mask = localStorageService.get('author_mask');
+                 $scope.setAuthorMask();
+                 $scope.goToChapter();
+                 */
                 $scope.allAnnotationsOpts.start = 0;
                 $scope.author_mask = localStorageService.get('author_mask');
                 $scope.setAuthorMask();
@@ -110,15 +117,14 @@ angular.module('ionicApp')
         }
 
         $scope.get_all_annotations = function () {
-            console.log("get_all_annotations")
             var usersRestangular = Restangular.all("annotations");
             $scope.allAnnotationsParams = [];
             $scope.allAnnotationsParams.start = $scope.allAnnotationsOpts.start;
             $scope.allAnnotationsParams.limit = $scope.allAnnotationsOpts.limit;
 
             //kapal�yd�
-               $scope.allAnnotationsParams.author = $scope.author_mask;
-
+            $scope.allAnnotationsParams.author = $scope.author_mask;
+            $scope.allAnnotationsParams.users = $scope.user.id;
 
             if ($scope.allAnnotationsSearch == true) {
                 //filter
@@ -186,28 +192,26 @@ angular.module('ionicApp')
             $scope.get_all_annotations();
         }
 
-        $scope.get_all_annotations();
+        //     $scope.get_all_annotations();
+        $scope.get_user_info2();
 
-
-
-
-        $ionicModal.fromTemplateUrl('components/partials/all_annotations_filter_modal.html', {
-            scope: $scope,
-            animation: 'slide-in-left',
-            id: 'all_annotations_filter'
-        }).then(function (modal) {
-            $scope.modal_all_annotations_filter = modal
-        });
-        $scope.openModal = function (id) {
-             if (id == 'all_annotations_filter') {
-                $scope.modal_all_annotations_filter.show();
-            }
-        };
-        $scope.closeModal = function (id) {
-            if (id == 'all_annotations_filter') {
-                $scope.modal_all_annotations_filter.hide();
+        if (config_data.isMobile) {
+            $ionicModal.fromTemplateUrl('components/partials/all_annotations_filter_modal.html', {
+                scope: $scope,
+                animation: 'slide-in-left',
+                id: 'all_annotations_filter'
+            }).then(function (modal) {
+                $scope.modal_all_annotations_filter = modal
+            });
+            $scope.openModal = function (id) {
+                if (id == 'all_annotations_filter') {
+                    $scope.modal_all_annotations_filter.show();
+                }
+            };
+            $scope.closeModal = function (id) {
+                if (id == 'all_annotations_filter') {
+                    $scope.modal_all_annotations_filter.hide();
+                }
             }
         }
-
-
     });
