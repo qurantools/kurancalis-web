@@ -9,21 +9,20 @@ exports.config = {
     // seleniumAddress: 'http://localhost:4444/wd/hub',
     directConnect: true,
     specs: [
-    /*    'spec1.js',
-        'spec2.js',
-        'spec3.js',//spec2 ile birlikte çalışmalıdır.
-        'spec4.js',
-        'spec5.js',
-        'spec6.js',
-        'spec7.js',
-        'spec8.js',
-        'spec9.js',
-        */
-       // 'spec10.js'
-       // ,
-
-        'spec11.js'
-        //,
+        //'spec1.js',
+        //'uye_temizle.js',
+        //'uye_giris.js',
+        //'uyelik.js',
+        //'spec2.js',
+        //'spec3.js',//spec2 ile birlikte çalışmalıdır.
+        //'spec4.js',
+        //'spec5.js',
+        //'spec6.js', //Tüm notlarda notu değiştirdiğimiz halde. Sureler bölümü sağ panelde değişmemiş hali geliyor.
+        //'spec7.js',
+        //'spec8.js',
+        //'spec9.js',
+        //'spec10.js', //Sağ panelde arama yaptığımızda etiket kelime ile arama başarısız sonuçlanıyor.
+        //'spec11.js',
         //'spec12.js'
     ],
     jasmineNodeOpts: {defaultTimeoutInterval: 360000},

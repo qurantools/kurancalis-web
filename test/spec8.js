@@ -1,4 +1,5 @@
 var sureler = require('./sure_ayet');
+var uyelik = require('./uyelik');
 
 describe('ceviri gosterimi', function() {
 	
@@ -7,6 +8,12 @@ describe('ceviri gosterimi', function() {
 	 
 	it('Sure listesi kontrolu', function() {
 	
+	 var uye = new uyelik();
+       	
+       	 uye.cikis();
+         uye.sil();
+         uye.giris();
+          
 		 var sure = new sureler();
 		 sure.sayfa();
 		 
@@ -41,7 +48,7 @@ aramabtn.click();
     		element(by.model('$parent.verse_number')).sendKeys('şç');
 	    	element(by.id('list_translations')).click();
 	    	
-	    	element(by.css('[class="ui-select-match-text pull-left"]')).element(by.css('[class="ng-binding ng-scope"]')).getText().then(function(text) {
+	    	element(by.css('[class="ui-select-match-text pull-left"]')).getText().then(function(text) {
 	       		 expect(text).toBe('2: Bakara');	
 	           });
 	    	

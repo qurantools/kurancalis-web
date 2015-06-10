@@ -1,4 +1,5 @@
 var sureler = require('./sure_ayet');
+var uyelik = require('./uyelik');
 
 describe('ceviri gosterimi', function() {
 	
@@ -7,6 +8,12 @@ describe('ceviri gosterimi', function() {
 	 
 	it('Sure listesi kontrolu', function() {
 		
+		 var uye = new uyelik();
+       	
+       	 uye.cikis();
+         uye.sil();
+         uye.giris();
+         
 		 var sure = new sureler();
 		 sure.sayfa();
 		 
