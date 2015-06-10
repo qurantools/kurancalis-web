@@ -1,5 +1,5 @@
 angular.module('ionicApp')
-    .controller('AnnotationsCtrl', function ($scope, $routeParams, Facebook, Restangular, authorization, localStorageService) {
+    .controller('AnnotationsCtrl', function ($scope, $routeParams, Facebook, Restangular, authorization, localStorageService, $ionicModal) {
         console.log("annotations ctrl")
         $scope.currentPage=$scope.getCurrentPage();
 
@@ -92,17 +92,25 @@ angular.module('ionicApp')
         $scope.annotationSearchAuthorSelection = $scope.selection;
 
         $scope.updateAuthors = function () {
+            console.log("updateAuthors - annotations controller");
             if (!config_data.isMobile) {
                     $scope.allAnnotationsOpts.start = 0;
                     $scope.get_all_annotations();
             } else {
+                /*
                 $scope.author_mask = localStorageService.get('author_mask');
                 $scope.setAuthorMask();
                 $scope.goToChapter();
+                */
+                $scope.allAnnotationsOpts.start = 0;
+                $scope.author_mask = localStorageService.get('author_mask');
+                $scope.setAuthorMask();
+                $scope.get_all_annotations();
             }
         }
 
         $scope.get_all_annotations = function () {
+            console.log("get_all_annotations")
             var usersRestangular = Restangular.all("annotations");
             $scope.allAnnotationsParams = [];
             $scope.allAnnotationsParams.start = $scope.allAnnotationsOpts.start;
@@ -179,6 +187,27 @@ angular.module('ionicApp')
         }
 
         $scope.get_all_annotations();
+
+
+
+
+        $ionicModal.fromTemplateUrl('components/partials/all_annotations_filter_modal.html', {
+            scope: $scope,
+            animation: 'slide-in-left',
+            id: 'all_annotations_filter'
+        }).then(function (modal) {
+            $scope.modal_all_annotations_filter = modal
+        });
+        $scope.openModal = function (id) {
+             if (id == 'all_annotations_filter') {
+                $scope.modal_all_annotations_filter.show();
+            }
+        };
+        $scope.closeModal = function (id) {
+            if (id == 'all_annotations_filter') {
+                $scope.modal_all_annotations_filter.hide();
+            }
+        }
 
 
     });

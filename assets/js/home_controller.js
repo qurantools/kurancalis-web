@@ -22,13 +22,17 @@ angular.module('ionicApp')
             if(config_data.isMobile){
                 if(document.getElementById("searchText") && document.getElementById("searchText").value){
                     var searchText = document.getElementById("searchText").value.toLowerCase();
+                    console.log("searchText"+searchText)
+                    $scope.searchText=searchText;
                 }
             }else{
                 var searchText = $scope.searchText.toLowerCase();
             }
             if (item.quote.toLowerCase().indexOf(searchText) > -1 || item.text.toLowerCase().indexOf(searchText) > -1) {
+                console.log("true")
                 return true;
             } else {
+                console.log("false")
                 return false;
             }
         }
