@@ -41,3 +41,22 @@ ion-content{
     float:left;
     padding-left:5px;
 }
+
+
+.label {
+    border-radius: 0.25em;
+    color: #fff;
+    display: inline;
+    font-size: 76%;
+    font-weight: normal;
+    line-height: 1;
+    padding: 0.25em 0.6em 0.29em;
+    text-align: center;
+    vertical-align: baseline;
+    white-space: nowrap;
+}
+
+.label-info {
+    background-color: #3498db;
+    color: #fff;
+}

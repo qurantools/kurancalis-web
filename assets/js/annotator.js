@@ -921,6 +921,12 @@
         Annotator.prototype.getChapterId = function () {
             return this.chapterId;
         };
+        Annotator.prototype.setUserId = function (value) {
+            this.userId = value;
+        };
+        Annotator.prototype.getUserId = function () {
+            return this.userId;
+        };
 
         Annotator.prototype.setAuthorMask = function (value) {
             this.authorMask = value;
