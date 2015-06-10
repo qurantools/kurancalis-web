@@ -411,8 +411,8 @@ app.factory('ChapterVerses', function ($resource) {
             var access_token = authorization.getAccessToken();
             if (access_token != null && access_token != "") {
                 $scope.access_token = access_token;
-                $scope.loggedIn = true;
                 $scope.get_user_info();
+                $scope.loggedIn = true;
                 status = true;
             } else {
                 $scope.user = null;
@@ -426,6 +426,7 @@ app.factory('ChapterVerses', function ($resource) {
             //TODO: document knowhow: custom get with custom header
             usersRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (user) {
                     $scope.user = user;
+                    $scope.annotate_it();
                 }
             );
         }
@@ -449,7 +450,15 @@ app.factory('ChapterVerses', function ($resource) {
                 annotator.setAuthorMask = $scope.author_mask;
             }
         }
-
+        $scope.setUserId = function () {
+            if (typeof annotator != 'undefined') {
+                if($scope.user!=null){
+                    annotator.setUserId = $scope.user.id;
+                }else{
+                    annotator.setUserId = '';
+                }
+            }
+        }
         //   if (!config_data.isMobile) {
         if (typeof $routeParams.chapterId !== 'undefined') {
             chapterId = $routeParams.chapterId;
@@ -525,6 +534,7 @@ app.factory('ChapterVerses', function ($resource) {
                 annotator.setTranslationDivMap($scope.translationDivMap);
                 annotator.setChapterId($scope.chapter_id);
                 annotator.setAuthorMask($scope.author_mask);
+                annotator.setUserId($scope.user.id);
 
                 annotator.addPlugin('Store', {
                     prefix: config_data.webServiceUrl,
@@ -546,8 +556,6 @@ app.factory('ChapterVerses', function ($resource) {
 
                 //unbind
                 if (config_data.isMobile) {
-                    console.log("unbind")
-
                     $(document).unbind('mouseup');
                     $(document).unbind('mousedown');
 
@@ -591,7 +599,7 @@ app.factory('ChapterVerses', function ($resource) {
             $timeout(function () {
 
                 //mark annotations
-                $scope.annotate_it();
+ //yeri değişti              $scope.annotate_it();
 
                 //$state.go($state.current, {}, {reload: true});
 
