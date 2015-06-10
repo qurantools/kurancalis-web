@@ -153,7 +153,7 @@ if (config_data.isMobile == false) { //false
             });
 
         //facebook
-        FacebookProvider.init('295857580594128');
+        FacebookProvider.init('400142910165594');
 
     });
 
@@ -208,7 +208,7 @@ console.log("mobile version")
             });
 
         //facebook
-        FacebookProvider.init('295857580594128');
+        FacebookProvider.init('400142910165594');
 
 
 
@@ -259,7 +259,7 @@ console.log("mobile version")
                          redirectTo: '/'
                      });
              }
-             FacebookProvider.init('295857580594128');
+             FacebookProvider.init('400142910165594');
          */
          }
 
