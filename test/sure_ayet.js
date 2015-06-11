@@ -20,7 +20,7 @@ var sureler = (function () {
 	}
 
 	sureler.prototype.sayfa = function () {
-		browser.get(baseAddress+'/#/chapter/1/author/1040/verse/1');
+		browser.get(baseAddress + '/#/chapter/1/author/1040/verse/1');
 	};
 
 	sureler.prototype.sureyegit = function (sure) {
@@ -40,8 +40,8 @@ var sureler = (function () {
 		aramakutu.sendKeys(sure);
 		browser.sleep('1000');
 		aramakutu.sendKeys(protractor.Key.ENTER);
-		element(by.model('$parent.verse_number')).clear();
-		element(by.model('$parent.verse_number')).sendKeys(ayet);
+		element(by.model('$parent.verse.number')).clear();
+		element(by.model('$parent.verse.number')).sendKeys(ayet);
 		element(by.id('list_translations')).click();
 
 		browser.sleep('5000');
@@ -106,8 +106,8 @@ var sureler = (function () {
 		browser.sleep(3000);
 		element(by.repeater('chapter in $select.items').row(satirsec)).click();
 
-		element(by.model('$parent.verse_number')).clear();
-		element(by.model('$parent.verse_number')).sendKeys(ayet);
+		element(by.model('$parent.verse.number')).clear();
+		element(by.model('$parent.verse.number')).sendKeys(ayet);
 		element(by.id('list_translations')).click();
 
 	};
@@ -118,9 +118,9 @@ var sureler = (function () {
 		browser.sleep(3000);
 		aramakutu.sendKeys(protractor.Key.TAB);
 
-		element(by.model('$parent.verse_number')).clear();
-		element(by.model('$parent.verse_number')).sendKeys(ayet);
-		element(by.model('$parent.verse_number')).sendKeys(protractor.Key.ENTER);
+		element(by.model('$parent.verse.number')).clear();
+		element(by.model('$parent.verse.number')).sendKeys(ayet);
+		element(by.model('$parent.verse.number')).sendKeys(protractor.Key.ENTER);
 
 	};
 
@@ -134,7 +134,7 @@ var sureler = (function () {
 			element(by.css('[class="annotator-adder"]')).element(by.css('button')).click();
 			element(by.model('annotationModalData.text')).sendKeys(not);
 			element(by.css('[value="' + renk + '"]')).click();
-			element(by.css('[ng-click="submitEditor()"]')).click();
+			element(by.css('[ng-click="submitEditor2()"]')).click();
 
 		}
 
@@ -158,7 +158,7 @@ var sureler = (function () {
 
 			}
 
-			element(by.css('[ng-click="submitEditor()"]')).click();
+			element(by.css('[ng-click="submitEditor2()"]')).click();
 
 			browser.sleep('3000');
 		}
