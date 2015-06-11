@@ -5,7 +5,7 @@ var uyelik = require('./uyelik');
 describe('ceviri gosterimi', function() {
 	
 	  beforeEach(function() {
-	        browser.get('http://kurancalis.com/#/chapter/1/author/1040/verse/1');
+	       browser.get(baseAddress + '/#/chapter/1/author/1040/verse/1');
 	        
 	       //browser.sleep(50000); // if your test is outrunning the browser
 	       // browser.waitForAngular(); 
@@ -45,7 +45,7 @@ describe('ceviri gosterimi', function() {
 	   	   	 element(by.model('annotationModalData.text')).sendKeys(not_deger);
 	   	   	 element(by.model('newTag.text')).sendKeys('Test1');
 	   	   	 element(by.css('[value="red"]')).click();
-	   	   	 element(by.css('[ng-click="submitEditor()"]')).click();
+	   	   	 element(by.css('[ng-click="submitEditor2()"]')).click();
 	   	   	 
 	   	   	  element(by.id('t_49995')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).element(by.css('[class="ng-binding"]')).element(by.css('[class="annotator-hl a_hl_red"]')).click();
 	   	   	 
@@ -69,7 +69,7 @@ describe('ceviri gosterimi', function() {
 	   	   	 element(by.model('annotationModalData.text')).click();
 	   	   	 element(by.model('newTag.text')).sendKeys('Test3');
 	   	   	 element(by.model('annotationModalData.text')).click();
-	   	   	 element(by.css('[ng-click="submitEditor()"]')).click();
+	   	   	 element(by.css('[ng-click="submitEditor2()"]')).click();
 	   	   	 
 	   	    //eklenen etiketleri sağ paneli açıp kontrol ediyor.
 	   	   	 
@@ -93,7 +93,7 @@ describe('ceviri gosterimi', function() {
 	   	   	 //eklenen etiketten ortada olanı siliyor.
 	   	   	 
 	   	     element(by.repeater('tag in tagList.items track by track(tag)').row(1)).element(by.css('[class="remove-button ng-binding"]')).click();
-	   	     element(by.css('[ng-click="submitEditor()"]')).click();
+	   	     element(by.css('[ng-click="submitEditor2()"]')).click();
 	   	    
 	   	     browser.sleep(2000);	     
 	     	 
@@ -115,7 +115,7 @@ describe('ceviri gosterimi', function() {
 	   	   	 
 	   	   	 element(by.repeater('tag in tagList.items track by track(tag)').row(0)).element(by.css('[class="remove-button ng-binding"]')).click();
 	   	   	 element(by.repeater('tag in tagList.items track by track(tag)').row(0)).element(by.css('[class="remove-button ng-binding"]')).click();
-	   	   	 element(by.css('[ng-click="submitEditor()"]')).click();
+	   	   	 element(by.css('[ng-click="submitEditor2()"]')).click();
 	   	   	 
 	   	   	 //silinen etiketleri sağ paneli açıp kontrol ediyor.
 	   	   	 

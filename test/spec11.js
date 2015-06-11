@@ -36,8 +36,8 @@ describe('ceviri gosterimi', function() {
 		   	  sure.karalaetiket('t_92845',100,'Not1','red',data, 1);
 		   	  browser.sleep('5000');
 		   	  
-		   	 element(by.model('$parent.verse_number')).clear();
-		   	 element(by.model('$parent.verse_number')).sendKeys('0');
+		   	 element(by.model('$parent.verse.number')).clear();
+		   	 element(by.model('$parent.verse.number')).sendKeys('0');
 		   	 sure.tekyazar(13);
 		   	 sure.sureayetegit(60,4)
 		   	  //browser.sleep('5000');
@@ -47,8 +47,8 @@ describe('ceviri gosterimi', function() {
 			  sure.karalaetiket('t_103998',100,'Not2 Not3','yellow',data, 2);
 			  //browser.sleep('5000');
 			  
-			  element(by.model('$parent.verse_number')).clear();
-			  element(by.model('$parent.verse_number')).sendKeys('0');
+			  element(by.model('$parent.verse.number')).clear();
+			  element(by.model('$parent.verse.number')).sendKeys('0');
 			  sure.tekyazar(1);
 			  sure.sureayetegit(86,16)
 			  //browser.sleep('5000');
@@ -57,8 +57,8 @@ describe('ceviri gosterimi', function() {
 			  sure.karalaetiket('t_30890',100,'Not4','green',data, 1);
 			  browser.sleep('5000');
 			      
-			  element(by.model('$parent.verse_number')).clear();
-			  element(by.model('$parent.verse_number')).sendKeys('0');
+			  element(by.model('$parent.verse.number')).clear();
+			  element(by.model('$parent.verse.number')).sendKeys('0');
 			  sure.tekyazar(6);
 			  sure.sureayetegit(101,10)
 			  //browser.sleep('5000');
@@ -68,8 +68,8 @@ describe('ceviri gosterimi', function() {
 			  sure.karalaetiket('t_43678',100,'Not3 Not4','yellow',data, 2);
 			  browser.sleep('8000');
 				  
-			  element(by.model('$parent.verse_number')).clear();
-			  element(by.model('$parent.verse_number')).sendKeys('0');
+			  element(by.model('$parent.verse.number')).clear();
+			  element(by.model('$parent.verse.number')).sendKeys('0');
 			  sure.tekyazar(15);
 			  sure.sureayetegit(112,2)
 			  //browser.sleep('5000');

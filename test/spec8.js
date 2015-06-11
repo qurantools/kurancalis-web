@@ -44,8 +44,8 @@ aramabtn.click();
 	    	browser.sleep(3000);
 	    	browser.sleep('1000');
 	    	
-	    	element(by.model('$parent.verse_number')).clear();
-    		element(by.model('$parent.verse_number')).sendKeys('şç');
+	    	element(by.model('$parent.verse.number')).clear();
+    		element(by.model('$parent.verse.number')).sendKeys('şç');
 	    	element(by.id('list_translations')).click();
 	    	
 	    	element(by.css('[class="ui-select-match-text pull-left"]')).getText().then(function(text) {

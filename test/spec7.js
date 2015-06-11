@@ -75,7 +75,7 @@ function listTranslations2(chapterNo, autid1, autid2) {
 }
 
 	  beforeEach(function() {
-	        browser.get('http://kurancalis.com/#/chapter/1/author/1040/verse/1');
+	        browser.get(baseAddress + '/#/chapter/1/author/1040/verse/1');
 	        
 	       //browser.sleep(50000); // if your test is outrunning the browser
 	       // browser.waitForAngular(); 
@@ -94,8 +94,8 @@ function listTranslations2(chapterNo, autid1, autid2) {
 	    	  
 	    	  var elm = element(by.id('t_31193')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).element(by.css('[class="ng-binding"]'));
 			  
-	    		element(by.model('$parent.verse_number')).clear();
-	    		element(by.model('$parent.verse_number')).sendKeys('7');
+	    		element(by.model('$parent.verse.number')).clear();
+	    		element(by.model('$parent.verse.number')).sendKeys('7');
 	    		element(by.id('list_translations')).click();
 	    			
 	    		browser.sleep(5000);
@@ -108,14 +108,15 @@ function listTranslations2(chapterNo, autid1, autid2) {
 	    	    element(by.model('annotationModalData.text')).click();
 	    	    element(by.model('newTag.text')).sendKeys('EkT2');
 	    	    element(by.css('[value="green"]')).click();
-	    	    element(by.css('[ng-click="submitEditor()"]')).click();
+	    	    element(by.css('[ng-click="submitEditor2()"]')).click();
 			  
+			  browser.sleep(3000);
 	           listTranslations(3, 4);
 	    	  
 	    	  elm = element(by.id('t_31477')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).element(by.css('[class="ng-binding"]'));
 			  
-	    	  	element(by.model('$parent.verse_number')).clear();
-	    		element(by.model('$parent.verse_number')).sendKeys('5');
+	    	  	element(by.model('$parent.verse.number')).clear();
+	    		element(by.model('$parent.verse.number')).sendKeys('5');
 	    		element(by.id('list_translations')).click();
 	    			
 	    		browser.sleep(5000);
@@ -126,14 +127,14 @@ function listTranslations2(chapterNo, autid1, autid2) {
 	    	    element(by.model('annotationModalData.text')).sendKeys('Test2');
 	    	    element(by.model('newTag.text')).sendKeys('EkT1');
 	    	    element(by.css('[value="red"]')).click();
-	    	    element(by.css('[ng-click="submitEditor()"]')).click();	    	    
+	    	    element(by.css('[ng-click="submitEditor2()"]')).click();	    	    
 			  
 	listTranslations(70, 4);
 		    	  
 	    	  	elm = element(by.id('t_36561')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).element(by.css('[class="ng-binding"]'));
 			  
-	    	  	element(by.model('$parent.verse_number')).clear();
-	    		element(by.model('$parent.verse_number')).sendKeys('10');
+	    	  	element(by.model('$parent.verse.number')).clear();
+	    		element(by.model('$parent.verse.number')).sendKeys('10');
 	    		element(by.id('list_translations')).click();
 	    			
 	    		browser.sleep(5000);
@@ -148,14 +149,14 @@ function listTranslations2(chapterNo, autid1, autid2) {
 	    	    element(by.model('annotationModalData.text')).click();
 	    	    element(by.model('newTag.text')).sendKeys('EkT3');
 	    	    element(by.css('[value="yellow"]')).click();
-	    	    element(by.css('[ng-click="submitEditor()"]')).click();
+	    	    element(by.css('[ng-click="submitEditor2()"]')).click();
 	    	    
 	listTranslations(70, 4);
 		    	  
 	    	  	elm = element(by.id('t_36562')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).element(by.css('[class="ng-binding"]'));
 			  
-	    	  	element(by.model('$parent.verse_number')).clear();
-	    		element(by.model('$parent.verse_number')).sendKeys('11');
+	    	  	element(by.model('$parent.verse.number')).clear();
+	    		element(by.model('$parent.verse.number')).sendKeys('11');
 	    		element(by.id('list_translations')).click();
 	    			
 	    		browser.sleep(5000);
@@ -166,14 +167,14 @@ function listTranslations2(chapterNo, autid1, autid2) {
 	    	    element(by.model('annotationModalData.text')).sendKeys('Test6');
 	    	    element(by.model('newTag.text')).sendKeys('EkT1');
 	    	    element(by.css('[value="red"]')).click();
-	    	    element(by.css('[ng-click="submitEditor()"]')).click();
+	    	    element(by.css('[ng-click="submitEditor2()"]')).click();
 	    	    
 	listTranslations(74, 4);
 	    	  
 				elm = element(by.id('t_36705')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).element(by.css('[class="ng-binding"]'));
 			  
-				element(by.model('$parent.verse_number')).clear();
-	    		element(by.model('$parent.verse_number')).sendKeys('34');
+				element(by.model('$parent.verse.number')).clear();
+	    		element(by.model('$parent.verse.number')).sendKeys('34');
 	    		element(by.id('list_translations')).click();
 	    			
 	    		browser.sleep(5000);
@@ -184,15 +185,15 @@ function listTranslations2(chapterNo, autid1, autid2) {
 	    	    element(by.model('annotationModalData.text')).sendKeys('Test4');
 	    	    element(by.model('newTag.text')).sendKeys('EkT2');
 	    	    element(by.css('[value="red"]')).click();
-	    	    element(by.css('[ng-click="submitEditor()"]')).click();
+	    	    element(by.css('[ng-click="submitEditor2()"]')).click();
 	    	   
 			  
 	listTranslations(114, 4);
 	    	  
 	    	  	elm = element(by.id('t_37412')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).element(by.css('[class="ng-binding"]'));
 			  
-	    	  	element(by.model('$parent.verse_number')).clear();
-	    		element(by.model('$parent.verse_number')).sendKeys('6');
+	    	  	element(by.model('$parent.verse.number')).clear();
+	    		element(by.model('$parent.verse.number')).sendKeys('6');
 	    		element(by.id('list_translations')).click();
 	    			
 	    		browser.sleep(5000);
@@ -205,12 +206,12 @@ function listTranslations2(chapterNo, autid1, autid2) {
 	    	    element(by.model('annotationModalData.text')).click();
 	    	    element(by.model('newTag.text')).sendKeys('EkT3');
 	    	    element(by.css('[value="yellow"]')).click();
-	    	    element(by.css('[ng-click="submitEditor()"]')).click(); 
+	    	    element(by.css('[ng-click="submitEditor2()"]')).click(); 
 	    	    
 	    	    
 	    	    listTranslations2(70, 4, 10);
-	    	    element(by.model('$parent.verse_number')).clear();
-	    		element(by.model('$parent.verse_number')).sendKeys('10');
+	    	    element(by.model('$parent.verse.number')).clear();
+	    		element(by.model('$parent.verse.number')).sendKeys('10');
 	    		element(by.id('list_translations')).click();
 	    		
 	    		browser.sleep('5000');
