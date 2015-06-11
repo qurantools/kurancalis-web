@@ -99,7 +99,7 @@ var mymodal = angular.module('ionicApp')
             var cevregosterRestangular = Restangular.all("circles");
             cevregosterRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (cevreliste) {
             //$scope.cevreadlar = cevreliste;
-            
+                $scope.dcevreadlar = cevreliste;
             for(var i=0;i<cevreliste.length;i++)
             {
             var ls=cevreliste[i].id;
@@ -249,7 +249,7 @@ var mymodal = angular.module('ionicApp')
         if(circlead=="")
         {$scope.circlead = "";}
         else
-        { $scope.circlead = circlead + "  çevresindeki kiþiler."; }
+        { $scope.circlead = circlead + "  ï¿½evresindeki kiï¿½iler."; }
         };
          
       $scope.kisiadd = function (kisid, drm) {
