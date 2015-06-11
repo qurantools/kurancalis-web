@@ -26,9 +26,9 @@
     
      <table id='{{cevreadlar[$index].name}}' class="btn btn-primary" ng-repeat="item in cevreadlar" ng-click="kisigoruntule('{{cevreadlar[$index].id}}','{{cevreadlar[$index].name}}');renksec('{{cevreadlar[$index].name}}')" style="width:135px; height:150px; margin: 10px 15px;">
      <td align="center" style="width:135px">
-     <label style="height:10px" id='ad{{cevreadlar[$index].id}}' style="color:White">{{cevreadlar[$index].name}}</label>
+     <label style="height:10px" id='ad{{cevreadlar[$index].id}}' ng-model="cevrenm" style="color:White">{{cevreadlar[$index].name}}</label>
      <hr />
-     <label id='lb{{cevreadlar[$index].id}}' style="color:White">{{cevreadlar[$index].user_count}} </label> Kiþi
+     <label id='lb{{cevreadlar[$index].id}}' ng-model="kisicnt" style="color:White">{{cevreadlar[$index].user_count}} </label> Kiþi
      <BR />
      <button id='bt1{{cevreadlar[$index].name}}' class="btn btn-primary" ng-click="cdegistirModal('{{cevreadlar[$index].name}}','{{cevreadlar[$index].id}}')">
      <i class="fa fa-edit"></i>
