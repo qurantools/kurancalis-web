@@ -168,12 +168,12 @@
       <div align="left">
         <label>Seçtiðiniz kiþileri ayrýca aþaðýdaki çevreye de ekleyebilirsiniz.</label>
         <table>
-        <tr ng-repeat="item in cevreadlar">
+        <tr ng-repeat="item in dcevreadlar">
         <td style="width:30px">
-         <input type="radio" ng-model="csecim" value="false" name="groupA" ng-click="cevreadd('{{cevreadlar[$index].id}}')" />
+         <input type="radio" ng-model="csecim" value="false" name="groupA" ng-click="cevreadd('{{dcevreadlar[$index].id}}')" />
         </td>
         <td>
-        {{cevreadlar[$index].name}}
+        {{dcevreadlar[$index].name}}
         </td>
         </tr>
         </table>
