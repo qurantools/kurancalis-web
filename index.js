@@ -860,11 +860,11 @@ app.factory('ChapterVerses', function ($resource) {
 
         }
         $scope.deleteAnnotation = function (index) {
+            console.log("deleteAnnotation")
             if (typeof $scope.filteredAnnotations != 'undefined' && $scope.filteredAnnotations.length > 0) {
                 index = $scope.getAnnotationIndexFromFilteredAnnotationIndex(index);
             }
             annotator.deleteAnnotation($scope.annotations[index]);
-            annotator.plugins['Store'].annotationDeleted($scope.annotations[index])
 
         }
 

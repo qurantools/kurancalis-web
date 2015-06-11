@@ -29,7 +29,9 @@ angular.module('ionicApp')
             var searchText = $scope.searchText.toLowerCase();
 
             var tags = '';
-            if (typeof item.tags[0] != 'undefined')tags = item.tags[0].toLowerCase();
+            if (typeof item.tags != 'undefined' && typeof item.tags[0] != 'undefined'){
+                tags = item.tags[0].toLowerCase();
+            }
             if (item.quote.toLowerCase().indexOf(searchText) > -1 || item.text.toLowerCase().indexOf(searchText) > -1 || tags.indexOf(searchText) > -1) {
                 return true;
             } else {
@@ -64,24 +66,26 @@ angular.module('ionicApp')
             }
         }
 
-        $ionicModal.fromTemplateUrl('components/partials/annotations_on_page_modal.html', {
-            scope: $scope,
-            animation: 'slide-in-right',
-            id: 'annotations_on_page'
-        }).then(function (modal) {
-            $scope.modal_annotations_on_page = modal
-        });
+        if(config_data.isMobile) {
+            $ionicModal.fromTemplateUrl('components/partials/annotations_on_page_modal.html', {
+                scope: $scope,
+                animation: 'slide-in-right',
+                id: 'annotations_on_page'
+            }).then(function (modal) {
+                $scope.modal_annotations_on_page = modal
+            });
 
 
-        $scope.openModal = function (id) {
-            if (id == 'annotations_on_page') {
-                $scope.modal_annotations_on_page.show();
-            }
-        };
+            $scope.openModal = function (id) {
+                if (id == 'annotations_on_page') {
+                    $scope.modal_annotations_on_page.show();
+                }
+            };
 
-        $scope.closeModal = function (id) {
-            if (id == 'annotations_on_page') {
-                $scope.modal_annotations_on_page.hide();
+            $scope.closeModal = function (id) {
+                if (id == 'annotations_on_page') {
+                    $scope.modal_annotations_on_page.hide();
+                }
             }
         }
 
