@@ -25,7 +25,7 @@
             </div>
         </div>
         <div ng-repeat="annotation in annotations | filter:annotationFilter | filter: annotationTextSearch"
-             class="sidebar_annotation box"
+             class="card"
              ng-click="scrollToElement('t_'+annotation.translationId)">
 
             <!-- s_a -->
@@ -41,7 +41,7 @@
             <div ng-repeat="annotationTag in annotation.tags" class="tag label label-info s_a_tag">
                 {{annotationTag}}
             </div>
-            <div class="row" style="padding:0 15px">
+            <div class="row" style="padding:5px 15px">
                 <div style="float: left">{{annotation.updated | date: 'dd/MM/yyyy HH:mm:ss'}}</div>
                 <div style="float: right">
                     <button type="button" class="btn btn-primary btn-xs" ng-click="editAnnotation($index)"><i
