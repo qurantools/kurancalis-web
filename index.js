@@ -153,7 +153,7 @@ if (config_data.isMobile == false) { //false
             });
 
         //facebook
-        FacebookProvider.init('295857580594128');
+        FacebookProvider.init('400142910165594');
 
     });
 
@@ -207,8 +207,8 @@ if (config_data.isMobile == false) { //false
                     redirectTo: '/'
                 });
 
-            //facebook
-            FacebookProvider.init('295857580594128');
+        //facebook
+        FacebookProvider.init('400142910165594');
 
 
             /*
@@ -257,9 +257,10 @@ if (config_data.isMobile == false) { //false
              redirectTo: '/'
              });
              }
-             FacebookProvider.init('295857580594128');
-             */
-        }
+             FacebookProvider.init('400142910165594');
+         */
+         }
+
     );
 
 }
@@ -452,9 +453,9 @@ app.factory('ChapterVerses', function ($resource) {
         }
         $scope.setUserId = function () {
             if (typeof annotator != 'undefined') {
-                if($scope.user!=null){
+                if ($scope.user != null) {
                     annotator.setUserId = $scope.user.id;
-                }else{
+                } else {
                     annotator.setUserId = '';
                 }
             }
@@ -599,9 +600,14 @@ app.factory('ChapterVerses', function ($resource) {
             $timeout(function () {
 
                 //mark annotations
- //yeri değişti              $scope.annotate_it();
+                if ($scope.user != null) {
+                    //if there is user info, run annotation. It calls on page changes.
+                    $scope.annotate_it();
+                } else if($scope.access_token!=null) {
+                    //if there isn't an access token, you can't get user info
+                    $scope.get_user_info();
+                }
 
-                //$state.go($state.current, {}, {reload: true});
 
                 //scroll to verse if user is not logged in.
                 //if user is logged in, they will scroll on tag generation.
@@ -709,7 +715,7 @@ app.factory('ChapterVerses', function ($resource) {
                 if ($scope.getCurrentPage() == 'home') {
                     $scope.goToChapter();
                 } else if ($scope.getCurrentPage() == 'annotations') {
-                   $scope.get_all_annotations();
+                    $scope.get_all_annotations();
                 }
 
 
