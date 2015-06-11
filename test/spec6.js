@@ -50,8 +50,8 @@ function listTranslations(chapterNo, autid1, autid2, autid3) {
 
 	function not_yaz(elm, not_deger, renk, korx, kory, ayetno) {
    
-		element(by.model('$parent.verse_number')).clear();
-		element(by.model('$parent.verse_number')).sendKeys(ayetno);
+		element(by.model('$parent.verse.number')).clear();
+		element(by.model('$parent.verse.number')).sendKeys(ayetno);
 		element(by.id('list_translations')).click();
 			
 		browser.sleep(5000);
@@ -61,7 +61,7 @@ function listTranslations(chapterNo, autid1, autid2, autid3) {
     element(by.css('[class="annotator-adder"]')).element(by.css('button')).click();
     element(by.model('annotationModalData.text')).sendKeys(not_deger);
     element(by.css('[value="' + renk + '"]')).click();
-    element(by.css('[ng-click="submitEditor()"]')).click();
+    element(by.css('[ng-click="submitEditor2()"]')).click();
    
 	}
 	
@@ -78,7 +78,7 @@ function listTranslations(chapterNo, autid1, autid2, autid3) {
 	}
 	
 	  beforeEach(function() {
-	        browser.get('http://kurancalis.com/#/chapter/1/author/1040/verse/1');
+	        browser.get(baseAddress + '/#/chapter/1/author/1040/verse/1');
 	        
 	       //browser.sleep(50000); // if your test is outrunning the browser
 	       // browser.waitForAngular(); 
@@ -147,7 +147,7 @@ function listTranslations(chapterNo, autid1, autid2, autid3) {
 								 elm = element(by.id('t_42749')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).element(by.css('[class="ng-binding"]'));
 								 not_yaz(elm, 'Test6', 'red', 80, 0, 0 );
 								
-								 elm = element(by.id('t_17761')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).element(by.css('[class="ng-binding"]'));
+								 elm = element(by.id('t_17761')).element(by.css('[class="col-xs-12 col-sm-9 translation_content translation_rtl"]')).element(by.css('[class="ng-binding"]'));
 								 not_yaz(elm, 'Test8', 'yellow', 40, 0, 16 );
 									
 								 
@@ -374,7 +374,7 @@ donen=kontrol(19, 'green');
 	        	element(by.model('annotationModalData.text')).sendKeys('Not Değişti');
 	        	element(by.model('newTag.text')).sendKeys('Tag Eklendi');
 	        	element(by.css('[value="yellow"]')).click();
-		        element(by.css('[ng-click="submitEditor()"]')).click();
+		        element(by.css('[ng-click="submitEditor2()"]')).click();
 		        
 		        browser.sleep('5000');
 		        

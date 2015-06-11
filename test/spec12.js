@@ -81,8 +81,8 @@ describe('ceviri gosterimi', function() {
    		
    		  //Fatiha suresi 4. ayet * tıklanır.
    		  
-   		element(by.model('$parent.verse_number')).clear();
-   		element(by.model('$parent.verse_number')).sendKeys('4');
+   		element(by.model('$parent.verse.number')).clear();
+   		element(by.model('$parent.verse.number')).sendKeys('4');
    		element(by.css('[ng-click="goToChapter()"]')).click();
    		
    		browser.sleep('5000');

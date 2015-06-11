@@ -5,7 +5,7 @@ var uyelik = require('./uyelik');
 describe('ceviri gosterimi', function() {
 
 	 beforeEach(function() {
-	        browser.get('http://kurancalis.com/#/chapter/1/author/1040/verse/1');
+	       browser.get(baseAddress + '/#/chapter/1/author/1040/verse/1');
 	 });
      
 	 function not_yaz_yeni(not_deger) {
@@ -16,7 +16,7 @@ describe('ceviri gosterimi', function() {
 		 element(by.css('[class="annotator-adder"]')).element(by.css('button')).click();
 		 element(by.model('annotationModalData.text')).sendKeys(not_deger);
 		 element(by.css('[value="red"]')).click();
-		 element(by.css('[ng-click="submitEditor()"]')).click();
+		 element(by.css('[ng-click="submitEditor2()"]')).click();
 	 }
 
 	 it('Liste halinde not gösterim', function() {
@@ -47,11 +47,11 @@ describe('ceviri gosterimi', function() {
            element(by.css('[class="annotator-adder"]')).element(by.css('button')).click();
            element(by.model('annotationModalData.text')).sendKeys('Test2');
            element(by.css('[value="green"]')).click();
-           element(by.css('[ng-click="submitEditor()"]')).click();
+           element(by.css('[ng-click="submitEditor2()"]')).click();
            
-           browser.sleep(5000);
+           browser.sleep(5000);        	
         	
-           element(by.id('cd-panel-right')).click();
+           element(by.css('[onclick="closePanel()"]')).click();
     	   	   	
            browser.sleep(5000);
         	
@@ -69,7 +69,7 @@ describe('ceviri gosterimi', function() {
         	
         	browser.sleep(5000);
         	
-        	element(by.id('cd-panel-right')).click();
+        	element(by.css('[onclick="closePanel()"]')).click();
 	   	   	
         	browser.sleep(5000);
         	
@@ -83,7 +83,7 @@ describe('ceviri gosterimi', function() {
         	element(by.css('[class="annotator-adder"]')).element(by.css('button')).click();
         	element(by.model('annotationModalData.text')).sendKeys('Test3');
         	element(by.css('[value="yellow"]')).click();
-        	element(by.css('[ng-click="submitEditor()"]')).click();
+        	element(by.css('[ng-click="submitEditor2()"]')).click();
         	
         	browser.sleep(5000);
         	
@@ -113,18 +113,17 @@ describe('ceviri gosterimi', function() {
         	element(by.model('annotationModalData.text')).clear();
         	element(by.model('annotationModalData.text')).sendKeys('Test2 Değişti');
         	element(by.css('[value="yellow"]')).click();
-	        element(by.css('[ng-click="submitEditor()"]')).click();
+	        element(by.css('[ng-click="submitEditor2()"]')).click();
             
 	        element(by.repeater('annotation in annotations | filter:annotationFilter | filter: annotationTextSearch').row(1)).element(by.css('[class="s_a_text"]')).getText().then(function(text) {
 	    		  expect(text).toBe('Test2 Değişti');	
 	         });
 	        
-	        browser.sleep(5000);
+	        browser.sleep(3000);
 	        
-	        browser.refresh();
+	        element(by.css('[onclick="closePanel()"]')).click();
 	        
-	        browser.sleep(5000);
-	        
+	        browser.sleep(3000);
 	        
 	        element(by.id('t_31181')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).element(by.css('[class="ng-binding"]')).element(by.css('[class="annotator-hl a_hl_red"]')).click();
 	       	

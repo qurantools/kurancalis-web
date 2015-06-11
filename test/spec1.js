@@ -17,7 +17,7 @@ describe('ceviri gosterimi', function() {
 	var tmpautid3;
 	
 	  beforeEach(function() {
-	        browser.get('http://kurancalis.com/#/chapter/1/author/1040/verse/1');
+	        browser.get(baseAddress + '/#/chapter/1/author/1040/verse/1');
 	        
 	       //browser.sleep(50000); // if your test is outrunning the browser
 	       // browser.waitForAngular(); 
@@ -90,7 +90,7 @@ describe('ceviri gosterimi', function() {
         expect(theVerses.count()).toEqual(287);
         expect(authors.count()).toEqual(861);
         
-        element(by.id('t_12482')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).getText().then(function(text) {
+        element(by.id('t_12482')).element(by.css('[class="col-xs-12 col-sm-9 translation_content translation_rtl"]')).getText().then(function(text) {
   		  expect(text).toBe('الم');	
         });
         
@@ -102,7 +102,7 @@ describe('ceviri gosterimi', function() {
     		  expect(text).toBe('Elif-Lâm-Mîm.');	
           });
         
-        element(by.id('t_12625')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).getText().then(function(text) {
+        element(by.id('t_12625')).element(by.css('[class="col-xs-12 col-sm-9 translation_content translation_rtl"]')).getText().then(function(text) {
   	  expect(text).toBe('قد نرى تقلب وجهك فى السماء فلنولينك قبلة ترضىها فول وجهك شطر المسجد الحرام وحيث ما كنتم فولوا وجوهكم شطره وان الذين اوتوا الكتب ليعلمون انه الحق من ربهم وما الله بغفل عما يعملون');	
         });
         
@@ -114,7 +114,7 @@ describe('ceviri gosterimi', function() {
     		 expect(text).toBe('Biz, (ey Peygamber) senin sık sık yüzünü (bir kılavuz arayışı içinde) göğe çevirdiğini görüyoruz: ve şimdi seni tam tatmin edecek bir kıbleye döndürüyoruz. Artık yüzünü Mescid-i Harâm\'a çevir; ve siz, hepiniz, nerede olursanız olun, yüzünüzü (namaz esnasında) o yöne döndürün. Doğrusu, daha önce kendilerine vahiy tevdî edilmiş olanlar, bu emrin Rablerinden gelen bir hakikat olduğunu çok iyi bilirler; ve Allah onların yaptıklarından habersiz değildir.');	
           });
         
-        element(by.id('t_12767')).element(by.css('[class="col-xs-12 col-sm-9 translation_content"]')).getText().then(function(text) {
+        element(by.id('t_12767')).element(by.css('[class="col-xs-12 col-sm-9 translation_content translation_rtl"]')).getText().then(function(text) {
     		  expect(text).toBe('لا يكلف الله نفسا الا وسعها لها ما كسبت وعليها ما اكتسبت ربنا لا تواخذنا ان نسينا او اخطانا ربنا ولا تحمل علينا اصرا كما حملته على الذين من قبلنا ربنا ولا تحملنا ما لا طاقة لنا به واعف عنا واغفر لنا وارحمنا انت مولىنا فانصرنا على القوم الكفرين');	
           });
         
