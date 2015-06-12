@@ -75,18 +75,31 @@ angular.module('ionicApp')
                 $scope.modal_annotations_on_page = modal
             });
 
+            $ionicModal.fromTemplateUrl('components/partials/chapter_selection_modal.html', {
+                scope: $scope,
+                animation: 'slide-in-left',
+                id: 'chapter_selection'
+            }).then(function (modal) {
+                $scope.modal_chapter_selection = modal
+            });
 
             $scope.openModal = function (id) {
                 if (id == 'annotations_on_page') {
                     $scope.modal_annotations_on_page.show();
+                } else if (id == 'chapter_selection') {
+                    $scope.modal_chapter_selection.show();
                 }
             };
 
             $scope.closeModal = function (id) {
                 if (id == 'annotations_on_page') {
                     $scope.modal_annotations_on_page.hide();
+                } else if (id == 'chapter_selection') {
+                    $scope.modal_chapter_selection.hide();
                 }
             }
         }
+
+
 
     });

@@ -16,7 +16,7 @@
             </ion-nav-buttons>
             <h1 class="title"></h1>
             <ion-nav-buttons side="right">
-                <button class="button" ng-click="login()" ng-if="user==null">Giriþ</button>
+                <button class="button" ng-click="login()" ng-if="user==null">Giriï¿½</button>
                 <a href ng-click="openModal('annotations_on_page')" class="button button-icon icon ion-clipboard"
                    ng-if="user!=null"></a>
 
@@ -32,8 +32,8 @@
 
 <ion-nav-view cache-view="true">
 
-<ion-content  overflow-scroll="true" delegate-handle="content">
-    <div class="row">
+<ion-content  overflow-scroll="true" delegate-handle="content" style="margin-top:30px;">
+    <div class="row"  delegate-handle="content">
         <div class="col-xs-12" id="translations" >
             <div ng-repeat="verse in verses" >
                 <div class="well translations col-xs-12" id="v_{{verse.id}}" >
