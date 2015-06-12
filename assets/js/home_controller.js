@@ -1,7 +1,7 @@
 angular.module('ionicApp')
     .controller('HomeCtrl', function ($scope, $q, $routeParams, $location, $timeout, ListAuthors, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService, $document, $filter, $rootScope, $state, $stateParams, $ionicModal, $ionicScrollDelegate, $ionicPosition, authorization) {
         console.log("HomeCtrl");
-        $scope.currentPage=$scope.getCurrentPage();
+        $scope.currentPage = $scope.getCurrentPage();
 
         $scope.list_translations();
 
@@ -11,6 +11,8 @@ angular.module('ionicApp')
             $scope.submitEditor($scope.theTags);
         }
 
+
+        $scope.filteredAnnotations = [];
         $scope.resetAnnotationFilter = function () {
             $scope.filteredAnnotations = [];
             $scope.searchText = '';
@@ -18,26 +20,39 @@ angular.module('ionicApp')
 
 
         $scope.annotationTextSearch = function (item) {
-//TODO: filtre çalışmıyor
-            if(config_data.isMobile){
-                if(document.getElementById("searchText") && document.getElementById("searchText").value){
-                    var searchText = document.getElementById("searchText").value.toLowerCase();
-                    console.log("searchText"+searchText)
-                    $scope.searchText=searchText;
+            if (config_data.isMobile) {
+                if (document.getElementById("searchText") && document.getElementById("searchText").value) {
+                    var searchText = document.getElementById("searchText").value;
+                    $scope.searchText = searchText;
                 }
-            }else{
-                var searchText = $scope.searchText.toLowerCase();
             }
-            if (item.quote.toLowerCase().indexOf(searchText) > -1 || item.text.toLowerCase().indexOf(searchText) > -1) {
-                console.log("true")
+            var searchText = $scope.searchText.toLowerCase();
+
+            var tags = '';
+            if (typeof item.tags != 'undefined' && typeof item.tags[0] != 'undefined'){
+                tags = item.tags[0].toLowerCase();
+            }
+            if (item.quote.toLowerCase().indexOf(searchText) > -1 || item.text.toLowerCase().indexOf(searchText) > -1 || tags.indexOf(searchText) > -1) {
                 return true;
             } else {
-                console.log("false")
                 return false;
             }
         }
 
+        $scope.getAnnotationIndexFromFilteredAnnotationIndex = function (filteredAnnotationIndex) {
+            //TODO use getIndexOfArrayByElement
+            var arrLen = $scope.annotations.length;
+            var filteredAnnotationId = $scope.filteredAnnotations[filteredAnnotationIndex].annotationId;
+            var annotationIndex = -1;
+            for (var i = 0; i < arrLen; i++) {
+                if ($scope.annotations[i].annotationId == filteredAnnotationId) {
+                    annotationIndex = i;
+                }
+            }
+            return annotationIndex;
+        }
         $scope.annotationFilter = function (item) {
+            console.log("filteredAnnotations:" + $scope.filteredAnnotations);
             if (typeof $scope.filteredAnnotations == 'undefined' || $scope.filteredAnnotations.length == 0) {
                 return true;
             } else {
@@ -50,4 +65,28 @@ angular.module('ionicApp')
                 if (found > 0)return true; else return false;
             }
         }
+
+        if(config_data.isMobile) {
+            $ionicModal.fromTemplateUrl('components/partials/annotations_on_page_modal.html', {
+                scope: $scope,
+                animation: 'slide-in-right',
+                id: 'annotations_on_page'
+            }).then(function (modal) {
+                $scope.modal_annotations_on_page = modal
+            });
+
+
+            $scope.openModal = function (id) {
+                if (id == 'annotations_on_page') {
+                    $scope.modal_annotations_on_page.show();
+                }
+            };
+
+            $scope.closeModal = function (id) {
+                if (id == 'annotations_on_page') {
+                    $scope.modal_annotations_on_page.hide();
+                }
+            }
+        }
+
     });

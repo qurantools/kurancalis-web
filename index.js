@@ -860,11 +860,11 @@ app.factory('ChapterVerses', function ($resource) {
 
         }
         $scope.deleteAnnotation = function (index) {
+            console.log("deleteAnnotation")
             if (typeof $scope.filteredAnnotations != 'undefined' && $scope.filteredAnnotations.length > 0) {
                 index = $scope.getAnnotationIndexFromFilteredAnnotationIndex(index);
             }
             annotator.deleteAnnotation($scope.annotations[index]);
-            annotator.plugins['Store'].annotationDeleted($scope.annotations[index])
 
         }
 
@@ -943,7 +943,7 @@ app.factory('ChapterVerses', function ($resource) {
          }
          */
 
-
+/*
         $scope.getAnnotationIndexFromFilteredAnnotationIndex = function (filteredAnnotationIndex) {
             //TODO use getIndexOfArrayByElement
             var arrLen = $scope.annotations.length;
@@ -956,7 +956,7 @@ app.factory('ChapterVerses', function ($resource) {
             }
             return annotationIndex;
         }
-
+*/
         /* moved to HomeCtrl
          $scope.resetAnnotationFilter = function () {
          console.log("resetAnnotationFilter index")
@@ -964,6 +964,9 @@ app.factory('ChapterVerses', function ($resource) {
          $scope.searchText = '';
          }
          */
+
+
+
         $scope.scrollToElement = function (elementId) {
             var destination = angular.element(document.getElementById(elementId));
 
@@ -1158,13 +1161,7 @@ app.factory('ChapterVerses', function ($resource) {
              })
              */
 
-            $ionicModal.fromTemplateUrl('components/partials/annotations_on_page_modal.html', {
-                scope: $scope,
-                animation: 'slide-in-right',
-                id: 'annotations_on_page'
-            }).then(function (modal) {
-                $scope.modal_annotations_on_page = modal
-            });
+
 
             $ionicModal.fromTemplateUrl('components/partials/editor_modal.html', {
                 scope: $scope,
@@ -1192,9 +1189,7 @@ app.factory('ChapterVerses', function ($resource) {
 
 
             $scope.openModal = function (id) {
-                if (id == 'annotations_on_page') {
-                    $scope.modal_annotations_on_page.show();
-                } else if (id == 'editor') {
+                if (id == 'editor') {
                     $scope.modal_editor.show();
                 } else if (id == 'chapter_selection') {
                     $scope.modal_chapter_selection.show();
@@ -1204,9 +1199,7 @@ app.factory('ChapterVerses', function ($resource) {
             };
 
             $scope.closeModal = function (id) {
-                if (id == 'annotations_on_page') {
-                    $scope.modal_annotations_on_page.hide();
-                } else if (id == 'editor') {
+                if (id == 'editor') {
                     $scope.modal_editor.hide();
                 } else if (id == 'chapter_selection') {
                     $scope.modal_chapter_selection.hide();

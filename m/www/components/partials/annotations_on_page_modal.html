@@ -10,16 +10,12 @@
     <ion-content overflow-scroll="true">
         <div style="height:50px"></div>
         <div style="padding-bottom:10px;">
-            <button onclick="closePanel()" class="btn btn-default btn-xs" style="float: left; height: 30px;"><i
-                    class="fa fa-undo"></i></button>
-            <button class="btn btn-warning btn-xs" ng-click="resetAnnotationFilter()"
+            <button class="btn btn-warning btn-xs" ng-click="searchText='';resetAnnotationFilter()"
                     ng-show='filteredAnnotations.length > 0 || searchText!=""' style="float: right; height: 30px;">
                 <i class="fa fa-trash-o"></i>
                 Filtreyi kaldır
             </button>
-
             <div style="display: block;">
-                <!--    <input ng-model="searchText" />-->
                 <input style="width: 150px; height: 30px;" type="text" placeholder="ara" ng-model="searchText" id="searchText">
                 <select ng-model="filterOrderSelect" ng-init="filterOrderSelect='verseId'"
                         ng-change="annotationFilterOrder(filterOrderSelect)" style="height: 30px;">
@@ -29,7 +25,7 @@
             </div>
         </div>
         <div ng-repeat="annotation in annotations | filter:annotationFilter | filter: annotationTextSearch"
-             class="sidebar_annotation box"
+             class="card"
              ng-click="scrollToElement('t_'+annotation.translationId)">
 
             <!-- s_a -->
@@ -45,7 +41,7 @@
             <div ng-repeat="annotationTag in annotation.tags" class="tag label label-info s_a_tag">
                 {{annotationTag}}
             </div>
-            <div class="row" style="padding:0 15px">
+            <div class="row" style="padding:5px 15px">
                 <div style="float: left">{{annotation.updated | date: 'dd/MM/yyyy HH:mm:ss'}}</div>
                 <div style="float: right">
                     <button type="button" class="btn btn-primary btn-xs" ng-click="editAnnotation($index)"><i

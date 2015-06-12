@@ -1385,8 +1385,16 @@
             //mobil theView
             angular.element(document.getElementById('theView')).scope().filteredAnnotations = annotations;
             angular.element(document.getElementById('theView')).scope().scopeApply();
+            if(!config_data.isMobile){
+                openPanel();
+            }else{
+                angular.element(document.getElementById('theView')).scope().openModal('annotations_on_page');
 
-            openPanel();
+
+
+            }
+
+
             //  return this.showViewer($.makeArray(annotations), Util.mousePosition(event, this.wrapper[0]));
         };
 
