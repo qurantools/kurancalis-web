@@ -105,8 +105,33 @@ describe('ceviri gosterimi', function() {
 		
 		element(by.css('[ng-click="kisiekle(\'261\',cvrid)"]')).click();
 		
+		browser.sleep(3000);
+		
+		element(by.css('[ng-click="kisieskleModal()"]')).click();
+		browser.sleep(2000);
+		element(by.model('kisieklead.text')).sendKeys('c');
+		
+		element(by.css('[ng-click="kisiekle(\'211\',cvrid)"]')).click();
+		
+		browser.sleep(3000);
+		
+		element(by.css('[ng-click="kisieskleModal()"]')).click();
+		browser.sleep(2000);
+		element(by.model('kisieklead.text')).sendKeys('c');
+		
+		element(by.css('[ng-click="kisiekle(\'717\',cvrid)"]')).click();
+		
+		browser.sleep(3000);
+		
+		element(by.css('[ng-click="kisieskleModal()"]')).click();
+		browser.sleep(2000);
+		element(by.model('kisieklead.text')).sendKeys('m');
+		
+		element(by.css('[ng-click="kisiekle(\'212\',cvrid)"]')).click();
+		
+		
 		//Eklenen Kişi Sayısı, İsimler ve Çevre Kutusundaki Kişi Sayısı Doğrulanıyor.
-		expect(cevrekisiler.count()).toEqual(2);
+		expect(cevrekisiler.count()).toEqual(5);
 		
 		element(by.repeater('item in cevrekisiler').row(0)).element(by.css('[class="ng-binding"]')).getText().then(function(text) {
     		  
@@ -120,11 +145,19 @@ describe('ceviri gosterimi', function() {
     	
     	element(by.repeater('item in cevreadlar').row(1)).element(by.model('kisicnt')).getText().then(function(text) {
     		  
-    		  expect(text).toBe('2');	
+    		  expect(text).toBe('5');	
     	});
     	
     	//Kişi Seçilerek Çevre3 İçine Eklenir. Çevre3 Kişi Sayısı Doğrulanır.
+    	element(by.repeater('item in cevrekisiler').row(0)).element(by.model('secimyap')).click();
+    	browser.sleep(2000);
     	element(by.repeater('item in cevrekisiler').row(1)).element(by.model('secimyap')).click();
+    	browser.sleep(2000);
+    	element(by.repeater('item in cevrekisiler').row(2)).element(by.model('secimyap')).click();
+    	browser.sleep(2000);
+    	element(by.repeater('item in cevrekisiler').row(3)).element(by.model('secimyap')).click();
+    	browser.sleep(2000);
+    	element(by.repeater('item in cevrekisiler').row(4)).element(by.model('secimyap')).click();
     	browser.sleep(2000);
     	element(by.css('[ng-click="digercevremodal()"]')).click();
     	browser.sleep(2000);
@@ -134,9 +167,33 @@ describe('ceviri gosterimi', function() {
     	
     	element(by.repeater('item in cevreadlar').row(2)).element(by.model('kisicnt')).getText().then(function(text) {
     		  
-    		  expect(text).toBe('1');	
+    		  expect(text).toBe('5');	
+    	});    	
+    	
+    	//Sayfa yenileniyor.
+    	browser.get(baseAddress + '/#/chapter/1/author/1040/verse/1');
+    	browser.sleep(3000);
+    	
+		element(by.css('[onclick="toggleLeftPanel()"]')).click();
+		browser.sleep(3000);
+		element(by.css('[ng-class="{active: currentPage == \'people\'}"]')).click();
+		browser.sleep(3000);
+		element(by.css('[href="#/people/circles/"]')).click();
+		
+		browser.sleep(2000);
+		element(by.repeater('item in cevreadlar').row(1)).element(by.model('kisicnt')).getText().then(function(text) {
+    		  
+    		  expect(text).toBe('5');	
     	});
     	
+    	element(by.repeater('item in cevreadlar').row(2)).element(by.model('kisicnt')).getText().then(function(text) {
+    		  
+    		  expect(text).toBe('5');	
+    	});
+		
+		element(by.id("Çevre2")).click();
+		browser.sleep(2000);
+		
     	//Kişi Seçilerek Çevre2 İçinden Silinir. Çevre2 Kişi Sayısı Doğrulanır.
     	element(by.repeater('item in cevrekisiler').row(0)).element(by.model('secimyap')).click();
     	browser.sleep(2000);
@@ -146,7 +203,7 @@ describe('ceviri gosterimi', function() {
     	
     	element(by.repeater('item in cevreadlar').row(1)).element(by.model('kisicnt')).getText().then(function(text) {
     		  
-    		  expect(text).toBe('1');	
+    		  expect(text).toBe('4');	
     	});
     	
     	//Çevre Adı Değiştirilir ve Doğrulanır.
@@ -160,6 +217,49 @@ describe('ceviri gosterimi', function() {
     	element(by.repeater('item in cevreadlar').row(0)).element(by.model('cevrenm')).getText().then(function(text) {
     		  
     		  expect(text).toBe('Çevre Değişti');	
+    	});
+    	
+    	//Sayfa yenileniyor.
+    	browser.get(baseAddress + '/#/chapter/1/author/1040/verse/1');
+    	browser.sleep(3000);
+    	
+		element(by.css('[onclick="toggleLeftPanel()"]')).click();
+		browser.sleep(3000);
+		element(by.css('[ng-class="{active: currentPage == \'people\'}"]')).click();
+		browser.sleep(3000);
+		element(by.css('[href="#/people/circles/"]')).click();
+		
+		browser.sleep(2000);
+		
+		//Tüm Çevre İsimleri ve Kişi Sayılarının 0 Olduğu Doğrulanıyor.
+		element(by.repeater('item in cevreadlar').row(0)).element(by.model('cevrenm')).getText().then(function(text) {
+    		  
+    		  expect(text).toBe('Çevre Değişti');	
+    	});
+		
+		element(by.repeater('item in cevreadlar').row(1)).element(by.model('cevrenm')).getText().then(function(text) {
+    		  
+    		  expect(text).toBe('Çevre2');	
+    	});
+    	
+		element(by.repeater('item in cevreadlar').row(2)).element(by.model('cevrenm')).getText().then(function(text) {
+    		  
+    		  expect(text).toBe('Çevre3');	
+    	});
+    	
+    	element(by.repeater('item in cevreadlar').row(0)).element(by.model('kisicnt')).getText().then(function(text) {
+    		  
+    		  expect(text).toBe('0');	
+    	});
+    	
+    	element(by.repeater('item in cevreadlar').row(1)).element(by.model('kisicnt')).getText().then(function(text) {
+    		  
+    		  expect(text).toBe('4');	
+    	});
+    	
+    	element(by.repeater('item in cevreadlar').row(2)).element(by.model('kisicnt')).getText().then(function(text) {
+    		  
+    		  expect(text).toBe('5');	
     	});
     	
     	//Çevre Silinir ve Doğrulanır.
