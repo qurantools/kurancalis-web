@@ -169,8 +169,9 @@ blockquote {
 }
 
 .translation_rtl{
-    direction: rtl;
-    font-size: 17px;
+    /* direction: rtl; */
+    font-size: 35px;
+
 }
 
 
