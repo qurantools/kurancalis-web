@@ -214,4 +214,20 @@ angular.module('ionicApp')
                 }
             }
         }
+
+        $scope.submitEditor2 = function () {
+            $scope.submitEditor($scope.theTags);
+        }
+        $scope.deleteAnnotation2 = function (annotation) {
+            var annotationRestangular = Restangular.one("annotations", annotation.annotationId);
+            annotationRestangular.customDELETE("", {}, {'access_token': $scope.access_token}).then(function (result) {
+
+                if (result.code == '200') {
+                    var annotationIndex = $scope.getIndexOfArrayByElement($scope.annotations, 'annotationId', annotation.annotationId);
+                    if (annotationIndex > -1) {
+                        $scope.annotations.splice(annotationIndex, 1);
+                    }
+                }
+            });
+        }
     });

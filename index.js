@@ -207,8 +207,8 @@ if (config_data.isMobile == false) { //false
                     redirectTo: '/'
                 });
 
-        //facebook
-        FacebookProvider.init('400142910165594');
+            //facebook
+            FacebookProvider.init('400142910165594');
 
 
             /*
@@ -258,9 +258,8 @@ if (config_data.isMobile == false) { //false
              });
              }
              FacebookProvider.init('400142910165594');
-         */
-         }
-
+             */
+        }
     );
 
 }
@@ -437,19 +436,29 @@ app.factory('ChapterVerses', function ($resource) {
         /* end of facebook login */
         /* end of auth */
 
-        var chapterId = 1;
-        var authorMask = 1040;
-        var verseNumber = 1;
 
-        $scope.setChapterId = function () {
+
+        $scope.setChapterId = function (myChapterId) {
+            if(typeof myChapterId!='undefined'){
+                $scope.chapter_id=myChapterId
+            }
             if (typeof annotator != 'undefined') {
                 annotator.setChapterId = $scope.chapter_id;
             }
         }
-        $scope.setAuthorMask = function () {
+        $scope.setAuthorMask = function (myAuthorMask) {
+            if(typeof myAuthorMask!='undefined'){
+                $scope.author_mask = myAuthorMask;
+            }
+
             if (typeof annotator != 'undefined') {
                 annotator.setAuthorMask = $scope.author_mask;
             }
+        }
+
+        $scope.verse = {};
+        $scope.setVerse= function (myVerse){
+            $scope.verse=myVerse;
         }
         $scope.setUserId = function () {
             if (typeof annotator != 'undefined') {
@@ -461,16 +470,8 @@ app.factory('ChapterVerses', function ($resource) {
             }
         }
         //   if (!config_data.isMobile) {
-        if (typeof $routeParams.chapterId !== 'undefined') {
-            chapterId = $routeParams.chapterId;
-            $scope.initChapterSelect = true;
-        }
-        if (typeof $routeParams.authorMask !== 'undefined') {
-            authorMask = $routeParams.authorMask;
-        }
-        if (typeof $routeParams.verseNumber !== 'undefined') {
-            verseNumber = $routeParams.verseNumber;
-        }
+
+
         /*
          } else {
          //mobile
@@ -494,16 +495,7 @@ app.factory('ChapterVerses', function ($resource) {
          }
          */
 
-        $scope.chapter_id = chapterId;
-        $scope.setChapterId();
 
-        $scope.author_mask = authorMask;
-        $scope.setAuthorMask();
-
-        localStorageService.set('author_mask', $scope.author_mask);
-
-        $scope.verse = {};
-        $scope.verse.number = verseNumber;
 
         $scope.myRoute = [];
         $scope.myRoute['tag'] = '';
@@ -603,7 +595,7 @@ app.factory('ChapterVerses', function ($resource) {
                 if ($scope.user != null) {
                     //if there is user info, run annotation. It calls on page changes.
                     $scope.annotate_it();
-                } else if($scope.access_token!=null) {
+                } else if ($scope.access_token != null) {
                     //if there isn't an access token, you can't get user info
                     $scope.get_user_info();
                 }
@@ -747,7 +739,6 @@ app.factory('ChapterVerses', function ($resource) {
             $scope.editorSubmitted = 1;
             //update verse tags
             $scope.updateVerseTags($scope.annotationModalData.verseId, oldTags, newTags);
-
             if ($scope.getCurrentPage() == 'annotations') { //annotations page update
                 $scope.editAnnotation2($scope.annotationModalData);
             }
@@ -755,12 +746,13 @@ app.factory('ChapterVerses', function ($resource) {
             if ($scope.getIndexOfArrayByElement($scope.annotations, 'annotationId', $scope.annotationModalData.annotationId) == -1) {
                 $scope.addAnnotation($scope.annotationModalData);
             }
-
             return annotator.ignoreMouseup = false;
 
         }
 
-
+        $scope.submitEditor2 = function () {
+            $scope.submitEditor($scope.theTags);
+        }
         $scope.showEditor = function (annotation, position) {
             var newTags = [];
             if (typeof annotation.tags != 'undefined') {
@@ -774,9 +766,8 @@ app.factory('ChapterVerses', function ($resource) {
                 $scope.annotationModalData.text = "";
             }
             if (!config_data.isMobile) {
-                angular.element(document.getElementById('theView')).scope().theTags = newTags;
+               angular.element(document.getElementById('theView')).scope().theTags = newTags;
             } else {
-                console.log("newtags")
                 angular.element(document.getElementById('MainCtrl')).scope().theTags = newTags;
             }
             $scope.annotationModalDataVerse = Math.floor(annotation.verseId / 1000) + ":" + annotation.verseId % 1000;
@@ -869,18 +860,7 @@ app.factory('ChapterVerses', function ($resource) {
         }
 
 
-        $scope.deleteAnnotation2 = function (annotation) {
-            var annotationRestangular = Restangular.one("annotations", annotation.annotationId);
-            annotationRestangular.customDELETE("", {}, {'access_token': $scope.access_token}).then(function (result) {
 
-                if (result.code == '200') {
-                    var annotationIndex = $scope.getIndexOfArrayByElement($scope.annotations, 'annotationId', annotation.annotationId);
-                    if (annotationIndex > -1) {
-                        $scope.annotations.splice(annotationIndex, 1);
-                    }
-                }
-            });
-        }
 
         $scope.editAnnotation2 = function (annotation) {
             var headers = {'Content-Type': 'application/x-www-form-urlencoded', 'access_token': $scope.access_token};
@@ -943,20 +923,20 @@ app.factory('ChapterVerses', function ($resource) {
          }
          */
 
-/*
-        $scope.getAnnotationIndexFromFilteredAnnotationIndex = function (filteredAnnotationIndex) {
-            //TODO use getIndexOfArrayByElement
-            var arrLen = $scope.annotations.length;
-            var filteredAnnotationId = $scope.filteredAnnotations[filteredAnnotationIndex].annotationId;
-            var annotationIndex = -1;
-            for (var i = 0; i < arrLen; i++) {
-                if ($scope.annotations[i].annotationId == filteredAnnotationId) {
-                    annotationIndex = i;
-                }
-            }
-            return annotationIndex;
-        }
-*/
+        /*
+         $scope.getAnnotationIndexFromFilteredAnnotationIndex = function (filteredAnnotationIndex) {
+         //TODO use getIndexOfArrayByElement
+         var arrLen = $scope.annotations.length;
+         var filteredAnnotationId = $scope.filteredAnnotations[filteredAnnotationIndex].annotationId;
+         var annotationIndex = -1;
+         for (var i = 0; i < arrLen; i++) {
+         if ($scope.annotations[i].annotationId == filteredAnnotationId) {
+         annotationIndex = i;
+         }
+         }
+         return annotationIndex;
+         }
+         */
         /* moved to HomeCtrl
          $scope.resetAnnotationFilter = function () {
          console.log("resetAnnotationFilter index")
@@ -966,18 +946,17 @@ app.factory('ChapterVerses', function ($resource) {
          */
 
 
-
         $scope.scrollToElement = function (elementId) {
-            var destination = angular.element(document.getElementById(elementId));
-
-            if (destination.length > 0) {
-                $document.scrollToElement(destination, 70, 1000);
+            if(!config_data.isMobile) {
+                var destination = angular.element(document.getElementById(elementId));
+                if (destination.length > 0) {
+                    $document.scrollToElement(destination, 70, 1000);
+                }
+            }else{
+                $location.hash(elementId);
+                var delegate = $ionicScrollDelegate.$getByHandle('content');
+                delegate.anchorScroll();
             }
-            /*
-             $location.hash(elementId);
-             var delegate = $ionicScrollDelegate.$getByHandle('content');
-             delegate.anchorScroll();
-             */
         }
 
 
@@ -1119,7 +1098,16 @@ app.factory('ChapterVerses', function ($resource) {
         $scope.scrollToVerse = function () {
             if (typeof $scope.verse.number != 'undefined') {
                 var verseId = parseInt($scope.chapter_id * 1000) + parseInt($scope.verse.number);
-                $scope.scrollToElement('v_' + verseId);
+                var verseElement = 'v_' + verseId;
+              //  if (!config_data.isMobile) {
+                    $scope.scrollToElement(verseElement);
+               /*
+                } else {
+                    $location.hash(verseElement);
+                    var delegate = $ionicScrollDelegate.$getByHandle('content');
+                    delegate.anchorScroll();
+                }
+                */
             }
         }
 
@@ -1162,7 +1150,6 @@ app.factory('ChapterVerses', function ($resource) {
              */
 
 
-
             $ionicModal.fromTemplateUrl('components/partials/editor_modal.html', {
                 scope: $scope,
                 animation: 'slide-in-left',
@@ -1171,13 +1158,6 @@ app.factory('ChapterVerses', function ($resource) {
                 $scope.modal_editor = modal
             });
 
-            $ionicModal.fromTemplateUrl('components/partials/chapter_selection_modal.html', {
-                scope: $scope,
-                animation: 'slide-in-left',
-                id: 'chapter_selection'
-            }).then(function (modal) {
-                $scope.modal_chapter_selection = modal
-            });
 
             $ionicModal.fromTemplateUrl('components/partials/authors_list_modal.html', {
                 scope: $scope,
@@ -1191,8 +1171,6 @@ app.factory('ChapterVerses', function ($resource) {
             $scope.openModal = function (id) {
                 if (id == 'editor') {
                     $scope.modal_editor.show();
-                } else if (id == 'chapter_selection') {
-                    $scope.modal_chapter_selection.show();
                 } else if (id == 'authors_list') {
                     $scope.modal_authors_list.show();
                 }
@@ -1201,8 +1179,6 @@ app.factory('ChapterVerses', function ($resource) {
             $scope.closeModal = function (id) {
                 if (id == 'editor') {
                     $scope.modal_editor.hide();
-                } else if (id == 'chapter_selection') {
-                    $scope.modal_chapter_selection.hide();
                 } else if (id == 'authors_list') {
                     $scope.modal_authors_list.hide();
                 }
@@ -1378,7 +1354,6 @@ app.factory('ChapterVerses', function ($resource) {
             $scope.setAuthorMask();
             localStorageService.set('author_mask', $scope.author_mask);
         };
-
 
     });
 

@@ -3,13 +3,55 @@ angular.module('ionicApp')
         console.log("HomeCtrl");
         $scope.currentPage = $scope.getCurrentPage();
 
+
+
+
+        var chapterId = 1;
+        var authorMask = 1040;
+        var verseNumber = 1;
+
+        if (typeof $routeParams.chapterId !== 'undefined') {
+            chapterId = $routeParams.chapterId;
+            $scope.initChapterSelect = true;
+        }
+        if (typeof $routeParams.authorMask !== 'undefined') {
+            authorMask = $routeParams.authorMask;
+        }
+        if (typeof $routeParams.verseNumber !== 'undefined') {
+            verseNumber = $routeParams.verseNumber;
+        }
+
+
+        $scope.chapter_id = chapterId;
+        $scope.setChapterId(chapterId);
+
+        $scope.author_mask = authorMask;
+        $scope.setAuthorMask(authorMask);
+
+        localStorageService.set('author_mask', $scope.author_mask);
+
+
+
+        $scope.verse = {};
+        $scope.verse.number = verseNumber;
+
+        $scope.setVerse($scope.verse);
+
+
+
+
+
+
+
+
+
+
+
         $scope.list_translations();
 
 
         $scope.checkUserLoginStatus();
-        $scope.submitEditor2 = function () {
-            $scope.submitEditor($scope.theTags);
-        }
+
 
 
         $scope.filteredAnnotations = [];
@@ -75,18 +117,31 @@ angular.module('ionicApp')
                 $scope.modal_annotations_on_page = modal
             });
 
+            $ionicModal.fromTemplateUrl('components/partials/chapter_selection_modal.html', {
+                scope: $scope,
+                animation: 'slide-in-left',
+                id: 'chapter_selection'
+            }).then(function (modal) {
+                $scope.modal_chapter_selection = modal
+            });
 
             $scope.openModal = function (id) {
                 if (id == 'annotations_on_page') {
                     $scope.modal_annotations_on_page.show();
+                } else if (id == 'chapter_selection') {
+                    $scope.modal_chapter_selection.show();
                 }
             };
 
             $scope.closeModal = function (id) {
                 if (id == 'annotations_on_page') {
                     $scope.modal_annotations_on_page.hide();
+                } else if (id == 'chapter_selection') {
+                    $scope.modal_chapter_selection.hide();
                 }
             }
         }
+
+
 
     });

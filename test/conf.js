@@ -18,7 +18,7 @@ exports.config = {
         //'spec8.js',
         //'spec9.js',
         //'spec10.js', //Sağ panelde arama yaptığımızda etiket kelime ile arama başarısız sonuçlanıyor.
-        //'spec11.js',
+        'spec11.js', //GEÇMEDİ
         //'spec12.js',
         //'spec13.js',
         //'spec14.js'
