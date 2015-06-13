@@ -436,19 +436,29 @@ app.factory('ChapterVerses', function ($resource) {
         /* end of facebook login */
         /* end of auth */
 
-        var chapterId = 1;
-        var authorMask = 1040;
-        var verseNumber = 1;
 
-        $scope.setChapterId = function () {
+
+        $scope.setChapterId = function (myChapterId) {
+            if(typeof myChapterId!='undefined'){
+                $scope.chapter_id=myChapterId
+            }
             if (typeof annotator != 'undefined') {
                 annotator.setChapterId = $scope.chapter_id;
             }
         }
-        $scope.setAuthorMask = function () {
+        $scope.setAuthorMask = function (myAuthorMask) {
+            if(typeof myAuthorMask!='undefined'){
+                $scope.author_mask = myAuthorMask;
+            }
+
             if (typeof annotator != 'undefined') {
                 annotator.setAuthorMask = $scope.author_mask;
             }
+        }
+
+        $scope.verse = {};
+        $scope.setVerse= function (myVerse){
+            $scope.verse=myVerse;
         }
         $scope.setUserId = function () {
             if (typeof annotator != 'undefined') {
@@ -460,16 +470,8 @@ app.factory('ChapterVerses', function ($resource) {
             }
         }
         //   if (!config_data.isMobile) {
-        if (typeof $routeParams.chapterId !== 'undefined') {
-            chapterId = $routeParams.chapterId;
-            $scope.initChapterSelect = true;
-        }
-        if (typeof $routeParams.authorMask !== 'undefined') {
-            authorMask = $routeParams.authorMask;
-        }
-        if (typeof $routeParams.verseNumber !== 'undefined') {
-            verseNumber = $routeParams.verseNumber;
-        }
+
+
         /*
          } else {
          //mobile
@@ -493,16 +495,7 @@ app.factory('ChapterVerses', function ($resource) {
          }
          */
 
-        $scope.chapter_id = chapterId;
-        $scope.setChapterId();
 
-        $scope.author_mask = authorMask;
-        $scope.setAuthorMask();
-
-        localStorageService.set('author_mask', $scope.author_mask);
-
-        $scope.verse = {};
-        $scope.verse.number = verseNumber;
 
         $scope.myRoute = [];
         $scope.myRoute['tag'] = '';

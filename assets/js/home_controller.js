@@ -3,6 +3,50 @@ angular.module('ionicApp')
         console.log("HomeCtrl");
         $scope.currentPage = $scope.getCurrentPage();
 
+
+
+
+        var chapterId = 1;
+        var authorMask = 1040;
+        var verseNumber = 1;
+
+        if (typeof $routeParams.chapterId !== 'undefined') {
+            chapterId = $routeParams.chapterId;
+            $scope.initChapterSelect = true;
+        }
+        if (typeof $routeParams.authorMask !== 'undefined') {
+            authorMask = $routeParams.authorMask;
+        }
+        if (typeof $routeParams.verseNumber !== 'undefined') {
+            verseNumber = $routeParams.verseNumber;
+        }
+
+
+        $scope.chapter_id = chapterId;
+        $scope.setChapterId(chapterId);
+
+        $scope.author_mask = authorMask;
+        $scope.setAuthorMask(authorMask);
+
+        localStorageService.set('author_mask', $scope.author_mask);
+
+
+
+        $scope.verse = {};
+        $scope.verse.number = verseNumber;
+
+        $scope.setVerse($scope.verse);
+
+
+
+
+
+
+
+
+
+
+
         $scope.list_translations();
 
 
