@@ -325,7 +325,7 @@ app.factory('ChapterVerses', function ($resource) {
     );
 })
 
-    .controller('MainCtrl', function ($scope, $q, $routeParams, $location, $timeout, ListAuthors, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService, $document, $filter, $rootScope, $state, $stateParams, $ionicModal, $ionicScrollDelegate, $ionicPosition, authorization) {
+    .controller('MainCtrl', function ($scope, $q, $routeParams,$ionicSideMenuDelegate, $location, $timeout, ListAuthors, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService, $document, $filter, $rootScope, $state, $stateParams, $ionicModal, $ionicScrollDelegate, $ionicPosition, authorization) {
         console.log("MainCtrl");
 
         //currentPage
@@ -364,9 +364,6 @@ app.factory('ChapterVerses', function ($resource) {
         $scope.onFacebookLogOutSuccess = function (responseData) {
             if (responseData.loggedOut == true) {
                 $scope.user = null;
-                if (typeof annotator != 'undefined') {
-                    annotator.destroy();
-                }
 
                 $scope.verseTagsJSON = {};
                 if ($scope.getCurrentPage() != "home") {
@@ -387,8 +384,10 @@ app.factory('ChapterVerses', function ($resource) {
             authorization.login($scope.onFacebookLoginSuccess);
         }
 
-        $scope.logOut = function () { //new
+        $scope.log_out = function () { //new
+            $ionicSideMenuDelegate.toggleLeft();
             authorization.logOut($scope.onFacebookLogOutSuccess);
+
         }
 
         /*

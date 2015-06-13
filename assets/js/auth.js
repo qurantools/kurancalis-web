@@ -93,7 +93,6 @@ authorizationModule.factory('User', function ($resource) {
                     fbLoginStatus = response.status;
                 });
             });
-
             localStorageService.remove('access_token');
             responseData.loggedOut=true;
             faceBookResponseMethod(responseData);

@@ -27,39 +27,21 @@ angular.module('ionicApp')
 
         $scope.author_mask = authorMask;
         $scope.setAuthorMask(authorMask);
-
         localStorageService.set('author_mask', $scope.author_mask);
-
-
 
         $scope.verse = {};
         $scope.verse.number = verseNumber;
-
         $scope.setVerse($scope.verse);
 
 
-
-
-
-
-
-
-
-
-
         $scope.list_translations();
-
-
         $scope.checkUserLoginStatus();
-
-
 
         $scope.filteredAnnotations = [];
         $scope.resetAnnotationFilter = function () {
             $scope.filteredAnnotations = [];
             $scope.searchText = '';
         }
-
 
         $scope.annotationTextSearch = function (item) {
             if (config_data.isMobile) {
