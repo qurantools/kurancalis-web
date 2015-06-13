@@ -746,7 +746,6 @@ app.factory('ChapterVerses', function ($resource) {
             $scope.editorSubmitted = 1;
             //update verse tags
             $scope.updateVerseTags($scope.annotationModalData.verseId, oldTags, newTags);
-
             if ($scope.getCurrentPage() == 'annotations') { //annotations page update
                 $scope.editAnnotation2($scope.annotationModalData);
             }
@@ -754,12 +753,13 @@ app.factory('ChapterVerses', function ($resource) {
             if ($scope.getIndexOfArrayByElement($scope.annotations, 'annotationId', $scope.annotationModalData.annotationId) == -1) {
                 $scope.addAnnotation($scope.annotationModalData);
             }
-
             return annotator.ignoreMouseup = false;
 
         }
 
-
+        $scope.submitEditor2 = function () {
+            $scope.submitEditor($scope.theTags);
+        }
         $scope.showEditor = function (annotation, position) {
             var newTags = [];
             if (typeof annotation.tags != 'undefined') {
@@ -773,9 +773,8 @@ app.factory('ChapterVerses', function ($resource) {
                 $scope.annotationModalData.text = "";
             }
             if (!config_data.isMobile) {
-                angular.element(document.getElementById('theView')).scope().theTags = newTags;
+               angular.element(document.getElementById('theView')).scope().theTags = newTags;
             } else {
-                console.log("newtags")
                 angular.element(document.getElementById('MainCtrl')).scope().theTags = newTags;
             }
             $scope.annotationModalDataVerse = Math.floor(annotation.verseId / 1000) + ":" + annotation.verseId % 1000;
@@ -868,18 +867,7 @@ app.factory('ChapterVerses', function ($resource) {
         }
 
 
-        $scope.deleteAnnotation2 = function (annotation) {
-            var annotationRestangular = Restangular.one("annotations", annotation.annotationId);
-            annotationRestangular.customDELETE("", {}, {'access_token': $scope.access_token}).then(function (result) {
 
-                if (result.code == '200') {
-                    var annotationIndex = $scope.getIndexOfArrayByElement($scope.annotations, 'annotationId', annotation.annotationId);
-                    if (annotationIndex > -1) {
-                        $scope.annotations.splice(annotationIndex, 1);
-                    }
-                }
-            });
-        }
 
         $scope.editAnnotation2 = function (annotation) {
             var headers = {'Content-Type': 'application/x-www-form-urlencoded', 'access_token': $scope.access_token};

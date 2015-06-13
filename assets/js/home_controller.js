@@ -7,9 +7,7 @@ angular.module('ionicApp')
 
 
         $scope.checkUserLoginStatus();
-        $scope.submitEditor2 = function () {
-            $scope.submitEditor($scope.theTags);
-        }
+
 
 
         $scope.filteredAnnotations = [];
