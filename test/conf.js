@@ -20,7 +20,9 @@ exports.config = {
         //'spec10.js', //Sağ panelde arama yaptığımızda etiket kelime ile arama başarısız sonuçlanıyor.
         //'spec11.js',
         //'spec12.js',
-        //'spec13.js'
+        //'spec13.js',
+        //'spec14.js'
+
     ],
     jasmineNodeOpts: {defaultTimeoutInterval: 360000},
     multiCapabilities: [
