@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html >
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+
+    <script src="../../../../assets/js/angular.min.js"></script>
+    <script src="../../../../assets/js/jquery.min.js"></script>
+    <script src="../../../../assets/js/config.js"></script>
+
+</head>
+<body>
+
+<script type="text/javascript">
+    var queryDict = {}
+    location.search.substr(1).split("&").forEach(function(item) {queryDict[item.split("=")[0]] = item.split("=")[1]})
+    var pass=0;
+    //var scope = angular.element(document.getElementById("MainWrap")).scope();
+    //var theScope = $scope;
+
+
+    if(queryDict.hasOwnProperty("error") ){
+        window.location=config_data.mobileAddress;
+        //error=access_denied&error_code=200&error_description=Permissions+error&error_reason=user_denied#_=_
+    }
+    if(queryDict.hasOwnProperty("code") ){
+        var code = queryDict['code'];
+        var request = new XMLHttpRequest();
+        var url = 'https://graph.facebook.com/oauth/access_token?client_id=400142910165594&redirect_uri='+encodeURIComponent(config_data.mobileAddress+"/components/mobile_auth/login_callback.html")+'&client_secret=e1c0f664bd3e803fce38a8d6399dba2d&code='+code;
+        request.onreadystatechange = function() {
+            if (request.readyState === 4) {
+                if (request.status === 200) {
+                    //get token value
+                    var values = {}
+                    request.response.split("&").forEach(function(item) {values[item.split("=")[0]] = item.split("=")[1]})
+
+
+
+
+                    jQuery.ajax({
+                        type:"POST",
+                        beforeSend: function (request)
+                        {
+                            request.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+
+                        },
+                        url: config_data.webServiceUrl+"/users",
+                        data: "fb_access_token="+values['access_token'],
+                        processData: false,
+                        success: function(msg) {
+                            window.localStorage.setItem("ls.access_token", msg.token);
+                            window.location = config_data.mobileAddress;
+                        },
+                        error: function(msg){
+                            alert("Facebook giriş için izniniz yok");
+                            window.location = config_data.mobileAddress;
+                        }
+                    });
+                } else {
+                    document.writeln('error');
+                }
+            }
+        };
+        request.open("GET", url , true);
+        request.send(null);
+    }
+    else{
+
+
+    }
+
+</script>
+</body>
+
+</html>

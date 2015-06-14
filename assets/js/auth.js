@@ -30,20 +30,20 @@ authorizationModule.factory('User', function ($resource) {
 
 
     factory("authorization", function (Facebook, User, localStorageService, Restangular) {
+
         fbLoginStatus = 'disconnected';
         facebookIsReady = false;
         var factory = {};
         factory.access_token="";
-        factory.redirect_uri= window.location.href;
-        factory.display= 'touch';
-        //, redirect_uri: 'http://test.kurancalis.com/m/www', display:'touch'
-        factory.permissions={scope: 'email'};
-
-        if (config_data.isMobile) {
-            factory.permissions['display']='touch';
-        }
 
         factory.login = function (faceBookResponseMethod) {
+            if (config_data.isMobile) {
+                var permissions = 'email';
+                var permissionUrl = "https://m.facebook.com/dialog/oauth?client_id=" + "400142910165594" + "&response_type=code&redirect_uri=" + encodeURIComponent(config_data.mobileAddress+ "/components/mobile_auth/login_callback.html") + "&scope=" + permissions;
+                window.location = permissionUrl;
+                return;
+            }
+
             var responseData = {loggedIn: false, token: ""};
 
             Facebook.login(function (response) {
@@ -73,7 +73,7 @@ authorizationModule.factory('User', function ($resource) {
                         }
                     );
                 }
-            }, factory.permissions);
+            }, {scope: 'email'});
         };
 
 
@@ -101,6 +101,7 @@ authorizationModule.factory('User', function ($resource) {
                     fbLoginStatus = response.status;
                 });
             });
+
             localStorageService.remove('access_token');
             responseData.loggedOut=true;
             faceBookResponseMethod(responseData);

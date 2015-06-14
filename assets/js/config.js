@@ -2,6 +2,8 @@ var config_module = angular.module('myConfig', []);
 
 var config_data = {
     'webServiceUrl': 'https://securewebserver.net/jetty/qttest/rest',
+    'webAddress': 'http://test.kurancalis.com',
+    'mobileAddress': 'http://test.kurancalis.com/m/www',
     'isMobile':isMobile()
 }
 

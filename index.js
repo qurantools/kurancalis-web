@@ -384,7 +384,7 @@ app.factory('ChapterVerses', function ($resource) {
             authorization.login($scope.onFacebookLoginSuccess);
         }
 
-        $scope.log_out = function () { //new
+        $scope.logOut = function () { //new
             $ionicSideMenuDelegate.toggleLeft();
             authorization.logOut($scope.onFacebookLogOutSuccess);
 
@@ -511,7 +511,6 @@ app.factory('ChapterVerses', function ($resource) {
         if (typeof $routeParams.targetVerse !== 'undefined') {
             $scope.targetVerseForTagContent = $routeParams.targetVerse;
         }
-
 
         $scope.annotate_it = function () {
             if ($scope.annotatorActivated == 1) {
