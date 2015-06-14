@@ -37,7 +37,7 @@ authorizationModule.factory('User', function ($resource) {
         factory.redirect_uri= window.location.href;
         factory.display= 'touch';
         permissions={};
-        factory.permissions={scope: 'email', redirect_uri: factory.redirect_uri};
+        factory.permissions={scope: 'email', redirect_uri: 'http://test.kurancalis.com/m/www', display:'touch'};
 
         if (config_data.isMobile) {
             factory.permissions['display']='touch';
