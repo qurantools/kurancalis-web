@@ -6,7 +6,7 @@
         <ul class="list">
             <a href="#/app/chapter/1/author/{{author_mask}}/verse/1/" class="item" menu-close="">Sureler</a>
             <a ng-if="user!=null"href="#/annotations/" class="item" menu-close="">Tüm Notlar</a>
-            <a ng-if="user!=null" href ng-click="log_out()" class="item">Çıkış</a>
+            <a ng-if="user!=null" href ng-click="logOut()" class="item">Çıkış</a>
             <a ng-if="user==null" href ng-click="login()" class="item" menu-close>Giriş</a>
         </ul>
     </ion-content>

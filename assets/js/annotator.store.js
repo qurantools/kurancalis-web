@@ -379,7 +379,7 @@
             } else if (xhr._action === 'read' && !xhr._id) {
                 //  message = Annotator._t("Sorry we could not ") + action + Annotator._t(" the annotations from the store");
                 message = Annotator._t("Oturum süresi dolmuştur");
-                angular.element(document.getElementById('theView')).scope().log_out();
+                angular.element(document.getElementById('theView')).scope().logOut();
             }
             switch (xhr.status) {
                 case 401:
