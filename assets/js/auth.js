@@ -34,6 +34,14 @@ authorizationModule.factory('User', function ($resource) {
         facebookIsReady = false;
         var factory = {};
         factory.access_token="";
+        factory.redirect_uri= window.location.href;
+        factory.display= 'touch';
+        permissions={};
+        factory.permissions={scope: 'email', redirect_uri: factory.redirect_uri};
+
+        if (config_data.isMobile) {
+            factory.permissions['display']='touch';
+        }
 
         factory.login = function (faceBookResponseMethod) {
             var responseData = {loggedIn: false, token: ""};
@@ -65,7 +73,7 @@ authorizationModule.factory('User', function ($resource) {
                         }
                     );
                 }
-            }, {scope: 'email'});
+            }, factory.permissions);
         };
 
 
