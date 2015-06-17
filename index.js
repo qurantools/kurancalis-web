@@ -32,7 +32,6 @@ var app = angular.module('ionicApp', requiredModules)
     .filter('selectionFilter', function () {
         return function (items, props) {
             var out = [];
-
             if (angular.isArray(items)) {
                 items.forEach(function (item) {
                     var itemMatches = false;
@@ -40,8 +39,13 @@ var app = angular.module('ionicApp', requiredModules)
                     var keys = Object.keys(props);
                     for (var i = 0; i < keys.length; i++) {
                         var prop = keys[i];
-                        var text = props[prop].toLowerCase();
-                        if (item[prop].toString().toLowerCase().indexOf(text) !== -1) {
+                        if (typeof props[prop] != 'undefined') {
+                            var text = props[prop].toLowerCase();
+                            if (item[prop].toString().toLowerCase().indexOf(text) !== -1) {
+                                itemMatches = true;
+                                break;
+                            }
+                        } else {
                             itemMatches = true;
                             break;
                         }
@@ -325,7 +329,7 @@ app.factory('ChapterVerses', function ($resource) {
     );
 })
 
-    .controller('MainCtrl', function ($scope, $q, $routeParams,$ionicSideMenuDelegate, $location, $timeout, ListAuthors, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService, $document, $filter, $rootScope, $state, $stateParams, $ionicModal, $ionicScrollDelegate, $ionicPosition, authorization) {
+    .controller('MainCtrl', function ($scope, $q, $routeParams, $ionicSideMenuDelegate, $location, $timeout, ListAuthors, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService, $document, $filter, $rootScope, $state, $stateParams, $ionicModal, $ionicScrollDelegate, $ionicPosition, authorization) {
         console.log("MainCtrl");
 
         //currentPage
@@ -436,17 +440,16 @@ app.factory('ChapterVerses', function ($resource) {
         /* end of auth */
 
 
-
         $scope.setChapterId = function (myChapterId) {
-            if(typeof myChapterId!='undefined'){
-                $scope.chapter_id=myChapterId
+            if (typeof myChapterId != 'undefined') {
+                $scope.chapter_id = myChapterId
             }
             if (typeof annotator != 'undefined') {
                 annotator.setChapterId = $scope.chapter_id;
             }
         }
         $scope.setAuthorMask = function (myAuthorMask) {
-            if(typeof myAuthorMask!='undefined'){
+            if (typeof myAuthorMask != 'undefined') {
                 $scope.author_mask = myAuthorMask;
             }
 
@@ -456,8 +459,8 @@ app.factory('ChapterVerses', function ($resource) {
         }
 
         $scope.verse = {};
-        $scope.setVerse= function (myVerse){
-            $scope.verse=myVerse;
+        $scope.setVerse = function (myVerse) {
+            $scope.verse = myVerse;
         }
         $scope.setUserId = function () {
             if (typeof annotator != 'undefined') {
@@ -493,7 +496,6 @@ app.factory('ChapterVerses', function ($resource) {
          }
          }
          */
-
 
 
         $scope.myRoute = [];
@@ -764,7 +766,7 @@ app.factory('ChapterVerses', function ($resource) {
                 $scope.annotationModalData.text = "";
             }
             if (!config_data.isMobile) {
-               angular.element(document.getElementById('theView')).scope().theTags = newTags;
+                angular.element(document.getElementById('theView')).scope().theTags = newTags;
             } else {
                 angular.element(document.getElementById('MainCtrl')).scope().theTags = newTags;
             }
@@ -858,8 +860,6 @@ app.factory('ChapterVerses', function ($resource) {
         }
 
 
-
-
         $scope.editAnnotation2 = function (annotation) {
             var headers = {'Content-Type': 'application/x-www-form-urlencoded', 'access_token': $scope.access_token};
             var jsonData = annotation;
@@ -945,12 +945,12 @@ app.factory('ChapterVerses', function ($resource) {
 
 
         $scope.scrollToElement = function (elementId) {
-            if(!config_data.isMobile) {
+            if (!config_data.isMobile) {
                 var destination = angular.element(document.getElementById(elementId));
                 if (destination.length > 0) {
                     $document.scrollToElement(destination, 70, 1000);
                 }
-            }else{
+            } else {
                 $location.hash(elementId);
                 var delegate = $ionicScrollDelegate.$getByHandle('content');
                 delegate.anchorScroll();
@@ -1097,15 +1097,15 @@ app.factory('ChapterVerses', function ($resource) {
             if (typeof $scope.verse.number != 'undefined') {
                 var verseId = parseInt($scope.chapter_id * 1000) + parseInt($scope.verse.number);
                 var verseElement = 'v_' + verseId;
-              //  if (!config_data.isMobile) {
-                    $scope.scrollToElement(verseElement);
-               /*
-                } else {
-                    $location.hash(verseElement);
-                    var delegate = $ionicScrollDelegate.$getByHandle('content');
-                    delegate.anchorScroll();
-                }
-                */
+                //  if (!config_data.isMobile) {
+                $scope.scrollToElement(verseElement);
+                /*
+                 } else {
+                 $location.hash(verseElement);
+                 var delegate = $ionicScrollDelegate.$getByHandle('content');
+                 delegate.anchorScroll();
+                 }
+                 */
             }
         }
 
