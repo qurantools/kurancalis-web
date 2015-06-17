@@ -1384,6 +1384,7 @@
 
             //mobil theView
             angular.element(document.getElementById('theView')).scope().filteredAnnotations = annotations;
+            angular.element(document.getElementById('theView')).scope().filterSingleAnnotation = true;
             angular.element(document.getElementById('theView')).scope().scopeApply();
             if(!config_data.isMobile){
                 openPanel();

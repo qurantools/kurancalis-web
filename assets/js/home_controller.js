@@ -3,7 +3,7 @@ angular.module('ionicApp')
         console.log("HomeCtrl");
         $scope.currentPage = $scope.getCurrentPage();
 
-
+$scope.filterSingleAnnotation=false;
 
 
         var chapterId = 1;
@@ -39,8 +39,12 @@ angular.module('ionicApp')
 
         $scope.filteredAnnotations = [];
         $scope.resetAnnotationFilter = function () {
-            $scope.filteredAnnotations = [];
+            $scope.resetFilteredAnnotations();
             $scope.searchText = '';
+        }
+        $scope.resetFilteredAnnotations= function () {
+            $scope.filteredAnnotations = [];
+            $scope.filterSingleAnnotation=false;
         }
 
         $scope.annotationTextSearch = function (item) {
@@ -57,6 +61,11 @@ angular.module('ionicApp')
                 tags = item.tags[0].toLowerCase();
             }
             if (item.quote.toLowerCase().indexOf(searchText) > -1 || item.text.toLowerCase().indexOf(searchText) > -1 || tags.indexOf(searchText) > -1) {
+                if($scope.filterSingleAnnotation==false) {
+                    if ($scope.filteredAnnotations.indexOf(item) == -1) {
+                        $scope.filteredAnnotations.push(item);
+                    }
+                }
                 return true;
             } else {
                 return false;
@@ -76,7 +85,6 @@ angular.module('ionicApp')
             return annotationIndex;
         }
         $scope.annotationFilter = function (item) {
-            console.log("filteredAnnotations:" + $scope.filteredAnnotations);
             if (typeof $scope.filteredAnnotations == 'undefined' || $scope.filteredAnnotations.length == 0) {
                 return true;
             } else {
@@ -89,6 +97,17 @@ angular.module('ionicApp')
                 if (found > 0)return true; else return false;
             }
         }
+
+
+        $scope.editAnnotation = function (index) {
+            if (typeof $scope.filteredAnnotations != 'undefined' && $scope.filteredAnnotations.length > 0) {
+                index = $scope.getAnnotationIndexFromFilteredAnnotationIndex(index);
+            }
+            annotator.onEditAnnotation($scope.annotations[index]);
+            annotator.updateAnnotation($scope.annotations[index]);
+
+        }
+
 
         if(config_data.isMobile) {
             $ionicModal.fromTemplateUrl('components/partials/annotations_on_page_modal.html', {

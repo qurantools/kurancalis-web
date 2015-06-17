@@ -471,31 +471,6 @@ app.factory('ChapterVerses', function ($resource) {
                 }
             }
         }
-        //   if (!config_data.isMobile) {
-
-
-        /*
-         } else {
-         //mobile
-
-         //author mask cookie
-         var localAuthorMask = localStorageService.get('author_mask');
-         if (localAuthorMask != null) {
-         authorMask = localAuthorMask;
-         }
-
-         if (typeof $stateParams.chapterId !== 'undefined') {
-         chapterId = $stateParams.chapterId;
-         $scope.initChapterSelect = true;
-         }
-         if (typeof $stateParams.authorMask !== 'undefined') {
-         authorMask = $stateParams.authorMask;
-         }
-         if (typeof $stateParams.verseNumber !== 'undefined') {
-         verseNumber = $stateParams.verseNumber;
-         }
-         }
-         */
 
 
         $scope.myRoute = [];
@@ -681,15 +656,6 @@ app.factory('ChapterVerses', function ($resource) {
             } else {
                 window.location.href = '#/chapter/' + $scope.chapter_id + '/author/' + $scope.author_mask + '/';
             }
-            /*
-             } else {
-             $state.go("app.home", {
-             "chapterId": $scope.chapter_id,
-             "authorMask": $scope.author_mask,
-             "verseNumber": $scope.verse.number
-             }, {reload: true});
-             }
-             */
         };
 
         $scope.updateAuthors = function () {
@@ -840,16 +806,17 @@ app.factory('ChapterVerses', function ($resource) {
         $scope.addAnnotation = function (annotation) {
             $scope.annotations.push(annotation);
         }
-
+/*
+  moved to homectrl
         $scope.editAnnotation = function (index) {
+            console.log("$scope.filteredAnnotations:"+$scope.filteredAnnotations);
             if (typeof $scope.filteredAnnotations != 'undefined' && $scope.filteredAnnotations.length > 0) {
                 index = $scope.getAnnotationIndexFromFilteredAnnotationIndex(index);
             }
             annotator.onEditAnnotation($scope.annotations[index]);
             annotator.updateAnnotation($scope.annotations[index]);
-
-
         }
+ */
         $scope.deleteAnnotation = function (index) {
             console.log("deleteAnnotation")
             if (typeof $scope.filteredAnnotations != 'undefined' && $scope.filteredAnnotations.length > 0) {
@@ -886,21 +853,6 @@ app.factory('ChapterVerses', function ($resource) {
         $scope.tagSearchResult = [];
         /* end of login - access token */
 
-        /* moved to HomeCtrl
-         $scope.annotationFilter = function (item) {
-         if (typeof $scope.filteredAnnotations == 'undefined' || $scope.filteredAnnotations.length == 0) {
-         return true;
-         } else {
-         var found = 0;
-         for (i = 0; i < $scope.filteredAnnotations.length; i++) {
-         if (item.annotationId == $scope.filteredAnnotations[i].annotationId) {
-         found++;
-         }
-         }
-         if (found > 0)return true; else return false;
-         }
-         }
-         */
         $scope.authorFilter = function (item) {
             return $scope.selection.indexOf(item.id) > -1;
         }
@@ -909,40 +861,6 @@ app.factory('ChapterVerses', function ($resource) {
             var orderBy = $filter('orderBy');
             $scope.annotations = orderBy($scope.annotations, predicate);
         }
-
-        /* moved to HomeCtrl
-         $scope.annotationTextSearch = function (item) {
-         var searchText = $scope.searchText.toLowerCase();
-         if (item.quote.toLowerCase().indexOf(searchText) > -1 || item.text.toLowerCase().indexOf(searchText) > -1) {
-         return true;
-         } else {
-         return false;
-         }
-         }
-         */
-
-        /*
-         $scope.getAnnotationIndexFromFilteredAnnotationIndex = function (filteredAnnotationIndex) {
-         //TODO use getIndexOfArrayByElement
-         var arrLen = $scope.annotations.length;
-         var filteredAnnotationId = $scope.filteredAnnotations[filteredAnnotationIndex].annotationId;
-         var annotationIndex = -1;
-         for (var i = 0; i < arrLen; i++) {
-         if ($scope.annotations[i].annotationId == filteredAnnotationId) {
-         annotationIndex = i;
-         }
-         }
-         return annotationIndex;
-         }
-         */
-        /* moved to HomeCtrl
-         $scope.resetAnnotationFilter = function () {
-         console.log("resetAnnotationFilter index")
-         $scope.filteredAnnotations = [];
-         $scope.searchText = '';
-         }
-         */
-
 
         $scope.scrollToElement = function (elementId) {
             if (!config_data.isMobile) {

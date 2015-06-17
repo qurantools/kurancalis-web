@@ -82,7 +82,7 @@
 
                 <div style="display: block;">
                     <!--    <input ng-model="searchText" />-->
-                    <input style="width: 150px; height: 30px;" type="text" placeholder="ara" ng-model="searchText">
+                    <input style="width: 150px; height: 30px;" type="text" placeholder="ara" ng-model="searchText" ng-change="resetFilteredAnnotations()">
                     <select ng-model="filterOrderSelect" ng-init="filterOrderSelect='verseId'"
                             ng-change="annotationFilterOrder(filterOrderSelect)" style="height: 30px;">
                         <option value="verseId">Ayet</option>
