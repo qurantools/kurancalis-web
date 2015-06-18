@@ -4,7 +4,7 @@ angular.module('ionicApp')
         $scope.currentPage = $scope.getCurrentPage();
 
 $scope.filterSingleAnnotation=false;
-
+$scope.theTags=[];
 
         var chapterId = 1;
         var authorMask = 1040;
@@ -100,6 +100,7 @@ $scope.filterSingleAnnotation=false;
 
 
         $scope.editAnnotation = function (index) {
+            console.log("editAnnotation - scope.filteredAnnotations:" + JSON.stringify($scope.filteredAnnotations))
             if (typeof $scope.filteredAnnotations != 'undefined' && $scope.filteredAnnotations.length > 0) {
                 index = $scope.getAnnotationIndexFromFilteredAnnotationIndex(index);
             }
@@ -107,7 +108,6 @@ $scope.filterSingleAnnotation=false;
             annotator.updateAnnotation($scope.annotations[index]);
 
         }
-
 
         if(config_data.isMobile) {
             $ionicModal.fromTemplateUrl('components/partials/annotations_on_page_modal.html', {
@@ -142,7 +142,6 @@ $scope.filterSingleAnnotation=false;
                 }
             }
         }
-
 
 
     });

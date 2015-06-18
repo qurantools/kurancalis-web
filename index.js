@@ -687,8 +687,11 @@ app.factory('ChapterVerses', function ($resource) {
         }
 
         $scope.submitEditor = function (theTags) {
+            console.log("submitEditor - index")
             //  var jsTags = $scope.theTags;
+            console.log(theTags);
             var jsTags = theTags;
+
             if (typeof jsTags == 'undefined') {
                 jsTags = [];
             }
@@ -700,7 +703,9 @@ app.factory('ChapterVerses', function ($resource) {
             for (var i = 0; i < jsTags.length; i++) {
                 newTags.push(jsTags[i].name);
             }
+            console.log("newTags:" + JSON.stringify(newTags));
             $scope.annotationModalData.tags = newTags;
+            console.log("annotator.editor:" + JSON.stringify(annotator.editor))
             annotator.publish('annotationEditorSubmit', [annotator.editor, $scope.annotationModalData]);
             $scope.editorSubmitted = 1;
             //update verse tags
@@ -711,6 +716,9 @@ app.factory('ChapterVerses', function ($resource) {
             //coming from another page fix
             if ($scope.getIndexOfArrayByElement($scope.annotations, 'annotationId', $scope.annotationModalData.annotationId) == -1) {
                 $scope.addAnnotation($scope.annotationModalData);
+            }
+            if (config_data.isMobile) {
+                $scope.closeModal('editor');
             }
             return annotator.ignoreMouseup = false;
 
@@ -806,17 +814,17 @@ app.factory('ChapterVerses', function ($resource) {
         $scope.addAnnotation = function (annotation) {
             $scope.annotations.push(annotation);
         }
-/*
-  moved to homectrl
-        $scope.editAnnotation = function (index) {
-            console.log("$scope.filteredAnnotations:"+$scope.filteredAnnotations);
-            if (typeof $scope.filteredAnnotations != 'undefined' && $scope.filteredAnnotations.length > 0) {
-                index = $scope.getAnnotationIndexFromFilteredAnnotationIndex(index);
-            }
-            annotator.onEditAnnotation($scope.annotations[index]);
-            annotator.updateAnnotation($scope.annotations[index]);
-        }
- */
+        /*
+         moved to homectrl
+         $scope.editAnnotation = function (index) {
+         console.log("$scope.filteredAnnotations:"+$scope.filteredAnnotations);
+         if (typeof $scope.filteredAnnotations != 'undefined' && $scope.filteredAnnotations.length > 0) {
+         index = $scope.getAnnotationIndexFromFilteredAnnotationIndex(index);
+         }
+         annotator.onEditAnnotation($scope.annotations[index]);
+         annotator.updateAnnotation($scope.annotations[index]);
+         }
+         */
         $scope.deleteAnnotation = function (index) {
             console.log("deleteAnnotation")
             if (typeof $scope.filteredAnnotations != 'undefined' && $scope.filteredAnnotations.length > 0) {
@@ -1074,7 +1082,6 @@ app.factory('ChapterVerses', function ($resource) {
                 $scope.modal_editor = modal
             });
 
-
             $ionicModal.fromTemplateUrl('components/partials/authors_list_modal.html', {
                 scope: $scope,
                 animation: 'slide-in-left',
@@ -1094,6 +1101,7 @@ app.factory('ChapterVerses', function ($resource) {
 
             $scope.closeModal = function (id) {
                 if (id == 'editor') {
+                    clearTextSelection();
                     $scope.modal_editor.hide();
                 } else if (id == 'authors_list') {
                     $scope.modal_authors_list.hide();
@@ -1271,6 +1279,13 @@ app.factory('ChapterVerses', function ($resource) {
             localStorageService.set('author_mask', $scope.author_mask);
         };
 
+        $scope.updateTextareaHeight = function(testareaID) {
+            var element = document.getElementById(testareaID);
+            element.style.height =  element.scrollHeight + "px";
+        }
+
+
+
     });
 
 
@@ -1326,4 +1341,16 @@ function seperateChapterAndVerse(data) {
     ret.chapter = data.substring(0, seperator);
     ret.verse = data.substring(seperator + 1, data.length);
     return ret;
+}
+
+function clearTextSelection() {
+    if (window.getSelection) {console.log(window.getSelection())
+        if (window.getSelection().empty) {  // Chrome
+            window.getSelection().empty();
+        } else if (window.getSelection().removeAllRanges) {  // Firefox
+            window.getSelection().removeAllRanges();
+        }
+    } else if (document.selection) {  // IE?
+        document.selection.empty();
+    }
 }
