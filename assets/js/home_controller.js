@@ -126,11 +126,23 @@ $scope.theTags=[];
                 $scope.modal_chapter_selection = modal
             });
 
+
+            $ionicModal.fromTemplateUrl('components/partials/authors_list_modal.html', {
+                scope: $scope,
+                animation: 'slide-in-left',
+                id: 'authors_list'
+            }).then(function (modal) {
+                $scope.modal_authors_list = modal
+            });
+
             $scope.openModal = function (id) {
                 if (id == 'annotations_on_page') {
                     $scope.modal_annotations_on_page.show();
                 } else if (id == 'chapter_selection') {
                     $scope.modal_chapter_selection.show();
+                }else if (id == 'authors_list') {
+                    console.log("authors_list")
+                    $scope.modal_authors_list.show();
                 }
             };
 
@@ -139,9 +151,10 @@ $scope.theTags=[];
                     $scope.modal_annotations_on_page.hide();
                 } else if (id == 'chapter_selection') {
                     $scope.modal_chapter_selection.hide();
+                } else if (id == 'authors_list') {
+                    $scope.modal_authors_list.hide();
                 }
             }
         }
-
 
     });

@@ -4,7 +4,8 @@ var config_data = {
     'webServiceUrl': 'https://securewebserver.net/jetty/qttest/rest',
     'webAddress': 'http://test.kurancalis.com',
     'mobileAddress': 'http://test.kurancalis.com/m/www',
-    'isMobile':isMobile()
+  //   'mobileAddress': 'http://localhost:63342/kurancalis-web/m/www',
+'isMobile':isMobile()
 }
 
 function isMobile() {

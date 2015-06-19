@@ -12,14 +12,6 @@ angular.module('ionicApp')
             );
         }
 
-        $scope.allAnnotationsFiltered_toggle = function () {
-            if ($scope.allAnnotationsFiltered != 1) {
-                $scope.allAnnotationsFiltered = 1;
-            } else {
-                $scope.allAnnotationsFiltered = 0;
-            }
-        }
-
 
         /* auth */
         $scope.onFacebookLoginSuccess = function (responseData) {
@@ -109,11 +101,21 @@ angular.module('ionicApp')
                  $scope.setAuthorMask();
                  $scope.goToChapter();
                  */
+                $scope.allAnnotationsSearch=1;
+                $scope.annotationSearchAuthorSelection = $scope.selection;
+
                 $scope.allAnnotationsOpts.start = 0;
                 $scope.author_mask = localStorageService.get('author_mask');
                 $scope.setAuthorMask();
                 $scope.get_all_annotations();
             }
+        }
+        $scope.setAnnotationSearchKeyword = function(keyword){
+            $scope.allAnnotationsSearchInput = keyword;
+        }
+        $scope.setAnnotationSearchTags = function(tags){
+            console.log("setAnnotationSearchTags"+tags);
+            $scope.filterTags = tags;
         }
 
         $scope.get_all_annotations = function () {
@@ -126,6 +128,7 @@ angular.module('ionicApp')
             $scope.allAnnotationsParams.author = $scope.author_mask;
             $scope.allAnnotationsParams.users = $scope.user.id;
 
+            console.log("$scope.allAnnotationsSearch: "+$scope.allAnnotationsSearch);
             if ($scope.allAnnotationsSearch == true) {
                 //filter
                 $scope.allAnnotationsParams.author = 0;
@@ -137,7 +140,11 @@ angular.module('ionicApp')
                 $scope.allAnnotationsParams.verse_tags = "";
 
                 var newTags = "";
-                var filterTags = $scope.filterTags;
+                var filterTags = [];
+                if(typeof $scope.filterTags !='undefined'){
+                    filterTags = $scope.filterTags;
+                }
+                console.log(filterTags);
                 for (var i = 0; i < filterTags.length; i++) {
                     if (i != 0)newTags += ",";
                     newTags += filterTags[i].name;

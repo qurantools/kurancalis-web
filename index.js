@@ -1082,20 +1082,12 @@ app.factory('ChapterVerses', function ($resource) {
                 $scope.modal_editor = modal
             });
 
-            $ionicModal.fromTemplateUrl('components/partials/authors_list_modal.html', {
-                scope: $scope,
-                animation: 'slide-in-left',
-                id: 'authors_list'
-            }).then(function (modal) {
-                $scope.modal_authors_list = modal
-            });
+
 
 
             $scope.openModal = function (id) {
                 if (id == 'editor') {
                     $scope.modal_editor.show();
-                } else if (id == 'authors_list') {
-                    $scope.modal_authors_list.show();
                 }
             };
 
@@ -1103,8 +1095,6 @@ app.factory('ChapterVerses', function ($resource) {
                 if (id == 'editor') {
                     clearTextSelection();
                     $scope.modal_editor.hide();
-                } else if (id == 'authors_list') {
-                    $scope.modal_authors_list.hide();
                 }
             }
 

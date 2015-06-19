@@ -4,8 +4,6 @@
         <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced">
             <ion-nav-buttons side="left">
                 <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
-
-                <a href="#/app/authors_list" class="button button-icon icon ion-person"></a>
                 <input type="hidden" ng-model="chapter_id"/>
                 <input type="hidden" ng-model="verse_number"/>
                 <input type="hidden" ng-model="author_mask"/>
@@ -14,9 +12,7 @@
 
             <h1 class="title"></h1>
             <ion-nav-buttons side="right">
-                <button class="button button-icon icon ion-search" ng-if="allAnnotationsFiltered!=1"
-                        ng-click="allAnnotationsFiltered_toggle()"></button>
-                <button class="button button-icon icon ion-funnel"
+                <button class="button button-icon icon ion-search"
                         ng-click="openModal('all_annotations_filter')"></button>
 
 
@@ -63,16 +59,6 @@
                         </div>
                     </div>
                     <div style="clear: both">&nbsp;</div>
-                    <div class="item item-input-inset" ng-if="allAnnotationsFiltered==1">
-                        <label class="item-input-wrapper">
-                            <input type="text" placeholder="Aranacak Kelime"
-                                   ng-model="$parent.allAnnotationsSearchInput">
-                        </label>
-                        <button class="button button-small button-positive"
-                                ng-click="$parent.allAnnotationsSearchInput='';allAnnotationsFiltered_toggle()">Filtreyi
-                            kaldır
-                        </button>
-                    </div>
                     <div class="card" ng-repeat="annotation in annotations | filter: allAnnotationsSearchInput">
                         <div class="item item-divider">
                             {{annotation.verseId / 1000 | number:0}}:{{annotation.verseId % 1000}}
