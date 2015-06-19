@@ -109,6 +109,7 @@ $scope.theTags=[];
 
         }
 
+
         if(config_data.isMobile) {
             $ionicModal.fromTemplateUrl('components/partials/annotations_on_page_modal.html', {
                 scope: $scope,

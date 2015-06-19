@@ -996,7 +996,6 @@ app.factory('ChapterVerses', function ($resource) {
             } else {
                 $scope.targetVerseForTagContent = 0;
             }
-
         }
 
         $scope.updateVerseTagContent = function () {
@@ -1312,7 +1311,8 @@ function toggleLeftPanel() {
 function verseTagClicked(elem) {
     var closeClick = false;
     if ($(elem).hasClass('btn-warning')) {
-        angular.element(document.getElementById('theView')).scope().targetVerseForTagContent = -1;
+       // angular.element(document.getElementById('theView')).scope().targetVerseForTagContent = -1;
+        angular.element(document.getElementById('MainCtrl')).scope().targetVerseForTagContent = -1;
         closeClick = true;
     }
 
