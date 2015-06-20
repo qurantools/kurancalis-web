@@ -382,6 +382,7 @@ app.factory('ChapterVerses', function ($resource) {
 
         $scope.fbLoginStatus = 'disconnected';
         $scope.facebookIsReady = false;
+        $scope.annotationModalDataTagsInput = [];
         //    $scope.user = null;
 
         $scope.login = function () { //new
@@ -686,17 +687,17 @@ app.factory('ChapterVerses', function ($resource) {
             annotator.onEditorHide();
         }
 
-        $scope.submitEditor = function (theTags) {
-            console.log("submitEditor - index")
-            //  var jsTags = $scope.theTags;
-            console.log(theTags);
-            var jsTags = theTags;
+        $scope.submitEditor = function () {
+
+            //the tags data should be in annotationModalDataTagInputs
+            var jsTags = $scope.annotationModalDataTagsInput;
 
             if (typeof jsTags == 'undefined') {
                 jsTags = [];
             }
             var oldTags = [];
             if (typeof $scope.annotationModalData.annotationId != 'undefined') {
+                //tags with server format
                 oldTags = $scope.annotationModalData.tags;
             }
             var newTags = [];
@@ -727,6 +728,8 @@ app.factory('ChapterVerses', function ($resource) {
         $scope.submitEditor2 = function () {
             $scope.submitEditor($scope.theTags);
         }
+
+
         $scope.showEditor = function (annotation, position) {
             var newTags = [];
             if (typeof annotation.tags != 'undefined') {
@@ -736,13 +739,9 @@ app.factory('ChapterVerses', function ($resource) {
             }
 
             $scope.annotationModalData = annotation;
+            $scope.annotationModalDataTagsInput = newTags;
             if (typeof $scope.annotationModalData.text == 'undefined') {
                 $scope.annotationModalData.text = "";
-            }
-            if (!config_data.isMobile) {
-                angular.element(document.getElementById('theView')).scope().theTags = newTags;
-            } else {
-                angular.element(document.getElementById('MainCtrl')).scope().theTags = newTags;
             }
             $scope.annotationModalDataVerse = Math.floor(annotation.verseId / 1000) + ":" + annotation.verseId % 1000;
             //set default color
