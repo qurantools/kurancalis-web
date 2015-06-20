@@ -876,9 +876,11 @@ app.factory('ChapterVerses', function ($resource) {
                     $document.scrollToElement(destination, 70, 1000);
                 }
             } else {
+                //document.getElementById("home_top_navbar").style.display = 'none';
                 $location.hash(elementId);
                 var delegate = $ionicScrollDelegate.$getByHandle('content');
                 delegate.anchorScroll();
+                //document.getElementById("home_top_navbar").style.display = 'block';
             }
         }
 

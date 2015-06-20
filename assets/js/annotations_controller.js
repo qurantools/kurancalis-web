@@ -124,7 +124,7 @@ angular.module('ionicApp')
             $scope.allAnnotationsParams.start = $scope.allAnnotationsOpts.start;
             $scope.allAnnotationsParams.limit = $scope.allAnnotationsOpts.limit;
 
-            //kapal�yd�
+            //kapaliydi
             $scope.allAnnotationsParams.author = $scope.author_mask;
             $scope.allAnnotationsParams.users = $scope.user.id;
 
@@ -140,14 +140,14 @@ angular.module('ionicApp')
                 $scope.allAnnotationsParams.verse_tags = "";
 
                 var newTags = "";
-                var filterTags = [];
-                if(typeof $scope.filterTags !='undefined'){
-                    filterTags = $scope.filterTags;
+
+                if(typeof $scope.filterTags =='undefined'){
+                    $scope.filterTags=[];
                 }
-                console.log(filterTags);
-                for (var i = 0; i < filterTags.length; i++) {
+                console.log($scope.filterTags);
+                for (var i = 0; i < $scope.filterTags.length; i++) {
                     if (i != 0)newTags += ",";
-                    newTags += filterTags[i].name;
+                    newTags += $scope.filterTags[i].name;
                 }
                 $scope.allAnnotationsParams.verse_tags = newTags;
             }
