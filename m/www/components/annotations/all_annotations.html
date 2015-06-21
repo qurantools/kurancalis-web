@@ -63,7 +63,6 @@
                     <div class="card" ng-repeat="annotation in annotations | filter: allAnnotationsSearchInput">
                         <div class="item item-divider">
                             {{annotation.verseId / 1000 | number:0}}:{{annotation.verseId % 1000}}
-                            annotationId: {{showVerseData.annotationId}}
                             <button ng-click="showVerse(annotation)" class="btn btn-primary btn-xs"
                                     ng-if="showVerseData.annotationId!=annotation.annotationId"><i
                                     class="fa fa-cog"></i></button>
