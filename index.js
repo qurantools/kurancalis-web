@@ -211,58 +211,8 @@ if (config_data.isMobile == false) { //false
                     redirectTo: '/'
                 });
 
-            //facebook
-            FacebookProvider.init('400142910165594');
+            openFB.init({appId: config_data.FBAppID});
 
-
-            /*
-             RestangularProvider.setBaseUrl(config_data.webServiceUrl);
-             localStorageServiceProvider.setStorageCookie(0, '/');
-
-             var locationHref = window.location.href;
-             if (locationHref.indexOf('/m/') > -1) {
-             //mobile version
-
-             $stateProvider
-             .state('app', {
-             url: "/app",
-             abstract: true,
-             templateUrl: "components/navigation/navigation.html"
-             })
-             .state('app.home', {
-             url: "/chapter/:chapterId/author/:authorMask/verse/:verseNumber/",
-             views: {
-             'appContent': {
-             templateUrl: "components/home/home.html",
-             controller: "MainCtrl"
-             }
-             }
-             })
-             .state('app.annotations', {
-             url: "/annotations",
-             views: {
-             'appContent': {
-             templateUrl: "components/annotations/all_annotations.html",
-             controller: "MainCtrl"
-             }
-             }
-             })
-
-             $urlRouterProvider.otherwise("/app/chapter/1/author/1040/verse/1/");
-             } else {
-             //mobile version is not ready
-             $routeProvider
-             .when('/', {
-             controller: 'MainCtrl',
-             templateUrl: 'app/components/home/mobile_on_development.html',
-             reloadOnSearch: false
-             })
-             .otherwise({
-             redirectTo: '/'
-             });
-             }
-             FacebookProvider.init('400142910165594');
-             */
         }
     );
 

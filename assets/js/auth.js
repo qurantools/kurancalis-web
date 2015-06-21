@@ -38,6 +38,7 @@ authorizationModule.factory('User', function ($resource) {
         factory.faceBookResponseMethod = function(){};
 
         factory.login = function (faceBookResponseMethod) {
+
             var nativeApp = document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1;
             var permissions = 'email';
             nativeApp = 1;
@@ -51,43 +52,16 @@ authorizationModule.factory('User', function ($resource) {
             else if(config_data.isMobile && nativeApp) {
                 //different FB login for cordoba
                 // Settings
-                FacebookInAppBrowser.settings.appId = config_data.FBAppID;
-                FacebookInAppBrowser.settings.redirectUrl = 'http://test.ilerian.com/m/www/components/mobile_auth/login_callback_cordova.html';
-                FacebookInAppBrowser.settings.permissions = permissions;
 
-                // Login(accessToken will be stored trough localStorage in 'accessToken');
-                FacebookInAppBrowser.login({
-                    send: function() {
-                        console.log('login opened');
-                    },
-                    success: function(access_token) {
-                        console.log('done, access token: ' + access_token);
-                        factory.onFBLoginResponse(access_token, faceBookResponseMethod);
-                    },
-                    denied: function() {
-                        console.log('user denied');
-                        factory.onFBLoginResponse("", faceBookResponseMethod);
-                    },
-                    timeout: function(){
-                        console.log('a timeout has occurred, probably a bad internet connection');
-                        factory.onFBLoginResponse("", faceBookResponseMethod);
-                    },
-                    complete: function(access_token) {
-                        console.log('window closed');
-                        if(access_token) {
-                            console.log(access_token);
+                openFB.login(
+                    function(response) {
+                        if(response.status === 'connected') {
+                            var token = response.authResponse.accessToken;
+                            factory.onFBLoginResponse(token, faceBookResponseMethod);
                         } else {
-                            console.log('no access token');
+                            alert('Facebook girişi başarısız');
                         }
-                    },
-                    userInfo: function(userInfo) {
-                        if(userInfo) {
-                            console.log(JSON.stringify(userInfo));
-                        } else {
-                            console.log('no user info');
-                        }
-                    }
-                });
+                    }, {scope: permissions});
 
             }
 
