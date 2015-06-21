@@ -1,11 +1,15 @@
 var config_module = angular.module('myConfig', []);
 
+//var domain = "http://kurancalis.com";
+var domain = "http://test.kurancalis.com";
+//var domain = "http://localhost:63342/kurancalis-web";
 var config_data = {
     'webServiceUrl': 'https://securewebserver.net/jetty/qttest/rest',
-    'webAddress': 'http://test.kurancalis.com',
-    'mobileAddress': 'http://test.kurancalis.com/m/www',
-   //  'mobileAddress': 'http://localhost:63342/kurancalis-web/m/www',
-'isMobile':isMobile()
+    'webAddress': domain,
+    'mobileAddress': domain+'/m/www',
+    'mobileLoginCallbackAddress': domain +'/m/www/components/mobile_auth/login_callback.html',
+    'FBAppID': '400142910165594',
+    'isMobile':isMobile()
 }
 
 function isMobile() {
