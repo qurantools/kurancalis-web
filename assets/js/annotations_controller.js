@@ -1,6 +1,7 @@
 angular.module('ionicApp')
     .controller('AnnotationsCtrl', function ($scope, $routeParams, Facebook, Restangular, authorization, localStorageService, $ionicModal) {
         console.log("annotations ctrl")
+        $scope.allAnnotationsOrderBy='verse'
         $scope.currentPage = $scope.getCurrentPage();
 
         $scope.get_user_info2 = function () {
@@ -91,7 +92,6 @@ angular.module('ionicApp')
         $scope.annotationSearchAuthorSelection = $scope.selection;
 
         $scope.updateAuthors = function () {
-            console.log("updateAuthors - annotations controller");
             if (!config_data.isMobile) {
                 $scope.allAnnotationsOpts.start = 0;
                 $scope.get_all_annotations();
@@ -114,7 +114,6 @@ angular.module('ionicApp')
             $scope.allAnnotationsSearchInput = keyword;
         }
         $scope.setAnnotationSearchTags = function(tags){
-            console.log("setAnnotationSearchTags"+tags);
             $scope.filterTags = tags;
         }
 
@@ -128,7 +127,6 @@ angular.module('ionicApp')
             $scope.allAnnotationsParams.author = $scope.author_mask;
             $scope.allAnnotationsParams.users = $scope.user.id;
 
-            console.log("$scope.allAnnotationsSearch: "+$scope.allAnnotationsSearch);
             if ($scope.allAnnotationsSearch == true) {
                 //filter
                 $scope.allAnnotationsParams.author = 0;
@@ -144,7 +142,6 @@ angular.module('ionicApp')
                 if(typeof $scope.filterTags =='undefined'){
                     $scope.filterTags=[];
                 }
-                console.log($scope.filterTags);
                 for (var i = 0; i < $scope.filterTags.length; i++) {
                     if (i != 0)newTags += ",";
                     newTags += $scope.filterTags[i].name;
@@ -210,14 +207,25 @@ angular.module('ionicApp')
             }).then(function (modal) {
                 $scope.modal_all_annotations_filter = modal
             });
+            $ionicModal.fromTemplateUrl('components/partials/all_annotations_sort_modal.html', {
+                scope: $scope,
+                animation: 'slide-in-left',
+                id: 'all_annotations_sort'
+            }).then(function (modal) {
+                $scope.modal_all_annotations_sort = modal
+            });
             $scope.openModal = function (id) {
                 if (id == 'all_annotations_filter') {
                     $scope.modal_all_annotations_filter.show();
+                }else if (id == 'all_annotations_sort') {
+                    $scope.modal_all_annotations_sort.show();
                 }
             };
             $scope.closeModal = function (id) {
                 if (id == 'all_annotations_filter') {
                     $scope.modal_all_annotations_filter.hide();
+                }else if (id == 'all_annotations_sort') {
+                    $scope.modal_all_annotations_sort.hide();
                 }
             }
         }

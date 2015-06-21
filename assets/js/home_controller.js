@@ -5,6 +5,7 @@ angular.module('ionicApp')
 
 $scope.filterSingleAnnotation=false;
 $scope.theTags=[];
+        $scope.filterOrderSelect='verseId';
 
         var chapterId = 1;
         var authorMask = 1040;
@@ -44,6 +45,7 @@ $scope.theTags=[];
         }
         $scope.resetFilteredAnnotations= function () {
             $scope.filteredAnnotations = [];
+          //  $scope.scopeApply();
             $scope.filterSingleAnnotation=false;
         }
 
@@ -136,14 +138,23 @@ $scope.theTags=[];
                 $scope.modal_authors_list = modal
             });
 
+            $ionicModal.fromTemplateUrl('components/partials/annotations_on_page_sort_modal.html', {
+                scope: $scope,
+                animation: 'slide-in-left',
+                id: 'annotations_on_page_sort'
+            }).then(function (modal) {
+                $scope.modal_annotations_on_page_sort = modal
+            });
+
             $scope.openModal = function (id) {
                 if (id == 'annotations_on_page') {
                     $scope.modal_annotations_on_page.show();
                 } else if (id == 'chapter_selection') {
                     $scope.modal_chapter_selection.show();
                 }else if (id == 'authors_list') {
-                    console.log("authors_list")
                     $scope.modal_authors_list.show();
+                }else if (id == 'annotations_on_page_sort') {
+                    $scope.modal_annotations_on_page_sort.show();
                 }
             };
 
@@ -154,7 +165,15 @@ $scope.theTags=[];
                     $scope.modal_chapter_selection.hide();
                 } else if (id == 'authors_list') {
                     $scope.modal_authors_list.hide();
+                } else if (id == 'annotations_on_page_sort') {
+                    $scope.modal_annotations_on_page_sort.hide();
                 }
+            }
+
+            $scope.annotationFilterOrderMobile = function (predicate) {
+                $scope.filterOrderSelect=predicate;
+                var orderBy = $filter('orderBy');
+                $scope.annotations = orderBy($scope.annotations, predicate);
             }
         }
 

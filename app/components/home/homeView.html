@@ -30,9 +30,6 @@
                             {{verseTag.tag}}
                         </button>
                     </div>
-                    targetVerseForTagContent {{targetVerseForTagContent}}
-                    <br />
-                    verse.id {{verse.id}}
                     <div ng-if="targetVerseForTagContent==verse.id" class="verse_tag_content">
                         <h4>Etiketli Ayetler</h4>
                         <select class="verseTagContentAuthor"
@@ -76,13 +73,11 @@
                 <button onclick="closePanel()" class="btn btn-default btn-xs" style="float: left; height: 30px;"><i
                         class="fa fa-undo"></i></button>
                 <button class="btn btn-warning btn-xs" ng-click="resetAnnotationFilter()"
-                        ng-show='filteredAnnotations.length > 0 || searchText!=""' style="float: right; height: 30px;">
+                        ng-show='filterSingleAnnotation || searchText!=""' style="float: right; height: 30px;">
                     <i
                             class="fa fa-trash-o"></i>
                     Filtreyi kaldır
                 </button>
-
-
                 <div style="display: block;">
                     <!--    <input ng-model="searchText" />-->
                     <input style="width: 150px; height: 30px;" type="text" placeholder="ara" ng-model="searchText" ng-change="resetFilteredAnnotations()">
