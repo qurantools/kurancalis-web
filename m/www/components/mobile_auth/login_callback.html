@@ -26,7 +26,7 @@
     if(queryDict.hasOwnProperty("code") ){
         var code = queryDict['code'];
         var request = new XMLHttpRequest();
-        var url = 'https://graph.facebook.com/oauth/access_token?client_id=400142910165594&redirect_uri='+encodeURIComponent(config_data.mobileAddress+"/components/mobile_auth/login_callback.html")+'&client_secret=e1c0f664bd3e803fce38a8d6399dba2d&code='+code;
+        var url = 'https://graph.facebook.com/oauth/access_token?client_id=400142910165594&redirect_uri='+encodeURIComponent(config_data.mobileLoginCallbackAddress)+'&client_secret=e1c0f664bd3e803fce38a8d6399dba2d&code='+code;
         request.onreadystatechange = function() {
             if (request.readyState === 4) {
                 if (request.status === 200) {
