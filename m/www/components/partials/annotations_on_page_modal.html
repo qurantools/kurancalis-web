@@ -26,7 +26,7 @@
         </div>
         <div ng-repeat="annotation in annotations | filter:annotationFilter | filter: annotationTextSearch"
              class="card"
-             ng-click="scrollToElement('t_'+annotation.translationId);closeModal('annotations_on_page');">
+             ng-click="scrollToElmnt('t_'+annotation.translationId);closeModal('annotations_on_page');">
 
             <!-- s_a -->
             <div class="s_a_header">

@@ -869,18 +869,18 @@ app.factory('ChapterVerses', function ($resource) {
             $scope.annotations = orderBy($scope.annotations, predicate);
         }
 
-        $scope.scrollToElement = function (elementId) {
+        $scope.scrollToElmnt = function (elementId) {
             if (!config_data.isMobile) {
                 var destination = angular.element(document.getElementById(elementId));
                 if (destination.length > 0) {
                     $document.scrollToElement(destination, 70, 1000);
                 }
             } else {
-                //document.getElementById("home_top_navbar").style.display = 'none';
-                $location.hash(elementId);
-                var delegate = $ionicScrollDelegate.$getByHandle('content');
-                delegate.anchorScroll();
-                //document.getElementById("home_top_navbar").style.display = 'block';
+             //   $location.hash(elementId);
+              //  $ionicScrollDelegate.anchorScroll(true);
+             //   var delegate = $ionicScrollDelegate.$getByHandle('content');
+             //   delegate.anchorScroll();
+             //   $ionicScrollDelegate.$getByHandle(elementId).scrollTop();
             }
         }
 
@@ -1024,7 +1024,7 @@ app.factory('ChapterVerses', function ($resource) {
                 var verseId = parseInt($scope.chapter_id * 1000) + parseInt($scope.verse.number);
                 var verseElement = 'v_' + verseId;
                 //  if (!config_data.isMobile) {
-                $scope.scrollToElement(verseElement);
+                $scope.scrollToElmnt(verseElement);
                 /*
                  } else {
                  $location.hash(verseElement);

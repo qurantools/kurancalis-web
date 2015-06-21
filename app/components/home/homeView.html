@@ -97,7 +97,7 @@
             </div>
             <div ng-repeat="annotation in annotations | filter:annotationFilter | filter: annotationTextSearch"
                  class="sidebar_annotation box"
-                 ng-click="scrollToElement('t_'+annotation.translationId)">
+                 ng-click="scrollToElmnt('t_'+annotation.translationId)">
                 <!-- s_a -->
                 <div class="s_a_header">
                     {{annotation.verseId / 1000 | number:0}}:{{annotation.verseId % 1000}}
