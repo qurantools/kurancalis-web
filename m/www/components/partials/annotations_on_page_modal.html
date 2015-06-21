@@ -11,7 +11,7 @@
         <div style="height:50px"></div>
         <div style="padding-bottom:10px;">
             <button class="btn btn-warning btn-xs" ng-click="searchText='';resetAnnotationFilter()"
-                    ng-show='filteredAnnotations.length > 0 || searchText!=""' style="float: right; height: 30px;">
+                    ng-show='filterSingleAnnotation || searchText!=""' style="float: right; height: 30px;">
                 <i class="fa fa-trash-o"></i>
                 Filtreyi kaldır
             </button>

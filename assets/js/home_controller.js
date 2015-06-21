@@ -44,6 +44,7 @@ $scope.theTags=[];
         }
         $scope.resetFilteredAnnotations= function () {
             $scope.filteredAnnotations = [];
+          //  $scope.scopeApply();
             $scope.filterSingleAnnotation=false;
         }
 
