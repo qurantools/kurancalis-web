@@ -41,7 +41,6 @@ authorizationModule.factory('User', function ($resource) {
 
             var nativeApp = document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1;
             var permissions = 'email';
-            nativeApp = 1;
 
             if (config_data.isMobile && !nativeApp) {
                 //different FB login for mobile web app
