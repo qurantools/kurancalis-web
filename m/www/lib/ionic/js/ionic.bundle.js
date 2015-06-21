@@ -1787,7 +1787,9 @@ window.ionic.version = '1.0.0-nightly-1395';
         // Prevent gestures that are not intended for this event handler from firing subsequent times
         if (inst.options.prevent_default_directions.length === 0
             || inst.options.prevent_default_directions.indexOf(ev.direction) != -1) {
-          ev.srcEvent.preventDefault();
+          if (ev.direction != 'up' && ev.direction != 'down') {//hack line
+            ev.srcEvent.preventDefault();
+          }//hack line
         }
         this.preventedFirstMove = true;
       }
