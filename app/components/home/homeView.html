@@ -5,10 +5,10 @@
     <div class="row">
         <div class="col-xs-12" id="translations">
             <div ng-repeat="verse in verses">
-                <div class="well translations col-xs-12" id="v_{{verse.id}}" delegate-handle="v_{{verse.id}}">
+                <div class="well translations col-xs-12" id="v_{{verse.id}}">
                     <div ng-repeat="translation in verse.translations">
                         <div ng-if="$first"><h4>{{translation.chapter}}:{{translation.verse}}</h4></div>
-                        <div class="row" id="t_{{translation.id}}" delegate-handle="t_{{translation.id}}">
+                        <div class="row" id="t_{{translation.id}}" >
                             <div class="col-xs-12 col-sm-3 authorDiv_{{authorMap[translation.authorId].color}}">
                                 {{authorMap[translation.authorId].name}}
                             </div>
