@@ -157,7 +157,7 @@ if (config_data.isMobile == false) { //false
             });
 
         //facebook
-        FacebookProvider.init('400142910165594');
+        FacebookProvider.init(config_data.FBAppID);
 
     });
 

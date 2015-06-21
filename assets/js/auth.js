@@ -35,46 +35,98 @@ authorizationModule.factory('User', function ($resource) {
         facebookIsReady = false;
         var factory = {};
         factory.access_token="";
+        factory.faceBookResponseMethod = function(){};
 
         factory.login = function (faceBookResponseMethod) {
-            if (config_data.isMobile) {
-                var permissions = 'email';
-                var permissionUrl = "https://m.facebook.com/dialog/oauth?client_id=" + "400142910165594" + "&response_type=code&redirect_uri=" + encodeURIComponent(config_data.mobileAddress+ "/components/mobile_auth/login_callback.html") + "&scope=" + permissions;
+            var nativeApp = document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1;
+            var permissions = 'email';
+            nativeApp = 1;
+
+            if (config_data.isMobile && !nativeApp) {
+                //different FB login for mobile web app
+                var permissionUrl = "https://m.facebook.com/dialog/oauth?client_id=" + config_data.FBAppID + "&response_type=code&redirect_uri=" + encodeURIComponent(config_data.mobileLoginCallbackAddress) + "&scope=" + permissions;
                 window.location = permissionUrl;
                 return;
             }
+            else if(config_data.isMobile && nativeApp) {
+                //different FB login for cordoba
+                // Settings
+                FacebookInAppBrowser.settings.appId = config_data.FBAppID;
+                FacebookInAppBrowser.settings.redirectUrl = 'http://test.ilerian.com/m/www/components/mobile_auth/login_callback_cordova.html';
+                FacebookInAppBrowser.settings.permissions = permissions;
 
+                // Login(accessToken will be stored trough localStorage in 'accessToken');
+                FacebookInAppBrowser.login({
+                    send: function() {
+                        console.log('login opened');
+                    },
+                    success: function(access_token) {
+                        console.log('done, access token: ' + access_token);
+                        factory.onFBLoginResponse(access_token, faceBookResponseMethod);
+                    },
+                    denied: function() {
+                        console.log('user denied');
+                        factory.onFBLoginResponse("", faceBookResponseMethod);
+                    },
+                    timeout: function(){
+                        console.log('a timeout has occurred, probably a bad internet connection');
+                        factory.onFBLoginResponse("", faceBookResponseMethod);
+                    },
+                    complete: function(access_token) {
+                        console.log('window closed');
+                        if(access_token) {
+                            console.log(access_token);
+                        } else {
+                            console.log('no access token');
+                        }
+                    },
+                    userInfo: function(userInfo) {
+                        if(userInfo) {
+                            console.log(JSON.stringify(userInfo));
+                        } else {
+                            console.log('no user info');
+                        }
+                    }
+                });
+
+            }
+
+
+            Facebook.login(
+                function(response){
+                    var token = response.authResponse.accessToken;
+                    factory.onFBLoginResponse(token, faceBookResponseMethod);
+                } , {scope: permissions});
+        };
+
+
+        factory.onFBLoginResponse=function (tokenFb, faceBookResponseMethod ) {
             var responseData = {loggedIn: false, token: ""};
 
-            Facebook.login(function (response) {
-                fbLoginStatus = response.status;
-                tokenFb = response.authResponse.accessToken;
-                if (tokenFb != "") {
-                    access_token = "";
-                    var user = new User();
+            if (tokenFb != "") {
+                var user = new User();
 
-                    user.fb_access_token = tokenFb;
-                    user.$save({fb_access_token: tokenFb},
-                        function (data, headers) {
-                            //get token
-                            responseData.token = data.token;
-                            responseData.loggedIn = true;
-                            faceBookResponseMethod(responseData);
-                        },
-                        function (error) {
-                            if (error.data.code == '209') {
-                                alert("Sisteme giriş yapabilmek için e-posta adresi paylaşımına izin vermeniz gerekmektedir.");
-                            }
-
-                            //factory.log_out();
-                            responseData.loggedIn = false;
-                            responseData.token = "error";
-                            faceBookResponseMethod(responseData);
+                user.fb_access_token = tokenFb;
+                user.$save({fb_access_token: tokenFb},
+                    function (data, headers) {
+                        //get token
+                        responseData.token = data.token;
+                        responseData.loggedIn = true;
+                        faceBookResponseMethod(responseData);
+                    },
+                    function (error) {
+                        if (error.data.code == '209') {
+                            alert("Sisteme giriş yapabilmek için e-posta adresi paylaşımına izin vermeniz gerekmektedir.");
                         }
-                    );
-                }
-            }, {scope: 'email'});
-        };
+
+                        //factory.log_out();
+                        responseData.loggedIn = false;
+                        responseData.token = "error";
+                        faceBookResponseMethod(responseData);
+                    }
+                );
+            }
+        }
 
 
         factory.get_user_info = function () {
