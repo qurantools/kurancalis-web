@@ -56,21 +56,21 @@
                         <tags-input ng-model="kisis" placeholder="Kişi Seçiniz" display-property="name"
                                     replace-spaces-with-dashes="false"
                                     min-length="2" add-from-autocomplete-only="true">
-                            <auto-complete source="kisilistele($query)" min-length="0" load-on-focus="true"></auto-complete>
+                            <auto-complete source="kisilistele($query)" min-length="2" ></auto-complete>
                         </tags-input>
 
                         Hangi Çevreler Yorum Yazabilir
                         <tags-input ng-model="yrmcevres" placeholder="Çevre Seçiniz" display-property="name"
                                     replace-spaces-with-dashes="false"
                                     min-length="2" add-from-autocomplete-only="true">
-                            <auto-complete source="cevrelistele()" min-length="0" load-on-focus="true"></auto-complete>
+                            <auto-complete source="cevrelistele()" load-on-focus="true"></auto-complete>
                         </tags-input>
 
                         Ayrıca Kimler Görebilir
                         <tags-input ng-model="yrmkisis" placeholder="Kişi Seçiniz" display-property="name"
                                     replace-spaces-with-dashes="false"
                                     min-length="2" add-from-autocomplete-only="true">
-                            <auto-complete source="kisilistele($query)" min-length="0" load-on-focus="true"></auto-complete>
+                            <auto-complete source="kisilistele($query)" min-length="2" ></auto-complete>
                         </tags-input>
                     </td>
                 </tr>
