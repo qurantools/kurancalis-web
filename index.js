@@ -1060,7 +1060,7 @@ app.factory('ChapterVerses', function ($resource) {
         /* show verse */
 //list of chapters
         $scope.chapters = [];
-        var chaptersVersion = 2;
+        var chaptersVersion = 3;
         var localChaptersVersion = localStorageService.get('chaptersVersion');
 
         if (localChaptersVersion == null || localChaptersVersion < chaptersVersion) {
