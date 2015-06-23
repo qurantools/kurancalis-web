@@ -25,11 +25,11 @@
         </div>
 
         <div class="list">
-            <label class="item item-radio" ng-repeat="chapter in chapters | selectionFilter: {id: chapterFilter,nameTr: chapterFilter}">
+            <label class="item item-radio" ng-repeat="chapter in chapters | selectionFilter: {id: chapterFilter,nameTr: chapterFilter,nameTr2: chapterFilter}">
                 <input type="radio" name="group" ng-click="setSelectedChapter(chapter)"/>
 
                 <div class="item-content">
-                    {{chapter.id}}: {{chapter.nameTr}}
+                    {{chapter.id}}: {{chapter.nameTr}}-{{chapter.nameTr2}}
                 </div>
                 <i class="radio-icon ion-checkmark"></i>
             </label>
