@@ -3,9 +3,9 @@ angular.module('ionicApp')
         console.log("HomeCtrl");
         $scope.currentPage = $scope.getCurrentPage();
 
-$scope.filterSingleAnnotation=false;
-$scope.theTags=[];
-        $scope.filterOrderSelect='verseId';
+        $scope.filterSingleAnnotation = false;
+        $scope.theTags = [];
+        $scope.filterOrderSelect = 'verseId';
 
         var chapterId = 1;
         var authorMask = 1040;
@@ -22,16 +22,10 @@ $scope.theTags=[];
             verseNumber = $routeParams.verseNumber;
         }
 
-//Volkan Ekledi.
- // all annotations
-        $scope.annotations = [];
-        $scope.allAnnotationsOpts = [];
-        $scope.allAnnotationsOpts.hasMore = true;
-        $scope.allAnnotationsOpts.start = 0;
-        $scope.allAnnotationsOpts.limit = 10;
-        $scope.allAnnotationsSortBy = "verse";
+        //Volkan Ekledi.
+
         $scope.annotationSearchAuthorSelection = $scope.selection;
-        
+
         $scope.annotationSearchAuthorToggleSelection = function annotationSearchAuthorToggleSelection(author_id) {
             var idx = $scope.annotationSearchAuthorSelection.indexOf(author_id);
             if (idx > -1) {
@@ -45,17 +39,18 @@ $scope.theTags=[];
                 $scope.annotationSearchAuthorMask = $scope.annotationSearchAuthorMask | $scope.annotationSearchAuthorSelection[index];
             }
         };
-        
-  $scope.init = function(){
-    $scope.status = true;
-  }
-  
-  $scope.changeStatus = function(){
-    $scope.status = !$scope.status;
-  }
- 
+
+        $scope.init = function () {
+            $scope.status = true;
+        }
+
+        $scope.changeStatus = function () {
+            $scope.status = !$scope.status;
+        }
+
         //
-        
+
+
         $scope.chapter_id = chapterId;
         $scope.setChapterId(chapterId);
 
@@ -76,10 +71,10 @@ $scope.theTags=[];
             $scope.resetFilteredAnnotations();
             $scope.searchText = '';
         }
-        $scope.resetFilteredAnnotations= function () {
+        $scope.resetFilteredAnnotations = function () {
             $scope.filteredAnnotations = [];
-          //  $scope.scopeApply();
-            $scope.filterSingleAnnotation=false;
+            //  $scope.scopeApply();
+            $scope.filterSingleAnnotation = false;
         }
 
         $scope.annotationTextSearch = function (item) {
@@ -92,11 +87,11 @@ $scope.theTags=[];
             var searchText = $scope.searchText.toLowerCase();
 
             var tags = '';
-            if (typeof item.tags != 'undefined' && typeof item.tags[0] != 'undefined'){
+            if (typeof item.tags != 'undefined' && typeof item.tags[0] != 'undefined') {
                 tags = item.tags[0].toLowerCase();
             }
             if (item.quote.toLowerCase().indexOf(searchText) > -1 || item.text.toLowerCase().indexOf(searchText) > -1 || tags.indexOf(searchText) > -1) {
-                if($scope.filterSingleAnnotation==false) {
+                if ($scope.filterSingleAnnotation == false) {
                     if ($scope.filteredAnnotations.indexOf(item) == -1) {
                         $scope.filteredAnnotations.push(item);
                     }
@@ -145,7 +140,7 @@ $scope.theTags=[];
         }
 
 
-        if(config_data.isMobile) {
+        if (config_data.isMobile) {
             $ionicModal.fromTemplateUrl('components/partials/annotations_on_page_modal.html', {
                 scope: $scope,
                 animation: 'slide-in-right',
@@ -184,9 +179,9 @@ $scope.theTags=[];
                     $scope.modal_annotations_on_page.show();
                 } else if (id == 'chapter_selection') {
                     $scope.modal_chapter_selection.show();
-                }else if (id == 'authors_list') {
+                } else if (id == 'authors_list') {
                     $scope.modal_authors_list.show();
-                }else if (id == 'annotations_on_page_sort') {
+                } else if (id == 'annotations_on_page_sort') {
                     $scope.modal_annotations_on_page_sort.show();
                 }
             };
@@ -204,7 +199,7 @@ $scope.theTags=[];
             }
 
             $scope.annotationFilterOrderMobile = function (predicate) {
-                $scope.filterOrderSelect=predicate;
+                $scope.filterOrderSelect = predicate;
                 var orderBy = $filter('orderBy');
                 $scope.annotations = orderBy($scope.annotations, predicate);
             }
