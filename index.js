@@ -333,6 +333,9 @@ app.factory('ChapterVerses', function ($resource) {
         $scope.fbLoginStatus = 'disconnected';
         $scope.facebookIsReady = false;
         $scope.annotationModalDataTagsInput = [];
+        $scope.yrmkisis=[];
+        $scope.yrmcevres=[];
+        
         //    $scope.user = null;
 
         $scope.login = function () { //new
@@ -666,35 +669,34 @@ app.factory('ChapterVerses', function ($resource) {
         }
 
 
-        $scope.submitEditor = function (cevres, kisis, yrmcevres, yrmkisis) {
+        $scope.submitEditor = function () {
             
             //Volkan Ekledi.
             
-            $scope.annotationModalData.vcircles=[];
-            $scope.annotationModalData.vusers=[];
-            $scope.annotationModalData.ccircles=[];
-            $scope.annotationModalData.cusers=[];
-            
-            for(var i=0;i<cevres.length;i++)
+            $scope.annotationModalData.canViewCircles = [];
+            $scope.annotationModalData.canViewUsers = [];
+            $scope.annotationModalData.canCommentCircles = [];
+            $scope.annotationModalData.canCommentUsers = [];
+           
+            for (var i = 0; i < $scope.cevres.length;i++)
             {
-            $scope.annotationModalData.vcircles.push(cevres[i].id);
+            $scope.annotationModalData.canViewCircles[i] = $scope.cevres[i].id;
             }
             
-            for(var i=0;i<yrmcevres.length;i++)
+            for (var i = 0; i < $scope.kisis.length;i++)
             {
-            $scope.annotationModalData.ccircles.push(yrmcevres[i].id);
+            $scope.annotationModalData.canViewUsers[i] = $scope.kisis[i].id;
             }
             
-            for(var i=0;i<kisis.length;i++)
+            for (var i = 0; i < $scope.yrmkisis.length;i++)
             {
-            $scope.annotationModalData.vusers.push(kisis[i].id);
+            $scope.annotationModalData.canCommentUsers[i] = $scope.yrmkisis[i].id;
             }
             
-            for(var i=0;i<yrmkisis.length;i++)
+            for (var i = 0; i < $scope.yrmcevres.length;i++)
             {
-            $scope.annotationModalData.cusers.push(yrmkisis[i].id);
+            $scope.annotationModalData.canCommentCircles[i] = $scope.yrmcevres[i].id;
             }
-         
             
             //the tags data should be in annotationModalDataTagInputs
             var jsTags = $scope.annotationModalDataTagsInput;
@@ -738,16 +740,75 @@ app.factory('ChapterVerses', function ($resource) {
         
         cVCircles = function(annoid) { 
             var cevregosterRestangular = Restangular.one("annotations",annoid).all("permissions");
+           $scope.cevres=[];
             cevregosterRestangular.customGET("", "", {'access_token': $scope.access_token}).then(function (cevreliste) {
-           var a="0";
-            a="1";
+           
+           var clis=[];
+           
+           for(var i=0;i<cevreliste.canViewCircles.length;i++)
+           {
+           clis.push({'id':cevreliste.canViewCircles[i].id,'name':cevreliste.canViewCircles[i].name});
+           }
+           
+           $scope.cevres=clis;
+            });            
+        }
+        
+        cVUsers = function(annoid) { 
+            var cevregosterRestangular = Restangular.one("annotations",annoid).all("permissions");
+            $scope.kisis=[];
+            cevregosterRestangular.customGET("", "", {'access_token': $scope.access_token}).then(function (cevreliste) {
+           
+           var clis=[];
+           
+           for(var i=0;i<cevreliste.canViewUsers.length;i++)
+           {
+           clis.push({'id':cevreliste.canViewUsers[i].id,'name':cevreliste.canViewUsers[i].name});
+           }
+           
+           $scope.kisis=clis;
+            });            
+        }
+        
+        cOCircles = function(annoid) { 
+            var cevregosterRestangular = Restangular.one("annotations",annoid).all("permissions");
+            $scope.yrmcevres=[];
+            cevregosterRestangular.customGET("", "", {'access_token': $scope.access_token}).then(function (cevreliste) {
+           
+           var clis=[];
+           
+           for(var i=0;i<cevreliste.canCommentCircles.length;i++)
+           {
+           clis.push({'id':cevreliste.canCommentCircles[i].id,'name':cevreliste.canCommentCircles[i].name});
+           }
+           
+           $scope.yrmcevres=clis;
+            });            
+        }
+        
+        cOUsers = function(annoid) { 
+            var cevregosterRestangular = Restangular.one("annotations",annoid).all("permissions");
+            $scope.yrmkisis=[];
+            cevregosterRestangular.customGET("", "", {'access_token': $scope.access_token}).then(function (cevreliste) {
+           
+           var clis=[];
+           
+           for(var i=0;i<cevreliste.canCommentUsers.length;i++)
+           {
+           clis.push({'id':cevreliste.canCommentUsers[i].id,'name':cevreliste.canCommentUsers[i].name});
+           }
+           
+           $scope.yrmkisis=clis;
             });            
         }
         
         $scope.showEditor = function (annotation, position) {
             
             cVCircles(annotation.annotationId);
-            
+            cVUsers(annotation.annotationId);
+            cOCircles(annotation.annotationId);
+            cOUsers(annotation.annotationId);
+             
             var newTags = [];
            
             //Volkan Ekledi.
@@ -878,6 +939,21 @@ app.factory('ChapterVerses', function ($resource) {
             postData.push(encodeURIComponent("verseId") + "=" + encodeURIComponent(jsonData.verseId));
             var tags = jsonData.tags.join(",");
             postData.push(encodeURIComponent("tags") + "=" + encodeURIComponent(tags));
+            
+            //Volkan Ekledi
+                var canViewCircles = jsonData.canViewCircles.join(",");
+                postData.push(encodeURIComponent("canViewCircles") + "=" + encodeURIComponent(canViewCircles));              
+               
+                var canViewUsers = jsonData.canViewUsers.join(",");
+                postData.push(encodeURIComponent("canViewUsers") + "=" + encodeURIComponent(canViewUsers));
+                
+                var canCommentCircles = jsonData.canCommentCircles.join(",");
+                postData.push(encodeURIComponent("canCommentCircles") + "=" + encodeURIComponent(canCommentCircles));
+                
+                var canCommentUsers = jsonData.canCommentUsers.join(",");
+                postData.push(encodeURIComponent("canCommentUsers") + "=" + encodeURIComponent(canCommentUsers));
+            
+            //
             var data = postData.join("&");
             var annotationRestangular = Restangular.one("annotations", jsonData.annotationId);
             return annotationRestangular.customPUT(data, '', '', headers);

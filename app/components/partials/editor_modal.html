@@ -6,56 +6,60 @@
                 {{annotationModalData.quote}}
                 <h4 class="modal-title">{{annotationModal.title}}</h4>
             </div>
+             <div class="modal-body">
+                <textarea class="form-control" id="annotationData_text" ng-model="annotationModalData.text" placeholder="Yorum ekleyin"></textarea>
 
-            <div class="modal-body">
-                <textarea class="form-control" id="annotationData_text" ng-model="annotationModalData.text" style="min-height: 100px;" placeholder="Yorum ekleyin" ></textarea>
-                <div class="row">
-                    <div class="col-xs-6">
-                        <tags-input ng-model="annotationModalDataTagsInput" display-property="name" placeholder="Etiket girin" replace-spaces-with-dashes="false"
+</div>
+<table style="width: 700px">
+    <tr>
+        <td style="width: 300px; vertical-align: top; padding-right: 20px; margin-right: 20px; border-right: dimgray 1px solid;">
+        Etiketler
+                   <tags-input ng-model="$parent.theTags" display-property="name" placeholder="Etiket girin" replace-spaces-with-dashes="false"
                                     min-length="2">
                             <auto-complete source="loadTags($query)" min-length="2"></auto-complete>
                         </tags-input>
                         <ul ng-repeat="selectedTag in selectedTags">
                             <li>{{selectedTag}}</li>
                         </ul>
-
+<br/>
                         <input type="radio" ng-model="annotationModalData.colour" value="yellow" style="float: left;">
                         <div class="tag_colour a_hl_yellow">&nbsp;</div>
                         <div class="tag_colour_description">Açıklama, hatırlatıcı</div>
                         <br/>
-
+                        <br/>
                         <input type="radio" ng-model="annotationModalData.colour" value="red" style="float: left;">
                         <div class="tag_colour a_hl_red">&nbsp;</div>
                         <div class="tag_colour_description">Tam olarak anlamadım</div>
                         <br/>
-
+                        <br/>
                         <input type="radio" ng-model="annotationModalData.colour" value="green" style="float: left;">
                         <div class="tag_colour a_hl_green">&nbsp;</div>
                         <div class="tag_colour_description">Önemli</div>
+                        <br/>
                         <br/>
                   
         </td>
         <td style="width: 300px; vertical-align: top; padding-left: 20px; margin-left: 20px;">
         Hangi Çevreler Görebilir
-        <tags-input ng-model="$parent.cevres" placeholder="Çevre Seçiniz" display-property="name" replace-spaces-with-dashes="false"
+        <tags-input ng-model="cevres" placeholder="Çevre Seçiniz" display-property="name" replace-spaces-with-dashes="false"
                                     min-length="2">
         <auto-complete source="cevrelistele()" min-length="2"></auto-complete>
         </tags-input>
         
          Ayrıca Kimler Görebilir
-        <tags-input ng-model="$parent.kisis" placeholder="Kişi Seçiniz" display-property="name" replace-spaces-with-dashes="false"
+        <tags-input ng-model="kisis" placeholder="Kişi Seçiniz" display-property="name" replace-spaces-with-dashes="false"
                                     min-length="2">
         <auto-complete source="kisilistele($query)" min-length="2"></auto-complete>
         </tags-input>
         
          Hangi Çevreler Yorum Yazabilir
-        <tags-input ng-model="$parent.yrmcevres" placeholder="Çevre Seçiniz" display-property="name" replace-spaces-with-dashes="false"
+        <tags-input ng-model="yrmcevres" placeholder="Çevre Seçiniz" display-property="name" replace-spaces-with-dashes="false"
                                     min-length="2">
         <auto-complete source="cevrelistele()" min-length="2"></auto-complete>
         </tags-input>
         
         Ayrıca Kimler Görebilir
-        <tags-input ng-model="$parent.yrmkisis" placeholder="Kişi Seçiniz" display-property="name" replace-spaces-with-dashes="false"
+        <tags-input ng-model="yrmkisis" placeholder="Kişi Seçiniz" display-property="name" replace-spaces-with-dashes="false"
                                     min-length="2">
         <auto-complete source="kisilistele($query)" min-length="2"></auto-complete>
         </tags-input>
@@ -63,11 +67,11 @@
     </tr>
 </table>
 
+
             <div class="modal-footer">
                 <button type="button" data-dismiss="modal" aria-hidden="true" class="btn">
-                    Vazgeç
-                </button>
-                <a href="#" class="btn btn-primary btn-wide" data-dismiss="modal" ng-click="submitEditor()">Tamam</a>
+                    Vazgeç</button>
+                <a href="#" class="btn btn-primary btn-wide" data-dismiss="modal" ng-click="submitEditor($parent.theTags, $parent.cevres, $parent.kisis, $parent.yrmcevres, $parent.yrmkisis)">Tamam</a>
             </div>
         </div>
     </div>

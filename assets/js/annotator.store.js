@@ -297,16 +297,16 @@
                 postData.push(encodeURIComponent("tags") + "=" + encodeURIComponent(tags));
                 
                 //Volkan Ekledi.
-                var canViewCircles = jsonData.vcircles.join(",");
+                var canViewCircles = jsonData.canViewCircles.join(",");
                 postData.push(encodeURIComponent("canViewCircles") + "=" + encodeURIComponent(canViewCircles));              
                
-                var canViewUsers = jsonData.vusers.join(",");
+                var canViewUsers = jsonData.canViewUsers.join(",");
                 postData.push(encodeURIComponent("canViewUsers") + "=" + encodeURIComponent(canViewUsers));
                 
-                var canCommentCircles = jsonData.ccircles.join(",");
+                var canCommentCircles = jsonData.canCommentCircles.join(",");
                 postData.push(encodeURIComponent("canCommentCircles") + "=" + encodeURIComponent(canCommentCircles));
                 
-                var canCommentUsers = jsonData.cusers.join(",");
+                var canCommentUsers = jsonData.canCommentUsers.join(",");
                 postData.push(encodeURIComponent("canCommentUsers") + "=" + encodeURIComponent(canCommentUsers));
                 //
                 
