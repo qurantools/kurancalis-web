@@ -166,6 +166,16 @@ angular.module('ionicApp')
             $scope.allAnnotationsSearch = false;
         }
 
+//Volkan Ekledi.
+        $scope.init = function(){
+        $scope.status = true;
+        }
+  
+        $scope.changeStatus = function(){
+        $scope.status = !$scope.status;
+        }
+        
+        //
         $scope.annotationSearchAuthorToggleSelection = function annotationSearchAuthorToggleSelection(author_id) {
             var idx = $scope.annotationSearchAuthorSelection.indexOf(author_id);
             if (idx > -1) {

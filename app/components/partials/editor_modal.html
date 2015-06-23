@@ -1,19 +1,20 @@
-<div class="modal" id="annotationModal">
-    <div class="modal-dialog fixed-dialog">
+<div align="center" class="modal" id="annotationModal">
+    <div style="width:750px" class="modal-dialog fixed-dialog">
         <div class="modal-content">
-            <div class="modal-header" id="annotationData_header">
+            <div align="left" class="modal-header" id="annotationData_header">
                 <strong>{{annotationModalDataVerse}}</strong>
                 {{annotationModalData.quote}}
                 <h4 class="modal-title">{{annotationModal.title}}</h4>
             </div>
-
-            <div class="modal-body">
+             <div class="modal-body">
                 <textarea class="form-control" id="annotationData_text" ng-model="annotationModalData.text" placeholder="Yorum ekleyin"></textarea>
 
-
-                <div class="row">
-                    <div class="col-xs-6">
-                        <tags-input ng-model="$parent.theTags" display-property="name" placeholder="Etiket girin" replace-spaces-with-dashes="false"
+</div>
+<table style="width: 700px">
+    <tr>
+        <td style="width: 300px; vertical-align: top; padding-right: 20px; margin-right: 20px; border-right: dimgray 1px solid;">
+        Etiketler
+                   <tags-input ng-model="$parent.theTags" display-property="name" placeholder="Etiket girin" replace-spaces-with-dashes="false"
                                     min-length="2">
                             <auto-complete source="loadTags($query)" min-length="2"></auto-complete>
                         </tags-input>
@@ -21,8 +22,6 @@
                             <li>{{selectedTag}}</li>
                         </ul>
 
-                    </div>
-                    <div class="col-xs-6" style="padding-top:5px;">
                         <input type="radio" ng-model="annotationModalData.colour" value="yellow" style="float: left;">
                         <div class="tag_colour a_hl_yellow">&nbsp;</div>
                         <div class="tag_colour_description">Açıklama, hatırlatıcı</div>
@@ -37,15 +36,41 @@
                         <div class="tag_colour a_hl_green">&nbsp;</div>
                         <div class="tag_colour_description">Önemli</div>
                         <br/>
-                    </div>
-                </div>
-            </div>
+                  
+        </td>
+        <td style="width: 300px; vertical-align: top; padding-left: 20px; margin-left: 20px;">
+        Hangi Çevreler Görebilir
+        <tags-input ng-model="$parent.cevres" placeholder="Çevre Seçiniz" display-property="name" replace-spaces-with-dashes="false"
+                                    min-length="2">
+        <auto-complete source="cevrelistele()" min-length="2"></auto-complete>
+        </tags-input>
+        
+         Ayrıca Kimler Görebilir
+        <tags-input ng-model="$parent.kisis" placeholder="Kişi Seçiniz" display-property="name" replace-spaces-with-dashes="false"
+                                    min-length="2">
+        <auto-complete source="kisilistele($query)" min-length="2"></auto-complete>
+        </tags-input>
+        
+         Hangi Çevreler Yorum Yazabilir
+        <tags-input ng-model="$parent.yrmcevres" placeholder="Çevre Seçiniz" display-property="name" replace-spaces-with-dashes="false"
+                                    min-length="2">
+        <auto-complete source="cevrelistele()" min-length="2"></auto-complete>
+        </tags-input>
+        
+        Ayrıca Kimler Görebilir
+        <tags-input ng-model="$parent.yrmkisis" placeholder="Kişi Seçiniz" display-property="name" replace-spaces-with-dashes="false"
+                                    min-length="2">
+        <auto-complete source="kisilistele($query)" min-length="2"></auto-complete>
+        </tags-input>
+        </td>
+    </tr>
+</table>
+
 
             <div class="modal-footer">
                 <button type="button" data-dismiss="modal" aria-hidden="true" class="btn">
-                    Vazgeç
-                </button>
-                <a href="#" class="btn btn-primary btn-wide" data-dismiss="modal" ng-click="submitEditor($parent.theTags)">Tamam</a>
+                    Vazgeç</button>
+                <a href="#" class="btn btn-primary btn-wide" data-dismiss="modal" ng-click="submitEditor($parent.theTags, $parent.cevres, $parent.kisis, $parent.yrmcevres, $parent.yrmkisis)">Tamam</a>
             </div>
         </div>
     </div>

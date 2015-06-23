@@ -295,6 +295,21 @@
                 postData.push(encodeURIComponent("verseId") + "=" + encodeURIComponent(jsonData.verseId));
                 var tags = jsonData.tags.join(",");
                 postData.push(encodeURIComponent("tags") + "=" + encodeURIComponent(tags));
+                
+                //Volkan Ekledi.
+                var canViewCircles = jsonData.vcircles.join(",");
+                postData.push(encodeURIComponent("canViewCircles") + "=" + encodeURIComponent(canViewCircles));              
+               
+                var canViewUsers = jsonData.vusers.join(",");
+                postData.push(encodeURIComponent("canViewUsers") + "=" + encodeURIComponent(canViewUsers));
+                
+                var canCommentCircles = jsonData.ccircles.join(",");
+                postData.push(encodeURIComponent("canCommentCircles") + "=" + encodeURIComponent(canCommentCircles));
+                
+                var canCommentUsers = jsonData.cusers.join(",");
+                postData.push(encodeURIComponent("canCommentUsers") + "=" + encodeURIComponent(canCommentUsers));
+                //
+                
                 data = postData.join("&");
 
             }
@@ -360,7 +375,7 @@
             annotation.startOffset = annotation.ranges[0].startOffset;
             annotation.endOffset = annotation.ranges[0].endOffset;
             annotation.translationVersion = 1;
-
+         
             // /hack
 
             data = JSON.stringify(annotation);

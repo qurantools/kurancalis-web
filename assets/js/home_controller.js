@@ -2,10 +2,7 @@ angular.module('ionicApp')
     .controller('HomeCtrl', function ($scope, $q, $routeParams, $location, $timeout, ListAuthors, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService, $document, $filter, $rootScope, $state, $stateParams, $ionicModal, $ionicScrollDelegate, $ionicPosition, authorization) {
         console.log("HomeCtrl");
         $scope.currentPage = $scope.getCurrentPage();
-
-
-
-
+        
         var chapterId = 1;
         var authorMask = 1040;
         var verseNumber = 1;
@@ -21,7 +18,40 @@ angular.module('ionicApp')
             verseNumber = $routeParams.verseNumber;
         }
 
-
+//Volkan Ekledi.
+ // all annotations
+        $scope.annotations = [];
+        $scope.allAnnotationsOpts = [];
+        $scope.allAnnotationsOpts.hasMore = true;
+        $scope.allAnnotationsOpts.start = 0;
+        $scope.allAnnotationsOpts.limit = 10;
+        $scope.allAnnotationsSortBy = "verse";
+        $scope.annotationSearchAuthorSelection = $scope.selection;
+        
+        $scope.annotationSearchAuthorToggleSelection = function annotationSearchAuthorToggleSelection(author_id) {
+            var idx = $scope.annotationSearchAuthorSelection.indexOf(author_id);
+            if (idx > -1) {
+                $scope.annotationSearchAuthorSelection.splice(idx, 1);
+            }
+            else {
+                $scope.annotationSearchAuthorSelection.push(author_id);
+            }
+            $scope.annotationSearchAuthorMask = 0;
+            for (var index in $scope.annotationSearchAuthorSelection) {
+                $scope.annotationSearchAuthorMask = $scope.annotationSearchAuthorMask | $scope.annotationSearchAuthorSelection[index];
+            }
+        };
+        
+  $scope.init = function(){
+    $scope.status = true;
+  }
+  
+  $scope.changeStatus = function(){
+    $scope.status = !$scope.status;
+  }
+ 
+        //
+        
         $scope.chapter_id = chapterId;
         $scope.setChapterId(chapterId);
 

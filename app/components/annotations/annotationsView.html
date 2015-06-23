@@ -69,7 +69,7 @@
 
 
     <div class="modal" id="annotationsFilterModal">
-        <div class="modal-dialog fixed-dialog">
+        <div style="width:750px" class="modal-dialog fixed-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" data-dismiss="modal" aria-hidden="true" style="float:right;"><i
@@ -78,19 +78,13 @@
                 </div>
 
                 <div class="modal-body">
-                    <div>
-                        <input type="text" ng-model="allAnnotationsSearchInput" size="12" class="form-control"
-                               placeholder="Aranacak kelime"/>
-                    </div>
-
-                    <div>
-                        <tags-input ng-model="filterTags" display-property="name" placeholder="Etiket girin" replace-spaces-with-dashes="false"
-                                    min-length="2">
-                            <auto-complete source="loadTags($query)" min-length="2"></auto-complete>
-                        </tags-input>
-                    </div>
-
-                    <div>
+  <table style="width: 700px">
+    <tr>
+        <td style="width: 260px;">
+            <strong>
+            Yazarlar</strong><br /> <br />
+            
+            <div>
                         <ul class="selectable_list">
                             <li ng-repeat="author in authors"
                                 ng-click="annotationSearchAuthorToggleSelection(author.id)"
@@ -100,6 +94,62 @@
                         </ul>
 
                     </div>
+        </td>
+        <td style="width: 440px; height: 21px; border-left: dimgray 1px solid; padding-left: 15px; vertical-align: top;">
+        
+         <div class="well" ng-init="init()">
+    <table>
+      <td>
+      <i class="fa fa-toggle-on active" ng-if="status == true" ng-click="changeStatus();"></i>
+      <i class="fa fa-toggle-on fa-rotate-180 inactive" ng-if="status == false" ng-click="changeStatus();"></i>
+      </td>
+      <td align="left" style="width:100%; padding-left: 15px;">      Benim notlarımı göster</td>
+      </table>
+     </div>
+        <div>
+        <input type="text" ng-model="allAnnotationsSearchInput" size="12" class="form-control" placeholder="Aranacak kelime"/>
+        </div>
+        <br />
+        <table style="width: 100%">
+        <tr>
+        <td align="left" style="width: 30px">
+        Sure
+        </td>
+        <td align="left" style="width: 120px">
+        <input style="width:60px" type="text" ng-model="sureler" size="12" class="form-control"/>
+        </td>
+        <td align="left" style="width: 30px">
+        Ayet
+        </td>
+        <td align="left" style="width: 120px">
+        <input style="width:60px" type="text" ng-model="ayetler" size="12" class="form-control"/>
+        </td>
+        </tr>
+        </table>
+        <br />
+                    <div>
+                    Etikete ahip olan notlar
+                        <tags-input ng-model="filterTags" display-property="name" placeholder="Etiket girin" replace-spaces-with-dashes="false"
+                                    min-length="2">
+                            <auto-complete source="loadTags($query)" min-length="2"></auto-complete>
+                        </tags-input>
+                    </div>
+          
+            <br />          
+      Kişilere ait olan notlar
+        <tags-input ng-model="$parent.kisis" placeholder="Kişi Seçiniz" display-property="name" replace-spaces-with-dashes="false" min-length="2">
+        <auto-complete source="kisilistele($query)" min-length="2"></auto-complete>
+        </tags-input>
+    
+      <br />
+     Çevremdeki kişilere ait olan notlar
+        <tags-input ng-model="$parent.cevres" placeholder="Çevre Seçiniz" display-property="name" replace-spaces-with-dashes="false" min-length="2">
+        <auto-complete source="cevrelistele()" min-length="2"></auto-complete>
+        </tags-input>
+  
+        </td>
+    </tr>
+</table>       
                 </div>
 
                 <div class="modal-footer">
