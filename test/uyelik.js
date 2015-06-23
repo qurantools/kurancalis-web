@@ -25,7 +25,7 @@ var uyelik = (function () {
         element(by.css('[onclick="toggleLeftPanel()"]')).click();
 
         browser.sleep('1000');
-        var cikis =  element(by.css('[ng-click="log_out()"]'));
+        var cikis =  element(by.css('[ng-click="logOut()"]'));
         cikis.isPresent().then(function(result) {
             if ( result ) {
                 cikis.click();

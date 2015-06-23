@@ -2,7 +2,7 @@
     <div class="bar bar-balanced">
         <div style="text-align: left; width:100px;">
             <button class="button button-icon icon-left ion-arrow-left-b" ng-click="updateAuthors();closeModal('all_annotations_filter')"
-                    style="float: left"> Geri
+                    style="float: left"> Tamam
             </button>
         </div>
         <div style="text-align: center; width:100px;"><h1 class="title">Filtre Seçenekleri</h1></div>
@@ -11,12 +11,12 @@
         <div style="height:50px"></div>
         <div>
         <input type="text" ng-model="allAnnotationsSearchInput" size="12" class="form-control"
-               placeholder="Aranacak kelime"/>
+               placeholder="Aranacak kelime" ng-change="setAnnotationSearchKeyword(allAnnotationsSearchInput)"/>
 </div>
 
 <div>
         <tags-input ng-model="filterTags" display-property="name" placeholder="Etiket girin" replace-spaces-with-dashes="false"
-                    min-length="2">
+                    min-length="2" ng-change="setAnnotationSearchTags(filterTags)">
             <auto-complete source="loadTags($query)" min-length="2"></auto-complete>
         </tags-input>
 </div>

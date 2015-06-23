@@ -2,7 +2,11 @@ angular.module('ionicApp')
     .controller('HomeCtrl', function ($scope, $q, $routeParams, $location, $timeout, ListAuthors, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService, $document, $filter, $rootScope, $state, $stateParams, $ionicModal, $ionicScrollDelegate, $ionicPosition, authorization) {
         console.log("HomeCtrl");
         $scope.currentPage = $scope.getCurrentPage();
-        
+
+$scope.filterSingleAnnotation=false;
+$scope.theTags=[];
+        $scope.filterOrderSelect='verseId';
+
         var chapterId = 1;
         var authorMask = 1040;
         var verseNumber = 1;
@@ -69,8 +73,13 @@ angular.module('ionicApp')
 
         $scope.filteredAnnotations = [];
         $scope.resetAnnotationFilter = function () {
-            $scope.filteredAnnotations = [];
+            $scope.resetFilteredAnnotations();
             $scope.searchText = '';
+        }
+        $scope.resetFilteredAnnotations= function () {
+            $scope.filteredAnnotations = [];
+          //  $scope.scopeApply();
+            $scope.filterSingleAnnotation=false;
         }
 
         $scope.annotationTextSearch = function (item) {
@@ -87,6 +96,11 @@ angular.module('ionicApp')
                 tags = item.tags[0].toLowerCase();
             }
             if (item.quote.toLowerCase().indexOf(searchText) > -1 || item.text.toLowerCase().indexOf(searchText) > -1 || tags.indexOf(searchText) > -1) {
+                if($scope.filterSingleAnnotation==false) {
+                    if ($scope.filteredAnnotations.indexOf(item) == -1) {
+                        $scope.filteredAnnotations.push(item);
+                    }
+                }
                 return true;
             } else {
                 return false;
@@ -106,7 +120,6 @@ angular.module('ionicApp')
             return annotationIndex;
         }
         $scope.annotationFilter = function (item) {
-            console.log("filteredAnnotations:" + $scope.filteredAnnotations);
             if (typeof $scope.filteredAnnotations == 'undefined' || $scope.filteredAnnotations.length == 0) {
                 return true;
             } else {
@@ -119,6 +132,18 @@ angular.module('ionicApp')
                 if (found > 0)return true; else return false;
             }
         }
+
+
+        $scope.editAnnotation = function (index) {
+            console.log("editAnnotation - scope.filteredAnnotations:" + JSON.stringify($scope.filteredAnnotations))
+            if (typeof $scope.filteredAnnotations != 'undefined' && $scope.filteredAnnotations.length > 0) {
+                index = $scope.getAnnotationIndexFromFilteredAnnotationIndex(index);
+            }
+            annotator.onEditAnnotation($scope.annotations[index]);
+            annotator.updateAnnotation($scope.annotations[index]);
+
+        }
+
 
         if(config_data.isMobile) {
             $ionicModal.fromTemplateUrl('components/partials/annotations_on_page_modal.html', {
@@ -137,11 +162,32 @@ angular.module('ionicApp')
                 $scope.modal_chapter_selection = modal
             });
 
+
+            $ionicModal.fromTemplateUrl('components/partials/authors_list_modal.html', {
+                scope: $scope,
+                animation: 'slide-in-left',
+                id: 'authors_list'
+            }).then(function (modal) {
+                $scope.modal_authors_list = modal
+            });
+
+            $ionicModal.fromTemplateUrl('components/partials/annotations_on_page_sort_modal.html', {
+                scope: $scope,
+                animation: 'slide-in-left',
+                id: 'annotations_on_page_sort'
+            }).then(function (modal) {
+                $scope.modal_annotations_on_page_sort = modal
+            });
+
             $scope.openModal = function (id) {
                 if (id == 'annotations_on_page') {
                     $scope.modal_annotations_on_page.show();
                 } else if (id == 'chapter_selection') {
                     $scope.modal_chapter_selection.show();
+                }else if (id == 'authors_list') {
+                    $scope.modal_authors_list.show();
+                }else if (id == 'annotations_on_page_sort') {
+                    $scope.modal_annotations_on_page_sort.show();
                 }
             };
 
@@ -150,10 +196,18 @@ angular.module('ionicApp')
                     $scope.modal_annotations_on_page.hide();
                 } else if (id == 'chapter_selection') {
                     $scope.modal_chapter_selection.hide();
+                } else if (id == 'authors_list') {
+                    $scope.modal_authors_list.hide();
+                } else if (id == 'annotations_on_page_sort') {
+                    $scope.modal_annotations_on_page_sort.hide();
                 }
             }
+
+            $scope.annotationFilterOrderMobile = function (predicate) {
+                $scope.filterOrderSelect=predicate;
+                var orderBy = $filter('orderBy');
+                $scope.annotations = orderBy($scope.annotations, predicate);
+            }
         }
-
-
 
     });

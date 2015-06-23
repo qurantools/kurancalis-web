@@ -8,7 +8,7 @@
                 <div class="well translations col-xs-12" id="v_{{verse.id}}">
                     <div ng-repeat="translation in verse.translations">
                         <div ng-if="$first"><h4>{{translation.chapter}}:{{translation.verse}}</h4></div>
-                        <div class="row" id="t_{{translation.id}}">
+                        <div class="row" id="t_{{translation.id}}" >
                             <div class="col-xs-12 col-sm-3 authorDiv_{{authorMap[translation.authorId].color}}">
                                 {{authorMap[translation.authorId].name}}
                             </div>
@@ -142,16 +142,14 @@
                 <button onclick="closePanel()" class="btn btn-default btn-xs" style="float: left; height: 30px;"><i
                         class="fa fa-undo"></i></button>
                 <button class="btn btn-warning btn-xs" ng-click="resetAnnotationFilter()"
-                        ng-show='filteredAnnotations.length > 0 || searchText!=""' style="float: right; height: 30px;">
+                        ng-show='filterSingleAnnotation || searchText!=""' style="float: right; height: 30px;">
                     <i
                             class="fa fa-trash-o"></i>
                     Filtreyi kaldır
                 </button>
-
-
                 <div style="display: block;">
                     <!--    <input ng-model="searchText" />-->
-                    <input style="width: 150px; height: 30px;" type="text" placeholder="ara" ng-model="searchText">
+                    <input style="width: 150px; height: 30px;" type="text" placeholder="ara" ng-model="searchText" ng-change="resetFilteredAnnotations()">
                     <select ng-model="filterOrderSelect" ng-init="filterOrderSelect='verseId'"
                             ng-change="annotationFilterOrder(filterOrderSelect)" style="height: 30px;">
                         <option value="verseId">Ayet</option>
@@ -163,7 +161,7 @@
             </div>
             <div ng-repeat="annotation in annotations | filter:annotationFilter | filter: annotationTextSearch"
                  class="sidebar_annotation box"
-                 ng-click="scrollToElement('t_'+annotation.translationId)">
+                 ng-click="scrollToElmnt('t_'+annotation.translationId)">
                 <!-- s_a -->
                 <div class="s_a_header">
                     {{annotation.verseId / 1000 | number:0}}:{{annotation.verseId % 1000}}

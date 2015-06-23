@@ -32,7 +32,6 @@ var app = angular.module('ionicApp', requiredModules)
     .filter('selectionFilter', function () {
         return function (items, props) {
             var out = [];
-
             if (angular.isArray(items)) {
                 items.forEach(function (item) {
                     var itemMatches = false;
@@ -40,8 +39,13 @@ var app = angular.module('ionicApp', requiredModules)
                     var keys = Object.keys(props);
                     for (var i = 0; i < keys.length; i++) {
                         var prop = keys[i];
-                        var text = props[prop].toLowerCase();
-                        if (item[prop].toString().toLowerCase().indexOf(text) !== -1) {
+                        if (typeof props[prop] != 'undefined') {
+                            var text = props[prop].toLowerCase();
+                            if (item[prop].toString().toLowerCase().indexOf(text) !== -1) {
+                                itemMatches = true;
+                                break;
+                            }
+                        } else {
                             itemMatches = true;
                             break;
                         }
@@ -153,7 +157,7 @@ if (config_data.isMobile == false) { //false
             });
 
         //facebook
-        FacebookProvider.init('400142910165594');
+        FacebookProvider.init(config_data.FBAppID);
 
     });
 
@@ -207,58 +211,8 @@ if (config_data.isMobile == false) { //false
                     redirectTo: '/'
                 });
 
-            //facebook
-            FacebookProvider.init('400142910165594');
+            openFB.init({appId: config_data.FBAppID});
 
-
-            /*
-             RestangularProvider.setBaseUrl(config_data.webServiceUrl);
-             localStorageServiceProvider.setStorageCookie(0, '/');
-
-             var locationHref = window.location.href;
-             if (locationHref.indexOf('/m/') > -1) {
-             //mobile version
-
-             $stateProvider
-             .state('app', {
-             url: "/app",
-             abstract: true,
-             templateUrl: "components/navigation/navigation.html"
-             })
-             .state('app.home', {
-             url: "/chapter/:chapterId/author/:authorMask/verse/:verseNumber/",
-             views: {
-             'appContent': {
-             templateUrl: "components/home/home.html",
-             controller: "MainCtrl"
-             }
-             }
-             })
-             .state('app.annotations', {
-             url: "/annotations",
-             views: {
-             'appContent': {
-             templateUrl: "components/annotations/all_annotations.html",
-             controller: "MainCtrl"
-             }
-             }
-             })
-
-             $urlRouterProvider.otherwise("/app/chapter/1/author/1040/verse/1/");
-             } else {
-             //mobile version is not ready
-             $routeProvider
-             .when('/', {
-             controller: 'MainCtrl',
-             templateUrl: 'app/components/home/mobile_on_development.html',
-             reloadOnSearch: false
-             })
-             .otherwise({
-             redirectTo: '/'
-             });
-             }
-             FacebookProvider.init('400142910165594');
-             */
         }
     );
 
@@ -325,7 +279,7 @@ app.factory('ChapterVerses', function ($resource) {
     );
 })
 
-    .controller('MainCtrl', function ($scope, $q, $routeParams,$ionicSideMenuDelegate, $location, $timeout, ListAuthors, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService, $document, $filter, $rootScope, $state, $stateParams, $ionicModal, $ionicScrollDelegate, $ionicPosition, authorization) {
+    .controller('MainCtrl', function ($scope, $q, $routeParams, $ionicSideMenuDelegate, $location, $timeout, ListAuthors, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService, $document, $filter, $rootScope, $state, $stateParams, $ionicModal, $ionicScrollDelegate, $ionicPosition, authorization) {
         console.log("MainCtrl");
 
         //currentPage
@@ -378,13 +332,14 @@ app.factory('ChapterVerses', function ($resource) {
 
         $scope.fbLoginStatus = 'disconnected';
         $scope.facebookIsReady = false;
+        $scope.annotationModalDataTagsInput = [];
         //    $scope.user = null;
 
         $scope.login = function () { //new
             authorization.login($scope.onFacebookLoginSuccess);
         }
 
-        $scope.log_out = function () { //new
+        $scope.logOut = function () { //new
             $ionicSideMenuDelegate.toggleLeft();
             authorization.logOut($scope.onFacebookLogOutSuccess);
 
@@ -440,17 +395,16 @@ app.factory('ChapterVerses', function ($resource) {
         /* end of auth */
 
 
-
         $scope.setChapterId = function (myChapterId) {
-            if(typeof myChapterId!='undefined'){
-                $scope.chapter_id=myChapterId
+            if (typeof myChapterId != 'undefined') {
+                $scope.chapter_id = myChapterId
             }
             if (typeof annotator != 'undefined') {
                 annotator.setChapterId = $scope.chapter_id;
             }
         }
         $scope.setAuthorMask = function (myAuthorMask) {
-            if(typeof myAuthorMask!='undefined'){
+            if (typeof myAuthorMask != 'undefined') {
                 $scope.author_mask = myAuthorMask;
             }
 
@@ -460,8 +414,8 @@ app.factory('ChapterVerses', function ($resource) {
         }
 
         $scope.verse = {};
-        $scope.setVerse= function (myVerse){
-            $scope.verse=myVerse;
+        $scope.setVerse = function (myVerse) {
+            $scope.verse = myVerse;
         }
         $scope.setUserId = function () {
             if (typeof annotator != 'undefined') {
@@ -472,32 +426,6 @@ app.factory('ChapterVerses', function ($resource) {
                 }
             }
         }
-        //   if (!config_data.isMobile) {
-
-
-        /*
-         } else {
-         //mobile
-
-         //author mask cookie
-         var localAuthorMask = localStorageService.get('author_mask');
-         if (localAuthorMask != null) {
-         authorMask = localAuthorMask;
-         }
-
-         if (typeof $stateParams.chapterId !== 'undefined') {
-         chapterId = $stateParams.chapterId;
-         $scope.initChapterSelect = true;
-         }
-         if (typeof $stateParams.authorMask !== 'undefined') {
-         authorMask = $stateParams.authorMask;
-         }
-         if (typeof $stateParams.verseNumber !== 'undefined') {
-         verseNumber = $stateParams.verseNumber;
-         }
-         }
-         */
-
 
 
         $scope.myRoute = [];
@@ -515,7 +443,6 @@ app.factory('ChapterVerses', function ($resource) {
         if (typeof $routeParams.targetVerse !== 'undefined') {
             $scope.targetVerseForTagContent = $routeParams.targetVerse;
         }
-
 
         $scope.annotate_it = function () {
             if ($scope.annotatorActivated == 1) {
@@ -708,15 +635,6 @@ app.factory('ChapterVerses', function ($resource) {
             } else {
                 window.location.href = '#/chapter/' + $scope.chapter_id + '/author/' + $scope.author_mask + '/';
             }
-            /*
-             } else {
-             $state.go("app.home", {
-             "chapterId": $scope.chapter_id,
-             "authorMask": $scope.author_mask,
-             "verseNumber": $scope.verse.number
-             }, {reload: true});
-             }
-             */
         };
 
         $scope.updateAuthors = function () {
@@ -748,7 +666,7 @@ app.factory('ChapterVerses', function ($resource) {
         }
 
 
-        $scope.submitEditor = function (theTags, cevres, kisis, yrmcevres, yrmkisis) {
+        $scope.submitEditor = function (cevres, kisis, yrmcevres, yrmkisis) {
             
             //Volkan Ekledi.
             
@@ -776,16 +694,17 @@ app.factory('ChapterVerses', function ($resource) {
             {
             $scope.annotationModalData.cusers.push(yrmkisis[i].id);
             }
+         
             
-            //
-            
-            //  var jsTags = $scope.theTags;
-            var jsTags = theTags;
+            //the tags data should be in annotationModalDataTagInputs
+            var jsTags = $scope.annotationModalDataTagsInput;
+
             if (typeof jsTags == 'undefined') {
                 jsTags = [];
             }
             var oldTags = [];
             if (typeof $scope.annotationModalData.annotationId != 'undefined') {
+                //tags with server format
                 oldTags = $scope.annotationModalData.tags;
             }
             var newTags = [];
@@ -804,6 +723,9 @@ app.factory('ChapterVerses', function ($resource) {
             if ($scope.getIndexOfArrayByElement($scope.annotations, 'annotationId', $scope.annotationModalData.annotationId) == -1) {
                 $scope.addAnnotation($scope.annotationModalData);
             }
+            if (config_data.isMobile) {
+                $scope.closeModal('editor');
+            }
             return annotator.ignoreMouseup = false;
 
         }
@@ -811,6 +733,8 @@ app.factory('ChapterVerses', function ($resource) {
         $scope.submitEditor2 = function () {
             $scope.submitEditor($scope.theTags);
         }
+
+
         
         cVCircles = function(annoid) { 
             var cevregosterRestangular = Restangular.one("annotations",annoid).all("permissions");
@@ -842,15 +766,9 @@ app.factory('ChapterVerses', function ($resource) {
             }
            
             $scope.annotationModalData = annotation;
+            $scope.annotationModalDataTagsInput = newTags;
             if (typeof $scope.annotationModalData.text == 'undefined') {
                 $scope.annotationModalData.text = "";
-            }
-            if (!config_data.isMobile) {
-               angular.element(document.getElementById('theView')).scope().theTags = newTags;
-               angular.element(document.getElementById('theView')).scope().cevres = cvrtags;
-            } else {
-                angular.element(document.getElementById('MainCtrl')).scope().theTags = newTags;
-                angular.element(document.getElementById('MainCtrl')).scope().cevres = cvrtags;
             }
             $scope.annotationModalDataVerse = Math.floor(annotation.verseId / 1000) + ":" + annotation.verseId % 1000;
             //set default color
@@ -922,16 +840,17 @@ app.factory('ChapterVerses', function ($resource) {
         $scope.addAnnotation = function (annotation) {
             $scope.annotations.push(annotation);
         }
-
-        $scope.editAnnotation = function (index) {
-            if (typeof $scope.filteredAnnotations != 'undefined' && $scope.filteredAnnotations.length > 0) {
-                index = $scope.getAnnotationIndexFromFilteredAnnotationIndex(index);
-            }
-            annotator.onEditAnnotation($scope.annotations[index]);
-            annotator.updateAnnotation($scope.annotations[index]);
-
-
-        }
+        /*
+         moved to homectrl
+         $scope.editAnnotation = function (index) {
+         console.log("$scope.filteredAnnotations:"+$scope.filteredAnnotations);
+         if (typeof $scope.filteredAnnotations != 'undefined' && $scope.filteredAnnotations.length > 0) {
+         index = $scope.getAnnotationIndexFromFilteredAnnotationIndex(index);
+         }
+         annotator.onEditAnnotation($scope.annotations[index]);
+         annotator.updateAnnotation($scope.annotations[index]);
+         }
+         */
         $scope.deleteAnnotation = function (index) {
             console.log("deleteAnnotation")
             if (typeof $scope.filteredAnnotations != 'undefined' && $scope.filteredAnnotations.length > 0) {
@@ -940,8 +859,6 @@ app.factory('ChapterVerses', function ($resource) {
             annotator.deleteAnnotation($scope.annotations[index]);
 
         }
-
-
 
 
         $scope.editAnnotation2 = function (annotation) {
@@ -970,21 +887,6 @@ app.factory('ChapterVerses', function ($resource) {
         $scope.tagSearchResult = [];
         /* end of login - access token */
 
-        /* moved to HomeCtrl
-         $scope.annotationFilter = function (item) {
-         if (typeof $scope.filteredAnnotations == 'undefined' || $scope.filteredAnnotations.length == 0) {
-         return true;
-         } else {
-         var found = 0;
-         for (i = 0; i < $scope.filteredAnnotations.length; i++) {
-         if (item.annotationId == $scope.filteredAnnotations[i].annotationId) {
-         found++;
-         }
-         }
-         if (found > 0)return true; else return false;
-         }
-         }
-         */
         $scope.authorFilter = function (item) {
             return $scope.selection.indexOf(item.id) > -1;
         }
@@ -994,50 +896,15 @@ app.factory('ChapterVerses', function ($resource) {
             $scope.annotations = orderBy($scope.annotations, predicate);
         }
 
-        /* moved to HomeCtrl
-         $scope.annotationTextSearch = function (item) {
-         var searchText = $scope.searchText.toLowerCase();
-         if (item.quote.toLowerCase().indexOf(searchText) > -1 || item.text.toLowerCase().indexOf(searchText) > -1) {
-         return true;
-         } else {
-         return false;
-         }
-         }
-         */
-
-        /*
-         $scope.getAnnotationIndexFromFilteredAnnotationIndex = function (filteredAnnotationIndex) {
-         //TODO use getIndexOfArrayByElement
-         var arrLen = $scope.annotations.length;
-         var filteredAnnotationId = $scope.filteredAnnotations[filteredAnnotationIndex].annotationId;
-         var annotationIndex = -1;
-         for (var i = 0; i < arrLen; i++) {
-         if ($scope.annotations[i].annotationId == filteredAnnotationId) {
-         annotationIndex = i;
-         }
-         }
-         return annotationIndex;
-         }
-         */
-        /* moved to HomeCtrl
-         $scope.resetAnnotationFilter = function () {
-         console.log("resetAnnotationFilter index")
-         $scope.filteredAnnotations = [];
-         $scope.searchText = '';
-         }
-         */
-
-
-        $scope.scrollToElement = function (elementId) {
-            if(!config_data.isMobile) {
+        $scope.scrollToElmnt = function (elementId) {
+            if (!config_data.isMobile) {
                 var destination = angular.element(document.getElementById(elementId));
                 if (destination.length > 0) {
                     $document.scrollToElement(destination, 70, 1000);
                 }
-            }else{
-                $location.hash(elementId);
-                var delegate = $ionicScrollDelegate.$getByHandle('content');
-                delegate.anchorScroll();
+            } else {
+                var elem = document.getElementById(elementId);
+                $ionicScrollDelegate.scrollTo(0,elem.offsetTop,false);
             }
         }
 
@@ -1154,7 +1021,6 @@ app.factory('ChapterVerses', function ($resource) {
             } else {
                 $scope.targetVerseForTagContent = 0;
             }
-
         }
 
         $scope.updateVerseTagContent = function () {
@@ -1181,15 +1047,15 @@ app.factory('ChapterVerses', function ($resource) {
             if (typeof $scope.verse.number != 'undefined') {
                 var verseId = parseInt($scope.chapter_id * 1000) + parseInt($scope.verse.number);
                 var verseElement = 'v_' + verseId;
-              //  if (!config_data.isMobile) {
-                    $scope.scrollToElement(verseElement);
-               /*
-                } else {
-                    $location.hash(verseElement);
-                    var delegate = $ionicScrollDelegate.$getByHandle('content');
-                    delegate.anchorScroll();
-                }
-                */
+                //  if (!config_data.isMobile) {
+                $scope.scrollToElmnt(verseElement);
+                /*
+                 } else {
+                 $location.hash(verseElement);
+                 var delegate = $ionicScrollDelegate.$getByHandle('content');
+                 delegate.anchorScroll();
+                 }
+                 */
             }
         }
 
@@ -1241,28 +1107,18 @@ app.factory('ChapterVerses', function ($resource) {
             });
 
 
-            $ionicModal.fromTemplateUrl('components/partials/authors_list_modal.html', {
-                scope: $scope,
-                animation: 'slide-in-left',
-                id: 'authors_list'
-            }).then(function (modal) {
-                $scope.modal_authors_list = modal
-            });
 
 
             $scope.openModal = function (id) {
                 if (id == 'editor') {
                     $scope.modal_editor.show();
-                } else if (id == 'authors_list') {
-                    $scope.modal_authors_list.show();
                 }
             };
 
             $scope.closeModal = function (id) {
                 if (id == 'editor') {
+                    clearTextSelection();
                     $scope.modal_editor.hide();
-                } else if (id == 'authors_list') {
-                    $scope.modal_authors_list.hide();
                 }
             }
 
@@ -1281,7 +1137,7 @@ app.factory('ChapterVerses', function ($resource) {
         /* show verse */
 //list of chapters
         $scope.chapters = [];
-        var chaptersVersion = 2;
+        var chaptersVersion = 3;
         var localChaptersVersion = localStorageService.get('chaptersVersion');
 
         if (localChaptersVersion == null || localChaptersVersion < chaptersVersion) {
@@ -1437,6 +1293,13 @@ app.factory('ChapterVerses', function ($resource) {
             localStorageService.set('author_mask', $scope.author_mask);
         };
 
+        $scope.updateTextareaHeight = function(testareaID) {
+            var element = document.getElementById(testareaID);
+            element.style.height =  element.scrollHeight + "px";
+        }
+
+
+
     });
 
 
@@ -1473,7 +1336,8 @@ function toggleLeftPanel() {
 function verseTagClicked(elem) {
     var closeClick = false;
     if ($(elem).hasClass('btn-warning')) {
-        angular.element(document.getElementById('theView')).scope().targetVerseForTagContent = -1;
+       // angular.element(document.getElementById('theView')).scope().targetVerseForTagContent = -1;
+        angular.element(document.getElementById('MainCtrl')).scope().targetVerseForTagContent = -1;
         closeClick = true;
     }
 
@@ -1492,4 +1356,16 @@ function seperateChapterAndVerse(data) {
     ret.chapter = data.substring(0, seperator);
     ret.verse = data.substring(seperator + 1, data.length);
     return ret;
+}
+
+function clearTextSelection() {
+    if (window.getSelection) {console.log(window.getSelection())
+        if (window.getSelection().empty) {  // Chrome
+            window.getSelection().empty();
+        } else if (window.getSelection().removeAllRanges) {  // Firefox
+            window.getSelection().removeAllRanges();
+        }
+    } else if (document.selection) {  // IE?
+        document.selection.empty();
+    }
 }

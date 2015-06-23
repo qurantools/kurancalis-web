@@ -1,32 +1,33 @@
 <div class="modal modal-fullscreen">
-    <div class="bar bar-balanced">
-        <div style="text-align: left; width:100px;">
+    <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced">
+        <ion-nav-title>Sayfadaki Notlar</ion-nav-title>
+        <ion-nav-buttons side="left">
             <button class="button button-icon icon-left ion-arrow-left-b" ng-click="closeModal('annotations_on_page')"
                     style="float: left"> Tamam
             </button>
-        </div>
-        <h1 class="title">Sayfadaki Notlar</h1>
-    </div>
+        </ion-nav-buttons>
+
+        <ion-nav-buttons side="right">
+            <button class="button button-icon icon ion-funnel"
+            ng-click="openModal('annotations_on_page_sort')"></button>
+        </ion-nav-buttons>
+    </ion-nav-bar>
+
     <ion-content overflow-scroll="true">
         <div style="height:50px"></div>
         <div style="padding-bottom:10px;">
             <button class="btn btn-warning btn-xs" ng-click="searchText='';resetAnnotationFilter()"
-                    ng-show='filteredAnnotations.length > 0 || searchText!=""' style="float: right; height: 30px;">
+                    ng-show='filterSingleAnnotation || searchText!=""' style="float: right; height: 30px;">
                 <i class="fa fa-trash-o"></i>
                 Filtreyi kaldır
             </button>
             <div style="display: block;">
                 <input style="width: 150px; height: 30px;" type="text" placeholder="ara" ng-model="searchText" id="searchText">
-                <select ng-model="filterOrderSelect" ng-init="filterOrderSelect='verseId'"
-                        ng-change="annotationFilterOrder(filterOrderSelect)" style="height: 30px;">
-                    <option value="verseId">Ayet</option>
-                    <option value="-updated">Zaman</option>
-                </select>
             </div>
         </div>
         <div ng-repeat="annotation in annotations | filter:annotationFilter | filter: annotationTextSearch"
              class="card"
-             ng-click="scrollToElement('t_'+annotation.translationId);closeModal('annotations_on_page');">
+             ng-click="scrollToElmnt('t_'+annotation.translationId);closeModal('annotations_on_page');">
 
             <!-- s_a -->
             <div class="s_a_header">

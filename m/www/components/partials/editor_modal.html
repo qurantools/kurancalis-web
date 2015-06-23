@@ -7,7 +7,7 @@
         </div>
         <div  style="text-align: center; width:100px;"><h1 class="title">Not Ekle</h1></div>
         <div style="text-align: right; width:100px;">
-            <button class="button button-icon icon-left ion-checkmark" ng-click="submitEditor($parent.theTags)"
+            <button class="button button-icon icon-left ion-checkmark" ng-click="submitEditor()"
                     style="float: right">
             </button>
         </div>
@@ -21,11 +21,9 @@
 
         <label class="item item-input">
             <textarea id="annotationData_text" ng-model="annotationModalData.text"
-                      placeholder="Yorum ekleyin"></textarea>
+                      placeholder="Yorum ekleyin" style="height:80px; font-size:16px;" ></textarea>
         </label>
-
-
-        <tags-input ng-model="$parent.theTags" display-property="name" replace-spaces-with-dashes="false" placeholder="Etiket girin"
+        <tags-input ng-model="annotationModalDataTagsInput" display-property="name" replace-spaces-with-dashes="false" placeholder="Etiket girin"
                     min-length="2">
             <auto-complete source="loadTags($query)" min-length="2"></auto-complete>
         </tags-input>
