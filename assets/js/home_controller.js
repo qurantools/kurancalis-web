@@ -130,12 +130,10 @@ angular.module('ionicApp')
 
 
         $scope.editAnnotation = function (index) {
-            console.log("editAnnotation - scope.filteredAnnotations:" + JSON.stringify($scope.filteredAnnotations))
             if (typeof $scope.filteredAnnotations != 'undefined' && $scope.filteredAnnotations.length > 0) {
                 index = $scope.getAnnotationIndexFromFilteredAnnotationIndex(index);
             }
             annotator.onEditAnnotation($scope.annotations[index]);
-            annotator.updateAnnotation($scope.annotations[index]);
 
         }
 
