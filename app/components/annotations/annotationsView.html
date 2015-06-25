@@ -10,6 +10,15 @@
             <div ng-if="filterTags.length>0"><strong>Etiket:</strong>
                 <div ng-repeat="filterTag in filterTags" class="tag label label-info s_a_tag">{{filterTag.name}}</div>
             </div>
+            
+            <div ng-if="kisis.length>0"><strong>Kişiler:</strong>
+                <div ng-repeat="kisi in kisis" class="tag label label-info s_a_tag">{{kisi.name}}</div>
+            </div>
+            
+            <div ng-if="cevres.length>0"><strong>Çevreler:</strong>
+                <div ng-repeat="cevre in cevres" class="tag label label-info s_a_tag">{{cevre.name}}</div>
+            </div>
+            
             <div ng-if="annotationSearchAuthorSelection.length>0">
                 <div style="float:left;"><strong>Yazar:</strong></div>
                 <div ng-repeat="authorSearch in annotationSearchAuthorSelection" style="float: left">
@@ -100,8 +109,8 @@
          <div class="well" ng-init="init()">
     <table>
       <td>
-      <i class="fa fa-toggle-on active" ng-if="status == true" ng-click="changeStatus();"></i>
-      <i class="fa fa-toggle-on fa-rotate-180 inactive" ng-if="status == false" ng-click="changeStatus();"></i>
+      <i class="fa fa-toggle-on aktif" ng-if="status == true" ng-click="changeStatus()"></i>
+      <i class="fa fa-toggle-on fa-rotate-180 inactive" ng-if="status == false" ng-click="changeStatus()"></i>
       </td>
       <td align="left" style="width:100%; padding-left: 15px;">      Benim notlarımı göster</td>
       </table>
@@ -128,7 +137,7 @@
         </table>
         <br />
                     <div>
-                    Etikete ahip olan notlar
+                    Etikete sahip olan notlar
                         <tags-input ng-model="filterTags" display-property="name" placeholder="Etiket girin" replace-spaces-with-dashes="false"
                                     min-length="2">
                             <auto-complete source="loadTags($query)" min-length="2"></auto-complete>
@@ -137,13 +146,13 @@
           
             <br />          
       Kişilere ait olan notlar
-        <tags-input ng-model="$parent.kisis" placeholder="Kişi Seçiniz" display-property="name" replace-spaces-with-dashes="false" min-length="2">
+        <tags-input ng-model="kisis" placeholder="Kişi Seçiniz" display-property="name" replace-spaces-with-dashes="false" min-length="2">
         <auto-complete source="kisilistele($query)" min-length="2"></auto-complete>
         </tags-input>
     
       <br />
      Çevremdeki kişilere ait olan notlar
-        <tags-input ng-model="$parent.cevres" placeholder="Çevre Seçiniz" display-property="name" replace-spaces-with-dashes="false" min-length="2">
+        <tags-input ng-model="cevres" placeholder="Çevre Seçiniz" display-property="name" replace-spaces-with-dashes="false" min-length="2">
         <auto-complete source="cevrelistele()" min-length="2"></auto-complete>
         </tags-input>
   

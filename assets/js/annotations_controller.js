@@ -116,7 +116,16 @@ angular.module('ionicApp')
         $scope.setAnnotationSearchTags = function(tags){
             $scope.filterTags = tags;
         }
-
+        
+        //Volkan Ekledi.
+        $scope.init = function(){
+        $scope.status = true;
+        }
+  
+        $scope.changeStatus = function(){
+        $scope.status =! $scope.status;
+        }
+  
         $scope.get_all_annotations = function () {
             var usersRestangular = Restangular.all("annotations");
             $scope.allAnnotationsParams = [];
@@ -147,6 +156,33 @@ angular.module('ionicApp')
                     newTags += $scope.filterTags[i].name;
                 }
                 $scope.allAnnotationsParams.verse_tags = newTags;
+                
+                //Volkan Ekledi.
+                 var kisiTags = "";
+                 var cevreTags = "";
+
+                for (var i = 0; i < $scope.kisis.length; i++) {
+                    if (i != 0)kisiTags += ",";
+                    kisiTags += $scope.kisis[i].id;
+                }
+                
+                 if($scope.status==true)
+                {
+                if (i != 0)kisiTags += ",";
+                    kisiTags += $scope.user.id;
+                }
+                
+                for (var i = 0; i < $scope.cevres.length; i++) {
+                    if (i != 0)cevreTags += ",";
+                    cevreTags += $scope.cevres[i].id;
+                }
+                
+                $scope.allAnnotationsParams.users = kisiTags;
+                $scope.allAnnotationsParams.circles = cevreTags;
+                $scope.allAnnotationsParams.chapter = $scope.sureler;
+                $scope.allAnnotationsParams.verse = $scope.ayetler;
+                
+               
             }
             $scope.allAnnotationsParams.orderby = $scope.allAnnotationsOrderBy;
             usersRestangular.customGET("", $scope.allAnnotationsParams, {'access_token': authorization.getAccessToken()}).then(function (annotations) {

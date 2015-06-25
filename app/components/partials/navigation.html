@@ -57,16 +57,7 @@
                        ng-if="user!=null && currentPage=='home'"><i class="fa fa-search"
                                                                            style="font-size: 1.3em"></i></a>
                     
-                     <select style=" height:42px" ng-model="cvrlist" ng-init="cvrlist = cevreadlar['Tüm Çevrelerim']" class="btn btn-primary dropdown-toggle"
-                     ng-if="user!=null && currentPage=='annotations'">
-                     <option value="">Tüm Çevrelerim</option>
-                     <option value="1">Herkes</option>
-                     <option value="2">Sadece Ben</option>
-                     <option ng-repeat="item in cevreadlar" value='{{cevreadlar[$index].id}}'>{{cevreadlar[$index].name}}</option>
-                     <option value="3">AYRINTILI ARAMA</option>
-                     </select>
-                     
-                    <a class="btn btn-primary" data-target="#annotationsFilterModal" data-toggle="modal"
+                     <a class="btn btn-primary" data-target="#annotationsFilterModal" data-toggle="modal"
                        ng-if="user!=null && currentPage=='annotations'"><i class="fa fa-search"
                                                                            style="font-size: 1.3em"></i></a>
 

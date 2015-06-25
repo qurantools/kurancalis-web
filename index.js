@@ -508,6 +508,7 @@ app.factory('ChapterVerses', function ($resource) {
         };
         
         $scope.cevrelistele = function() { 
+            var listamam=[];
             var cevregosterRestangular = Restangular.all("circles");
             return cevregosterRestangular.customGET("", {}, {'access_token': $scope.access_token});            
         };
@@ -735,80 +736,56 @@ app.factory('ChapterVerses', function ($resource) {
         $scope.submitEditor2 = function () {
             $scope.submitEditor($scope.theTags);
         }
-
-
         
-        cVCircles = function(annoid) { 
+        coVliste = function(annoid) { 
             var cevregosterRestangular = Restangular.one("annotations",annoid).all("permissions");
-           $scope.cevres=[];
             cevregosterRestangular.customGET("", "", {'access_token': $scope.access_token}).then(function (cevreliste) {
            
-           var clis=[];
-           
+           var clis=[];           
            for(var i=0;i<cevreliste.canViewCircles.length;i++)
            {
            clis.push({'id':cevreliste.canViewCircles[i].id,'name':cevreliste.canViewCircles[i].name});
-           }
-           
+           }           
            $scope.cevres=clis;
-            });            
-        }
-        
-        cVUsers = function(annoid) { 
-            var cevregosterRestangular = Restangular.one("annotations",annoid).all("permissions");
-            $scope.kisis=[];
-            cevregosterRestangular.customGET("", "", {'access_token': $scope.access_token}).then(function (cevreliste) {
-           
-           var clis=[];
-           
+            
+           var clis1=[];
            for(var i=0;i<cevreliste.canViewUsers.length;i++)
            {
-           clis.push({'id':cevreliste.canViewUsers[i].id,'name':cevreliste.canViewUsers[i].name});
+           clis1.push({'id':cevreliste.canViewUsers[i].id,'name':cevreliste.canViewUsers[i].name});
            }
            
-           $scope.kisis=clis;
-            });            
-        }
-        
-        cOCircles = function(annoid) { 
-            var cevregosterRestangular = Restangular.one("annotations",annoid).all("permissions");
-            $scope.yrmcevres=[];
-            cevregosterRestangular.customGET("", "", {'access_token': $scope.access_token}).then(function (cevreliste) {
-           
-           var clis=[];
-           
+           $scope.kisis=clis1;
+            
+           var clis2=[];           
            for(var i=0;i<cevreliste.canCommentCircles.length;i++)
            {
-           clis.push({'id':cevreliste.canCommentCircles[i].id,'name':cevreliste.canCommentCircles[i].name});
+           clis2.push({'id':cevreliste.canCommentCircles[i].id,'name':cevreliste.canCommentCircles[i].name});
            }
            
-           $scope.yrmcevres=clis;
-            });            
-        }
+           $scope.yrmcevres=clis2;
         
-        cOUsers = function(annoid) { 
-            var cevregosterRestangular = Restangular.one("annotations",annoid).all("permissions");
-            $scope.yrmkisis=[];
-            cevregosterRestangular.customGET("", "", {'access_token': $scope.access_token}).then(function (cevreliste) {
-           
-           var clis=[];
-           
+           var clis3=[];           
            for(var i=0;i<cevreliste.canCommentUsers.length;i++)
            {
-           clis.push({'id':cevreliste.canCommentUsers[i].id,'name':cevreliste.canCommentUsers[i].name});
+           clis3.push({'id':cevreliste.canCommentUsers[i].id,'name':cevreliste.canCommentUsers[i].name});
            }
            
-           $scope.yrmkisis=clis;
+           $scope.yrmkisis=clis3; 
+             
             });            
         }
-        
+                
         $scope.showEditor = function (annotation, position) {
             
-            cVCircles(annotation.annotationId);
-            cVUsers(annotation.annotationId);
-            cOCircles(annotation.annotationId);
-            cOUsers(annotation.annotationId);
-             
+            $scope.cevres=[];
+            $scope.kisis=[];
+            $scope.yrmcevres=[];
+            $scope.yrmkisis=[];
+           
+            if (typeof annotation.annotationId != 'undefined') {
+                coVliste(annotation.annotationId);
+            }
+            
             var newTags = [];
            
             //Volkan Ekledi.
