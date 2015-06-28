@@ -335,6 +335,8 @@ app.factory('ChapterVerses', function ($resource) {
         $scope.annotationModalDataTagsInput = [];
         $scope.yrmkisis=[];
         $scope.yrmcevres=[];
+        $scope.kisis=[];
+        $scope.cevres=[];
         
         //    $scope.user = null;
 
@@ -499,7 +501,6 @@ app.factory('ChapterVerses', function ($resource) {
 
 //Volkan Ekledi.
 
-
         function cevregoster() { 
             var cevregosterRestangular = Restangular.all("circles");
             cevregosterRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (cevreliste) {
@@ -507,10 +508,21 @@ app.factory('ChapterVerses', function ($resource) {
             });            
         };
         
-        $scope.cevrelistele = function() { 
-            var listamam=[];
+        var listamam=[];
+        
+        function cevrelistele1() { 
             var cevregosterRestangular = Restangular.all("circles");
-            return cevregosterRestangular.customGET("", {}, {'access_token': $scope.access_token});            
+            cevregosterRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (cevreliste) {
+            listamam = cevreliste;    
+            });         
+        };
+        
+         $scope.cevrelistele = function() { 
+            
+            cevrelistele1();
+           listamam.push({'id':'-2','name':'Tüm Çevrelerim'});
+           listamam.push({'id':'-1','name':'Herkes'});
+             return listamam;          
         };
 
         $scope.kisilistele = function (kisiad) {
@@ -1063,6 +1075,35 @@ app.factory('ChapterVerses', function ($resource) {
             $scope.goToVerseTag($scope.targetVerseForTagContent, $scope.myRoute['tag']);
         }
 
+        //Volkan Ekledi.
+        $scope.init = function(){
+        $scope.status = true;
+        }
+  
+        $scope.changeStatus = function(){
+        $scope.status =! $scope.status;
+        }
+        
+       $scope.secili = ["16", "32"];
+       $scope.annotationSearchAuthorSelection = $scope.secili;
+       $scope.annotationSearchAuthorMask="48";
+
+        $scope.annotationSearchAuthorToggleSelection = function annotationSearchAuthorToggleSelection(author_id) {
+            var idx = $scope.annotationSearchAuthorSelection.indexOf(author_id);
+            if (idx > -1) {
+                $scope.annotationSearchAuthorSelection.splice(idx, 1);
+            }
+            else {
+                $scope.annotationSearchAuthorSelection.push(author_id);
+            }
+            $scope.annotationSearchAuthorMask = 0;
+            for (var index in $scope.annotationSearchAuthorSelection) {
+                $scope.annotationSearchAuthorMask = $scope.annotationSearchAuthorMask | $scope.annotationSearchAuthorSelection[index];
+            }
+        };
+       
+        //
+        
         $scope.goToVerseTag = function (verseId, tag) {
             if ($scope.targetVerseForTagContent != -1) {
                 $scope.verseTagContentParams = [];
@@ -1070,6 +1111,34 @@ app.factory('ChapterVerses', function ($resource) {
                 $scope.verseTagContentParams.verse_tags = tag;
                 $scope.loadVerseTagContent($scope.verseTagContentParams, verseId);
                 $scope.verseTagContentAuthor = $scope.getSelectedVerseTagContentAuthor(); //set combo
+            
+            //Volkan Ekledi
+            
+             $scope.allAnnotationsParams = [];
+             var kisiTags = "";
+             var cevreTags = "";
+
+                for (var i = 0; i < $scope.kisis.length; i++) {
+                    if (i != 0)kisiTags += ",";
+                    kisiTags += $scope.kisis[i].id;
+                }
+                
+                for (var i = 0; i < $scope.cevres.length; i++) {
+                    if (i != 0)cevreTags += ",";
+                    cevreTags += $scope.cevres[i].id;
+                }
+                
+                 $scope.allAnnotationsParams.own_annotations="0";
+                
+                if($scope.status==true)
+                { $scope.allAnnotationsParams.own_annotations="1"; }    
+                
+                $scope.allAnnotationsParams.users = kisiTags;
+                $scope.allAnnotationsParams.circles = cevreTags;
+                $scope.allAnnotationsParams.author = $scope.annotationSearchAuthorMask;
+            
+            //
+            
                 $scope.scopeApply();
             } else {
                 $scope.targetVerseForTagContent = 0;
@@ -1306,7 +1375,7 @@ app.factory('ChapterVerses', function ($resource) {
 
         //selected authors
         $scope.selection = ["16", "32"];
-
+        
         $scope.verseTagContentAuthor = $scope.selection[0];
 
 

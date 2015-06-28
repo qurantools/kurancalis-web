@@ -15,11 +15,11 @@
                                on-select="setSelectedChapter($item)"
                                ng-enter=""
                             >
-                        <ui-select-match placeholder="Sure">{{$select.selected.id}}: {{$select.selected.nameTr}}
+                        <ui-select-match placeholder="Sure">{{$select.selected.id}}: {{$select.selected.nameTr}
                         </ui-select-match>
                         <ui-select-choices
-                                repeat="chapter in chapters | selectionFilter: {id: $select.search,nameTr: $select.search,nameTr2: $select.search}">
-                            {{chapter.id}}: {{chapter.nameTr}} / {{chapter.nameTr2}}
+                                repeat="chapter in chapters | selectionFilter: {id: $select.search,nameTr: $select.search}">
+                            {{chapter.id}}: {{chapter.nameTr}}
                         </ui-select-choices>
                     </ui-select>
                 </div>
@@ -43,17 +43,21 @@
                     </button>
                     
                     <!--Volkan Ekledi-->
-                     <select style=" height:42px" ng-model="cvrlist" ng-init="cvrlist = cevreadlar['Tüm Çevrelerim']" class="btn btn-primary dropdown-toggle"
-                     ng-if="user!=null && currentPage=='home'">
-                     <option value="">Tüm Çevrelerim</option>
-                     <option value="1">Herkes</option>
-                     <option value="2">Sadece Ben</option>
-                     <option ng-repeat="item in cevreadlar" value='{{cevreadlar[$index].id}}'>{{cevreadlar[$index].name}}</option>
-                     <option value="3">AYRINTILI ARAMA</option>
-                     </select>
-                     
-                     <!--Volkan Ekledi-->
-                    <a class="btn btn-primary" data-target="#homearama" data-toggle="modal"
+                    
+                    <div class="btn-group" ng-class='{open: open}' ng-if="user!=null && currentPage=='home'">
+                    <button style="background-color:#1abc9c; color:White; height:42px" class="btn">Tüm Çevrelerim</button>
+                    <button style="background-color:#1abc9c; height:42px" class="btn dropdown-toggle" data-toggle="dropdown" ng-click='open=!open'><span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                    <li><a style="color:White;" class="btn btn-primary">Tüm Çevrelerim</a></li>
+                    <li><a style="color:White;" class="btn btn-primary">Herkes</a></li>
+                    <li><a style="color:White;" class="btn btn-primary">Sadece Ben</a></li>
+                    <li style="color:White" ng-repeat="item in cevreadlar" value='{{cevreadlar[$index].id}}'><a style="color:White;" class="btn btn-primary">{{cevreadlar[$index].name}}</a></li>
+                    <li><a style="color:White;" class="btn btn-primary" data-target="#homearama" data-toggle="modal">AYRINTILI ARAMA</a></li>
+                    </ul>
+                    </div>
+                    
+                      <!--Volkan Ekledi-->
+                       <a class="btn btn-primary" data-target="#homearama" data-toggle="modal"
                        ng-if="user!=null && currentPage=='home'"><i class="fa fa-search"
                                                                            style="font-size: 1.3em"></i></a>
                     

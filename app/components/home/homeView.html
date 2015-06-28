@@ -106,14 +106,14 @@
     
     <div class="well">
      Çevremdeki kişilere ait olan notlar
-        <tags-input ng-model="$parent.cevres" placeholder="Çevre Seçiniz" display-property="name" replace-spaces-with-dashes="false" min-length="2">
+        <tags-input ng-model="cevres" placeholder="Çevre Seçiniz" display-property="name" replace-spaces-with-dashes="false" min-length="2">
         <auto-complete source="cevrelistele()" min-length="2"></auto-complete>
         </tags-input>
     </div>
     
     <div class="well">
       Kişilere ait olan notlar
-        <tags-input ng-model="$parent.kisis" placeholder="Kişi Seçiniz" display-property="name" replace-spaces-with-dashes="false" min-length="2">
+        <tags-input ng-model="kisis" placeholder="Kişi Seçiniz" display-property="name" replace-spaces-with-dashes="false" min-length="2">
         <auto-complete source="kisilistele($query)" min-length="2"></auto-complete>
         </tags-input>
         </div>
@@ -125,7 +125,7 @@
 
                 <div class="modal-footer">
                     <a href="#" class="btn btn-primary btn-wide" data-dismiss="modal"
-                       ng-click="search_all_annotations()">Tamam</a>
+                       ng-click="goToVerseTag()">Tamam</a>
                 </div>
             </div>
         </div>

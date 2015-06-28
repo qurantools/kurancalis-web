@@ -166,11 +166,10 @@ angular.module('ionicApp')
                     kisiTags += $scope.kisis[i].id;
                 }
                 
-                 if($scope.status==true)
-                {
-                if (i != 0)kisiTags += ",";
-                    kisiTags += $scope.user.id;
-                }
+                $scope.allAnnotationsParams.own_annotations="0";
+                
+                if($scope.status==true)
+                { $scope.allAnnotationsParams.own_annotations="1"; }                
                 
                 for (var i = 0; i < $scope.cevres.length; i++) {
                     if (i != 0)cevreTags += ",";

@@ -24,21 +24,21 @@ angular.module('ionicApp')
 
         //Volkan Ekledi.
 
-        $scope.annotationSearchAuthorSelection = $scope.selection;
+//        $scope.annotationSearchAuthorSelection = $scope.selection;
 
-        $scope.annotationSearchAuthorToggleSelection = function annotationSearchAuthorToggleSelection(author_id) {
-            var idx = $scope.annotationSearchAuthorSelection.indexOf(author_id);
-            if (idx > -1) {
-                $scope.annotationSearchAuthorSelection.splice(idx, 1);
-            }
-            else {
-                $scope.annotationSearchAuthorSelection.push(author_id);
-            }
-            $scope.annotationSearchAuthorMask = 0;
-            for (var index in $scope.annotationSearchAuthorSelection) {
-                $scope.annotationSearchAuthorMask = $scope.annotationSearchAuthorMask | $scope.annotationSearchAuthorSelection[index];
-            }
-        };
+//        $scope.annotationSearchAuthorToggleSelection = function annotationSearchAuthorToggleSelection(author_id) {
+//            var idx = $scope.annotationSearchAuthorSelection.indexOf(author_id);
+//            if (idx > -1) {
+//                $scope.annotationSearchAuthorSelection.splice(idx, 1);
+//            }
+//            else {
+//                $scope.annotationSearchAuthorSelection.push(author_id);
+//            }
+//            $scope.annotationSearchAuthorMask = 0;
+//            for (var index in $scope.annotationSearchAuthorSelection) {
+//                $scope.annotationSearchAuthorMask = $scope.annotationSearchAuthorMask | $scope.annotationSearchAuthorSelection[index];
+//            }
+//        };
 
         $scope.init = function () {
             $scope.status = true;
@@ -130,10 +130,12 @@ angular.module('ionicApp')
 
 
         $scope.editAnnotation = function (index) {
+            console.log("editAnnotation - scope.filteredAnnotations:" + JSON.stringify($scope.filteredAnnotations))
             if (typeof $scope.filteredAnnotations != 'undefined' && $scope.filteredAnnotations.length > 0) {
                 index = $scope.getAnnotationIndexFromFilteredAnnotationIndex(index);
             }
             annotator.onEditAnnotation($scope.annotations[index]);
+            annotator.updateAnnotation($scope.annotations[index]);
 
         }
 
