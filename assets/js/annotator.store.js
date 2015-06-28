@@ -140,7 +140,6 @@
             if (typeof this.annotator.getAccessToken() === 'undefined' || this.annotator.getAccessToken() == '') {
                 return;
             }
-            ;
             return this._apiRequest('read', null, this._onLoadAnnotations);
         };
 
@@ -239,30 +238,21 @@
                     'Content-Type': 'application/json; charset=utf-8'
                 });
 
-                //mobil scope değişti
-                //theView
-                if (!config_data.isMobile) {
-                    /*
-                    var _chapter = angular.element(document.getElementById('theView')).scope().chapter_id;
-                    var _author = angular.element(document.getElementById('theView')).scope().author_mask;
-                    */
-                    var _chapter = annotator.getChapterId();
-                    var _author = annotator.getAuthorMask();
-                    var _users = annotator.getUserId();
-                } else {
-                    /*
-                     var _chapter = angular.element(document.getElementById('MainCtrl')).scope().chapter_id;
-                     var _author = angular.element(document.getElementById('MainCtrl')).scope().author_mask;
-                     */
-                    var _chapter = annotator.getChapterId();
-                    var _author = annotator.getAuthorMask();
-                    var _users = annotator.getUserId();
+                var queryParams = annotator.getQueryParameters();
+                var _chapter = queryParams.chapter;
+                var _verses = queryParams.verses;
+                var _author = queryParams.author_mask;
+                var _users = queryParams.users;
+                var _circles = queryParams.circles;
+                var _own_annotations = queryParams.own_annotations;
 
-                }
                 data = {
                     chapter: _chapter,
+                    verses: _verses,
                     author: _author,
-                    users: _users
+                    circles: _circles,
+                    users: _users,
+                    own_annotations: _own_annotations
                 };
                 opts.dataType = 'json';
 
@@ -355,18 +345,15 @@
             highlights = annotation.highlights;
             delete annotation.highlights;
             $.extend(annotation, this.options.annotationData);
-            //theView
-            // var tidBlock = angular.element(document.getElementById('theView')).scope().translationDivMap[annotation.translationId];
 
             var tidBlock = annotator.getTranslationDivMap(annotation.translationId);
             annotation.ranges[0].start = annotation.ranges[0].start.replace(tidBlock, "");
             annotation.ranges[0].end = annotation.ranges[0].end.replace(tidBlock, "");
             // hack
-            annotation.chapterId = this.annotator.getChapterId();
-
-            annotation.author = this.annotator.getAuthorMask();
-
-            annotation.users = this.annotator.getUserId();
+            //can be deleted
+            //annotation.chapterId = this.annotator.getChapterId();
+            //annotation.author = this.annotator.getAuthorMask();
+            //annotation.users = this.annotator.getUserId();
 
             annotation.content = annotation.text;
             annotation.colour = annotation.colour;

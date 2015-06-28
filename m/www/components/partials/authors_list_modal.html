@@ -16,8 +16,8 @@
                             type="checkbox"
                             name="selectedauthors[]"
                             value="{{author.id}}"
-                            ng-checked="$parent.selection.indexOf(author.id) > -1"
-                            ng-click="toggleSelection(author.id)"
+                            ng-checked="detailedSearchAuthorSelection.indexOf(author.id) > -1"
+                            ng-click="detailedSearchAuthorToggleSelection(author.id)"
                             >
                 </label>
                 {{author.name}}

@@ -61,75 +61,8 @@
 
 <div ng-include="'app/components/partials/authors_modal.html'"></div>
 <div ng-include="'app/components/partials/editor_modal.html'"></div>
+<div ng-include="'app/components/partials/detailed_search.html'"></div>
 
-<div class="modal" id="homearama">
-        <div style="width:750px" class="modal-dialog fixed-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" data-dismiss="modal" aria-hidden="true" style="float:right;"><i
-                            class="fa fa-close"></i></button>
-                    <h4 class="modal-title">Filtre seçenekleri</h4>
-                </div>
-
-                <div class="modal-body">
-                    
-                    <table style="width: 700px">
-    <tr>
-        <td style="width: 260px">
-        
-        <strong>
-            Yazarlar</strong>
-        <br />
-        <br />
-         <div>
-                        <ul class="selectable_list">
-                            <li ng-repeat="author in authors"
-                                ng-click="annotationSearchAuthorToggleSelection(author.id)"
-                                ng-class="{ 'selected_list_item': annotationSearchAuthorSelection.indexOf(author.id) > -1}">
-                                {{author.name}}
-                            </li>
-                        </ul>
-
-                    </div>
-        </td>
-        <td style="width: 440px; height: 21px; border-left: dimgray 1px solid; padding-left: 10px; vertical-align: top;">
-         
-    <div class="well" ng-init="init()">
-    <table>
-      <td>
-      <i class="fa fa-toggle-on aktif" ng-if="status == true" ng-click="changeStatus();"></i>
-      <i class="fa fa-toggle-on fa-rotate-180 inactive" ng-if="status == false" ng-click="changeStatus();"></i>
-      </td>
-      <td align="left" style="width:100%; padding-left: 15px;">      Benim notlarımı göster</td>
-      </table>
-     </div>
-    
-    <div class="well">
-     Çevremdeki kişilere ait olan notlar
-        <tags-input ng-model="cevres" placeholder="Çevre Seçiniz" display-property="name" replace-spaces-with-dashes="false" min-length="2">
-        <auto-complete source="cevrelistele()" min-length="2"></auto-complete>
-        </tags-input>
-    </div>
-    
-    <div class="well">
-      Kişilere ait olan notlar
-        <tags-input ng-model="kisis" placeholder="Kişi Seçiniz" display-property="name" replace-spaces-with-dashes="false" min-length="2">
-        <auto-complete source="kisilistele($query)" min-length="2"></auto-complete>
-        </tags-input>
-        </div>
-        </td>
-    </tr>
-</table>
-                   
-                </div>
-
-                <div class="modal-footer">
-                    <a href="#" class="btn btn-primary btn-wide" data-dismiss="modal"
-                       ng-click="goToVerseTag()">Tamam</a>
-                </div>
-            </div>
-        </div>
-    </div>
 
 <div class="cd-panel from-right" id="cd-panel-right">
     <!--     <a href="#0" class="cd-panel-close">Close</a>-->

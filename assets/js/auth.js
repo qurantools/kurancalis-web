@@ -85,6 +85,10 @@ authorizationModule.factory('User', function ($resource) {
                         //get token
                         responseData.token = data.token;
                         responseData.loggedIn = true;
+                        responseData.user = data.user;
+
+                        //set cookie
+                        localStorageService.set('access_token', data.token);
                         faceBookResponseMethod(responseData);
                     },
                     function (error) {
@@ -95,6 +99,8 @@ authorizationModule.factory('User', function ($resource) {
                         //factory.log_out();
                         responseData.loggedIn = false;
                         responseData.token = "error";
+                        //remove cookie if exist
+                        localStorageService.remove('access_token');
                         faceBookResponseMethod(responseData);
                     }
                 );
@@ -102,6 +108,7 @@ authorizationModule.factory('User', function ($resource) {
         }
 
 
+        /*
         factory.get_user_info = function () {
             var usersRestangular = Restangular.all("users");
             //TODO: document knowhow: custom get with custom header
@@ -111,12 +118,10 @@ authorizationModule.factory('User', function ($resource) {
             );
         };
 
+        */
+
         factory.logOut = function (faceBookResponseMethod) {
             var responseData = {loggedOut: false};
-            if (typeof annotator != 'undefined') {
-                annotator.destroy();
-            }
-
 
             //remove auth
             Facebook.api({

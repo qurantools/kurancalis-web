@@ -899,12 +899,24 @@
             Annotator._instances.push(this);
         }
 
-        Annotator.prototype.setAccessToken = function (at) {
-            this.accessToken = at;
+        Annotator.prototype.setQueryParameters = function (queryParameters ) {
+            this.queryParameters = queryParameters;
+
+        };
+
+        Annotator.prototype.getQueryParameters = function () {
+            return this.queryParameters;
+
+        };
+
+        Annotator.prototype.setAccessToken = function (access_token) {
+            return this.access_token = access_token;
+
         };
 
         Annotator.prototype.getAccessToken = function () {
-            return this.accessToken;
+            return this.access_token ;
+
         };
 
         Annotator.prototype.setTranslationDivMap = function (value) {
@@ -915,18 +927,6 @@
             return this.translationDivMap[index];
         };
 
-        Annotator.prototype.setChapterId = function (value) {
-            this.chapterId = value;
-        };
-        Annotator.prototype.getChapterId = function () {
-            return this.chapterId;
-        };
-        Annotator.prototype.setUserId = function (value) {
-            this.userId = value;
-        };
-        Annotator.prototype.getUserId = function () {
-            return this.userId;
-        };
 
         Annotator.prototype.setAuthorMask = function (value) {
             this.authorMask = value;
@@ -1079,7 +1079,6 @@
             var annotation;
             annotation = {};
             this.publish('beforeAnnotationCreated', [annotation]);
-            angular.element(document.getElementById('MainCtrl')).scope().addAnnotation(annotation);
             return annotation;
         };
 
@@ -1143,7 +1142,7 @@
                 }
             }
             this.publish('annotationDeleted', [annotation]);
-            angular.element(document.getElementById('MainCtrl')).scope().removeAnnotation(annotation);
+
             return annotation;
         };
 
@@ -1382,19 +1381,7 @@
                 return $(this).data("annotation");
             });
 
-            //mobil theView
-            angular.element(document.getElementById('theView')).scope().filteredAnnotations = annotations;
-            angular.element(document.getElementById('theView')).scope().filterSingleAnnotation = true;
-            angular.element(document.getElementById('theView')).scope().scopeApply();
-            if(!config_data.isMobile){
-                openPanel();
-            }else{
-                angular.element(document.getElementById('theView')).scope().openModal('annotations_on_page');
-
-
-
-            }
-
+            this.publish('highlightClicked', [annotations]);
 
             //  return this.showViewer($.makeArray(annotations), Util.mousePosition(event, this.wrapper[0]));
         };
@@ -1441,7 +1428,8 @@
             this.subscribe('annotationEditorHidden', cancel);
             this.subscribe('annotationEditorSubmit', save);
 
-            angular.element(document.getElementById('MainCtrl')).scope().showEditor(annotation, position);
+            this.publish("adderClicked",[annotation, position]);
+
 
 
         };
@@ -1465,7 +1453,7 @@
             this.subscribe('annotationEditorHidden', cleanup);
             this.subscribe('annotationEditorSubmit', update);
             this.viewer.hide();
-            return angular.element(document.getElementById('MainCtrl')).scope().showEditor(annotation, offset);
+            this.publish("editClicked",[annotation, offset]);
         };
 
         Annotator.prototype.onDeleteAnnotation = function (annotation) {
