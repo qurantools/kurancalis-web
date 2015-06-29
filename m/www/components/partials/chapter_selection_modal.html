@@ -26,7 +26,7 @@
 
         <div class="list">
             <label class="item item-radio" ng-repeat="chapter in chapters | selectionFilter: {id: chapterFilter,nameTr: chapterFilter,nameTr2: chapterFilter}">
-                <input type="radio" name="group" ng-click="goToVerseParameters.setSelectedChapterForGoto(chapter)"/>
+                <input type="radio" name="group" ng-click="goToVerseParameters.setSelectedChapter(chapter)"/>
 
                 <div class="item-content">
                     {{chapter.id}}: {{chapter.nameTr}}-{{chapter.nameTr2}}

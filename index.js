@@ -487,7 +487,7 @@ app.factory('ChapterVerses', function ($resource) {
             return status;
         };
 
-        $scope.goToVerseParameters.setSelectedChapterForGoto = function(chapter){
+        $scope.goToVerseParameters.setSelectedChapter = function(chapter){
             $scope.goToVerseParameters.chapter = chapter;
         };
 
@@ -533,7 +533,7 @@ app.factory('ChapterVerses', function ($resource) {
                 tagParameter[i] = tagList[i].id;
             }
 
-            return tagParameter;
+            return tagParameter.join(',');
         };
 
 

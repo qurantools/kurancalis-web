@@ -11,8 +11,8 @@ angular.module('ionicApp')
         //detailed search screen parameters
         $scope.query_chapter_id=$scope.chapter_id;
         $scope.query_author_mask=$scope.author_mask;
-        $scope.query_circles="";
-        $scope.query_users="";
+        $scope.query_circles=[];
+        $scope.query_users=[];
         $scope.query_verses="";
         $scope.query_own_annotations=true;
 
