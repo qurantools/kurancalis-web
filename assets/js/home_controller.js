@@ -289,9 +289,11 @@ angular.module('ionicApp')
 
         //go to chapter
         $scope.goToChapter = function () {
+
             $location.path('/chapter/' + $scope.query_chapter_id + '/author/' + $scope.query_author_mask + '/verse/' + $scope.verse.number + '/', false);
             $scope.list_translations();
             $scope.updateVerseTagContent();
+            $scope.storeChapterViewParameters();
 
 
         };
