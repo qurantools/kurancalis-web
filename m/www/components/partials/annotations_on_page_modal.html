@@ -36,7 +36,7 @@
             <div>
                 <blockquote>{{annotation.quote}}</blockquote>
             </div>
-            <div class="s_a_text">
+            <div class="s_a_text"  style="background-color:#ddd;">
                 <span ng-bind-html="annotation.text | newLineAllowed | to_trusted"></span>
             </div>
             <div ng-repeat="annotationTag in annotation.tags" class="tag label label-info s_a_tag">
@@ -45,10 +45,10 @@
             <div class="row" style="padding:5px 15px">
                 <div style="float: left">{{annotation.updated | date: 'dd/MM/yyyy HH:mm:ss'}}</div>
                 <div style="float: right">
-                    <button type="button" class="btn btn-primary btn-xs" ng-click="editAnnotation($index)"><i
+                    <button type="button" class="button button-balanced button-small" ng-click="editAnnotation($index)"><i
                             class="fa fa-pencil-square-o"></i>
                     </button>
-                    <button type="button" class="btn btn-primary btn-xs" ng-click="deleteAnnotation($index)"><i
+                    <button type="button" class="button button-balanced button-small" ng-click="deleteAnnotation($index)"><i
                             class="fa fa-trash-o"></i></button>
                 </div>
             </div>

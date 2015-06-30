@@ -9,15 +9,14 @@ angular.module('ionicApp')
         $scope.filteredAnnotations = [];
 
         //detailed search screen parameters
-        $scope.query_chapter_id=$scope.chapter_id;
-        $scope.query_author_mask=$scope.author_mask;
-        $scope.query_circles="";
-        $scope.query_users="";
-        $scope.query_verses="";
-        $scope.query_own_annotations=true;
+        $scope.query_chapter_id = $scope.chapter_id;
+        $scope.query_author_mask = $scope.author_mask;
+        $scope.query_circles = "";
+        $scope.query_users = "";
+        $scope.query_verses = "";
+        $scope.query_own_annotations = true;
 
-
-        $scope.restoreChapterViewParameters = function(localParameterData){
+        $scope.restoreChapterViewParameters = function (localParameterData) {
             $scope.query_author_mask = localParameterData.author_mask;
             $scope.query_chapter_id = localParameterData.chapter_id;
             $scope.verse = {};
@@ -25,16 +24,15 @@ angular.module('ionicApp')
             $scope.setDetailedSearchAuthorSelection($scope.query_author_mask);
         };
 
-        $scope.storeChapterViewParameters = function(){
+        $scope.storeChapterViewParameters = function () {
 
             var localParameterData = {};
-            localParameterData.author_mask=$scope.query_author_mask;
+            localParameterData.author_mask = $scope.query_author_mask;
             localParameterData.chapter_id = $scope.query_chapter_id;
             localParameterData.verse_number = $scope.verse.number;
 
             localStorageService.set('chapter_view_parameters', localParameterData);
         };
-
 
 
         $scope.detailedSearchAuthorToggleSelection = function (author_id) {
@@ -62,9 +60,9 @@ angular.module('ionicApp')
             }
         };
 
-        $scope.updateTextareaHeight = function(testareaID) {
+        $scope.updateTextareaHeight = function (testareaID) {
             var element = document.getElementById(testareaID);
-            element.style.height =  element.scrollHeight + "px";
+            element.style.height = element.scrollHeight + "px";
         };
 
 
@@ -145,11 +143,9 @@ angular.module('ionicApp')
         };
 
 
-
-        $scope.toggleDetailedSearchOwnAnnotations = function(){
-            $scope.query_own_annotations=! $scope.query_own_annotations;
+        $scope.toggleDetailedSearchOwnAnnotations = function () {
+            $scope.query_own_annotations = !$scope.query_own_annotations;
         }
-
 
 
         $scope.resetAnnotationFilter = function () {
@@ -236,7 +232,7 @@ angular.module('ionicApp')
             }
 
             //get tag Parameters
-            var tagParameters = $scope.getTagParametersForAnnotatorStore($scope.cevres,$scope.yrmcevres,$scope.kisis,$scope.yrmkisis,$scope.annotationModalDataTagsInput)
+            var tagParameters = $scope.getTagParametersForAnnotatorStore($scope.cevres, $scope.yrmcevres, $scope.kisis, $scope.yrmkisis, $scope.annotationModalDataTagsInput)
             //now annotationModalData belogs to root scope, may be we can get it later
             $scope.annotationModalData.canViewCircles = tagParameters.canViewCircles;
             $scope.annotationModalData.canCommentCircles = tagParameters.canCommentCircles;
@@ -264,8 +260,6 @@ angular.module('ionicApp')
         };
 
 
-
-
         $scope.authorFilter = function (item) {
             return $scope.selection.indexOf(item.id) > -1;
         };
@@ -283,7 +277,7 @@ angular.module('ionicApp')
                 }
             } else {
                 var elem = document.getElementById(elementId);
-                $ionicScrollDelegate.scrollTo(0,elem.offsetTop,false);
+                $ionicScrollDelegate.scrollTo(0, elem.offsetTop, false);
             }
         };
 
@@ -299,7 +293,7 @@ angular.module('ionicApp')
 
         //go to chapter / verse from navigation header
         $scope.goToVerse = function () {
-            $scope.query_chapter_id = $scope.goToVerseParameters.chapter.id ;
+            $scope.query_chapter_id = $scope.goToVerseParameters.chapter.id;
             $scope.verse.number = $scope.goToVerseParameters.verse;
             $scope.goToChapter();
         };
@@ -308,11 +302,11 @@ angular.module('ionicApp')
         //customized showEditor for home controller
         $scope.showEditor = function (annotation, position) {
             //call parent show editor
-            $scope.$parent.showEditor(annotation,position);
+            $scope.$parent.showEditor(annotation, position);
             if (!config_data.isMobile) {
                 $('#annotationModal').on('hidden.bs.modal', function () {
                     annotator.onEditorHide();
-                 })
+                })
             }
 
         };
@@ -328,10 +322,10 @@ angular.module('ionicApp')
                 annotator.setAccessToken($scope.access_token);
                 annotator.setTranslationDivMap($scope.translationDivMap);
 
-                var queryParams={};
+                var queryParams = {};
                 queryParams.chapter = $scope.query_chapter_id;
                 queryParams.author_mask = $scope.query_author_mask;
-                queryParams.circles = $scope.getSingleTagParametersForAnnotatorStore( $scope.query_circles);
+                queryParams.circles = $scope.getSingleTagParametersForAnnotatorStore($scope.query_circles);
                 queryParams.users = $scope.getSingleTagParametersForAnnotatorStore($scope.query_users);
                 queryParams.verses = $scope.query_verses;
                 queryParams.own_annotations = $scope.query_own_annotations;
@@ -372,16 +366,16 @@ angular.module('ionicApp')
         };
 
 
-        $scope.onHighlightClicked = function(clickedAnnotations){
+        $scope.onHighlightClicked = function (clickedAnnotations) {
 
             //mobil theView
             $scope.filteredAnnotations = clickedAnnotations;
             $scope.filterSingleAnnotation = true;
             $scope.scopeApply();
 
-            if(!config_data.isMobile){
+            if (!config_data.isMobile) {
                 openPanel();
-            }else{
+            } else {
                 $scope.openModal('annotations_on_page');
             }
 
@@ -592,6 +586,26 @@ angular.module('ionicApp')
             }
         }
 
+        $scope.verseNumberValidation = function (chapters, chapter_id, verse_number) {
+            var chapters = $scope.chapters;
+            var chapter_id = $scope.goToVerseParameters.chapter.id;
+            var verse_number = $scope.goToVerseParameters.verse;
+
+            //search array with id
+            var validationErrorMessage = "Geçerli ayet ve sure numarası giriniz";
+            var index = chapters.map(function (el) {
+                return el.id;
+            }).indexOf(chapter_id);
+            if (index == -1 || chapters[index].verseCount < verse_number || isNaN(chapter_id) || isNaN(verse_number)) {
+                if (typeof annotator != 'undefined') {
+                    Annotator.showNotification(validationErrorMessage);
+                } else {
+                    alert(validationErrorMessage);
+                }
+            } else {
+                $scope.goToVerse();
+            }
+        };
 
         if (config_data.isMobile) {
             $ionicModal.fromTemplateUrl('components/partials/annotations_on_page_modal.html', {
@@ -644,7 +658,7 @@ angular.module('ionicApp')
                     $scope.modal_authors_list.show();
                 } else if (id == 'annotations_on_page_sort') {
                     $scope.modal_annotations_on_page_sort.show();
-                } else  if (id == 'editor') {
+                } else if (id == 'editor') {
                     $scope.$parent.modal_editor.show();
                 }
             };
@@ -658,7 +672,7 @@ angular.module('ionicApp')
                     $scope.modal_authors_list.hide();
                 } else if (id == 'annotations_on_page_sort') {
                     $scope.modal_annotations_on_page_sort.hide();
-                } else  if (id == 'editor') {
+                } else if (id == 'editor') {
                     clearTextSelection();
                     $scope.$parent.modal_editor.hide();
                 }
@@ -671,20 +685,17 @@ angular.module('ionicApp')
             }
 
 
-
-
-
         }
 
 
-        $scope.initChapterViewParameters = function(){
+        $scope.initChapterViewParameters = function () {
 
             var chapterId = 1;
             var authorMask = 1040;
             var verseNumber = 1;
-            var chapterFromRoute=false;
-            var authorFromRoute=false;
-            var verseFromRoute=false;
+            var chapterFromRoute = false;
+            var authorFromRoute = false;
+            var verseFromRoute = false;
 
             if (typeof $routeParams.chapterId !== 'undefined') {
                 chapterId = $routeParams.chapterId;
@@ -699,28 +710,28 @@ angular.module('ionicApp')
                 verseFromRoute = true;
             }
 
-            var localParameterData= localStorageService.get('chapter_view_parameters');
+            var localParameterData = localStorageService.get('chapter_view_parameters');
 
-            if (localParameterData == null ) {
+            if (localParameterData == null) {
 
                 //assign  default parameters to scope and store
-                $scope.query_author_mask  = authorMask;
-                $scope.query_chapter_id   = chapterId;
+                $scope.query_author_mask = authorMask;
+                $scope.query_chapter_id = chapterId;
                 $scope.verse = {}
                 $scope.verse.number = verseNumber;
 
                 $scope.storeChapterViewParameters();
 
             }
-            else{
+            else {
                 //get from local
-                if(chapterFromRoute){
+                if (chapterFromRoute) {
                     localParameterData.chapter_id = chapterId;
                 }
-                if(authorFromRoute){
+                if (authorFromRoute) {
                     localParameterData.author_mask = authorMask;
                 }
-                if(verseFromRoute){
+                if (verseFromRoute) {
                     localParameterData.verse_number = verseNumber;
                 }
                 $scope.storeChapterViewParameters();
@@ -730,7 +741,7 @@ angular.module('ionicApp')
         };
 
 
-        $scope.initializeHomeController = function(){
+        $scope.initializeHomeController = function () {
 
             $scope.initChapterViewParameters();
             $scope.list_translations();
@@ -747,12 +758,10 @@ angular.module('ionicApp')
             });
 
 
-
             //Volkan Ekledi.
 
             $scope.detailedSearchAuthorSelection = $scope.selection;
         };
-
 
 
         //initialization

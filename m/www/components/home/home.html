@@ -58,7 +58,8 @@
                                      ng-if="verseTagsVal.verseId==verse.id" style="text-align: right;width:100%">
                                     <hr/>
                                     <button ng-repeat="verseTag in verseTagsVal.tags"
-                                            class="btn btn-xs btn-info verse_tag"
+                                            class="tag label label-info s_a_tag"
+                                            style="border:0;"
                                             ng-click="goToVerseTag(verse.id,verseTag.tag)"
                                             onclick="verseTagClicked(this)">
                                         {{verseTag.tag}}

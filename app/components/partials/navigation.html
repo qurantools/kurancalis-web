@@ -23,16 +23,16 @@
                     </ui-select>
                 </div>
                 <div style="float: left" data-placement="bottom">
-                    <input type="text" ng-model="goToVerseParameters.verse" size="3" ng-enter="goToVerse()"
+                    <input type="text" ng-model="goToVerseParameters.verse" size="3" ng-enter="verseNumberValidation()"
                            placeholder="Ayet" class="form-control"/>
                 </div>
                 <div style="float: left">
-                    <input type="hidden" ng-model="goToVerseParameters.chapter" size="12" ng-enter="goToVerse()"/>
+                    <input type="hidden" ng-model="goToVerseParameters.chapter"/>
                 </div>
 
                 <div style="float: left; ">
-                    <button type="button" id="list_translations" ng-click="goToVerse()" class="btn btn-primary">
-                        <i class="fa fa-arrow-right" style="font-size: 1.3em"></i>
+                    <button type="button" id="list_translations" ng-click="verseNumberValidation()" class="btn btn-primary">
+                        <i class="fa fa-arrow-right" style="font-size: 1.3em"></i><!-- goToVerse()-->
                     </button>
                     <span style="width: 10px;">&nbsp;</span>
                     <button class="btn btn-primary" data-target="#myModal" data-toggle="modal" type="button"

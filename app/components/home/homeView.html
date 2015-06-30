@@ -44,7 +44,7 @@
                                  ng-if="verseTagContentTranslation.authorId==verseTagContentAuthor">
                                 <strong>{{verseTagContentTranslation.verseId / 1000 |
                                     number:0}}:{{verseTagContentTranslation.verseId % 1000}}</strong>
-                                {{verseTagContentTranslation.content}}
+                                <span ng-class="{translation_rtl: authorMap[verseTagContentTranslation.authorId].language=='ar'}">{{verseTagContentTranslation.content}}</span>
                             </div>
 
                         </div>

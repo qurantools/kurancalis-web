@@ -155,11 +155,6 @@ i.inactive {color: #d9534f}
     cursor: hand;
 }
 
-.verse_tag_content {
-    background-color: #eeeeee;
-    padding: 10px;
-}
-
 .ui-select-match span, .ui-select-match span:hover {
     background-color: #ffffff;
     color: #000000;
