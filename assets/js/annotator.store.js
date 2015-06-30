@@ -349,11 +349,6 @@
             var tidBlock = annotator.getTranslationDivMap(annotation.translationId);
             annotation.ranges[0].start = annotation.ranges[0].start.replace(tidBlock, "");
             annotation.ranges[0].end = annotation.ranges[0].end.replace(tidBlock, "");
-            // hack
-            //can be deleted
-            //annotation.chapterId = this.annotator.getChapterId();
-            //annotation.author = this.annotator.getAuthorMask();
-            //annotation.users = this.annotator.getUserId();
 
             annotation.content = annotation.text;
             annotation.colour = annotation.colour;
