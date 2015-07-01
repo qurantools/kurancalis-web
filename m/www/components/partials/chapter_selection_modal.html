@@ -1,17 +1,19 @@
 <div class="modal modal-fullscreen">
-    <div class="bar bar-balanced">
-        <div style="text-align: left; width:100px;">
+    <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced">
+        <ion-nav-title></ion-nav-title>
+        <ion-nav-buttons side="left">
             <button class="button button-icon icon-left ion-arrow-left-b" ng-click="closeModal('chapter_selection')"
                     style="float: left"> Geri
             </button>
-        </div>
-        <div style="text-align: right; width:100px;">
+        </ion-nav-buttons>
+
+        <ion-nav-buttons side="right">
             <button class="button button-icon icon-left ion-checkmark"
                     ng-click="goToVerse();closeModal('chapter_selection');"
                     style="float: right">
             </button>
-        </div>
-    </div>
+        </ion-nav-buttons>
+    </ion-nav-bar>
     <ion-content overflow-scroll="true">
         <div style="height:50px"></div>
 
@@ -26,7 +28,7 @@
 
         <div class="list">
             <label class="item item-radio" ng-repeat="chapter in chapters | selectionFilter: {id: chapterFilter,nameTr: chapterFilter,nameTr2: chapterFilter}">
-                <input type="radio" name="group" ng-click="goToVerseParameters.setSelectedChapterForGoto(chapter)"/>
+                <input type="radio" name="group" ng-click="goToVerseParameters.setSelectedChapter(chapter)"/>
 
                 <div class="item-content">
                     {{chapter.id}}: {{chapter.nameTr}}-{{chapter.nameTr2}}

@@ -11,8 +11,8 @@ angular.module('ionicApp')
         //detailed search screen parameters
         $scope.query_chapter_id=$scope.chapter_id;
         $scope.query_author_mask=$scope.author_mask;
-        $scope.query_circles="";
-        $scope.query_users="";
+        $scope.query_circles=[];
+        $scope.query_users=[];
         $scope.query_verses="";
         $scope.query_own_annotations=true;
 
@@ -592,6 +592,26 @@ angular.module('ionicApp')
             }
         }
 
+        $scope.verseNumberValidation = function (chapters, chapter_id, verse_number) {
+            var chapters = $scope.chapters;
+            var chapter_id = $scope.goToVerseParameters.chapter.id;
+            var verse_number = $scope.goToVerseParameters.verse;
+
+            //search array with id
+            var validationErrorMessage = "Geçerli ayet ve sure numarası giriniz";
+            var index = chapters.map(function (el) {
+                return el.id;
+            }).indexOf(chapter_id);
+            if (index == -1 || chapters[index].verseCount < verse_number || isNaN(chapter_id) || isNaN(verse_number)) {
+                if (typeof annotator != 'undefined') {
+                    Annotator.showNotification(validationErrorMessage);
+                } else {
+                    alert(validationErrorMessage);
+                }
+            } else {
+                $scope.goToVerse();
+            }
+        };
 
         if (config_data.isMobile) {
             $ionicModal.fromTemplateUrl('components/partials/annotations_on_page_modal.html', {
@@ -723,8 +743,9 @@ angular.module('ionicApp')
                 if(verseFromRoute){
                     localParameterData.verse_number = verseNumber;
                 }
-                $scope.storeChapterViewParameters();
+
                 $scope.restoreChapterViewParameters(localParameterData);
+                $scope.storeChapterViewParameters();
             }
 
         };
@@ -744,6 +765,8 @@ angular.module('ionicApp')
                 if (typeof annotator != 'undefined') {
                     annotator.destroy();
                 }
+                //remove tags on logout
+                $scope.verseTagsJSON = [];
             });
 
 
