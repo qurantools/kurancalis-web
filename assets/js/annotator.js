@@ -1270,13 +1270,14 @@
         };
 
         Annotator.prototype.checkForEndSelection = function (event) {
-
+console.log("checkForEndSelection");
             var container, range, _k, _len2, _ref1;
             this.mouseIsDown = false;
             if (this.ignoreMouseup) {
                 return;
             }
             this.selectedRanges = this.getSelectedRanges();
+
             _ref1 = this.selectedRanges;
             for (_k = 0, _len2 = _ref1.length; _k < _len2; _k++) {
                 range = _ref1[_k];
@@ -1322,9 +1323,8 @@
                 }
             }
             else {
+                Annotator.showNotification("Not eklenecek metni seçiniz", Annotator.Notification.ERROR);
                 return this.adder.hide();
-
-
             }
         };
 
