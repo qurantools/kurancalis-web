@@ -927,14 +927,6 @@
             return this.translationDivMap[index];
         };
 
-
-        Annotator.prototype.setAuthorMask = function (value) {
-            this.authorMask = value;
-        };
-        Annotator.prototype.getAuthorMask = function () {
-            return this.authorMask;
-        };
-
         Annotator.prototype._setupWrapper = function () {
             this.wrapper = $(this.html.wrapper);
             this.element.find('script').remove();

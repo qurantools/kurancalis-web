@@ -743,8 +743,9 @@ angular.module('ionicApp')
                 if(verseFromRoute){
                     localParameterData.verse_number = verseNumber;
                 }
-                $scope.storeChapterViewParameters();
+
                 $scope.restoreChapterViewParameters(localParameterData);
+                $scope.storeChapterViewParameters();
             }
 
         };

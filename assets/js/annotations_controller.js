@@ -4,43 +4,6 @@ angular.module('ionicApp')
         $scope.allAnnotationsOrderBy='verse'
         $scope.currentPage = $scope.getCurrentPage();
 
-        /* auth */
-        $scope.onFacebookLoginSuccess = function (responseData) {
-            if (responseData.loggedIn == false) {
-                $scope.loggedIn = false;
-                $scope.logOut();
-            }
-            else {
-                $scope.access_token = responseData.token;
-                //set cookie
-                localStorageService.set('access_token', $scope.access_token);
-                //get user information
-                $scope.get_user_info();
-
-                $scope.loggedIn = true;
-                // $scope.list_translations();
-                if ($scope.getCurrentPage() == 'home') {
-                    $scope.list_translations();
-                }
-            }
-        }
-
-        $scope.onFacebookLogOutSuccess = function (responseData) {
-            if (responseData.loggedOut == true) {
-                $scope.user = null;
-                if (typeof annotator != 'undefined') {
-                    annotator.destroy();
-                }
-
-                $scope.verseTagsJSON = {};
-                if ($scope.getCurrentPage() != "home") {
-
-                    $scope.chapter_id = 1;
-                    $scope.goToChapter();
-
-                }
-            }
-        }
 
         /* facebook login */
 

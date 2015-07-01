@@ -430,10 +430,7 @@ app.factory('ChapterVerses', function ($resource) {
 
                 $scope.$broadcast('logout', responseData);
 
-                if ($scope.getCurrentPage() != "home") {
-                    $scope.chapter_id = 1;
-                    $scope.goToChapter();
-                }
+                window.location.href = '#/';
             }
         }
 
