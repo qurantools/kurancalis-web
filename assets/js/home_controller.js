@@ -22,7 +22,7 @@ angular.module('ionicApp')
             $scope.query_chapter_id = localParameterData.chapter_id;
             $scope.verse = {};
             $scope.verse.number = localParameterData.verse_number;
-            $scope.setDetailedSearchAuthorSelection($scope.query_author_mask);
+
         };
 
         $scope.storeChapterViewParameters = function(){
@@ -747,6 +747,11 @@ angular.module('ionicApp')
                 $scope.restoreChapterViewParameters(localParameterData);
                 $scope.storeChapterViewParameters();
             }
+
+            //set screen variables for author mask
+            $scope.$on("authorMap ready", function handler(){
+                $scope.setDetailedSearchAuthorSelection($scope.query_author_mask);
+            });
 
         };
 
