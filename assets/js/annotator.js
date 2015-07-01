@@ -1323,7 +1323,9 @@ console.log("checkForEndSelection");
                 }
             }
             else {
-                Annotator.showNotification("Not eklenecek metni seçiniz", Annotator.Notification.ERROR);
+                if(config_data.isMobile) {
+                    Annotator.showNotification("Not eklenecek metni seçiniz", Annotator.Notification.ERROR);
+                }
                 return this.adder.hide();
             }
         };

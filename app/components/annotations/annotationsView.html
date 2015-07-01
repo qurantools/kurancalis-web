@@ -33,6 +33,7 @@
     </div>
     <div>
         <div ng-repeat="annotation in annotations" class="box">
+            <pre><span ng-bind="annotation | json"></span></pre>
             <div class="s_a_header">
                 {{annotation.verseId / 1000 | number:0}}:{{annotation.verseId % 1000}}
                 <button ng-click="showVerse(annotation)" class="btn btn-primary btn-xs" ng-if="showVerseData.annotationId!=annotation.annotationId"><i

@@ -133,3 +133,11 @@
     background-color: #eeeeee;
     padding: 10px;
 }
+
+.s_a_text {
+    margin-bottom: 0 !important;
+    text-align: left;
+    background-color: #fefae9;
+    padding: 5px;
+    display:block;
+}
