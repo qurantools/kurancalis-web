@@ -272,7 +272,7 @@ var mymodal = angular.module('ionicApp')
        }
 
        if(ekle=="1")
-       { deger.push({kisid, drm}); $scope.ackapa=false;}
+       { deger.push({'kisid' : kisid, 'drm' : drm}); $scope.ackapa=false;}
 
          };
 
