@@ -283,7 +283,9 @@ angular.module('ionicApp')
                 }
             } else {
                 var elem = document.getElementById(elementId);
-                $ionicScrollDelegate.scrollTo(0,elem.offsetTop,false);
+                if(elem != null) {
+                    $ionicScrollDelegate.scrollTo(0, elem.offsetTop, false);
+                }
             }
         };
 
