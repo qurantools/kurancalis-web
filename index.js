@@ -372,7 +372,10 @@ app.factory('ChapterVerses', function ($resource) {
         //hide list of authors div
         $scope.showAuthorsList = false;
 
-
+        //Çevreleri listeleme - show circles
+        var listamam=[];
+        $scope.cevreadlar=[];
+       
         $scope.tutorial = function (parameter) {
             if (parameter == 'init') {
                 if ($scope.loggedIn == false) {
@@ -471,10 +474,9 @@ app.factory('ChapterVerses', function ($resource) {
 
                 status = true;
                 
-                //Volkan Ekledi.
-                //TODO:niye?
-                //cevregoster();
-                //
+                //Show Circles - Kullanıcı login olduğunda öevre listesi çekilir.
+                cevregoster();
+                
             }
             else{
                 $scope.loggedIn = false;
@@ -627,7 +629,7 @@ app.factory('ChapterVerses', function ($resource) {
 
             });
         };
-                
+        
         $scope.showEditor = function (annotation, position) {
             
             $scope.cevres=[];
@@ -895,7 +897,12 @@ app.factory('ChapterVerses', function ($resource) {
 
         //tags input auto complete
         
-         var listamam=[];
+         function cevregoster() {
+            var cevregosterRestangular = Restangular.all("circles");
+            cevregosterRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (cevreliste) {
+                $scope.cevreadlar = cevreliste;
+            });
+        };
         
         function cevrelistele1() { 
             var cevregosterRestangular = Restangular.all("circles");
