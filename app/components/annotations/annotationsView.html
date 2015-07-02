@@ -153,8 +153,8 @@
     
       <br />
      Çevremdeki kişilere ait olan notlar
-        <tags-input ng-model="cevres" placeholder="Çevre Seçiniz" display-property="name" replace-spaces-with-dashes="false" min-length="2">
-        <auto-complete source="cevrelistele()" min-length="2"></auto-complete>
+        <tags-input ng-model="cevres" placeholder="Çevre Seçiniz" display-property="name" replace-spaces-with-dashes="false" min-length="1" add-from-autocomplete-only="true" addOnBlur="false">
+        <auto-complete source="cevrelistele()"  load-on-empty="true" load-on-focus="true" ></auto-complete>
         </tags-input>
   
         </td>

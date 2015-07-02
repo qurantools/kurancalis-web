@@ -42,8 +42,8 @@
 
                             <div class="well">
                                 Çevremdeki kişilere ait olan notlar
-                                <tags-input ng-model="query_circles" placeholder="Çevre Seçiniz" display-property="name" replace-spaces-with-dashes="false" min-length="2">
-                                    <auto-complete source="cevrelistele()" min-length="2"></auto-complete>
+                                <tags-input ng-model="query_circles" placeholder="Çevre Seçiniz" display-property="name" replace-spaces-with-dashes="false" min-length="1" add-from-autocomplete-only="true"  addOnBlur="false">
+                                    <auto-complete source="cevrelistele()" ></auto-complete>
                                 </tags-input>
                             </div>
 
