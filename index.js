@@ -1031,3 +1031,10 @@ function clearTextSelection() {
         document.selection.empty();
     }
 }
+
+function focusToVerseInput(){
+    setTimeout(function(){
+        document.getElementById('chapterSelection_verse').focus();
+        document.getElementById('chapterSelection_verse').select();
+    }, 10);
+}

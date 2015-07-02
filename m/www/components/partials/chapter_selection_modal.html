@@ -22,13 +22,13 @@
                 <input type="text" placeholder="Sure" ng-model="chapterFilter" value=""/>
             </label>
             <label class="item-input-wrapper">
-                <input type="text" ng-model="goToVerseParameters.verse" size="3" placeholder="Ayet"/>
+                <input type="number" id="chapterSelection_verse" ng-model="goToVerseParameters.verse" size="3" placeholder="Ayet"/>
             </label>
         </div>
 
         <div class="list">
             <label class="item item-radio" ng-repeat="chapter in chapters | selectionFilter: {id: chapterFilter,nameTr: chapterFilter,nameTr2: chapterFilter}">
-                <input type="radio" name="group" ng-click="goToVerseParameters.setSelectedChapter(chapter)"/>
+                <input type="radio" name="group" ng-click="goToVerseParameters.setSelectedChapter(chapter)" onclick="focusToVerseInput()"/>
 
                 <div class="item-content">
                     {{chapter.id}}: {{chapter.nameTr}}-{{chapter.nameTr2}}
