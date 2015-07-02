@@ -391,12 +391,12 @@ angular.module('ionicApp')
 //Volkan Ekledi.
 
 
-        function cevregoster() {
-            var cevregosterRestangular = Restangular.all("circles");
-            cevregosterRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (cevreliste) {
-                $scope.cevreadlar = cevreliste;
-            });
-        };
+//        function cevregoster() {
+//            var cevregosterRestangular = Restangular.all("circles");
+//            cevregosterRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (cevreliste) {
+//                $scope.cevreadlar = cevreliste;
+//            });
+//        };
 
 //
 
