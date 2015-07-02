@@ -50,6 +50,7 @@ ion-content {
     text-align: center;
     vertical-align: baseline;
     white-space: nowrap;
+    margin-right: 2px;
 }
 
 .label-info {
@@ -65,4 +66,8 @@ body .overflow-scroll {
 .activeTag {
     background-color: #ffc900;
     font-size: 90%;
+}
+
+blockquote{
+    margin:0;
 }
