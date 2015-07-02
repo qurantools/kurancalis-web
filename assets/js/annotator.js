@@ -1316,7 +1316,7 @@ console.log("checkForEndSelection");
             }
             else {
                 if(config_data.isMobile) {
-                    Annotator.showNotification("Not eklenecek metni seçiniz", Annotator.Notification.ERROR);
+                    Annotator.showNotification("Önce not eklenecek metni seçiniz", Annotator.Notification.ERROR);
                 }
                 return this.adder.hide();
             }

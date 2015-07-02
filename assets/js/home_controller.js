@@ -736,12 +736,19 @@ angular.module('ionicApp')
                 }
             }
 
+            $scope.hideAllMobileModals = function(){
+                    $scope.modal_annotations_on_page.hide();
+                    $scope.modal_chapter_selection.hide();
+                    $scope.modal_authors_list.hide();
+                    $scope.modal_annotations_on_page_sort.hide();
+                    $scope.$parent.modal_editor.hide();
+            };
+
             $scope.annotationFilterOrderMobile = function (predicate) {
                 $scope.filterOrderSelect = predicate;
                 var orderBy = $filter('orderBy');
                 $scope.annotations = orderBy($scope.annotations, predicate);
             }
-
 
 
 

@@ -1,4 +1,4 @@
-<div class="modal modal-fullscreen">
+<div class="modal modal-fullscreen" >
     <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced">
         <ion-nav-title>Sayfadaki Notlar</ion-nav-title>
         <ion-nav-buttons side="left">
@@ -8,7 +8,7 @@
         </ion-nav-buttons>
 
         <ion-nav-buttons side="right">
-            <button class="button button-icon icon ion-funnel"
+            <button class="button button-icon icon ion-android-more-vertical"
             ng-click="openModal('annotations_on_page_sort')"></button>
         </ion-nav-buttons>
     </ion-nav-bar>
@@ -32,7 +32,7 @@
             <!-- s_a -->
             <div class="s_a_header">
                 {{annotation.verseId / 1000 | number:0}}:{{annotation.verseId % 1000}}
-                <div style="float:right;">{{annotation.userId | limitTo: 25}}</div>
+                <div style="float:right;">{{annotation.userName | limitTo: 25}}</div>
             </div>
             <div>
                 <blockquote>{{annotation.quote}}</blockquote>
