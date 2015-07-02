@@ -579,16 +579,7 @@ app.factory('ChapterVerses', function ($resource) {
 
             return tagParameters;
         };
-        
-        var listamam=[];
-        
-        function cevrelistele1() { 
-            var cevregosterRestangular = Restangular.all("circles");
-            cevregosterRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (cevreliste) {
-            listamam = cevreliste;    
-            });         
-        };
-        
+       
          $scope.cevrelistele = function() { 
             
             cevrelistele1();
@@ -952,11 +943,23 @@ app.factory('ChapterVerses', function ($resource) {
         };
 
         //tags input auto complete
-        $scope.cevrelistele = function() {
-            var listamam=[];
+        
+         var listamam=[];
+        
+        function cevrelistele1() { 
             var cevregosterRestangular = Restangular.all("circles");
-            return cevregosterRestangular.customGET("", {}, {'access_token': $scope.access_token});
+            cevregosterRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (cevreliste) {
+            listamam = cevreliste;    
+            });         
         };
+        
+        $scope.cevrelistele = function() {
+           cevrelistele1();
+           listamam.push({'id':'-2','name':'Tüm Çevrelerim'});
+           listamam.push({'id':'-1','name':'Herkes'});
+             return listamam;          
+        };
+       
         //tags input auto complete
         $scope.kisilistele = function (kisiad) {
             var kisilisteRestangular = Restangular.all("users/search");
