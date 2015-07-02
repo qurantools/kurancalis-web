@@ -932,6 +932,7 @@ app.factory('ChapterVerses', function ($resource) {
                     $scope.authorMap[data[i].id] = data[i];
                     $scope.setAuthors($scope.author_mask);
                 }
+                $scope.$broadcast("authorMap ready");
             });
         };
 

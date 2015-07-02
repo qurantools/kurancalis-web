@@ -342,6 +342,19 @@ var mymodal = angular.module('ionicApp')
         $scope.ackapa=true;
 
         };
+
+
+        $scope.initializePeopleCircles = function(){
+            $scope.checkUserLoginStatus();
+            if($scope.loggedIn == false){
+                //redirect to home page
+                window.location.href = '#/';
+            }
+        }
+
+        //definitions are finished. Now run initialization
+        $scope.initializePeopleCircles();
+
     });
 
 
