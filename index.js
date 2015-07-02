@@ -716,56 +716,6 @@ app.factory('ChapterVerses', function ($resource) {
 
 
 
-        //Get verses of the tag from server
-        $scope.loadVerseTagContent = function (verseTagContentParams, verseId) {
-            var verseTagContentRestangular = Restangular.all("translations");
-            verseTagContentRestangular.customGET("", verseTagContentParams, {'access_token': $scope.access_token}).then(function (verseTagContent) {
-                $scope.targetVerseForTagContent = verseId;
-                $scope.verseTagContents = verseTagContent;
-            });
-        };
-
-
-
-        //Retrieve verses with the tag.
-        $scope.goToVerseTag = function (verseId, tag) {
-            if ($scope.targetVerseForTagContent != -1) {
-                $scope.verseTagContentParams = [];
-                $scope.verseTagContentParams.author = $scope.getSelectedVerseTagContentAuthor();
-                $scope.verseTagContentParams.verse_tags = tag;
-                $scope.loadVerseTagContent($scope.verseTagContentParams, verseId);
-                $scope.verseTagContentAuthor = $scope.getSelectedVerseTagContentAuthor(); //set combo
-                $scope.scopeApply();
-            } else {
-                $scope.targetVerseForTagContent = 0;
-            }
-        };
-
-        //Redisplay the verses of the tag with current params
-        $scope.updateVerseTagContent = function () {
-            if ($scope.targetVerseForTagContent != 0 && typeof $scope.verseTagContentParams.verse_tags != 'undefined') {
-                $scope.goToVerseTag($scope.targetVerseForTagContent, $scope.verseTagContentParams.verse_tags);
-            }
-        };
-
-        $scope.getSelectedVerseTagContentAuthor = function () {
-            if ($scope.activeVerseTagContentAuthor == "" ) {
-                $scope.activeVerseTagContentAuthor = $scope.selection[0];
-            }
-            else if($scope.selection.indexOf($scope.activeVerseTagContentAuthor)== -1){
-                $scope.activeVerseTagContentAuthor = $scope.selection[0];
-            }//get the first one if the previous author is not selected now
-
-
-            return $scope.activeVerseTagContentAuthor;
-        };
-
-        $scope.verseTagContentAuthorUpdate = function (item) {
-            $scope.activeVerseTagContentAuthor = item;
-            $scope.verseTagContentAuthor = $scope.activeVerseTagContentAuthor; //comboda seciliyi degistiriyor
-            $scope.updateVerseTagContent();
-        };
-
         $scope.scopeApply = function () {
             if (!$scope.$$phase) {
                 $scope.$apply();
@@ -1044,19 +994,21 @@ function toggleLeftPanel() {
 }
 
 function verseTagClicked(elem) {
+    console.log("versetagclicked");
     var closeClick = false;
     if ($(elem).hasClass('btn-warning')) {
-       // angular.element(document.getElementById('theView')).scope().targetVerseForTagContent = -1;
-        angular.element(document.getElementById('MainCtrl')).scope().targetVerseForTagContent = -1;
+        angular.element(document.getElementById('theView')).scope().targetVerseForTagContent = -1;
+     //   angular.element(document.getElementById('MainCtrl')).scope().targetVerseForTagContent = -1;
         closeClick = true;
     }
 
     //disable previous active element
-    $('.verse_tag.btn-warning').removeClass('btn-warning').removeClass('btn-sm').addClass("btn-info").addClass("btn-xs");
+    $('.verse_tag.btn-warning').removeClass('btn-warning').removeClass('btn-sm').addClass("btn-info").addClass("btn-xs").removeClass('activeTag');
+
 
     //activate element
     if (!closeClick) {
-        $(elem).addClass("btn-warning").addClass("btn-sm").removeClass('btn-info').removeClass('btn-xs');
+        $(elem).addClass("btn-warning").addClass("activeTag").addClass("btn-sm").removeClass('btn-info').removeClass('btn-xs');
     }
 }
 

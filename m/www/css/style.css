@@ -1,34 +1,31 @@
-body{
-    font-size:17px;
+body {
+    font-size: 17px;
 }
 
-ion-content{
+ion-content {
     text-align: justify;
 }
 
-
-.selectable{
+.selectable {
     -webkit-user-select: auto;
 }
 
-
-.translation{
+.translation {
 
 }
 
-.translations .item{
+.translations .item {
     font-size: 14px !important;
-    padding:5px;
+    padding: 5px;
 }
 
-.modal-fullscreen{
-    top: 0 ;
-    bottom: 0 ;
-    left: 0 ;
-    right: 0 ;
-    width: 100% ;
+.modal-fullscreen {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
 }
-
 
 .tag_colour {
     float: left;
@@ -37,11 +34,10 @@ ion-content{
 
 }
 
-.tag_colour_description{
-    float:left;
-    padding-left:5px;
+.tag_colour_description {
+    float: left;
+    padding-left: 5px;
 }
-
 
 .label {
     border-radius: 0.25em;
@@ -66,3 +62,7 @@ body .overflow-scroll {
     overflow-x: hidden;
 }
 
+.activeTag {
+    background-color: #ffc900;
+    font-size: 90%;
+}
