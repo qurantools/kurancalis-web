@@ -83,7 +83,22 @@ var app = angular.module('ionicApp', requiredModules)
                 }
             };
         }])
-    .run(['$route', '$rootScope', '$location', function ($route, $rootScope, $location) {
+    .run(['$route', '$rootScope', '$location', '$ionicPlatform', function ($route, $rootScope, $location, $ionicPlatform) {
+
+
+        $ionicPlatform.ready(function () {
+            // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+            // for form inputs)
+            if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
+                cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+            }
+            if (window.StatusBar) {
+                // org.apache.cordova.statusbar required
+                StatusBar.styleLightContent();
+            }
+        });
+
+
         var original = $location.path;
         $location.path = function (path, reload) {
             if (reload === false) {
@@ -215,6 +230,16 @@ if (config_data.isMobile == false) { //false
 
             openFB.init({appId: config_data.FBAppID});
 
+            /*
+             $ionicAppProvider.identify({
+             // The App ID (from apps.ionic.io) for the server
+             app_id: '30f3e1ed',
+             // The public API key all services will use for this app
+             api_key: 'fc14493a35cb42bd3f7dab2b09071ea96a03ad62b5d55770',
+             // The GCM project ID (project number) from your Google Developer Console (un-comment if used)
+             // gcm_id: 'YOUR_GCM_ID'
+             });
+             */
         }
     );
 
@@ -285,7 +310,7 @@ app.factory('ChapterVerses', function ($resource) {
         console.log("MainCtrl");
 
         //all root scope parameters should be defined and documented here
-        $scope.access_token="";
+        $scope.access_token = "";
         $scope.loggedIn = false;
         $scope.verseTagsJSON = {};
         $scope.chapter_id = 1;
@@ -293,10 +318,12 @@ app.factory('ChapterVerses', function ($resource) {
         $scope.chapterSelected = 1;
         var chaptersVersion = 3;
 
+        $scope.circleDropdownArray=[];
+
         //selected authors
         $scope.selection = ["16", "32"];
         $scope.verseTagContentAuthor = $scope.selection[0];
-        $scope.activeVerseTagContentAuthor="";
+        $scope.activeVerseTagContentAuthor = "";
         $scope.authorMap = new Object();
 
         /* facebook login */
@@ -315,7 +342,7 @@ app.factory('ChapterVerses', function ($resource) {
 
         //    $scope.user = null;
 
-        $scope.modal_editor=null;
+        $scope.modal_editor = null;
         $scope.author_mask = 1040;
         $scope.authorMaskCheckPoint = $scope.author_mask;
 
@@ -350,12 +377,12 @@ app.factory('ChapterVerses', function ($resource) {
         $scope.targetVerseForTagContent = 0;
 
 
-        $scope.selection=[];
+        $scope.selection = [];
 
         //hizli meal gosterimi - show verse
         $scope.showVerseData = {};
         $scope.markVerseAnnotations = true;
-        $scope.showVerseAtTranslation=0;
+        $scope.showVerseAtTranslation = 0;
 
         //tutorial
         $scope.showTutorial = 0;
@@ -373,9 +400,9 @@ app.factory('ChapterVerses', function ($resource) {
         $scope.showAuthorsList = false;
 
         //Çevreleri listeleme - show circles
-        var listamam=[];
-        $scope.cevreadlar=[];
-       
+        $scope.extendedCircles= [];
+        $scope.cevreadlar = [];
+
         $scope.tutorial = function (parameter) {
             if (parameter == 'init') {
                 if ($scope.loggedIn == false) {
@@ -427,7 +454,7 @@ app.factory('ChapterVerses', function ($resource) {
             if (responseData.loggedOut == true) {
 
                 $scope.verseTagsJSON = {};
-                $scope.access_token="";
+                $scope.access_token = "";
                 $scope.loggedIn = false;
                 $scope.user = null;
 
@@ -473,12 +500,13 @@ app.factory('ChapterVerses', function ($resource) {
                 $scope.loggedIn = true;
 
                 status = true;
-                
-                //Show Circles - Kullanıcı login olduğunda öevre listesi çekilir.
+
+                //Show Circles - Kullanıcı login olduğunda çevre listesi çekilir.
                 cevregoster();
-                
+                $scope.initializeCircleLists();
+
             }
-            else{
+            else {
                 $scope.loggedIn = false;
                 //do some cleaning
             }
@@ -486,7 +514,7 @@ app.factory('ChapterVerses', function ($resource) {
             return status;
         };
 
-        $scope.goToVerseParameters.setSelectedChapter = function(chapter){
+        $scope.goToVerseParameters.setSelectedChapter = function (chapter) {
             $scope.goToVerseParameters.chapter = chapter;
         };
 
@@ -508,7 +536,7 @@ app.factory('ChapterVerses', function ($resource) {
         /* end of auth */
 
 
-        $scope.initRoute = function(){
+        $scope.initRoute = function () {
 
             if (typeof $routeParams.tag !== 'undefined') {
                 $scope.myRoute['tag'] = $routeParams.tag;
@@ -523,12 +551,11 @@ app.factory('ChapterVerses', function ($resource) {
         };
 
 
-        $scope.getSingleTagParametersForAnnotatorStore = function(tagList){
+        $scope.getSingleTagParametersForAnnotatorStore = function (tagList) {
             //prepare tags
             var tagParameter = [];
 
-            for (var i = 0; i < tagList.length;i++)
-            {
+            for (var i = 0; i < tagList.length; i++) {
                 tagParameter[i] = tagList[i].id;
             }
 
@@ -536,7 +563,7 @@ app.factory('ChapterVerses', function ($resource) {
         };
 
 
-        $scope.getTagParametersForAnnotatorStore = function(canViewCircles, canCommentCircles,canViewUsers, canCommentUsers,tags){
+        $scope.getTagParametersForAnnotatorStore = function (canViewCircles, canCommentCircles, canViewUsers, canCommentUsers, tags) {
             //Volkan Ekledi.
             //prepare tags
             var tagParameters = {};
@@ -545,23 +572,19 @@ app.factory('ChapterVerses', function ($resource) {
             tagParameters.canCommentCircles = [];
             tagParameters.canCommentUsers = [];
 
-            for (var i = 0; i < canViewCircles.length;i++)
-            {
+            for (var i = 0; i < canViewCircles.length; i++) {
                 tagParameters.canViewCircles[i] = canViewCircles[i].id;
             }
 
-            for (var i = 0; i < canViewUsers.length;i++)
-            {
+            for (var i = 0; i < canViewUsers.length; i++) {
                 tagParameters.canViewUsers[i] = canViewUsers[i].id;
             }
 
-            for (var i = 0; i < canCommentUsers.length;i++)
-            {
+            for (var i = 0; i < canCommentUsers.length; i++) {
                 tagParameters.canCommentUsers[i] = canCommentUsers[i].id;
             }
 
-            for (var i = 0; i < canCommentCircles.length;i++)
-            {
+            for (var i = 0; i < canCommentCircles.length; i++) {
                 tagParameters.canCommentCircles[i] = canCommentCircles[i].id;
             }
 
@@ -581,16 +604,6 @@ app.factory('ChapterVerses', function ($resource) {
 
             return tagParameters;
         };
-       
-         $scope.cevrelistele = function() { 
-            
-            cevrelistele1();
-           listamam.push({'id':'-2','name':'Tüm Çevrelerim'});
-           listamam.push({'id':'-1','name':'Herkes'});
-             return listamam;          
-        };
-
-
 
         //retrives the permissions of an annotation to scope variables
         $scope.coVliste = function (annoid) {
@@ -629,20 +642,20 @@ app.factory('ChapterVerses', function ($resource) {
 
             });
         };
-        
+
         $scope.showEditor = function (annotation, position) {
-            
-            $scope.cevres=[];
-            $scope.kisis=[];
-            $scope.yrmcevres=[];
-            $scope.yrmkisis=[];
-           
+
+            $scope.cevres = [];
+            $scope.kisis = [];
+            $scope.yrmcevres = [];
+            $scope.yrmkisis = [];
+
             if (typeof annotation.annotationId != 'undefined') {
                 $scope.coVliste(annotation.annotationId);
             }
-            
+
             var newTags = [];
-           
+
             //Volkan Ekledi.
             var cvrtags = [];
             if (typeof annotation.vcircles != 'undefined') {
@@ -651,13 +664,13 @@ app.factory('ChapterVerses', function ($resource) {
                 }
             }
             //
-            
+
             if (typeof annotation.tags != 'undefined') {
                 for (var i = 0; i < annotation.tags.length; i++) {
                     newTags.push({"name": annotation.tags[i]});
                 }
             }
-           
+
             $scope.annotationModalData = annotation;
             $scope.annotationModalDataTagsInput = newTags;
             if (typeof $scope.annotationModalData.text == 'undefined') {
@@ -677,15 +690,14 @@ app.factory('ChapterVerses', function ($resource) {
         };
 
 
-
         //go to chapter for general purpuse.
         $scope.goToChapter = function () {
-            window.location.href = '#/chapter/' + $scope.chapter_id + '/author/' + $scope.author_mask + '/verse/'+$scope.verse.number;
+            window.location.href = '#/chapter/' + $scope.chapter_id + '/author/' + $scope.author_mask + '/verse/' + $scope.verse.number;
         };
 
-        $scope.goToChapterWithParameters = function (chapter_id,author_mask,verse_number) {
-            $scope.chapter_id =chapter_id;
-            $scope.author_mask =author_mask;
+        $scope.goToChapterWithParameters = function (chapter_id, author_mask, verse_number) {
+            $scope.chapter_id = chapter_id;
+            $scope.author_mask = author_mask;
             $scope.verse.number = verse_number;
             $scope.goToChapter();
 
@@ -704,7 +716,6 @@ app.factory('ChapterVerses', function ($resource) {
          */
 
 
-
         $scope.getIndexOfArrayByElement = function (arr, k, v) {
             var arrLen = arr.length;
             var foundOnIndex = -1;
@@ -717,7 +728,6 @@ app.factory('ChapterVerses', function ($resource) {
         };
 
 
-
         $scope.scopeApply = function () {
             if (!$scope.$$phase) {
                 $scope.$apply();
@@ -725,94 +735,7 @@ app.factory('ChapterVerses', function ($resource) {
         };
 
 
-        $scope.initializeController = function(){
-
-
-            if (config_data.isMobile) {
-                /*
-                 $scope.currentState = $state.current.name;
-                 $rootScope.$on('$stateChangeSuccess',
-                 function (event, toState, toParams, fromState, fromParams) {
-                 $scope.currentState = toState.name;
-                 $scope.scopeApply();
-                 })
-                 */
-
-
-
-
-
-
-                $scope.openModal = function (id) {
-                    if (id == 'editor') {
-                        $scope.modal_editor.show();
-                    }
-                };
-
-                $scope.closeModal = function (id) {
-                    if (id == 'editor') {
-                        clearTextSelection();
-                        $scope.modal_editor.hide();
-                    }
-                }
-
-                $scope.annotationAddable = false;
-                $scope.selectionEnded = function () {
-                    $scope.annotationAddable = true;
-                    $scope.scopeApply();
-                }
-
-                $scope.selectionCancel = function () {
-                    $scope.annotationAddable = false;
-                    $scope.scopeApply();
-                }
-            }
-
-            if ($location.path() == "/") {
-                $scope.showTutorial = 1;
-            }
-
-            //list the authors on page load
-            $scope.list_authors(); //prepare map
-
-
-
-            // $scope.toggleSidebar();
-            sidebarInit();
-
-
-    //list of chapters
-            $scope.chapters = [];
-
-            var localChaptersVersion = localStorageService.get('chaptersVersion');
-
-            if (localChaptersVersion == null || localChaptersVersion < chaptersVersion) {
-                Restangular.all('chapters').getList().then(function (data) {
-                    $scope.chapters = data;
-                    localStorageService.set('chapters', data);
-                    localStorageService.set('chaptersVersion', chaptersVersion);
-                });
-            } else {
-                $scope.chapters = localStorageService.get('chapters');
-            }
-
-
-            if ($scope.myRoute['tag'] != "") {
-                $scope.goToVerseTag($scope.targetVerseForTagContent, $scope.myRoute['tag']);
-            }
-
-    //init chapter select box
-            var chaptersLen = $scope.chapters.length;
-            for (var chaptersIndex = 0; chaptersIndex < chaptersLen; chaptersIndex++) {
-                if ($scope.chapters[chaptersIndex].id == $scope.chapter_id) {
-                    $scope.goToVerseParameters.chapter = $scope.chapters[chaptersIndex];
-                    break;
-                }
-            }
-
-        };//end of init controller
-
-        //Hizli Meal Gosterimi / Fast Translation Display
+         //Hizli Meal Gosterimi / Fast Translation Display
         $scope.showVerse = function (annotation) {
             $scope.showVerseData = {};
             Restangular.one('translations', annotation.translationId).get().then(function (translation) {
@@ -896,34 +819,45 @@ app.factory('ChapterVerses', function ($resource) {
         };
 
         //tags input auto complete
-        
-         function cevregoster() {
+
+        function cevregoster() {
             var cevregosterRestangular = Restangular.all("circles");
             cevregosterRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (cevreliste) {
                 $scope.cevreadlar = cevreliste;
             });
         };
-        
-        function cevrelistele1() { 
-            var cevregosterRestangular = Restangular.all("circles");
-            cevregosterRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (cevreliste) {
-            listamam = cevreliste;    
-            });         
+
+
+        $scope.cevrelistele = function () {
+
+            return $scope.extendedCircles;
         };
-        
-        $scope.cevrelistele = function() {
-           cevrelistele1();
-           listamam.push({'id':'-2','name':'Tüm Çevrelerim'});
-           listamam.push({'id':'-1','name':'Herkes'});
-             return listamam;          
-        };
-       
+
+        $scope.initializeCircleLists = function(){
+            $scope.circleDropdownArray = [];
+            $scope.circleDropdownArray.push({'id': '-2', 'name': 'Tüm Çevrelerim'});
+            $scope.circleDropdownArray.push({'id': '-1', 'name': 'Herkes'});
+            $scope.circleDropdownArray.push({'id': '', 'name': 'Sadece Ben'});
+            $scope.query_circle_dropdown = $scope.circleDropdownArray[2];
+
+            Restangular.all("circles").customGET("", {}, {'access_token': $scope.access_token}).then(function (circleList) {
+                $scope.circleDropdownArray.push.apply($scope.circleDropdownArray, circleList);
+
+                //also initialize extended circles
+                $scope.extendedCircles.push.apply($scope.extendedCircles,$scope.circleDropdownArray);
+                //remoce only mine
+                $scope.extendedCircles.splice(2,1);
+            });
+
+            //set initial value as: "Sadece Ben"
+        }
+
         //tags input auto complete
         $scope.kisilistele = function (kisiad) {
             var kisilisteRestangular = Restangular.all("users/search");
             $scope.usersParams = [];
             $scope.usersParams.search_query = kisiad;
-            return kisilisteRestangular.customGET("",  $scope.usersParams, {'access_token': $scope.access_token});
+            return kisilisteRestangular.customGET("", $scope.usersParams, {'access_token': $scope.access_token});
 
         };
 
@@ -956,6 +890,89 @@ app.factory('ChapterVerses', function ($resource) {
             //$scope.setAuthorMask();
             //localStorageService.set('author_mask', $scope.author_mask);
         };
+
+
+        $scope.initializeController = function () {
+
+
+            if (config_data.isMobile) {
+                /*
+                 $scope.currentState = $state.current.name;
+                 $rootScope.$on('$stateChangeSuccess',
+                 function (event, toState, toParams, fromState, fromParams) {
+                 $scope.currentState = toState.name;
+                 $scope.scopeApply();
+                 })
+                 */
+
+
+                $scope.openModal = function (id) {
+                    if (id == 'editor') {
+                        $scope.modal_editor.show();
+                    }
+                };
+
+                $scope.closeModal = function (id) {
+                    if (id == 'editor') {
+                        clearTextSelection();
+                        $scope.modal_editor.hide();
+                    }
+                }
+
+                $scope.annotationAddable = false;
+                $scope.selectionEnded = function () {
+                    $scope.annotationAddable = true;
+                    $scope.scopeApply();
+                }
+
+                $scope.selectionCancel = function () {
+                    $scope.annotationAddable = false;
+                    $scope.scopeApply();
+                }
+            }
+
+            if ($location.path() == "/") {
+                $scope.showTutorial = 1;
+            }
+
+            //list the authors on page load
+            $scope.list_authors(); //prepare map
+
+
+            // $scope.toggleSidebar();
+            sidebarInit();
+
+
+            //list of chapters
+            $scope.chapters = [];
+
+            var localChaptersVersion = localStorageService.get('chaptersVersion');
+
+            if (localChaptersVersion == null || localChaptersVersion < chaptersVersion) {
+                Restangular.all('chapters').getList().then(function (data) {
+                    $scope.chapters = data;
+                    localStorageService.set('chapters', data);
+                    localStorageService.set('chaptersVersion', chaptersVersion);
+                });
+            } else {
+                $scope.chapters = localStorageService.get('chapters');
+            }
+
+
+            if ($scope.myRoute['tag'] != "") {
+                $scope.goToVerseTag($scope.targetVerseForTagContent, $scope.myRoute['tag']);
+            }
+
+            //init chapter select box
+            var chaptersLen = $scope.chapters.length;
+            for (var chaptersIndex = 0; chaptersIndex < chaptersLen; chaptersIndex++) {
+                if ($scope.chapters[chaptersIndex].id == $scope.chapter_id) {
+                    $scope.goToVerseParameters.chapter = $scope.chapters[chaptersIndex];
+                    break;
+                }
+            }
+
+        };//end of init controller
 
 
 
@@ -1005,7 +1022,7 @@ function verseTagClicked(elem) {
     var closeClick = false;
     if ($(elem).hasClass('btn-warning')) {
         angular.element(document.getElementById('theView')).scope().targetVerseForTagContent = -1;
-     //   angular.element(document.getElementById('MainCtrl')).scope().targetVerseForTagContent = -1;
+        //   angular.element(document.getElementById('MainCtrl')).scope().targetVerseForTagContent = -1;
         closeClick = true;
     }
 
@@ -1028,7 +1045,8 @@ function seperateChapterAndVerse(data) {
 }
 
 function clearTextSelection() {
-    if (window.getSelection) {console.log(window.getSelection())
+    if (window.getSelection) {
+        console.log(window.getSelection())
         if (window.getSelection().empty) {  // Chrome
             window.getSelection().empty();
         } else if (window.getSelection().removeAllRanges) {  // Firefox
@@ -1039,8 +1057,8 @@ function clearTextSelection() {
     }
 }
 
-function focusToVerseInput(){
-    setTimeout(function(){
+function focusToVerseInput() {
+    setTimeout(function () {
         document.getElementById('chapterSelection_verse').focus();
         document.getElementById('chapterSelection_verse').select();
     }, 300);

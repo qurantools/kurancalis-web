@@ -305,6 +305,12 @@ angular.module('ionicApp')
             $scope.goToChapter();
         };
 
+        //acction for detailed search screen
+        $scope.detailedSearch = function(){
+            $scope.query_circle_dropdown={'id':'','name':'DETAYLI ARAMA'};
+            $scope.goToChapter();
+        };
+
 
         //customized showEditor for home controller
         $scope.showEditor = function (annotation, position) {
@@ -842,6 +848,19 @@ angular.module('ionicApp')
             $scope.detailedSearchAuthorSelection = $scope.selection;
         };
 
+        $scope.selectDropdownCircle = function(item){
+
+            $scope.query_own_annotations="true";
+            if(item.id==''){
+                $scope.query_circles = [];
+            }
+            else {
+                $scope.query_circles = [item];
+            }
+            $scope.query_circle_dropdown = item;
+
+            $scope.goToChapter();
+        };
 
 
         //initialization

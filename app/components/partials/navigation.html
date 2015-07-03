@@ -31,7 +31,8 @@
                 </div>
 
                 <div style="float: left; ">
-                    <button type="button" id="list_translations" ng-click="verseNumberValidation()" class="btn btn-primary">
+                    <button type="button" id="list_translations" ng-click="verseNumberValidation()"
+                            class="btn btn-primary">
                         <i class="fa fa-arrow-right" style="font-size: 1.3em"></i><!-- goToVerse()-->
                     </button>
                     <span style="width: 10px;">&nbsp;</span>
@@ -39,27 +40,31 @@
                             ng-if="currentPage!='annotations'">
                         <i class="fa fa-user" style="font-size: 1.3em"></i> Yazarlar
                     </button>
-                    
+
                     <!--Volkan Ekledi-->
 
                     <div class="btn-group" ng-class='{open: open}' ng-if="user!=null && currentPage=='home'">
-                    <button style="background-color:#1abc9c; color:White; height:42px" class="btn">Tüm Çevrelerim</button>
-                    <button style="background-color:#1abc9c; height:42px" class="btn dropdown-toggle" data-toggle="dropdown" ng-click='open=!open'><span class="caret"></span></button>
-                    <ul class="dropdown-menu">
-                    <li><a style="color:White;" class="btn btn-primary">Tüm Çevrelerim</a></li>
-                    <li><a style="color:White;" class="btn btn-primary">Herkes</a></li>
-                    <li><a style="color:White;" class="btn btn-primary">Sadece Ben</a></li>
-                    <li style="color:White" ng-repeat="item in cevreadlar" value='{{cevreadlar[$index].id}}'><a style="color:White;" class="btn btn-primary">{{cevreadlar[$index].name}}</a></li>
-                    <li><a style="color:White;" class="btn btn-primary" data-target="#homearama" data-toggle="modal">AYRINTILI ARAMA</a></li>
-                    </ul>
+                        <button style="background-color:#1abc9c; color:White; height:42px" class="btn"
+                                ng-click='open=!open'>{{query_circle_dropdown.name}}
+                        </button>
+                        <button style="background-color:#1abc9c; height:42px" class="btn dropdown-toggle"
+                                data-toggle="dropdown" ng-click='open=!open'><span class="caret"></span></button>
+                        <ul class="dropdown-menu">
+                            <li style="color:White" ng-repeat="item in circleDropdownArray" ><a
+                                    style="color:White;" class="btn btn-primary"
+                                    ng-click='selectDropdownCircle({{circleDropdownArray[$index]}})'>{{circleDropdownArray[$index].name}}</a>
+                            </li>
+                            <li><a style="color:White;" class="btn btn-primary" data-target="#homearama"
+                                   data-toggle="modal">AYRINTILI ARAMA</a></li>
+                        </ul>
                     </div>
-                    
-                      <!--Volkan Ekledi-->
-                       <a class="btn btn-primary" data-target="#homearama" data-toggle="modal"
+
+                    <!--Volkan Ekledi-->
+                    <a class="btn btn-primary" data-target="#homearama" data-toggle="modal"
                        ng-if="user!=null && currentPage=='home'"><i class="fa fa-search"
-                                                                           style="font-size: 1.3em"></i></a>
-                    
-                     <a class="btn btn-primary" data-target="#annotationsFilterModal" data-toggle="modal"
+                                                                    style="font-size: 1.3em"></i></a>
+
+                    <a class="btn btn-primary" data-target="#annotationsFilterModal" data-toggle="modal"
                        ng-if="user!=null && currentPage=='annotations'"><i class="fa fa-search"
                                                                            style="font-size: 1.3em"></i></a>
 
