@@ -9,7 +9,7 @@
  * Copyright 2014 Drifty Co.
  * http://drifty.com/
  *
- * Ionic, v1.0.0-nightly-1395
+ * Ionic, v1.0.1
  * A powerful HTML5 mobile app framework.
  * http://ionicframework.com/
  *
@@ -25,7 +25,7 @@
 // build processes may have already created an ionic obj
 window.ionic = window.ionic || {};
 window.ionic.views = {};
-window.ionic.version = '1.0.0-nightly-1395';
+window.ionic.version = '1.0.1';
 
 (function (ionic) {
 
@@ -1787,9 +1787,7 @@ window.ionic.version = '1.0.0-nightly-1395';
         // Prevent gestures that are not intended for this event handler from firing subsequent times
         if (inst.options.prevent_default_directions.length === 0
             || inst.options.prevent_default_directions.indexOf(ev.direction) != -1) {
-          if (ev.direction != 'up' && ev.direction != 'down') {//hack line
-            ev.srcEvent.preventDefault();
-          }//hack line
+          ev.srcEvent.preventDefault();
         }
         this.preventedFirstMove = true;
       }
@@ -5354,7 +5352,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
     container.removeEventListener('touchmove', self.touchMoveBubble);
     document.removeEventListener('touchmove', self.touchMove);
     document.removeEventListener('touchend', self.touchEnd);
-    document.removeEventListener('touchcancel', self.touchCancel);
+    document.removeEventListener('touchcancel', self.touchEnd);
 
     container.removeEventListener("pointerdown", self.touchStart);
     container.removeEventListener("pointermove", self.touchMoveBubble);
@@ -42042,7 +42040,7 @@ angular.module('ui.router.state')
  * Copyright 2014 Drifty Co.
  * http://drifty.com/
  *
- * Ionic, v1.0.0-nightly-1395
+ * Ionic, v1.0.1
  * A powerful HTML5 mobile app framework.
  * http://ionicframework.com/
  *
