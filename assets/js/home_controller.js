@@ -499,7 +499,9 @@ angular.module('ionicApp')
         //add annotation to scope
         $scope.addAnnotation = function (annotation) {
             $scope.annotations.push(annotation);
-            $scope.annotate_it();
+
+            //added because of annotations on page weren't updated when annotation added
+            $scope.filteredAnnotations= $scope.annotations;
         };
 
         //delete annotation from annotator library (highlight)
