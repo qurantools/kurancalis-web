@@ -257,7 +257,6 @@ angular.module('ionicApp')
             if (config_data.isMobile) {
                 $scope.closeModal('editor');
             }
-
             annotator.onEditorHide();
             return annotator.ignoreMouseup = false;
 
@@ -500,6 +499,7 @@ angular.module('ionicApp')
         //add annotation to scope
         $scope.addAnnotation = function (annotation) {
             $scope.annotations.push(annotation);
+            $scope.annotate_it();
         };
 
         //delete annotation from annotator library (highlight)
