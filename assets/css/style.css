@@ -166,6 +166,11 @@ i.inactive {color: #d9534f}
 
 }
 
+.translation_content{
+    font-size: 18px;
+
+}
+
 
 /* left menu */
 .side-menu-container > .navbar-nav {
