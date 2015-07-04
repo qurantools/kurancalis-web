@@ -993,6 +993,13 @@ function openPanel() {
 function closePanel() {
     $('#cd-panel-right').removeClass('is-visible');
 }
+function togglePanel() {
+    if ($('#cd-panel-right').hasClass('is-visible')) {
+        closePanel();
+    } else {
+        openPanel();
+    }
+}
 function openLeftPanel() {
     $('#cd-panel-left').addClass('is-visible');
 }
