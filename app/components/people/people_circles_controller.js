@@ -247,7 +247,7 @@ var mymodal = angular.module('ionicApp')
                 $scope.circlead = "";
             }
             else {
-                $scope.circlead = circlead + "  Çevresindeki kişiler.";
+                $scope.circlead = circlead + "  çevresindeki kişiler.";
             }
         };
 
