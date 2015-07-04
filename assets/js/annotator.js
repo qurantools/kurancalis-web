@@ -1262,7 +1262,6 @@
         };
 
         Annotator.prototype.checkForEndSelection = function (event) {
-console.log("checkForEndSelection");
             var container, range, _k, _len2, _ref1;
             this.mouseIsDown = false;
             if (this.ignoreMouseup) {

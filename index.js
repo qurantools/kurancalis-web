@@ -401,7 +401,6 @@ app.factory('ChapterVerses', function ($resource) {
 
         //Çevreleri listeleme - show circles
         $scope.extendedCircles= [];
-        $scope.cevreadlar = [];
 
         $scope.tutorial = function (parameter) {
             if (parameter == 'init') {
@@ -819,15 +818,6 @@ app.factory('ChapterVerses', function ($resource) {
         };
 
         //tags input auto complete
-
-        function cevregoster() {
-            var cevregosterRestangular = Restangular.all("circles");
-            cevregosterRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (cevreliste) {
-                $scope.cevreadlar = cevreliste;
-            });
-        };
-
-
         $scope.cevrelistele = function () {
 
             return $scope.extendedCircles;
