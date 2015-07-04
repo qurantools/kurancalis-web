@@ -190,7 +190,9 @@ angular.module('ionicApp')
 
         $scope.getAnnotationIndexFromFilteredAnnotationIndex = function (filteredAnnotationIndex) {
             //TODO use getIndexOfArrayByElement
+            console.log("index1: "+filteredAnnotationIndex);
             var arrLen = $scope.annotations.length;
+
             var filteredAnnotationId = $scope.filteredAnnotations[filteredAnnotationIndex].annotationId;
             var annotationIndex = -1;
             for (var i = 0; i < arrLen; i++) {
@@ -270,8 +272,13 @@ angular.module('ionicApp')
         };
 
         $scope.annotationFilterOrder = function (predicate) {
+            if(config_data.isMobile){
+                $scope.filterOrderSelect = predicate;
+            }
             var orderBy = $filter('orderBy');
             $scope.annotations = orderBy($scope.annotations, predicate);
+            //filtered annotations index bug fix
+            $scope.filteredAnnotations = $scope.annotations;
         };
 
         $scope.scrollToElmnt = function (elementId) {
@@ -513,6 +520,7 @@ angular.module('ionicApp')
         //delete annotation from annotator library (highlight)
         $scope.deleteAnnotation = function (index) {
             console.log("deleteAnnotation")
+            console.log("$scope.filteredAnnotations: "+JSON.stringify($scope.filteredAnnotations));
             if (typeof $scope.filteredAnnotations != 'undefined' && $scope.filteredAnnotations.length > 0) {
                 index = $scope.getAnnotationIndexFromFilteredAnnotationIndex(index);
             }
@@ -751,15 +759,6 @@ angular.module('ionicApp')
                     $scope.modal_annotations_on_page_sort.hide();
                     $scope.$parent.modal_editor.hide();
             };
-
-            $scope.annotationFilterOrderMobile = function (predicate) {
-                $scope.filterOrderSelect = predicate;
-                var orderBy = $filter('orderBy');
-                $scope.annotations = orderBy($scope.annotations, predicate);
-            }
-
-
-
 
         }
 

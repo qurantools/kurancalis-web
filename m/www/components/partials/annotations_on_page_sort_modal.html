@@ -10,11 +10,11 @@
     <ion-content overflow-scroll="true">
         <div style="height:50px"></div>
         <ion-list>
-            <ion-item ng-click="annotationFilterOrderMobile('verseId');closeModal('annotations_on_page_sort')">
+            <ion-item ng-click="annotationFilterOrder('verseId');closeModal('annotations_on_page_sort')">
                 Ayet
                 <i class="radio-icon ion-checkmark" ng-if="filterOrderSelect=='verseId'"></i>
             </ion-item>
-            <ion-item ng-click="annotationFilterOrderMobile('-updated');closeModal('annotations_on_page_sort')">
+            <ion-item ng-click="annotationFilterOrder('-updated');closeModal('annotations_on_page_sort')">
                 Zaman
                 <i class="radio-icon ion-checkmark" ng-if="filterOrderSelect=='-updated'"></i>
             </ion-item>
