@@ -72,7 +72,7 @@ var mymodal = angular.module('ionicApp')
             $scope.kisieklead = {
                 text: ''
             };
-            $scope.kisiliste = 0;
+            $scope.kisiliste = [];
         };
 
         $scope.digercevre = false;

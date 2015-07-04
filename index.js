@@ -501,7 +501,6 @@ app.factory('ChapterVerses', function ($resource) {
                 status = true;
 
                 //Show Circles - Kullanıcı login olduğunda çevre listesi çekilir.
-                cevregoster();
                 $scope.initializeCircleLists();
 
             }
