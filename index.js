@@ -834,7 +834,7 @@ app.factory('ChapterVerses', function ($resource) {
                 $scope.circleDropdownArray.push.apply($scope.circleDropdownArray, circleList);
 
                 //also initialize extended circles
-                $scope.extendedCircles.push.apply($scope.extendedCircles,$scope.circleDropdownArray);
+                $scope.extendedCircles = $scope.circleDropdownArray;
                 //remoce only mine
                 $scope.extendedCircles.splice(2,1);
             });
