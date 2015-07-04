@@ -442,6 +442,7 @@ app.factory('ChapterVerses', function ($resource) {
                 $scope.user = responseData.user;
                 $scope.loggedIn = true;
 
+                $scope.initializeCircleLists();
 
                 $scope.$broadcast('login', responseData);
             }
