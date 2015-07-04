@@ -676,7 +676,7 @@ angular.module('ionicApp')
         if (config_data.isMobile) {
             $ionicModal.fromTemplateUrl('components/partials/annotations_on_page_modal.html', {
                 scope: $scope,
-                animation: 'slide-in-right',
+                //animation: 'slide-in-right',
                 id: 'annotations_on_page'
             }).then(function (modal) {
                 $scope.modal_annotations_on_page = modal
@@ -684,7 +684,7 @@ angular.module('ionicApp')
 
             $ionicModal.fromTemplateUrl('components/partials/chapter_selection_modal.html', {
                 scope: $scope,
-                animation: 'slide-in-left',
+                //animation: 'slide-in-left',
                 id: 'chapter_selection'
             }).then(function (modal) {
                 $scope.modal_chapter_selection = modal
@@ -693,7 +693,7 @@ angular.module('ionicApp')
 
             $ionicModal.fromTemplateUrl('components/partials/authors_list_modal.html', {
                 scope: $scope,
-                animation: 'slide-in-left',
+                //animation: 'slide-in-left',
                 id: 'authors_list'
             }).then(function (modal) {
                 $scope.modal_authors_list = modal
@@ -701,7 +701,7 @@ angular.module('ionicApp')
 
             $ionicModal.fromTemplateUrl('components/partials/annotations_on_page_sort_modal.html', {
                 scope: $scope,
-                animation: 'slide-in-left',
+                //animation: 'slide-in-left',
                 id: 'annotations_on_page_sort'
             }).then(function (modal) {
                 $scope.modal_annotations_on_page_sort = modal
@@ -709,7 +709,7 @@ angular.module('ionicApp')
 
             $ionicModal.fromTemplateUrl('components/partials/editor_modal.html', {
                 scope: $scope,
-                animation: 'slide-in-left',
+                //animation: 'slide-in-left',
                 id: 'editor'
             }).then(function (modal) {
                 $scope.$parent.modal_editor = modal;
