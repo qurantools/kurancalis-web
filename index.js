@@ -563,7 +563,6 @@ app.factory('ChapterVerses', function ($resource) {
 
 
         $scope.getTagParametersForAnnotatorStore = function (canViewCircles, canCommentCircles, canViewUsers, canCommentUsers, tags) {
-            //Volkan Ekledi.
             //prepare tags
             var tagParameters = {};
             tagParameters.canViewCircles = [];
@@ -572,19 +571,40 @@ app.factory('ChapterVerses', function ($resource) {
             tagParameters.canCommentUsers = [];
 
             for (var i = 0; i < canViewCircles.length; i++) {
-                tagParameters.canViewCircles[i] = canViewCircles[i].id;
+                if(canViewCircles[i].id == -2){ //all circles
+                    tagParameters.canViewCircles[tagParameters.canViewCircles.length]=0; // id:0 for all circles on rest
+                }
+                else if(canViewCircles[i].id == -1){ //public view
+                    tagParameters.canViewUsers[0] = 0;  //add public to view users
+
+                }
+                else {
+                    tagParameters.canViewCircles[tagParameters.canViewCircles.length] = canViewCircles[i].id;
+                }
             }
 
             for (var i = 0; i < canViewUsers.length; i++) {
-                tagParameters.canViewUsers[i] = canViewUsers[i].id;
+                tagParameters.canViewUsers[tagParameters.canViewUsers.length] = canViewUsers[i].id;
+            }
+
+
+            for (var i = 0; i < canCommentCircles.length; i++) {
+                if(canCommentCircles[i].id == -2){ //all circles
+                    tagParameters.canCommentCircles[tagParameters.canCommentCircles.length]=0; // id:0 for all circles on rest
+                }
+                else if(canCommentCircles[i].id == -1){ //public view
+                    tagParameters.canCommentUsers[0] = 0;  //add public to view users
+
+                }
+                else {
+                    tagParameters.canCommentCircles[tagParameters.canCommentCircles.length] = canCommentCircles[i].id;
+                }
+
             }
 
             for (var i = 0; i < canCommentUsers.length; i++) {
-                tagParameters.canCommentUsers[i] = canCommentUsers[i].id;
-            }
 
-            for (var i = 0; i < canCommentCircles.length; i++) {
-                tagParameters.canCommentCircles[i] = canCommentCircles[i].id;
+                tagParameters.canCommentUsers[i] = canCommentUsers[i].id;
             }
 
             //the tags data should be in annotationModalDataTagInputs
