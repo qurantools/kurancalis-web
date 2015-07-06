@@ -519,8 +519,6 @@ angular.module('ionicApp')
 
         //delete annotation from annotator library (highlight)
         $scope.deleteAnnotation = function (index) {
-            console.log("deleteAnnotation")
-            console.log("$scope.filteredAnnotations: "+JSON.stringify($scope.filteredAnnotations));
             if (typeof $scope.filteredAnnotations != 'undefined' && $scope.filteredAnnotations.length > 0) {
                 index = $scope.getAnnotationIndexFromFilteredAnnotationIndex(index);
             }

@@ -571,40 +571,19 @@ app.factory('ChapterVerses', function ($resource) {
             tagParameters.canCommentUsers = [];
 
             for (var i = 0; i < canViewCircles.length; i++) {
-                if(canViewCircles[i].id == -2){ //all circles
-                    tagParameters.canViewCircles[tagParameters.canViewCircles.length]=0; // id:0 for all circles on rest
-                }
-                else if(canViewCircles[i].id == -1){ //public view
-                    tagParameters.canViewUsers[0] = 0;  //add public to view users
-
-                }
-                else {
-                    tagParameters.canViewCircles[tagParameters.canViewCircles.length] = canViewCircles[i].id;
-                }
+                tagParameters.canViewCircles[i] = canViewCircles[i].id;
             }
 
             for (var i = 0; i < canViewUsers.length; i++) {
-                tagParameters.canViewUsers[tagParameters.canViewUsers.length] = canViewUsers[i].id;
-            }
-
-
-            for (var i = 0; i < canCommentCircles.length; i++) {
-                if(canCommentCircles[i].id == -2){ //all circles
-                    tagParameters.canCommentCircles[tagParameters.canCommentCircles.length]=0; // id:0 for all circles on rest
-                }
-                else if(canCommentCircles[i].id == -1){ //public view
-                    tagParameters.canCommentUsers[0] = 0;  //add public to view users
-
-                }
-                else {
-                    tagParameters.canCommentCircles[tagParameters.canCommentCircles.length] = canCommentCircles[i].id;
-                }
-
+                tagParameters.canViewUsers[i] = canViewUsers[i].id;
             }
 
             for (var i = 0; i < canCommentUsers.length; i++) {
-
                 tagParameters.canCommentUsers[i] = canCommentUsers[i].id;
+            }
+
+            for (var i = 0; i < canCommentCircles.length; i++) {
+                tagParameters.canCommentCircles[i] = canCommentCircles[i].id;
             }
 
             //the tags data should be in annotationModalDataTagInputs
@@ -629,6 +608,8 @@ app.factory('ChapterVerses', function ($resource) {
             var cevregosterRestangular = Restangular.one("annotations", annoid).all("permissions");
             cevregosterRestangular.customGET("", "", {'access_token': $scope.access_token}).then(function (cevreliste) {
 
+
+                //todo: replace locale "All circles" and "All users" for -2 and -1 circle ids
                 var clis = [];
                 for (var i = 0; i < cevreliste.canViewCircles.length; i++) {
                     clis.push({'id': cevreliste.canViewCircles[i].id, 'name': cevreliste.canViewCircles[i].name});
