@@ -129,6 +129,9 @@ if (config_data.isMobile == false) { //false
     app.config(function ($routeProvider, FacebookProvider, RestangularProvider, localStorageServiceProvider) {
         RestangularProvider.setBaseUrl(config_data.webServiceUrl);
         localStorageServiceProvider.setStorageCookie(0, '/');
+
+
+
         //route
         $routeProvider
             .when('/chapter/:chapterId/author/:authorMask/verse/:verseNumber/', {
@@ -181,6 +184,12 @@ if (config_data.isMobile == false) { //false
 } else {
     app.config(function ($routeProvider, FacebookProvider, RestangularProvider, localStorageServiceProvider, $stateProvider, $urlRouterProvider) {
             console.log("mobile version")
+
+            //redirect / to /m/www/
+            var currentPath=window.location.pathname;
+            if(currentPath=='/kurancalis-web/' || currentPath=='/'){
+                window.location.href=currentPath+'m/www/';
+            }
 
             RestangularProvider.setBaseUrl(config_data.webServiceUrl);
             localStorageServiceProvider.setStorageCookie(0, '/');
