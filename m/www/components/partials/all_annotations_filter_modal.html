@@ -10,11 +10,18 @@
     <ion-content overflow-scroll="true">
         <div style="height:50px"></div>
         <div>
-        <input type="text" ng-model="allAnnotationsSearchInput" size="12" class="form-control"
+            <label class="item item-input" style="margin:10px;">
+        <input type="text" ng-model="allAnnotationsSearchInput" size="12"
                placeholder="Aranacak kelime" ng-change="setAnnotationSearchKeyword(allAnnotationsSearchInput)"/>
+                </label>
+
+
+
 </div>
 
 <div>
+
+
         <tags-input ng-model="filterTags" display-property="name" placeholder="Etiket girin" replace-spaces-with-dashes="false"
                     min-length="2" ng-change="setAnnotationSearchTags(filterTags)">
             <auto-complete source="loadTags($query)" min-length="2"></auto-complete>

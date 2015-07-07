@@ -16,13 +16,15 @@
     <ion-content overflow-scroll="true">
         <div style="height:50px"></div>
         <div style="padding-bottom:10px;">
-            <button class="btn btn-warning btn-xs" ng-click="searchText='';resetAnnotationFilter()"
+            <button class="button button-energized button-medium" ng-click="searchText='';resetAnnotationFilter()"
                     ng-show='filterSingleAnnotation || searchText!=""' style="float: right; height: 30px;">
                 <i class="fa fa-trash-o"></i>
                 Filtreyi kaldır
             </button>
             <div style="display: block; box-shadow:1px 1px 1px 0 lightgray;">
-                <input style="width: 150px; height: 30px;" type="text" placeholder="ara" ng-model="searchText" id="searchText">
+                <label class="item item-input" style="margin:10px;">
+                    <input style="width: 150px; height: 30px;" type="text" placeholder="ara" ng-model="searchText" id="searchText">
+                </label>
             </div>
         </div>
         <div ng-repeat="annotation in annotations | filter:annotationFilter | filter: annotationTextSearch"
