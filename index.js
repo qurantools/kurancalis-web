@@ -179,9 +179,9 @@ if (config_data.isMobile == false) { //false
     });
 
 } else {
-
     app.config(function ($routeProvider, FacebookProvider, RestangularProvider, localStorageServiceProvider, $stateProvider, $urlRouterProvider) {
             console.log("mobile version")
+
             RestangularProvider.setBaseUrl(config_data.webServiceUrl);
             localStorageServiceProvider.setStorageCookie(0, '/');
             //route
@@ -227,6 +227,7 @@ if (config_data.isMobile == false) { //false
                 .otherwise({
                     redirectTo: '/'
                 });
+
 
             openFB.init({appId: config_data.FBAppID});
 
@@ -308,6 +309,7 @@ app.factory('ChapterVerses', function ($resource) {
 
     .controller('MainCtrl', function ($scope, $q, $routeParams, $ionicSideMenuDelegate, $location, $timeout, ListAuthors, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService, $document, $filter, $rootScope, $state, $stateParams, $ionicModal, $ionicScrollDelegate, $ionicPosition, authorization) {
         console.log("MainCtrl");
+
 
         //all root scope parameters should be defined and documented here
         $scope.access_token = "";
@@ -922,7 +924,6 @@ app.factory('ChapterVerses', function ($resource) {
                     $scope.scopeApply();
                 }
             }
-
             if ($location.path() == "/") {
                 $scope.showTutorial = 1;
             }
@@ -1017,7 +1018,6 @@ function toggleLeftPanel() {
 }
 
 function verseTagClicked(elem) {
-    console.log("versetagclicked");
     var closeClick = false;
     if ($(elem).hasClass('btn-warning')) {
         angular.element(document.getElementById('theView')).scope().targetVerseForTagContent = -1;
@@ -1045,7 +1045,6 @@ function seperateChapterAndVerse(data) {
 
 function clearTextSelection() {
     if (window.getSelection) {
-        console.log(window.getSelection())
         if (window.getSelection().empty) {  // Chrome
             window.getSelection().empty();
         } else if (window.getSelection().removeAllRanges) {  // Firefox
