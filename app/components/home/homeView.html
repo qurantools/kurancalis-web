@@ -112,11 +112,11 @@
                 <div class="row" style="padding:0 15px">
                     <div style="float: left">{{annotation.updated | date: 'dd/MM/yyyy HH:mm:ss'}}</div>
                     <div style="float: right">
-                        <button type="button" class="btn btn-primary btn-xs" ng-click="editAnnotation($index)"><i
-                                class="fa fa-pencil-square-o"></i>
+                        <button type="button" class="btn btn-primary btn-xs" ng-click="editAnnotation($index)" ng-if="annotation.userId==user.id"><i
+                                class="fa fa-pencil-square-o" ></i>
                         </button>
-                        <button type="button" class="btn btn-primary btn-xs" ng-click="deleteAnnotation($index)"><i
-                                class="fa fa-trash-o"></i></button>
+                        <button type="button" class="btn btn-primary btn-xs" ng-click="deleteAnnotation($index)" ng-if="annotation.userId==user.id"><i
+                                class="fa fa-trash-o" ></i></button>
                     </div>
                 </div>
 
@@ -131,6 +131,6 @@
 
  
 <div ng-include="'app/components/partials/off_canvas_menu.html'"></div>
-
+<div ng-include="'app/components/partials/tutorial_modal.html'"></div>
 
 </body>

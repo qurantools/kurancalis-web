@@ -129,6 +129,8 @@ if (config_data.isMobile == false) { //false
     app.config(function ($routeProvider, FacebookProvider, RestangularProvider, localStorageServiceProvider) {
         RestangularProvider.setBaseUrl(config_data.webServiceUrl);
         localStorageServiceProvider.setStorageCookie(0, '/');
+
+
         //route
         $routeProvider
             .when('/chapter/:chapterId/author/:authorMask/verse/:verseNumber/', {
@@ -179,9 +181,15 @@ if (config_data.isMobile == false) { //false
     });
 
 } else {
-
     app.config(function ($routeProvider, FacebookProvider, RestangularProvider, localStorageServiceProvider, $stateProvider, $urlRouterProvider) {
             console.log("mobile version")
+
+            //redirect / to /m/www/
+            var currentPath = window.location.pathname;
+            if (currentPath == '/kurancalis-web/' || currentPath == '/') {
+                window.location.href = currentPath + 'm/www/';
+            }
+
             RestangularProvider.setBaseUrl(config_data.webServiceUrl);
             localStorageServiceProvider.setStorageCookie(0, '/');
             //route
@@ -227,6 +235,7 @@ if (config_data.isMobile == false) { //false
                 .otherwise({
                     redirectTo: '/'
                 });
+
 
             openFB.init({appId: config_data.FBAppID});
 
@@ -309,6 +318,7 @@ app.factory('ChapterVerses', function ($resource) {
     .controller('MainCtrl', function ($scope, $q, $routeParams, $ionicSideMenuDelegate, $location, $timeout, ListAuthors, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService, $document, $filter, $rootScope, $state, $stateParams, $ionicModal, $ionicScrollDelegate, $ionicPosition, authorization) {
         console.log("MainCtrl");
 
+
         //all root scope parameters should be defined and documented here
         $scope.access_token = "";
         $scope.loggedIn = false;
@@ -318,7 +328,7 @@ app.factory('ChapterVerses', function ($resource) {
         $scope.chapterSelected = 1;
         var chaptersVersion = 3;
 
-        $scope.circleDropdownArray=[];
+        $scope.circleDropdownArray = [];
 
         //selected authors
         $scope.selection = ["16", "32"];
@@ -400,7 +410,8 @@ app.factory('ChapterVerses', function ($resource) {
         $scope.showAuthorsList = false;
 
         //Çevreleri listeleme - show circles
-        $scope.extendedCircles= [];
+        $scope.extendedCircles = [];
+        $scope.extendedCirclesForSearch = [];
 
         $scope.tutorial = function (parameter) {
             if (parameter == 'init') {
@@ -563,7 +574,6 @@ app.factory('ChapterVerses', function ($resource) {
 
 
         $scope.getTagParametersForAnnotatorStore = function (canViewCircles, canCommentCircles, canViewUsers, canCommentUsers, tags) {
-            //Volkan Ekledi.
             //prepare tags
             var tagParameters = {};
             tagParameters.canViewCircles = [];
@@ -609,6 +619,8 @@ app.factory('ChapterVerses', function ($resource) {
             var cevregosterRestangular = Restangular.one("annotations", annoid).all("permissions");
             cevregosterRestangular.customGET("", "", {'access_token': $scope.access_token}).then(function (cevreliste) {
 
+
+                //todo: replace locale "All circles" and "All users" for -2 and -1 circle ids
                 var clis = [];
                 for (var i = 0; i < cevreliste.canViewCircles.length; i++) {
                     clis.push({'id': cevreliste.canViewCircles[i].id, 'name': cevreliste.canViewCircles[i].name});
@@ -644,13 +656,21 @@ app.factory('ChapterVerses', function ($resource) {
 
         $scope.showEditor = function (annotation, position) {
 
-            $scope.cevres = [];
-            $scope.kisis = [];
-            $scope.yrmcevres = [];
-            $scope.yrmkisis = [];
 
             if (typeof annotation.annotationId != 'undefined') {
+                $scope.cevres = [];
+                $scope.kisis = [];
+                $scope.yrmcevres = [];
+                $scope.yrmkisis = [];
                 $scope.coVliste(annotation.annotationId);
+            }
+            if ($scope.cevres.length == 0 && $scope.kisis.length == 0 && $scope.yrmcevres.length == 0 && $scope.yrmkisis.length == 0) {
+                //all empty //share to everyone by default
+
+                $scope.cevres.push({'id': '-1', 'name': 'Herkes'});
+            }
+            else { //use previous values.
+
             }
 
             var newTags = [];
@@ -734,7 +754,7 @@ app.factory('ChapterVerses', function ($resource) {
         };
 
 
-         //Hizli Meal Gosterimi / Fast Translation Display
+        //Hizli Meal Gosterimi / Fast Translation Display
         $scope.showVerse = function (annotation) {
             $scope.showVerseData = {};
             Restangular.one('translations', annotation.translationId).get().then(function (translation) {
@@ -823,24 +843,38 @@ app.factory('ChapterVerses', function ($resource) {
             return $scope.extendedCircles;
         };
 
-        $scope.initializeCircleLists = function(){
+        //tags input auto complete
+        $scope.cevrelisteleForSearch = function () {
+
+            return $scope.extendedCirclesForSearch;
+        };
+
+        $scope.initializeCircleLists = function () {
+
+            $scope.extendedCircles = [];
+            $scope.extendedCircles.push({'id': '-2', 'name': 'Tüm Çevrelerim'});
+            $scope.extendedCircles.push({'id': '-1', 'name': 'Herkes'});
+
+            $scope.extendedCirclesForSearch = [];
+            $scope.extendedCirclesForSearch.push({'id': '-2', 'name': 'Tüm Çevrelerim'});
+
+
             $scope.circleDropdownArray = [];
             $scope.circleDropdownArray.push({'id': '-2', 'name': 'Tüm Çevrelerim'});
-            $scope.circleDropdownArray.push({'id': '-1', 'name': 'Herkes'});
             $scope.circleDropdownArray.push({'id': '', 'name': 'Sadece Ben'});
-            $scope.query_circle_dropdown = $scope.circleDropdownArray[2];
+
+            $scope.query_circle_dropdown = $scope.circleDropdownArray[1];
 
             Restangular.all("circles").customGET("", {}, {'access_token': $scope.access_token}).then(function (circleList) {
                 $scope.circleDropdownArray.push.apply($scope.circleDropdownArray, circleList);
 
                 //also initialize extended circles
-                $scope.extendedCircles = [];
-                $scope.extendedCircles.push.apply($scope.extendedCircles,$scope.circleDropdownArray);
-                //remove only mine
-                $scope.extendedCircles.splice(2,1);
+                $scope.extendedCircles.push.apply($scope.extendedCircles, circleList);
+                $scope.extendedCirclesForSearch.push.apply($scope.extendedCirclesForSearch, circleList);
+
+
             });
 
-            //set initial value as: "Sadece Ben"
         }
 
         //tags input auto complete
@@ -882,6 +916,33 @@ app.factory('ChapterVerses', function ($resource) {
             //localStorageService.set('author_mask', $scope.author_mask);
         };
 
+        //go to chapter / verse from navigation header
+        $scope.goToVerse = function () {
+            $scope.query_chapter_id = $scope.goToVerseParameters.chapter.id ;
+            $scope.verse.number = $scope.goToVerseParameters.verse;
+            $scope.goToChapter();
+        };
+
+        $scope.verseNumberValidation = function (chapters, chapter_id, verse_number) {
+            var chapters = $scope.chapters;
+            var chapter_id = $scope.goToVerseParameters.chapter.id;
+            var verse_number = $scope.goToVerseParameters.verse;
+
+            //search array with id
+            var validationErrorMessage = "Geçerli ayet ve sure numarası giriniz";
+            var index = chapters.map(function (el) {
+                return el.id;
+            }).indexOf(chapter_id);
+            if (index == -1 || chapters[index].verseCount < verse_number || isNaN(chapter_id) || isNaN(verse_number)) {
+                if (typeof annotator != 'undefined') {
+                    Annotator.showNotification(validationErrorMessage);
+                } else {
+                    alert(validationErrorMessage);
+                }
+            } else {
+                $scope.goToVerse();
+            }
+        };
 
         $scope.initializeController = function () {
 
@@ -921,7 +982,6 @@ app.factory('ChapterVerses', function ($resource) {
                     $scope.scopeApply();
                 }
             }
-
             if ($location.path() == "/") {
                 $scope.showTutorial = 1;
             }
@@ -964,7 +1024,6 @@ app.factory('ChapterVerses', function ($resource) {
             }
 
         };//end of init controller
-
 
 
         //initialization
@@ -1016,7 +1075,6 @@ function toggleLeftPanel() {
 }
 
 function verseTagClicked(elem) {
-    console.log("versetagclicked");
     var closeClick = false;
     if ($(elem).hasClass('btn-warning')) {
         angular.element(document.getElementById('theView')).scope().targetVerseForTagContent = -1;
@@ -1044,7 +1102,6 @@ function seperateChapterAndVerse(data) {
 
 function clearTextSelection() {
     if (window.getSelection) {
-        console.log(window.getSelection())
         if (window.getSelection().empty) {  // Chrome
             window.getSelection().empty();
         } else if (window.getSelection().removeAllRanges) {  // Firefox

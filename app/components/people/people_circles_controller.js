@@ -229,7 +229,9 @@ var mymodal = angular.module('ionicApp')
 
                 if ($scope.cevretanim != circlead) {
                     $scope.cevrekisiler = kisiler;
-                    $scope.$apply();
+                    if (!$scope.$$phase) {
+                        $scope.$apply();
+                    }
                 }
 
                 cevreidyaz(circleid, circlead);

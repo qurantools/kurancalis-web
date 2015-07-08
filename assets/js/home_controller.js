@@ -305,12 +305,7 @@ angular.module('ionicApp')
         };
 
 
-        //go to chapter / verse from navigation header
-        $scope.goToVerse = function () {
-            $scope.query_chapter_id = $scope.goToVerseParameters.chapter.id ;
-            $scope.verse.number = $scope.goToVerseParameters.verse;
-            $scope.goToChapter();
-        };
+
 
         //acction for detailed search screen
         $scope.detailedSearch = function(){
@@ -519,8 +514,6 @@ angular.module('ionicApp')
 
         //delete annotation from annotator library (highlight)
         $scope.deleteAnnotation = function (index) {
-            console.log("deleteAnnotation")
-            console.log("$scope.filteredAnnotations: "+JSON.stringify($scope.filteredAnnotations));
             if (typeof $scope.filteredAnnotations != 'undefined' && $scope.filteredAnnotations.length > 0) {
                 index = $scope.getAnnotationIndexFromFilteredAnnotationIndex(index);
             }
@@ -610,26 +603,7 @@ angular.module('ionicApp')
             }
         }
 
-        $scope.verseNumberValidation = function (chapters, chapter_id, verse_number) {
-            var chapters = $scope.chapters;
-            var chapter_id = $scope.goToVerseParameters.chapter.id;
-            var verse_number = $scope.goToVerseParameters.verse;
 
-            //search array with id
-            var validationErrorMessage = "Geçerli ayet ve sure numarası giriniz";
-            var index = chapters.map(function (el) {
-                return el.id;
-            }).indexOf(chapter_id);
-            if (index == -1 || chapters[index].verseCount < verse_number || isNaN(chapter_id) || isNaN(verse_number)) {
-                if (typeof annotator != 'undefined') {
-                    Annotator.showNotification(validationErrorMessage);
-                } else {
-                    alert(validationErrorMessage);
-                }
-            } else {
-                $scope.goToVerse();
-            }
-        };
 
         //Get verses of the tag from server
         $scope.loadVerseTagContent = function (verseTagContentParams, verseId) {

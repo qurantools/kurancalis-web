@@ -11,6 +11,9 @@ angular.module('ionicApp')
         $scope.facebookIsReady = false;
         //    $scope.user = null;
 
+        $scope.usersForSearch=[];
+        $scope.circlesForSearch=[];
+
         $scope.login = function () { //new
             authorization.login($scope.onFacebookLoginSuccess);
         }
@@ -97,15 +100,15 @@ angular.module('ionicApp')
              var kisiTags = "";
              var cevreTags = "";
 
-            for (var i = 0; i < $scope.kisis.length; i++) {
+            for (var i = 0; i < $scope.usersForSearch.length; i++) {
                 if (i != 0)kisiTags += ",";
-                kisiTags += $scope.kisis[i].id;
+                kisiTags += $scope.usersForSearch[i].id;
             }
 
 
-            for (var i = 0; i < $scope.cevres.length; i++) {
+            for (var i = 0; i < $scope.circlesForSearch.length; i++) {
                 if (i != 0)cevreTags += ",";
-                cevreTags += $scope.cevres[i].id;
+                cevreTags += $scope.circlesForSearch[i].id;
             }
 
             $scope.allAnnotationsParams.users = kisiTags;

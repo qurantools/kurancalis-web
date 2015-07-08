@@ -59,10 +59,10 @@
             <div class="row" style="padding:0 15px">
                 <div style="float: left">{{annotation.updated | date: 'dd/MM/yyyy HH:mm:ss'}}</div>
                 <div style="float: right">
-                    <button type="button" class="btn btn-primary btn-xs" ng-click="showEditor(annotation)"><i
+                    <button type="button" class="btn btn-primary btn-xs" ng-click="showEditor(annotation)" ng-if="annotation.userId==user.id"><i
                             class="fa fa-pencil-square-o "></i>
                     </button>
-                    <button type="button" class="btn btn-danger btn-xs" ng-click="deleteAnnotation(annotation)"><i
+                    <button type="button" class="btn btn-danger btn-xs" ng-click="deleteAnnotation(annotation)" ng-if="annotation.userId==user.id"><i
                             class="fa fa-trash-o"></i></button>
                 </div>
             </div>
@@ -147,14 +147,14 @@
           
             <br />          
       Kişilere ait olan notlar
-        <tags-input ng-model="kisis" placeholder="Kişi Seçiniz" display-property="name" replace-spaces-with-dashes="false" min-length="2">
+        <tags-input ng-model="usersForSearch" placeholder="Kişi Seçiniz" display-property="name" replace-spaces-with-dashes="false" min-length="2">
         <auto-complete source="kisilistele($query)" min-length="2"></auto-complete>
         </tags-input>
     
       <br />
      Çevremdeki kişilere ait olan notlar
-        <tags-input ng-model="cevres" placeholder="Çevre Seçiniz" display-property="name" replace-spaces-with-dashes="false" min-length="1" add-from-autocomplete-only="true" add-on-blur="false">
-        <auto-complete source="cevrelistele()"  load-on-empty="true" load-on-focus="true" ></auto-complete>
+        <tags-input ng-model="circlesForSearch" placeholder="Çevre Seçiniz" display-property="name" replace-spaces-with-dashes="false" min-length="1" add-from-autocomplete-only="true" add-on-blur="false">
+        <auto-complete source="cevrelisteleForSearch()"  load-on-empty="true" load-on-focus="true" ></auto-complete>
         </tags-input>
   
         </td>
