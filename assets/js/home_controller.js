@@ -648,6 +648,7 @@ angular.module('ionicApp')
                 $scope.verseTagContentParams = [];
                 $scope.verseTagContentParams.author = $scope.getSelectedVerseTagContentAuthor();
                 $scope.verseTagContentParams.verse_tags = tag;
+                $scope.verseTagContentParams.circles = 1702;
                 $scope.loadVerseTagContent($scope.verseTagContentParams, verseId);
                 $scope.verseTagContentAuthor = $scope.getSelectedVerseTagContentAuthor(); //set combo
                 $scope.scopeApply();
