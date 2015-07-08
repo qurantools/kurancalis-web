@@ -894,6 +894,33 @@ app.factory('ChapterVerses', function ($resource) {
             //localStorageService.set('author_mask', $scope.author_mask);
         };
 
+        //go to chapter / verse from navigation header
+        $scope.goToVerse = function () {
+            $scope.query_chapter_id = $scope.goToVerseParameters.chapter.id ;
+            $scope.verse.number = $scope.goToVerseParameters.verse;
+            $scope.goToChapter();
+        };
+
+        $scope.verseNumberValidation = function (chapters, chapter_id, verse_number) {
+            var chapters = $scope.chapters;
+            var chapter_id = $scope.goToVerseParameters.chapter.id;
+            var verse_number = $scope.goToVerseParameters.verse;
+
+            //search array with id
+            var validationErrorMessage = "Geçerli ayet ve sure numarası giriniz";
+            var index = chapters.map(function (el) {
+                return el.id;
+            }).indexOf(chapter_id);
+            if (index == -1 || chapters[index].verseCount < verse_number || isNaN(chapter_id) || isNaN(verse_number)) {
+                if (typeof annotator != 'undefined') {
+                    Annotator.showNotification(validationErrorMessage);
+                } else {
+                    alert(validationErrorMessage);
+                }
+            } else {
+                $scope.goToVerse();
+            }
+        };
 
         $scope.initializeController = function () {
 
