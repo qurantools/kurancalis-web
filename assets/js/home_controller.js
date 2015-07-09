@@ -298,7 +298,7 @@ angular.module('ionicApp')
             if (!config_data.isMobile) {
                 var destination = angular.element(document.getElementById(elementId));
                 if (destination.length > 0) {
-                    $document.scrollToElement(destination, 70, 1000);
+                    $document.scrollToElement(destination, 70, 0);
                 }
             } else {
                 var elem = document.getElementById(elementId);
@@ -346,6 +346,7 @@ angular.module('ionicApp')
 
         $scope.annotate_it = function () {
             if ($scope.annotatorActivated == 1) {
+                annotator.unsubscribe();
                 annotator.destroy();
                 delete annotator;
             }
@@ -378,7 +379,7 @@ angular.module('ionicApp')
 
                 annotator.addPlugin('Tags');
                 $scope.annotatorActivated = 1;
-                annotator.unsubscribe();
+
                 annotator.subscribe("annotationCreated", $scope.colorTheAnnotation);
                 annotator.subscribe("annotationCreated", $scope.addAnnotation);
                 annotator.subscribe("annotationUpdated", $scope.colorTheAnnotation);
