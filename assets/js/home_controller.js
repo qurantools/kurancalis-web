@@ -863,7 +863,7 @@ angular.module('ionicApp')
 
         $scope.selectDropdownCircle = function(item){
 
-            $scope.query_own_annotations="true";
+            $scope.query_own_annotations=true;
             if(item.id==''){
                 $scope.query_circles = [];
             }
