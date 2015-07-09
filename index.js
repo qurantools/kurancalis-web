@@ -1,4 +1,4 @@
-var requiredModules = ['ionic', 'ngResource', 'ngRoute', 'facebook', 'restangular', 'LocalStorageModule', 'ngTagsInput', 'duScroll', 'directives.showVerse', 'ui.select', 'myConfig', 'authorizationModule'];
+var requiredModules = ['ionic', 'ngResource', 'ngRoute', 'facebook', 'restangular', 'LocalStorageModule', 'ngTagsInput', 'duScroll', 'directives.showVerse', 'directives.repeatCompleted', 'ui.select', 'myConfig', 'authorizationModule'];
 
 if (config_data.isMobile) {
     var mobileModules = [];//'ionic'
@@ -561,7 +561,7 @@ app.factory('ChapterVerses', function ($resource) {
         };
 
 
-        $scope.getSingleTagParametersForAnnotatorStore = function (tagList) {
+        $scope.getTagsWithCommaSeparated = function (tagList) {
             //prepare tags
             var tagParameter = [];
 
@@ -781,7 +781,7 @@ app.factory('ChapterVerses', function ($resource) {
         };
 
         $scope.showVerseByParameters = function (action) {
-            var showVerseRestangular = Restangular.all("translations");
+
             var showVerseParameters = [];
             if (action == 'next') {
                 if ($scope.showVerseData.data.verse != ($scope.chapters[$scope.showVerseData.data.chapter - 1].verseCount)) {
@@ -802,15 +802,14 @@ app.factory('ChapterVerses', function ($resource) {
             }
             showVerseParameters.chapter = $scope.showVerseData.data.chapter;
             showVerseParameters.verse = $scope.showVerseData.data.verse;
-            showVerseParameters = {
-                chapter: $scope.showVerseData.data.chapter,
-                verse: $scope.showVerseData.data.verse,
-                author: $scope.showVerseData.data.authorId
-            };
-            showVerseRestangular.customGET("", showVerseParameters, {'access_token': authorization.getAccessToken()}).then(function (verse) {
-                if (verse != "") {
+
+            var verseId = $scope.showVerseData.data.chapter * 1000 + parseInt($scope.showVerseData.data.verse);
+            var showVerseRestangular = Restangular.one('authors', $scope.showVerseData.data.authorId)
+                                                .one('verse', verseId);
+            showVerseRestangular.get().then(function (translation) {
+                if (translation != "") {
                     $scope.markVerseAnnotations = false;
-                    $scope.showVerseData.data = verse[0].translations[0];
+                    $scope.showVerseData.data = translation;
                 }
             });
         };

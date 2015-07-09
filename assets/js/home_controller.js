@@ -111,11 +111,13 @@ angular.module('ionicApp')
             }
             $scope.verseTagsJSON = verseTagsJSON;
             //TODO: bu kod ne is yapiyor?
+            /*
             if ($scope.editorSubmitted == 0) {
                 $scope.scrollToVerse();
             } else {
                 $scope.editorSubmitted = 0;
             }
+            */
         };
 
 
@@ -345,8 +347,8 @@ angular.module('ionicApp')
                 var queryParams={};
                 queryParams.chapter = $scope.query_chapter_id;
                 queryParams.author_mask = $scope.query_author_mask;
-                queryParams.circles = $scope.getSingleTagParametersForAnnotatorStore( $scope.query_circles);
-                queryParams.users = $scope.getSingleTagParametersForAnnotatorStore($scope.query_users);
+                queryParams.circles = $scope.getTagsWithCommaSeparated( $scope.query_circles);
+                queryParams.users = $scope.getTagsWithCommaSeparated($scope.query_users);
                 queryParams.verses = $scope.query_verses;
                 queryParams.own_annotations = $scope.query_own_annotations;
 
@@ -637,6 +639,7 @@ angular.module('ionicApp')
             verseTagContentRestangular.customGET("", verseTagContentParams, {'access_token': $scope.access_token}).then(function (verseTagContent) {
                 $scope.targetVerseForTagContent = verseId;
                 $scope.verseTagContents = verseTagContent;
+                $scope.scopeApply();
             });
         };
 
@@ -648,11 +651,13 @@ angular.module('ionicApp')
                 $scope.verseTagContentParams = [];
                 $scope.verseTagContentParams.author = $scope.getSelectedVerseTagContentAuthor();
                 $scope.verseTagContentParams.verse_tags = tag;
-                $scope.verseTagContentParams.circles = 1702;
-                $scope.verseTagContentParams.users = "";
-                $scope.loadVerseTagContent($scope.verseTagContentParams, verseId);
+
+                $scope.verseTagContentParams.circles = $scope.getTagsWithCommaSeparated($scope.query_circles);
+                $scope.verseTagContentParams.users = $scope.getTagsWithCommaSeparated($scope.query_users);
+
                 $scope.verseTagContentAuthor = $scope.getSelectedVerseTagContentAuthor(); //set combo
-                $scope.scopeApply();
+                $scope.loadVerseTagContent($scope.verseTagContentParams, verseId);
+
             } else {
                 $scope.targetVerseForTagContent = 0;
             }
@@ -843,8 +848,14 @@ angular.module('ionicApp')
             });
 
 
+            /* it does not work because of timing
+            //this is for scrolling after listing tag verses.
+            $scope.$watch('verseTagContents',
+                function(){
+                    $scope.scrollToElmnt("verseTags_"+$scope.targetVerseForTagContent);
+                });
 
-            //Volkan Ekledi.
+            */
 
             $scope.detailedSearchAuthorSelection = $scope.selection;
         };
