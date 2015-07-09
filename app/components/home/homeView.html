@@ -39,9 +39,9 @@
                         </select>
 
 
-                        <div ng-repeat="verseTagContent in verseTagContents">
+                        <div ng-repeat="verseTagContent in verseTagContents" repeat-completed="onDisplayVerseTags({{targetVerseForTagContent}})">
                             <div ng-repeat="verseTagContentTranslation in verseTagContent.translations"
-                                 ng-if="verseTagContentTranslation.authorId==verseTagContentAuthor">
+                                 ng-if="verseTagContentTranslation.authorId==verseTagContentAuthor" >
                                 <strong>{{verseTagContentTranslation.verseId / 1000 |
                                     number:0}}:{{verseTagContentTranslation.verseId % 1000}}</strong>
                                 <span ng-class="{translation_rtl: authorMap[verseTagContentTranslation.authorId].language=='ar'}">{{verseTagContentTranslation.content}}</span>

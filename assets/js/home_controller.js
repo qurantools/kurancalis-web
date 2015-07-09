@@ -95,6 +95,23 @@ angular.module('ionicApp')
             $scope.generateVerseTags();
         };
 
+        $scope.onDisplayVerseTags = function(verseId){
+            console.log("scrolling to "+verseId);
+            //$scope.scrollToElmnt("verseTags_"+verseId);
+            
+        };
+
+        $scope.$watch('targetVerseForTagContent',
+                function(newValue, oldValue){
+                    if(newValue != 0){
+                        $timeout(function(){
+                            $scope.scrollToElmnt("verseTags_"+$scope.targetVerseForTagContent);
+                        });
+                    }
+                    
+        },true);
+            
+
 
         //TODO:ne is yapiyor?
         $scope.generateVerseTags = function () {
@@ -111,13 +128,13 @@ angular.module('ionicApp')
             }
             $scope.verseTagsJSON = verseTagsJSON;
             //TODO: bu kod ne is yapiyor?
-            /*
+            
             if ($scope.editorSubmitted == 0) {
                 $scope.scrollToVerse();
             } else {
                 $scope.editorSubmitted = 0;
             }
-            */
+            
         };
 
 
@@ -367,6 +384,7 @@ angular.module('ionicApp')
 
                 annotator.addPlugin('Tags');
                 $scope.annotatorActivated = 1;
+                annotator.unsubscribe();
                 annotator.subscribe("annotationCreated", $scope.colorTheAnnotation);
                 annotator.subscribe("annotationCreated", $scope.addAnnotation);
                 annotator.subscribe("annotationUpdated", $scope.colorTheAnnotation);
