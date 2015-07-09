@@ -95,12 +95,6 @@ angular.module('ionicApp')
             $scope.generateVerseTags();
         };
 
-        $scope.onDisplayVerseTags = function(verseId){
-            console.log("scrolling to "+verseId);
-            //$scope.scrollToElmnt("verseTags_"+verseId);
-            
-        };
-
         $scope.$watch('targetVerseForTagContent',
                 function(newValue, oldValue){
                     if(newValue != 0){
@@ -480,15 +474,12 @@ angular.module('ionicApp')
             if (typeof $scope.verse.number != 'undefined') {
                 var verseId = parseInt($scope.query_chapter_id * 1000) + parseInt($scope.verse.number);
                 var verseElement = 'v_' + verseId;
-                //  if (!config_data.isMobile) {
-                $scope.scrollToElmnt(verseElement);
-                /*
-                 } else {
-                 $location.hash(verseElement);
-                 var delegate = $ionicScrollDelegate.$getByHandle('content');
-                 delegate.anchorScroll();
-                 }
-                 */
+                
+                $timeout(function(){
+                            $scope.scrollToElmnt(verseElement);
+                        });
+                
+                
             }
         };
 
@@ -865,15 +856,6 @@ angular.module('ionicApp')
                 $scope.verseTagsJSON = [];
             });
 
-
-            /* it does not work because of timing
-            //this is for scrolling after listing tag verses.
-            $scope.$watch('verseTagContents',
-                function(){
-                    $scope.scrollToElmnt("verseTags_"+$scope.targetVerseForTagContent);
-                });
-
-            */
 
             $scope.detailedSearchAuthorSelection = $scope.selection;
         };
