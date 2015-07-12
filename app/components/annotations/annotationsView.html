@@ -10,13 +10,13 @@
             <div ng-if="filterTags.length>0"><strong>Etiket:</strong>
                 <div ng-repeat="filterTag in filterTags" class="tag label label-info s_a_tag">{{filterTag.name}}</div>
             </div>
-            
-            <div ng-if="kisis.length>0"><strong>Kişiler:</strong>
-                <div ng-repeat="kisi in kisis" class="tag label label-info s_a_tag">{{kisi.name}}</div>
+
+            <div ng-if="usersForSearch.length>0"><strong>Kişiler:</strong>
+                <div ng-repeat="kisi in usersForSearch" class="tag label label-info s_a_tag">{{kisi.name}}</div>
             </div>
             
-            <div ng-if="cevres.length>0"><strong>Çevreler:</strong>
-                <div ng-repeat="cevre in cevres" class="tag label label-info s_a_tag">{{cevre.name}}</div>
+            <div ng-if="circlesForSearch.length>0"><strong>Çevreler:</strong>
+                <div ng-repeat="cevre in circlesForSearch" class="tag label label-info s_a_tag">{{cevre.name}}</div>
             </div>
             
             <div ng-if="annotationSearchAuthorSelection.length>0">
