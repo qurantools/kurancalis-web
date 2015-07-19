@@ -308,6 +308,22 @@ angular.module('ionicApp')
             }
         };
 
+        /*
+        daha basit çözüm bulunduğu için şimdilik kullanılmıyor.
+
+        $scope.scrollToNextVerse = function (verseId){
+            var chapter=Math.floor(verseId / 1000);
+            var verseNumber=verseId % 1000;
+            if (verseNumber != ($scope.chapters[chapter - 1].verseCount)) {
+                verseId++;
+            } else {
+                chapter++;
+                verseId=chapter*1000;
+            }
+            $scope.scrollToElmnt("v_"+verseId);
+        }
+        */
+
         //go to chapter
         $scope.goToChapter = function () {
             $location.path('/chapter/' + $scope.query_chapter_id + '/author/' + $scope.query_author_mask + '/verse/' + $scope.verse.number + '/', false);
