@@ -347,8 +347,8 @@
             $.extend(annotation, this.options.annotationData);
 
             var tidBlock = annotator.getTranslationDivMap(annotation.translationId);
-            annotation.ranges[0].start = annotation.ranges[0].start.replace(tidBlock, "");
-            annotation.ranges[0].end = annotation.ranges[0].end.replace(tidBlock, "");
+            annotation.ranges[0].start = "";//annotation.ranges[0].start.replace(tidBlock, "");
+            annotation.ranges[0].end = "";//annotation.ranges[0].end.replace(tidBlock, "");
 
             annotation.content = annotation.text;
             annotation.colour = annotation.colour;

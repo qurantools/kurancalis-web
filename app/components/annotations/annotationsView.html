@@ -141,7 +141,7 @@
                     Etikete sahip olan notlar
                         <tags-input ng-model="filterTags" display-property="name" placeholder="Etiket girin" replace-spaces-with-dashes="false"
                                     min-length="2">
-                            <auto-complete source="loadTags($query)" min-length="2"></auto-complete>
+                            <auto-complete source="loadTags($query)" min-length="2" select-first-match="false"></auto-complete>
                         </tags-input>
                     </div>
           

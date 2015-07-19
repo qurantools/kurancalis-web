@@ -133,7 +133,7 @@ if (config_data.isMobile == false) { //false
 
         //route
         $routeProvider
-            .when('/chapter/:chapterId/author/:authorMask/verse/:verseNumber/', {
+            .when('/t/', {
                 controller: 'HomeCtrl',
                 templateUrl: 'app/components/home/homeView.html',
                 reloadOnSearch: false
@@ -168,12 +168,18 @@ if (config_data.isMobile == false) { //false
                 templateUrl: 'app/components/home/homeView.html',
                 reloadOnSearch: false
             })
-            .when('/chapter/:chapterId/author/:authorMask/', {
-                redirectTo: '/chapter/:chapterId/author/:authorMask/verse/1/'
+            .when('/chapter/:chapter/author/:author/', {
+                redirectTo: '/t/?chapter=:chapter&verse=1&author=:author'
             })
+            //.when('/:chapter/:verse', {
+            //    redirectTo: '/t/?chapter=:chapter&verse=:verse&author=1040'
+            //})
             .otherwise({
                 redirectTo: '/'
             });
+
+//        var $route = $routeProvider.$get[$routeProvider.$get.length-1]({$on:function(){}});
+//        $route.routes['/:chapter/:verse'].regexp = /^\/(?:artist\/(\d+))$/
 
         //facebook
         FacebookProvider.init(config_data.FBAppID);
@@ -412,6 +418,7 @@ app.factory('ChapterVerses', function ($resource) {
         //Çevreleri listeleme - show circles
         $scope.extendedCircles = [];
         $scope.extendedCirclesForSearch = [];
+        $scope.circleListsPromise=null;
 
         $scope.tutorial = function (parameter) {
             if (parameter == 'init') {
@@ -572,6 +579,14 @@ app.factory('ChapterVerses', function ($resource) {
             return tagParameter.join(',');
         };
 
+        $scope.getIdArrayFromCommaSeparated = function (tagList) {
+            if(tagList.length==0){
+                return [];
+            }
+            else{
+                return tagList.split(',');
+            }
+        };
 
         $scope.getTagParametersForAnnotatorStore = function (canViewCircles, canCommentCircles, canViewUsers, canCommentUsers, tags) {
             //prepare tags
@@ -689,6 +704,9 @@ app.factory('ChapterVerses', function ($resource) {
                     newTags.push({"name": annotation.tags[i]});
                 }
             }
+
+            console.log(annotation.ranges[0].end);
+
 
             $scope.annotationModalData = annotation;
             $scope.annotationModalDataTagsInput = newTags;
@@ -850,6 +868,7 @@ app.factory('ChapterVerses', function ($resource) {
 
         $scope.initializeCircleLists = function () {
 
+            $scope.circleListsPromise =  $q.defer();
             $scope.extendedCircles = [];
             $scope.extendedCircles.push({'id': '-2', 'name': 'Tüm Çevrelerim'});
             $scope.extendedCircles.push({'id': '-1', 'name': 'Herkes'});
@@ -871,6 +890,7 @@ app.factory('ChapterVerses', function ($resource) {
                 $scope.extendedCircles.push.apply($scope.extendedCircles, circleList);
                 $scope.extendedCirclesForSearch.push.apply($scope.extendedCirclesForSearch, circleList);
 
+                $scope.$broadcast("circleLists ready");
 
             });
 

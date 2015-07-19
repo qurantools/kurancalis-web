@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div id="fb-root"></div>
+<script src="http://connect.facebook.net/en_US/all.js">
+</script>
+<script>
+    FB.init({
+        appId:'295857580594128', cookie:true,
+        status:true, xfbml:true
+    });
+
+
+
+    function FacebookInviteFriends()
+    {
+        FB.ui({ method: 'apprequests',
+            message: 'VISIT THIS WEB SITE'});
+    }
+</script>
+
+<a href='#' onClick="FacebookInviteFriends();"> INVITE YOUR FACEBOOK FRIENDS</a>
+
+</body>
+</html>
