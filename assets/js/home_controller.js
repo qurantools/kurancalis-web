@@ -906,10 +906,10 @@ angular.module('ionicApp')
                     localParameterData.ownAnnotations = ownAnnotations;
                 }
 
-                if(usersFromRoute && users.length != 0){
+                if(usersFromRoute || !isDefined(localParameterData.users)){
                     localParameterData.users=users;
                 }
-                if(circlesFromRoute && circles.length != 0){
+                if(circlesFromRoute|| !isDefined(localParameterData.circles)){
                     localParameterData.circles = circles;
                 }
             }
