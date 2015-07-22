@@ -12,7 +12,7 @@
                         <div ng-repeat="translation in verse.translations">
                             <div class="col-sm-1" ng-if="$first" style="text-align: center">
                                 <a href ng-click="scrollToElmnt('v_{{verse.id-1}}')"><i class="fa fa-caret-up fa-2x"></i></a>
-                                <div>{{translation.chapter}}:{{translation.verse}}</div>
+                                <div class="chapter_verse_number">{{translation.chapter}}:{{translation.verse}}</div>
                                 <a href ng-click="scrollToElmnt('v_{{verse.id+1}}')"><i class="fa fa-caret-down fa-2x"></i></a>
                             </div>
 
@@ -21,7 +21,7 @@
                                    {{authorMap[translation.authorId].name}}
                                </div>
                                <div ng-class="{translation_rtl: authorMap[translation.authorId].language=='ar', translation_content: authorMap[translation.authorId].language!='ar'}"><span
-                                       ng-bind-html="translation.content | with_footnote_link:translation.id:translation.authorId | to_trusted"></span>
+                                       ng-bind-html="translation.content | with_footnote_link:translation.id:translation.authorId | to_trusted" class="translation_span"></span>
                                </div>
                            </div>
 

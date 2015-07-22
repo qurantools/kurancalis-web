@@ -74,7 +74,12 @@ i.inactive {color: #d9534f}
 }
 
 .translations {
-    padding-top: 0 !important;
+    padding-top: 10px !important;
+}
+
+.chapter_verse_number{
+    font-size:20px;
+    line-height:20px;
 }
 
 .facebook_area {
@@ -171,6 +176,9 @@ i.inactive {color: #d9534f}
 
 }
 
+.translation_span{
+    padding-left:10px;
+}
 
 /* left menu */
 .side-menu-container > .navbar-nav {
