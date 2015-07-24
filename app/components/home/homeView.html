@@ -7,18 +7,18 @@
             <div ng-repeat="verse in verses">
                 <div class="well translations col-xs-12" id="v_{{verse.id}}">
                     <div class="row" >
-
-
                         <div ng-repeat="translation in verse.translations">
                             <div class="col-sm-1" ng-if="$first" style="text-align: center">
                                 <a href ng-click="scrollToElmnt('v_{{verse.id-1}}')"><i class="fa fa-caret-up fa-2x"></i></a>
                                 <div class="chapter_verse_number">{{translation.chapter}}:{{translation.verse}}</div>
                                 <a href ng-click="scrollToElmnt('v_{{verse.id+1}}')"><i class="fa fa-caret-down fa-2x"></i></a>
+                                <br /><a href>Kelime Meali</a>
                             </div>
 
                            <div class="col-sm-11" id="t_{{translation.id}}"  style="float: right" >
-                               <div class="col-sm-3 authorDiv_{{authorMap[translation.authorId].color}}" ng-if="detailedSearchAuthorSelection.length>1">
-                                   {{authorMap[translation.authorId].name}}
+                               <div class="col-sm-3 authorDiv_{{authorMap[translation.authorId].color}}">
+                                   <a href ng-click="updateAuthorManually({{translation.authorId}},{{verse.id}})" ng-if="detailedSearchAuthorSelection.length>1">{{authorMap[translation.authorId].name}}</a>
+                                   <a href ng-click="restoreAuthorManually({{verse.id}})" ng-if="detailedSearchAuthorSelection.length==1 && detailedSearchAuthorSelection_original.length>0">+</a>
                                </div>
                                <div ng-class="{translation_rtl: authorMap[translation.authorId].language=='ar', translation_content: authorMap[translation.authorId].language!='ar'}"><span
                                        ng-bind-html="translation.content | with_footnote_link:translation.id:translation.authorId | to_trusted" class="translation_span"></span>
