@@ -28,12 +28,13 @@
                             <div class="col-sm-8"  style="float: right" ng-if="!$last" >
                                 <hr />
                             </div>
-
-
+<div class="row">
+                            <show-verse data="showVerseData.data" ng-if="showVerseAtTranslation==translation.id"
+                                         class="showVerseData"></show-verse>
+</div>
                            </div>
 
-                        <show-verse data="showVerseData.data" ng-if="showVerseAtTranslation==translation.id"
-                                    class="showVerseData"></show-verse>
+
 
                     </div>
                     <div id="verseTags_{{verse.id}}" ng-repeat="(verseTagsKey, verseTagsVal) in verseTagsJSON"
