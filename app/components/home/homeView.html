@@ -20,15 +20,16 @@
                                    <a href ng-click="singleAuthorView({{translation.authorId}},{{verse.id}})" ng-if="showSingleAuthor == false">{{authorMap[translation.authorId].name}}</a>
                                    <a href ng-click="multipleAuthorsView({{verse.id}})" ng-if="selectedSingleAuthor == translation.authorId">+</a>
                                </div>
-                               <div ng-class="{translation_rtl: authorMap[translation.authorId].language=='ar', translation_content: authorMap[translation.authorId].language!='ar'}"><span
-                                       ng-bind-html="translation.content | with_footnote_link:translation.id:translation.authorId | to_trusted" class="translation_span"></span>
+                               <div class="col-sm-9" ng-class="{translation_rtl: authorMap[translation.authorId].language=='ar', translation_content: authorMap[translation.authorId].language!='ar'}"><span
+                                       ng-bind-html="translation.content | with_footnote_link:translation.id:translation.authorId | to_trusted"></span>
                                </div>
                            </div>
 
                             <div class="col-sm-8"  style="float: right" ng-if="!$last" >
                                 <hr />
                             </div>
-<div class="row">
+
+<div  class="col-sm-11"   style="float: right">
                             <show-verse data="showVerseData.data" ng-if="showVerseAtTranslation==translation.id"
                                          class="showVerseData"></show-verse>
 </div>
