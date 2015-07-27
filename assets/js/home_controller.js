@@ -20,8 +20,8 @@ angular.module('ionicApp')
         $scope.detailedSearchAuthorSelection = [];
 
         //multiple > single author view
-        $scope.author_mask_original = 0;
-        $scope.detailedSearchAuthorSelection_original = [];
+        $scope.showSingleAuthor=false;
+        $scope.selectedSingleAuthor=0;
 
 
         $scope.restoreChapterViewParameters = function (localParameterData) {
@@ -729,52 +729,22 @@ angular.module('ionicApp')
             $scope.updateVerseTagContent();
         };
 
-        $scope.updateAuthorManually = function (author, verse) {
-            $scope.author_mask_original = 0;
-            for (var index in $scope.detailedSearchAuthorSelection) {
-                $scope.author_mask_original = $scope.author_mask_original | $scope.detailedSearchAuthorSelection[index];
-            }
-
-            $scope.detailedSearchAuthorSelection_original = $scope.detailedSearchAuthorSelection;
-            $scope.detailedSearchAuthorSelection = [];
-            $scope.detailedSearchAuthorSelection.push(author);
-
-            var localParameterData = localStorageService.get('chapter_view_parameters');
-            localParameterData.author_mask = author;
-            localParameterData.verse_number = verse;
-            $scope.restoreChapterViewParameters(localParameterData);
-            $scope.storeChapterViewParameters();
-
-
-            $scope.goToChapter();
+        $scope.singleAuthorView = function (author, verse) {
+            $scope.selectedSingleAuthor=author;
+            $scope.showSingleAuthor=true;
+            var verseElement = 'v_' + verse;
             $timeout(function () {
-                var verseElement = 'v_' + verse;
-                $timeout(function () {
-                    $scope.scrollToElmnt(verseElement);
-                });
-            }, 2000);
+                $scope.scrollToElmnt(verseElement);
+            });
         };
 
-        $scope.restoreAuthorManually = function (verse) {
-            if ($scope.detailedSearchAuthorSelection_original.length > 0) {
-                $scope.detailedSearchAuthorSelection = $scope.detailedSearchAuthorSelection_original;
-                var localParameterData = localStorageService.get('chapter_view_parameters');
-                localParameterData.author_mask = $scope.author_mask_original;
-                $scope.restoreChapterViewParameters(localParameterData);
-                $scope.storeChapterViewParameters();
-
-
-                $scope.author_mask_original = 0;
-                $scope.detailedSearchAuthorSelection_original = []
-                $scope.goToChapter();
-
-                $timeout(function () {
-                    var verseElement = 'v_' + verse;
-                    $timeout(function () {
-                        $scope.scrollToElmnt(verseElement);
-                    });
-                }, 2000);
-            }
+        $scope.multipleAuthorsView = function (verse) {
+            $scope.showSingleAuthor=false;
+            $scope.selectedSingleAuthor=0;
+            var verseElement = 'v_' + verse;
+            $timeout(function () {
+                $scope.scrollToElmnt(verseElement);
+            });
         };
 
         if (config_data.isMobile) {
