@@ -9,23 +9,23 @@
                     <div class="row" >
                         <div ng-repeat="translation in verse.translations">
                             <div class="col-sm-1" ng-if="$first" style="text-align: center">
-                                <a href ng-click="scrollToElmnt('v_{{verse.id-1}}')"><i class="fa fa-caret-up fa-2x"></i></a>
+                                <a href ng-click="scrollToElmnt('v_{{verse.id-1}}')" ng-show="!showSingleAuthor"><i class="fa fa-caret-up fa-2x"></i></a>
                                 <div class="chapter_verse_number">{{translation.chapter}}:{{translation.verse}}</div>
-                                <a href ng-click="scrollToElmnt('v_{{verse.id+1}}')"><i class="fa fa-caret-down fa-2x"></i></a>
+                                <a href ng-click="scrollToElmnt('v_{{verse.id+1}}')" ng-show="!showSingleAuthor"><i class="fa fa-caret-down fa-2x"></i></a>
                                 <br /><a href>Kelime Meali</a>
                             </div>
                            <div class="col-sm-11" id="t_{{translation.id}}"  style="float: right"
-                                ng-if="showSingleAuthor == false || (showSingleAuthor == true && selectedSingleAuthor == translation.authorId)">
+                                ng-show="!showSingleAuthor || (showSingleAuthor && selectedSingleAuthor == translation.authorId)">
                                <div class="col-sm-3 authorDiv_{{authorMap[translation.authorId].color}}">
-                                   <a href ng-click="singleAuthorView({{translation.authorId}},{{verse.id}})" ng-if="showSingleAuthor == false">{{authorMap[translation.authorId].name}}</a>
-                                   <a href ng-click="multipleAuthorsView({{verse.id}})" ng-if="selectedSingleAuthor == translation.authorId">+</a>
+                                   <a href ng-click="singleAuthorView({{translation.authorId}},{{verse.id}})" ng-show="!showSingleAuthor">{{authorMap[translation.authorId].name}}</a>
+                                   <a href ng-click="multipleAuthorsView({{verse.id}})" ng-show="selectedSingleAuthor == translation.authorId">+</a>
                                </div>
                                <div class="col-sm-9" ng-class="{translation_rtl: authorMap[translation.authorId].language=='ar', translation_content: authorMap[translation.authorId].language!='ar'}"><span
                                        ng-bind-html="translation.content | with_footnote_link:translation.id:translation.authorId | to_trusted"></span>
                                </div>
                            </div>
 
-                            <div class="col-sm-8"  style="float: right" ng-if="!$last" >
+                            <div class="col-sm-8"  style="float: right" ng-if="!$last && !showSingleAuthor" >
                                 <hr />
                             </div>
 
