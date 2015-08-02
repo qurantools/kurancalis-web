@@ -14,6 +14,57 @@ angular.module('ionicApp')
         $scope.usersForSearch=[];
         $scope.circlesForSearch=[];
 
+        // all annotations
+        $scope.annotations = [];
+        $scope.allAnnotationsOpts = [];
+        $scope.allAnnotationsOpts.hasMore = true;
+        $scope.allAnnotationsOpts.start = 0;
+        $scope.allAnnotationsOpts.limit = 10;
+        $scope.allAnnotationsOpts.own_annotations = true;
+
+        $scope.allAnnotationsSortBy = "verse";
+        $scope.annotationSearchAuthorSelection = $scope.selection;
+
+
+        $scope.restoreAnnotationsViewParameters = function (localParameterData) {
+            $scope.allAnnotationsOpts.hasMore = localParameterData.has_more;
+            $scope.allAnnotationsOpts.own_annotations = localParameterData.own_annotations;
+            $scope.allAnnotationsSortBy = localParameterData.verse;
+            $scope.annotationSearchAuthorSelection = localParameterData.author_selection;
+
+        };
+
+        $scope.storeChapterViewParameters = function () {
+
+            var localParameterData = {};
+            localParameterData.author_mask = $scope.query_author_mask;
+            localParameterData.chapter_id = $scope.query_chapter_id;
+            localParameterData.verse_number = $scope.verse.number;
+            localParameterData.ownAnnotations = $scope.query_own_annotations;
+            localParameterData.circles = $scope.query_circles;
+            localParameterData.users = $scope.query_users;
+
+            localStorageService.set('chapter_view_parameters', localParameterData);
+        };
+
+
+        //reflects the scope parameters to URL
+        $scope.setTranslationsPageURL = function () {
+            var parameters =
+            {
+                author: $scope.query_author_mask,
+                chapter: $scope.query_chapter_id,
+                verse: $scope.verse.number,
+                ownAnnotations: $scope.query_own_annotations,
+                circles: btoa(JSON.stringify($scope.query_circles)),
+                users: btoa(JSON.stringify($scope.query_users))
+            }
+            $location.path("/t/", false).search(parameters);
+        };
+
+
+
+
         $scope.login = function () { //new
             authorization.login($scope.onFacebookLoginSuccess);
         }
@@ -38,17 +89,6 @@ angular.module('ionicApp')
         /* end of auth */
 
 
-        // all annotations
-        $scope.annotations = [];
-        $scope.allAnnotationsOpts = [];
-        $scope.allAnnotationsOpts.hasMore = true;
-        $scope.allAnnotationsOpts.start = 0;
-        $scope.allAnnotationsOpts.limit = 10;
-        $scope.allAnnotationsOpts.own_annotations = true;
-
-
-        $scope.allAnnotationsSortBy = "verse";
-        $scope.annotationSearchAuthorSelection = $scope.selection;
 
 
         $scope.setAnnotationSearchKeyword = function(keyword){

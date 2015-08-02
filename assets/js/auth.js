@@ -40,7 +40,7 @@ authorizationModule.factory('User', function ($resource) {
         factory.login = function (faceBookResponseMethod) {
 
             var nativeApp = document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1;
-            var permissions = 'email';
+            var permissions = 'email,user_friends';
 
             if (config_data.isMobile && !nativeApp) {
                 //different FB login for mobile web app

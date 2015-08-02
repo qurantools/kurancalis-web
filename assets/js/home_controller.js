@@ -132,7 +132,6 @@ angular.module('ionicApp')
 
             }, true);
 
-
         //TODO:ne is yapiyor?
         $scope.generateVerseTags = function () {
             var verseTagsJSON = [];
@@ -187,6 +186,7 @@ angular.module('ionicApp')
         $scope.toggleDetailedSearchOwnAnnotations = function () {
             $scope.query_own_annotations = !$scope.query_own_annotations;
         }
+
 
 
         $scope.resetAnnotationFilter = function () {
@@ -350,7 +350,6 @@ angular.module('ionicApp')
         //acction for detailed search screen
         $scope.detailedSearch = function () {
             $scope.query_circle_dropdown = $scope.DETAILED_SEARCH_ITEM;
-            ;
             $scope.goToChapter();
         };
 
@@ -563,8 +562,7 @@ angular.module('ionicApp')
 
         //delete annotation from annotator library (highlight)
         $scope.deleteAnnotation = function (index) {
-            console.log("deleteAnnotation")
-            console.log("$scope.filteredAnnotations: " + JSON.stringify($scope.filteredAnnotations));
+            //console.log("$scope.filteredAnnotations: "+JSON.stringify($scope.filteredAnnotations));
             if (typeof $scope.filteredAnnotations != 'undefined' && $scope.filteredAnnotations.length > 0) {
                 index = $scope.getAnnotationIndexFromFilteredAnnotationIndex(index);
             }
