@@ -6,25 +6,25 @@
     <div></div>
     <br />
     <div align="left"  style="width:95%">
-        <h4>kurancalis.com ile tan��an arkada�lar�m</h4>    
+        <h4>kurancalis.com ile tanışan arkadaşlarım</h4>    
     </div>
          <div align="center"  style="width:100%">    
     <table>
     <tr>
     <td style="width:100%; vertical-align: bottom;">
-    <input class="form-control" style="width:400px" placeholder="Facebook Arkada�lar�mda Ara" id="Text1" type="text" ng-model="search.$" /></td>
+    <input class="form-control" style="width:400px" placeholder="Facebook Arkadaşlarımda Ara" id="Text1" type="text" ng-model="search.$" /></td>
     <td style="width:200px">
     <table>
     <tr>
     <td style="height: 50px">
     <button class="btn btn-primary btn-wide" style="width:300px">
-    Di�er Arkada�lar�m� Davet Et</button>
+    Diğer Arkadaşlarımı Davet Et</button>
     </td>
     </tr>
     <tr>
     <td>
      <button class="btn btn-primary btn-wide" style="width:300px" ng-click="digercevremodal()" ng-disabled="ackapa">
-    Se�ili Arkada�lar�m� �evreye Ekle</button>
+    Seçili Arkadaşlarımı Çevreye Ekle</button>
     </td>
     </tr>
     </table>
@@ -66,9 +66,9 @@
 <div ng-include="'app/components/partials/off_canvas_menu.html'"></div>
 
    <div align="center">
-        <digercevremodal title="Ki�ileri Ba�ka �evreye Ekle" visible="digercevre">
+        <digercevremodal title="Kişileri Başka Çevreye Ekle" visible="digercevre">
             <div align="left">
-                <label>Se�ti�iniz ki�ileri a�a��daki se�ece�iniz �evreye de ekleyebilirsiniz.</label>
+                <label>Seçtiğiniz kişileri aşağıdaki seçeceğiniz çevreye de ekleyebilirsiniz.</label>
                 <table>
                     <tr ng-repeat="item in dcevreadlar">
                         <td style="width:30px">
@@ -82,8 +82,8 @@
                 </table>
             </div>
             <div class="modal-footer">
-                <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal">Vazge�</a>
-                <a class="btn btn-primary btn-wide" ng-click="kisiekcevre()" data-dismiss="modal">�evreye Ekle</a>
+                <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal">Vazgeç</a>
+                <a class="btn btn-primary btn-wide" ng-click="kisiekcevre()" data-dismiss="modal">Çevreye Ekle</a>
             </div>
         </digercevremodal>
     </div>
