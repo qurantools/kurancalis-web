@@ -9,7 +9,7 @@ angular.module('ionicApp')
         if(verseno=="0")
         {verseno="1";}
         
-        $scope.linkno="http://kuranharitasi.com/kuran.aspx?sureno=" + chapterno + "&ayetno=" + verseno;       
+        $scope.linkno="http://kuranharitasi.com/kuran.aspx?sureno=" + chapterno + "&ayetno=" + verseno + "#ContentPlaceHolder1_ayettekikoklergrid";       
         $scope.currentProjectUrl = $sce.trustAsResourceUrl($scope.linkno);
         };
     
