@@ -1,6 +1,19 @@
 angular.module('ionicApp')
-    .controller('HomeCtrl', function ($scope, $q, $routeParams, $location, $timeout, ListAuthors, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService, $document, $filter, $rootScope, $state, $stateParams, $ionicModal, $ionicScrollDelegate, $ionicPosition, authorization) {
+    .controller('HomeCtrl', function ($scope, $q, $routeParams, $location, $timeout, ListAuthors, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService, $document, $filter, $rootScope, $state, $stateParams, $ionicModal, $ionicScrollDelegate, $ionicPosition, authorization, $sce) {
 
+        //Volkan : kuranharitası link create by chapter-verse
+        
+        $scope.linkno="";
+        
+        $scope.linkcreate=function(chapterno,verseno){
+        if(verseno=="0")
+        {verseno="1";}
+        
+        $scope.linkno="http://kuranharitasi.com/kuran.aspx?sureno=" + chapterno + "&ayetno=" + verseno;       
+        $scope.currentProjectUrl = $sce.trustAsResourceUrl($scope.linkno);
+        };
+    
+        ///////////////////////
 
         $scope.DETAILED_SEARCH_ITEM = {'id': '', 'name': 'DETAYLI ARAMA'};
         $scope.ONLY_MINE_ITEM = {'id': '', 'name': 'Sadece Ben'};

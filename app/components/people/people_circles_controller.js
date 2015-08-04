@@ -549,4 +549,3 @@ mymodal.directive('digercevremodal', function () {
         }
     };
 });
-   

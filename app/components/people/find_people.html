@@ -1,11 +1,90 @@
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-9" />
 <body>
 <div class="container">
+<input type="checkbox" style="visibility:hidden" ng-model="ackapa"/>
     <div ng-include="'app/components/people/people_navigation.html'"></div>
-    <div class="nav-bottom"></div>
-    <div class="row">
-        <h1>find people</h1>
-        <h2>controller/scope test: {{testData}}</h2>
+    <div></div>
+    <br />
+    <div align="left"  style="width:95%">
+        <h4>kurancalis.com ile tanışan arkadaşlarım</h4>    
     </div>
+         <div align="center"  style="width:100%">    
+    <table>
+    <tr>
+    <td style="width:100%; vertical-align: bottom;">
+    <input class="form-control" style="width:400px" placeholder="Facebook Arkadaşlarımda Ara" id="Text1" type="text" ng-model="search.$" /></td>
+    <td style="width:200px">
+    <table>
+    <tr>
+    <td style="height: 50px">
+    <button class="btn btn-primary btn-wide" style="width:300px">
+    Diğer Arkadaşlarımı Davet Et</button>
+    </td>
+    </tr>
+    <tr>
+    <td>
+     <button class="btn btn-primary btn-wide" style="width:300px" ng-click="digercevremodal()" ng-disabled="ackapa">
+    Seçili Arkadaşlarımı Çevreye Ekle</button>
+    </td>
+    </tr>
+    </table>
+    
+    </td>
+    </tr>
+    </table>
+        <br />
+    
+    </div>
+    
+    <div>
+       <table class="btn btn-primary btn-wide" ng-repeat="item in cevrekisiler | filter:search:strict" cellpadding="0" cellspacing="0"
+               style=" background-color:#1abc9c; width: 215px; margin: 10px 10px; padding:0px 0px">
+            <tr>
+                <td align="left" style="width: 75px; height: 75px">
+                    <img width="75px" height="75px" src={{item.photo}}>
+                </td>
+                <td style="width: 135px; padding-left: 8px;">
+                    <table style="width: 135px">
+                        <tr>
+                            <td align="right" style="width: 140px; padding-right:20px; height: 10px;">
+                                <input id="{{item.fbId}}" type="checkbox" ng-model="secimyap"
+                                       ng-click="kisiadd('{{item.fbId}}',secimyap)">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td nowrap="nowrap" align="left"
+                                style="vertical-align: top; width: 140px; height: 40px; color:White">
+                                {{item.name}}
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        </div>
 </div>
 <div ng-include="'app/components/partials/off_canvas_menu.html'"></div>
+
+   <div align="center">
+        <digercevremodal title="Kişileri Başka Çevreye Ekle" visible="digercevre">
+            <div align="left">
+                <label>Seçtiğiniz kişileri aşağıdaki seçeceğiniz çevreye de ekleyebilirsiniz.</label>
+                <table>
+                    <tr ng-repeat="item in dcevreadlar">
+                        <td style="width:30px">
+                            <input type="radio" ng-model="csecim" value="false" name="groupA"
+                                   ng-click="cevreadd('{{dcevreadlar[$index].id}}')"/>
+                        </td>
+                        <td>
+                            {{dcevreadlar[$index].name}}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal">Vazgeç</a>
+                <a class="btn btn-primary btn-wide" ng-click="kisiekcevre()" data-dismiss="modal">Çevreye Ekle</a>
+            </div>
+        </digercevremodal>
+    </div>
 </body>
