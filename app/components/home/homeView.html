@@ -16,10 +16,12 @@
                                 <br /><a ng-click="linkcreate({{translation.chapter}},{{translation.verse}})" href data-target="#openlink" data-toggle="modal">Kelime Meali</a>
                             </div>
                            <div class="col-sm-11" id="t_{{translation.id}}"  style="float: right"
-                                ng-show="!showSingleAuthor || (showSingleAuthor && selectedSingleAuthor == translation.authorId)">
-                               <div class="col-sm-3 authorDiv_{{authorMap[translation.authorId].color}}">
-                                   <a href ng-click="singleAuthorView({{translation.authorId}},{{verse.id}})" ng-show="!showSingleAuthor">{{authorMap[translation.authorId].name}}</a>
-                                   <a href ng-click="multipleAuthorsView({{verse.id}})" ng-show="selectedSingleAuthor == translation.authorId">+</a>
+                                 ng-switch="selectedSingleAuthor">
+                               <div class="col-sm-3 authorDiv_{{authorMap[translation.authorId].color}}" ng-switch-when="0">
+                                   <a href ng-click="singleAuthorView({{translation.authorId}},{{verse.id}})" >{{authorMap[translation.authorId].name}}</a>
+                               </div>
+                               <div class="col-sm-3 authorDiv_{{authorMap[translation.authorId].color}}" ng-switch-when="translation.authorId">
+                                   <a href ng-click="multipleAuthorsView({{verse.id}})" >+{{authorMap[translation.authorId].name}}</a> | <a href="#">K.M.</a>
                                </div>
                                <div class="col-sm-9" ng-class="{translation_rtl: authorMap[translation.authorId].language=='ar', translation_content: authorMap[translation.authorId].language!='ar'}"><span
                                        ng-bind-html="translation.content | with_footnote_link:translation.id:translation.authorId | to_trusted"></span>

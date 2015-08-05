@@ -68,9 +68,9 @@
                        ng-if="user!=null && currentPage=='annotations'"><i class="fa fa-search"
                                                                            style="font-size: 1.3em"></i></a>
 
-                    <select ng-model="allAnnotationsOrderBy" ng-init="allAnnotationsOrderBy='verse'"
+                    <select ng-model="allAnnotationsOrderBy"
                             ng-if="currentPage=='annotations'"
-                            ng-change="$parent.allAnnotationsOrderByChanged(this.allAnnotationsOrderBy)"
+                            ng-change="allAnnotationsOrderByChanged(allAnnotationsOrderBy)"
                             >
                         <option value="verse">Ayet</option>
                         <option value="time">Zaman</option>

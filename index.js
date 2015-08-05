@@ -133,7 +133,7 @@ if (config_data.isMobile == false) { //false
 
         //route
         $routeProvider
-            .when('/t/', {
+            .when('/translations/', {
                 controller: 'HomeCtrl',
                 templateUrl: 'app/components/home/homeView.html',
                 reloadOnSearch: false
@@ -169,10 +169,10 @@ if (config_data.isMobile == false) { //false
                 reloadOnSearch: false
             })
             .when('/chapter/:chapter/author/:author/', {
-                redirectTo: '/t/?chapter=:chapter&verse=1&author=:author'
+                redirectTo: '/translations/?chapter=:chapter&verse=1&author=:author'
             })
             //.when('/:chapter/:verse', {
-            //    redirectTo: '/t/?chapter=:chapter&verse=:verse&author=1040'
+            //    redirectTo: '/translations/?chapter=:chapter&verse=:verse&author=1040'
             //})
             .otherwise({
                 redirectTo: '/'

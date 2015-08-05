@@ -73,7 +73,7 @@ angular.module('ionicApp')
                 circles: btoa(JSON.stringify($scope.query_circles)),
                 users: btoa(JSON.stringify($scope.query_users))
             }
-            $location.path("/t/", false).search(parameters);
+            $location.path("/translations/", false).search(parameters);
         };
 
 
