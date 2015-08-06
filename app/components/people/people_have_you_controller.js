@@ -1,87 +1,86 @@
 angular.module('ionicApp')
     .controller('PeopleHaveYouCtrl', function ($scope, $routeParams, Facebook, Restangular, localStorageService) {
-         var deger = [];
-       var csec;
-       $scope.ackapa = true;
+       var value = [];
+       var select_circle;
+       $scope.hidden_visible = true;
        
         //View friends
-        var kisialRestangular = Restangular.one("circles").all("followers");
-            kisialRestangular.customGET("", "", {'access_token': $scope.access_token}).then(function (kisiler) {
+        var peopleRestangular = Restangular.one("circles").all("followers");
+            peopleRestangular.customGET("", "", {'access_token': $scope.access_token}).then(function (followers) {
 
-                $scope.cevrekisiler = kisiler;
-                $scope.ackapakisi = false;
+                $scope.circle_friends = followers;
             });
             
             //Checkbox click
-           $scope.kisiadd = function (kisid, drm) {
+           $scope.add_people = function (people_id, status) {
 
-            $scope.ackapa = true;
+            $scope.hidden_visible = true;
 
-            var ekle = "1";
+            var add = "1";
 
-            for (var i = 0; i < deger.length; i++) {
-                if (kisid == deger[i].kisid) {
-                    deger[i].drm = drm;
-                    ekle = "0";
+            for (var i = 0; i < value.length; i++) {
+                if (people_id == value[i].people_id) {
+                    value[i].status = status;
+                    add = "0";
                     //break;
                 }
 
-                if (deger[i].drm == true) {
-                    $scope.ackapa = false;
+                if (value[i].status == true) {
+                    $scope.hidden_visible = false;
                 }
             }
 
-            if (ekle == "1") {
-                deger.push({'kisid': kisid, 'drm': drm});
-                $scope.ackapa = false;
+            if (add == "1") {
+                value.push({'people_id': people_id, 'status': status});
+                $scope.hidden_visible = false;
             }
 
         };
         
-         $scope.digercevre = false;
+         $scope.other_circle = false;
          $scope.digercevremodal = function () {
-         $scope.digercevre = !$scope.digercevre;
+         $scope.other_circle = !$scope.other_circle;
         };
         
         //View circles
-           var cevregosterRestangular = Restangular.all("circles");
-            cevregosterRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (cevreliste) {
-                $scope.dcevreadlar = cevreliste;
+           var view_circleRestangular = Restangular.all("circles");
+            view_circleRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (circle_list) {
+                $scope.circle_names = circle_list;
            });
            
            //Peoples add    
-           $scope.cevreadd = function (csecim) 
-           { csec = csecim; };
+           $scope.add_circle = function (the_select_circle) 
+           { select_circle = the_select_circle; };
         
-                $scope.kisiekcevre = function () {
+                $scope.people_add_circle = function () {
 
-            for (var i = 0; i < deger.length; i++) {
-                var drm = deger[i].drm;
-                var kisidsi = deger[i].kisid;
+            for (var i = 0; i < value.length; i++) {
+                var status = value[i].status;
+                var the_people_id = value[i].people_id;
 
-                var kapat = document.getElementById(kisidsi);
-                kapat.checked = false;
+                var close = document.getElementById(the_people_id);
+                close.checked = false;
 
-                if (drm == true) {
+                if (status == true) {
                     var headers = {
                         'Content-Type': 'application/x-www-form-urlencoded',
                         'access_token': $scope.access_token
                     };
-                    var jsonData = kisidsi;
+                    var jsonData = the_people_id;
                     var postData = [];
                     postData.push(encodeURIComponent("fb_user_id") + "=" + encodeURIComponent(jsonData));
                     var data = postData.join("&");
-                    var kisiekleRestangular = Restangular.one("circles", csec).all("users").all("fbfriend");
+                    var people_addRestangular = Restangular.one("circles", select_circle).all("users").all("fbfriend");
 
-                    kisiekleRestangular.customPOST(data, '', '', headers).then(function (eklekisi) {
+                    people_addRestangular.customPOST(data, '', '', headers).then(function (people_list) {
                         
                     });
 
                 }
             }
 
-            deger.length = 0;
-            $scope.ackapa = true;
+            value.length = 0;
+            $scope.hidden_visible = true;
 
         };
     });
