@@ -158,59 +158,43 @@ if (config_data.isMobile == false) { //false
         RestangularProvider.setBaseUrl(config_data.webServiceUrl);
         localStorageServiceProvider.setStorageCookie(0, '/');
 
-        var routeResolve = {
-            // I will cause a 1 second delay
-            delay: function($q, $timeout) {
-                var delay = $q.defer();
-                $timeout(delay.resolve, 100);
-                return delay.promise;
-            }
-        };
-
         //route
         $routeProvider
             .when('/translations/', {
                 controller: 'HomeCtrl',
                 templateUrl: 'app/components/home/homeView.html',
-                reloadOnSearch: true,
-                resolve: routeResolve
+                reloadOnSearch: false
 
             })
             .when('/annotations/', {
                 controller: 'AnnotationsCtrl',
                 templateUrl: 'app/components/annotations/annotationsView.html',
-                reloadOnSearch: true,
-                resolve: routeResolve
+                reloadOnSearch: false
             })
             .when('/people/find_people/', {
                 controller: 'PeopleFindCtrl',
                 templateUrl: 'app/components/people/find_people.html',
-                reloadOnSearch: true,
-                resolve: routeResolve
+                reloadOnSearch: false
             })
             .when('/people/people_have_you/', {
                 controller: 'PeopleHaveYouCtrl',
                 templateUrl: 'app/components/people/people_have_you.html',
-                reloadOnSearch: true,
-                resolve: routeResolve
+                reloadOnSearch: false
             })
             .when('/people/circles/', {
                 controller: 'PeopleCirclesCtrl',
                 templateUrl: 'app/components/people/circles.html',
-                reloadOnSearch: true,
-                resolve: routeResolve
+                reloadOnSearch: false
             })
             .when('/people/explore/', {
                 controller: 'PeopleExploreCtrl',
                 templateUrl: 'app/components/people/explore.html',
-                reloadOnSearch: true,
-                resolve: routeResolve
+                reloadOnSearch: false
             })
             .when('/', {
                 controller: 'HomeCtrl',
                 templateUrl: 'app/components/home/homeView.html',
-                reloadOnSearch: false,
-                resolve: routeResolve
+                reloadOnSearch: false
             })
             .when('/chapter/:chapter/author/:author/', {
                 redirectTo: '/translations/?chapter=:chapter&verse=1&author=:author'
@@ -492,9 +476,9 @@ app.factory('ChapterVerses', function ($resource) {
             } else if ( url == "/people/people_have_you/"){
                 retcp = "people_have_you";
             } else if ( url == "/people/find_people/"){
-                retcp = "find_people";
+                retcp = "people_find";
             } else if ( url == "/people/explore/"){
-                retcp = "explore";
+                retcp = "people_explore";
             }
             else {
                 retcp = 'home';

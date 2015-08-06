@@ -7,20 +7,20 @@
         <h2>controller/scope test: {{testData}}</h2> -->
 
         <div>
-            <modal title="Yeni Çevre Ekleme" visible="showModal">
+            <modal title="Yeni Ã‡evre Ekleme" visible="showModal">
                 <div class="form-group">
-                    <label>Çevre Tanýmý</label>
-                    <input type="text" class="form-control" ng-model="cevread.text" placeholder="Çevre Tanýmý"/>
+                    
+                    <input type="text" class="form-control" ng-model="cevread.text" placeholder="Ã‡evre TanÄ±mÄ±"/>
                 </div>
                 <div class="modal-footer">
-                    <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal">Ýptal</a>
+                    <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal">Ä°ptal</a>
                     <a class="btn btn-primary btn-wide" ng-click="cevrekle(cevread.text)" data-dismiss="modal">Tamam</a>
                 </div>
             </modal>
         </div>
 
         <button style="width:135px; height:150px; margin: 10px 15px;" ng-click="toggleModal()" class="btn btn-primary">
-            <font size="7">+</font><br/>Yeni Çevre
+            <font size="7">+</font><br/>Yeni Ã‡evre
         </button>
 
         <table id='{{cevreadlar[$index].name}}' class="btn btn-primary" ng-repeat="item in cevreadlar"
@@ -30,7 +30,7 @@
                 <label style="height:10px" id='ad{{cevreadlar[$index].id}}' ng-model="cevrenm" style="color:White">{{cevreadlar[$index].name}}</label>
                 <hr/>
                 <label id='lb{{cevreadlar[$index].id}}' ng-model="kisicnt" style="color:White">{{cevreadlar[$index].user_count}} </label>
-                Kiþi
+                KiÅŸi
                 <BR/>
                 <button id='bt1{{cevreadlar[$index].name}}' class="btn btn-primary"
                         ng-click="cdegistirModal('{{cevreadlar[$index].name}}','{{cevreadlar[$index].id}}')">
@@ -44,36 +44,36 @@
         </table>
 
         <div>
-            <silmodal title="Çevre Sil" visible="csil">
+            <silmodal title="Ã‡evre Sil" visible="csil">
                 <div>
-                    <label>{{cevreadi}} </BR>  Çevresi silinecektir. Onaylýyor musunuz?</label>
+                    <label>{{cevreadi}} </BR>  Ã‡evresi silinecektir. OnaylÄ±yor musunuz?</label>
                 </div>
                 <div class="modal-footer">
-                    <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal">Ýptal</a>
+                    <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal">Ä°ptal</a>
                     <a class="btn btn-primary btn-wide" ng-click="cevresil(cid)" data-dismiss="modal">Tamam</a>
                 </div>
             </silmodal>
         </div>
 
         <div>
-            <kisisilmodal title="Kiþi(ler) Sil" visible="kisisil">
+            <kisisilmodal title="KiÅŸi(ler) Sil" visible="kisisil">
                 <div>
-                    <label>{{cevretanim}} </BR>  Çevresinden seçili kiþi(ler) silinecektir. Onaylýyor musunuz?</label>
+                    <label>{{cevretanim}} </BR>  Ã§evresinden seÃ§ili kiÅŸi(ler) silinecektir. OnaylÄ±yor musunuz?</label>
                 </div>
                 <div class="modal-footer">
-                    <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal">Ýptal</a>
+                    <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal">Ä°ptal</a>
                     <a class="btn btn-primary btn-wide" ng-click="kisisilme(cvrid)" data-dismiss="modal">Tamam</a>
                 </div>
             </kisisilmodal>
         </div>
 
         <div>
-            <degistirmodal title="Çevre Bilgileri" visible="cdegistir">
+            <degistirmodal title="Ã‡evre Bilgileri" visible="cdegistir">
                 <div>
                     <input type="text" class="form-control" ng-model="cevredgsad.text"/>
                 </div>
                 <div class="modal-footer">
-                    <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal">Ýptal</a>
+                    <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal">Ä°ptal</a>
                     <a class="btn btn-primary btn-wide" ng-click="cevredegistir(cvrid,cevredgsad.text)"
                        data-dismiss="modal">Tamam</a>
                 </div>
@@ -81,10 +81,10 @@
         </div>
 
         <div>
-            <kisieklemodal title="Yeni Kiþi Ekle" visible="kisieskle">
+            <kisieklemodal title="Yeni KiÅŸi Ekle" visible="kisieskle">
 
                 <div>
-                    <input type="text" class="form-control" ng-model="kisieklead.text" placeholder="Kiþi ismi"
+                    <input type="text" class="form-control" ng-model="kisieklead.text" placeholder="KiÅŸi ismi"
                            ng-change="kisilistele(kisieklead.text)"/>
                 </div>
                 <div>
@@ -128,11 +128,11 @@
                     <h6>{{circlead}}</h6>
                 </td>
                 <td align="right" style="width:60%">
-                    <button class="btn btn-primary btn-wide" ng-disabled="ackapa" ng-click="kisisilModal()">Çevreden
-                        Çýkart
+                    <button class="btn btn-primary btn-wide" ng-disabled="ackapa" ng-click="kisisilModal()">Ã‡evreden
+                        Ã§Ä±kart
                     </button>
-                    <button class="btn btn-primary btn-wide" ng-disabled="ackapa" ng-click="digercevremodal()">Baþka
-                        Çevreye Ekle
+                    <button class="btn btn-primary btn-wide" ng-disabled="ackapa" ng-click="digercevremodal()">BaÅŸka
+                        Ã§evreye Ekle
                     </button>
                 </td>
             </tr>
@@ -150,7 +150,7 @@
                     +
                 </td>
                 <td align="center" style="vertical-align: middle;width: 170px;">
-                    Yeni Kiþi Ekle
+                    Yeni KiÅŸi Ekle
                 </td>
             </tr>
         </table>
@@ -182,9 +182,9 @@
     </div>
 
     <div align="center">
-        <digercevremodal title="Kiþileri Baþka Çevreye Ekle" visible="digercevre">
+        <digercevremodal title="KiÅŸileri BaÅŸka Ã‡evreye Ekle" visible="digercevre">
             <div align="left">
-                <label>Seçtiðiniz kiþileri ayrýca aþaðýdaki çevreye de ekleyebilirsiniz.</label>
+                <label>SeÃ§tiÄŸiniz kiÅŸileri ayrÄ±ca aÅŸaÄŸÄ±daki Ã§evreye de ekleyebilirsiniz.</label>
                 <table>
                     <tr ng-repeat="item in dcevreadlar">
                         <td style="width:30px">
@@ -198,8 +198,8 @@
                 </table>
             </div>
             <div class="modal-footer">
-                <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal">Vazgeç</a>
-                <a class="btn btn-primary btn-wide" ng-click="kisiekcevre()" data-dismiss="modal">Çevreye Ekle</a>
+                <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal">VazgeÃ§</a>
+                <a class="btn btn-primary btn-wide btn-info" ng-click="kisiekcevre()" data-dismiss="modal">Ã‡evreye Ekle</a>
             </div>
         </digercevremodal>
     </div>

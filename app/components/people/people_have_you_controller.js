@@ -1,9 +1,10 @@
 angular.module('ionicApp')
     .controller('PeopleHaveYouCtrl', function ($scope, $routeParams, Facebook, Restangular, localStorageService) {
-       var value = [];
-       var select_circle;
-       $scope.hidden_visible = true;
-       
+         var deger = [];
+       var csec;
+       $scope.ackapa = true;
+        $scope.checkUserLoginStatus();
+        
         //View friends
         var peopleRestangular = Restangular.one("circles").all("followers");
             peopleRestangular.customGET("", "", {'access_token': $scope.access_token}).then(function (followers) {
