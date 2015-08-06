@@ -46,8 +46,7 @@
                         <hr/>
                         <button ng-repeat="verseTag in verseTagsVal.tags" class="btn btn-xs btn-info verse_tag"
                                 ng-click="goToVerseTag(verse.id,verseTag.tag)" onclick="verseTagClicked(this)">
-                            {{verseTag.tag}}
-                        </button>
+                            {{verseTag.tag}}</button>
                     </div>
                     <div ng-if="targetVerseForTagContent==verse.id" class="verse_tag_content">
                         <h4>Etiketli Ayetler</h4>
@@ -97,8 +96,7 @@
                         ng-show='filterSingleAnnotation || searchText!=""' style="float: right; height: 30px;">
                     <i
                             class="fa fa-trash-o"></i>
-                    Filtreyi kaldır
-                </button>
+                    Filtreyi kaldır</button>
                 <div style="display: block;">
                     <!--    <input ng-model="searchText" />-->
                     <input style="width: 150px; height: 30px;" type="text" placeholder="ara" ng-model="searchText" ng-change="resetFilteredAnnotations()">

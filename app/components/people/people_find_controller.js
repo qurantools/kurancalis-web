@@ -5,7 +5,7 @@ angular.module('ionicApp')
        var csec;
        $scope.ackapa = true;
        
-       //View Circles
+       //View friends
         var kisialRestangular = Restangular.one("users").all("friends");
             kisialRestangular.customGET("", "", {'access_token': $scope.access_token}).then(function (kisiler) {
 

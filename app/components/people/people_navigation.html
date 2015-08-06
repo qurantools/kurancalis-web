@@ -5,14 +5,13 @@
                     class="fa fa-bars"></i> MENÜ
             </button>
 
-            {{currentPage}}
-            <a href="#/people/find_people/" id="fp" class="btn btn-primary">Kullanıcı Bul
+            <a href="#/people/find_people/" id="fp" ng-class="{active: getCurrentPage() == 'find_people'}" class="btn btn-primary">Kullanıcı Bul
             </a>
 
-            <a href="#/people/people_have_you/" id="phy" class="btn btn-primary">Takipçilerim
+            <a href="#/people/people_have_you/" id="phy" ng-class="{active: getCurrentPage() == 'people_have_you'}" class="btn btn-primary">Takipçilerim
             </a>
 
-            <a href="#/people/circles/" id="crcl" class="btn btn-primary">Çevreleriniz
+            <a href="#/people/circles/" id="crcl" ng-class="{active: getCurrentPage() == 'people_circle'}" class="btn btn-primary">Çevreleriniz
             </a>
 <!--
             <a href="#/people/explore/" id="exp" class="btn btn-primary">Keşfet
