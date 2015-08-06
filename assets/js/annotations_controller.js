@@ -2,8 +2,6 @@ angular.module('ionicApp')
     .controller('AnnotationsCtrl', function ($scope, $routeParams, Facebook, Restangular, $location, authorization, localStorageService, $ionicModal) {
         console.log("annotations ctrl")
         $scope.allAnnotationsOrderBy='verse'
-        $scope.currentPage = $scope.getCurrentPage();
-
 
         /* facebook login */
 
@@ -106,7 +104,7 @@ angular.module('ionicApp')
 
         $scope.setAnnotationSearchTags = function(tagsString){
             $scope.filterTags = [];
-            if(tagsString!==""){
+            if(tagsString!=""){
                 var tagNames = tagsString.split(",");
 
                 for (var i = 0; i < tagNames.length; i++) {

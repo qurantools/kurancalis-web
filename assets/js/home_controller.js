@@ -18,7 +18,7 @@ angular.module('ionicApp')
         $scope.DETAILED_SEARCH_ITEM = {'id': '', 'name': 'DETAYLI ARAMA'};
         $scope.ONLY_MINE_ITEM = {'id': '', 'name': 'Sadece Ben'};
         console.log("HomeCtrl");
-        $scope.currentPage = $scope.getCurrentPage();
+
         $scope.filterSingleAnnotation = false;
         $scope.filterOrderSelect = 'verseId';
         $scope.filteredAnnotations = [];
@@ -981,6 +981,7 @@ angular.module('ionicApp')
         };
 
         $scope.initializeHomeController = function () {
+
 
             $scope.initChapterViewParameters();
             $scope.list_translations();

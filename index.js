@@ -127,7 +127,7 @@ var app = angular.module('ionicApp', requiredModules)
         });
 
 
-        var original = $location.path;
+        /*var original = $location.path;
         $location.path = function (path, reload) {
             if (reload === false) {
                 var lastRoute = $route.current;
@@ -137,7 +137,7 @@ var app = angular.module('ionicApp', requiredModules)
                 });
             }
             return original.apply($location, [path]);
-        };
+        };*/
     }]).directive('ngEnter', function () {
         return function (scope, element, attrs) {
             element.bind("keydown keypress", function (event) {
@@ -158,49 +158,65 @@ if (config_data.isMobile == false) { //false
         RestangularProvider.setBaseUrl(config_data.webServiceUrl);
         localStorageServiceProvider.setStorageCookie(0, '/');
 
+        var routeResolve = {
+            // I will cause a 1 second delay
+            delay: function($q, $timeout) {
+                var delay = $q.defer();
+                $timeout(delay.resolve, 100);
+                return delay.promise;
+            }
+        };
 
         //route
         $routeProvider
             .when('/translations/', {
                 controller: 'HomeCtrl',
                 templateUrl: 'app/components/home/homeView.html',
-                reloadOnSearch: false
+                reloadOnSearch: true,
+                resolve: routeResolve
+
             })
             .when('/annotations/', {
                 controller: 'AnnotationsCtrl',
                 templateUrl: 'app/components/annotations/annotationsView.html',
-                reloadOnSearch: false
+                reloadOnSearch: true,
+                resolve: routeResolve
             })
             .when('/people/find_people/', {
                 controller: 'PeopleFindCtrl',
                 templateUrl: 'app/components/people/find_people.html',
-                reloadOnSearch: false
+                reloadOnSearch: true,
+                resolve: routeResolve
             })
             .when('/people/people_have_you/', {
                 controller: 'PeopleHaveYouCtrl',
                 templateUrl: 'app/components/people/people_have_you.html',
-                reloadOnSearch: false
+                reloadOnSearch: true,
+                resolve: routeResolve
             })
             .when('/people/circles/', {
                 controller: 'PeopleCirclesCtrl',
                 templateUrl: 'app/components/people/circles.html',
-                reloadOnSearch: false
+                reloadOnSearch: true,
+                resolve: routeResolve
             })
             .when('/people/explore/', {
                 controller: 'PeopleExploreCtrl',
                 templateUrl: 'app/components/people/explore.html',
-                reloadOnSearch: false
+                reloadOnSearch: true,
+                resolve: routeResolve
             })
             .when('/', {
                 controller: 'HomeCtrl',
                 templateUrl: 'app/components/home/homeView.html',
-                reloadOnSearch: false
+                reloadOnSearch: false,
+                resolve: routeResolve
             })
             .when('/chapter/:chapter/author/:author/', {
                 redirectTo: '/translations/?chapter=:chapter&verse=1&author=:author'
             })
             //.when('/:chapter/:verse', {
-            //    redirectTo: '/translations/?chapter=:chapter&verse=:verse&author=1040'
+            //    redirectTo: '/translations?chapter=:chapter&verse=:verse&author=1040'
             //})
             .otherwise({
                 redirectTo: '/'
@@ -360,7 +376,8 @@ app.factory('ChapterVerses', function ($resource) {
         $scope.chapter_id = 1;
         $scope.chapters = [];
         $scope.chapterSelected = 1;
-        var chaptersVersion = 3;
+        $scope.currentPage = "";
+        var chaptersVersion = 4;
 
         $scope.circleDropdownArray = [];
 
@@ -467,9 +484,13 @@ app.factory('ChapterVerses', function ($resource) {
         //currentPage
         $scope.getCurrentPage = function () {
             var retcp = "";
-            if ($location.path() == '/annotations/') {
+            url = $location.path();
+            if ( url == '/annotations/') {
                 retcp = 'annotations';
-            } else {
+            } else if ( url == "/people/circle"){
+                retcp = "people_circle";
+            }
+            else {
                 retcp = 'home';
             }
             return retcp;
@@ -991,8 +1012,18 @@ app.factory('ChapterVerses', function ($resource) {
             }
         };
 
+        $scope.goToURL = function(url){
+            $location.path(url).search({});
+            $scope.scopeApply();
+            //$route.reload();
+        }
+
         $scope.initializeController = function () {
 
+
+            $scope.$on('$routeChangeStart', function(next, current) {
+                $scope.currentPage = $scope.getCurrentPage();
+            });
 
             if (config_data.isMobile) {
                 /*
