@@ -162,7 +162,10 @@ angular.module('ionicApp')
             //TODO: bu kod ne is yapiyor?
 
             if ($scope.editorSubmitted == 0) {
-                $scope.scrollToVerse();
+                if (typeof $scope.verse.number != 'undefined') {
+                    var verseId = parseInt($scope.query_chapter_id * 1000) + parseInt($scope.verse.number);
+                    $scope.scrollToVerse(verseId);
+                }
             } else {
                 $scope.editorSubmitted = 0;
             }
@@ -506,7 +509,10 @@ angular.module('ionicApp')
                 //scroll to verse if user is not logged in.
                 //if user is logged in, they will scroll on tag generation.
                 if ($scope.user == null) {
-                    $scope.scrollToVerse();
+                    if (typeof $scope.verse.number != 'undefined') {
+                        var verseId = parseInt($scope.query_chapter_id * 1000) + parseInt($scope.verse.number);
+                        $scope.scrollToVerse(verseId);
+                    }
                 }
 
 
@@ -515,17 +521,15 @@ angular.module('ionicApp')
         };
 
 
-        $scope.scrollToVerse = function () {
-            if (typeof $scope.verse.number != 'undefined') {
-                var verseId = parseInt($scope.query_chapter_id * 1000) + parseInt($scope.verse.number);
-                var verseElement = 'v_' + verseId;
+        $scope.scrollToVerse = function (verseId) {
 
-                $timeout(function () {
-                    $scope.scrollToElmnt(verseElement);
-                });
+            $scope.verse.number = verseId%1000;
+            var verseElement = 'v_' + verseId;
+            $scope.setTranslationsPageURL();
 
-
-            }
+            $timeout(function () {
+                $scope.scrollToElmnt(verseElement);
+            });
         };
 
         $scope.colorTheAnnotation = function (annotation) {
