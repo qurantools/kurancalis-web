@@ -14,7 +14,7 @@
                         <li ng-class="{active: currentPage == 'annotations'}">
                             <a href="#/annotations/" ng-if="user!=null">Tüm notlar</a>
                         </li>
-                        <li ng-class="{active: currentPage == 'people'}">
+                        <li ng-class="{active: currentPage.search('people')==0}">
                             <a href="#/people/circles/" ng-if="user!=null">Kişiler</a>
                         </li>
                         <li ng-if="user!=null">

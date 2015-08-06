@@ -508,7 +508,7 @@ angular.module('ionicApp')
                     animation: 'slide-in-left',
                     id: 'editor'
                 }).then(function (modal) {
-                    $scope.$parent.modal_editor = modal;
+                    $scope.modal_editor = modal;
                 });
 
                 $scope.openModal = function (id) {
@@ -517,7 +517,7 @@ angular.module('ionicApp')
                     }else if (id == 'all_annotations_sort') {
                         $scope.modal_all_annotations_sort.show();
                     } else  if (id == 'editor') {
-                        $scope.$parent.modal_editor.show();
+                        $scope.modal_editor.show();
                     }
                 };
                 $scope.closeModal = function (id) {
@@ -527,7 +527,7 @@ angular.module('ionicApp')
                         $scope.modal_all_annotations_sort.hide();
                     } else  if (id == 'editor') {
                         clearTextSelection();
-                        $scope.$parent.modal_editor.hide();
+                        $scope.modal_editor.hide();
                     }
                 }
             }

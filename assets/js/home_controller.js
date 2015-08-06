@@ -371,9 +371,10 @@ angular.module('ionicApp')
 
 
         //customized showEditor for home controller
+        var parentShowEditor = $scope.showEditor;
         $scope.showEditor = function (annotation, position) {
             //call parent show editor
-            $scope.$parent.showEditor(annotation, position);
+            parentShowEditor(annotation, position);
             if (!config_data.isMobile) {
                 $('#annotationModal').on('hidden.bs.modal', function () {
                     annotator.onEditorHide();
@@ -801,7 +802,7 @@ angular.module('ionicApp')
                 //animation: 'slide-in-left',
                 id: 'editor'
             }).then(function (modal) {
-                $scope.$parent.modal_editor = modal;
+                $scope.modal_editor = modal;
             });
 
             $scope.openModal = function (id) {
@@ -814,7 +815,7 @@ angular.module('ionicApp')
                 } else if (id == 'annotations_on_page_sort') {
                     $scope.modal_annotations_on_page_sort.show();
                 } else if (id == 'editor') {
-                    $scope.$parent.modal_editor.show();
+                    $scope.modal_editor.show();
                 }
             };
 
@@ -829,7 +830,7 @@ angular.module('ionicApp')
                     $scope.modal_annotations_on_page_sort.hide();
                 } else if (id == 'editor') {
                     clearTextSelection();
-                    $scope.$parent.modal_editor.hide();
+                    $scope.modal_editor.hide();
                 }
             }
 
@@ -838,7 +839,7 @@ angular.module('ionicApp')
                 $scope.modal_chapter_selection.hide();
                 $scope.modal_authors_list.hide();
                 $scope.modal_annotations_on_page_sort.hide();
-                $scope.$parent.modal_editor.hide();
+                $scope.modal_editor.hide();
             };
 
         }

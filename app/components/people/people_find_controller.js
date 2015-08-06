@@ -4,6 +4,7 @@ angular.module('ionicApp')
        var value = [];
        var select_circle;
        $scope.visible_hidden = true;
+        $scope.checkUserLoginStatus();
        
        //View friends
         var peopleRestangular = Restangular.one("users").all("friends");
@@ -85,5 +86,11 @@ angular.module('ionicApp')
             $scope.visible_hidden = true;
 
         };
+
+        $scope.inviteFriends= function(){
+            Facebook.ui({ method: 'apprequests',
+                message: 'Dosdoğru yolu BİRLİKTE bulmak için Kuran Çalışalım: http://kurancalis.com'});
+
+        }
     });
     
