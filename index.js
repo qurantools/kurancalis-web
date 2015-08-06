@@ -29,6 +29,34 @@ var app = angular.module('ionicApp', requiredModules)
                 return text.replace(/\*+/g, "<a class='footnote_asterisk' href='javascript:angular.element(document.getElementById(\"theView\")).scope().list_footnotes(" + translation_id + "," + author_id + ")'>*</a>");
             };
         }])
+    .filter('with_next_link', [
+        function () {
+            return function (text, chapter_id, author_id, translation_id) {
+                if(author_id!=262144){// if author isn't Hakkı Yılmaz
+                    return text;
+                }else { // Hakkı Yılmaz
+                    var searchText='(Sonraki ';
+                    var nextLinkPosition = text.indexOf(searchText);
+                    if (nextLinkPosition == -1) {// translation doesn't have next link
+                        return text;
+                    } else {
+                        var chapterVerse=text.substring(nextLinkPosition+searchText.length,text.length-1); //20:83
+                        var chapterVerseParse=chapterVerse.split(":");
+                        var chapterInLink=parseInt(chapterVerseParse[0]);
+                        var verseInLink=parseInt(chapterVerseParse[1]);
+
+                        var linkHref="";
+                        if(chapter_id==chapterInLink){// if link will be in same page
+                            var elementId='v_'+(chapterInLink*1000+verseInLink);
+                            linkHref='javascript: angular.element(document.getElementById(\'theView\')).scope().scrollToElmnt(\''+elementId+'\');';
+                        }else{
+                            linkHref='javascript: angular.element(document.getElementById(\'theView\')).scope().showVerseFromFootnote(\''+chapterVerse+'\','+author_id+','+translation_id+');';
+                        }
+                        return text.substring(0,nextLinkPosition)+ ' (Sonraki ' + '<a href="'+linkHref+'">'+chapterVerse+'</a>)';
+                    }
+                }
+            };
+        }])
     .filter('selectionFilter', function () {
         return function (items, props) {
             var out = [];

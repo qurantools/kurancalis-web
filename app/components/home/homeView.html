@@ -24,7 +24,7 @@
                                    <a href ng-click="multipleAuthorsView({{verse.id}})" >+{{authorMap[translation.authorId].name}}</a> | <a href="#">K.M.</a>
                                </div>
                                <div class="col-sm-9" ng-class="{translation_rtl: authorMap[translation.authorId].language=='ar', translation_content: authorMap[translation.authorId].language!='ar'}"><span
-                                       ng-bind-html="translation.content | with_footnote_link:translation.id:translation.authorId | to_trusted"></span>
+                                       ng-bind-html="translation.content | with_footnote_link:translation.id:translation.authorId | with_next_link:translation.chapter:translation.authorId:translation.id | to_trusted"></span>
                                </div>
                            </div>
 
