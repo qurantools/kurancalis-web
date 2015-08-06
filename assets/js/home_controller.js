@@ -7,7 +7,7 @@ angular.module('ionicApp')
         
         $scope.linkcreate=function(chapterno,verseno){
         if(verseno=="0")
-        {verseno="1";}
+        {verseno="1"; chapterno="1"; }
         
         $scope.linkno="http://kuranharitasi.com/kuran.aspx?sureno=" + chapterno + "&ayetno=" + verseno + "#ContentPlaceHolder1_ayettekikoklergrid";       
         $scope.currentProjectUrl = $sce.trustAsResourceUrl($scope.linkno);
