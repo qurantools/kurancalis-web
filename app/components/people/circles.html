@@ -143,17 +143,10 @@
 
     <div align="left" style="width:87%">
 
-        <table style="width: 215px; margin: 10px 10px;" class="btn btn-primary btn-wide" ng-disabled="ackapakisi"
-               ng-click="kisieskleModal()">
-            <tr>
-                <td align="center" style=" font-size:32pt; font-weight:bolder; vertical-align: middle;width: 40px;">
-                    +
-                </td>
-                <td align="center" style="vertical-align: middle;width: 170px;">
-                    Yeni Kişi Ekle
-                </td>
-            </tr>
-        </table>
+        <button style="width:215px; height:80px;margin: 10px 10px; padding:0px 0px" ng-click="kisieskleModal()" class="btn-info" ng-disabled="ackapakisi">
+            <font size="5">+</font>&nbsp;&nbsp;Yeni Kişi Ekle
+        </button>
+
 
         <table class="btn btn-primary btn-wide" ng-repeat="item in cevrekisiler" cellpadding="0" cellspacing="0"
                style=" background-color:#1abc9c; width: 215px; margin: 10px 10px; padding:0px 0px">
