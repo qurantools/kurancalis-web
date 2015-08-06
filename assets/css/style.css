@@ -217,4 +217,7 @@ i.inactive {color: #d9534f}
 .carousel-indicators li.active {
     background-color: #1abc9c !important;
 }
+.back_orange {
+	background-color: orange !important;
+}
 /* end of tutorial carousel */

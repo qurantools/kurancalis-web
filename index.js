@@ -483,28 +483,23 @@ app.factory('ChapterVerses', function ($resource) {
         //currentPage
         $scope.getCurrentPage = function () {
             var retcp = "";
-            var elm = "";
-            var property = "";
             
             url = $location.path();
             if ( url == '/annotations/') {
                 retcp = 'annotations';
             } else if ( url == "/people/circles/"){
                 retcp = "people_circle";
-                elm = "crcl";
             } else if ( url == "/people/people_have_you/"){
                 retcp = "people_have_you";
-                elm = "phy";
             } else if ( url == "/people/find_people/"){
                 retcp = "find_people";
-                elm = "fp";
+            } else if ( url == "/people/explore/"){
+                retcp = "explore";
             }
             else {
                 retcp = 'home';
             }
             
-             property = document.getElementById(elm);
-             property.style.backgroundColor = "orange";
             return retcp;
         }
 
