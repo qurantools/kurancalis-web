@@ -4,7 +4,9 @@ angular.module('ionicApp')
         //Volkan : kuranharitası link create by chapter-verse
         
         $scope.linkno="";
-        
+
+        $scope.switchAuthorViewVerseId = 0;
+        $scope.switchScrollWatch=false;
         $scope.linkcreate=function(chapterno,verseno){
         if(verseno=="0")
         {verseno="1"; chapterno="1";  }
@@ -144,6 +146,19 @@ angular.module('ionicApp')
                 }
 
             }, true);
+
+        $scope.$watch('switchScrollWatch',
+            function (newValue, oldValue) {
+                if (newValue != oldValue) {
+                    var verseElement = 'v_' + $scope.switchAuthorViewVerseId;
+                    $timeout(function () {
+                        $scope.scrollToElmnt(verseElement);
+                    });
+
+                }
+
+            }, true);
+
 
         //TODO:ne is yapiyor?
         $scope.generateVerseTags = function () {
@@ -746,21 +761,21 @@ angular.module('ionicApp')
         };
 
         $scope.singleAuthorView = function (author, verse) {
-            $scope.selectedSingleAuthor=author;
             $scope.showSingleAuthor=true;
-            var verseElement = 'v_' + verse;
-            $timeout(function () {
-                $scope.scrollToElmnt(verseElement);
-            });
+            $scope.switchAuthorViewVerseId = verse;
+            $scope.selectedSingleAuthor=author;
+            $scope.scopeApply();
+            $scope.switchScrollWatch=!$scope.switchScrollWatch;
+
         };
 
         $scope.multipleAuthorsView = function (verse) {
             $scope.showSingleAuthor=false;
+            $scope.switchAuthorViewVerseId = verse;
             $scope.selectedSingleAuthor=0;
-            var verseElement = 'v_' + verse;
-            $timeout(function () {
-                $scope.scrollToElmnt(verseElement);
-            });
+            $scope.scopeApply();
+            $scope.switchScrollWatch=!$scope.switchScrollWatch;
+
         };
 
         if (config_data.isMobile) {
