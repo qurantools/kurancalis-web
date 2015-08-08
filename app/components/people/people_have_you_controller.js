@@ -71,7 +71,7 @@ angular.module('ionicApp')
                     var postData = [];
                     postData.push(encodeURIComponent("fb_user_id") + "=" + encodeURIComponent(jsonData));
                     var data = postData.join("&");
-                    var people_addRestangular = Restangular.one("circles", select_circle).all("users").all("fbfriend");
+                    var people_addRestangular = Restangular.one("circles", select_circle).all("users");
 
                     people_addRestangular.customPOST(data, '', '', headers).then(function (people_list) {
                         
