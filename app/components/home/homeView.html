@@ -7,52 +7,62 @@
         <div class="col-xs-12" id="translations">
             <div ng-repeat="verse in verses">
                 <div class="well translations col-xs-12" id="v_{{verse.id}}">
-                    <div class="row" >
+                    <div class="row">
                         <div ng-repeat="translation in verse.translations">
                             <div class="col-sm-1" ng-if="$first" style="text-align: center" ng-show="!showSingleAuthor">
-                                <a href ng-click="scrollToVerse('{{verse.id-1}}')" ><i class="fa fa-caret-up fa-2x"></i></a>
+                                <a href ng-click="scrollToVerse('{{verse.id-1}}')"><i class="fa fa-caret-up fa-2x"></i></a>
+
                                 <div class="chapter_verse_number">{{translation.chapter}}:{{translation.verse}}</div>
-                                <a href ng-click="scrollToVerse('{{verse.id+1}}')" ><i class="fa fa-caret-down fa-2x"></i></a>
-                                <br /><a ng-click="linkcreate({{translation.chapter}},{{translation.verse}})" href data-target="#openlink" data-toggle="modal">Kelime Meali</a>
+                                <a href ng-click="scrollToVerse('{{verse.id+1}}')"><i
+                                        class="fa fa-caret-down fa-2x"></i></a>
+                                <br/><a ng-click="linkcreate({{translation.chapter}},{{translation.verse}})" href
+                                        data-target="#openlink" data-toggle="modal">Kelime Meali</a>
                             </div>
                             <div class="col-sm-1" ng-if="$first" style="text-align: center" ng-show="showSingleAuthor">
                                 <div class="chapter_verse_number">{{translation.chapter}}:{{translation.verse}}</div>
                             </div>
-                           <div class="col-sm-11" id="t_{{translation.id}}"  style="float: right" >
-                               <div class="col-sm-3 authorDiv_{{authorMap[translation.authorId].color}}" ng-show="!showSingleAuthor">
-                                   <a href ng-click="singleAuthorView({{translation.authorId}},{{verse.id}})" >{{authorMap[translation.authorId].name}}</a>
-                               </div>
-                               <div class="col-sm-3 authorDiv_{{authorMap[translation.authorId].color}}" ng-show="selectedSingleAuthor==translation.authorId">
-                                   <a href ng-click="multipleAuthorsView({{verse.id}})" >+{{authorMap[translation.authorId].name}}</a> | <a ng-click="linkcreate({{translation.chapter}},{{translation.verse}})" href data-target="#openlink" data-toggle="modal">K.M.</a>
-                               </div>
-                               <div ng-show="selectedSingleAuthor==translation.authorId || !showSingleAuthor" class="col-sm-9" ng-class="{translation_rtl: authorMap[translation.authorId].language=='ar', translation_content: authorMap[translation.authorId].language!='ar'}"><span
-                                       ng-bind-html="translation.content | with_footnote_link:translation.id:translation.authorId | with_next_link:translation.chapter:translation.authorId:translation.id | to_trusted"></span>
-                               </div>
-                           </div>
-
-                            <div class="col-sm-8"  style="float: right" ng-if="!$last && !showSingleAuthor" >
-                                <hr />
+                            <div class="col-sm-11" id="t_{{translation.id}}" style="float: right">
+                                <div class="col-sm-3 authorDiv_{{authorMap[translation.authorId].color}}"
+                                     ng-show="!showSingleAuthor">
+                                    <span class="author"><a href ng-click="singleAuthorView({{translation.authorId}},{{verse.id}})">(-)</a></span>{{authorMap[translation.authorId].name}}
+                                </div>
+                                <div class="col-sm-3 authorDiv_{{authorMap[translation.authorId].color}}"
+                                     ng-show="selectedSingleAuthor==translation.authorId">
+                                    <span class="author"><a href ng-click="multipleAuthorsView({{verse.id}})">(+)</a></span>{{authorMap[translation.authorId].name}}
+                                    | <a ng-click="linkcreate({{translation.chapter}},{{translation.verse}})" href
+                                         data-target="#openlink" data-toggle="modal">K.M.</a>
+                                </div>
+                                <div ng-show="selectedSingleAuthor==translation.authorId || !showSingleAuthor"
+                                     class="col-sm-9"
+                                     ng-class="{translation_rtl: authorMap[translation.authorId].language=='ar', translation_content: authorMap[translation.authorId].language!='ar'}"><span
+                                        ng-bind-html="translation.content | with_footnote_link:translation.id:translation.authorId | with_next_link:translation.chapter:translation.authorId:translation.id | to_trusted"></span>
+                                </div>
                             </div>
 
-<div  class="col-sm-11"   style="float: right">
-                            <show-verse data="showVerseData.data" ng-if="showVerseAtTranslation==translation.id"
-                                         class="showVerseData"></show-verse>
-</div>
-                           </div>
+                            <div class="col-sm-8" style="float: right" ng-if="!$last && !showSingleAuthor">
+                                <hr/>
+                            </div>
 
+                            <div class="col-sm-11" style="float: right">
+                                <show-verse data="showVerseData.data" ng-if="showVerseAtTranslation==translation.id"
+                                            class="showVerseData"></show-verse>
+                            </div>
+                        </div>
 
 
                     </div>
                     <div id="verseTags_{{verse.id}}" ng-repeat="(verseTagsKey, verseTagsVal) in verseTagsJSON"
-                         ng-if="verseTagsVal.verseId==verse.id" style="text-align: right;width:100%" >
+                         ng-if="verseTagsVal.verseId==verse.id" style="text-align: right;width:100%">
                         <hr/>
                         <button ng-repeat="verseTag in verseTagsVal.tags" class="btn btn-xs btn-info verse_tag"
                                 ng-click="goToVerseTag(verse.id,verseTag.tag)" onclick="verseTagClicked(this)">
-                            {{verseTag.tag}}</button>
+                            {{verseTag.tag}}
+                        </button>
                     </div>
                     <div ng-if="targetVerseForTagContent==verse.id" class="verse_tag_content">
                         <h4>Etiketli Ayetler:</h4>
-                        <a style="float: right;" href ng-click="displayAnnotationsWithTag()">Etiketli Notları Göster>></a>
+                        <a style="float: right;" href ng-click="displayAnnotationsWithTag()">Etiketli Notları
+                            Göster>></a>
                         <select class="verseTagContentAuthor"
                                 ng-options="author.id as author.name for author in authors | filter:authorFilter"
                                 ng-model="verseTagContentAuthor"
@@ -60,9 +70,9 @@
                         </select>
 
 
-                        <div ng-repeat="verseTagContent in verseTagContents" >
+                        <div ng-repeat="verseTagContent in verseTagContents">
                             <div ng-repeat="verseTagContentTranslation in verseTagContent.translations"
-                                 ng-if="verseTagContentTranslation.authorId==verseTagContentAuthor" >
+                                 ng-if="verseTagContentTranslation.authorId==verseTagContentAuthor">
                                 <strong>{{verseTagContentTranslation.verseId / 1000 |
                                     number:0}}:{{verseTagContentTranslation.verseId % 1000}}</strong>
                                 <span ng-class="{translation_rtl: authorMap[verseTagContentTranslation.authorId].language=='ar'}">{{verseTagContentTranslation.content}}</span>
@@ -99,10 +109,12 @@
                         ng-show='filterSingleAnnotation || searchText!=""' style="float: right; height: 30px;">
                     <i
                             class="fa fa-trash-o"></i>
-                    Filtreyi kaldır</button>
+                    Filtreyi kaldır
+                </button>
                 <div style="display: block;">
                     <!--    <input ng-model="searchText" />-->
-                    <input style="width: 150px; height: 30px;" type="text" placeholder="ara" ng-model="searchText" ng-change="resetFilteredAnnotations()">
+                    <input style="width: 150px; height: 30px;" type="text" placeholder="ara" ng-model="searchText"
+                           ng-change="resetFilteredAnnotations()">
                     <select ng-model="filterOrderSelect" ng-init="filterOrderSelect='verseId'"
                             ng-change="annotationFilterOrder(filterOrderSelect)" style="height: 30px;">
                         <option value="verseId">Ayet</option>
@@ -132,11 +144,13 @@
                 <div class="row" style="padding:0 15px">
                     <div style="float: left">{{annotation.updated | date: 'dd/MM/yyyy HH:mm:ss'}}</div>
                     <div style="float: right">
-                        <button type="button" class="btn btn-primary btn-xs" ng-click="editAnnotation($index)" ng-if="annotation.userId==user.id"><i
-                                class="fa fa-pencil-square-o" ></i>
+                        <button type="button" class="btn btn-primary btn-xs" ng-click="editAnnotation($index)"
+                                ng-if="annotation.userId==user.id"><i
+                                class="fa fa-pencil-square-o"></i>
                         </button>
-                        <button type="button" class="btn btn-primary btn-xs" ng-click="deleteAnnotation($index)" ng-if="annotation.userId==user.id"><i
-                                class="fa fa-trash-o" ></i></button>
+                        <button type="button" class="btn btn-primary btn-xs" ng-click="deleteAnnotation($index)"
+                                ng-if="annotation.userId==user.id"><i
+                                class="fa fa-trash-o"></i></button>
                     </div>
                 </div>
 
@@ -149,7 +163,6 @@
 <!-- cd-panel -->
 
 
- 
 <div ng-include="'app/components/partials/off_canvas_menu.html'"></div>
 <div ng-include="'app/components/partials/tutorial_modal.html'"></div>
 

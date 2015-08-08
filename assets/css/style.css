@@ -220,4 +220,25 @@ i.inactive {color: #d9534f}
 .back_orange {
 	background-color: orange !important;
 }
+
+/* author links */
+/* unvisited link */
+.author a:link {
+    color: #FFFFFF;
+}
+
+/* visited link */
+.author a:visited {
+    color: #ffffff;
+}
+
+/* mouse over link */
+.author a:hover {
+    color: blue;
+}
+
+/* selected link */
+.author a:active {
+    color: #000000;
+}
 /* end of tutorial carousel */

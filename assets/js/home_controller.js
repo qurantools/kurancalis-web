@@ -379,7 +379,7 @@ angular.module('ionicApp')
             $scope.goToChapter();
         };
 
-        //acction for detailed search screen
+        //action for detailed search screen
         $scope.detailedSearch = function () {
             $scope.query_circle_dropdown = $scope.DETAILED_SEARCH_ITEM;
             $scope.goToChapter();
@@ -484,8 +484,23 @@ angular.module('ionicApp')
 
 //
 
+        $scope.setAuthorViewAccordingToDetailedSearchAuthorSelection = function(){
+            //switch to singleAuthor View in case of single author
+            if($scope.detailedSearchAuthorSelection.length == 1){
+                $scope.showSingleAuthor = true;
+                $scope.selectedSingleAuthor=$scope.detailedSearchAuthorSelection[0];
+            }
+            else{
+                $scope.showSingleAuthor = false;
+                $scope.selectedSingleAuthor = 0;
+            }
+        };
+
         //list translations
         $scope.list_translations = function () {
+
+            $scope.setAuthorViewAccordingToDetailedSearchAuthorSelection();
+
             $scope.translationDivMap = [];
             $scope.verses = ChapterVerses.query({
                 chapter_id: $scope.query_chapter_id,
@@ -771,11 +786,13 @@ angular.module('ionicApp')
         };
 
         $scope.multipleAuthorsView = function (verse) {
-            $scope.showSingleAuthor=false;
-            $scope.switchAuthorViewVerseId = verse;
-            $scope.selectedSingleAuthor=0;
-            $scope.scopeApply();
-            $scope.switchScrollWatch=!$scope.switchScrollWatch;
+            if($scope.detailedSearchAuthorSelection.length != 1){
+                $scope.showSingleAuthor=false;
+                $scope.switchAuthorViewVerseId = verse;
+                $scope.selectedSingleAuthor=0;
+                $scope.scopeApply();
+                $scope.switchScrollWatch=!$scope.switchScrollWatch;
+            }
 
         };
 
@@ -951,14 +968,8 @@ angular.module('ionicApp')
             $scope.storeChapterViewParameters();
 
             //set detailed search author selection
-
-
-            //set screen variables for author mask
-            for (var index in $scope.authorMap) {
-                if ($scope.query_author_mask & $scope.authorMap[index].id) {
-                    $scope.detailedSearchAuthorSelection.push($scope.authorMap[index].id);
-                }
-            }
+            $scope.setDetailedSearchAuthorSelection($scope.query_author_mask);
+            $scope.setAuthorViewAccordingToDetailedSearchAuthorSelection();
 
 
             if (localParameterData.users.length != 0 || localParameterData.circles.length > 1 || localParameterData.ownAnnotations == false) {
@@ -975,8 +986,8 @@ angular.module('ionicApp')
             //set screen variables for author mask
             $scope.$on("authorMap ready", function handler() {
                 $scope.setDetailedSearchAuthorSelection($scope.query_author_mask);
+                $scope.setAuthorViewAccordingToDetailedSearchAuthorSelection();
             });
-
 
             $scope.setTranslationsPageURL();
         };
