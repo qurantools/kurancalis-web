@@ -69,7 +69,7 @@ angular.module('ionicApp')
                     };
                     var jsonData = the_people_id;
                     var postData = [];
-                    postData.push(encodeURIComponent("fb_user_id") + "=" + encodeURIComponent(jsonData));
+                    postData.push(encodeURIComponent("user_id") + "=" + encodeURIComponent(jsonData));
                     var data = postData.join("&");
                     var people_addRestangular = Restangular.one("circles", select_circle).all("users");
 
