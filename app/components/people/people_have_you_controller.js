@@ -1,8 +1,8 @@
 angular.module('ionicApp')
     .controller('PeopleHaveYouCtrl', function ($scope, $routeParams, Facebook, Restangular, localStorageService) {
-         var deger = [];
+         var value = [];
        var csec;
-       $scope.ackapa = true;
+       $scope.hidden_visible = true;
         $scope.checkUserLoginStatus();
         
         //View friends
