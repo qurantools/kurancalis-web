@@ -51,7 +51,8 @@
                             {{verseTag.tag}}</button>
                     </div>
                     <div ng-if="targetVerseForTagContent==verse.id" class="verse_tag_content">
-                        <h4>Etiketli Ayetler</h4>
+                        <h4>Etiketli Ayetler:</h4>
+                        <a style="float: right;" href ng-click="displayAnnotationsWithTag()">Etiketli Notları Göster>></a>
                         <select class="verseTagContentAuthor"
                                 ng-options="author.id as author.name for author in authors | filter:authorFilter"
                                 ng-model="verseTagContentAuthor"

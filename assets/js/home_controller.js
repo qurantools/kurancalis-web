@@ -42,6 +42,7 @@ angular.module('ionicApp')
         $scope.restoreChapterViewParameters = function (localParameterData) {
             $scope.query_author_mask = localParameterData.author_mask;
             $scope.query_chapter_id = localParameterData.chapter_id;
+            //$scope.goToVerseParameters.chapter = localParameterData.chapter_id;
             $scope.verse = {};
             $scope.verse.number = localParameterData.verse_number;
             $scope.query_circles = localParameterData.circles;
@@ -505,14 +506,14 @@ angular.module('ionicApp')
                         }
                         $scope.translationDivMap[vid] =
                             /*
-                             4:0:1 /div[1]/div[1]/div[1]/div[1]/div[2]/div[2]/span[1]
-                             4:0:2 /div[1]/div[1]/div[1]/div[2]/div[1]/div[2]/span[1]
-                             4:1:1 /div[2]/div[1]/div[1]/div[1]/div[2]/div[2]/span[1]
-                             4:1:2 /div[2]/div[1]/div[1]/div[2]/div[1]/div[2]/span[1]
-                             4:1:3 /div[2]/div[1]/div[1]/div[3]/div[1]/div[2]/span[1]
-
+                             4:0:1 /div[1]/div[1]/div[1]/div[1]/div[2]/div[3]/span[1]
+                             4:0:2 /div[1]/div[1]/div[1]/div[2]/div[1]/div[3]/span[1]
+                             4:1:1 /div[2]/div[1]/div[1]/div[1]/div[2]/div[3]/span[1]
+                             4:1:2 /div[2]/div[1]/div[1]/div[2]/div[1]/div[3]/span[1]
+                             4:1:3 /div[2]/div[1]/div[1]/div[3]/div[1]/div[3]/span[1]
+                                   /div[1]/div[1]/div[1]/div[4]/div[1]/div[3]/span[1]
                              */
-                            "/div[" + (i + 1) + "]/div[1]/div[1]/div[" + (j + 1) + "]/div[" + (1 + ilkimi) + "]/div[2]/span[1]";
+                            "/div[" + (i + 1) + "]/div[1]/div[1]/div[" + (j + 1) + "]/div[" + (1 + ilkimi) + "]/div[3]/span[1]";
                     }
                 }
             });
@@ -994,6 +995,24 @@ angular.module('ionicApp')
             }
 
             return circleList;
+        };
+
+        //reflects the scope parameters to URL
+        $scope.displayAnnotationsWithTag = function (tag) {
+            var parameters =
+            {
+                authorMask: $scope.query_author_mask,
+                verseTags: $scope.verseTagContentParams.verse_tags,
+                verseKeyword: "",
+                ownAnnotations: true,
+                orderby: "time",
+                chapters: "",
+                verses: "",
+                circles: btoa(JSON.stringify($scope.query_circles)),
+                users: btoa(JSON.stringify($scope.query_users))
+
+            }
+            $location.path("/annotations/", false).search(parameters);
         };
 
         $scope.initializeHomeController = function () {

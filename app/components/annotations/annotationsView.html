@@ -110,8 +110,8 @@
          <div class="well" ng-init="init()">
     <table>
         <td>
-            <i class="fa fa-toggle-on aktif" ng-if="allAnnotationsOpts.own_annotations == true" ng-click="toggleAnnotationSearchOwnAnnotations();"></i>
-            <i class="fa fa-toggle-on fa-rotate-180 inactive" ng-if="allAnnotationsOpts.own_annotations == false" ng-click="toggleAnnotationSearchOwnAnnotations();"></i>
+            <i class="fa fa-toggle-on aktif" ng-if="allAnnotationsOpts.own_annotations == true || allAnnotationsOpts.own_annotations == 'true'" ng-click="toggleAnnotationSearchOwnAnnotations();"></i>
+            <i class="fa fa-toggle-on fa-rotate-180 inactive" ng-if="allAnnotationsOpts.own_annotations == false || allAnnotationsOpts.own_annotations == 'false'" ng-click="toggleAnnotationSearchOwnAnnotations();"></i>
         </td>
       <td align="left" style="width:100%; padding-left: 15px;">      Benim notlarımı göster</td>
       </table>

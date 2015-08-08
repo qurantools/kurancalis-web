@@ -192,9 +192,7 @@ if (config_data.isMobile == false) { //false
                 reloadOnSearch: false
             })
             .when('/', {
-                controller: 'HomeCtrl',
-                templateUrl: 'app/components/home/homeView.html',
-                reloadOnSearch: false
+                redirectTo: '/translations/'
             })
             .when('/chapter/:chapter/author/:author/', {
                 redirectTo: '/translations/?chapter=:chapter&verse=1&author=:author'
@@ -203,7 +201,7 @@ if (config_data.isMobile == false) { //false
             //    redirectTo: '/translations?chapter=:chapter&verse=:verse&author=1040'
             //})
             .otherwise({
-                redirectTo: '/'
+                redirectTo: '/translations/'
             });
 
 //        var $route = $routeProvider.$get[$routeProvider.$get.length-1]({$on:function(){}});
@@ -709,7 +707,18 @@ app.factory('ChapterVerses', function ($resource) {
             });
         };
 
+
+
+        //debug for annotation start - end
+        //this will be used after html structure change
+        //console.log(jsonData.ranges[0].start);
+
+
         $scope.showEditor = function (annotation, position) {
+
+            //debug for annotation start - end
+            //this will be used after html structure change
+            console.log(annotation.ranges[0].start);
 
 
             if (typeof annotation.annotationId != 'undefined') {
@@ -744,9 +753,6 @@ app.factory('ChapterVerses', function ($resource) {
                     newTags.push({"name": annotation.tags[i]});
                 }
             }
-
-            console.log(annotation.ranges[0].end);
-
 
             $scope.annotationModalData = annotation;
             $scope.annotationModalDataTagsInput = newTags;
@@ -908,27 +914,28 @@ app.factory('ChapterVerses', function ($resource) {
 
         $scope.initializeCircleLists = function () {
 
-            $scope.circleListsPromise =  $q.defer();
-            $scope.extendedCircles = [];
-            $scope.extendedCircles.push({'id': '-2', 'name': 'Tüm Çevrelerim'});
-            $scope.extendedCircles.push({'id': '-1', 'name': 'Herkes'});
 
-            $scope.extendedCirclesForSearch = [];
-            $scope.extendedCirclesForSearch.push({'id': '-2', 'name': 'Tüm Çevrelerim'});
-
-
-            $scope.circleDropdownArray = [];
-            $scope.circleDropdownArray.push({'id': '-2', 'name': 'Tüm Çevrelerim'});
-            $scope.circleDropdownArray.push({'id': '', 'name': 'Sadece Ben'});
-
-            $scope.query_circle_dropdown = $scope.circleDropdownArray[1];
 
             Restangular.all("circles").customGET("", {}, {'access_token': $scope.access_token}).then(function (circleList) {
-                $scope.circleDropdownArray.push.apply($scope.circleDropdownArray, circleList);
+
+                $scope.extendedCircles = [];
+                $scope.extendedCircles.push({'id': '-2', 'name': 'Tüm Çevrelerim'});
+                $scope.extendedCircles.push({'id': '-1', 'name': 'Herkes'});
+
+                $scope.extendedCirclesForSearch = [];
+                $scope.extendedCirclesForSearch.push({'id': '-2', 'name': 'Tüm Çevrelerim'});
+
+
+                $scope.circleDropdownArray = [];
+                $scope.circleDropdownArray.push({'id': '-2', 'name': 'Tüm Çevrelerim'});
+                $scope.circleDropdownArray.push({'id': '', 'name': 'Sadece Ben'});
+
+                $scope.query_circle_dropdown = $scope.circleDropdownArray[1];
+                Array.prototype.push.apply($scope.circleDropdownArray, circleList);
 
                 //also initialize extended circles
-                $scope.extendedCircles.push.apply($scope.extendedCircles, circleList);
-                $scope.extendedCirclesForSearch.push.apply($scope.extendedCirclesForSearch, circleList);
+                Array.prototype.push.apply($scope.extendedCircles, circleList);
+                Array.prototype.push.apply($scope.extendedCirclesForSearch, circleList);
 
                 $scope.$broadcast("circleLists ready");
 

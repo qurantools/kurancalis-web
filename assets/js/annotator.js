@@ -1356,6 +1356,7 @@
              });
              return this.showViewer($.makeArray(annotations), Util.mousePosition(event, this.wrapper[0]));
              */
+
         };
         Annotator.prototype.onHighlightClick = function (event) {
 
