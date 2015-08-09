@@ -527,18 +527,13 @@ app.factory('ChapterVerses', function ($resource) {
         }
 
         $scope.logOut = function () { //new
-            $ionicSideMenuDelegate.toggleLeft();
+            if($ionicSideMenuDelegate.isOpenLeft()){
+                $ionicSideMenuDelegate.toggleLeft();
+            }
             authorization.logOut($scope.onFacebookLogOutSuccess);
 
         }
 
-        /*
-         $scope.api = function () {
-         Facebook.api('/me', {fields: 'email'}, function (response) {
-         //   $scope.user = response.email;
-         });
-         };
-         */
         $scope.$watch(function () {
                 return Facebook.isReady();
             }, function (newVal) {
@@ -581,6 +576,10 @@ app.factory('ChapterVerses', function ($resource) {
             //TODO: document knowhow: custom get with custom header
             usersRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (user) {
                     $scope.user = user;
+                },
+                function(response) {
+                    console.log("Error occured while validating user login with status code", response.status);
+                    $scope.logOut();
                 }
             );
         }
