@@ -717,7 +717,7 @@ app.factory('ChapterVerses', function ($resource) {
 
             //debug for annotation start - end
             //this will be used after html structure change
-            console.log(annotation.ranges[0].start);
+            //console.log(annotation.ranges[0].start);
 
 
             if (typeof annotation.annotationId != 'undefined') {
