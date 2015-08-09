@@ -443,6 +443,9 @@ angular.module('ionicApp')
                 annotator.subscribe("highlightClicked", $scope.onHighlightClicked);
                 annotator.subscribe("adderClicked", $scope.showEditor);
                 annotator.subscribe("editClicked", $scope.showEditor);
+                annotator.subscribe("rangeNormalizeFail",function(anno){
+                    console.log("verseId:"+anno.verseId+" start:"+anno.ranges[0].start);
+                });
 
                 //unbind
                 if (config_data.isMobile) {
@@ -514,11 +517,17 @@ angular.module('ionicApp')
                         var vid = data[i].translations[j].id;
                         var ilkimi;
                         if (j == 0) {
-                            ilkimi = 1;
+                            ilkimi = 3;
                         }
                         else {
-                            ilkimi = 0;
+                            ilkimi = 1;
                         }
+
+                        if(data.length==1){ //there is only one author selected
+                            $scope.translationDivMap[vid] = "/div[" + (i + 1) + "]/div[1]/div[1]/div[1]/div[3]";
+                        }
+                        else{
+
                         $scope.translationDivMap[vid] =
                             /*
                              4:0:1 /div[1]/div[1]/div[1]/div[1]/div[2]/div[3]/span[1]
@@ -527,8 +536,13 @@ angular.module('ionicApp')
                              4:1:2 /div[2]/div[1]/div[1]/div[2]/div[1]/div[3]/span[1]
                              4:1:3 /div[2]/div[1]/div[1]/div[3]/div[1]/div[3]/span[1]
                                    /div[1]/div[1]/div[1]/div[4]/div[1]/div[3]/span[1]
+                                   /div[2]/div[1]/div[1]/div[2]/div[1]/div[3]/span[1]
+                                  "/div[2]/div[1]/div[1]/div[1]/div[2]/div[3]/span[1]"
+                                   /div[2]/div[1]/div[1]/div[1]/div[2]/div[3]/span[1]
                              */
-                            "/div[" + (i + 1) + "]/div[1]/div[1]/div[" + (j + 1) + "]/div[" + (1 + ilkimi) + "]/div[3]/span[1]";
+                            "/div[" + (i + 1) + "]/div[1]/div[1]/div[" + (j + 1) + "]/div[" + ilkimi + "]/div[3]/span[1]";
+                        }
+
                     }
                 }
             });
