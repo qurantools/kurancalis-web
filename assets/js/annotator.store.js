@@ -247,8 +247,8 @@
                 var _own_annotations = queryParams.own_annotations;
 
                 data = {
-                    chapter: _chapter,
-                    verses: _verses,
+                    chapters: _chapter,
+                    verse: _verses,
                     author: _author,
                     circles: _circles,
                     users: _users,

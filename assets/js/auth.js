@@ -1,38 +1,8 @@
 var authorizationModule = angular.module('authorizationModule', ['facebook', 'LocalStorageModule', 'restangular']);
 
-authorizationModule.factory('User', function ($resource) {
+authorizationModule.factory("authorization", function (Facebook, User, localStorageService, Restangular) {
 
-    return $resource(config_data.webServiceUrl + '/users',
-        {},
-
-        {
-            query: {
-                method: 'GET',
-                headers: {
-                    "access_token": this.accessToken
-                },
-                isArray: false
-            },
-            save: {
-                method: 'POST',
-                headers: {"Content-Type": "application/x-www-form-urlencoded"},
-                transformRequest: function (obj) {
-                    var str = [];
-                    for (var p in obj)
-                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                    return str.join("&");
-                },
-                isArray: false
-            }
-        }
-    );
-}).
-
-
-    factory("authorization", function (Facebook, User, localStorageService, Restangular) {
-
-        fbLoginStatus = 'disconnected';
-        facebookIsReady = false;
+        var fbLoginStatus = 'disconnected';
         var factory = {};
         factory.access_token="";
         factory.faceBookResponseMethod = function(){};
@@ -77,11 +47,17 @@ authorizationModule.factory('User', function ($resource) {
             var responseData = {loggedIn: false, token: ""};
 
             if (tokenFb != "") {
-                var user = new User();
 
-                user.fb_access_token = tokenFb;
-                user.$save({fb_access_token: tokenFb},
-                    function (data, headers) {
+                var headers = {'Content-Type': 'application/x-www-form-urlencoded'};
+
+                var postData = [];
+                postData.push(encodeURIComponent("fb_access_token") + "=" + tokenFb);
+                var data = postData.join("&");
+                var userRestangular = Restangular.all("users");
+
+                userRestangular.customPOST(data, '', '', headers).then(
+                    function(data){
+
                         //get token
                         responseData.token = data.token;
                         responseData.loggedIn = true;
@@ -91,9 +67,12 @@ authorizationModule.factory('User', function ($resource) {
                         localStorageService.set('access_token', data.token);
                         faceBookResponseMethod(responseData);
                     },
-                    function (error) {
+                    function(response) {
                         if (error.data.code == '209') {
                             alert("Sisteme giriş yapabilmek için e-posta adresi paylaşımına izin vermeniz gerekmektedir.");
+                        }
+                        else if( error.data.code == '217') {
+                            alert("Sisteme giriş yapabilmek için arkadaş listesi paylaşımına izin vermeniz gerekmektedir.");
                         }
 
                         //factory.log_out();
@@ -102,23 +81,11 @@ authorizationModule.factory('User', function ($resource) {
                         //remove cookie if exist
                         localStorageService.remove('access_token');
                         faceBookResponseMethod(responseData);
-                    }
-                );
+                    });
+
+
             }
         }
-
-
-        /*
-        factory.get_user_info = function () {
-            var usersRestangular = Restangular.all("users");
-            //TODO: document knowhow: custom get with custom header
-            usersRestangular.customGET("", {}, {'access_token': access_token}).then(function (theUser) {
-                    user = theUser;
-                }
-            );
-        };
-
-        */
 
         factory.logOut = function (faceBookResponseMethod) {
             var responseData = {loggedOut: false};
