@@ -200,7 +200,7 @@ angular.module('ionicApp')
 
             $scope.allAnnotationsParams.users = kisiTags;
             $scope.allAnnotationsParams.circles = cevreTags;
-            $scope.allAnnotationsParams.chapter = $scope.sureler;
+            $scope.allAnnotationsParams.chapters = $scope.sureler;
             $scope.allAnnotationsParams.verse = $scope.ayetler;
 
                
