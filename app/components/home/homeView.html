@@ -32,7 +32,7 @@
                                     | <a ng-click="linkcreate({{translation.chapter}},{{translation.verse}})" href
                                          data-target="#openlink" data-toggle="modal">K.M.</a>
                                 </div>
-                                <div ng-show="selectedSingleAuthor==translation.authorId || !showSingleAuthor"
+                                <div id="tt_{{translation.id}}" ng-show="selectedSingleAuthor==translation.authorId || !showSingleAuthor"
                                      class="col-sm-9"
                                      ng-class="{translation_rtl: authorMap[translation.authorId].language=='ar', translation_content: authorMap[translation.authorId].language!='ar'}"><span
                                         ng-bind-html="translation.content | with_footnote_link:translation.id:translation.authorId | with_next_link:translation.chapter:translation.authorId:translation.id | to_trusted"></span>

@@ -1055,6 +1055,7 @@ angular.module('ionicApp')
                 if (typeof annotator != 'undefined') {
                     annotator.destroy();
                 }
+
                 //remove tags on logout
                 $scope.verseTagsJSON = [];
             });

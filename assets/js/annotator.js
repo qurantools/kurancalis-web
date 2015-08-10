@@ -1283,9 +1283,9 @@
             if (event && this.selectedRanges.length) {
                 //check translation id
                 if (this.selectedRanges.length == 1) {
-                    var translation_start_id = this.getElementIdOfSelection(this.selectedRanges[0].start, "t_");
-                    var translation_end_id = this.getElementIdOfSelection(this.selectedRanges[0].end, "t_");
-                    if (translation_end_id == translation_start_id && translation_start_id != 0) {
+                    var translation_start_id = this.getElementIdOfSelection(this.selectedRanges[0].start, "tt_");
+                    var translation_end_id = this.getElementIdOfSelection(this.selectedRanges[0].end, "tt_");
+                    if (translation_end_id == translation_start_id && translation_start_id != 0 ) {
                         this.selectedRanges[0].translationId = translation_start_id;
                         this.selectedRanges[0].verseId = this.getElementIdOfSelection(this.selectedRanges[0].start, "v_");
 
@@ -1322,16 +1322,18 @@
         };
 
         Annotator.prototype.getElementIdOfSelection = function (endPoint, elementIdentifier) {
-            if (typeof(endPoint.parentNode.id) == 'undefined')
+            //invalid selection if author is selected or outside of translation selected.
+            if (typeof(endPoint.parentNode.id) == 'undefined') {
                 return 0;
+            }
 
             var parentId = endPoint.parentNode.id;
 
             if (parentId.indexOf(elementIdentifier) == 0) {
-                return parentId.substr(2);
+                return parentId.substr(elementIdentifier.length);
             }
             else {
-                if (typeof(endPoint.parentNode) != 'undefined') {
+                if (typeof(endPoint.parentNode) != 'undefined' ) {
                     return this.getElementIdOfSelection(endPoint.parentNode, elementIdentifier);
                 }
                 else {

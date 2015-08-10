@@ -514,6 +514,8 @@ app.factory('ChapterVerses', function ($resource) {
                 $scope.loggedIn = false;
                 $scope.user = null;
 
+                localStorageService.remove('chapter_view_parameters');
+                localStorageService.remove('annotations_view_parameters');
                 $scope.$broadcast('logout', responseData);
 
                 window.location.href = '#/';
@@ -708,16 +710,13 @@ app.factory('ChapterVerses', function ($resource) {
 
 
 
-        //debug for annotation start - end
-        //this will be used after html structure change
-        //console.log(jsonData.ranges[0].start);
 
 
         $scope.showEditor = function (annotation, position) {
 
             //debug for annotation start - end
             //this will be used after html structure change
-            //console.log(annotation.ranges[0].start);
+            console.log(annotation.ranges[0].start);
 
 
             if (typeof annotation.annotationId != 'undefined') {
