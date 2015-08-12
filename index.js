@@ -191,6 +191,26 @@ if (config_data.isMobile == false) { //false
                 templateUrl: 'app/components/people/explore.html',
                 reloadOnSearch: false
             })
+            .when('/inferences/', {
+                controller: 'AnnotationsCtrl',
+                templateUrl: 'app/components/inferences/inferencesListView.html',
+                reloadOnSearch: false
+            })
+            .when('/inference/new/', {
+                controller: 'InferenceEditController',
+                templateUrl: 'app/components/inferences/inferenceEditView.html',
+                reloadOnSearch: false
+            })
+            .when('/inference/edit/', {
+                controller: 'InferenceEditController',
+                templateUrl: 'app/components/inferences/inferenceEditView.html',
+                reloadOnSearch: false
+            })
+            .when('/inference/display/:inferenceId/', {
+                controller: 'InferenceDisplayController',
+                templateUrl: 'app/components/inferences/inferenceDisplayView.html',
+                reloadOnSearch: false
+            })
             .when('/', {
                 redirectTo: '/translations/'
             })

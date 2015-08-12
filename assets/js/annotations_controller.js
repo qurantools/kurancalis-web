@@ -1,7 +1,7 @@
 angular.module('ionicApp')
     .controller('AnnotationsCtrl', function ($scope, $routeParams, Facebook, Restangular, $location, authorization, localStorageService, $ionicModal) {
-        console.log("annotations ctrl")
-        $scope.allAnnotationsOrderBy='verse'
+        console.log("annotations ctrl");
+        $scope.allAnnotationsOrderBy='verse';
 
         /* facebook login */
 
@@ -22,6 +22,7 @@ angular.module('ionicApp')
         $scope.sureler="";
         $scope.ayetler="";
         $scope.allAnnotationsSearchInput = "";
+        $scope.pagePurpose = "annotations"; //may be annotations or inferences
 
         $scope.annotationSearchAuthorSelection = $scope.selection;
 
@@ -75,7 +76,7 @@ angular.module('ionicApp')
                 users: btoa(JSON.stringify($scope.usersForSearch))
 
             }
-            $location.path("/annotations/", false).search(parameters);
+            $location.path("/"+$scope.pagePurpose+"/", false).search(parameters);
         };
 
 
@@ -373,6 +374,16 @@ angular.module('ionicApp')
             var verseTagsFromRoute = false;
 
 
+
+            if($location.path() == "/annotations/"){
+                $scope.pagePurpose = "annotations";
+            }
+            else if($location.path() == "/inferences/"){
+                $scope.pagePurpose = "inferences";
+            }
+            else{
+                alert("pagePurpose undefined");
+            }
 
             if (typeof $routeParams.orderby !== 'undefined') {
                 orderby = $routeParams.orderby;
