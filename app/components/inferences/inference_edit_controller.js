@@ -7,6 +7,7 @@ angular.module('ionicApp')
         $scope.pagePurpose = "new";
 
 
+
         $scope.initializeInferenceEditController = function () {
             var inferenceId=0;
             var circles = []; //id array
@@ -81,6 +82,10 @@ angular.module('ionicApp')
             $scope.restoreInferenceEditViewParameters(localParameterData);
             $scope.storeInferenceEditViewParameters
             $scope.setInferenceEditPageURL();
+
+
+
+
         }
 
 
@@ -118,6 +123,9 @@ angular.module('ionicApp')
                 $location.path("/inference/edit/", false).search(parameters);
             }
         };
+
+
+
 
         //definitions are finished. Now run initialization
         $scope.initializeInferenceEditController();

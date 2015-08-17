@@ -113,12 +113,13 @@ var app = angular.module('ionicApp', requiredModules)
         }])
     .run(['$route', '$rootScope', '$location', '$ionicPlatform', function ($route, $rootScope, $location, $ionicPlatform) {
 
-
         $ionicPlatform.ready(function () {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
             // for form inputs)
             if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
                 cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+                //cordova.plugins.Keyboard.disableScroll(true);
+                ionic.keyboard.disable();
             }
             if (window.StatusBar) {
                 // org.apache.cordova.statusbar required
@@ -236,61 +237,47 @@ if (config_data.isMobile == false) { //false
     app.config(function ($routeProvider, FacebookProvider, RestangularProvider, localStorageServiceProvider, $stateProvider, $urlRouterProvider) {
             console.log("mobile version")
 
+
             //redirect / to /m/www/
             var currentPath = window.location.pathname;
             if (currentPath == '/kurancalis-web/' || currentPath == '/') {
-                window.location.href = currentPath + 'm/www/';
+                var diyezIndex =  window.location.href.indexOf("#");
+                var locationURL = window.location.href.substring(diyezIndex);
+                var mobileURL = currentPath + 'm/www/'+ locationURL;
+                console.log("Redirectiong to mobile version:" + mobileURL);
+                window.location.href = mobileURL;
+
             }
+            else {
+                RestangularProvider.setBaseUrl(config_data.webServiceUrl);
+                localStorageServiceProvider.setStorageCookie(0, '/');
+                //route
 
-            RestangularProvider.setBaseUrl(config_data.webServiceUrl);
-            localStorageServiceProvider.setStorageCookie(0, '/');
-            //route
-            $routeProvider
-                .when('/chapter/:chapterId/author/:authorMask/verse/:verseNumber/', {
-                    controller: 'HomeCtrl',
-                    templateUrl: 'components/home/home.html',
-                    reloadOnSearch: false
-                })
-                .when('/annotations/', {
-                    controller: 'AnnotationsCtrl',
-                    templateUrl: 'components/annotations/all_annotations.html',
-                    reloadOnSearch: false
-                })
-                .when('/people/find_people/', {
-                    controller: 'PeopleFindCtrl',
-                    templateUrl: 'app/components/people/find_people.html',
-                    reloadOnSearch: false
-                })
-                .when('/people/people_have_you/', {
-                    controller: 'PeopleHaveYouCtrl',
-                    templateUrl: 'app/components/people/people_have_you.html',
-                    reloadOnSearch: false
-                })
-                .when('/people/circles/', {
-                    controller: 'PeopleCirclesCtrl',
-                    templateUrl: 'app/components/people/circles.html',
-                    reloadOnSearch: false
-                })
-                .when('/people/explore/', {
-                    controller: 'PeopleExploreCtrl',
-                    templateUrl: 'app/components/people/explore.html',
-                    reloadOnSearch: false
-                })
-                .when('/', {
-                    controller: 'HomeCtrl',
-                    templateUrl: 'components/home/home.html',
-                    reloadOnSearch: false
-                })
-                .when('/chapter/:chapterId/author/:authorMask/', {
-                    redirectTo: '/chapter/:chapterId/author/:authorMask/verse/1/'
-                })
-                .otherwise({
-                    redirectTo: '/'
-                });
+                //route
+                $routeProvider
+                    .when('/translations/', {
+                        controller: 'HomeCtrl',
+                        templateUrl: 'components/home/home.html',
+                        reloadOnSearch: false
+                    })
+                    .when('/annotations/', {
+                        controller: 'AnnotationsCtrl',
+                        templateUrl: 'components/annotations/all_annotations.html',
+                        reloadOnSearch: false
+                    })
+                    .when('/', {
+                        redirectTo: '/translations/'
+                    })
+                    .when('/chapter/:chapter/author/:author/', {
+                        redirectTo: '/translations/?chapter=:chapter&verse=1&author=:author'
+                    })
+                    .otherwise({
+                        redirectTo: '/translations/'
+                    });
 
 
-            openFB.init({appId: config_data.FBAppID});
-
+                openFB.init({appId: config_data.FBAppID});
+            }
             /*
              $ionicAppProvider.identify({
              // The App ID (from apps.ionic.io) for the server
@@ -369,7 +356,6 @@ app.factory('ChapterVerses', function ($resource) {
 
     .controller('MainCtrl', function ($scope, $q, $routeParams, $ionicSideMenuDelegate, $location, $timeout, ListAuthors, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService, $document, $filter, $rootScope, $state, $stateParams, $ionicModal, $ionicScrollDelegate, $ionicPosition, authorization) {
         console.log("MainCtrl");
-
 
         //all root scope parameters should be defined and documented here
         $scope.access_token = "";
