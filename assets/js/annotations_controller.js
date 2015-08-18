@@ -19,9 +19,9 @@ angular.module('ionicApp')
         $scope.allAnnotationsOpts.start = 0;
         $scope.allAnnotationsOpts.limit = 10;
         $scope.allAnnotationsOpts.own_annotations = true;
+        $scope.allAnnotationsOpts.keyword = "";
         $scope.sureler="";
         $scope.ayetler="";
-        $scope.allAnnotationsSearchInput = "";
         $scope.pagePurpose = "annotations"; //may be annotations or inferences
 
         $scope.annotationSearchAuthorSelection = $scope.selection;
@@ -31,7 +31,7 @@ angular.module('ionicApp')
             $scope.allAnnotationsOpts.own_annotations = localParameterData.ownAnnotations;
             $scope.allAnnotationsOrderBy = localParameterData.orderby;
             $scope.setAnnotationSearchAuthorSelection(localParameterData.authorMask);
-            $scope.allAnnotationsSearchInput = localParameterData.verseKeyword;
+            $scope.allAnnotationsOpts.keyword = localParameterData.verseKeyword;
             $scope.setAnnotationSearchTags(localParameterData.verseTags);
 
             $scope.circlesForSearch = localParameterData.circles;
@@ -49,7 +49,7 @@ angular.module('ionicApp')
             localParameterData.orderby = $scope.allAnnotationsOrderBy;
 
             localParameterData.authorMask=$scope.getAnnotationSearchAuthorMask();
-            localParameterData.verseKeyword = $scope.allAnnotationsSearchInput;
+            localParameterData.verseKeyword = $scope.allAnnotationsOpts.keyword;
             localParameterData.verseTags = $scope.getAnnotationSearchTags();
 
             localParameterData.circles = $scope.circlesForSearch;
@@ -67,7 +67,7 @@ angular.module('ionicApp')
             {
                 authorMask: $scope.getAnnotationSearchAuthorMask(),
                 verseTags: $scope.getAnnotationSearchTags(),
-                verseKeyword: $scope.allAnnotationsSearchInput,
+                verseKeyword: $scope.allAnnotationsOpts.keyword,
                 ownAnnotations: $scope.allAnnotationsOpts.own_annotations,
                 orderby: $scope.allAnnotationsOrderBy,
                 chapters: $scope.sureler,
@@ -170,7 +170,7 @@ angular.module('ionicApp')
 
             $scope.allAnnotationsParams.author = $scope.getAnnotationSearchAuthorMask();
 
-            $scope.allAnnotationsParams.verse_keyword = $scope.allAnnotationsSearchInput;
+            $scope.allAnnotationsParams.verse_keyword = $scope.allAnnotationsOpts.keyword;
             $scope.allAnnotationsParams.verse_tags = "";
 
             var newTags = "";
@@ -519,7 +519,7 @@ angular.module('ionicApp')
                     animation: 'slide-in-left',
                     id: 'editor'
                 }).then(function (modal) {
-                    $scope.modal_editor = modal;
+                    $scope.setModalEditor(modal);
                 });
 
                 $scope.openModal = function (id) {
@@ -528,7 +528,7 @@ angular.module('ionicApp')
                     }else if (id == 'all_annotations_sort') {
                         $scope.modal_all_annotations_sort.show();
                     } else  if (id == 'editor') {
-                        $scope.modal_editor.show();
+                        $scope.getModalEditor().show();
                     }
                 };
                 $scope.closeModal = function (id) {
@@ -538,7 +538,7 @@ angular.module('ionicApp')
                         $scope.modal_all_annotations_sort.hide();
                     } else  if (id == 'editor') {
                         clearTextSelection();
-                        $scope.modal_editor.hide();
+                        $scope.getModalEditor().hide();
                     }
                 }
             }

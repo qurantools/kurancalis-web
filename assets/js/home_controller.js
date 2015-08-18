@@ -33,6 +33,13 @@ angular.module('ionicApp')
         $scope.showSingleAuthor=false;
         $scope.selectedSingleAuthor=0;
 
+        //mobile modals
+        $scope.modal_annotations_on_page = null;
+        $scope.modal_chapter_selection = null;
+        $scope.modal_authors_list = null;
+        $scope.modal_annotations_on_page_sort = null;
+        $scope.modal_editor = null;
+
 
         $scope.restoreChapterViewParameters = function (localParameterData) {
             $scope.query_author_mask = localParameterData.author_mask;
@@ -880,7 +887,7 @@ angular.module('ionicApp')
                 //animation: 'slide-in-left',
                 id: 'editor'
             }).then(function (modal) {
-                $scope.modal_editor = modal;
+                $scope.setModalEditor(modal);
             });
 
             $scope.openModal = function (id) {
@@ -908,7 +915,7 @@ angular.module('ionicApp')
                     $scope.modal_annotations_on_page_sort.hide();
                 } else if (id == 'editor') {
                     clearTextSelection();
-                    $scope.modal_editor.hide();
+                    $scope.getModalEditor().hide();
                 }
             }
 

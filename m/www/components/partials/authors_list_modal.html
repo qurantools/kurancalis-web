@@ -1,14 +1,21 @@
 <div class="modal modal-fullscreen">
-    <div class="bar bar-balanced">
-        <div style="text-align: left; width:100px;">
-            <button class="button button-icon icon-left ion-arrow-left-b" ng-click="updateAuthors();closeModal('authors_list')"
-                    style="float: left"> Tamam
+    <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced">
+        <ion-nav-title>Yazar Seçimi</ion-nav-title>
+        <ion-nav-buttons side="left">
+            <button class="button button-icon icon-left ion-arrow-left-b" ng-click="closeModal('authors_list')"
+                    style="float: left"> Geri
             </button>
-        </div>
-        <div style="text-align: center; width:100px;"><h1 class="title">Yazar Seçimi</h1></div>
-    </div>
+
+        </ion-nav-buttons>
+        <ion-nav-buttons side="right">
+            <button class="button button-icon icon-left ion-checkmark" ng-click="updateAuthors();closeModal('authors_list')"
+                    style="float: left">
+            </button>
+        </ion-nav-buttons>
+
+    </ion-nav-bar>
     <ion-content overflow-scroll="true">
-        <div style="height:50px"></div>
+        <div style="height:65px"></div>
         <ul class="list">
             <li class="item item-checkbox" ng-repeat="author in authors">
                 <label class="checkbox">

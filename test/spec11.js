@@ -134,8 +134,8 @@ describe('ceviri gosterimi', function() {
 			element(by.css('[class="selectable_list"]')).element(by.repeater('author in authors').row(5)).click()
 	 	
 	        //Not1 arama kelimesine yazılır ve Ali Bulaç seçilir. Tamam tıklanır.
-	 		element(by.model('allAnnotationsSearchInput')).clear();
-	 		element(by.model('allAnnotationsSearchInput')).sendKeys('Not1');
+	 		element(by.model('allAnnotationsOpts.keyword')).clear();
+	 		element(by.model('allAnnotationsOpts.keyword')).sendKeys('Not1');
 	 	
 	 		element(by.css('[class="selectable_list"]')).element(by.repeater('author in authors').row(12)).click()
 	 		element(by.css('[ng-click="search_all_annotations()"]')).click();
@@ -152,8 +152,8 @@ describe('ceviri gosterimi', function() {
 			 element(by.css('[class="fa fa-search"]')).click();
 		 		
 	 		//Not3 arama kelimesine, Etk2 etiket kelime içine yazılır ve Diyanet İşleri seçilir.
-	 		element(by.model('allAnnotationsSearchInput')).clear();
-	 		element(by.model('allAnnotationsSearchInput')).sendKeys('Not3');
+	 		element(by.model('allAnnotationsOpts.keyword')).clear();
+	 		element(by.model('allAnnotationsOpts.keyword')).sendKeys('Not3');
 	 		element(by.model('filterTags')).element(by.model('newTag.text')).sendKeys('Etk2');
 	 	
 	 		element(by.css('[class="selectable_list"]')).element(by.repeater('author in authors').row(12)).click()
@@ -174,13 +174,13 @@ describe('ceviri gosterimi', function() {
 	 		 element(by.css('[class="fa fa-search"]')).click();
 	 		
 	 		//Not3 arama kelimesine, etk1 ve etk3 etiket kelime içine yazılır. Süleyman Ateş seçilir.
-	 		element(by.model('allAnnotationsSearchInput')).clear();
-	 		element(by.model('allAnnotationsSearchInput')).sendKeys('Not3');
+	 		element(by.model('allAnnotationsOpts.keyword')).clear();
+	 		element(by.model('allAnnotationsOpts.keyword')).sendKeys('Not3');
 	 		
 	 		element(by.repeater('tag in tagList.items track by track(tag)').row(0)).element(by.css('[ng-click="tagList.remove($index)"]')).click();
 	 		
 	 		element(by.model('filterTags')).element(by.model('newTag.text')).sendKeys('Etk1');
-	 		element(by.model('allAnnotationsSearchInput')).click();
+	 		element(by.model('allAnnotationsOpts.keyword')).click();
 	 		element(by.model('filterTags')).element(by.model('newTag.text')).sendKeys('Etk3');
 	 		
 	 	    element(by.css('[class="selectable_list"]')).element(by.repeater('author in authors').row(13)).click()
@@ -203,7 +203,7 @@ describe('ceviri gosterimi', function() {
 			 element(by.css('[class="fa fa-search"]')).click();
 			 
 			 //Aramalar silinir
-			 element(by.model('allAnnotationsSearchInput')).clear();
+			 element(by.model('allAnnotationsOpts.keyword')).clear();
 			 element(by.repeater('tag in tagList.items track by track(tag)').row(0)).element(by.css('[ng-click="tagList.remove($index)"]')).click();
 			 element(by.repeater('tag in tagList.items track by track(tag)').row(0)).element(by.css('[ng-click="tagList.remove($index)"]')).click();
 		 		

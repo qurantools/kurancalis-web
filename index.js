@@ -242,7 +242,10 @@ if (config_data.isMobile == false) { //false
             var currentPath = window.location.pathname;
             if (currentPath == '/kurancalis-web/' || currentPath == '/') {
                 var diyezIndex =  window.location.href.indexOf("#");
-                var locationURL = window.location.href.substring(diyezIndex);
+                var locationURL = "";
+                if(diyezIndex!= -1){
+                  locationURL = window.location.href.substring(diyezIndex);
+                }
                 var mobileURL = currentPath + 'm/www/'+ locationURL;
                 console.log("Redirectiong to mobile version:" + mobileURL);
                 window.location.href = mobileURL;
@@ -366,6 +369,7 @@ app.factory('ChapterVerses', function ($resource) {
         $scope.chapterSelected = 1;
         $scope.currentPage = "";
         var chaptersVersion = 4;
+        $scope.modal_editor = null;
 
         $scope.circleDropdownArray = [];
 
@@ -1028,15 +1032,14 @@ app.factory('ChapterVerses', function ($resource) {
             });
 
             if (config_data.isMobile) {
-                /*
-                 $scope.currentState = $state.current.name;
-                 $rootScope.$on('$stateChangeSuccess',
-                 function (event, toState, toParams, fromState, fromParams) {
-                 $scope.currentState = toState.name;
-                 $scope.scopeApply();
-                 })
-                 */
 
+                $scope.setModalEditor= function(modal){
+                    $scope.modal_editor = modal;
+                };
+
+                $scope.getModalEditor= function(){
+                    return $scope.modal_editor;
+                };
 
                 $scope.openModal = function (id) {
                     if (id == 'editor') {
@@ -1196,5 +1199,5 @@ function focusToVerseInput() {
     setTimeout(function () {
         document.getElementById('chapterSelection_verse').focus();
         document.getElementById('chapterSelection_verse').select();
-    }, 300);
+    }, 600);
 }

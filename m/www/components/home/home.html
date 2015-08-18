@@ -43,7 +43,7 @@
                                         <div class="col-xs-12 col-sm-3 authorDiv_{{authorMap[translation.authorId].color}}">
                                             {{authorMap[translation.authorId].name}}
                                         </div>
-                                        <div id="tt_{{translation.id}}" class="col-xs-12 col-sm-9 translation_content selectable"><span
+                                        <div id="tt_{{translation.id}}" ng-class="{translation_rtl: authorMap[translation.authorId].language=='ar', translation_content: authorMap[translation.authorId].language!='ar'}" class="col-xs-12 col-sm-9 translation_content selectable"><span
                                                 ng-bind-html="translation.content | with_footnote_link:translation.id:translation.authorId | to_trusted"
                                                 class="selectable"></span>
                                         </div>

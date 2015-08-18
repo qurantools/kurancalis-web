@@ -16,7 +16,7 @@
     </ion-nav-bar>
 
     <ion-content overflow-scroll="true">
-        <div style="height:50px"></div>
+        <div style="height:65px"></div>
 
         <strong>{{annotationModalDataVerse}}</strong>
         {{annotationModalData.quote}}
@@ -26,15 +26,11 @@
             <textarea id="annotationData_text" ng-model="annotationModalData.text"
                       placeholder="Yorum ekleyin" style="height:80px; font-size:16px;" ></textarea>
         </label>
-        <tags-input ng-model="annotationModalDataTagsInput" display-property="name" replace-spaces-with-dashes="false" placeholder="Etiket girin"
+        <tags-input ng-model="annotationModalDataTagsInput" display-property="name"
+                    placeholder="Etiket girin" replace-spaces-with-dashes="false"
                     min-length="2">
-            <auto-complete source="loadTags($query)" min-length="2"></auto-complete>
+            <auto-complete source="loadTags($query)" min-length="2" select-first-match="false"></auto-complete>
         </tags-input>
-        <br/>
-        <ul ng-repeat="selectedTag in selectedTags">
-            <li>{{selectedTag}}</li>
-        </ul>
-
         <br/>
 
         <div class="list">
