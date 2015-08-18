@@ -361,7 +361,7 @@ angular.module('ionicApp')
             } else {
                 var elem = document.getElementById(elementId);
                 if (elem != null) {
-                    $ionicScrollDelegate.scrollTo(0, elem.offsetTop, false);
+                    $ionicScrollDelegate.scrollTo(0, elem.offsetTop, true);
                 }
             }
         };
@@ -577,25 +577,24 @@ angular.module('ionicApp')
                 translationParams.chapter="";
             }
 
-            verseTagContentRestangular.customGET("", translationParams, {}).then($scope.prepareTranslationDivMap);
-
-            $timeout(function () {
-
+            verseTagContentRestangular.customGET("", translationParams, {}).then( function(data){
+                $scope.prepareTranslationDivMap(data);
                 //mark annotations
                 $scope.annotate_it();
-
                 //scroll to verse if user is not logged in.
                 //if user is logged in, they will scroll on tag generation.
                 if ($scope.user == null) {
                     if (typeof $scope.verse.number != 'undefined') {
                         var verseId = parseInt($scope.query_chapter_id * 1000) + parseInt($scope.verse.number);
-                        $scope.scrollToVerse(verseId);
+                         $timeout(function () {
+                            $scope.scrollToVerse(verseId);                
+                        });
                     }
                 }
 
+            });
 
-            }, 2000);
-
+           
         };
 
 
