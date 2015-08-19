@@ -852,6 +852,8 @@ angular.module('ionicApp')
             $ionicModal.fromTemplateUrl('components/partials/annotations_on_page_modal.html', {
                 scope: $scope,
                 //animation: 'slide-in-right',
+                //animation: 'slide-left-right',
+                animation: 'slide-in-up',
                 id: 'annotations_on_page'
             }).then(function (modal) {
                 $scope.modal_annotations_on_page = modal
@@ -860,6 +862,8 @@ angular.module('ionicApp')
             $ionicModal.fromTemplateUrl('components/partials/chapter_selection_modal.html', {
                 scope: $scope,
                 //animation: 'slide-in-left',
+                //animation: 'slide-left-right',
+                animation: 'slide-in-up',
                 id: 'chapter_selection'
             }).then(function (modal) {
                 $scope.modal_chapter_selection = modal
@@ -869,6 +873,8 @@ angular.module('ionicApp')
             $ionicModal.fromTemplateUrl('components/partials/authors_list_modal.html', {
                 scope: $scope,
                 //animation: 'slide-in-left',
+                //animation: 'slide-left-right',
+                animation: 'slide-in-up',
                 id: 'authors_list'
             }).then(function (modal) {
                 $scope.modal_authors_list = modal

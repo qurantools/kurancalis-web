@@ -12,6 +12,7 @@ var config_data = {
     'mobileLoginCallbackAddress': domain +'/m/www/components/mobile_auth/login_callback.html',
     'FBAppID': '400142910165594',
     'clientSecret':'e1c0f664bd3e803fce38a8d6399dba2d',
+    'version':"1.2",
     'isMobile':isMobile()
 }
 

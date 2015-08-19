@@ -457,6 +457,20 @@ app.factory('ChapterVerses', function ($resource) {
         $scope.extendedCirclesForSearch = [];
         $scope.circleListsPromise=null;
 
+
+        $scope.checkAPIVersion = function(){
+            var versionRestangular = Restangular.all("apiversioncompatibility");
+            $scope.versionParams = [];
+            $scope.versionParams.version = config_data.version;
+            versionRestangular.customGET("", $scope.versionParams, {}).then(function(data){
+                if(data.message != "OK"){
+                    alert(data.message);
+                }
+            });
+
+
+        }
+
         $scope.tutorial = function (parameter) {
             if (parameter == 'init') {
                 if ($scope.loggedIn == false) {
@@ -1026,6 +1040,7 @@ app.factory('ChapterVerses', function ($resource) {
 
         $scope.initializeController = function () {
 
+            $scope.checkAPIVersion();
 
             $scope.$on('$routeChangeStart', function(next, current) {
                 $scope.currentPage = $scope.getCurrentPage();

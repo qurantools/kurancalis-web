@@ -1,14 +1,16 @@
 <div class="modal modal-fullscreen">
-    <div class="bar bar-balanced">
-        <div style="text-align: left; width:100px;">
-            <button class="button button-icon icon-left ion-arrow-left-b" ng-click="closeModal('annotations_on_page_sort')"
+    <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced">
+        <ion-nav-title>Sıralama</ion-nav-title>
+        <ion-nav-buttons side="left">
+            <button class="button button-icon icon-left ion-arrow-left-b"
+                    ng-click="closeModal('annotations_on_page_sort')"
                     style="float: left"> Geri
             </button>
-        </div>
-        <div style="text-align: center; width:100px;"><h1 class="title">Sıralama</h1></div>
-    </div>
+        </ion-nav-buttons>
+    </ion-nav-bar>
+
     <ion-content overflow-scroll="true">
-        <div style="height:65px"></div>
+        <div style="height: 65px"></div>
         <ion-list>
             <ion-item ng-click="annotationFilterOrder('verseId');closeModal('annotations_on_page_sort')">
                 Ayet
