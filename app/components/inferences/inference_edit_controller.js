@@ -83,6 +83,9 @@ angular.module('ionicApp')
             $scope.storeInferenceEditViewParameters
             $scope.setInferenceEditPageURL();
 
+            tinymce.init({
+                selector: "#mytextarea"
+            });
 
 
 
