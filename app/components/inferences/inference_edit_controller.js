@@ -200,7 +200,10 @@ angular.module('ionicApp')
             $scope.setInferenceEditPageURL();
 
             tinymce.init({
-                selector: "#mytextarea"
+                selector: "#mytextarea",
+                language: "tr_TR",
+                plugins: "textcolor advlist autolink link image lists preview",
+                toolbar: "undo redo | formatselect fontsizeselect | bold italic underline | alignleft aligncenter alignright | bullist numlist outdent indent | forecolor backcolor | link image preview"
             });
 
 
