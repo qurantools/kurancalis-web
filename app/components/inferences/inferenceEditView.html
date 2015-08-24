@@ -17,12 +17,13 @@
         </tr>
     </table>
         <br />
-        <div style="width : 770px">
-             <textarea id="mytextarea" ng-model="contenti" style="width:586px; height:350px"></textarea>
-             
-             {{contenti}}
-           
-             </div>
+
+        <div style="width : 770px;">
+            <div ng-model="content" class="form-control" id="mytextarea" ui-tinymce="tinymceOptions" name="content"
+                 style="height:350px">
+            </div>
+
+        </div>
              <br />
       <br />
         <div align="left" style="width:760px">
@@ -84,8 +85,21 @@
                 </td>
             </tr>
         </table>
-         
-    <div align="right"><input id="save" class="form-control" style="width:120px" ng-click="do_array()" type="button" value="Kaydet" /></div>
+            <div align="right">
+                &nbsp;</div>
+
+            <div align="right">
+                <table style="width: 760px">
+                    <tr>
+                        <td align="right" style="width: 620px">
+                            <input id="Button1" class="form-control" style="width:120px" ng-click="do_array()"
+                                   type="button" value="Vazgeç"/></td>
+                        <td align="right" style="width: 140px">
+                            <input id="save" class="form-control" style="width:120px" ng-click="do_array()"
+                                   type="button" value="Kaydet"/></td>
+                    </tr>
+                </table>
+            </div>
     
     </div>
     </div>
