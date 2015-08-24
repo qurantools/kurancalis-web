@@ -1,0 +1,425 @@
+.image-manager-btn {
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: normal;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    border-radius: 4px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.image-manager-btn:focus,
+.image-manager-btn:active:focus,
+.image-manager-btn.active:focus {
+    outline: thin dotted;
+    outline: 5px auto -webkit-focus-ring-color;
+    outline-offset: -2px;
+}
+.image-manager-btn:hover,
+.image-manager-btn:focus {
+    color: #333333;
+    text-decoration: none;
+}
+.image-manager-btn:active,
+.image-manager-btn.active {
+    outline: 0;
+    background-image: none;
+    -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+}
+.image-manager-btn.disabled,
+.image-manager-btn[disabled],
+fieldset[disabled] .image-manager-btn {
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: 0.65;
+    filter: alpha(opacity=65);
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+.image-manager-btn-default {
+    color: #333333;
+    background-color: #ffffff;
+    border-color: #cccccc;
+}
+.image-manager-btn-default:hover,
+.image-manager-btn-default:focus,
+.image-manager-btn-default:active,
+.image-manager-btn-default.active,
+.open > .dropdown-toggle.image-manager-btn-default {
+    color: #333333;
+    background-color: #e6e6e6;
+    border-color: #adadad;
+}
+.image-manager-btn-default:active,
+.image-manager-btn-default.active,
+.open > .dropdown-toggle.image-manager-btn-default {
+    background-image: none;
+}
+.image-manager-btn-default.disabled,
+.image-manager-btn-default[disabled],
+fieldset[disabled] .image-manager-btn-default,
+.image-manager-btn-default.disabled:hover,
+.image-manager-btn-default[disabled]:hover,
+fieldset[disabled] .image-manager-btn-default:hover,
+.image-manager-btn-default.disabled:focus,
+.image-manager-btn-default[disabled]:focus,
+fieldset[disabled] .image-manager-btn-default:focus,
+.image-manager-btn-default.disabled:active,
+.image-manager-btn-default[disabled]:active,
+fieldset[disabled] .image-manager-btn-default:active,
+.image-manager-btn-default.disabled.active,
+.image-manager-btn-default[disabled].active,
+fieldset[disabled] .image-manager-btn-default.active {
+    background-color: #ffffff;
+    border-color: #cccccc;
+}
+.image-manager-btn-default .badge {
+    color: #ffffff;
+    background-color: #333333;
+}
+.image-manager-btn-primary {
+    color: #ffffff;
+    background-color: #428bca;
+    border-color: #357ebd;
+}
+.image-manager-btn-primary:hover,
+.image-manager-btn-primary:focus,
+.image-manager-btn-primary:active,
+.image-manager-btn-primary.active,
+.open > .dropdown-toggle.image-manager-btn-primary {
+    color: #ffffff;
+    background-color: #3071a9;
+    border-color: #285e8e;
+}
+.image-manager-btn-primary:active,
+.image-manager-btn-primary.active,
+.open > .dropdown-toggle.image-manager-btn-primary {
+    background-image: none;
+}
+.image-manager-btn-primary.disabled,
+.image-manager-btn-primary[disabled],
+fieldset[disabled] .image-manager-btn-primary,
+.image-manager-btn-primary.disabled:hover,
+.image-manager-btn-primary[disabled]:hover,
+fieldset[disabled] .image-manager-btn-primary:hover,
+.image-manager-btn-primary.disabled:focus,
+.image-manager-btn-primary[disabled]:focus,
+fieldset[disabled] .image-manager-btn-primary:focus,
+.image-manager-btn-primary.disabled:active,
+.image-manager-btn-primary[disabled]:active,
+fieldset[disabled] .image-manager-btn-primary:active,
+.image-manager-btn-primary.disabled.active,
+.image-manager-btn-primary[disabled].active,
+fieldset[disabled] .image-manager-btn-primary.active {
+    background-color: #428bca;
+    border-color: #357ebd;
+}
+.image-manager-btn-primary .badge {
+    color: #428bca;
+    background-color: #ffffff;
+}
+.image-manager-btn-success {
+    color: #ffffff;
+    background-color: #5cb85c;
+    border-color: #4cae4c;
+}
+.image-manager-btn-success:hover,
+.image-manager-btn-success:focus,
+.image-manager-btn-success:active,
+.image-manager-btn-success.active,
+.open > .dropdown-toggle.image-manager-btn-success {
+    color: #ffffff;
+    background-color: #449d44;
+    border-color: #398439;
+}
+.image-manager-btn-success:active,
+.image-manager-btn-success.active,
+.open > .dropdown-toggle.image-manager-btn-success {
+    background-image: none;
+}
+.image-manager-btn-success.disabled,
+.image-manager-btn-success[disabled],
+fieldset[disabled] .image-manager-btn-success,
+.image-manager-btn-success.disabled:hover,
+.image-manager-btn-success[disabled]:hover,
+fieldset[disabled] .image-manager-btn-success:hover,
+.image-manager-btn-success.disabled:focus,
+.image-manager-btn-success[disabled]:focus,
+fieldset[disabled] .image-manager-btn-success:focus,
+.image-manager-btn-success.disabled:active,
+.image-manager-btn-success[disabled]:active,
+fieldset[disabled] .image-manager-btn-success:active,
+.image-manager-btn-success.disabled.active,
+.image-manager-btn-success[disabled].active,
+fieldset[disabled] .image-manager-btn-success.active {
+    background-color: #5cb85c;
+    border-color: #4cae4c;
+}
+.image-manager-btn-success .badge {
+    color: #5cb85c;
+    background-color: #ffffff;
+}
+.image-manager-btn-info {
+    color: #ffffff;
+    background-color: #5bc0de;
+    border-color: #46b8da;
+}
+.image-manager-btn-info:hover,
+.image-manager-btn-info:focus,
+.image-manager-btn-info:active,
+.image-manager-btn-info.active,
+.open > .dropdown-toggle.image-manager-btn-info {
+    color: #ffffff;
+    background-color: #31b0d5;
+    border-color: #269abc;
+}
+.image-manager-btn-info:active,
+.image-manager-btn-info.active,
+.open > .dropdown-toggle.image-manager-btn-info {
+    background-image: none;
+}
+.image-manager-btn-info.disabled,
+.image-manager-btn-info[disabled],
+fieldset[disabled] .image-manager-btn-info,
+.image-manager-btn-info.disabled:hover,
+.image-manager-btn-info[disabled]:hover,
+fieldset[disabled] .image-manager-btn-info:hover,
+.image-manager-btn-info.disabled:focus,
+.image-manager-btn-info[disabled]:focus,
+fieldset[disabled] .image-manager-btn-info:focus,
+.image-manager-btn-info.disabled:active,
+.image-manager-btn-info[disabled]:active,
+fieldset[disabled] .image-manager-btn-info:active,
+.image-manager-btn-info.disabled.active,
+.image-manager-btn-info[disabled].active,
+fieldset[disabled] .image-manager-btn-info.active {
+    background-color: #5bc0de;
+    border-color: #46b8da;
+}
+.image-manager-btn-info .badge {
+    color: #5bc0de;
+    background-color: #ffffff;
+}
+.image-manager-btn-warning {
+    color: #ffffff;
+    background-color: #f0ad4e;
+    border-color: #eea236;
+}
+.image-manager-btn-warning:hover,
+.image-manager-btn-warning:focus,
+.image-manager-btn-warning:active,
+.image-manager-btn-warning.active,
+.open > .dropdown-toggle.image-manager-btn-warning {
+    color: #ffffff;
+    background-color: #ec971f;
+    border-color: #d58512;
+}
+.image-manager-btn-warning:active,
+.image-manager-btn-warning.active,
+.open > .dropdown-toggle.image-manager-btn-warning {
+    background-image: none;
+}
+.image-manager-btn-warning.disabled,
+.image-manager-btn-warning[disabled],
+fieldset[disabled] .image-manager-btn-warning,
+.image-manager-btn-warning.disabled:hover,
+.image-manager-btn-warning[disabled]:hover,
+fieldset[disabled] .image-manager-btn-warning:hover,
+.image-manager-btn-warning.disabled:focus,
+.image-manager-btn-warning[disabled]:focus,
+fieldset[disabled] .image-manager-btn-warning:focus,
+.image-manager-btn-warning.disabled:active,
+.image-manager-btn-warning[disabled]:active,
+fieldset[disabled] .image-manager-btn-warning:active,
+.image-manager-btn-warning.disabled.active,
+.image-manager-btn-warning[disabled].active,
+fieldset[disabled] .image-manager-btn-warning.active {
+    background-color: #f0ad4e;
+    border-color: #eea236;
+}
+.image-manager-btn-warning .badge {
+    color: #f0ad4e;
+    background-color: #ffffff;
+}
+.image-manager-btn-danger {
+    color: #ffffff;
+    background-color: #d9534f;
+    border-color: #d43f3a;
+}
+.image-manager-btn-danger:hover,
+.image-manager-btn-danger:focus,
+.image-manager-btn-danger:active,
+.image-manager-btn-danger.active,
+.open > .dropdown-toggle.image-manager-btn-danger {
+    color: #ffffff;
+    background-color: #c9302c;
+    border-color: #ac2925;
+}
+.image-manager-btn-danger:active,
+.image-manager-btn-danger.active,
+.open > .dropdown-toggle.image-manager-btn-danger {
+    background-image: none;
+}
+.image-manager-btn-danger.disabled,
+.image-manager-btn-danger[disabled],
+fieldset[disabled] .image-manager-btn-danger,
+.image-manager-btn-danger.disabled:hover,
+.image-manager-btn-danger[disabled]:hover,
+fieldset[disabled] .image-manager-btn-danger:hover,
+.image-manager-btn-danger.disabled:focus,
+.image-manager-btn-danger[disabled]:focus,
+fieldset[disabled] .image-manager-btn-danger:focus,
+.image-manager-btn-danger.disabled:active,
+.image-manager-btn-danger[disabled]:active,
+fieldset[disabled] .image-manager-btn-danger:active,
+.image-manager-btn-danger.disabled.active,
+.image-manager-btn-danger[disabled].active,
+fieldset[disabled] .image-manager-btn-danger.active {
+    background-color: #d9534f;
+    border-color: #d43f3a;
+}
+.image-manager-btn-danger .badge {
+    color: #d9534f;
+    background-color: #ffffff;
+}
+.image-manager-btn-link {
+    color: #428bca;
+    font-weight: normal;
+    cursor: pointer;
+    border-radius: 0;
+}
+.image-manager-btn-link,
+.image-manager-btn-link:active,
+.image-manager-btn-link[disabled],
+fieldset[disabled] .image-manager-btn-link {
+    background-color: transparent;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+.image-manager-btn-link,
+.image-manager-btn-link:hover,
+.image-manager-btn-link:focus,
+.image-manager-btn-link:active {
+    border-color: transparent;
+}
+.image-manager-btn-link:hover,
+.image-manager-btn-link:focus {
+    color: #2a6496;
+    text-decoration: underline;
+    background-color: transparent;
+}
+.image-manager-btn-link[disabled]:hover,
+fieldset[disabled] .image-manager-btn-link:hover,
+.image-manager-btn-link[disabled]:focus,
+fieldset[disabled] .image-manager-btn-link:focus {
+    color: #777777;
+    text-decoration: none;
+}
+.image-manager-btn-lg,
+.image-manager-btn-group-lg > .image-manager-btn {
+    padding: 10px 16px;
+    font-size: 18px;
+    line-height: 1.33;
+    border-radius: 6px;
+}
+.image-manager-btn-sm,
+.image-manager-btn-group-sm > .image-manager-btn {
+    padding: 5px 10px;
+    font-size: 12px;
+    line-height: 1.5;
+    border-radius: 3px;
+}
+.image-manager-btn-xs,
+.image-manager-btn-group-xs > .image-manager-btn {
+    padding: 1px 5px;
+    font-size: 12px;
+    line-height: 1.5;
+    border-radius: 3px;
+}
+.image-manager-btn-block {
+    display: block;
+    width: 100%;
+}
+.image-manager-btn-block + .image-manager-btn-block {
+    margin-top: 5px;
+}
+input[type="submit"].image-manager-btn-block,
+input[type="reset"].image-manager-btn-block,
+input[type="button"].image-manager-btn-block {
+    width: 100%;
+}
+
+/*	--------------------------------------------------
+	Reveal Modals
+	-------------------------------------------------- */
+
+.reveal-modal-bg {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background: #000;
+    background: rgba(0,0,0,.8);
+    z-index: 100;
+    display: none;
+    top: 0;
+    left: 0;
+}
+
+.reveal-modal {
+    visibility: hidden;
+    top: 100px;
+    left: 50%;
+    margin-left: -300px;
+    width: 520px;
+    background-color: #eee;
+    position: absolute;
+    z-index: 101;
+    padding: 0;
+}
+
+.reveal-modal.small 		{ width: 200px; margin-left: -140px;}
+.reveal-modal.medium 		{ width: 400px; margin-left: -240px;}
+.reveal-modal.large 		{ width: 600px; margin-left: -340px;}
+.reveal-modal.xlarge 		{ width: 885px; margin-left: -483px;}
+
+.reveal-modal .close-reveal-modal {
+    font-size: 22px;
+    line-height: .5;
+    position: absolute;
+    top: 8px;
+    right: 11px;
+    color: #aaa;
+    text-shadow: 0 -1px 1px rbga(0,0,0,.6);
+    font-weight: bold;
+    cursor: pointer;
+}
+
+@media (max-width: 600px) {
+    .reveal-modal {
+        width: 80%;
+        margin-left: 0px;
+        left: 10%;
+    }
+
+    .reveal-modal.xlarge {
+        width: 80%;
+        margin-left: 0px;
+    }
+}
+
+@media (max-width: 600px) {
+    #image-manager-frame{
+        width: 100%;
+        overflow: scroll;
+    }
+}
