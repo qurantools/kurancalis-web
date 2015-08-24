@@ -14,8 +14,10 @@ angular.module('ionicApp')
         var canCommentCircles_tags = [];
         var canViewUsers_tags = [];
         var canCommentUsers_tags = [];
-        
-        
+        var record_nm = "";
+
+        $scope.from_one = '<strong>bold data in controller in from_one.js</strong>';
+
         //tags input auto complete function
         $scope.loadTags = function (query) {
             var tagsRestangular = Restangular.one('tags', query);
@@ -43,15 +45,15 @@ angular.module('ionicApp')
             Restangular.all("circles").customGET("", {}, {'access_token': $scope.access_token}).then(function (circleList) {
 
                 $scope.extendedCircles = [];
-                $scope.extendedCircles.push({'id': '-2', 'name': 'Tüm Çevrelerim'});
+                $scope.extendedCircles.push({'id': '-2', 'name': 'Tï¿½m ï¿½evrelerim'});
                 $scope.extendedCircles.push({'id': '-1', 'name': 'Herkes'});
 
                 $scope.extendedCirclesForSearch = [];
-                $scope.extendedCirclesForSearch.push({'id': '-2', 'name': 'Tüm Çevrelerim'});
+                $scope.extendedCirclesForSearch.push({'id': '-2', 'name': 'Tï¿½m ï¿½evrelerim'});
 
 
                 $scope.circleDropdownArray = [];
-                $scope.circleDropdownArray.push({'id': '-2', 'name': 'Tüm Çevrelerim'});
+                $scope.circleDropdownArray.push({'id': '-2', 'name': 'Tï¿½m ï¿½evrelerim'});
                 $scope.circleDropdownArray.push({'id': '', 'name': 'Sadece Ben'});
 
                 $scope.query_circle_dropdown = $scope.circleDropdownArray[1];
@@ -100,7 +102,7 @@ angular.module('ionicApp')
             var postData = [];
             postData.push(encodeURIComponent("title") + "=" + encodeURIComponent($scope.title));
             postData.push(encodeURIComponent("image") + "=" + encodeURIComponent(''));
-            postData.push(encodeURIComponent("content") + "=" + encodeURIComponent($scope.content));
+            postData.push(encodeURIComponent("content") + "=" + encodeURIComponent($scope.contentCopy));
             var tags_add = tags.join(",");
             postData.push(encodeURIComponent("tags") + "=" + encodeURIComponent(tags_add));
 
@@ -119,7 +121,11 @@ angular.module('ionicApp')
             //
             var data = postData.join("&");
             var annotationRestangular = Restangular.one("inferences");
-            return annotationRestangular.customPOST(data, '', '', headers);
+
+            annotationRestangular.customPOST(data, '', '', headers).then(function (record) {
+
+                record_nm = record.id;
+            });
         }
         
         ///////Volkan
@@ -199,17 +205,36 @@ angular.module('ionicApp')
             $scope.storeInferenceEditViewParameters
             $scope.setInferenceEditPageURL();
 
+
+            $scope.contentCopy = 'World';
+            var _scope = $scope;
+    
             tinymce.init({
                 selector: "#mytextarea",
                 language: "tr_TR",
-                plugins: "textcolor advlist autolink link image lists preview",
+                plugins: [
+                    "textcolor advlist autolink link image lists preview"
+                ],
+                setup: function (ed) {
+                    ed.on('Change', function (e) {
+                        _scope.contentCopy = ed.getContent();
+                        $scope.$apply();
+                    }),
+                        ed.on('keyup', function (e) {
+                            _scope.contentCopy = ed.getContent();
+                            $scope.$apply();
+                        })
+                },
                 toolbar: "undo redo | formatselect fontsizeselect | bold italic underline | alignleft aligncenter alignright | bullist numlist outdent indent | forecolor backcolor | link image preview"
             });
 
-
-
+            $scope.tinymceOptions = {
+                setup: function (ed) {
+                    _scope.contentCopy = ed.getContent();
+                    $scope.$apply();
+                }
+            };
         }
-
 
         $scope.restoreInferenceEditViewParameters = function (localParameterData) {
             $scope.circlesForSearch = localParameterData.circles;
