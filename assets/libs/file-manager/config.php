@@ -37,7 +37,7 @@ define('THUMBNAIL_WIDTH', 100);
 /** If thumbnailing, maximum height */
 define('THUMBNAIL_HEIGHT', 100);
 /** If thumbnailing, hide thumbnails in listings */
-define('THUMBNAIL_HIDE', false);
+define('THUMBNAIL_HIDE', true);
 
 
 
@@ -75,7 +75,7 @@ function CanAcessUploadForm(){
 }
 
 function CanAcessAllRecent(){
-	return true;
+	return false;
 }
 
 function CanCreateFolders(){
@@ -87,7 +87,7 @@ function CanDeleteFiles(){
 }
 
 function CanDeleteFolder(){
-	return true;
+	return false;
 }
 
 function CanRenameFiles(){
