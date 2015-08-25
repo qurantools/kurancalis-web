@@ -6,28 +6,6 @@
     <br />
     <br />
 
-        <form class="form-horizontal" role="form">
-            <div class="form-group">
-                <label for="image-1" class="col-sm-2 control-label">Image</label>
-                <div class="col-sm-5">
-                    <input type="text" class="form-control file-manager" id="image-1" placeholder="Focus to select image">
-                </div>
-            </div>
-
-            <p>It is also possible to open the file manager using a button and then have the file url place in a text field. To do this add the class <code>file-manager-linked</code> to the button and then add the attribute <code>data-input-id="text-input-id"</code> to the same button</p>
-
-            <div class="form-group">
-                <label for="image-1" class="col-sm-2 control-label">Another File</label>
-                <div class="col-sm-5">
-                    <div class="input-group">
-                        <input type="text" class="form-control" id="image-2" placeholder="Click on the button to select image">
-                          <span class="input-group-btn">
-                            <button class="btn btn-default file-manager-linked" type="button" data-input-id="image-2" >Click to select Image</button>
-                          </span>
-                    </div>
-                </div>
-            </div>
-        </form>
     <table>
         <tr>
             <td style="vertical-align: top; width: 600px" align="left">
@@ -36,9 +14,8 @@
                 <br />
                 </td>
             <td align="center" style="vertical-align: top; width: 180px">
-                <img height="100" src="" width="165" class="file-manager-linked" data-input-id="image-2"/></td>
-            <input type="text" class="form-control" id="inferenceImage" placeholder="Click on the button to select image">
-            <img height="100" src="" width="165" class="file-manager-linked" data-input-id="inferenceImage"/></td>
+            <input type="hidden" class="form-control" id="inferenceImage" placeholder="" ng-model="inferenceImage">
+            <img height="100" src="{{inferenceImage}}" width="165" class="file-manager-linked" data-input-id="inferenceImage"/></td>
         </tr>
     </table>
         <br />
