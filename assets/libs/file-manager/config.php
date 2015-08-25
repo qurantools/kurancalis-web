@@ -6,7 +6,7 @@ session_start();
 define('FOLDER_PATH', 'uploads/');
 
 /** Full URL to the folder that images will be used as library and upload. Include trailing slash and protocol (i.e. http://) */
-define('FOLDER_URL', 'http://uskk43071273.sulutruk.koding.io/kurancalis/assets/libs/file-manager/');
+define('FOLDER_URL', 'http://test.kurancalis.com/assets/libs/file-manager/uploads/');
 
 /** The extensions for to use in validation */
 define('ALLOWED_IMG_EXTENSIONS', 'gif,jpg,jpeg,png');
@@ -55,8 +55,11 @@ Simply write your code and return true or false */
 function CurrentUserFolder(){
     if(isset($_GET['user_id'])){
     	$user_id = clean($_GET['user_id']);
-    }else{
-	    $user_id = "";
+    }else if(isset($_POST['user_id'])){
+        	$user_id = clean($_POST['user_id']);
+    }
+    else{
+        $user_id = "tmp";
     }
 
 	return $user_id;
