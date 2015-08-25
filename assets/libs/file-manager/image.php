@@ -3,16 +3,19 @@
 require_once('config.php');
 require_once('functions.php');
 
+
 $max_upload = (int)(ini_get('upload_max_filesize'));
 $max_post = (int)(ini_get('post_max_size'));
 $memory_limit = (int)(ini_get('memory_limit'));
 $upload_mb = min($max_upload, $max_post, $memory_limit);
+
 
 if(isset($_GET['src'])){
 	$source = clean($_GET['src']);
 }else{
 	$source = "";
 }
+
 
 if(isset($_GET['title'])){
 	$title = clean($_GET['title']);

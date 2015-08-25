@@ -9,7 +9,7 @@ define('FOLDER_PATH', 'uploads/');
 define('FOLDER_URL', 'http://yourwebsite.com/path-to-the-library/');
 
 /** The extensions for to use in validation */
-define('ALLOWED_IMG_EXTENSIONS', 'gif,jpg,jpeg,png,jpe,pdf');
+define('ALLOWED_IMG_EXTENSIONS', 'gif,jpg,jpeg,png');
 
 /** Should the files be renamed to a random name when uploading */
 define('RENAME_UPLOADED_FILES', true);
@@ -19,16 +19,16 @@ define('ROWS_PER_PAGE', 12);
 
 
 /** Should Images be resized on upload. You will then need to set at least one of the dimensions sizes below */
-define('RESIZE_ON_UPLOAD', false);
+define('RESIZE_ON_UPLOAD', true);
 
 /** If resizing, width */
-define('RESIZE_WIDTH', 300);
+define('RESIZE_WIDTH', 800);
 /** If resizing, height */
-define('RESIZE_HEIGHT', 300);
+define('RESIZE_HEIGHT', 600);
 
 
 /** Should a thumbnail be created? */
-define('THUMBNAIL_ON_UPLOAD', false);
+define('THUMBNAIL_ON_UPLOAD', true);
 
 /** If thumbnailing, thumbnail postfix */
 define('THUMBNAIL_POSTFIX', '_thumb');
@@ -37,7 +37,7 @@ define('THUMBNAIL_WIDTH', 100);
 /** If thumbnailing, maximum height */
 define('THUMBNAIL_HEIGHT', 100);
 /** If thumbnailing, hide thumbnails in listings */
-define('THUMBNAIL_HIDE', true);
+define('THUMBNAIL_HIDE', false);
 
 
 
@@ -45,12 +45,21 @@ define('THUMBNAIL_HIDE', true);
 Simply write your code and return true or false */
 
 
+
+
+
 /** If you would like each user to have their own folder and only upload 
  * to that folder and get images from there, you can use this funtion to 
  * set the folder name base on user ids or usernames. NB: make sure it return 
  * a valid folder name. */
 function CurrentUserFolder(){
-	return '';
+    if(isset($_GET['user_id'])){
+    	$user_id = clean($_GET['user_id']);
+    }else{
+	    $user_id = "";
+    }
+
+	return $user_id;
 }
 
 
@@ -67,11 +76,11 @@ function CanAcessAllRecent(){
 }
 
 function CanCreateFolders(){
-	return true;
+	return false;
 }
 
 function CanDeleteFiles(){
-	return true;
+	return false;
 }
 
 function CanDeleteFolder(){
@@ -79,11 +88,11 @@ function CanDeleteFolder(){
 }
 
 function CanRenameFiles(){
-	return true;
+	return false;
 }
 
 function CanRenameFolder(){
-	return true;
+	return false;
 }
 
 

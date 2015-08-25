@@ -3,7 +3,7 @@ CONFIGURATION
  */
 
 //Url to the image-manager folder and include the trailing slash
-var url_to_file_manager = 'http://yourwebsite.com/path-to-the-library/';
+var url_to_file_manager = 'http://uskk43071273.sulutruk.koding.io/kurancalis/assets/libs/file-manager/';
 
 //These two variables can be used to translate. All you will need to do is change the text
 var image_manager_insert_text = 'Insert';
@@ -46,7 +46,7 @@ $(document).ready(function(){
     function GetTheHtml(existing_files){
         var html = '';
         html += '<input type="hidden" name="image-manager-src" id="image-manager-src" value="' + existing_files + '"/>';
-        html += '<iframe src="' + url_to_file_manager + 'image.php'+ '?' + new Date().getTime() + '&src=' + encodeURI(existing_files) + '" frameborder="0" width="885" height="400"></iframe>';
+        html += '<iframe src="' + url_to_file_manager + 'image.php'+ '?' + new Date().getTime() + '&user_id=111&src=' + encodeURI(existing_files) + '" frameborder="0" width="885" height="400"></iframe>';
 
         return html;
     }
