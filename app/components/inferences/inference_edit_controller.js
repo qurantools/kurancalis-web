@@ -1,5 +1,5 @@
 angular.module('ionicApp')
-    .controller('InferenceEditController', function ($scope, $routeParams, $location, authorization, localStorageService, Restangular) {
+    .controller('InferenceEditController', function ($scope, $routeParams, $location, $timeout, authorization, localStorageService, Restangular) {
 
         $scope.inferenceId=0;
         $scope.circles = []; //id array
