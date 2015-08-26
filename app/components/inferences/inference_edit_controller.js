@@ -237,8 +237,9 @@ angular.module('ionicApp')
             
             
             $(document).on('click', '#image-manager-insert', function () {
+                   //$('inferenceImage').onchange=
                     $timeout(function () {
-                        angular.element($('inferenceImage')).triggerHandler('input');
+                        angular.element($('#inferenceImage')).triggerHandler('input');
                     });
                 }
             );

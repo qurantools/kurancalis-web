@@ -6,7 +6,8 @@ session_start();
 define('FOLDER_PATH', 'uploads/');
 
 /** Full URL to the folder that images will be used as library and upload. Include trailing slash and protocol (i.e. http://) */
-define('FOLDER_URL', 'http://test.kurancalis.com/assets/libs/file-manager/uploads/');
+#define('FOLDER_URL', 'http://test.kurancalis.com/assets/libs/file-manager/uploads/');
+define('FOLDER_URL', 'http://uskk43071273.sulutruk.koding.io/kurancalis/assets/libs/file-manager/uploads/');
 
 /** The extensions for to use in validation */
 define('ALLOWED_IMG_EXTENSIONS', 'gif,jpg,jpeg,png');
