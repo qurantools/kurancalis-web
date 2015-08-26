@@ -9,12 +9,12 @@
     <table>
         <tr>
             <td style="vertical-align: top; width: 600px" align="left">
-                            <input id="title" ng-model="title" class="form-control file-manager" placeholder="Başlık" style="width: 580px" type="text" /><br />
+                            <input id="title" ng-model="title" class="form-control" placeholder="Başlık" style="width: 580px" type="text" /><br />
                 <br />
                 <br />
                 </td>
             <td align="center" style="vertical-align: top; width: 180px">
-            <input type="hidden" class="form-control" id="inferenceImage" placeholder="" ng-model="inferenceImage">
+            <input type="text" class="form-control" id="inferenceImage" style="width: 165px" placeholder="Image URL" ng-model="inferenceImage">
             <img height="100" src="{{inferenceImage}}" width="165" class="file-manager-linked" data-input-id="inferenceImage"/></td>
         </tr>
     </table>
