@@ -4,6 +4,8 @@ CONFIGURATION
 
 //Url to the image-manager folder and include the trailing slash
 var url_to_file_manager = 'http://test.kurancalis.com/assets/libs/file-manager/';
+//var url_to_file_manager = 'http://uskk43071273.sulutruk.koding.io/kurancalis/assets/libs/file-manager/';
+
 
 //These two variables can be used to translate. All you will need to do is change the text
 var image_manager_insert_text = 'Insert';
