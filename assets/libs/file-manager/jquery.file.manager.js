@@ -38,6 +38,7 @@ $(document).ready(function(){
         element.val($('#image-manager-src').val());
         element.triggerHandler("change");
         element.trigger('input');
+        element.triggerHandler('input');
         $('#myModal').trigger('reveal:close');
     });
 
