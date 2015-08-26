@@ -234,6 +234,14 @@ angular.module('ionicApp')
                     $scope.$apply();
                 }
             };
+            
+            
+            $(document).on('click', '#image-manager-insert', function () {
+                    $timeout(function () {
+                        angular.element($('inferenceImage')).triggerHandler('input');
+                    });
+                }
+            );
         }
 
         $scope.restoreInferenceEditViewParameters = function (localParameterData) {
