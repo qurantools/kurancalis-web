@@ -37,7 +37,7 @@ $(document).ready(function(){
     $(document).on('click', '#image-manager-insert', function () {
         element.val($('#image-manager-src').val());
         element.triggerHandler("change");
-        //element.trigger('input');
+        element.trigger('input');
         $('#myModal').trigger('reveal:close');
     });
 
