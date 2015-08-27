@@ -1,7 +1,7 @@
 angular.module('ionicApp')
     .controller('InferenceEditController', function ($scope, $routeParams, $location, $timeout, authorization, localStorageService, Restangular) {
 
-        $scope.inferenceId=0;
+        $scope.inferenceId = 0;
         $scope.circles = []; //id array
         $scope.users = []; //id array
         $scope.pagePurpose = "new";
@@ -39,8 +39,6 @@ angular.module('ionicApp')
         };
         
         $scope.initializeCircleLists = function () {
-
-
 
             Restangular.all("circles").customGET("", {}, {'access_token': $scope.access_token}).then(function (circleList) {
 
@@ -101,7 +99,7 @@ angular.module('ionicApp')
             //var jsonData = annotation;
             var postData = [];
             postData.push(encodeURIComponent("title") + "=" + encodeURIComponent($scope.title));
-            postData.push(encodeURIComponent("image") + "=" + encodeURIComponent(''));
+            postData.push(encodeURIComponent("image") + "=" + encodeURIComponent($scope.inferenceImage));
             postData.push(encodeURIComponent("content") + "=" + encodeURIComponent($scope.contentCopy));
             var tags_add = tags.join(",");
             postData.push(encodeURIComponent("tags") + "=" + encodeURIComponent(tags_add));
@@ -124,7 +122,7 @@ angular.module('ionicApp')
 
             annotationRestangular.customPOST(data, '', '', headers).then(function (record) {
 
-                record_nm = record.id;
+                $scope.inferenceId = record.id;
             });
         }
         
@@ -186,7 +184,6 @@ angular.module('ionicApp')
                 localParameterData.circles = [];
                 localParameterData.users = [];
                 localParameterData.inferenceId = inferenceId;
-
 
             }
             else {
@@ -284,9 +281,6 @@ angular.module('ionicApp')
                 $location.path("/inference/edit/", false).search(parameters);
             }
         };
-
-
-
 
         //definitions are finished. Now run initialization
         $scope.initializeInferenceEditController();
