@@ -6,7 +6,18 @@ angular.module('ionicApp')
         $scope.circles = []; //id array
         $scope.users = []; //id array
 
+        $scope.title = "";
+        $scope.info_author = "";
+        $scope.photo = "";
 
+        function inference_info(inferenceId) {
+            var inferenceRestangular = Restangular.one("inferences", inferenceId);
+            //TODO: document knowhow: custom get with custom header
+            inferenceRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (data) {
+                $scope.inference_info = data;
+            });
+        }
+        
         $scope.initializeInferenceDisplayController = function () {
             var inferenceId=0;
             var circles = []; //id array
@@ -19,6 +30,7 @@ angular.module('ionicApp')
             if (typeof $routeParams.inferenceId !== 'undefined') {
                 inferenceId = $routeParams.inferenceId;
                 inferenceIdFromRoute = true;
+                inference_info(inferenceId);
             }
             else {
                 alert("iferenceId can not be empty or null!!!!");

@@ -17,12 +17,12 @@ angular.module('ionicApp')
         var record_nm = "";
 
         $scope.from_one = '<strong>bold data in controller in from_one.js</strong>';
-
-        //tags input auto complete function
         $scope.loadTags = function (query) {
             var tagsRestangular = Restangular.one('tags', query);
             return tagsRestangular.customGET("", {}, {'access_token': $scope.access_token});
         };
+        //tags input auto complete function
+       
         
         //tags input auto complete
         $scope.peoplelist = function (people_name) {
@@ -39,6 +39,7 @@ angular.module('ionicApp')
         };
         
         $scope.initializeCircleLists = function () {
+
 
             Restangular.all("circles").customGET("", {}, {'access_token': $scope.access_token}).then(function (circleList) {
 
@@ -66,7 +67,7 @@ angular.module('ionicApp')
             });
 
         }
-        
+
         $scope.do_array=function()
         {
             tags.length=0;
@@ -74,25 +75,25 @@ angular.module('ionicApp')
             canCommentCircles_tags.length = 0;
             canViewUsers_tags.length = 0;
             canCommentUsers_tags.length = 0;
-        
+
             for(var i=0; i<$scope.tags_entry.length; i++)
             { tags.push($scope.tags_entry[i].id); }
-            
+
             for(var i=0; i<$scope.circlesForSearch.length; i++)
             { canViewCircles_tags.push($scope.circlesForSearch[i].id); }
-            
+
             for(var i=0; i<$scope.usersForSearch.length; i++)
             { canViewUsers_tags.push($scope.usersForSearch[i].id); }
-            
+
             for(var i=0; i<$scope.circlesForSearch1.length; i++)
             { canCommentCircles_tags.push($scope.circlesForSearch1[i].id); }
-            
+
             for(var i=0; i<$scope.usersForSearch1.length; i++)
             { canCommentUsers_tags.push($scope.usersForSearch1[i].id); }
-        
-        save_inferences();
+
+            save_inferences();
         }
-        
+
         function save_inferences()
         {
            var headers = {'Content-Type': 'application/x-www-form-urlencoded', 'access_token': $scope.access_token};
@@ -123,11 +124,12 @@ angular.module('ionicApp')
             annotationRestangular.customPOST(data, '', '', headers).then(function (record) {
 
                 $scope.inferenceId = record.id;
+                $location.path('inference/display/' + $scope.inferenceId);
             });
         }
-        
+
         ///////Volkan
-        
+
         $scope.initializeInferenceEditController = function () {
             var inferenceId=0;
             var circles = []; //id array
@@ -184,6 +186,7 @@ angular.module('ionicApp')
                 localParameterData.circles = [];
                 localParameterData.users = [];
                 localParameterData.inferenceId = inferenceId;
+
 
             }
             else {
@@ -281,6 +284,7 @@ angular.module('ionicApp')
                 $location.path("/inference/edit/", false).search(parameters);
             }
         };
+
 
         //definitions are finished. Now run initialization
         $scope.initializeInferenceEditController();

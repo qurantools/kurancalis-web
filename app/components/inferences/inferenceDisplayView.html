@@ -2,9 +2,28 @@
 <div class="container">
     <div ng-include="'app/components/inferences/inferences_navigation.html'"></div>
     <div class="nav-bottom"></div>
-    <div class="row">
+    <div align="center" class="row">
         <h1>Inferences Display</h1>
         <h2>controller/scope inference ID: {{inferenceId}}</h2>
+
+        <table>
+            <tr>
+                <td align="center" style="width:780px">
+                    <h1>{{title}}</h1>
+                </td>
+            </tr>
+            <tr>
+                <td align="left" style="width:780px; height: 35px;">
+                    {{info_author}}
+                </td>
+            </tr>
+            <tr>
+                <td align="center" style="width:780px">
+                    <img src={{photo}} width="750px"/>
+                </td>
+            </tr>
+        </table>
+
     </div>
 </div>
 <div ng-include="'app/components/partials/off_canvas_menu.html'"></div>
