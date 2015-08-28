@@ -6,18 +6,35 @@ angular.module('ionicApp')
         $scope.circles = []; //id array
         $scope.users = []; //id array
 
+        //All Display Variables
         $scope.title = "";
         $scope.info_author = "";
         $scope.photo = "";
+        $scope.content = "";
+        $scope.tags = [];
 
+        //View inference
         function inference_info(inferenceId) {
             var inferenceRestangular = Restangular.one("inferences", inferenceId);
-            //TODO: document knowhow: custom get with custom header
             inferenceRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (data) {
                 $scope.inference_info = data;
+
+                $scope.title = data.title;
+                $scope.info_author = data.userName;
+                $scope.photo = data.image;
+                $scope.content = data.content;
+                $scope.tags = data.tags;
+        
             });
         }
-        
+
+        //On Off Switch
+        $scope.status = true;
+
+        $scope.changeStatus = function () {
+            $scope.status = !$scope.status;
+        }
+  
         $scope.initializeInferenceDisplayController = function () {
             var inferenceId=0;
             var circles = []; //id array
@@ -30,6 +47,8 @@ angular.module('ionicApp')
             if (typeof $routeParams.inferenceId !== 'undefined') {
                 inferenceId = $routeParams.inferenceId;
                 inferenceIdFromRoute = true;
+
+                //View inference by id
                 inference_info(inferenceId);
             }
             else {

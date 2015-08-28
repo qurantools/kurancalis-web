@@ -3,23 +3,41 @@
     <div ng-include="'app/components/inferences/inferences_navigation.html'"></div>
     <div class="nav-bottom"></div>
     <div align="center" class="row">
-        <h1>Inferences Display</h1>
-        <h2>controller/scope inference ID: {{inferenceId}}</h2>
-
-        <table>
+        <table cellpadding="0" cellspacing="0">
             <tr>
                 <td align="center" style="width:780px">
-                    <h1>{{title}}</h1>
+                    <h3>{{title}}</h3>
                 </td>
             </tr>
             <tr>
-                <td align="left" style="width:780px; height: 35px;">
+                <td align="left" style="width:780px; height: 40px;">
                     {{info_author}}
                 </td>
             </tr>
             <tr>
-                <td align="center" style="width:780px">
-                    <img src={{photo}} width="750px"/>
+                <td align="center" style="width:780px; vertical-align: top;">
+                    <img src={{photo}} width="750px"/></td>
+            </tr>
+            <tr>
+                <td align="right"
+                    style="vertical-align: top; width: 780px; height: 45px; padding-top:15px; padding-bottom:15px">
+                    <i class="fa fa-toggle-on aktif" ng-if="status == true" ng-click="changeStatus();"></i>
+                    <i class="fa fa-toggle-on fa-rotate-180 inactive" ng-if="status == false"
+                       ng-click="changeStatus();"></i>Referansların
+                    İçeriğini Göster
+                </td>
+            </tr>
+            <tr>
+                <td align="left" style="padding-right: 15px; padding-left: 15px; padding-bottom: 15px; width: 780px;
+                    padding-top: 15px; background-color:#ffe599">
+
+                    <p ng-bind-html="content"></p>
+                </td>
+            </tr>
+            <tr>
+                <td align="right" style="padding-right: 15px; padding-left: 15px; padding-bottom: 15px;
+                    width: 780px; padding-top: 15px; background-color:#ffe599">
+                    <button ng-repeat="item in tags" class="btn verse_tag ng-binding btn-info btn-xs">{{item}}</button>
                 </td>
             </tr>
         </table>

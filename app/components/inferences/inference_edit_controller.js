@@ -65,7 +65,6 @@ angular.module('ionicApp')
                 $scope.$broadcast("circleLists ready");
 
             });
-
         }
 
         $scope.do_array=function()
@@ -76,8 +75,9 @@ angular.module('ionicApp')
             canViewUsers_tags.length = 0;
             canCommentUsers_tags.length = 0;
 
-            for(var i=0; i<$scope.tags_entry.length; i++)
-            { tags.push($scope.tags_entry[i].id); }
+            for(var i=0; i<$scope.tags_entry.length; i++) {
+                tags.push($scope.tags_entry[i].name);
+            }
 
             for(var i=0; i<$scope.circlesForSearch.length; i++)
             { canViewCircles_tags.push($scope.circlesForSearch[i].id); }
@@ -85,12 +85,25 @@ angular.module('ionicApp')
             for(var i=0; i<$scope.usersForSearch.length; i++)
             { canViewUsers_tags.push($scope.usersForSearch[i].id); }
 
-            for(var i=0; i<$scope.circlesForSearch1.length; i++)
-            { canCommentCircles_tags.push($scope.circlesForSearch1[i].id); }
+            if ($scope.show_entry == false) {
+                for (var i = 0; i < $scope.circlesForSearch1.length; i++) {
+                    canCommentCircles_tags.push($scope.circlesForSearch1[i].id);
+                }
 
-            for(var i=0; i<$scope.usersForSearch1.length; i++)
-            { canCommentUsers_tags.push($scope.usersForSearch1[i].id); }
+                for (var i = 0; i < $scope.usersForSearch1.length; i++) {
+                    canCommentUsers_tags.push($scope.usersForSearch1[i].id);
+                }
+            }
+            else {
+                for (var i = 0; i < $scope.circlesForSearch.length; i++) {
+                    canCommentCircles_tags.push($scope.circlesForSearch[i].id);
+                }
 
+                for (var i = 0; i < $scope.usersForSearch.length; i++) {
+                    canCommentUsers_tags.push($scope.usersForSearch[i].id);
+                }
+            }
+            
             save_inferences();
         }
 
