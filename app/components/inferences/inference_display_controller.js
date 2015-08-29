@@ -7,24 +7,54 @@ angular.module('ionicApp')
         $scope.users = []; //id array
 
         //All Display Variables
+        $scope.edit_user = "";
         $scope.title = "";
         $scope.info_author = "";
         $scope.photo = "";
         $scope.content = "";
         $scope.tags = [];
+        $scope.open_edit = true;
 
+        $scope.digercevre = false;
+        $scope.digercevremodal = function () {
+            $scope.digercevre = !$scope.digercevre;
+        };
+
+        //Delete inference
+        $scope.delete_inference = function () {
+
+            var inferenceRestangular = Restangular.one("inferences", $scope.inferenceId);
+            inferenceRestangular.customDELETE("", {}, {'access_token': $scope.access_token}).then(function (data) {
+                $location.path('inference/new/');
+            });
+
+        }
+
+        //Edit inference
+        $scope.edit_inference = function () {
+            $location.path('inference/new/');
+        }
+        
         //View inference
         function inference_info(inferenceId) {
             var inferenceRestangular = Restangular.one("inferences", inferenceId);
             inferenceRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (data) {
                 $scope.inference_info = data;
 
+                $scope.edit_user = data.userId;
                 $scope.title = data.title;
                 $scope.info_author = data.userName;
                 $scope.photo = data.image;
                 $scope.content = data.content;
                 $scope.tags = data.tags;
-        
+
+                if ($scope.edit_user == $scope.user.id) {
+                    $scope.open_edit = true;
+                }
+                else {
+                    $scope.open_edit = false;
+                }
+                     
             });
         }
 
@@ -49,6 +79,7 @@ angular.module('ionicApp')
                 inferenceIdFromRoute = true;
 
                 //View inference by id
+                $scope.inferenceId = inferenceId;
                 inference_info(inferenceId);
             }
             else {

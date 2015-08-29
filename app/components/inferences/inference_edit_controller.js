@@ -15,8 +15,8 @@ angular.module('ionicApp')
         var canViewUsers_tags = [];
         var canCommentUsers_tags = [];
         var record_nm = "";
+        $scope.show_entry = false;
 
-        $scope.from_one = '<strong>bold data in controller in from_one.js</strong>';
         $scope.loadTags = function (query) {
             var tagsRestangular = Restangular.one('tags', query);
             return tagsRestangular.customGET("", {}, {'access_token': $scope.access_token});
@@ -39,7 +39,6 @@ angular.module('ionicApp')
         };
         
         $scope.initializeCircleLists = function () {
-
 
             Restangular.all("circles").customGET("", {}, {'access_token': $scope.access_token}).then(function (circleList) {
 
@@ -132,15 +131,47 @@ angular.module('ionicApp')
 
             //
             var data = postData.join("&");
-            var annotationRestangular = Restangular.one("inferences");
 
-            annotationRestangular.customPOST(data, '', '', headers).then(function (record) {
+            //if inference id 0 new record else update.
+            if ($scope.inferenceId == 0) {
+                var annotationRestangular = Restangular.one("inferences");
+                annotationRestangular.customPOST(data, '', '', headers).then(function (record) {
+
+                    $scope.inferenceId = record.id;
+                    $location.path('inference/display/' + $scope.inferenceId);
+                });
+            }
+            else {
+                var annotationRestangular = Restangular.one("inferences", $scope.inferenceId);
+                annotationRestangular.customPUT(data, '', '', headers).then(function (record) {
 
                 $scope.inferenceId = record.id;
                 $location.path('inference/display/' + $scope.inferenceId);
-            });
+                });
+            }
         }
 
+        //View inference
+        function inference_info(inferenceId) {
+            var inferenceRestangular = Restangular.one("inferences", inferenceId);
+            inferenceRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (data) {
+
+                $scope.title = data.title;
+                $scope.inferenceImage = data.image;
+                $scope.contentCopy = data.content;
+                $scope.tags_entry = data.tags;
+
+                var inference_PermRestangular = Restangular.one("inferences", inferenceId).all("permissions");
+                inference_PermRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (data) {
+
+                    $scope.circlesForSearch = data.canViewCircles;
+                    $scope.usersForSearch = data.canViewUsers;
+                    $scope.circlesForSearch1 = data.canCommentCircles;
+                    $scope.usersForSearch1 = data.canCommentUsers;
+                });
+
+            });
+        }
         ///////Volkan
 
         $scope.initializeInferenceEditController = function () {
@@ -163,6 +194,8 @@ angular.module('ionicApp')
             if (typeof $routeParams.inferenceId !== 'undefined') {
                 inferenceId = $routeParams.inferenceId;
                 inferenceIdFromRoute = true;
+
+                inference_info(inferenceId);
             }
             else if( $scope.pagePurpose == "edit" ){
                 //edit page should have inferenceID

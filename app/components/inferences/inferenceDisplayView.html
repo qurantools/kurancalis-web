@@ -6,7 +6,23 @@
         <table cellpadding="0" cellspacing="0">
             <tr>
                 <td align="center" style="width:780px">
-                    <h3>{{title}}</h3>
+                    <table style="width: 810px">
+                        <tr>
+                            <td align="center" style="width:610px">
+                                <h3>{{title}}</h3>
+                            </td>
+                            <td align="center" style="width:200px">
+                                <div ng-show="open_edit" style="width:200px">
+                                    <button style="width:90px" ng-click="edit_inference()"
+                                            class="btn verse_tag ng-binding btn-info btn-xs">Düzenle</a>&nbsp;
+                                        <button style="width:90px" ng-click="digercevremodal()"
+                                                class="btn verse_tag ng-binding btn-info btn-xs">Sil
+                                        </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+
                 </td>
             </tr>
             <tr>
@@ -43,6 +59,18 @@
         </table>
 
     </div>
+</div>
+<div align="center">
+    <digercevremodal title="Not Silme" visible="digercevre">
+        <div align="left">
+            <label>Çıkarım notu silinecek Onaylıyor musunuz?</label>
+
+        </div>
+        <div class="modal-footer">
+            <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal">Vazgeç</a>
+            <a class="btn btn-primary btn-wide btn-info" ng-click="delete_inference()" data-dismiss="modal">Sil</a>
+        </div>
+    </digercevremodal>
 </div>
 <div ng-include="'app/components/partials/off_canvas_menu.html'"></div>
 </body>
