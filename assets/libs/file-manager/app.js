@@ -54,7 +54,7 @@ $(document).ready(function(){
             page = "";
         }
 
-        $.post('lib.php' + '?dummy=' + new Date().getTime(),{path: path, toggle: toggle, page: page}, function(returned){
+        $.post('lib.php' + '?user_id='+user_id+'&dummy=' + new Date().getTime(),{path: path, toggle: toggle, page: page}, function(returned){
             if(returned.success == 1){
                 empty_append('#gallery-images', returned.html);
             }else{

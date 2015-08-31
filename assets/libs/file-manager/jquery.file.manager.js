@@ -3,23 +3,35 @@ CONFIGURATION
  */
 
 //Url to the image-manager folder and include the trailing slash
-var url_to_file_manager = 'http://test.kurancalis.com/assets/libs/file-manager/';
-//var url_to_file_manager = 'http://uskk43071273.sulutruk.koding.io/kurancalis/assets/libs/file-manager/';
+//var url_to_file_manager = 'http://test.kurancalis.com/assets/libs/file-manager/';
+var url_to_file_manager = 'http://uskk43071273.sulutruk.koding.io/kurancalis/assets/libs/file-manager/';
 
 
 //These two variables can be used to translate. All you will need to do is change the text
 var image_manager_insert_text = 'Insert';
 var image_manager_cancel_text ='Cancel';
 
-$(document).ready(function(){
+//$(document).ready(function(){
+function initFileManager(container,user_id,afterInsertFunction){
     var element;
 
-    $('body').append('<div id="myModal" class="reveal-modal xlarge"><div id="image-manager-frame"></div><p style="text-align: right; padding-right: 10px; padding-top: 5px;"><button id="image-manager-insert" type="button" class="image-manager-btn image-manager-btn-primary">' + image_manager_insert_text + '</button>&nbsp;<button id="image-manager-cancel" type="button" class="image-manager-btn image-manager-btn-default">' + image_manager_cancel_text + '</button></p></div>');
+    //$('body').append('<div id="myModal" class="reveal-modal xlarge"><div id="image-manager-frame"></div><p style="text-align: right; padding-right: 10px; padding-top: 5px;"><button id="image-manager-insert" type="button" class="image-manager-btn image-manager-btn-primary">' + image_manager_insert_text + '</button>&nbsp;<button id="image-manager-cancel" type="button" class="image-manager-btn image-manager-btn-default">' + image_manager_cancel_text + '</button></p></div>');
+    $('#'+container).append('<div id="myModal" class="reveal-modal xlarge"><div id="image-manager-frame"></div><p style="text-align: right; padding-right: 10px; padding-top: 5px;"><button id="image-manager-insert" type="button" class="image-manager-btn image-manager-btn-primary">' + image_manager_insert_text + '</button>&nbsp;<button id="image-manager-cancel" type="button" class="image-manager-btn image-manager-btn-default">' + image_manager_cancel_text + '</button></p></div>');
+    
+    
+    
 
     $( "input.image-manager" ).each(function() {
         //$( this ).prop("readonly",true);
     });
 
+    //reset Listeners
+    $(document).off('focus', 'input.file-manager');
+    $(document).off('click', '.file-manager-linked');
+    $(document).off('click', '#image-manager-insert');
+    $(document).off('click', '#image-manager-cancel');
+
+    //set listeners
     $(document).on('focus', 'input.file-manager', function () {
         element = $(this);
 
@@ -38,6 +50,7 @@ $(document).ready(function(){
 
     $(document).on('click', '#image-manager-insert', function () {
         element.val($('#image-manager-src').val());
+        afterInsertFunction();
         $('#myModal').trigger('reveal:close');
     });
 
@@ -46,14 +59,16 @@ $(document).ready(function(){
     });
 
     function GetTheHtml(existing_files){
+
         var html = '';
         html += '<input type="hidden" name="image-manager-src" id="image-manager-src" value="' + existing_files + '"/>';
-        html += '<iframe src="' + url_to_file_manager + 'image.php'+ '?' + new Date().getTime() + '&user_id=111&src=' + encodeURI(existing_files) + '" frameborder="0" width="885" height="400"></iframe>';
+        html += '<iframe src="' + url_to_file_manager + 'image.php'+ '?' + new Date().getTime() + '&user_id='+user_id+'&src=' + encodeURI(existing_files) + '" frameborder="0" width="885" height="400"></iframe>';
 
         return html;
     }
 
-});
+//});
+}
 
 /*
  * jQuery Reveal Plugin 1.0

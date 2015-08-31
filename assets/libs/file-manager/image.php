@@ -89,7 +89,7 @@ if(isset($_GET['class'])){
             var trans_clear = "<?php e_lang('clear'); ?>";
             var trans_deleting = "<?php e_lang('Deleting'); ?>";
             var trans_saving = "<?php e_lang('Saving'); ?>";
-
+            var user_id = "<?php echo $user;?>";
         var lib_folder_path = '<?php echo LIBRARY_FOLDER_PATH; ?>';
 		
 		<?php
@@ -458,7 +458,7 @@ $(function(){
 </div>
 <div class="clearfix"></div>
 </div>
-<form id="upload" method="post" action="upload.php" enctype="multipart/form-data">
+<form id="upload" method="post" action="upload.php?user_id=<?php print($user);?>" enctype="multipart/form-data">
 			
 			<div id="drop">
 				

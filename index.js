@@ -525,6 +525,7 @@ app.factory('ChapterVerses', function ($resource) {
                 $scope.initializeCircleLists();
 
                 $scope.$broadcast('login', responseData);
+                $scope.$broadcast('userInfoReady');
             }
         }
 
@@ -602,6 +603,7 @@ app.factory('ChapterVerses', function ($resource) {
             //TODO: document knowhow: custom get with custom header
             usersRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (user) {
                     $scope.user = user;
+                    $scope.$broadcast('userInfoReady');
                 },
                 function(response) {
                     console.log("Error occured while validating user login with status code", response.status);
@@ -1120,7 +1122,7 @@ app.factory('ChapterVerses', function ($resource) {
                     break;
                 }
             }
-
+            
         };//end of init controller
 
 

@@ -235,14 +235,19 @@ angular.module('ionicApp')
                 }
             };
             
-            
-            $(document).on('click', '#image-manager-insert', function () {
+            $scope.checkUserLoginStatus();
+            $scope.$on('userInfoReady', function handler() {
+                initFileManager('theView',$scope.user.id,function () {
                    //$('inferenceImage').onchange=
                     $timeout(function () {
                         angular.element($('#inferenceImage')).triggerHandler('input');
                     });
-                }
-            );
+                });
+                console.log("Image manager initialized for: "+$scope.user.id);
+            });
+            
+           
+           
         }
 
         $scope.restoreInferenceEditViewParameters = function (localParameterData) {

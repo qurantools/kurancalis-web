@@ -78,6 +78,12 @@ function get_file_icon_path($extension){
 
 
 $user = CurrentUserFolder();
+$logMessage = "\n".$_SERVER['PHP_SELF']." FUSER:".$user;
+$result = file_put_contents("/tmp/log.txt", $logMessage, FILE_APPEND);
+if ($result == false){
+    print("couldnot write");
+}
+
 define('LIBRARY_FOLDER_PATH', FOLDER_PATH . (strlen($user) > 0 ? $user . "/" : ""));
 define('LIBRARY_FOLDER_URL', FOLDER_URL . (strlen($user) > 0 ? $user . "/" : ""));
 CreateUserFolder(LIBRARY_FOLDER_PATH);
