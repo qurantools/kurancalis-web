@@ -5,10 +5,10 @@
     <div align="center" class="row">
         <table cellpadding="0" cellspacing="0">
             <tr>
-                <td align="center" style="width:780px">
-                    <table style="width: 810px">
+                <td align="center" style="width:1050px">
+                    <table style="width: 1040px">
                         <tr>
-                            <td align="center" style="width:610px">
+                            <td align="center" style="width:840px">
                                 <h3>{{title}}</h3>
                             </td>
                             <td align="center" style="width:200px">
@@ -26,17 +26,17 @@
                 </td>
             </tr>
             <tr>
-                <td align="left" style="width:780px; height: 40px;">
+                <td align="left" style="width:1050px; height: 40px;">
                     {{info_author}}
                 </td>
             </tr>
             <tr>
-                <td align="center" style="width:780px; vertical-align: top;">
-                    <img src={{photo}} width="750px"/></td>
+                <td align="center" style="width:1050px; vertical-align: top;">
+                    <img src={{photo}} width="1050px"/></td>
             </tr>
             <tr>
                 <td align="right"
-                    style="vertical-align: top; width: 780px; height: 45px; padding-top:15px; padding-bottom:15px">
+                    style="vertical-align: top; width: 1050px; height: 45px; padding-top:15px; padding-bottom:15px">
                     <i class="fa fa-toggle-on aktif" ng-if="status == true" ng-click="changeStatus();"></i>
                     <i class="fa fa-toggle-on fa-rotate-180 inactive" ng-if="status == false"
                        ng-click="changeStatus();"></i>Referansların
@@ -44,7 +44,7 @@
                 </td>
             </tr>
             <tr>
-                <td align="left" style="padding-right: 15px; padding-left: 15px; padding-bottom: 15px; width: 780px;
+                <td align="left" style="padding-right: 15px; padding-left: 15px; padding-bottom: 15px; width: 1050px;
                     padding-top: 15px; background-color:#ffe599">
 
                     <p ng-bind-html="content"></p>
@@ -52,13 +52,46 @@
             </tr>
             <tr>
                 <td align="right" style="padding-right: 15px; padding-left: 15px; padding-bottom: 15px;
-                    width: 780px; padding-top: 15px; background-color:#ffe599">
+                    width: 1050px; padding-top: 15px; background-color:#ffe599">
                     <button ng-repeat="item in tags" class="btn verse_tag ng-binding btn-info btn-xs">{{item}}</button>
+                </td>
+            </tr>
+        </table>
+        <br/>
+        <table>
+            <tr>
+                <td align="left" style="width: 200px">
+                    <select class="form-control" style="width: 200px" name="singleSelect"
+                            data-ng-model="selectedOption">
+                        <option ng-repeat="item in authorlist">{{item.name}}</option>
+                    </select>
+                </td>
+                <td align="center" style="width: 310px">
+                    <tags-input style="width: 300px" ng-model="circlesForSearch" placeholder="Çevre Seçiniz"
+                                display-property="name"
+                                replace-spaces-with-dashes="false" min-length="1" add-from-autocomplete-only="true"
+                                add-on-blur="false">
+                        <auto-complete source="circleslistForSearch()" load-on-empty="true"
+                                       load-on-focus="true"></auto-complete>
+                    </tags-input>
+                </td>
+                <td align="center" style="width: 310px">
+                    <tags-input style="width: 300px" ng-model="usersForSearch" placeholder="Kişi Seçiniz"
+                                display-property="name"
+                                replace-spaces-with-dashes="false" min-length="2">
+                        <auto-complete source="peoplelist($query)" min-length="2"></auto-complete>
+                    </tags-input>
+                </td>
+                <td align="right" style="width: 230px">
+                    <button style="width:230px; height: 35px" ng-click=""
+                            class="btn verse_tag ng-binding btn-info btn-xs">Çevreye / Kişiye ait etiketleri göster
+                    </button>
                 </td>
             </tr>
         </table>
 
     </div>
+
 </div>
 <div align="center">
     <digercevremodal title="Not Silme" visible="digercevre">
@@ -72,5 +105,7 @@
         </div>
     </digercevremodal>
 </div>
+
+
 <div ng-include="'app/components/partials/off_canvas_menu.html'"></div>
 </body>

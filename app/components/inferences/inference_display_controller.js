@@ -14,6 +14,10 @@ angular.module('ionicApp')
         $scope.content = "";
         $scope.tags = [];
         $scope.open_edit = true;
+        $scope.authorlist = [];
+
+        //Volkan
+        $scope.initializeCircleLists(); //show circles
 
         $scope.digercevre = false;
         $scope.digercevremodal = function () {
@@ -29,6 +33,54 @@ angular.module('ionicApp')
             });
 
         }
+
+        //tags input auto complete
+        $scope.peoplelist = function (people_name) {
+            var peoplesRestangular = Restangular.all("users/search");
+            $scope.usersParams = [];
+            $scope.usersParams.search_query = people_name;
+            return peoplesRestangular.customGET("", $scope.usersParams, {'access_token': $scope.access_token});
+        };
+
+        //tags input auto complete
+        $scope.circleslistForSearch = function () {
+            return $scope.extendedCirclesForSearch;
+        };
+
+        $scope.initializeCircleLists = function () {
+
+            Restangular.all("circles").customGET("", {}, {'access_token': $scope.access_token}).then(function (circleList) {
+
+                $scope.extendedCircles = [];
+                $scope.extendedCircles.push({'id': '-2', 'name': 'T�m �evrelerim'});
+                $scope.extendedCircles.push({'id': '-1', 'name': 'Herkes'});
+
+                $scope.extendedCirclesForSearch = [];
+                $scope.extendedCirclesForSearch.push({'id': '-2', 'name': 'T�m �evrelerim'});
+
+
+                $scope.circleDropdownArray = [];
+                $scope.circleDropdownArray.push({'id': '-2', 'name': 'T�m �evrelerim'});
+                $scope.circleDropdownArray.push({'id': '', 'name': 'Sadece Ben'});
+
+                $scope.query_circle_dropdown = $scope.circleDropdownArray[1];
+                Array.prototype.push.apply($scope.circleDropdownArray, circleList);
+
+                //also initialize extended circles
+                Array.prototype.push.apply($scope.extendedCircles, circleList);
+                Array.prototype.push.apply($scope.extendedCirclesForSearch, circleList);
+
+                $scope.$broadcast("circleLists ready");
+
+            });
+        }
+
+        //Authors
+        var AuthorsRestangular = Restangular.one("authors");
+        AuthorsRestangular.customGET("", {}, {}).then(function (data) {
+            $scope.authorlist = data;
+            $scope.selectedOption = $scope.authorlist[13].name;
+        });
 
         //Edit inference
         $scope.edit_inference = function () {
