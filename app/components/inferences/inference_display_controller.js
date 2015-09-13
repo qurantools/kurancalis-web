@@ -18,6 +18,8 @@ angular.module('ionicApp')
 
         //Volkan
         $scope.initializeCircleLists(); //show circles
+        Circles_tags = [];
+        Users_tags = [];
 
         $scope.digercevre = false;
         $scope.digercevremodal = function () {
@@ -52,15 +54,15 @@ angular.module('ionicApp')
             Restangular.all("circles").customGET("", {}, {'access_token': $scope.access_token}).then(function (circleList) {
 
                 $scope.extendedCircles = [];
-                $scope.extendedCircles.push({'id': '-2', 'name': 'T�m �evrelerim'});
+                $scope.extendedCircles.push({'id': '-2', 'name': 'Tüm Çevrelerim'});
                 $scope.extendedCircles.push({'id': '-1', 'name': 'Herkes'});
 
                 $scope.extendedCirclesForSearch = [];
-                $scope.extendedCirclesForSearch.push({'id': '-2', 'name': 'T�m �evrelerim'});
+                $scope.extendedCirclesForSearch.push({'id': '-2', 'name': 'Tüm Çevrelerim'});
 
 
                 $scope.circleDropdownArray = [];
-                $scope.circleDropdownArray.push({'id': '-2', 'name': 'T�m �evrelerim'});
+                $scope.circleDropdownArray.push({'id': '-2', 'name': 'Tüm Çevrelerim'});
                 $scope.circleDropdownArray.push({'id': '', 'name': 'Sadece Ben'});
 
                 $scope.query_circle_dropdown = $scope.circleDropdownArray[1];
@@ -79,7 +81,7 @@ angular.module('ionicApp')
         var AuthorsRestangular = Restangular.one("authors");
         AuthorsRestangular.customGET("", {}, {}).then(function (data) {
             $scope.authorlist = data;
-            $scope.selectedOption = $scope.authorlist[13].name;
+            $scope.selectedOption = $scope.authorlist[13].id;
         });
 
         //Edit inference
@@ -116,7 +118,61 @@ angular.module('ionicApp')
         $scope.changeStatus = function () {
             $scope.status = !$scope.status;
         }
-  
+
+        $scope.do_array = function () {
+            Circles_tags.length = 0;
+            Users_tags.length = 0;
+
+            for (var i = 0; i < $scope.circlesForSearch.length; i++) {
+                Circles_tags.push($scope.circlesForSearch[i].id);
+            }
+
+            for (var i = 0; i < $scope.usersForSearch.length; i++) {
+                Users_tags.push($scope.usersForSearch[i].id);
+            }
+
+            lists();
+        }
+
+        function lists() {
+
+            //var headers = {'Content-Type': 'application/x-www-form-urlencoded', 'access_token': $scope.access_token};
+            //var postData = [];
+            //postData.push(encodeURIComponent("author") + "=" + encodeURIComponent($scope.selectedOption.valueOf()));
+
+            //var users = Users_tags.join(",");
+            //postData.push(encodeURIComponent("users") + "=" + encodeURIComponent(users));
+
+            //var circles = Circles_tags.join(",");
+            //postData.push(encodeURIComponent("circles") + "=" + encodeURIComponent(circles));
+
+            //var data = postData.join("&");
+            //var annotationRestangular = Restangular.all("annotations").one("tags");
+
+            //annotationRestangular.customGET(data, '', '', headers).then(function (data) {
+
+            //var a=data;
+            //});
+
+            $scope.allAnnotationsParams = [];
+
+            $scope.allAnnotationsParams.author = $scope.selectedOption.valueOf();
+
+            var users = Users_tags.join(",");
+            $scope.allAnnotationsParams.users = users;
+
+            var circles = Circles_tags.join(",");
+            $scope.allAnnotationsParams.circles = circles;
+
+            var annotationRestangular = Restangular.one("annotations").all("tags");
+            annotationRestangular.customGET('', $scope.allAnnotationsParams, {access_token: $scope.access_token}).then(function (data) {
+
+                var a = data;
+            });
+
+        }
+
+        //////////////Volkan
         $scope.initializeInferenceDisplayController = function () {
             var inferenceId=0;
             var circles = []; //id array
