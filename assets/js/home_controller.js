@@ -896,6 +896,16 @@ angular.module('ionicApp')
                 $scope.setModalEditor(modal);
             });
 
+            $ionicModal.fromTemplateUrl('components/partials/detailed_search.html', {
+                scope: $scope,
+                //animation: 'slide-in-right',
+                //animation: 'slide-left-right',
+                animation: 'slide-in-up',
+                id: 'homesearch'
+            }).then(function (modal) {
+                $scope.modal_home_search = modal
+            });
+            
             $scope.openModal = function (id) {
                 if (id == 'annotations_on_page') {
                     $scope.modal_annotations_on_page.show();
@@ -907,6 +917,8 @@ angular.module('ionicApp')
                     $scope.modal_annotations_on_page_sort.show();
                 } else if (id == 'editor') {
                     $scope.modal_editor.show();
+                } else if (id == 'homesearch') {
+                    $scope.modal_home_search.show();
                 }
             };
 
@@ -919,6 +931,8 @@ angular.module('ionicApp')
                     $scope.modal_authors_list.hide();
                 } else if (id == 'annotations_on_page_sort') {
                     $scope.modal_annotations_on_page_sort.hide();
+                } else if (id == 'homesearch') {
+                    $scope.modal_home_search.hide();
                 } else if (id == 'editor') {
                     clearTextSelection();
                     $scope.getModalEditor().hide();
@@ -935,7 +949,22 @@ angular.module('ionicApp')
 
         }
 
+        $scope.circlesview = function () {
+            var circlesviewRestangular = Restangular.all("circles");
+            circlesviewRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (circleslist) {
+                $scope.circlesname = circleslist;
 
+            });
+        };
+
+        $scope.friendsview = function () {
+            var friendsviewRestangular = Restangular.all("users").one("friends");
+            friendsviewRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (friendslist) {
+                $scope.friendsname = friendslist;
+
+            });
+        };
+        
         $scope.initChapterViewParameters = function () {
 
             var chapterId = 1;
