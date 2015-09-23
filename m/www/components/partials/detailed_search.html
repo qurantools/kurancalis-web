@@ -1,0 +1,60 @@
+<div class="modal modal-fullscreen">
+    <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced">
+        <ion-nav-title>Not Arama</ion-nav-title>
+        <ion-nav-buttons side="left">
+            <button class="button button-icon icon-left ion-arrow-left-b" ng-click="closeModal('homesearch')"
+                    style="float: left"> Geri
+            </button>
+
+        </ion-nav-buttons>
+        <ion-nav-buttons side="right">
+            <button class="button button-icon icon-left ion-checkmark" ng-click="closeModal('homesearch')"
+                    style="float: left">
+            </button>
+        </ion-nav-buttons>
+
+    </ion-nav-bar>
+    <ion-content overflow-scroll="true">
+        <br/><br/><br/>
+
+        <div style="height:25px; width:100%; background-color:lightgrey; color:Black; padding-left:10px">Çevrelerin
+            Notları
+        </div>
+
+        <ul class="list">
+            <li class="item item-checkbox" ng-repeat="item in circlesname">
+                <label class="checkbox">
+                    <input
+                            type="checkbox"
+                            name="circlesview[]"
+                            value="{{item.id}}"
+
+                            >
+                </label>
+                {{item.name}}
+            </li>
+        </ul>
+
+        <br/>
+
+        <div style="height:25px; width:100%; background-color:lightgrey; color:Black; padding-left:10px">Kişilerin
+            Notları
+        </div>
+
+        <ul class="list">
+            <li class="item item-checkbox" ng-repeat="item in friendsname">
+                <label class="checkbox">
+                    <input
+                            type="checkbox"
+                            name="friendsview[]"
+                            value="{{item.id}}"
+
+                            >
+                </label>
+                {{item.name}}
+            </li>
+        </ul>
+        <button class="btn-info btn-xs">Kişi Ekle</button>
+    </ion-content>
+
+</div>
