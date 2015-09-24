@@ -15,7 +15,7 @@
                 <button class="button button-icon icon ion-plus" ng-if="user!=null"
                         onclick="annotator.checkForStartSelection({ pageX : 300, pageY: 300});annotator.checkForEndSelection({ pageX : 300, pageY: 300});"></button>
 
-                <button class="button button-icon icon fa fa-search"
+                <button class="button button-icon icon fa fa-search" ng-if="user!=null && currentPage=='home'"
                         ng-click="circlesview();friendsview();openModal('homesearch');"></button>
 
             </ion-nav-buttons>
