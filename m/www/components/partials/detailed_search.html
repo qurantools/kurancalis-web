@@ -17,6 +17,24 @@
     <ion-content overflow-scroll="true">
         <br/><br/><br/>
 
+        <div style="width:100%; padding-left:10px">
+
+            <table style="width:100%">
+                <tr>
+                    <td style="width:7%">
+                        <i class="fa fa-toggle-on aktif" ng-if="status == true" ng-click="changeStatus();"></i>
+                        <i class="fa fa-toggle-on fa-rotate-180 inactive" ng-if="status == false"
+                           ng-click="changeStatus();"></i>
+                    </td>
+                    <td style="width:93%; vertical-align:middle">
+                        Benim Notlarımı Göster
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+        <br/>
+
         <div style="height:25px; width:100%; background-color:lightgrey; color:Black; padding-left:10px">Çevrelerin
             Notları
         </div>
@@ -41,20 +59,20 @@
             Notları
         </div>
 
-        <ul class="list">
-            <li class="item item-checkbox" ng-repeat="item in friendsname">
-                <label class="checkbox">
-                    <input
-                            type="checkbox"
-                            name="friendsview[]"
-                            value="{{item.id}}"
-
-                            >
-                </label>
+        <ion-list show-delete=true>
+            <ion-item ng-repeat="item in friendsname">
+                <ion-delete-button class="ion-minus-circled"
+                                   ng-click="friendsname.splice($index, 1)">
+                </ion-delete-button>
                 {{item.name}}
-            </li>
-        </ul>
-        <button class="btn-info btn-xs">Kişi Ekle</button>
+
+            </ion-item>
+        </ion-list>
+
+
+        <button class="button button-block button-positive" ng-click="openModal('friendsearch');">
+            Kişi Ekle
+        </button>
     </ion-content>
 
 </div>

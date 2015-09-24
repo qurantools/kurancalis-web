@@ -28,6 +28,7 @@ angular.module('ionicApp')
         $scope.queryVerse={};//trick for scope - detailed search compatibiliry. object needed
         $scope.queryVerse.keyword="";
         $scope.detailedSearchAuthorSelection = [];
+        $scope.peoplesearch = "";
 
         //multiple > single author view
         $scope.showSingleAuthor=false;
@@ -39,7 +40,8 @@ angular.module('ionicApp')
         $scope.modal_authors_list = null;
         $scope.modal_annotations_on_page_sort = null;
         $scope.modal_editor = null;
-
+        $scope.modal_home_search = null;
+        $scope.modal_friend_search = null;
 
         $scope.restoreChapterViewParameters = function (localParameterData) {
             $scope.query_author_mask = localParameterData.author_mask;
@@ -905,6 +907,16 @@ angular.module('ionicApp')
             }).then(function (modal) {
                 $scope.modal_home_search = modal
             });
+
+            $ionicModal.fromTemplateUrl('components/partials/friend_search.html', {
+                scope: $scope,
+                //animation: 'slide-in-right',
+                //animation: 'slide-left-right',
+                animation: 'slide-in-up',
+                id: 'homesearch'
+            }).then(function (modal) {
+                $scope.modal_friend_search = modal
+            });
             
             $scope.openModal = function (id) {
                 if (id == 'annotations_on_page') {
@@ -919,6 +931,8 @@ angular.module('ionicApp')
                     $scope.modal_editor.show();
                 } else if (id == 'homesearch') {
                     $scope.modal_home_search.show();
+                } else if (id == 'friendsearch') {
+                    $scope.modal_friend_search.show();
                 }
             };
 
@@ -933,6 +947,8 @@ angular.module('ionicApp')
                     $scope.modal_annotations_on_page_sort.hide();
                 } else if (id == 'homesearch') {
                     $scope.modal_home_search.hide();
+                } else if (id == 'friendsearch') {
+                    $scope.modal_friend_search.hide();
                 } else if (id == 'editor') {
                     clearTextSelection();
                     $scope.getModalEditor().hide();
@@ -949,10 +965,24 @@ angular.module('ionicApp')
 
         }
 
+        //On Off Switch
+        $scope.status = true;
+
+        $scope.changeStatus = function () {
+            $scope.status = !$scope.status;
+        }
+        
         $scope.circlesview = function () {
+            $scope.circlesname = [];
+            
             var circlesviewRestangular = Restangular.all("circles");
             circlesviewRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (circleslist) {
-                $scope.circlesname = circleslist;
+
+                $scope.circlesname.push({'id': '-2', 'name': 'Tüm Çevrelerim'});
+
+                for (var x = 0; x < circleslist.length; x++) {
+                    $scope.circlesname.push(circleslist[x]);
+                }
 
             });
         };
@@ -964,6 +994,31 @@ angular.module('ionicApp')
 
             });
         };
+
+        $scope.clearfriendsearch = function () {
+            $scope.peoplesearch = "";
+        };
+
+        //People Search
+        $scope.peoplelist = function (people) {
+
+            if ((people != "") && (people.length > 2)) {
+                var peoplelistRestangular = Restangular.all("users/search");
+                $scope.usersParams = [];
+                $scope.usersParams.search_query = people;
+                peoplelistRestangular.customGET("", $scope.usersParams, {'access_token': $scope.access_token}).then(function (userliste) {
+                    $scope.users = userliste;
+                });
+            }
+            else {
+                $scope.users = [];
+            }
+        };
+
+        //People Add
+        $scope.peopleaddlist = function (index) {
+            $scope.friendsname.push($scope.users[index]);
+        }
         
         $scope.initChapterViewParameters = function () {
 
