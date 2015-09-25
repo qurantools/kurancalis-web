@@ -26,12 +26,31 @@
             <textarea id="annotationData_text" ng-model="annotationModalData.text"
                       placeholder="Yorum ekleyin" style="height:80px; font-size:16px;" ></textarea>
         </label>
-        <tags-input ng-model="annotationModalDataTagsInput" display-property="name"
-                    placeholder="Etiket girin" replace-spaces-with-dashes="false"
-                    min-length="2">
-            <auto-complete source="loadTags($query)" min-length="2" select-first-match="false"></auto-complete>
-        </tags-input>
+
+        <div style="height:25px; width:100%; background-color:lightgrey; color:Black; padding-left:10px">
+            Etiketler
+        </div>
+
+        <ion-list show-delete=true>
+            <ion-item ng-repeat="item in annotationModalData.tags">
+                <ion-delete-button class="ion-minus-circled"
+                                   ng-click="annotationModalData.tags.splice($index, 1)">
+                </ion-delete-button>
+                {{item}}
+
+            </ion-item>
+        </ion-list>
+
+
+        <button class="button button-block button-positive" ng-click="openModal('tagsearch');">
+            Etiket Ekle
+        </button>
+
         <br/>
+
+        <div style="height:25px; width:100%; background-color:lightgrey; color:Black; padding-left:10px">
+            Kategori
+        </div>
 
         <div class="list">
 

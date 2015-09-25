@@ -1,0 +1,33 @@
+<div class="modal modal-fullscreen">
+    <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced">
+        <ion-nav-title>Etiket Ekle</ion-nav-title>
+        <ion-nav-buttons side="left">
+            <button class="button button-icon icon-left ion-arrow-left-b" ng-click="closeModal('tagsearch')"
+                    style="float: left"> Vazgeç
+            </button>
+
+        </ion-nav-buttons>
+
+    </ion-nav-bar>
+    <button class="button button-icon icon-left ion-arrow-left-b" ng-click="closeModal('tagsearch')"
+            style="float: left" type="button">
+    </button>
+    <ion-content overflow-scroll="true">
+        <br/><br/>
+
+        <div class="bar bar-header item-input-inset">
+            <label class="item-input-wrapper">
+                <i class="icon ion-ios-search placeholder-icon"></i>
+                <input ng-model="tagsearched" type="text" placeholder="Etiket"
+                       ng-change="tagsquery(tagsearched)"/>
+            </label>
+            <button ng-click="addedtags()" style="width:40px" class="button button-block button-positive">+</button>
+        </div>
+
+        <div style="width:100%;  border-bottom: lightgray 1px solid; height:auto; padding-left:15px; padding-bottom:10px; padding-top:10px"
+             ng-click="txtADD(item.name)"
+             ng-repeat="item in tagslist">
+            {{item.name}}
+        </div>
+    </ion-content>
+   

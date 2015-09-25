@@ -29,7 +29,8 @@ angular.module('ionicApp')
         $scope.queryVerse.keyword="";
         $scope.detailedSearchAuthorSelection = [];
         $scope.peoplesearch = "";
-
+        $scope.tagsearched = "";
+ 
         //multiple > single author view
         $scope.showSingleAuthor=false;
         $scope.selectedSingleAuthor=0;
@@ -917,6 +918,16 @@ angular.module('ionicApp')
             }).then(function (modal) {
                 $scope.modal_friend_search = modal
             });
+
+            $ionicModal.fromTemplateUrl('components/partials/tag_search.html', {
+                scope: $scope,
+                //animation: 'slide-in-right',
+                //animation: 'slide-left-right',
+                animation: 'slide-in-up',
+                id: 'tagsearch'
+            }).then(function (modal) {
+                $scope.modal_tag_search = modal
+            });
             
             $scope.openModal = function (id) {
                 if (id == 'annotations_on_page') {
@@ -933,6 +944,8 @@ angular.module('ionicApp')
                     $scope.modal_home_search.show();
                 } else if (id == 'friendsearch') {
                     $scope.modal_friend_search.show();
+                } else if (id == 'tagsearch') {
+                    $scope.modal_tag_search.show();
                 }
             };
 
@@ -949,6 +962,8 @@ angular.module('ionicApp')
                     $scope.modal_home_search.hide();
                 } else if (id == 'friendsearch') {
                     $scope.modal_friend_search.hide();
+                } else if (id == 'tagsearch') {
+                    $scope.modal_tag_search.hide();
                 } else if (id == 'editor') {
                     clearTextSelection();
                     $scope.getModalEditor().hide();
@@ -1019,6 +1034,27 @@ angular.module('ionicApp')
         $scope.peopleaddlist = function (index) {
             $scope.friendsname.push($scope.users[index]);
         }
+
+
+        //TagsQuery
+        $scope.tagsquery = function (query) {
+
+            if ((query != "") && (query.length > 2)) {
+                var tagsRestangular = Restangular.one('tags', query);
+                tagsRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (taglist) {
+
+                    $scope.tagslist = taglist;
+
+                });
+            }
+            else {
+                $scope.tagslist = [];
+            }
+        };
+
+        $scope.txtADD = function (txt) {
+            $scope.tagsearched = txt;
+        };
         
         $scope.initChapterViewParameters = function () {
 
