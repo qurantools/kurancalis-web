@@ -389,7 +389,7 @@ app.factory('ChapterVerses', function ($resource) {
         $scope.annotationModalDataTagsInput = [];
         $scope.annotationModalDataVerse = "0:0";
         $scope.cevres = [];
-        $scope.kisis = [];
+        $scope.ViewUsers = [];
         $scope.yrmcevres = [];
         $scope.yrmkisis = [];
 
@@ -712,7 +712,7 @@ app.factory('ChapterVerses', function ($resource) {
                     clis1.push({'id': cevreliste.canViewUsers[i].id, 'name': cevreliste.canViewUsers[i].name});
                 }
 
-                $scope.kisis = clis1;
+                $scope.ViewUsers = clis1;
 
                 var clis2 = [];
                 for (var i = 0; i < cevreliste.canCommentCircles.length; i++) {
@@ -747,12 +747,12 @@ app.factory('ChapterVerses', function ($resource) {
 
             if (typeof annotation.annotationId != 'undefined') {
                 $scope.cevres = [];
-                $scope.kisis = [];
+                $scope.ViewUsers = [];
                 $scope.yrmcevres = [];
                 $scope.yrmkisis = [];
                 $scope.coVliste(annotation.annotationId);
             }
-            if ($scope.cevres.length == 0 && $scope.kisis.length == 0 && $scope.yrmcevres.length == 0 && $scope.yrmkisis.length == 0) {
+            if ($scope.cevres.length == 0 && $scope.ViewUsers.length == 0 && $scope.yrmcevres.length == 0 && $scope.yrmkisis.length == 0) {
                 //all empty //share to everyone by default
 
                 $scope.cevres.push({'id': '-1', 'name': 'Herkes'});
@@ -967,6 +967,7 @@ app.factory('ChapterVerses', function ($resource) {
 
         }
 
+
         //tags input auto complete
         $scope.kisilistele = function (kisiad) {
             var kisilisteRestangular = Restangular.all("users/search");
@@ -1039,6 +1040,7 @@ app.factory('ChapterVerses', function ($resource) {
             $scope.scopeApply();
             //$route.reload();
         }
+
 
         $scope.initializeController = function () {
 
@@ -1218,3 +1220,4 @@ function focusToVerseInput() {
         document.getElementById('chapterSelection_verse').select();
     }, 600);
 }
+

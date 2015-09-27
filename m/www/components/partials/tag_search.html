@@ -18,10 +18,12 @@
         <div class="bar bar-header item-input-inset">
             <label class="item-input-wrapper">
                 <i class="icon ion-ios-search placeholder-icon"></i>
-                <input ng-model="tagsearched" type="text" placeholder="Etiket"
-                       ng-change="tagsquery(tagsearched)"/>
+                <input id="mobil_tags" ng-model="mobil_tagsearched " type="text" placeholder="Etiket"
+                       ng-change="tagsquery(mobil_tagsearched)"/>
             </label>
-            <button ng-click="addedtags()" style="width:40px" class="button button-block button-positive">+</button>
+            <button ng-click="addedtags(); closeModal('tagsearch');" style="width:40px"
+                    class="button button-block button-positive">+
+            </button>
         </div>
 
         <div style="width:100%;  border-bottom: lightgray 1px solid; height:auto; padding-left:15px; padding-bottom:10px; padding-top:10px"
