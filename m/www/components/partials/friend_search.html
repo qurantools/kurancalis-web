@@ -34,7 +34,7 @@
                              ng-click="peopleaddlist($index); closeModal('friendsearch'); ">
                     </td>
                     <td style="vertical-align:middle">
-                        {{item.name}}
+                        <div ng-click="peopleaddlist($index); closeModal('friendsearch'); "> {{item.name}}</div>
                     </td>
                 </tr>
             </table>

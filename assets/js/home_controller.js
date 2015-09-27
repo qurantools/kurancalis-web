@@ -29,7 +29,8 @@ angular.module('ionicApp')
         $scope.queryVerse.keyword="";
         $scope.detailedSearchAuthorSelection = [];
         $scope.peoplesearch = "";
-
+        $scope.friendsname = [];
+           
         //multiple > single author view
         $scope.showSingleAuthor=false;
         $scope.selectedSingleAuthor=0;
@@ -1024,7 +1025,6 @@ angular.module('ionicApp')
 
         $scope.friendsview = function () {
 
-            $scope.friendsname = [];
             var friendsviewRestangular = Restangular.all("users").one("friends");
             friendsviewRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (friendslist) {
                 $scope.friendsname = friendslist;
