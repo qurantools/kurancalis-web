@@ -32,11 +32,11 @@
         </div>
 
         <ion-list show-delete=true>
-            <ion-item ng-repeat="item in annotationModalData.tags">
+            <ion-item ng-repeat="item in annotationModalDataTagsInput">
                 <ion-delete-button class="ion-minus-circled"
-                                   ng-click="annotationModalData.tags.splice($index, 1)">
+                                   ng-click="annotationModalDataTagsInput.splice($index, 1)">
                 </ion-delete-button>
-                {{item}}
+                {{item.name}}
 
             </ion-item>
         </ion-list>
@@ -96,6 +96,43 @@
                 <i class="radio-icon ion-checkmark" ng-if="annotationModalData.colour=='green'"></i>
             </label>
         </div>
-        <div style="height:20px"></div>
+        <div style="height:15px"></div>
+
+        <div style="height:25px; width:100%; background-color:lightgrey; color:Black; padding-left:10px">
+            Paylaşılan Çevreler
+        </div>
+
+        <ul class="list">
+            <li class="item item-checkbox" ng-repeat="item in circlesname">
+                <label class="checkbox">
+                    <input
+                            type="checkbox"
+                            name="circlesview[]"
+                            value="{{item.id}}"
+                            checked: true
+                            >
+                </label>
+                {{item.name}}
+            </li>
+        </ul>
+
+        <div style="height:25px; width:100%; background-color:lightgrey; color:Black; padding-left:10px">
+            Paylaşılan Kişiler
+        </div>
+
+        <ion-list show-delete=true>
+            <ion-item ng-repeat="item in ViewUsers">
+                <ion-delete-button class="ion-minus-circled"
+                                   ng-click="ViewUsers.splice($index, 1)">
+                </ion-delete-button>
+                {{item.name}}
+
+            </ion-item>
+        </ion-list>
+
+
+        <button class="button button-block button-positive" ng-click="openModal('viewusersearch');">
+            Kişi Ekle
+        </button>
     </ion-content>
 </div>
