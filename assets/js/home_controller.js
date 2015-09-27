@@ -29,8 +29,8 @@ angular.module('ionicApp')
         $scope.queryVerse.keyword="";
         $scope.detailedSearchAuthorSelection = [];
         $scope.peoplesearch = "";
-        $scope.friendsname = [];
-           
+        $scope.circlesname = [];
+        
         //multiple > single author view
         $scope.showSingleAuthor=false;
         $scope.selectedSingleAuthor=0;
@@ -1008,8 +1008,11 @@ angular.module('ionicApp')
         }
         
         $scope.circlesview = function () {
-            $scope.circlesname = [];
-            
+
+//            $scope.query_circles = [];
+//            $scope.query_users = [];
+
+            if ($scope.circlesname.length == 0) {
             var circlesviewRestangular = Restangular.all("circles");
             circlesviewRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (circleslist) {
 
@@ -1021,15 +1024,7 @@ angular.module('ionicApp')
                 }
 
             });
-        };
-
-        $scope.friendsview = function () {
-
-            var friendsviewRestangular = Restangular.all("users").one("friends");
-            friendsviewRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (friendslist) {
-                $scope.friendsname = friendslist;
-
-            });
+            }
         };
 
         $scope.clearfriendsearch = function () {
@@ -1057,7 +1052,7 @@ angular.module('ionicApp')
 
         //People Add
         $scope.peopleaddlist = function (index) {
-            $scope.friendsname.push($scope.users[index]);
+            $scope.query_users.push($scope.users[index]);
         }
 
         //People Add
@@ -1089,7 +1084,25 @@ angular.module('ionicApp')
             $scope.annotationModalDataTagsInput.push({name: $scope.mobil_tagsearched});
             //$scope.annotationModalDataTagsInput.push($scope.mobil_tagsearched);
         }
-        
+
+        $scope.addcircles = function (index) {
+
+            var control = "0";
+            var circle_id = $scope.circlesname[index].id;
+
+            for (var i = 0; i < $scope.query_circles.length; i++) {
+                if ($scope.query_circles[i].id == circle_id) {
+                    $scope.query_circles.splice(i, 1);
+                    control = "1";
+                }
+            }
+
+            if (control == "0") {
+                $scope.query_circles.push($scope.circlesname[index]);
+            }
+
+        }
+                
         $scope.initChapterViewParameters = function () {
 
             var chapterId = 1;

@@ -8,7 +8,8 @@
 
         </ion-nav-buttons>
         <ion-nav-buttons side="right">
-            <button class="button button-icon icon-left ion-checkmark" ng-click="closeModal('homesearch')"
+            <button class="button button-icon icon-left ion-checkmark"
+                    ng-click="detailedSearch(); closeModal('homesearch');"
                     style="float: left">
             </button>
         </ion-nav-buttons>
@@ -19,18 +20,19 @@
 
         <div style="width:100%; padding-left:10px">
 
-            <table style="width:100%">
-                <tr>
-                    <td style="width:7%">
-                        <i class="fa fa-toggle-on aktif" ng-if="status == true" ng-click="changeStatus();"></i>
-                        <i class="fa fa-toggle-on fa-rotate-180 inactive" ng-if="status == false"
-                           ng-click="changeStatus();"></i>
+            <div class="well" ng-init="init()">
+                <table>
+                    <td>
+                        <i class="fa fa-toggle-on aktif"
+                           ng-if="query_own_annotations == true || query_own_annotations == 'true'"
+                           ng-click="toggleDetailedSearchOwnAnnotations();"></i>
+                        <i class="fa fa-toggle-on fa-rotate-180 inactive"
+                           ng-if="query_own_annotations == false || query_own_annotations == 'false'"
+                           ng-click="toggleDetailedSearchOwnAnnotations();"></i>
                     </td>
-                    <td style="width:93%; vertical-align:middle">
-                        Benim Notlarımı Göster
-                    </td>
-                </tr>
-            </table>
+                    <td align="left" style="width:100%; padding-left: 15px;"> Benim notlarımı göster</td>
+                </table>
+            </div>
 
         </div>
         <br/>
@@ -46,7 +48,7 @@
                             type="checkbox"
                             name="circlesview[]"
                             value="{{item.id}}"
-
+                            ng-click="addcircles($index);"
                             >
                 </label>
                 {{item.name}}
@@ -60,9 +62,9 @@
         </div>
 
         <ion-list show-delete=true>
-            <ion-item ng-repeat="item in friendsname">
+            <ion-item ng-repeat="item in query_users">
                 <ion-delete-button class="ion-minus-circled"
-                                   ng-click="friendsname.splice($index, 1)">
+                                   ng-click="query_users.splice($index, 1)">
                 </ion-delete-button>
                 {{item.name}}
 
