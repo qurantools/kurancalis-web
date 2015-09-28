@@ -109,7 +109,7 @@
                             type="checkbox"
                             name="circlesview[]"
                             value="{{item.id}}"
-                            checked: true
+                            ng-click="addViewcircles($index)"
                             >
                 </label>
                 {{item.name}}

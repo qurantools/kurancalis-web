@@ -324,7 +324,7 @@ angular.module('ionicApp')
             }
 
             //get tag Parameters
-            var tagParameters = $scope.getTagParametersForAnnotatorStore($scope.cevres, $scope.yrmcevres, $scope.ViewUsers, $scope.yrmkisis, $scope.annotationModalDataTagsInput)
+            var tagParameters = $scope.getTagParametersForAnnotatorStore($scope.ViewCircles, $scope.yrmcevres, $scope.ViewUsers, $scope.yrmkisis, $scope.annotationModalDataTagsInput)
             //now annotationModalData belogs to root scope, may be we can get it later
             $scope.annotationModalData.canViewCircles = tagParameters.canViewCircles;
             $scope.annotationModalData.canCommentCircles = tagParameters.canCommentCircles;
@@ -1013,17 +1013,16 @@ angular.module('ionicApp')
 //            $scope.query_users = [];
 
             if ($scope.circlesname.length == 0) {
-            var circlesviewRestangular = Restangular.all("circles");
-            circlesviewRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (circleslist) {
+                var circlesviewRestangular = Restangular.all("circles");
+                circlesviewRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (circleslist) {
 
-                $scope.circlesname.push({'id': '-2', 'name': 'Tüm Çevrelerim'});
+                    $scope.circlesname.push({'id': '-2', 'name': 'Tüm Çevrelerim'});
 
-                for (var x = 0; x < circleslist.length; x++) {
-                    $scope.circlesname.push(circleslist[x]);
+                    for (var x = 0; x < circleslist.length; x++) {
+                        $scope.circlesname.push(circleslist[x]);
+                    }
 
-                }
-
-            });
+                });
             }
         };
 
@@ -1110,6 +1109,24 @@ angular.module('ionicApp')
 
             if (control == "0") {
                 $scope.query_circles.push($scope.circlesname[index]);
+            }
+
+        }
+
+        $scope.addViewcircles = function (index) {
+
+            var control = "0";
+            var circle_id = $scope.circlesname[index].id;
+
+            for (var i = 0; i < $scope.ViewCircles.length; i++) {
+                if ($scope.ViewCircles[i].id == circle_id) {
+                    $scope.ViewCircles.splice(i, 1);
+                    control = "1";
+                }
+            }
+
+            if (control == "0") {
+                $scope.ViewCircles.push($scope.circlesname[index]);
             }
 
         }

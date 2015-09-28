@@ -388,7 +388,7 @@ app.factory('ChapterVerses', function ($resource) {
         $scope.annotationModalData = {};
         $scope.annotationModalDataTagsInput = [];
         $scope.annotationModalDataVerse = "0:0";
-        $scope.cevres = [];
+        $scope.ViewCircles = [];
         $scope.ViewUsers = [];
         $scope.yrmcevres = [];
         $scope.yrmkisis = [];
@@ -705,7 +705,7 @@ app.factory('ChapterVerses', function ($resource) {
                 for (var i = 0; i < cevreliste.canViewCircles.length; i++) {
                     clis.push({'id': cevreliste.canViewCircles[i].id, 'name': cevreliste.canViewCircles[i].name});
                 }
-                $scope.cevres = clis;
+                $scope.ViewCircles = clis;
 
                 var clis1 = [];
                 for (var i = 0; i < cevreliste.canViewUsers.length; i++) {
@@ -746,16 +746,16 @@ app.factory('ChapterVerses', function ($resource) {
 
 
             if (typeof annotation.annotationId != 'undefined') {
-                $scope.cevres = [];
+                $scope.ViewCircles = [];
                 $scope.ViewUsers = [];
                 $scope.yrmcevres = [];
                 $scope.yrmkisis = [];
                 $scope.coVliste(annotation.annotationId);
             }
-            if ($scope.cevres.length == 0 && $scope.ViewUsers.length == 0 && $scope.yrmcevres.length == 0 && $scope.yrmkisis.length == 0) {
+            if ($scope.ViewCircles.length == 0 && $scope.ViewUsers.length == 0 && $scope.yrmcevres.length == 0 && $scope.yrmkisis.length == 0) {
                 //all empty //share to everyone by default
 
-                $scope.cevres.push({'id': '-1', 'name': 'Herkes'});
+                $scope.ViewCircles.push({'id': '-1', 'name': 'Herkes'});
             }
             else { //use previous values.
 
