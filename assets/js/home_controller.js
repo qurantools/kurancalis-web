@@ -44,6 +44,7 @@ angular.module('ionicApp')
         $scope.modal_home_search = null;
         $scope.modal_friend_search = null;
 
+
         //tags parameters
         $scope.mobil_tagsearched = "";
       
@@ -1019,6 +1020,7 @@ angular.module('ionicApp')
                     $scope.circlesname.push({'id': '-2', 'name': 'Tüm Çevrelerim'});
 
                     for (var x = 0; x < circleslist.length; x++) {
+
                         $scope.circlesname.push(circleslist[x]);
                     }
 
