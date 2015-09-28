@@ -1081,8 +1081,19 @@ angular.module('ionicApp')
         };
 
         $scope.addedtags = function () {
-            $scope.annotationModalDataTagsInput.push({name: $scope.mobil_tagsearched});
-            //$scope.annotationModalDataTagsInput.push($scope.mobil_tagsearched);
+
+            var control = "0";
+
+            for (var i = 0; i < $scope.annotationModalDataTagsInput.length; i++) {
+
+                if ($scope.annotationModalDataTagsInput[i].name == $scope.mobil_tagsearched) {
+                    control = "1";
+                }
+            }
+
+            if (control == "0") {
+                $scope.annotationModalDataTagsInput.push({name: $scope.mobil_tagsearched});
+            }
         }
 
         $scope.addcircles = function (index) {
