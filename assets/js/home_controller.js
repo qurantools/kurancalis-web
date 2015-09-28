@@ -1075,13 +1075,14 @@ angular.module('ionicApp')
             }
         };
 
-        $scope.txtADD = function (txt) {
+        $scope.mobil_txtADD = function (txt) {
             $scope.mobil_tagsearched = txt;
             var taginput = document.getElementById('mobil_tags');
             taginput.value = txt;
         };
 
-        $scope.addedtags = function () {
+        //Addicionar selected tags
+        $scope.mobil_addedtags = function () {
 
             var control = "0";
 
@@ -1097,7 +1098,8 @@ angular.module('ionicApp')
             }
         }
 
-        $scope.addcircles = function (index) {
+        //Select circles addicionar for detail search parametre
+        $scope.mobil_addCircles = function (index) {
 
             var control = "0";
             var circle_id = $scope.circlesname[index].id;
@@ -1115,7 +1117,8 @@ angular.module('ionicApp')
 
         }
 
-        $scope.addViewcircles = function (index) {
+        //Select circles addicionar for parametre
+        $scope.mobil_addViewCircles = function (index) {
 
             var control = "0";
             var circle_id = $scope.circlesname[index].id;
