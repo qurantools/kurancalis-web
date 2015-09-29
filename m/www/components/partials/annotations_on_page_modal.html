@@ -48,10 +48,13 @@
             <div class="row" style="padding:5px 15px; display: block;">
                 <div style="float: left">{{annotation.updated | date: 'dd/MM/yyyy HH:mm:ss'}}</div>
                 <div style="float: right">
-                    <button type="button" class="button button-balanced button-small" ng-click="editAnnotation($index)"><i
+                    <button ng-show="user.id==annotation.userId" type="button"
+                            class="button button-balanced button-small"
+                            ng-click="editAnnotation($index);circlesview();"><i
                             class="fa fa-pencil-square-o"></i>
                     </button>
-                    <button type="button" class="button button-assertive button-small" ng-click="deleteAnnotation($index)"><i
+                    <button ng-show="user.id==annotation.userId" type="button"
+                            class="button button-assertive button-small" ng-click="deleteAnnotation($index)"><i
                             class="fa fa-trash-o"></i></button>
                 </div>
             </div>
