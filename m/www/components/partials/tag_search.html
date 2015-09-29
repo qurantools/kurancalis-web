@@ -21,13 +21,13 @@
                 <input id="mobil_tags" ng-model="mobil_tagsearched " type="text" placeholder="Etiket"
                        ng-change="tagsquery(mobil_tagsearched)"/>
             </label>
-            <button ng-click="mobil_addedtags(); closeModal('tagsearch');" style="width:40px"
+            <button ng-click="mobil_addedtags(mobil_tagsearched); closeModal('tagsearch');" style="width:40px"
                     class="button button-block button-positive">+
             </button>
         </div>
 
         <div style="width:100%;  border-bottom: lightgray 1px solid; height:auto; padding-left:15px; padding-bottom:10px; padding-top:10px"
-             ng-click="mobil_txtADD(item.name)"
+             ng-click="mobil_addedtags(item.name); closeModal('tagsearch');"
              ng-repeat="item in tagslist">
             {{item.name}}
         </div>

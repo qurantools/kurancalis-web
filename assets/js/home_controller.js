@@ -1053,12 +1053,35 @@ angular.module('ionicApp')
 
         //People Add
         $scope.peopleaddlist = function (index) {
-            $scope.query_users.push($scope.users[index]);
+
+            var control = "0";
+
+            for (var i = 0; i < $scope.query_users.length; i++) {
+                if ($scope.query_users[i].id == $scope.users[index].id) {
+                    control = "1";
+                }
+        }
+
+            if (control == "0") {
+                $scope.query_users.push($scope.users[index]);
+            }
+
         }
 
         //People Add
         $scope.viewusersearchadd = function (index) {
-            $scope.ViewUsers.push($scope.users[index]);
+
+            var control = "0";
+
+            for (var i = 0; i < $scope.ViewUsers.length; i++) {
+                if ($scope.ViewUsers[i].id == $scope.users[index].id) {
+                    control = "1";
+                }
+        }
+
+            if (control == "0") {
+                $scope.ViewUsers.push($scope.users[index]);
+            }
         }
 
         //TagsQuery
@@ -1075,26 +1098,20 @@ angular.module('ionicApp')
             }
         };
 
-        $scope.mobil_txtADD = function (txt) {
-            $scope.mobil_tagsearched = txt;
-            var taginput = document.getElementById('mobil_tags');
-            taginput.value = txt;
-        };
-
         //Addicionar selected tags
-        $scope.mobil_addedtags = function () {
+        $scope.mobil_addedtags = function (TXT) {
 
             var control = "0";
 
             for (var i = 0; i < $scope.annotationModalDataTagsInput.length; i++) {
 
-                if ($scope.annotationModalDataTagsInput[i].name == $scope.mobil_tagsearched) {
+                if ($scope.annotationModalDataTagsInput[i].name == TXT) {
                     control = "1";
                 }
             }
 
             if (control == "0") {
-                $scope.annotationModalDataTagsInput.push({name: $scope.mobil_tagsearched});
+                $scope.annotationModalDataTagsInput.push({name: TXT});
             }
         }
 
