@@ -1115,7 +1115,7 @@ angular.module('ionicApp')
             }
         }
 
-        //Select circles addicionar for detail search parametre
+        //Select circles addicionar for detail search parameter
         $scope.mobil_addCircles = function (index) {
 
             var control = "0";
@@ -1134,7 +1134,7 @@ angular.module('ionicApp')
 
         }
 
-        //Select circles addicionar for parametre
+        //Select circles addicionar for parameter
         $scope.mobil_addViewCircles = function (index) {
 
             var control = "0";
@@ -1152,7 +1152,12 @@ angular.module('ionicApp')
             }
 
         }
-                
+
+        $scope.checked = function (durum) {
+
+            $scope.query_own_annotations = durum;
+        }
+        
         $scope.initChapterViewParameters = function () {
 
             var chapterId = 1;
