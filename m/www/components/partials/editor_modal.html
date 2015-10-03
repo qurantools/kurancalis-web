@@ -102,20 +102,14 @@
             Paylaşılan Çevreler
         </div>
 
-        <ul class="list">
-            <li class="item item-checkbox" ng-repeat="item in circlesname">
-                <label class="checkbox">
-                    <input
-                            type="checkbox"
-                            name="circlesview[]"
-                            value="{{item.id}}"
-                            ng-click="mobil_addViewCircles($index)"                            
-                            >
-                </label>
-
+        <div class="list">
+            <ion-checkbox  ng-repeat="item in mobileAnnotationEditorCircleListForSelection"
+                           ng-model="mobileAnnotationEditorCircleListForSelection[$index].selected"
+                           ng-checked="mobileAnnotationEditorCircleListForSelection[$index].selected"
+                    >
                 {{item.name}}
-            </li>
-        </ul>
+            </ion-checkbox>
+        </div>
 
         <div class="item item-divider">
             Paylaşılan Kişiler

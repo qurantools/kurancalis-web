@@ -53,8 +53,8 @@
                                     </div>
                                     <show-verse data="showVerseData.data" ng-if="showVerseAtTranslation==translation.id"
                                                 class="showVerseData"></show-verse>
-                                    <div class="row" ng-if="!$last">
-                                        <hr/>
+                                    <div class="row" ng-if="!$last" style="height: 10px;">
+                                       &nbsp;
                                     </div>
                                 </div>
                                 <div ng-repeat="(verseTagsKey, verseTagsVal) in verseTagsJSON"

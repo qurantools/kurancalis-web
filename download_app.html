@@ -1,15 +1,19 @@
-﻿<!doctype html>
-
+﻿<html>
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script>
         $(document).ready(function (){
             if(navigator.userAgent.toLowerCase().indexOf("android") > -1){
                 window.location.href = 'https://play.google.com/store/apps/details?id=org.quran.qurantools';
             }
-            if(navigator.userAgent.toLowerCase().indexOf("iphone") > -1){
+            else if(navigator.userAgent.toLowerCase().indexOf("iphone") > -1){
                 window.location.href = 'https://itunes.apple.com/tr/app/kuran-cal-s/id1032659897?mt=8';
             }
+            else{
+                window.location.href = 'http://i.tr.cx/kurancalis_android';
+            }
+            //alert(navigator.userAgent.toLowerCase()+navigator.userAgent.toLowerCase().indexOf("iphone"));
         });
     </script>
 </head>

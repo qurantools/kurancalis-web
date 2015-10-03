@@ -457,6 +457,9 @@ app.factory('ChapterVerses', function ($resource) {
         $scope.extendedCirclesForSearch = [];
         $scope.circleListsPromise=null;
 
+        //mobile: can View circle list for editor
+        $scope.mobileAnnotationEditorCircleListForSelection = [];
+
 
         $scope.checkAPIVersion = function(){
             var versionRestangular = Restangular.all("apiversioncompatibility");
@@ -695,15 +698,28 @@ app.factory('ChapterVerses', function ($resource) {
         };
 
         //retrives the permissions of an annotation to scope variables
-        $scope.coVliste = function (annoid) {
+        $scope.restoreScopeAnnotationPermissions = function (annoid) {
             var cevregosterRestangular = Restangular.one("annotations", annoid).all("permissions");
             cevregosterRestangular.customGET("", "", {'access_token': $scope.access_token}).then(function (cevreliste) {
 
 
                 //todo: replace locale "All circles" and "All users" for -2 and -1 circle ids
                 var clis = [];
+                //reset mobileAnnotationEditorCircleListForSelection
+                for (var checkboxIndex = 0; checkboxIndex < $scope.mobileAnnotationEditorCircleListForSelection.length; checkboxIndex++) {
+                    $scope.mobileAnnotationEditorCircleListForSelection[checkboxIndex].selected=false;
+                }
+
                 for (var i = 0; i < cevreliste.canViewCircles.length; i++) {
                     clis.push({'id': cevreliste.canViewCircles[i].id, 'name': cevreliste.canViewCircles[i].name});
+
+                    //prepare circle checkbox  list
+                    for (var checkboxIndex = 0; checkboxIndex < $scope.mobileAnnotationEditorCircleListForSelection.length; checkboxIndex++) {
+                        if( cevreliste.canViewCircles[i].id == $scope.mobileAnnotationEditorCircleListForSelection[checkboxIndex].id ){
+                            $scope.mobileAnnotationEditorCircleListForSelection[checkboxIndex].selected=true;
+                        }
+                    }
+
                 }
                 $scope.ViewCircles = clis;
 
@@ -731,6 +747,8 @@ app.factory('ChapterVerses', function ($resource) {
 
                 $scope.yrmkisis = clis3;
 
+
+
             });
         };
 
@@ -750,7 +768,7 @@ app.factory('ChapterVerses', function ($resource) {
                 $scope.ViewUsers = [];
                 $scope.yrmcevres = [];
                 $scope.yrmkisis = [];
-                $scope.coVliste(annotation.annotationId);
+                $scope.restoreScopeAnnotationPermissions(annotation.annotationId);
             }
             if ($scope.ViewCircles.length == 0 && $scope.ViewUsers.length == 0 && $scope.yrmcevres.length == 0 && $scope.yrmkisis.length == 0) {
                 //all empty //share to everyone by default
@@ -768,6 +786,7 @@ app.factory('ChapterVerses', function ($resource) {
             if (typeof annotation.vcircles != 'undefined') {
                 for (var i = 0; i < annotation.vcircles.length; i++) {
                     cvrtags.push({"id": annotation.vcircles[i]});
+
                 }
             }
             //
@@ -786,11 +805,13 @@ app.factory('ChapterVerses', function ($resource) {
             $scope.annotationModalDataVerse = Math.floor(annotation.verseId / 1000) + ":" + annotation.verseId % 1000;
             //set default color
             if (typeof $scope.annotationModalData.colour == 'undefined')$scope.annotationModalData.colour = 'yellow';
+
             $scope.scopeApply();
             if (!config_data.isMobile) {
                 $('#annotationModal').modal('show');
 
             } else {
+
                 $scope.openModal('editor');
             }
 
@@ -960,6 +981,14 @@ app.factory('ChapterVerses', function ($resource) {
                 //also initialize extended circles
                 Array.prototype.push.apply($scope.extendedCircles, circleList);
                 Array.prototype.push.apply($scope.extendedCirclesForSearch, circleList);
+
+                //also initialize mobileAnnotationEditorCircleListForSelection
+                $scope.mobileAnnotationEditorCircleListForSelection=[];
+                Array.prototype.push.apply($scope.mobileAnnotationEditorCircleListForSelection, $scope.extendedCircles);
+                //add isSelected property for mobile.
+                for (var index = 0; index < $scope.mobileAnnotationEditorCircleListForSelection.length; ++index) {
+                    $scope.mobileAnnotationEditorCircleListForSelection[index].selected=false;
+                }
 
                 $scope.$broadcast("circleLists ready");
 

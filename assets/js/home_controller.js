@@ -30,7 +30,7 @@ angular.module('ionicApp')
         $scope.detailedSearchAuthorSelection = [];
         $scope.peoplesearch = "";
         $scope.circlesname = [];
-        
+
         //multiple > single author view
         $scope.showSingleAuthor=false;
         $scope.selectedSingleAuthor=0;
@@ -316,6 +316,15 @@ angular.module('ionicApp')
         $scope.submitEditor = function () {
 
 
+            if (config_data.isMobile) {
+                //prepare canView circle list
+                $scope.ViewCircles=[];
+                for (var index = 0; index < $scope.mobileAnnotationEditorCircleListForSelection.length; ++index) {
+                    if($scope.mobileAnnotationEditorCircleListForSelection[index].selected==true){
+                        $scope.ViewCircles.push($scope.mobileAnnotationEditorCircleListForSelection[index]);
+                    }
+                }
+            }
 
             //update verse tags
             var oldTags = [];
