@@ -18,44 +18,22 @@
     <ion-content overflow-scroll="true">
         <br/><br/><br/>
 
-        <div style="width:100%; padding-left:10px">
-
-            <div class="well" ng-init="init()">
-                <table>
-                    <td>
-
-                        <label class="toggle toggle-balanced">
-                            <input ng-model="check" type="checkbox" ng-click="checked(check);">
-
-                            <div class="track">
-                                <div class="handle"></div>
-                            </div>
-                        </label>
-                    </td>
-                    <td align="left" style="width:100%; padding-left: 15px;"> Benim notlarımı göster</td>
-                </table>
-            </div>
-
-        </div>
+        <ion-toggle ng-model="query_own_annotations" ng-checked="query_own_annotations" >Benim notlarımı göster</ion-toggle>
         <br/>
+        {{query_own_annotations}}
 
         <div class="item item-divider">
             Çevrelerin Notları
         </div>
 
-        <ul class="list">
-            <li class="item item-checkbox" ng-repeat="item in circlesname">
-                <label class="checkbox">
-                    <input
-                            type="checkbox"
-                            name="circlesview[]"
-                            value="{{item.id}}"
-                            ng-click="mobil_addCircles($index);"
-                            >
-                </label>
+        <div class="list">
+            <ion-checkbox  ng-repeat="item in mobileDetailedSearchCircleListForSelection"
+                           ng-model="mobileDetailedSearchCircleListForSelection[$index].selected"
+                           ng-checked="mobileDetailedSearchCircleListForSelection[$index].selected"
+                    >
                 {{item.name}}
-            </li>
-        </ul>
+            </ion-checkbox>
+        </div>
 
         <br/>
 

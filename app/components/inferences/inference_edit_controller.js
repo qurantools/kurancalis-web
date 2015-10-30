@@ -205,7 +205,7 @@ angular.module('ionicApp')
 
             if (typeof $routeParams.circles !== 'undefined') {
                 try {
-                    circles = JSON.parse(atob($routeParams.circles));
+                    circles = JSON.parse(Base64.decode($routeParams.circles));
                     circlesFromRoute = true;
                 }
                 catch (err) {
@@ -215,7 +215,7 @@ angular.module('ionicApp')
 
             if (typeof $routeParams.users !== 'undefined') {
                 try {
-                    users = JSON.parse(atob($routeParams.users));
+                    users = JSON.parse(Base64.decode($routeParams.users));
                     usersFromRoute = true;
                 }
                 catch (err) {
@@ -323,8 +323,8 @@ angular.module('ionicApp')
                 var parameters =
                 {
                     inferenceId: $scope.inferenceId,
-                    circles: btoa(JSON.stringify($scope.circlesForSearch)),
-                    users: btoa(JSON.stringify($scope.usersForSearch))
+                    circles: Base64.encode(JSON.stringify($scope.circlesForSearch)),
+                    users: Base64.encode(JSON.stringify($scope.usersForSearch))
 
                 }
                 $location.path("/inference/edit/", false).search(parameters);

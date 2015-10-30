@@ -459,7 +459,10 @@ app.factory('ChapterVerses', function ($resource) {
 
         //mobile: can View circle list for editor
         $scope.mobileAnnotationEditorCircleListForSelection = [];
-
+        //mobile: circle list for detailed search
+        $scope.mobileDetailedSearchCircleListForSelection = [];
+        //mobile: circle list for all annotations search
+        $scope.mobileAllAnnotationsSearchCircleListForSelection = [];
 
         $scope.checkAPIVersion = function(){
             var versionRestangular = Restangular.all("apiversioncompatibility");
@@ -982,12 +985,28 @@ app.factory('ChapterVerses', function ($resource) {
                 Array.prototype.push.apply($scope.extendedCircles, circleList);
                 Array.prototype.push.apply($scope.extendedCirclesForSearch, circleList);
 
-                //also initialize mobileAnnotationEditorCircleListForSelection
+                // initialize mobileAnnotationEditorCircleListForSelection
                 $scope.mobileAnnotationEditorCircleListForSelection=[];
                 Array.prototype.push.apply($scope.mobileAnnotationEditorCircleListForSelection, $scope.extendedCircles);
                 //add isSelected property for mobile.
                 for (var index = 0; index < $scope.mobileAnnotationEditorCircleListForSelection.length; ++index) {
                     $scope.mobileAnnotationEditorCircleListForSelection[index].selected=false;
+                }
+
+                // initialize mobileDetailedSearchCircleListForSelection
+                $scope.mobileDetailedSearchCircleListForSelection=[];
+                Array.prototype.push.apply($scope.mobileDetailedSearchCircleListForSelection, $scope.extendedCircles);
+                //add isSelected property for mobile.
+                for (var index = 0; index < $scope.mobileDetailedSearchCircleListForSelection.length; ++index) {
+                    $scope.mobileDetailedSearchCircleListForSelection[index].selected=false;
+                }
+
+                // initialize mobileAllAnnotationsSearchCircleListForSelection
+                $scope.mobileAllAnnotationsSearchCircleListForSelection=[];
+                Array.prototype.push.apply($scope.mobileAllAnnotationsSearchCircleListForSelection, $scope.extendedCircles);
+                //add isSelected property for mobile.
+                for (var index = 0; index < $scope.mobileAllAnnotationsSearchCircleListForSelection.length; ++index) {
+                    $scope.mobileAllAnnotationsSearchCircleListForSelection[index].selected=false;
                 }
 
                 $scope.$broadcast("circleLists ready");

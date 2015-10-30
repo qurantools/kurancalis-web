@@ -91,8 +91,8 @@ angular.module('ionicApp')
                 verse: $scope.verse.number,
                 verseKeyword: $scope.queryVerse.keyword,
                 ownAnnotations: $scope.query_own_annotations,
-                circles: btoa(JSON.stringify($scope.query_circles)),
-                users: btoa(JSON.stringify($scope.query_users))
+                circles: Base64.encode(JSON.stringify($scope.query_circles)),
+                users: Base64.encode(JSON.stringify($scope.query_users))
             }
             $location.path("/translations/", false).search(parameters);
         };
@@ -409,6 +409,16 @@ angular.module('ionicApp')
 
         //action for detailed search screen
         $scope.detailedSearch = function () {
+
+            if(isMobile()){ //set query_circles from mobile selection
+                $scope.query_circles=[];
+                for (var index = 0; index < $scope.mobileDetailedSearchCircleListForSelection.length; ++index) {
+                    if($scope.mobileDetailedSearchCircleListForSelection[index].selected==true){
+                        $scope.query_circles.push($scope.mobileDetailedSearchCircleListForSelection[index]);
+                    }
+                }
+            }
+
             $scope.query_circle_dropdown = $scope.DETAILED_SEARCH_ITEM;
             $scope.goToChapter();
         };
@@ -964,6 +974,7 @@ angular.module('ionicApp')
                 } else if (id == 'editor') {
                     $scope.modal_editor.show();
                 } else if (id == 'homesearch') {
+                    $scope.restoreMobileDetailedSearchCircleSelections();
                     $scope.modal_home_search.show();
                 } else if (id == 'friendsearch') {
                     $scope.modal_friend_search.show();
@@ -1017,25 +1028,21 @@ angular.module('ionicApp')
             $scope.status = !$scope.status;
         }
         
-        $scope.circlesview = function () {
+        $scope.restoreMobileDetailedSearchCircleSelections = function(){
+            //restore mobile circle selections
+            for (var index = 0; index < $scope.mobileDetailedSearchCircleListForSelection.length; ++index) {
+                for(var qindex = 0; qindex < $scope.query_circles.length; ++qindex){
+                    if($scope.query_circles[qindex].id == $scope.mobileDetailedSearchCircleListForSelection[index].id){
 
-//            $scope.query_circles = [];
-//            $scope.query_users = [];
-
-            if ($scope.circlesname.length == 0) {
-                var circlesviewRestangular = Restangular.all("circles");
-                circlesviewRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (circleslist) {
-
-                    $scope.circlesname.push({'id': '-2', 'name': 'Tüm Çevrelerim'});
-
-                    for (var x = 0; x < circleslist.length; x++) {
-
-                        $scope.circlesname.push(circleslist[x]);
+                        $scope.mobileDetailedSearchCircleListForSelection[index].selected=true;
+                        break;
                     }
-
-                });
+                    else{
+                        $scope.mobileDetailedSearchCircleListForSelection[index].selected=false;
+                    }
+                }
             }
-        };
+        }
 
         $scope.clearfriendsearch = function () {
             $scope.peoplesearch = "";
@@ -1124,7 +1131,7 @@ angular.module('ionicApp')
             }
         }
 
-        //Select circles addicionar for detail search parameter
+        //Select circles addicional for detailed search parameter
         $scope.mobil_addCircles = function (index) {
 
             var control = "0";
@@ -1208,7 +1215,7 @@ angular.module('ionicApp')
             }
             if (typeof $routeParams.circles !== 'undefined') {
                 try {
-                    circles = JSON.parse(atob($routeParams.circles));
+                    circles = JSON.parse(Base64.decode($routeParams.circles));
                     circlesFromRoute = true;
                 }
                 catch (err) {
@@ -1217,7 +1224,7 @@ angular.module('ionicApp')
             }
             if (typeof $routeParams.users !== 'undefined') {
                 try {
-                    users = JSON.parse(atob($routeParams.users));
+                    users = JSON.parse(Base64.decode($routeParams.users));
                     usersFromRoute = true;
                 }
                 catch (err) {
@@ -1320,8 +1327,8 @@ angular.module('ionicApp')
                 orderby: "time",
                 chapters: "",
                 verses: "",
-                circles: btoa(JSON.stringify($scope.query_circles)),
-                users: btoa(JSON.stringify($scope.query_users))
+                circles: Base64.encode(JSON.stringify($scope.query_circles)),
+                users: Base64.encode(JSON.stringify($scope.query_users))
 
             }
             $location.path("/annotations/", false).search(parameters);
