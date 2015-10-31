@@ -24,11 +24,11 @@ angular.module('ionicApp')
         $scope.query_circles = [];
         $scope.query_users = [];
         $scope.query_verses = "";
-        $scope.query_own_annotations = true;
+
+        $scope.query_own_annotations = { value: true };
         $scope.queryVerse={};//trick for scope - detailed search compatibiliry. object needed
         $scope.queryVerse.keyword="";
         $scope.detailedSearchAuthorSelection = [];
-        $scope.peoplesearch = "";
         $scope.circlesname = [];
 
         //multiple > single author view
@@ -56,7 +56,7 @@ angular.module('ionicApp')
             $scope.verse.number = localParameterData.verse_number;
             $scope.query_circles = localParameterData.circles;
             $scope.query_users = localParameterData.users;
-            $scope.query_own_annotations = localParameterData.ownAnnotations;
+            $scope.query_own_annotations.value = localParameterData.ownAnnotations;
 
         };
 
@@ -67,7 +67,7 @@ angular.module('ionicApp')
             localParameterData.chapter_id = $scope.query_chapter_id;
             localParameterData.verseKeyword = $scope.queryVerse.keyword;
             localParameterData.verse_number = $scope.verse.number;
-            localParameterData.ownAnnotations = $scope.query_own_annotations;
+            localParameterData.ownAnnotations = $scope.query_own_annotations.value;
             localParameterData.circles = $scope.query_circles;
             localParameterData.users = $scope.query_users;
 
@@ -90,7 +90,7 @@ angular.module('ionicApp')
                 chapter: $scope.query_chapter_id,
                 verse: $scope.verse.number,
                 verseKeyword: $scope.queryVerse.keyword,
-                ownAnnotations: $scope.query_own_annotations,
+                ownAnnotations: $scope.query_own_annotations.value,
                 circles: Base64.encode(JSON.stringify($scope.query_circles)),
                 users: Base64.encode(JSON.stringify($scope.query_users))
             }
@@ -234,7 +234,7 @@ angular.module('ionicApp')
 
 
         $scope.toggleDetailedSearchOwnAnnotations = function () {
-            $scope.query_own_annotations = !$scope.query_own_annotations;
+            $scope.query_own_annotations.value = !$scope.query_own_annotations.value;
         }
 
 
@@ -455,7 +455,7 @@ angular.module('ionicApp')
                 queryParams.circles = $scope.getTagsWithCommaSeparated($scope.query_circles);
                 queryParams.users = $scope.getTagsWithCommaSeparated($scope.query_users);
                 queryParams.verses = $scope.query_verses;
-                queryParams.own_annotations = $scope.query_own_annotations;
+                queryParams.own_annotations = $scope.query_own_annotations.value;
 
 
                 annotator.setQueryParameters(queryParams);
@@ -932,17 +932,17 @@ angular.module('ionicApp')
                 $scope.modal_home_search = modal
             });
 
-            $ionicModal.fromTemplateUrl('components/partials/friend_search.html', {
+            $ionicModal.fromTemplateUrl('components/partials/add_friend_to_search.html', {
                 scope: $scope,
                 //animation: 'slide-in-right',
                 //animation: 'slide-left-right',
                 animation: 'slide-in-up',
-                id: 'homesearch'
+                id: 'friendsearch'
             }).then(function (modal) {
                 $scope.modal_friend_search = modal
             });
 
-            $ionicModal.fromTemplateUrl('components/partials/tag_search.html', {
+            $ionicModal.fromTemplateUrl('components/partials/add_tag_to_annotation.html', {
                 scope: $scope,
                 //animation: 'slide-in-right',
                 //animation: 'slide-left-right',
@@ -952,7 +952,7 @@ angular.module('ionicApp')
                 $scope.modal_tag_search = modal
             });
 
-            $ionicModal.fromTemplateUrl('components/partials/view_users_search.html', {
+            $ionicModal.fromTemplateUrl('components/partials/add_canviewuser.html', {
                 scope: $scope,
                 //animation: 'slide-in-right',
                 //animation: 'slide-left-right',
@@ -982,9 +982,7 @@ angular.module('ionicApp')
                     $scope.modal_view_user_search.show();
                 } else if (id == 'tagsearch') {
                     $scope.modal_tag_search.show();
-                    var taginput = document.getElementById('mobil_tags');
-                    taginput.value = "";
-                    $scope.tagslist = [];
+
                 }
             };
 
@@ -1044,93 +1042,6 @@ angular.module('ionicApp')
             }
         }
 
-        $scope.clearfriendsearch = function () {
-            $scope.peoplesearch = "";
-            var peopleinput = document.getElementById('mobil_peoples');
-            peopleinput.value = '';
-            $scope.users = [];
-        };
-
-        //People Search
-        $scope.peoplelist = function (people) {
-
-            if ((people != "") && (people.length > 2)) {
-                var peoplelistRestangular = Restangular.all("users/search");
-                $scope.usersParams = [];
-                $scope.usersParams.search_query = people;
-                peoplelistRestangular.customGET("", $scope.usersParams, {'access_token': $scope.access_token}).then(function (userliste) {
-                    $scope.users = userliste;
-                });
-            }
-            else {
-                $scope.users = [];
-            }
-        };
-
-        //People Add
-        $scope.peopleaddlist = function (index) {
-
-            var control = "0";
-
-            for (var i = 0; i < $scope.query_users.length; i++) {
-                if ($scope.query_users[i].id == $scope.users[index].id) {
-                    control = "1";
-                }
-        }
-
-            if (control == "0") {
-                $scope.query_users.push($scope.users[index]);
-            }
-
-        }
-
-        //People Add
-        $scope.viewusersearchadd = function (index) {
-
-            var control = "0";
-
-            for (var i = 0; i < $scope.ViewUsers.length; i++) {
-                if ($scope.ViewUsers[i].id == $scope.users[index].id) {
-                    control = "1";
-                }
-        }
-
-            if (control == "0") {
-                $scope.ViewUsers.push($scope.users[index]);
-            }
-        }
-
-        //TagsQuery
-        $scope.tagsquery = function (query) {
-
-            if ((query != "") && (query.length > 2)) {
-                var tagsRestangular = Restangular.one('tags', query);
-                tagsRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (taglist) {
-                    $scope.tagslist = taglist;
-                });
-            }
-            else {
-                $scope.tagslist = [];
-            }
-        };
-
-        //Addicionar selected tags
-        $scope.mobil_addedtags = function (TXT) {
-
-            var control = "0";
-
-            for (var i = 0; i < $scope.annotationModalDataTagsInput.length; i++) {
-
-                if ($scope.annotationModalDataTagsInput[i].name == TXT) {
-                    control = "1";
-                }
-            }
-
-            if (control == "0") {
-                $scope.annotationModalDataTagsInput.push({name: TXT});
-            }
-        }
-
         //Select circles addicional for detailed search parameter
         $scope.mobil_addCircles = function (index) {
 
@@ -1171,7 +1082,7 @@ angular.module('ionicApp')
 
         $scope.checked = function (durum) {
 
-            $scope.query_own_annotations = durum;
+            $scope.query_own_annotations.value = durum;
         }
         
         $scope.initChapterViewParameters = function () {
@@ -1359,7 +1270,7 @@ angular.module('ionicApp')
 
         $scope.selectDropdownCircle = function (item) {
 
-            $scope.query_own_annotations = true;
+            $scope.query_own_annotations.value = true;
             if (item.id == '') {
                 $scope.query_circles = [];
             }

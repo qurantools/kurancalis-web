@@ -12,7 +12,7 @@
     <button class="button button-icon icon-left ion-arrow-left-b" ng-click="closeModal('friendsearch')"
             style="float: left" type="button">
     </button>
-    <ion-content overflow-scroll="true">
+    <ion-content overflow-scroll="true" ng-controller="friendSearchController">
         <br/><br/>
 
         <div class="bar bar-header item-input-inset">
@@ -23,22 +23,10 @@
             </label>
             <button ng-click="clearfriendsearch()" class="button button-clear">X</button>
         </div>
-
-
-        <div style="width:100%;  border-bottom: lightgray 1px solid; height:auto; padding-bottom:10px; padding-top:10px"
-             ng-repeat="item in users">
-            <table>
-                <tr>
-                    <td align="left" style="width:70px; padding-left:15px">
-                        <img height="50" width="50" src={{item.photo}}
-                             ng-click="peopleaddlist($index); closeModal('friendsearch'); ">
-                    </td>
-                    <td style="vertical-align:middle">
-                        <div ng-click="peopleaddlist($index); closeModal('friendsearch'); "> {{item.name}}</div>
-                    </td>
-                </tr>
-            </table>
+        <div class="list" >
+            <a  ng-repeat="item in friendSearchResult" class="item item-avatar"  ng-click="peopleaddlist($index); closeModal('friendsearch');">
+                <img src="{{item.photo}}">{{item.name}}</a>
         </div>
 
     </ion-content>
-   
+</div>

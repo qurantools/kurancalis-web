@@ -38,8 +38,8 @@
                             <div class="well" ng-init="init()">
                                 <table>
                                     <td>
-                                        <i class="fa fa-toggle-on aktif" ng-if="query_own_annotations == true || query_own_annotations == 'true'" ng-click="toggleDetailedSearchOwnAnnotations();"></i>
-                                        <i class="fa fa-toggle-on fa-rotate-180 inactive" ng-if="query_own_annotations == false || query_own_annotations == 'false'" ng-click="toggleDetailedSearchOwnAnnotations();"></i>
+                                        <i class="fa fa-toggle-on aktif" ng-if="query_own_annotations.value == true || query_own_annotations.value == 'true'" ng-click="toggleDetailedSearchOwnAnnotations();"></i>
+                                        <i class="fa fa-toggle-on fa-rotate-180 inactive" ng-if="query_own_annotations.value == false || query_own_annotations.value == 'false'" ng-click="toggleDetailedSearchOwnAnnotations();"></i>
                                     </td>
                                     <td align="left" style="width:100%; padding-left: 15px;">      Benim notlarımı göster</td>
                                 </table>

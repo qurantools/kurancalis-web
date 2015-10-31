@@ -260,6 +260,15 @@ angular.module('ionicApp')
         };
 
         $scope.search_all_annotations = function () {
+
+            if(isMobile()){ //set query_circles from mobile selection
+                $scope.circlesForSearch=[];
+                for (var index = 0; index < $scope.mobileAllAnnotationsSearchCircleListForSelection.length; ++index) {
+                    if($scope.mobileAllAnnotationsSearchCircleListForSelection[index].selected==true){
+                        $scope.circlesForSearch.push($scope.mobileAllAnnotationsSearchCircleListForSelection[index]);
+                    }
+                }
+            }
             $scope.allAnnotationsOpts.start = 0;
             $scope.get_all_annotations();
         }
@@ -290,6 +299,16 @@ angular.module('ionicApp')
 
 
         $scope.submitEditor = function () {
+
+            if (config_data.isMobile) {
+                //prepare canView circle list
+                $scope.ViewCircles=[];
+                for (var index = 0; index < $scope.mobileAnnotationEditorCircleListForSelection.length; ++index) {
+                    if($scope.mobileAnnotationEditorCircleListForSelection[index].selected==true){
+                        $scope.ViewCircles.push($scope.mobileAnnotationEditorCircleListForSelection[index]);
+                    }
+                }
+            }
 
             //get tag Parameters
             var tagParameters = $scope.getTagParametersForAnnotatorStore($scope.ViewCircles, $scope.yrmcevres, $scope.ViewUsers, $scope.yrmkisis, $scope.annotationModalDataTagsInput)
@@ -522,6 +541,47 @@ angular.module('ionicApp')
                     $scope.setModalEditor(modal);
                 });
 
+                $ionicModal.fromTemplateUrl('components/partials/add_canviewuser.html', {
+                    scope: $scope,
+                    //animation: 'slide-in-right',
+                    //animation: 'slide-left-right',
+                    animation: 'slide-in-up',
+                    id: 'viewusersearch'
+                }).then(function (modal) {
+                    $scope.modal_add_canviewuser = modal
+                });
+
+                $ionicModal.fromTemplateUrl('components/partials/add_user_to_all_annotations_search.html', {
+                    scope: $scope,
+                    //animation: 'slide-in-right',
+                    //animation: 'slide-left-right',
+                    animation: 'slide-in-up',
+                    id: 'addUserToAllAnnotationsSearch'
+                }).then(function (modal) {
+                    $scope.modal_addUserToAllAnnotationsSearch = modal
+                });
+
+                $ionicModal.fromTemplateUrl('components/partials/add_tag_to_annotation.html', {
+                    scope: $scope,
+                    //animation: 'slide-in-right',
+                    //animation: 'slide-left-right',
+                    animation: 'slide-in-up',
+                    id: 'tagsearch'
+                }).then(function (modal) {
+                    $scope.modal_tag_search = modal
+                });
+
+                $ionicModal.fromTemplateUrl('components/partials/add_tag_to_search.html', {
+                    scope: $scope,
+                    //animation: 'slide-in-right',
+                    //animation: 'slide-left-right',
+                    animation: 'slide-in-up',
+                    id: 'addtagtosearch'
+                }).then(function (modal) {
+                    $scope.modal_addtagtosearch = modal
+                });
+
+
                 $scope.openModal = function (id) {
                     if (id == 'all_annotations_filter') {
                         $scope.modal_all_annotations_filter.show();
@@ -529,7 +589,19 @@ angular.module('ionicApp')
                         $scope.modal_all_annotations_sort.show();
                     } else  if (id == 'editor') {
                         $scope.getModalEditor().show();
+                    } else  if (id == 'viewusersearch') {
+                        $scope.modal_add_canviewuser.show();
+                    } else  if (id == 'addUserToAllAnnotationsSearch') {
+                        $scope.modal_addUserToAllAnnotationsSearch.show();
+                    } else  if (id == 'tagsearch') {
+                        $scope.modal_tag_search.show();
+                    } else  if (id == 'addtagtosearch') {
+                        $scope.modal_addtagtosearch.show();
                     }
+
+
+
+
                 };
                 $scope.closeModal = function (id) {
                     if (id == 'all_annotations_filter') {
@@ -539,11 +611,24 @@ angular.module('ionicApp')
                     } else  if (id == 'editor') {
                         clearTextSelection();
                         $scope.getModalEditor().hide();
+                    } else  if (id == 'viewusersearch') {
+                        $scope.modal_add_canviewuser.hide();
+                    }else  if (id == 'addUserToAllAnnotationsSearch') {
+                        $scope.modal_addUserToAllAnnotationsSearch.hide();
+                    } else  if (id == 'tagsearch') {
+                        $scope.modal_tag_search.hide();
+                    } else  if (id == 'addtagtosearch') {
+                        $scope.modal_addtagtosearch.hide();
                     }
                 }
             }
 
         };
+
+        $scope.editAnnotation= function (annotation){
+
+            $scope.showEditor(annotation);
+        }
 
         $scope.initAnnotationsParameters();
     });

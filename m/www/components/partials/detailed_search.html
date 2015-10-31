@@ -16,12 +16,8 @@
 
     </ion-nav-bar>
     <ion-content overflow-scroll="true">
-        <br/><br/><br/>
-
-        <ion-toggle ng-model="query_own_annotations" ng-checked="query_own_annotations" >Benim notlarımı göster</ion-toggle>
-        <br/>
-        {{query_own_annotations}}
-
+        <br/><br/>
+        <ion-toggle ng-model="query_own_annotations.value" ng-checked="query_own_annotations.value" >Benim notlarımı göster</ion-toggle>
         <div class="item item-divider">
             Çevrelerin Notları
         </div>

@@ -32,13 +32,56 @@
 
         <div>
 
+            <ion-list show-delete=true>
+                <ion-item ng-repeat="item in filterTags">
+                    <ion-delete-button class="ion-minus-circled"
+                                       ng-click="filterTags.splice($index, 1)">
+                    </ion-delete-button>
+                    {{item.name}}
 
-            <tags-input ng-model="filterTags" display-property="name" placeholder="Etiket girin"
-                        replace-spaces-with-dashes="false"
-                        min-length="2" ng-change="setAnnotationSearchTags(filterTags)">
-                <auto-complete source="loadTags($query)" min-length="2"></auto-complete>
-            </tags-input>
+                </ion-item>
+            </ion-list>
+            <button class="button button-block button-positive" ng-click="openModal('addtagtosearch');">
+                Etiket Ekle
+            </button>
         </div>
+
+        <br/><br/>
+
+        <ion-toggle ng-model="allAnnotationsOpts.own_annotations" ng-checked="allAnnotationsOpts.own_annotations" >Benim notlarımı göster</ion-toggle>
+        <div class="item item-divider">
+            Çevrelerin Notları
+        </div>
+
+        <div class="list">
+            <ion-checkbox  ng-repeat="item in mobileAllAnnotationsSearchCircleListForSelection"
+                           ng-model="mobileAllAnnotationsSearchCircleListForSelection[$index].selected"
+                           ng-checked="mobileAllAnnotationsSearchCircleListForSelection[$index].selected"
+                    >
+                {{item.name}}
+            </ion-checkbox>
+        </div>
+
+        <br/>
+
+        <div class="item item-divider">
+            Kişilerin Notları
+        </div>
+
+        <ion-list show-delete=true>
+            <ion-item ng-repeat="item in usersForSearch">
+                <ion-delete-button class="ion-minus-circled"
+                                   ng-click="usersForSearch.splice($index, 1)">
+                </ion-delete-button>
+                {{item.name}}
+
+            </ion-item>
+        </ion-list>
+
+
+        <button class="button button-block button-positive" ng-click="openModal('addUserToAllAnnotationsSearch');">
+            Kişi Ekle
+        </button>
 
         <ul class="list">
             <li class="item item-checkbox" ng-repeat="author in authors">

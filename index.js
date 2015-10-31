@@ -995,7 +995,7 @@ app.factory('ChapterVerses', function ($resource) {
 
                 // initialize mobileDetailedSearchCircleListForSelection
                 $scope.mobileDetailedSearchCircleListForSelection=[];
-                Array.prototype.push.apply($scope.mobileDetailedSearchCircleListForSelection, $scope.extendedCircles);
+                Array.prototype.push.apply($scope.mobileDetailedSearchCircleListForSelection, $scope.extendedCirclesForSearch);
                 //add isSelected property for mobile.
                 for (var index = 0; index < $scope.mobileDetailedSearchCircleListForSelection.length; ++index) {
                     $scope.mobileDetailedSearchCircleListForSelection[index].selected=false;
