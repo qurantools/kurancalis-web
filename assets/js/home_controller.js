@@ -4,6 +4,7 @@ angular.module('ionicApp')
 
         $scope.linkno="";
 
+
         $scope.switchAuthorViewVerseId = 0;
         $scope.switchScrollWatch=false;
 
@@ -47,6 +48,8 @@ angular.module('ionicApp')
 
         //tags parameters
         $scope.mobil_tagsearched = "";
+
+        $scope.verseAnnotationData = [];
       
         $scope.restoreChapterViewParameters = function (localParameterData) {
             $scope.query_author_mask = localParameterData.author_mask;
@@ -129,8 +132,13 @@ angular.module('ionicApp')
         };
 
 
-        //TODO: ne is yapiyor?
-        $scope.loadVerseTags = function () {
+        $scope.verseHasAnnotation = function(verseId){
+            return verseId in $scope.verseAnnotationData;
+        };
+
+        //load the data that contains verse centric annotation and tag data map
+        $scope.loadVerseAnnotationData = function(){
+            $scope.verseAnnotationData = [];
             $scope.verseTags = [];
             var arrLen = $scope.annotations.length;
             for (var i = 0; i < arrLen; i++) {
@@ -138,9 +146,17 @@ angular.module('ionicApp')
                 var verseId = $scope.annotations[i].verseId;
                 var tags = $scope.annotations[i].tags;
 
+                if (typeof $scope.verseAnnotationData[verseId] == 'undefined') {
+                    $scope.verseAnnotationData[verseId] = {};
+                    $scope.verseAnnotationData[verseId].annotations=[];
+                }
+
+                $scope.verseAnnotationData[verseId].annotations.push ($scope.annotations[i]);
+
                 if (tags != null && tags != "") {
                     if (typeof $scope.verseTags[verseId] == 'undefined') {
                         $scope.verseTags[verseId] = [];
+
                     }
 
                     for (var tag in tags) {
@@ -154,7 +170,7 @@ angular.module('ionicApp')
                 }
             }
             $scope.generateVerseTags();
-        };
+        }
 
         $scope.$watch('targetVerseForTagContent',
             function (newValue, oldValue) {
@@ -290,6 +306,7 @@ angular.module('ionicApp')
             return annotationIndex;
         };
 
+        //method for checking if the item passes the filter.
         $scope.annotationFilter = function (item) {
             if (typeof $scope.filteredAnnotations == 'undefined' || $scope.filteredAnnotations.length == 0) {
                 return true;
@@ -300,7 +317,11 @@ angular.module('ionicApp')
                         found++;
                     }
                 }
-                if (found > 0)return true; else return false;
+                if (found > 0){
+                    return true;
+                } else {
+                    return false;
+                }
             }
         };
 
@@ -451,7 +472,8 @@ angular.module('ionicApp')
 
                 var queryParams = {};
                 queryParams.chapter = $scope.query_chapter_id;
-                queryParams.author_mask = $scope.query_author_mask;
+                //queryParams.author_mask = $scope.query_author_mask;
+                queryParams.author_mask = MAX_AUTHOR_MASK;
                 queryParams.circles = $scope.getTagsWithCommaSeparated($scope.query_circles);
                 queryParams.users = $scope.getTagsWithCommaSeparated($scope.query_users);
                 queryParams.verses = $scope.query_verses;
@@ -497,6 +519,22 @@ angular.module('ionicApp')
 
         };
 
+
+        $scope.showVerseAnnotations = function (verseId){
+
+            var arrayLength = $scope.annotations.length;
+            var verseAnnotations = [];
+            for (var i = 0; i < arrayLength; i++) {
+
+                if( $scope.annotations[i].verseId == verseId ){
+                    verseAnnotations.push($scope.annotations[i]);
+                }
+            }
+
+            //it is just like clicked on annotations
+            $scope.onHighlightClicked(verseAnnotations);
+
+        };
 
         $scope.onHighlightClicked = function (clickedAnnotations) {
 
@@ -671,7 +709,7 @@ angular.module('ionicApp')
 
         $scope.loadAnnotations = function (annotations) {
             $scope.annotations = annotations;
-            $scope.loadVerseTags();
+            $scope.loadVerseAnnotationData();
             $scope.scopeApply();
             $scope.resetAnnotationFilter();
             $scope.colorAnnotations(annotations);
@@ -698,11 +736,35 @@ angular.module('ionicApp')
         };
 
 
+
+
         //remove annotation from scope
         $scope.deleteAnnotationFromScope = function (annotation) {
+
+
+            var verseId = annotation.verseId;
             var arrLen = $scope.annotations.length;
             var annotationId = annotation.annotationId;
             var annotationIndex = -1;
+
+            //delete from verseTags
+
+            //delete from verseAnnotations
+            if( typeof $scope.verseAnnotationData[verseId] != 'undefined' && $scope.verseAnnotationData.hasOwnProperty("annotations")){
+
+                for (var i = 0; i < $scope.verseAnnotationData[verseId].annotations.length; i++) {
+                    if ($scope.verseAnnotationData[verseId].annotations[i].annotationId == annotationId) {
+                        $scope.verseAnnotationData[verseId].annotations.splice(i, 1);
+                        break;
+                    }
+                }
+
+                if($scope.verseAnnotationData[verseId].annotations.length == 0){
+                    delete verseAnnotationData[verseId];
+                }
+
+            }
+
             for (var i = 0; i < arrLen; i++) {
                 if ($scope.annotations[i].annotationId == annotationId) {
                     annotationIndex = i;
@@ -713,6 +775,8 @@ angular.module('ionicApp')
                 $scope.annotations.splice(annotationIndex, 1);
                 $scope.scopeApply();
             }
+
+
         };
 
         //list footnotes
@@ -816,6 +880,8 @@ angular.module('ionicApp')
             if ($scope.targetVerseForTagContent != -1) {
                 $scope.verseTagContentParams = [];
                 $scope.verseTagContentParams.author = $scope.getSelectedVerseTagContentAuthor();
+                //display all verse tags on all authors
+                //$scope.verseTagContentParams.author = MAX_AUTHOR_MASK;
                 $scope.verseTagContentParams.verse_tags = tag;
 
                 $scope.verseTagContentParams.circles = $scope.getTagsWithCommaSeparated($scope.query_circles);

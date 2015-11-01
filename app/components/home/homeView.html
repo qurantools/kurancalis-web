@@ -12,14 +12,14 @@
                             <div class="col-sm-1" ng-if="$first" style="text-align: center" ng-show="!showSingleAuthor">
                                 <a href ng-click="scrollToVerse('{{verse.id-1}}')"><i class="fa fa-caret-up fa-2x"></i></a>
 
-                                <div class="chapter_verse_number">{{translation.chapter}}:{{translation.verse}}</div>
+                                <div class="chapter_verse_number">{{translation.chapter}}:{{translation.verse}} <img src="assets/img/sticky-note.png" width="25" height="25" ng-if="verseHasAnnotation(verse.id)" ng-click="showVerseAnnotations({{verse.id}})"></div>
                                 <a href ng-click="scrollToVerse('{{verse.id+1}}')"><i
                                         class="fa fa-caret-down fa-2x"></i></a>
                                 <br/><a ng-click="linkcreate({{translation.chapter}},{{translation.verse}})" href
                                         data-target="#openlink" data-toggle="modal">Kelime Meali</a>
                             </div>
                             <div class="col-sm-1" ng-if="$first" style="text-align: center" ng-show="showSingleAuthor">
-                                <div class="chapter_verse_number">{{translation.chapter}}:{{translation.verse}}</div>
+                                <div class="chapter_verse_number">{{translation.chapter}}:{{translation.verse}} <img src="assets/img/sticky-note.png" width="25" height="25" ng-if="verseHasAnnotation(verse.id)" ng-click="showVerseAnnotations({{verse.id}})"></div>
                             </div>
                             <div class="col-sm-11" id="t_{{translation.id}}" style="float: right">
                                 <div class="col-sm-3 authorDiv_{{authorMap[translation.authorId].color}}"
@@ -51,6 +51,7 @@
 
 
                     </div>
+
                     <div id="verseTags_{{verse.id}}" ng-repeat="(verseTagsKey, verseTagsVal) in verseTagsJSON"
                          ng-if="verseTagsVal.verseId==verse.id" style="text-align: right;width:100%">
                         <hr/>

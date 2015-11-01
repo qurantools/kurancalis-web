@@ -7,9 +7,6 @@
                     style="float: left"> Geri
             </button>
         </ion-nav-buttons>
-
-
-
         <ion-nav-buttons side="right">
             <button class="button button-icon icon-left ion-checkmark"
                     ng-click="search_all_annotations();closeModal('all_annotations_filter')"
@@ -20,18 +17,21 @@
 
 
     <ion-content overflow-scroll="true">
-        <div style="height: 65px"></div>
+        <div style="height: 50px"></div>
         <div>
-            <label class="item item-input" style="margin:10px;">
-                <input type="text" ng-model="allAnnotationsOpts.keyword" size="12"
-                       placeholder="Aranacak kelime"/>
+            <label class="item item-input" >
+                <input type="text" ng-model="allAnnotationsOpts.keyword" size="15"
+                       placeholder="Not içeriğinde aranacak kelime"/>
             </label>
-
-
         </div>
-
+        <ion-toggle ng-model="allAnnotationsOpts.own_annotations" ng-checked="allAnnotationsOpts.own_annotations" >Benim notlarımı göster</ion-toggle>
+        <div class="item item-divider">
+            Etiketler
+        </div>
+        <button class="button button-block button-positive" ng-click="openModal('addtagtosearch');">
+            Etiket Ekle
+        </button>
         <div>
-
             <ion-list show-delete=true>
                 <ion-item ng-repeat="item in filterTags">
                     <ion-delete-button class="ion-minus-circled"
@@ -41,14 +41,9 @@
 
                 </ion-item>
             </ion-list>
-            <button class="button button-block button-positive" ng-click="openModal('addtagtosearch');">
-                Etiket Ekle
-            </button>
+
         </div>
 
-        <br/><br/>
-
-        <ion-toggle ng-model="allAnnotationsOpts.own_annotations" ng-checked="allAnnotationsOpts.own_annotations" >Benim notlarımı göster</ion-toggle>
         <div class="item item-divider">
             Çevrelerin Notları
         </div>
@@ -61,9 +56,6 @@
                 {{item.name}}
             </ion-checkbox>
         </div>
-
-        <br/>
-
         <div class="item item-divider">
             Kişilerin Notları
         </div>
@@ -82,7 +74,7 @@
         <button class="button button-block button-positive" ng-click="openModal('addUserToAllAnnotationsSearch');">
             Kişi Ekle
         </button>
-
+<!-- yazar seçimi iptal
         <ul class="list">
             <li class="item item-checkbox" ng-repeat="author in authors">
                 <label class="checkbox">
@@ -97,5 +89,7 @@
                 {{author.name}}
             </li>
         </ul>
+
+        -->
     </ion-content>
 </div>
