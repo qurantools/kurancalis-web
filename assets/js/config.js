@@ -16,6 +16,8 @@ var config_data = {
     'isMobile':isMobile()
 }
 
+var MAX_AUTHOR_MASK="2147483647";
+
 function isMobile() {
     //test for mobile
     var mobileTest = false;
