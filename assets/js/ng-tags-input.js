@@ -576,7 +576,7 @@ tagsInput.directive('autoComplete', ["$document", "$timeout", "$sce", "$q", "tag
             }
             self.visible = true;
         };
-        self.load = tiUtil.debounce(function(query, tags) {
+        self.load = tiUtil.debounce(function(query, tags, tagsInput) {
             self.query = query;
 
             var promise = $q.when(loadFn({ $query: query }));
@@ -597,6 +597,7 @@ tagsInput.directive('autoComplete', ["$document", "$timeout", "$sce", "$q", "tag
                 else {
                     self.reset();
                 }
+                tagsInput.focusInput();
             });
         }, options.debounceDelay);
 
@@ -715,7 +716,7 @@ tagsInput.directive('autoComplete', ["$document", "$timeout", "$sce", "$q", "tag
                 })
                 .on('input-change', function(value) {
                     if (shouldLoadSuggestions(value)) {
-                        suggestionList.load(value, tagsInput.getTags());
+                        suggestionList.load(value, tagsInput.getTags(),tagsInput);
                     }
                     else {
                         suggestionList.reset();
@@ -724,7 +725,7 @@ tagsInput.directive('autoComplete', ["$document", "$timeout", "$sce", "$q", "tag
                 .on('input-focus', function() {
                     var value = tagsInput.getCurrentTagText();
                     if (options.loadOnFocus && shouldLoadSuggestions(value)) {
-                        suggestionList.load(value, tagsInput.getTags());
+                        suggestionList.load(value, tagsInput.getTags(),tagsInput);
                     }
                 })
                 .on('input-keydown', function(event) {
@@ -755,7 +756,7 @@ tagsInput.directive('autoComplete', ["$document", "$timeout", "$sce", "$q", "tag
                     }
                     else {
                         if (key === KEYS.down && scope.options.loadOnDownArrow) {
-                            suggestionList.load(tagsInput.getCurrentTagText(), tagsInput.getTags());
+                            suggestionList.load(tagsInput.getCurrentTagText(), tagsInput.getTags(), tagsInput);
                             handled = true;
                         }
                     }

@@ -16,7 +16,7 @@ var config_data = {
     'isMobile':isMobile()
 }
 
-var MAX_AUTHOR_MASK="2147483647";
+var MAX_AUTHOR_MASK = "2147483647"; //32 authors
 
 function isMobile() {
     //test for mobile
