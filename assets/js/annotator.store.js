@@ -164,6 +164,9 @@
                 //var tidBlock = angular.element(document.getElementById('theView')).scope().translationDivMap[data[_j].translationId];
                 var tidBlock = annotator.getTranslationDivMap(data[_j].translationId);
 
+                if(typeof  tidBlock == 'undefined'){
+                    tidBlock = "";
+                }
                 data[_j].ranges[0].start = tidBlock + data[_j].ranges[0].start;
                 data[_j].ranges[0].end = tidBlock + data[_j].ranges[0].end;
 
