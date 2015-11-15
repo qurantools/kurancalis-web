@@ -1082,6 +1082,7 @@
             _ref1 = annotation.ranges;
             for (_k = 0, _len2 = _ref1.length; _k < _len2; _k++) {
                 r = _ref1[_k];
+
                 try {
                     normedRanges.push(Range.sniff(r).normalize(root));
                 } catch (_error) {
@@ -1152,7 +1153,10 @@
                     now = annList.splice(0, 10);
                     for (_k = 0, _len2 = now.length; _k < _len2; _k++) {
                         n = now[_k];
-                        _this.setupAnnotation(n);
+                        //kurtulus: do not process if the author is not displayed
+                        if(_this.getQueryParameters().author_mask_on_view & n.author_id){
+                            _this.setupAnnotation(n);
+                        }
                     }
                     if (annList.length > 0) {
                         return setTimeout((function () {

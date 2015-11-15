@@ -206,7 +206,7 @@ angular.module('ionicApp')
                         count: $scope.verseTags[verseId][tag]
                     });
                 }
-                verseTagsJSON.push(thisVerse);
+                verseTagsJSON[verseId]=thisVerse;
             }
             $scope.verseTagsJSON = verseTagsJSON;
             //TODO: bu kod ne is yapiyor?
@@ -472,7 +472,7 @@ angular.module('ionicApp')
 
                 var queryParams = {};
                 queryParams.chapter = $scope.query_chapter_id;
-                //queryParams.author_mask = $scope.query_author_mask;
+                queryParams.author_mask_on_view = $scope.query_author_mask;
                 queryParams.author_mask = MAX_AUTHOR_MASK;
                 queryParams.circles = $scope.getTagsWithCommaSeparated($scope.query_circles);
                 queryParams.users = $scope.getTagsWithCommaSeparated($scope.query_users);
@@ -493,7 +493,6 @@ angular.module('ionicApp')
                     }
                 });
 
-                annotator.addPlugin('Tags');
                 $scope.annotatorActivated = 1;
 
                 annotator.subscribe("annotationCreated", $scope.colorTheAnnotation);
