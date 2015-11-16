@@ -117,8 +117,11 @@ var app = angular.module('ionicApp', requiredModules)
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
             // for form inputs)
             if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
-                cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+                //cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
                 //cordova.plugins.Keyboard.disableScroll(true);
+
+                cordova.plugins.Keyboard.hideKeyboardAccessoryBar(false);
+                cordova.plugins.Keyboard.disableScroll(true);
                 ionic.keyboard.disable();
             }
             if (window.StatusBar) {
@@ -1269,3 +1272,9 @@ function focusToVerseInput() {
     }, 600);
 }
 
+function focusToChapterInput() {
+    setTimeout(function () {
+        document.getElementById('chapterSelection_chapter').focus();
+        document.getElementById('chapterSelection_chapter').select();
+    }, 600);
+}

@@ -51,53 +51,15 @@
         <div class="item item-divider">
             Kategori
         </div>
-
-        <div class="list">
-
-            <label class="item item-radio">
-                <input type="radio" ng-model="annotationModalData.colour" value="yellow" style="float: left;">
-
-                <div class="item-content">
-                    <div class="tag_colour a_hl_yellow">
-
-                    </div>
-                    <div>
-                        Açıklama, hatırlatıcı
-                    </div>
-                </div>
-                <i class="radio-icon ion-checkmark" ng-if="annotationModalData.colour=='yellow'"></i>
-            </label>
-
-            <label class="item item-radio">
-                <input type="radio" ng-model="annotationModalData.colour" value="red" style="float: left;">
-
-                <div class="item-content">
-                    <div class="tag_colour a_hl_red">
-
-                    </div>
-                    <div>
-                        Tam olarak anlamadım
-                    </div>
-                </div>
-                <i class="radio-icon ion-checkmark" ng-if="annotationModalData.colour=='red'"></i>
-            </label>
-
-            <label class="item item-radio">
-                <input type="radio" ng-model="annotationModalData.colour" value="green" style="float: left;">
-
-                <div class="item-content">
-                    <div class="tag_colour a_hl_green">
-
-                    </div>
-                    <div>
-                        Önemli
-                    </div>
-                </div>
-                <i class="radio-icon ion-checkmark" ng-if="annotationModalData.colour=='green'"></i>
-            </label>
-        </div>
-        <div style="height:15px"></div>
-
+        <ion-radio ng-value="'yellow'" ng-model="annotationModalData.colour" >
+            <div class="tag_colour a_hl_yellow"></div>Açıklama, hatırlatıcı
+        </ion-radio>
+        <ion-radio  ng-value="'red'" ng-model="annotationModalData.colour" >
+            <div class="tag_colour a_hl_red"></div>Tam olarak anlamadım
+        </ion-radio>
+        <ion-radio ng-value="'green'" ng-model="annotationModalData.colour" >
+            <div class="tag_colour a_hl_green"></div>Önemli
+        </ion-radio>
         <div class="item item-divider">
             Paylaşılan Çevreler
         </div>

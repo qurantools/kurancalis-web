@@ -1330,7 +1330,6 @@ angular.module('ionicApp')
                 $scope.verseTagsJSON = [];
             });
 
-
         };
 
         $scope.selectDropdownCircle = function (item) {
@@ -1347,6 +1346,9 @@ angular.module('ionicApp')
             $scope.goToChapter();
         };
 
+        $scope.scrollToTop = function(){
+            $ionicScrollDelegate.scrollTo(0, 0, true);
+        }
 
         //initialization
 

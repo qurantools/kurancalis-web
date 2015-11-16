@@ -57,10 +57,9 @@
                                        &nbsp;
                                     </div>
                                 </div>
-                                <div ng-repeat="(verseTagsKey, verseTagsVal) in verseTagsJSON"
-                                     ng-if="verseTagsVal.verseId==verse.id" style="text-align: right;width:100%">
+                                <div style="text-align: right;width:100%">
                                     <hr/>
-                                    <button ng-repeat="verseTag in verseTagsVal.tags"
+                                    <button ng-repeat="verseTag in verseTagsJSON[verse.id].tags"
                                             class="tag label label-info s_a_tag btn btn-xs btn-info verse_tag"
                                             style="border:0;"
                                             ng-click="goToVerseTag(verse.id,verseTag.tag)"
