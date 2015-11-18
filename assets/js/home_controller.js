@@ -632,6 +632,8 @@ angular.module('ionicApp')
         //list translations
         $scope.list_translations = function () {
 
+            $scope.showProgress();
+
             $scope.setAuthorViewAccordingToDetailedSearchAuthorSelection();
 
             $scope.translationDivMap = [];
@@ -649,6 +651,7 @@ angular.module('ionicApp')
 
             verseTagContentRestangular.customGET("", translationParams, {}).then( function(data){
                 $scope.prepareTranslationDivMap(data);
+                $scope.hideProgress();
                 //mark annotations
                 $scope.annotate_it();
                 //scroll to verse if user is not logged in.
@@ -707,11 +710,13 @@ angular.module('ionicApp')
         };
 
         $scope.loadAnnotations = function (annotations) {
+
             $scope.annotations = annotations;
             $scope.loadVerseAnnotationData();
             $scope.scopeApply();
             $scope.resetAnnotationFilter();
             $scope.colorAnnotations(annotations);
+
 
         };
 
@@ -865,11 +870,13 @@ angular.module('ionicApp')
 
         //Get verses of the tag from server
         $scope.loadVerseTagContent = function (verseTagContentParams, verseId) {
+            $scope.showProgress();
             var verseTagContentRestangular = Restangular.all("translations");
             verseTagContentRestangular.customGET("", verseTagContentParams, {'access_token': $scope.access_token}).then(function (verseTagContent) {
                 $scope.targetVerseForTagContent = verseId;
                 $scope.verseTagContents = verseTagContent;
                 $scope.scopeApply();
+                $scope.hideProgress();
             });
         };
 
@@ -1349,6 +1356,12 @@ angular.module('ionicApp')
         $scope.scrollToTop = function(){
             $ionicScrollDelegate.scrollTo(0, 0, true);
         }
+
+        $scope.$on('modal.shown', function() {
+            $timeout(function () {
+                $scope.scrollToTop();
+            });
+        });
 
         //initialization
 

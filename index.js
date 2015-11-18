@@ -360,7 +360,7 @@ app.factory('ChapterVerses', function ($resource) {
     );
 })
 
-    .controller('MainCtrl', function ($scope, $q, $routeParams, $ionicSideMenuDelegate, $location, $timeout, ListAuthors, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService, $document, $filter, $rootScope, $state, $stateParams, $ionicModal, $ionicScrollDelegate, $ionicPosition, authorization) {
+    .controller('MainCtrl', function ($scope, $q, $routeParams, $ionicSideMenuDelegate, $location, $timeout, ListAuthors, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService, $document, $filter, $rootScope, $state, $stateParams, $ionicModal, $ionicScrollDelegate, $ionicPosition, $ionicLoading, authorization) {
         console.log("MainCtrl");
 
         //all root scope parameters should be defined and documented here
@@ -1175,9 +1175,48 @@ app.factory('ChapterVerses', function ($resource) {
                     break;
                 }
             }
+
+            $scope.$on('modal.shown', function() {
+                $timeout(function () {
+                    $scope.scrollToTop();
+                });
+            });
             
         };//end of init controller
 
+        $scope.scrollToTop = function(){
+            $ionicScrollDelegate.scrollTo(0, 0, true);
+        }
+
+
+
+
+        $scope.showProgress = function() {
+            if(config_data.isMobile){
+                if (window.cordova && window.cordova.plugins){
+
+                    SpinnerDialog.show("","");
+                }
+                else{
+                    $ionicLoading.show({
+                        template: 'Yükleniyor...',
+                        delay:100
+                    });
+                }
+            }
+        };
+        $scope.hideProgress = function(){
+            if(config_data.isMobile) {
+                if (window.cordova && window.cordova.plugins){
+
+                    SpinnerDialog.hide();
+                }
+                else{
+                        $ionicLoading.hide();
+                }
+            }
+
+        };
 
         //initialization
 
@@ -1201,6 +1240,7 @@ function sidebarInit() {
 
 function openPanel() {
     $('#cd-panel-right').addClass('is-visible');
+
 }
 function closePanel() {
     $('#cd-panel-right').removeClass('is-visible');
@@ -1228,6 +1268,7 @@ function toggleLeftPanel() {
 }
 
 function verseTagClicked(elem) {
+
     var closeClick = false;
     if ($(elem).hasClass('btn-warning')) {
         angular.element(document.getElementById('theView')).scope().targetVerseForTagContent = -1;

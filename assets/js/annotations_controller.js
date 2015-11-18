@@ -630,5 +630,15 @@ angular.module('ionicApp')
             $scope.showEditor(annotation);
         }
 
+        $scope.scrollToTop = function(){
+            $ionicScrollDelegate.scrollTo(0, 0, true);
+        }
+
+        $scope.$on('modal.shown', function() {
+            $timeout(function () {
+                $scope.scrollToTop();
+            });
+        });
+
         $scope.initAnnotationsParameters();
     });
