@@ -1246,18 +1246,18 @@ function sidebarInit() {
 
 function openPanel() {
     $('#cd-panel-right').addClass('is-visible');
-
+document.getElementById("openbtn").style.border = "1px solid blue";
 }
 function closePanel() {
     $('#cd-panel-right').removeClass('is-visible');
+    document.getElementById("openbtn").style.border = "none";
 }
 function togglePanel() {
     if ($('#cd-panel-right').hasClass('is-visible')) {
         closePanel();
-        document.getElementById("openbtn").style.border = "none";
     } else {
         openPanel();
-        document.getElementById("openbtn").style.border = "1px solid blue";
+        
     }
 }
 function openLeftPanel() {

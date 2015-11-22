@@ -552,7 +552,7 @@ angular.module('ionicApp')
 
             //it is just like clicked on annotations
             $scope.onHighlightClicked(verseAnnotations);
-
+           
         };
 
         $scope.onHighlightClicked = function (clickedAnnotations) {
