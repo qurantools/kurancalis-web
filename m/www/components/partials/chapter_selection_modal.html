@@ -18,7 +18,7 @@
         <label class="item-input-wrapper">
             <i class="icon ion-ios-search placeholder-icon field-icon"></i>
             <input id="chapterSelection_chapter" type="text" placeholder="Sure" ng-model="goToVerseParameters.chapterFilter"  value="" ng-init="goToVerseParameters.chapterFilter=''"
-                    ng-change="scrollToTop()"/>
+                    ng-change="scrollDelegateTop('chapter_selection')"/>
             <a ng-if="goToVerseParameters.chapterFilter != ''"
                on-tap="goToVerseParameters.chapterFilter='';focusToChapterInput()">
                 <i class="icon ion-ios-close placeholder-icon"></i>
@@ -33,7 +33,7 @@
         </label>
 
     </ion-header-bar>
-    <ion-content >
+    <ion-content delegate-handle="chapter_selection">
         <ion-radio ng-repeat="chapter in chapters | selectionFilter: {id: goToVerseParameters.chapterFilter,nameTr: goToVerseParameters.chapterFilter,nameTr2: goToVerseParameters.chapterFilter}"
                    ng-value="chapter"
                    ng-model="goToVerseParameters.chapter"

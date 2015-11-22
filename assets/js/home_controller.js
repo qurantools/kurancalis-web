@@ -293,7 +293,7 @@ angular.module('ionicApp')
 
         $scope.getAnnotationIndexFromFilteredAnnotationIndex = function (filteredAnnotationIndex) {
             //TODO use getIndexOfArrayByElement
-            console.log("index1: " + filteredAnnotationIndex);
+            //console.log("index1: " + filteredAnnotationIndex);
             var arrLen = $scope.annotations.length;
 
             var filteredAnnotationId = $scope.filteredAnnotations[filteredAnnotationIndex].annotationId;
@@ -336,48 +336,59 @@ angular.module('ionicApp')
 
         $scope.submitEditor = function () {
 
+            $scope.showProgress();
 
-            if (config_data.isMobile) {
-                //prepare canView circle list
-                $scope.ViewCircles=[];
-                for (var index = 0; index < $scope.mobileAnnotationEditorCircleListForSelection.length; ++index) {
-                    if($scope.mobileAnnotationEditorCircleListForSelection[index].selected==true){
-                        $scope.ViewCircles.push($scope.mobileAnnotationEditorCircleListForSelection[index]);
+            $timeout(function () {
+
+
+                if (config_data.isMobile) {
+                    //prepare canView circle list
+                    $scope.ViewCircles = [];
+                    for (var index = 0; index < $scope.mobileAnnotationEditorCircleListForSelection.length; ++index) {
+                        if ($scope.mobileAnnotationEditorCircleListForSelection[index].selected == true) {
+                            $scope.ViewCircles.push($scope.mobileAnnotationEditorCircleListForSelection[index]);
+                        }
                     }
                 }
-            }
 
-            //update verse tags
-            var oldTags = [];
-            if (typeof $scope.annotationModalData.annotationId != 'undefined') {
-                //tags with server format
-                oldTags = $scope.annotationModalData.tags;
-            }
+                //update verse tags
+                var oldTags = [];
+                if (typeof $scope.annotationModalData.annotationId != 'undefined') {
+                    //tags with server format
+                    oldTags = $scope.annotationModalData.tags;
+                }
 
-            //get tag Parameters
-            var tagParameters = $scope.getTagParametersForAnnotatorStore($scope.ViewCircles, $scope.yrmcevres, $scope.ViewUsers, $scope.yrmkisis, $scope.annotationModalDataTagsInput)
-            //now annotationModalData belogs to root scope, may be we can get it later
-            $scope.annotationModalData.canViewCircles = tagParameters.canViewCircles;
-            $scope.annotationModalData.canCommentCircles = tagParameters.canCommentCircles;
-            $scope.annotationModalData.canViewUsers = tagParameters.canViewUsers;
-            $scope.annotationModalData.canCommentUsers = tagParameters.canCommentUsers;
-            $scope.annotationModalData.tags = tagParameters.tags;
+                //get tag Parameters
+                var tagParameters = $scope.getTagParametersForAnnotatorStore($scope.ViewCircles, $scope.yrmcevres, $scope.ViewUsers, $scope.yrmkisis, $scope.annotationModalDataTagsInput)
+                //now annotationModalData belogs to root scope, may be we can get it later
+                $scope.annotationModalData.canViewCircles = tagParameters.canViewCircles;
+                $scope.annotationModalData.canCommentCircles = tagParameters.canCommentCircles;
+                $scope.annotationModalData.canViewUsers = tagParameters.canViewUsers;
+                $scope.annotationModalData.canCommentUsers = tagParameters.canCommentUsers;
+                $scope.annotationModalData.tags = tagParameters.tags;
 
-            annotator.publish('annotationEditorSubmit', [annotator.editor, $scope.annotationModalData]);
-            $scope.editorSubmitted = 1;
+                annotator.publish('annotationEditorSubmit', [annotator.editor, $scope.annotationModalData]);
+                $scope.editorSubmitted = 1;
 
-            $scope.updateVerseTags($scope.annotationModalData.verseId, oldTags, $scope.annotationModalData.tags);
+                $scope.updateVerseTags($scope.annotationModalData.verseId, oldTags, $scope.annotationModalData.tags);
 
 
-            //coming from another page fix
-            if ($scope.getIndexOfArrayByElement($scope.annotations, 'annotationId', $scope.annotationModalData.annotationId) == -1) {
-                $scope.addAnnotation($scope.annotationModalData);
-            }
-            if (config_data.isMobile) {
-                $scope.closeModal('editor');
-            }
-            annotator.onEditorHide();
-            return annotator.ignoreMouseup = false;
+                //coming from another page fix
+                if ($scope.getIndexOfArrayByElement($scope.annotations, 'annotationId', $scope.annotationModalData.annotationId) == -1) {
+                    $scope.addAnnotation($scope.annotationModalData);
+                }
+
+                annotator.onEditorHide();
+                annotator.ignoreMouseup = false;
+
+                if (config_data.isMobile) {
+                    $scope.closeModal('editor');
+                }
+
+                $scope.hideProgress();
+
+            },350);
+
 
         };
 
@@ -431,17 +442,25 @@ angular.module('ionicApp')
         //action for detailed search screen
         $scope.detailedSearch = function () {
 
-            if(isMobile()){ //set query_circles from mobile selection
-                $scope.query_circles=[];
-                for (var index = 0; index < $scope.mobileDetailedSearchCircleListForSelection.length; ++index) {
-                    if($scope.mobileDetailedSearchCircleListForSelection[index].selected==true){
-                        $scope.query_circles.push($scope.mobileDetailedSearchCircleListForSelection[index]);
+            $scope.showProgress();
+            $timeout(function(){
+
+                if(isMobile()){ //set query_circles from mobile selection
+                    $scope.query_circles=[];
+                    for (var index = 0; index < $scope.mobileDetailedSearchCircleListForSelection.length; ++index) {
+                        if($scope.mobileDetailedSearchCircleListForSelection[index].selected==true){
+                            $scope.query_circles.push($scope.mobileDetailedSearchCircleListForSelection[index]);
+                        }
                     }
                 }
-            }
+                $scope.query_circle_dropdown = $scope.DETAILED_SEARCH_ITEM;
+                $scope.goToChapter();
 
-            $scope.query_circle_dropdown = $scope.DETAILED_SEARCH_ITEM;
-            $scope.goToChapter();
+                if (config_data.isMobile) {
+                    $scope.closeModal('homesearch');
+                }
+            },350);
+
         };
 
 
@@ -513,6 +532,7 @@ angular.module('ionicApp')
                     $(document).unbind('mousedown');
 
                 }
+                $scope.hideProgress();
             }
 
 
@@ -841,8 +861,16 @@ angular.module('ionicApp')
             if (!config_data.isMobile) {
                 $scope.goToChapter();
             } else {
-                //$scope.query_author_mask = localStorageService.get('');
-                $scope.goToChapter();
+                $scope.showProgress();
+                $timeout(function(){
+                    //$scope.query_author_mask = localStorageService.get('');
+                    $scope.goToChapter();
+
+                    if (config_data.isMobile) {
+                        $scope.closeModal('authors_list');
+                    }
+
+                },300);
 
             }
         }
@@ -953,6 +981,7 @@ angular.module('ionicApp')
                 //animation: 'slide-left-right',
                 animation: 'slide-in-up',
                 id: 'annotations_on_page'
+
             }).then(function (modal) {
                 $scope.modal_annotations_on_page = modal
             });
@@ -1059,26 +1088,29 @@ angular.module('ionicApp')
             };
 
             $scope.closeModal = function (id) {
-                if (id == 'annotations_on_page') {
-                    $scope.modal_annotations_on_page.hide();
-                } else if (id == 'chapter_selection') {
-                    $scope.modal_chapter_selection.hide();
-                } else if (id == 'authors_list') {
-                    $scope.modal_authors_list.hide();
-                } else if (id == 'annotations_on_page_sort') {
-                    $scope.modal_annotations_on_page_sort.hide();
-                } else if (id == 'homesearch') {
-                    $scope.modal_home_search.hide();
-                } else if (id == 'friendsearch') {
-                    $scope.modal_friend_search.hide();
-                } else if (id == 'tagsearch') {
-                    $scope.modal_tag_search.hide();
-                } else if (id == 'viewusersearch') {
-                    $scope.modal_view_user_search.hide();
-                } else if (id == 'editor') {
-                    clearTextSelection();
-                    $scope.getModalEditor().hide();
-                }
+                $timeout(function(){
+
+                    if (id == 'annotations_on_page') {
+                        $scope.modal_annotations_on_page.hide();
+                    } else if (id == 'chapter_selection') {
+                        $scope.modal_chapter_selection.hide();
+                    } else if (id == 'authors_list') {
+                        $scope.modal_authors_list.hide();
+                    } else if (id == 'annotations_on_page_sort') {
+                        $scope.modal_annotations_on_page_sort.hide();
+                    } else if (id == 'homesearch') {
+                        $scope.modal_home_search.hide();
+                    } else if (id == 'friendsearch') {
+                        $scope.modal_friend_search.hide();
+                    } else if (id == 'tagsearch') {
+                        $scope.modal_tag_search.hide();
+                    } else if (id == 'viewusersearch') {
+                        $scope.modal_view_user_search.hide();
+                    } else if (id == 'editor') {
+                        clearTextSelection();
+                        $scope.getModalEditor().hide();
+                    }
+                },300);
             }
 
             $scope.hideAllMobileModals = function () {
@@ -1337,6 +1369,14 @@ angular.module('ionicApp')
                 $scope.verseTagsJSON = [];
             });
 
+            $scope.$on('modal.shown', function(event, modal) {
+                if(config_data.isMobile) {
+                    $timeout(function () {
+                        $scope.scrollDelegateTop(modal.id);
+                    });
+                }
+            });
+
         };
 
         $scope.selectDropdownCircle = function (item) {
@@ -1353,15 +1393,10 @@ angular.module('ionicApp')
             $scope.goToChapter();
         };
 
-        $scope.scrollToTop = function(){
-            $ionicScrollDelegate.scrollTo(0, 0, true);
-        }
+        $scope.scrollDelegateTop = function(id){
+            $ionicScrollDelegate.$getByHandle(id).scrollTop();
+        };
 
-        $scope.$on('modal.shown', function() {
-            $timeout(function () {
-                $scope.scrollToTop();
-            });
-        });
 
         //initialization
 

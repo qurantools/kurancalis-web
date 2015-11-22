@@ -460,6 +460,8 @@ app.factory('ChapterVerses', function ($resource) {
         $scope.extendedCirclesForSearch = [];
         $scope.circleListsPromise=null;
 
+        $scope.clickBlocking = false;
+
         //mobile: can View circle list for editor
         $scope.mobileAnnotationEditorCircleListForSelection = [];
         //mobile: circle list for detailed search
@@ -1118,10 +1120,13 @@ app.factory('ChapterVerses', function ($resource) {
                 };
 
                 $scope.closeModal = function (id) {
-                    if (id == 'editor') {
-                        clearTextSelection();
-                        $scope.modal_editor.hide();
-                    }
+                    $timeout(function() {
+
+                        if (id == 'editor') {
+                            clearTextSelection();
+                            $scope.modal_editor.hide();
+                        }
+                    },300);
                 }
 
                 $scope.annotationAddable = false;
@@ -1176,44 +1181,45 @@ app.factory('ChapterVerses', function ($resource) {
                 }
             }
 
-            $scope.$on('modal.shown', function() {
-                $timeout(function () {
-                    $scope.scrollToTop();
-                });
+            $scope.$on('modal.shown', function(event, modal) {
+                if(config_data.isMobile) {
+                    $timeout(function () {
+                        $ionicScrollDelegate.$getByHandle(modal.id).scrollTop();
+                    });
+                }
             });
             
         };//end of init controller
 
-        $scope.scrollToTop = function(){
-            $ionicScrollDelegate.scrollTo(0, 0, true);
-        }
-
-
-
 
         $scope.showProgress = function() {
-            if(config_data.isMobile){
-                if (window.cordova && window.cordova.plugins){
 
-                    SpinnerDialog.show("","");
+
+            if(config_data.isMobile){
+                $scope.clickBlocking = true;
+            /*    if (window.cordova && window.cordova.plugins){
+
+                    SpinnerDialog.show("","",$scope.hideProgress);
                 }
-                else{
+                else{*/
                     $ionicLoading.show({
                         template: 'Yükleniyor...',
-                        delay:100
+                        delay:100,
+                        duration:1000
                     });
-                }
+                //}
             }
         };
         $scope.hideProgress = function(){
             if(config_data.isMobile) {
-                if (window.cordova && window.cordova.plugins){
+                $scope.clickBlocking = false;
+            /*    if (window.cordova && window.cordova.plugins){
 
                     SpinnerDialog.hide();
                 }
-                else{
-                        $ionicLoading.hide();
-                }
+                else{*/
+                    $ionicLoading.hide();
+                //}
             }
 
         };

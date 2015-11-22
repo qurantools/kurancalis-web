@@ -1,5 +1,5 @@
 angular.module('ionicApp')
-    .controller('AnnotationsCtrl', function ($scope, $routeParams, Facebook, Restangular, $location, authorization, localStorageService, $ionicModal) {
+    .controller('AnnotationsCtrl', function ($scope, $routeParams, Facebook, Restangular, $location, authorization, localStorageService, $ionicModal, $timeout, $ionicScrollDelegate) {
         console.log("annotations ctrl");
         $scope.allAnnotationsOrderBy='verse';
 
@@ -604,24 +604,35 @@ angular.module('ionicApp')
 
                 };
                 $scope.closeModal = function (id) {
-                    if (id == 'all_annotations_filter') {
-                        $scope.modal_all_annotations_filter.hide();
-                    }else if (id == 'all_annotations_sort') {
-                        $scope.modal_all_annotations_sort.hide();
-                    } else  if (id == 'editor') {
-                        clearTextSelection();
-                        $scope.getModalEditor().hide();
-                    } else  if (id == 'viewusersearch') {
-                        $scope.modal_add_canviewuser.hide();
-                    }else  if (id == 'addUserToAllAnnotationsSearch') {
-                        $scope.modal_addUserToAllAnnotationsSearch.hide();
-                    } else  if (id == 'tagsearch') {
-                        $scope.modal_tag_search.hide();
-                    } else  if (id == 'addtagtosearch') {
-                        $scope.modal_addtagtosearch.hide();
-                    }
+                    $timeout(function() {
+
+                        if (id == 'all_annotations_filter') {
+                            $scope.modal_all_annotations_filter.hide();
+                        } else if (id == 'all_annotations_sort') {
+                            $scope.modal_all_annotations_sort.hide();
+                        } else if (id == 'editor') {
+                            clearTextSelection();
+                            $scope.getModalEditor().hide();
+                        } else if (id == 'viewusersearch') {
+                            $scope.modal_add_canviewuser.hide();
+                        } else if (id == 'addUserToAllAnnotationsSearch') {
+                            $scope.modal_addUserToAllAnnotationsSearch.hide();
+                        } else if (id == 'tagsearch') {
+                            $scope.modal_tag_search.hide();
+                        } else if (id == 'addtagtosearch') {
+                            $scope.modal_addtagtosearch.hide();
+                        }
+                    },300);
                 }
             }
+
+            $scope.$on('modal.shown', function(event, modal) {
+                if(config_data.isMobile) {
+                    $timeout(function () {
+                        $scope.scrollDelegateTop(modal.id);
+                    });
+                }
+            });
 
         };
 
@@ -630,15 +641,11 @@ angular.module('ionicApp')
             $scope.showEditor(annotation);
         }
 
-        $scope.scrollToTop = function(){
-            $ionicScrollDelegate.scrollTo(0, 0, true);
-        }
 
-        $scope.$on('modal.shown', function() {
-            $timeout(function () {
-                $scope.scrollToTop();
-            });
-        });
+
+        $scope.scrollDelegateTop = function(id){
+            $ionicScrollDelegate.$getByHandle(id).scrollTop();
+        };
 
         $scope.initAnnotationsParameters();
     });
