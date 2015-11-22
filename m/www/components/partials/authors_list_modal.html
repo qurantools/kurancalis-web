@@ -8,13 +8,13 @@
 
         </ion-nav-buttons>
         <ion-nav-buttons side="right">
-            <button class="button button-icon icon-left ion-checkmark" ng-click="updateAuthors();closeModal('authors_list')"
+            <button class="button button-icon icon-left ion-checkmark" ng-click="updateAuthors()"
                     style="float: left">
             </button>
         </ion-nav-buttons>
 
     </ion-nav-bar>
-    <ion-content overflow-scroll="true">
+    <ion-content delegate-handle="authors_list">
         <div style="height:65px"></div>
         <ul class="list">
             <li class="item item-checkbox" ng-repeat="author in authors">

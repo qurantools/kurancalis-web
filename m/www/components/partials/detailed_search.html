@@ -9,14 +9,14 @@
         </ion-nav-buttons>
         <ion-nav-buttons side="right">
             <button class="button button-icon icon-left ion-checkmark"
-                    ng-click="detailedSearch(); closeModal('homesearch');"
+                    ng-click="detailedSearch()"
                     style="float: left">
             </button>
         </ion-nav-buttons>
 
     </ion-nav-bar>
     <ion-content overflow-scroll="true">
-        <br/><br/>
+        <div style="height: 65px;">&nbsp;</div>
         <ion-toggle ng-model="query_own_annotations.value" ng-checked="query_own_annotations.value" >Benim notlarımı göster</ion-toggle>
         <div class="item item-divider">
             Çevrelerin Notları

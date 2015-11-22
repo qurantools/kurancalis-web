@@ -360,7 +360,7 @@ app.factory('ChapterVerses', function ($resource) {
     );
 })
 
-    .controller('MainCtrl', function ($scope, $q, $routeParams, $ionicSideMenuDelegate, $location, $timeout, ListAuthors, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService, $document, $filter, $rootScope, $state, $stateParams, $ionicModal, $ionicScrollDelegate, $ionicPosition, authorization) {
+    .controller('MainCtrl', function ($scope, $q, $routeParams, $ionicSideMenuDelegate, $location, $timeout, ListAuthors, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService, $document, $filter, $rootScope, $state, $stateParams, $ionicModal, $ionicScrollDelegate, $ionicPosition, $ionicLoading, authorization) {
         console.log("MainCtrl");
 
         //all root scope parameters should be defined and documented here
@@ -459,6 +459,8 @@ app.factory('ChapterVerses', function ($resource) {
         $scope.extendedCircles = [];
         $scope.extendedCirclesForSearch = [];
         $scope.circleListsPromise=null;
+
+        $scope.clickBlocking = false;
 
         //mobile: can View circle list for editor
         $scope.mobileAnnotationEditorCircleListForSelection = [];
@@ -1118,10 +1120,13 @@ app.factory('ChapterVerses', function ($resource) {
                 };
 
                 $scope.closeModal = function (id) {
-                    if (id == 'editor') {
-                        clearTextSelection();
-                        $scope.modal_editor.hide();
-                    }
+                    $timeout(function() {
+
+                        if (id == 'editor') {
+                            clearTextSelection();
+                            $scope.modal_editor.hide();
+                        }
+                    },300);
                 }
 
                 $scope.annotationAddable = false;
@@ -1175,9 +1180,49 @@ app.factory('ChapterVerses', function ($resource) {
                     break;
                 }
             }
+
+            $scope.$on('modal.shown', function(event, modal) {
+                if(config_data.isMobile) {
+                    $timeout(function () {
+                        $ionicScrollDelegate.$getByHandle(modal.id).scrollTop();
+                    });
+                }
+            });
             
         };//end of init controller
 
+
+        $scope.showProgress = function() {
+
+
+            if(config_data.isMobile){
+                $scope.clickBlocking = true;
+            /*    if (window.cordova && window.cordova.plugins){
+
+                    SpinnerDialog.show("","",$scope.hideProgress);
+                }
+                else{*/
+                    $ionicLoading.show({
+                        template: 'Yükleniyor...',
+                        delay:100,
+                        duration:1000
+                    });
+                //}
+            }
+        };
+        $scope.hideProgress = function(){
+            if(config_data.isMobile) {
+                $scope.clickBlocking = false;
+            /*    if (window.cordova && window.cordova.plugins){
+
+                    SpinnerDialog.hide();
+                }
+                else{*/
+                    $ionicLoading.hide();
+                //}
+            }
+
+        };
 
         //initialization
 
@@ -1201,6 +1246,7 @@ function sidebarInit() {
 
 function openPanel() {
     $('#cd-panel-right').addClass('is-visible');
+
 }
 function closePanel() {
     $('#cd-panel-right').removeClass('is-visible');
@@ -1230,6 +1276,7 @@ function toggleLeftPanel() {
 }
 
 function verseTagClicked(elem) {
+
     var closeClick = false;
     if ($(elem).hasClass('btn-warning')) {
         angular.element(document.getElementById('theView')).scope().targetVerseForTagContent = -1;

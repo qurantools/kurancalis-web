@@ -19,7 +19,7 @@
             <label class="item-input-wrapper">
                 <i class="icon ion-ios-search placeholder-icon"></i>
                 <input id="mobil_peoples" ng-model="peoplesearch" type="search" placeholder="Kişi Arama"
-                       ng-change="peoplelist(peoplesearch)"/>
+                       ng-change="peoplelist(peoplesearch);scrollToTop()"/>
             </label>
             <button ng-click="clearfriendsearch()" class="button button-clear">X</button>
         </div>
