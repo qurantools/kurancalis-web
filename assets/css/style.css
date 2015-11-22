@@ -80,6 +80,7 @@ i.inactive {color: #d9534f}
 .chapter_verse_number{
     font-size:20px;
     line-height:20px;
+    width:65px;
 }
 
 .facebook_area {

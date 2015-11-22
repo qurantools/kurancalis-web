@@ -1208,8 +1208,10 @@ function closePanel() {
 function togglePanel() {
     if ($('#cd-panel-right').hasClass('is-visible')) {
         closePanel();
+        document.getElementById("openbtn").style.border = "none";
     } else {
         openPanel();
+        document.getElementById("openbtn").style.border = "1px solid blue";
     }
 }
 function openLeftPanel() {

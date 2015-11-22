@@ -10,13 +10,15 @@
                     <div class="row">
                         <div ng-repeat="translation in verse.translations">
                             <div class="col-sm-1" ng-if="$first" style="text-align: center" ng-show="!showSingleAuthor">
-                                <a href ng-click="scrollToVerse('{{verse.id-1}}')"><i class="fa fa-caret-up fa-2x"></i></a>
+                                <div align="left" style="margin-left:15px"><a href ng-click="scrollToVerse('{{verse.id-1}}')"><i class="fa fa-caret-up fa-2x"></i></a></div>
 
-                                <div class="chapter_verse_number">{{translation.chapter}}:{{translation.verse}} <img src="assets/img/sticky-note.png" width="25" height="25" ng-if="verseHasAnnotation(verse.id)" ng-click="showVerseAnnotations({{verse.id}})"></div>
-                                <a href ng-click="scrollToVerse('{{verse.id+1}}')"><i
+                         <div class="row"><div align="center" style="width:76px; font-size:20px" class="col-md-1">{{translation.chapter}}:{{translation.verse}}</div><div><img src="assets/img/sticky-note.png" width="20" height="20" ng-if="verseHasAnnotation(verse.id)" ng-click="showVerseAnnotations({{verse.id}})"></div></div>
+                             <div align="left" style="margin-left:15px">   <a href ng-click="scrollToVerse('{{verse.id+1}}')"><i
                                         class="fa fa-caret-down fa-2x"></i></a>
-                                <br/><a ng-click="linkcreate({{translation.chapter}},{{translation.verse}})" href
-                                        data-target="#openlink" data-toggle="modal">Kelime Meali</a>
+                                </div>
+                                <div align="center" style="width:50px">
+                                <a ng-click="linkcreate({{translation.chapter}},{{translation.verse}})" href
+                                        data-target="#openlink" data-toggle="modal">Kelime Meali</a></div>
                             </div>
                             <div class="col-sm-1" ng-if="$first" style="text-align: center" ng-show="showSingleAuthor">
                                 <div class="chapter_verse_number">{{translation.chapter}}:{{translation.verse}} <img src="assets/img/sticky-note.png" width="25" height="25" ng-if="verseHasAnnotation(verse.id)" ng-click="showVerseAnnotations({{verse.id}})"></div>
@@ -105,7 +107,7 @@
             <div style="height:50px"></div>
             <div style="padding-bottom:10px;">
                 <button onclick="closePanel()" class="btn btn-default btn-xs" style="float: left; height: 30px;"><i
-                        class="fa fa-undo"></i></button>
+                        class="fa fa-chevron-right large_icon"></i></button>
                 <button class="btn btn-warning btn-xs" ng-click="resetAnnotationFilter()"
                         ng-show='filterSingleAnnotation || searchText!=""' style="float: right; height: 30px;">
                     <i
