@@ -336,7 +336,7 @@ angular.module('ionicApp')
 
         $scope.submitEditor = function () {
 
-            $scope.showProgress();
+            $scope.showProgress("submitEditor");
 
             $timeout(function () {
 
@@ -385,7 +385,7 @@ angular.module('ionicApp')
                     $scope.closeModal('editor');
                 }
 
-                $scope.hideProgress();
+                $scope.hideProgress("submitEditor");
 
             },350);
 
@@ -423,6 +423,7 @@ angular.module('ionicApp')
 
         //go to chapter
         $scope.goToChapter = function () {
+            $scope.showProgress("goToChapter");
             $scope.list_translations();
             $scope.updateVerseTagContent();
             $scope.storeChapterViewParameters();
@@ -442,7 +443,6 @@ angular.module('ionicApp')
         //action for detailed search screen
         $scope.detailedSearch = function () {
 
-            $scope.showProgress();
             $timeout(function(){
 
                 if(isMobile()){ //set query_circles from mobile selection
@@ -532,7 +532,6 @@ angular.module('ionicApp')
                     $(document).unbind('mousedown');
 
                 }
-                $scope.hideProgress();
             }
 
 
@@ -652,8 +651,6 @@ angular.module('ionicApp')
         //list translations
         $scope.list_translations = function () {
 
-            $scope.showProgress();
-
             $scope.setAuthorViewAccordingToDetailedSearchAuthorSelection();
 
             $scope.translationDivMap = [];
@@ -671,7 +668,6 @@ angular.module('ionicApp')
 
             verseTagContentRestangular.customGET("", translationParams, {}).then( function(data){
                 $scope.prepareTranslationDivMap(data);
-                $scope.hideProgress();
                 //mark annotations
                 $scope.annotate_it();
                 //scroll to verse if user is not logged in.
@@ -699,6 +695,7 @@ angular.module('ionicApp')
 
             $timeout(function () {
                 $scope.scrollToElmnt(verseElement);
+                $scope.hideProgress("goToChapter");
             });
         };
 
@@ -861,7 +858,6 @@ angular.module('ionicApp')
             if (!config_data.isMobile) {
                 $scope.goToChapter();
             } else {
-                $scope.showProgress();
                 $timeout(function(){
                     //$scope.query_author_mask = localStorageService.get('');
                     $scope.goToChapter();
@@ -898,13 +894,13 @@ angular.module('ionicApp')
 
         //Get verses of the tag from server
         $scope.loadVerseTagContent = function (verseTagContentParams, verseId) {
-            $scope.showProgress();
+            $scope.showProgress("loadVerseTagContent");
             var verseTagContentRestangular = Restangular.all("translations");
             verseTagContentRestangular.customGET("", verseTagContentParams, {'access_token': $scope.access_token}).then(function (verseTagContent) {
                 $scope.targetVerseForTagContent = verseId;
                 $scope.verseTagContents = verseTagContent;
                 $scope.scopeApply();
-                $scope.hideProgress();
+                $scope.hideProgress("loadVerseTagContent")
             });
         };
 

@@ -713,23 +713,14 @@ app.factory('ChapterVerses', function ($resource) {
 
                 //todo: replace locale "All circles" and "All users" for -2 and -1 circle ids
                 var clis = [];
-                //reset mobileAnnotationEditorCircleListForSelection
-                for (var checkboxIndex = 0; checkboxIndex < $scope.mobileAnnotationEditorCircleListForSelection.length; checkboxIndex++) {
-                    $scope.mobileAnnotationEditorCircleListForSelection[checkboxIndex].selected=false;
-                }
 
                 for (var i = 0; i < cevreliste.canViewCircles.length; i++) {
                     clis.push({'id': cevreliste.canViewCircles[i].id, 'name': cevreliste.canViewCircles[i].name});
 
-                    //prepare circle checkbox  list
-                    for (var checkboxIndex = 0; checkboxIndex < $scope.mobileAnnotationEditorCircleListForSelection.length; checkboxIndex++) {
-                        if( cevreliste.canViewCircles[i].id == $scope.mobileAnnotationEditorCircleListForSelection[checkboxIndex].id ){
-                            $scope.mobileAnnotationEditorCircleListForSelection[checkboxIndex].selected=true;
-                        }
-                    }
-
                 }
                 $scope.ViewCircles = clis;
+                //do some special for mobile widget
+                $scope.setMobileAnnotationEditorCircleListForSelection($scope.ViewCircles);
 
                 var clis1 = [];
                 for (var i = 0; i < cevreliste.canViewUsers.length; i++) {
@@ -755,12 +746,27 @@ app.factory('ChapterVerses', function ($resource) {
 
                 $scope.yrmkisis = clis3;
 
-
-
             });
         };
 
 
+
+        $scope.setMobileAnnotationEditorCircleListForSelection = function(circles){
+            //reset mobileAnnotationEditorCircleListForSelection
+            for (var checkboxIndex = 0; checkboxIndex < $scope.mobileAnnotationEditorCircleListForSelection.length; checkboxIndex++) {
+                $scope.mobileAnnotationEditorCircleListForSelection[checkboxIndex].selected=false;
+            }
+
+            //prepare circle checkbox  list
+            for( var circleIndex = 0; circleIndex < circles.length; circleIndex++){
+                for (var checkboxIndex = 0; checkboxIndex < $scope.mobileAnnotationEditorCircleListForSelection.length; checkboxIndex++) {
+                    if( circles[circleIndex].id == $scope.mobileAnnotationEditorCircleListForSelection[checkboxIndex].id ){
+                        $scope.mobileAnnotationEditorCircleListForSelection[checkboxIndex].selected=true;
+                    }
+                }
+
+            }
+        };
 
 
 
@@ -771,6 +777,8 @@ app.factory('ChapterVerses', function ($resource) {
             console.log(annotation.ranges[0].start);
 
 
+
+            //prepare canView circles.
             if (typeof annotation.annotationId != 'undefined') {
                 $scope.ViewCircles = [];
                 $scope.ViewUsers = [];
@@ -778,14 +786,19 @@ app.factory('ChapterVerses', function ($resource) {
                 $scope.yrmkisis = [];
                 $scope.restoreScopeAnnotationPermissions(annotation.annotationId);
             }
-            if ($scope.ViewCircles.length == 0 && $scope.ViewUsers.length == 0 && $scope.yrmcevres.length == 0 && $scope.yrmkisis.length == 0) {
-                //all empty //share to everyone by default
+            else {
+                if ($scope.ViewCircles.length == 0 && $scope.ViewUsers.length == 0 && $scope.yrmcevres.length == 0 && $scope.yrmkisis.length == 0) {
+                    //all empty //share to everyone by default
 
-                $scope.ViewCircles.push({'id': '-1', 'name': 'Herkes'});
-            }
-            else { //use previous values.
+                    $scope.ViewCircles.push({'id': '-1', 'name': 'Herkes'});
+                }
+                else { //use previous values.
 
+                }
+                //do some special for mobile widget
+                $scope.setMobileAnnotationEditorCircleListForSelection($scope.ViewCircles);
             }
+
 
             var newTags = [];
 
@@ -810,9 +823,11 @@ app.factory('ChapterVerses', function ($resource) {
             if (typeof $scope.annotationModalData.text == 'undefined') {
                 $scope.annotationModalData.text = "";
             }
-            $scope.annotationModalDataVerse = Math.floor(annotation.verseId / 1000) + ":" + annotation.verseId % 1000;
             //set default color
-            if (typeof $scope.annotationModalData.colour == 'undefined')$scope.annotationModalData.colour = 'yellow';
+            if (typeof $scope.annotationModalData.colour == 'undefined') {
+                $scope.annotationModalData.colour = 'yellow';
+            }
+            $scope.annotationModalDataVerse = Math.floor(annotation.verseId / 1000) + ":" + annotation.verseId % 1000;
 
             $scope.scopeApply();
             if (!config_data.isMobile) {
@@ -1192,9 +1207,10 @@ app.factory('ChapterVerses', function ($resource) {
         };//end of init controller
 
 
-        $scope.showProgress = function() {
+        $scope.showProgress = function(operationName) {
 
 
+            $scope.progressOperation=operationName;
             if(config_data.isMobile){
                 $scope.clickBlocking = true;
             /*    if (window.cordova && window.cordova.plugins){
@@ -1210,16 +1226,19 @@ app.factory('ChapterVerses', function ($resource) {
                 //}
             }
         };
-        $scope.hideProgress = function(){
-            if(config_data.isMobile) {
-                $scope.clickBlocking = false;
-            /*    if (window.cordova && window.cordova.plugins){
+        $scope.hideProgress = function(operationName){
+            //hide only for started operation
+            if(operationName == $scope.progressOperation) {
+                if (config_data.isMobile) {
+                    $scope.clickBlocking = false;
+                    /*    if (window.cordova && window.cordova.plugins){
 
-                    SpinnerDialog.hide();
-                }
-                else{*/
+                     SpinnerDialog.hide();
+                     }
+                     else{*/
                     $ionicLoading.hide();
-                //}
+                    //}
+                }
             }
 
         };
