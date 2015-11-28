@@ -10,17 +10,17 @@
                     <div class="row">
                         <div ng-repeat="translation in verse.translations">
                             <div class="col-xs-1" ng-if="$first" style="text-align: center" ng-show="!showSingleAuthor">
-                                <div align="left" style="margin-left:15px"><a href ng-click="scrollToVerse('{{verse.id-1}}')"><i class="fa fa-caret-up fa-2x"></i></a></div>
+                                <div align="left" style="margin-left:15px; margin-bottom:-5px;"><a href ng-click="scrollToVerse('{{verse.id-1}}')"><i class="fa fa-caret-up fa-2x"></i></a></div>
 
                          <div class="row">
                              <div align="center" style="text-align:right; padding-top:10px; width:56px; font-size:20px; float:left;">{{translation.chapter}}:{{translation.verse}}</div>
-                             <div style="width:20px; float:right;margin-right:-5px;">
+                             <div style="width:20px; float:right;">
                                  <img src="assets/img/sticky-note.png" width="20" height="20" ng-if="verseHasAnnotation(verse.id)" ng-click="showVerseAnnotations({{verse.id}})"><br/>
                                  <a ng-click="linkcreate({{translation.chapter}},{{translation.verse}})" href
                                     data-target="#openlink" data-toggle="modal"><img src="assets/img/sticky-note.png" width="20" height="20"></a>
                              </div>
                          </div>
-                             <div align="left" style="margin-left:15px">   <a href ng-click="scrollToVerse('{{verse.id+1}}')"><i
+                             <div align="left" style="margin-left:15px; margin-top:-5px;">   <a href ng-click="scrollToVerse('{{verse.id+1}}')"><i
                                         class="fa fa-caret-down fa-2x"></i></a>
                                 </div>
                             </div>
