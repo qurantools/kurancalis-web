@@ -26,7 +26,7 @@ var app = angular.module('ionicApp', requiredModules)
     .filter('with_footnote_link', [
         function () {
             return function (text, translation_id, author_id) {
-                return text.replace(/\*+/g, "<button class='btn btn-info btn-xs' onclick='angular.element(document.getElementById(\"theView\")).scope().list_footnotes(" + translation_id + "," + author_id + ")'>*</button>");
+                return text.replace(/\*+/g, "<button class='btn btn-default btn-xs' onclick='angular.element(document.getElementById(\"theView\")).scope().list_footnotes(" + translation_id + "," + author_id + ")'>dipnot</button>");
             };
         }])
     .filter('with_next_link', [
