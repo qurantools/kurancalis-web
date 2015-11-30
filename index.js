@@ -473,6 +473,7 @@ app.factory('ChapterVerses', function ($resource) {
             var versionRestangular = Restangular.all("apiversioncompatibility");
             $scope.versionParams = [];
             $scope.versionParams.version = config_data.version;
+            $scope.versionParams.platform = ionic.Platform.platform();
             versionRestangular.customGET("", $scope.versionParams, {}).then(function(data){
                 if(data.message != "OK"){
                     alert(data.message);
