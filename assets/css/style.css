@@ -243,3 +243,8 @@ i.inactive {color: #d9534f}
     color: #000000;
 }
 /* end of tutorial carousel */
+
+.translation_nav_col1{
+    width:60px;
+    float:left;
+}
