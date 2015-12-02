@@ -385,7 +385,10 @@ angular.module('ionicApp')
                     $scope.closeModal('editor');
                 }
 
+                $('#annotationModal').modal('hide');
+
                 $scope.hideProgress("submitEditor");
+
 
             },350);
 
