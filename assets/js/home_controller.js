@@ -1,5 +1,5 @@
 angular.module('ionicApp')
-    .controller('HomeCtrl', function ($scope, $q, $routeParams, $location, $timeout, ListAuthors, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService, $document, $filter, $rootScope, $state, $stateParams, $ionicModal, $ionicScrollDelegate, $ionicPosition, authorization, $sce) {
+    .controller('HomeCtrl', function ($scope, $compile, $q, $routeParams, $location, $timeout, ListAuthors, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService, $document, $filter, $rootScope, $state, $stateParams, $ionicModal, $ionicScrollDelegate, $ionicPosition, authorization, $sce) {
 
 
         $scope.linkno="";
@@ -76,13 +76,101 @@ angular.module('ionicApp')
 
             localStorageService.set('chapter_view_parameters', localParameterData);
         };
+  
+            $scope.chapterinfo= "";  
+            $scope.verseinfo = "";           
+            $scope.bookmarkverseid = "";
+            $scope.bookchaptername = "";
+            
+            $scope.bookmarks = [];
+            $scope.bookmarksyellowverseID = "";
+            $scope.bookmarksyellowchapter = "";
+            $scope.bookmarksgreenverseID = "";
+            $scope.bookmarksgreenchapter = "";
+            $scope.bookmarksorangeverseID = "";
+            $scope.bookmarksorangechapter = "";
+            
+           $('body').on('click', function (e) {
+                $('[data-toggle="popover"]').each(function () {
+                if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+            $(this).popover('hide');
+                } else {
+            //fixes issue described above
+            $compile($('.popover.in').contents())($scope);
+               }
+            });
+        });
+      
+        $scope.showModal = false;
+            $scope.modal = function (chapterinfo, verseinfo, bookmarkverseid) {
+            $scope.showModal = !$scope.showModal
+            $scope.chapterinfo=chapterinfo;  
+            $scope.verseinfo=verseinfo;           
+            $scope.bookmarkverseid=bookmarkverseid;
+            $scope.bookchaptername = $scope.chapters[chapterinfo - 1].nameTr;
+            
+            bookmark_search();
+        };
+        
+         $scope.NavBarModal = false;
+            $scope.Navmodal = function () {
+            $scope.NavBarModal = !$scope.NavBarModal
+            
+            bookmark_search();
+        };
+        
+        function bookmark_search()
+        {
+         var bookmarkRestangular = Restangular.all("bookmarks");
+            bookmarkRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (data) {
+               
+               $scope.bookmarks = data;
+               
+               for(var i=0;i<3;i++)
+                {
+                  if(data[i].color=="yellow")
+                    {
+                        $scope.bookmarksyellowverseID = data[i].verseId;
+                        $scope.bookmarksyellowchapter = $scope.chapters[(data[i].verseId / 1000 | 0)-1].nameTr;                    
+                    }
+                    else if(data[i].color=="green")
+                    {
+                        $scope.bookmarksgreenverseID = data[i].verseId;
+                        $scope.bookmarksgreenchapter = $scope.chapters[(data[i].verseId / 1000 | 0)-1].nameTr;                    
+                    }    
+                     else if(data[i].color=="orange")
+                    {
+                        $scope.bookmarksorangeverseID = data[i].verseId;
+                        $scope.bookmarksorangechapter = $scope.chapters[(data[i].verseId / 1000 | 0)-1].nameTr;                    
+                    }            
+                }
+               
+            });
+        }
+        
+        $scope.bookmarksave=function(BookMarkcolour,BookMarkverseId)
+        {
+         var headers = {'Content-Type': 'application/x-www-form-urlencoded', 'access_token': $scope.access_token};
+            //var jsonData = annotation;
+            var postData = [];
+            postData.push(encodeURIComponent("colour") + "=" + encodeURIComponent(BookMarkcolour));
+            postData.push(encodeURIComponent("verseId") + "=" + encodeURIComponent(BookMarkverseId));
+            
+            var data = postData.join("&");
 
+             var bookmarkRestangular = Restangular.one("bookmarks");
+                bookmarkRestangular.customPOST(data, '', '', headers).then(function (data) {
+                    bookmark_search();
+                });
+        }
+        
         $scope.linkcreate=function(chapterno,verseno){
             if(verseno=="0")
             {verseno="1"; chapterno="1";  }
 
             $scope.linkno="http://kuranharitasi.com/kuran.aspx?sureno=" + chapterno + "&ayetno=" + verseno + "#ContentPlaceHolder1_ayettekikoklergrid";
             $scope.currentProjectUrl = $sce.trustAsResourceUrl($scope.linkno);
+        
         };
 
         //reflects the scope parameters to URL
@@ -1399,3 +1487,4 @@ angular.module('ionicApp')
         $scope.initializeHomeController();
 
     });
+
