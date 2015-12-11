@@ -24,10 +24,12 @@
             bookmark_search();
         });
         
-        $scope.navigationPopover=function(){
-            bookmark_search();
-        }
-      
+        $scope.$on("searchBookMarkModal", function(event) {
+
+           bookmark_search();
+        });
+        
+        
        function bookmark_search()
         {
          var bookmarkRestangular = Restangular.all("bookmarks");

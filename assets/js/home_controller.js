@@ -87,6 +87,11 @@ angular.module('ionicApp')
             
             $scope.$broadcast('openAddBookMarkModal');
         };
+        
+        $scope.searchBookMarkModal = function(){
+            
+            $scope.$broadcast('searchBookMarkModal');
+        };
        
         $scope.popoveropen=function(){
         $compile($('.popover.in').contents())($scope);
