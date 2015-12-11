@@ -26,9 +26,8 @@
                                     <div class="translation_nav_col1">
                                         <a href ng-click="scrollToVerse('{{verse.id+1}}')"><i class="fa fa-caret-down fa-2x"></i></a>
                                     </div>
-                                    <div>
+                                    <div ng-controller="bookmarkController">
                                     <a tabindex="0" role="button" data-toggle="popover" data-trigger="focus" data-content="<div class='form-control' style='width:220px; height:auto'><a ng-click='linkcreate({{translation.chapter}},{{translation.verse}})' data-target='#openlink' data-toggle='modal'>Kelime Meali</a><hr style='width:100%' /><a ng-click='modal({{translation.chapter}},{{translation.verse}},{{verse.id}})'>Burada Kaldım</a><hr style='width:100%' /><a >Ayeti Paylaş</a></div>" data-html="true"><i class="fa fa-ellipsis-h large_icon" ></i></a>
-                                        
                                     </div>
                                    
                                 </div>

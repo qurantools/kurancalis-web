@@ -1,10 +1,6 @@
 angular.module('ionicApp')
     .controller('HomeCtrl', function ($scope, $compile, $q, $routeParams, $location, $timeout, ListAuthors, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService, $document, $filter, $rootScope, $state, $stateParams, $ionicModal, $ionicScrollDelegate, $ionicPosition, authorization, $sce) {
 
-
-        $scope.linkno="";
-
-
         $scope.switchAuthorViewVerseId = 0;
         $scope.switchScrollWatch=false;
 
@@ -89,28 +85,7 @@ angular.module('ionicApp')
             $scope.bookmarksgreenchapter = "";
             $scope.bookmarksorangeverseID = "";
             $scope.bookmarksorangechapter = "";
-            
-           $('body').on('click', function (e) {
-                $('[data-toggle="popover"]').each(function () {
-                if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
-            $(this).popover('hide');
-                } else {
-            //fixes issue described above
-            $compile($('.popover.in').contents())($scope);
-               }
-            });
-        });
-      
-        $scope.showModal = false;
-            $scope.modal = function (chapterinfo, verseinfo, bookmarkverseid) {
-            $scope.showModal = !$scope.showModal
-            $scope.chapterinfo=chapterinfo;  
-            $scope.verseinfo=verseinfo;           
-            $scope.bookmarkverseid=bookmarkverseid;
-            $scope.bookchaptername = $scope.chapters[chapterinfo - 1].nameTr;
-            
-            bookmark_search();
-        };
+       
         
          $scope.NavBarModal = false;
             $scope.Navmodal = function () {
@@ -163,16 +138,7 @@ angular.module('ionicApp')
                     bookmark_search();
                 });
         }
-        
-        $scope.linkcreate=function(chapterno,verseno){
-            if(verseno=="0")
-            {verseno="1"; chapterno="1";  }
-
-            $scope.linkno="http://kuranharitasi.com/kuran.aspx?sureno=" + chapterno + "&ayetno=" + verseno + "#ContentPlaceHolder1_ayettekikoklergrid";
-            $scope.currentProjectUrl = $sce.trustAsResourceUrl($scope.linkno);
-        
-        };
-
+      
         //reflects the scope parameters to URL
         $scope.setTranslationsPageURL = function () {
             var parameters =
