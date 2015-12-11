@@ -37,7 +37,8 @@
                     </button>
                     <span style="width: 10px;">&nbsp;</span>
                     
-                    <a ng-if="user!=null && currentPage=='home'" class="btn btn-primary" tabindex="0" role="button" data-placement="bottom" data-toggle="popover" data-trigger="focus" data-content="<div class='form-control' style='width:220px; height:auto'><div style='border-bottom: 1px solid Black;height:40px; padding-top:8px' ng-click='Navmodal()'>Burada Kaldım</div><div style='border-bottom: 1px solid Black;height:40px; padding-top:8px' data-target='#homearama' data-toggle='modal'><i class='fa fa-search' style='font-size: 1.3em'></i>&nbsp;&nbsp;Not Arama / Filtreleme</div><div style='height:40px; padding-top:8px' data-target='#myModal' data-toggle='modal' type='button'> <i class='fa fa-user' style='font-size: 1.3em'></i>&nbsp;&nbsp;Meal Seçimi </div></div>" data-html="true">Araçlar</a>
+                     
+                    <a ng-if="user!=null && currentPage=='home'" class="btn btn-primary" tabindex="0" role="button" data-placement="bottom" data-toggle="popover" data-trigger="focus" data-content="<div class='form-control' style='width:220px; height:auto'><div ng-controller='bookmarkController' style='border-bottom: 1px solid Black;height:40px; padding-top:8px' ng-click='navigationPopover()' data-target='#navbookmark' data-toggle='modal'>Burada Kaldım</div><div style='border-bottom: 1px solid Black;height:40px; padding-top:8px' data-target='#homearama' data-toggle='modal'><i class='fa fa-search' style='font-size: 1.3em'></i>&nbsp;&nbsp;Not Arama / Filtreleme</div><div style='height:40px; padding-top:8px' data-target='#myModal' data-toggle='modal' type='button'> <i class='fa fa-user' style='font-size: 1.3em'></i>&nbsp;&nbsp;Meal Seçimi </div></div>" data-html="true">Araçlar</a>
                     
                     <a ng-if="user==null && currentPage!='annotations'" class="btn btn-primary" style='height:40px; padding-top:8px' data-target='#myModal' data-toggle='modal' type='button'> <i class='fa fa-user' style='font-size: 1.3em'></i>&nbsp;&nbsp;Meal Seçimi </a>
                     
@@ -90,22 +91,10 @@
                     </div>
                 </div>
             </div>
+            <div ng-include="'app/components/partials/nav_bookmark.htm'"></div>
+                   
         </form>
     </div>
     <!-- /.navbar-collapse -->
 </nav>
 <!-- /navbar -->
-
-<div>
-          <modal title="Ayraçlar (Kaldığım Yer)" visible="NavBarModal">              
-                
-                Gitmek istediğiniz Ayracı Seçiniz.
-                <br /><br />
-                <div style="width:100%" align="center">
-                <div style="background-color:Yellow; width:30%; height:100px; font-size:14px; font-weight:bold; vertical-align:middle; color:Black" class="btn btn-primary btn-wide">{{bookmarksyellowchapter}}<br />{{bookmarksyellowverseID / 1000 | number:0}}:{{bookmarksyellowverseID % 1000}}</div>
-                <div style="background-color:Green; width:30%; height:100px; font-size:14px; font-weight:bold; vertical-align:middle; color:White" class="btn btn-primary btn-wide">{{bookmarksgreenchapter}}<br />{{bookmarksgreenverseID / 1000 | number:0}}:{{bookmarksgreenverseID % 1000}}</div>
-                <div style="background-color:Orange; width:30%; height:100px; font-size:14px; font-weight:bold; vertical-align:middle; color:Black" class="btn btn-primary btn-wide">{{bookmarksorangechapter}}<br />{{bookmarksorangeverseID / 1000 | number:0}}:{{bookmarksorangeverseID % 1000}}</div>
-                </div>
-              
-            </modal>
-        </div>

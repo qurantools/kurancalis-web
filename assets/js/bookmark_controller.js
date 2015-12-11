@@ -1,34 +1,32 @@
 ﻿angular.module('ionicApp')
     .controller('bookmarkController', function ($scope, Restangular, $sce, $compile) {
     
-    
- $('[data-toggle="popover"]').popover({ html : true })
-    .click(function(ev) {
-     //this is workaround needed in order to make ng-click work inside of popover
-     $compile($('.popover.in').contents())($scope);
-});
-    
-    $scope.linkno="";
-    
-      $scope.linkcreate=function(chapterno,verseno){
-            if(verseno=="0")
-            {verseno="1"; chapterno="1";  }
-
-            $scope.linkno="http://kuranharitasi.com/kuran.aspx?sureno=" + chapterno + "&ayetno=" + verseno + "#ContentPlaceHolder1_ayettekikoklergrid";
-            $scope.currentProjectUrl = $sce.trustAsResourceUrl($scope.linkno);
-        
-        };
-        
-       $scope.showModal = false;
-            $scope.modal = function (chapterinfo, verseinfo, bookmarkverseid) {
-            $scope.showModal = !$scope.showModal
-            $scope.chapterinfo=chapterinfo;  
-            $scope.verseinfo=verseinfo;           
-            $scope.bookmarkverseid=bookmarkverseid;
-            $scope.bookchaptername = $scope.chapters[chapterinfo - 1].nameTr;
+            $scope.chapterinfo= "";  
+            $scope.verseinfo = "";           
+            $scope.bookmarkverseid = "";
+            $scope.bookchaptername = "";
+           
+            $scope.bookmarks = [];
+            $scope.bookmarksyellowverseID = "";
+            $scope.bookmarksyellowchapter = "";
+            $scope.bookmarksgreenverseID = "";
+            $scope.bookmarksgreenchapter = "";
+            $scope.bookmarksorangeverseID = "";
+            $scope.bookmarksorangechapter = "";
             
+            $scope.$on("openAddBookMarkModal", function(event) {
+
+            $scope.chapterinfo = $scope.bookmarkParameters.chapterinfo;
+            $scope.verseinfo = $scope.bookmarkParameters.verseinfo;
+            $scope.bookmarkverseid = $scope.bookmarkParameters.bookmarkverseid;
+            $scope.bookchaptername = $scope.chapters[$scope.chapterinfo - 1].nameTr;
+
             bookmark_search();
-        };
+        });
+        
+        $scope.navigationPopover=function(){
+            bookmark_search();
+        }
       
        function bookmark_search()
         {
@@ -57,5 +55,21 @@
                 }
                
             });
+        }
+        
+        $scope.bookmarksave=function(BookMarkcolour,BookMarkverseId)
+        {
+         var headers = {'Content-Type': 'application/x-www-form-urlencoded', 'access_token': $scope.access_token};
+            //var jsonData = annotation;
+            var postData = [];
+            postData.push(encodeURIComponent("colour") + "=" + encodeURIComponent(BookMarkcolour));
+            postData.push(encodeURIComponent("verseId") + "=" + encodeURIComponent(BookMarkverseId));
+            
+            var data = postData.join("&");
+
+             var bookmarkRestangular = Restangular.one("bookmarks");
+                bookmarkRestangular.customPOST(data, '', '', headers).then(function (data) {
+                    bookmark_search();
+                });
         }
 });
