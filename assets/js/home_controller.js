@@ -98,7 +98,7 @@ angular.module('ionicApp')
         }
         
         $scope.ShowChapter=function(chapterid, verseno){
-        
+            
             $scope.goToVerseParameters.chapter.id = chapterid;
             $scope.goToVerseParameters.verse = verseno;
             $scope.goToVerse();

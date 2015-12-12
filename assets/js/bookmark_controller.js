@@ -1,7 +1,6 @@
 ﻿angular.module('ionicApp')
     .controller('bookmarkController', function ($scope, Restangular, $sce, $compile) {
     
-            $scope.navbookmark = true;
             $scope.chapterinfo= "";  
             $scope.verseinfo = "";           
             $scope.bookmarkverseid = "";
@@ -35,6 +34,9 @@
        
        function bookmark_search()
         {
+        
+        $scope.navbookmark = true;
+        
          var bookmarkRestangular = Restangular.all("bookmarks");
             bookmarkRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (data) {
                
