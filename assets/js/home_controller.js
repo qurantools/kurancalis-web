@@ -97,6 +97,14 @@ angular.module('ionicApp')
         $compile($('.popover.in').contents())($scope);
         }
         
+        $scope.ShowChapter=function(chapterid, verseno){
+        
+            $scope.goToVerseParameters.chapter.id = chapterid;
+            $scope.goToVerseParameters.verse = verseno;
+            $scope.goToVerse();
+        
+        }
+        
         $scope.linkcreate=function(chapterno,verseno){
             if(verseno=="0")
             {verseno="1"; chapterno="1";  }
@@ -894,7 +902,8 @@ angular.module('ionicApp')
 
             }
         }
-
+           
+        
         $scope.verseNumberValidation = function (chapters, chapter_id, verse_number) {
             var chapters = $scope.chapters;
             var chapter_id = $scope.goToVerseParameters.chapter.id;

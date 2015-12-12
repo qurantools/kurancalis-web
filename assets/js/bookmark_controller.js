@@ -1,6 +1,7 @@
 ﻿angular.module('ionicApp')
     .controller('bookmarkController', function ($scope, Restangular, $sce, $compile) {
     
+            $scope.navbookmark = true;
             $scope.chapterinfo= "";  
             $scope.verseinfo = "";           
             $scope.bookmarkverseid = "";
@@ -28,8 +29,10 @@
 
            bookmark_search();
         });
-        
-        
+                
+       $scope.bookmarksyellowchapterid = "";
+       $scope.bookmarksyellowverseID = "";
+       
        function bookmark_search()
         {
          var bookmarkRestangular = Restangular.all("bookmarks");
@@ -42,17 +45,23 @@
                   if(data[i].color=="yellow")
                     {
                         $scope.bookmarksyellowverseID = data[i].verseId;
-                        $scope.bookmarksyellowchapter = $scope.chapters[(data[i].verseId / 1000 | 0)-1].nameTr;                    
+                        $scope.bookmarksyellowchapter = $scope.chapters[(data[i].verseId / 1000 | 0)-1].nameTr;  
+                        $scope.bookmarksyellowchapterid = Math.floor(data[i].verseId / 1000);
+                        $scope.bookmarksyellowverseID = data[i].verseId % 1000;         
                     }
                     else if(data[i].color=="green")
                     {
                         $scope.bookmarksgreenverseID = data[i].verseId;
                         $scope.bookmarksgreenchapter = $scope.chapters[(data[i].verseId / 1000 | 0)-1].nameTr;                    
+                        $scope.bookmarksgreenchapterid = Math.floor(data[i].verseId / 1000);
+                        $scope.bookmarksgreenverseID = data[i].verseId % 1000;         
                     }    
                      else if(data[i].color=="orange")
                     {
                         $scope.bookmarksorangeverseID = data[i].verseId;
                         $scope.bookmarksorangechapter = $scope.chapters[(data[i].verseId / 1000 | 0)-1].nameTr;                    
+                        $scope.bookmarksorangechapterid = Math.floor(data[i].verseId / 1000);
+                        $scope.bookmarksorangeverseID = data[i].verseId % 1000;         
                     }            
                 }
                
