@@ -13,9 +13,9 @@
                             </td>
                             <td align="center" style="width:200px">
                                 <div ng-show="open_edit" style="width:200px">
-                                    <button style="width:90px" ng-click="edit_inference()"
-                                            class="btn verse_tag ng-binding btn-info btn-xs">Düzenle</a>&nbsp;
-                                        <button style="width:90px" ng-click="digercevremodal()"
+                                    <button ng-if="edit_user == user.id" style="width:90px" ng-click="edit_inference()"
+                                            class="btn verse_tag ng-binding btn-info btn-xs">Düzenle</button>&nbsp;
+                                        <button ng-if="edit_user == user.id" style="width:90px" ng-click="digercevremodal()"
                                                 class="btn verse_tag ng-binding btn-info btn-xs">Sil
                                         </button>
                                 </div>

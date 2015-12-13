@@ -1,5 +1,5 @@
 angular.module('ionicApp')
-    .controller('InferenceDisplayController', function ($scope, $routeParams, $location, authorization, localStorageService,  Restangular) {
+    .controller('InferenceDisplayController', function ($scope, $routeParams, $location, authorization, localStorageService,  Restangular, $timeout) {
 
         //All scope variables
         $scope.inferenceId=0;
@@ -31,7 +31,7 @@ angular.module('ionicApp')
 
             var inferenceRestangular = Restangular.one("inferences", $scope.inferenceId);
             inferenceRestangular.customDELETE("", {}, {'access_token': $scope.access_token}).then(function (data) {
-                $location.path('inference/new/');
+                $location.path('inferences/');
             });
 
         }
@@ -86,7 +86,7 @@ angular.module('ionicApp')
 
         //Edit inference
         $scope.edit_inference = function () {
-            $location.path('inference/new/');
+            $location.path('inference/edit/'+$scope.inferenceId+"/");
         }
         
         //View inference
@@ -102,13 +102,6 @@ angular.module('ionicApp')
                 $scope.content = data.content;
                 $scope.tags = data.tags;
 
-                if ($scope.edit_user == $scope.user.id) {
-                    $scope.open_edit = true;
-                }
-                else {
-                    $scope.open_edit = false;
-                }
-                     
             });
         }
 
@@ -182,13 +175,17 @@ angular.module('ionicApp')
             var circlesFromRoute = false;
             var usersFromRoute = false;
 
+            $scope.checkUserLoginStatus();
+
             if (typeof $routeParams.inferenceId !== 'undefined') {
                 inferenceId = $routeParams.inferenceId;
                 inferenceIdFromRoute = true;
 
                 //View inference by id
                 $scope.inferenceId = inferenceId;
-                inference_info(inferenceId);
+                $timeout( function(){
+                    inference_info(inferenceId);
+                });
             }
             else {
                 alert("iferenceId can not be empty or null!!!!");
@@ -241,7 +238,7 @@ angular.module('ionicApp')
             $scope.storeInferenceDisplayViewParameters
             $scope.setInferenceDisplayPageURL();
 
-            $scope.checkUserLoginStatus();
+
         }
 
 
@@ -267,7 +264,6 @@ angular.module('ionicApp')
         $scope.setInferenceDisplayPageURL = function () {
             var parameters =
             {
-                inferenceId: $scope.inferenceId,
                 circles: Base64.encode(JSON.stringify($scope.circlesForSearch)),
                 users: Base64.encode(JSON.stringify($scope.usersForSearch))
 

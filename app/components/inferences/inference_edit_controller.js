@@ -183,6 +183,8 @@ angular.module('ionicApp')
             var circlesFromRoute = false;
             var usersFromRoute = false;
 
+            $scope.checkUserLoginStatus();
+
             if($location.path()=="/inference/new/"){
                 $scope.pagePurpose = "new";
                 inferenceId = 0;
@@ -195,7 +197,9 @@ angular.module('ionicApp')
                 inferenceId = $routeParams.inferenceId;
                 inferenceIdFromRoute = true;
 
-                inference_info(inferenceId);
+                $timeout(function(){
+                    inference_info(inferenceId);
+                });
             }
             else if( $scope.pagePurpose == "edit" ){
                 //edit page should have inferenceID
@@ -281,7 +285,6 @@ angular.module('ionicApp')
                 }
             };
             
-            $scope.checkUserLoginStatus();
             $scope.$on('userInfoReady', function handler() {
                 initFileManager('theView',$scope.user.id,function () {
                    //$('inferenceImage').onchange=
@@ -322,12 +325,11 @@ angular.module('ionicApp')
 
                 var parameters =
                 {
-                    inferenceId: $scope.inferenceId,
                     circles: Base64.encode(JSON.stringify($scope.circlesForSearch)),
                     users: Base64.encode(JSON.stringify($scope.usersForSearch))
 
                 }
-                $location.path("/inference/edit/", false).search(parameters);
+                $location.path("/inference/edit/"+$scope.inferenceId+"/", false).search(parameters);
             }
         };
 

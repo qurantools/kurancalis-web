@@ -196,7 +196,7 @@ if (config_data.isMobile == false) { //false
                 reloadOnSearch: false
             })
             .when('/inferences/', {
-                controller: 'AnnotationsCtrl',
+                controller: 'InferenceListController',
                 templateUrl: 'app/components/inferences/inferencesListView.html',
                 reloadOnSearch: false
             })
@@ -205,7 +205,7 @@ if (config_data.isMobile == false) { //false
                 templateUrl: 'app/components/inferences/inferenceEditView.html',
                 reloadOnSearch: false
             })
-            .when('/inference/edit/', {
+            .when('/inference/edit/:inferenceId/', {
                 controller: 'InferenceEditController',
                 templateUrl: 'app/components/inferences/inferenceEditView.html',
                 reloadOnSearch: false

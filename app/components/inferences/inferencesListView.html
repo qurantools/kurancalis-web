@@ -4,84 +4,65 @@
     <div ng-include="'app/components/inferences/inferences_navigation.html'"></div>
     <div class="nav-bottom"></div>
     <div class="dialog dialog-warning" style="padding:0 20px 10px 20px"
-         ng-if="allAnnotationsOpts.keyword ||filterTags.length >0|| annotationSearchAuthorSelection.length>0 ">
+         ng-if="allInferencesOpts.keyword ||filterTags.length >0 ">
         <div class="container" style="text-align: left;">
-            <div ng-if="allAnnotationsOpts.keyword"><strong>Kelime:</strong> {{allAnnotationsOpts.keyword}}</div>
+            <div ng-if="allInferencesOpts.keyword"><strong>Kelime:</strong> {{allInferencesOpts.keyword}}</div>
             <div ng-if="filterTags.length>0"><strong>Etiket:</strong>
+
                 <div ng-repeat="filterTag in filterTags" class="tag label label-info s_a_tag">{{filterTag.name}}</div>
             </div>
 
             <div ng-if="usersForSearch.length>0"><strong>Kişiler:</strong>
+
                 <div ng-repeat="kisi in usersForSearch" class="tag label label-info s_a_tag">{{kisi.name}}</div>
             </div>
-            
+
             <div ng-if="circlesForSearch.length>0"><strong>Çevreler:</strong>
+
                 <div ng-repeat="cevre in circlesForSearch" class="tag label label-info s_a_tag">{{cevre.name}}</div>
-            </div>
-            
-            <div ng-if="annotationSearchAuthorSelection.length>0">
-                <div style="float:left;"><strong>Yazar:</strong></div>
-                <div ng-repeat="authorSearch in annotationSearchAuthorSelection" style="float: left">
-                    <span ng-repeat="author in authors" ng-if="author.id==authorSearch"
-                          style="float: left; padding-left:5px">
-                        {{author.name}}
-                    </span>{{$last ? '' : ', '}}
-                </div>
             </div>
 
         </div>
     </div>
 
-    Örnek: <br><a href="#/inference/display/5/">Inference ID:5</a>
-    <br><a href="#/inference/display/6/">Inference ID:6</a><br>
     <div>
-        <div ng-repeat="annotation in annotations" class="box">
+        <div ng-repeat="inference in inferences" class="box">
             <div class="s_a_header">
-                {{annotation.verseId / 1000 | number:0}}:{{annotation.verseId % 1000}}
-                <button ng-click="showVerse(annotation)" class="btn btn-primary btn-xs" ng-if="showVerseData.annotationId!=annotation.annotationId"><i
-                        class="fa fa-cog"></i></button>
-                <button ng-click="showVerseData.annotationId=-1" class="btn btn-xs" ng-if="showVerseData.annotationId==annotation.annotationId"><i
-                        class="fa fa-cog "></i></button>
-                <div style="float:right;">{{annotation.userName | limitTo: 25}}</div>
-            </div>
-            <show-verse data="showVerseData.data"
-                        ng-if="showVerseData.annotationId==annotation.annotationId"></show-verse>
-            <div class="small_space">&nbsp;</div>
-            <div ng-if="showVerseData.annotationId!=annotation.annotationId">
-               <blockquote ng-bind-html="annotation.translation_content | mark_verse_annotation:annotation:1 | newLineAllowed | to_trusted"></blockquote>
+                <div style="float:right;">{{inference.userName | limitTo: 25}}</div>
             </div>
             <div class="small_space">&nbsp;</div>
-            <div class="s_a_text">
-                <span ng-bind-html="annotation.text | newLineAllowed | to_trusted"></span>
+            <div class="s_a_header">
+                <div >
+                    <a href="#/inference/display/{{inference.id}}/"><img src="{{inference.image}}" width="200"
+                                                                         height="150"></a>
+                </div>
+                <div >
+                    <div style="text-align: center"><a href="#/inference/display/{{inference.id}}/"><h4>
+                        {{inference.title}}</h4>
+                    </a></div>
+                    <div>
+                        <span ng-bind-html="inference.brief | to_trusted"></span>
+                    </div>
+                </div>
             </div>
-            <div class="small_space">&nbsp;</div>
-            <div ng-repeat="annotationTag in annotation.tags" class="tag label label-info s_a_tag">
-                {{annotationTag}}
+            <br>
+            <div class="has-footer small_space">&nbsp;</div>
+            <div ng-repeat="inferenceTag in inference.tags" class="tag label label-info s_a_tag">
+                {{inferenceTag}}
             </div>
             <div class="small_space">&nbsp;</div>
             <div class="row" style="padding:0 15px">
-                <div style="float: left">{{annotation.updated | date: 'dd/MM/yyyy HH:mm:ss'}}</div>
-                <div style="float: right">
-                    <button type="button" class="btn btn-primary btn-xs" ng-click="showEditor(annotation)" ng-if="annotation.userId==user.id"><i
-                            class="fa fa-pencil-square-o "></i>
-                    </button>
-                    <button type="button" class="btn btn-danger btn-xs" ng-click="deleteAnnotation(annotation)" ng-if="annotation.userId==user.id"><i
-                            class="fa fa-trash-o"></i></button>
-                </div>
+                <div style="float: left">{{inference.updated | date: 'dd/MM/yyyy HH:mm:ss'}}</div>
             </div>
 
         </div>
 
     </div>
-    <div style="text-align: center; padding-top:10px;" ng-if="allAnnotationsOpts.hasMore==true">
-        <button ng-click="get_all_annotations()" class="btn btn-info btn-hg">Daha fazla</button>
+    <div style="text-align: center; padding-top:10px;" ng-if="allInferencesOpts.hasMore==true">
+        <button ng-click="get_all_inferences()" class="btn btn-info btn-hg">Daha fazla</button>
     </div>
 
-    <div ng-include="'app/components/partials/authors_modal.html'"></div>
-    <div ng-include="'app/components/partials/editor_modal.html'"></div>
-
-
-    <div class="modal" id="annotationsFilterModal">
+    <div class="modal" id="inferencesFilterModal">
         <div style="width:750px" class="modal-dialog fixed-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -91,83 +72,87 @@
                 </div>
 
                 <div class="modal-body">
-  <table style="width: 700px">
-    <tr>
-        <td style="width: 260px;">
-            <strong>
-            Yazarlar</strong><br /> <br />
-            
-            <div>
-                        <ul class="selectable_list">
-                            <li ng-repeat="author in authors"
-                                ng-click="annotationSearchAuthorToggleSelection(author.id)"
-                                ng-class="{ 'selected_list_item': annotationSearchAuthorSelection.indexOf(author.id) > -1}">
-                                {{author.name}}
-                            </li>
-                        </ul>
+                    <table style="width: 700px">
+                        <tr>
+                            <td style="width: 260px;">
 
-                    </div>
-        </td>
-        <td style="width: 440px; height: 21px; border-left: dimgray 1px solid; padding-left: 15px; vertical-align: top;">
-        
-         <div class="well" ng-init="init()">
-    <table>
-        <td>
-            <i class="fa fa-toggle-on aktif" ng-if="allAnnotationsOpts.own_annotations == true || allAnnotationsOpts.own_annotations == 'true'" ng-click="toggleAnnotationSearchOwnAnnotations();"></i>
-            <i class="fa fa-toggle-on fa-rotate-180 inactive" ng-if="allAnnotationsOpts.own_annotations == false || allAnnotationsOpts.own_annotations == 'false'" ng-click="toggleAnnotationSearchOwnAnnotations();"></i>
-        </td>
-      <td align="left" style="width:100%; padding-left: 15px;">      Benim notlarımı göster</td>
-      </table>
-     </div>
-        <div>
-        <input type="text" ng-model="allAnnotationsOpts.keyword" size="12" class="form-control" placeholder="Aranacak kelime"/>
-        </div>
-        <br />
-        <table style="width: 100%">
-        <tr>
-        <td align="left" style="width: 30px">
-        Sure
-        </td>
-        <td align="left" style="width: 120px">
-        <input style="width:60px" type="text" ng-model="sureler" size="12" class="form-control"/>
-        </td>
-        <td align="left" style="width: 30px">
-        Ayet
-        </td>
-        <td align="left" style="width: 120px">
-        <input style="width:60px" type="text" ng-model="ayetler" size="12" class="form-control"/>
-        </td>
-        </tr>
-        </table>
-        <br />
-                    <div>
-                    Etikete sahip olan notlar
-                        <tags-input ng-model="filterTags" display-property="name" placeholder="Etiket girin" replace-spaces-with-dashes="false"
-                                    min-length="2">
-                            <auto-complete source="loadTags($query)" min-length="2" select-first-match="false"></auto-complete>
-                        </tags-input>
-                    </div>
-          
-            <br />          
-      Kişilere ait olan notlar
-        <tags-input ng-model="usersForSearch" placeholder="Kişi Seçiniz" display-property="name" replace-spaces-with-dashes="false" min-length="2">
-        <auto-complete source="kisilistele($query)" min-length="2"></auto-complete>
-        </tags-input>
-    
-      <br />
-     Çevremdeki kişilere ait olan notlar
-        <tags-input ng-model="circlesForSearch" placeholder="Çevre Seçiniz" display-property="name" replace-spaces-with-dashes="false" min-length="1" add-from-autocomplete-only="true" add-on-blur="false">
-        <auto-complete source="cevrelisteleForSearch()"  load-on-empty="true" load-on-focus="true" ></auto-complete>
-        </tags-input>
-  
-        </td>
-    </tr>
-</table>       
+                            </td>
+                            <td style="width: 440px; height: 21px; border-left: dimgray 1px solid; padding-left: 15px; vertical-align: top;">
+
+                                <div class="well" ng-init="init()">
+                                    <table>
+                                        <td>
+                                            <i class="fa fa-toggle-on aktif"
+                                               ng-if="allInferencesOpts.own_inferences == true || allInferencesOpts.own_inferences == 'true'"
+                                               ng-click="toggleInferenceSearchOwnInferences();"></i>
+                                            <i class="fa fa-toggle-on fa-rotate-180 inactive"
+                                               ng-if="allInferencesOpts.own_inferences == false || allInferencesOpts.own_inferences == 'false'"
+                                               ng-click="toggleInferenceSearchOwnInferences();"></i>
+                                        </td>
+                                        <td align="left" style="width:100%; padding-left: 15px;"> Benim notlarımı
+                                            göster
+                                        </td>
+                                    </table>
+                                </div>
+                                <div>
+                                    <input type="text" ng-model="allInferencesOpts.keyword" size="12"
+                                           class="form-control" placeholder="Aranacak kelime"/>
+                                </div>
+                                <br/>
+                                <table style="width: 100%">
+                                    <tr>
+                                        <td align="left" style="width: 30px">
+                                            Sure
+                                        </td>
+                                        <td align="left" style="width: 120px">
+                                            <input style="width:60px" type="text" ng-model="sureler" size="12"
+                                                   class="form-control"/>
+                                        </td>
+                                        <td align="left" style="width: 30px">
+                                            Ayet
+                                        </td>
+                                        <td align="left" style="width: 120px">
+                                            <input style="width:60px" type="text" ng-model="ayetler" size="12"
+                                                   class="form-control"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <br/>
+
+                                <div>
+                                    Etikete sahip olan notlar
+                                    <tags-input ng-model="filterTags" display-property="name" placeholder="Etiket girin"
+                                                replace-spaces-with-dashes="false"
+                                                min-length="2">
+                                        <auto-complete source="loadTags($query)" min-length="2"
+                                                       select-first-match="false"></auto-complete>
+                                    </tags-input>
+                                </div>
+
+                                <br/>
+                                Kişilere ait olan notlar
+                                <tags-input ng-model="usersForSearch" placeholder="Kişi Seçiniz" display-property="name"
+                                            replace-spaces-with-dashes="false" min-length="2">
+                                    <auto-complete source="kisilistele($query)" min-length="2"></auto-complete>
+                                </tags-input>
+
+                                <br/>
+                                Çevremdeki kişilere ait olan notlar
+                                <tags-input ng-model="circlesForSearch" placeholder="Çevre Seçiniz"
+                                            display-property="name" replace-spaces-with-dashes="false" min-length="1"
+                                            add-from-autocomplete-only="true" add-on-blur="false">
+                                    <auto-complete source="cevrelisteleForSearch()" load-on-empty="true"
+                                                   load-on-focus="true"></auto-complete>
+                                </tags-input>
+
+                            </td>
+                        </tr>
+                    </table>
                 </div>
 
                 <div class="modal-footer">
                     <a href="#" class="btn btn-primary btn-wide" data-dismiss="modal"
-                       ng-click="search_all_annotations()">Tamam</a>
+                       ng-click="search_all_inferences()">Tamam</a>
                 </div>
             </div>
         </div>
