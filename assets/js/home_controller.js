@@ -97,14 +97,6 @@ angular.module('ionicApp')
         $compile($('.popover.in').contents())($scope);
         }
         
-        $scope.ShowChapter=function(chapterid, verseno){
-            
-            $scope.goToVerseParameters.chapter.id = chapterid;
-            $scope.goToVerseParameters.verse = verseno;
-            $scope.goToVerse();
-        
-        }
-        
         $scope.linkcreate=function(chapterno,verseno){
             if(verseno=="0")
             {verseno="1"; chapterno="1";  }
@@ -1440,7 +1432,19 @@ angular.module('ionicApp')
         $(element).tooltip();
       }
       if (attrs.toggle=="popover"){
-        $(element).popover();
+        $(element).popover(
+        /*    {
+            html: true,
+            content: function () {
+                console.log(attrs.templatefile);
+                return $('#verse_popover').html();
+                /*$.get(attrs.templatefile).success(function (data) {
+                    return data;
+                });*/
+        //    }
+       // }
+
+        );
          
       }
     }

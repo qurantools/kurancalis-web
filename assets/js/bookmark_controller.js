@@ -85,4 +85,12 @@
                     bookmark_search();
                 });
         }
+
+        $scope.gotoBookmark=function(chapterid, verseno){
+
+            $scope.goToVerseParameters.chapter.id = chapterid;
+            $scope.goToVerseParameters.verse = verseno;
+            $scope.goToVerse();
+
+        }
 });
