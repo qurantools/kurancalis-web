@@ -31,21 +31,21 @@
                 <div style="float:right;">{{inference.userName | limitTo: 25}}</div>
             </div>
             <div class="small_space">&nbsp;</div>
-            <div class="s_a_header">
-                <div >
+            <div>
+                <div style="float: left">
                     <a href="#/inference/display/{{inference.id}}/"><img src="{{inference.image}}" width="200"
                                                                          height="150"></a>
                 </div>
-                <div >
-                    <div style="text-align: center"><a href="#/inference/display/{{inference.id}}/"><h4>
+                <div style="float: left" class="mycol2">
+                    <div style="text-align: center;" ><a href="#/inference/display/{{inference.id}}/"><h4 style="margin-top:0;">
                         {{inference.title}}</h4>
                     </a></div>
-                    <div>
+                    <div style="padding-left:10px;">
                         <span ng-bind-html="inference.brief | to_trusted"></span>
                     </div>
                 </div>
             </div>
-            <br>
+            <div style="clear: both"></div>
             <div class="has-footer small_space">&nbsp;</div>
             <div ng-repeat="inferenceTag in inference.tags" class="tag label label-info s_a_tag">
                 {{inferenceTag}}
