@@ -9,10 +9,15 @@
             $scope.bookmarks = [];
             $scope.bookmarksyellowverseID = "";
             $scope.bookmarksyellowchapter = "";
+            $scope.bookmarksyellowchapterid = "";
+            
             $scope.bookmarksgreenverseID = "";
             $scope.bookmarksgreenchapter = "";
+            $scope.bookmarksgreenchapterid = "";
+            
             $scope.bookmarksorangeverseID = "";
             $scope.bookmarksorangechapter = "";
+            $scope.bookmarksorangechapterid = "";             
             
             $scope.$on("openAddBookMarkModal", function(event) {
 
@@ -29,8 +34,7 @@
            bookmark_search();
         });
                 
-       $scope.bookmarksyellowchapterid = "";
-       $scope.bookmarksyellowverseID = "";
+      
        
        function bookmark_search()
         {
@@ -47,23 +51,41 @@
                   if(data[i].color=="yellow")
                     {
                         $scope.bookmarksyellowverseID = data[i].verseId;
-                        $scope.bookmarksyellowchapter = $scope.chapters[(data[i].verseId / 1000 | 0)-1].nameTr;  
-                        $scope.bookmarksyellowchapterid = Math.floor(data[i].verseId / 1000);
-                        $scope.bookmarksyellowverseID = data[i].verseId % 1000;         
+                        $scope.bookmarksyellowchapter = $scope.chapters[(data[i].verseId / 1000 | 0)-1].nameTr; 
+                        
+                        if($scope.bookmarksyellowchapter != "")
+                        {    
+                            $scope.bookmarksyellowchapterid = Math.floor(data[i].verseId / 1000);
+                            $scope.bookmarksyellowverseID = data[i].verseId % 1000;
+                        }
+                        else
+                        { $scope.bookmarksyellowchapter = "Boş"; }          
                     }
                     else if(data[i].color=="green")
                     {
                         $scope.bookmarksgreenverseID = data[i].verseId;
-                        $scope.bookmarksgreenchapter = $scope.chapters[(data[i].verseId / 1000 | 0)-1].nameTr;                    
-                        $scope.bookmarksgreenchapterid = Math.floor(data[i].verseId / 1000);
-                        $scope.bookmarksgreenverseID = data[i].verseId % 1000;         
+                        $scope.bookmarksgreenchapter = $scope.chapters[(data[i].verseId / 1000 | 0)-1].nameTr;
+                        
+                        if($scope.bookmarksgreenchapter != "")
+                        {                   
+                            $scope.bookmarksgreenchapterid = Math.floor(data[i].verseId / 1000);
+                            $scope.bookmarksgreenverseID = data[i].verseId % 1000;  
+                        }
+                        else
+                        { $scope.bookmarksgreenchapter = "Boş"; }       
                     }    
                      else if(data[i].color=="orange")
                     {
                         $scope.bookmarksorangeverseID = data[i].verseId;
-                        $scope.bookmarksorangechapter = $scope.chapters[(data[i].verseId / 1000 | 0)-1].nameTr;                    
-                        $scope.bookmarksorangechapterid = Math.floor(data[i].verseId / 1000);
-                        $scope.bookmarksorangeverseID = data[i].verseId % 1000;         
+                        $scope.bookmarksorangechapter = $scope.chapters[(data[i].verseId / 1000 | 0)-1].nameTr;  
+                        
+                        if($scope.bookmarksorangechapter != "")
+                        {                    
+                            $scope.bookmarksorangechapterid = Math.floor(data[i].verseId / 1000);
+                            $scope.bookmarksorangeverseID = data[i].verseId % 1000;       
+                        }
+                        else
+                        { $scope.bookmarksorangechapter = "Boş"; }    
                     }            
                 }
                

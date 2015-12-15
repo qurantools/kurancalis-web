@@ -1,21 +1,24 @@
 <div class="modal" id="navbookmark" ng-controller="bookmarkController">
-    <div class="modal-dialog fixed-dialog">
+    <div class="modal-dialog fixed-dialog" style="width:770px">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" data-dismiss="modal" aria-hidden="true" style="float:right;"><i
                         class="fa fa-close"></i></button>
                 <h4 class="modal-title">Ayraçlar (Kaldığım Yer)</h4>
             </div>
-             <div class="modal-body" style=" width:100%">
-           
+             <div class="modal-body" style="width:100%; height:75px">
             Gitmek istediğiniz Ayracı Seçiniz.
-                <br /><br />
+               </div>
                 <div style="width:100%" align="center">
-                <div data-dismiss="modal" aria-hidden="true" style="background-color:Yellow; width:30%; height:100px; font-size:14px; font-weight:bold; vertical-align:middle; color:Black" class="btn btn-primary btn-wide" ng-click="gotoBookmark(bookmarksyellowchapterid,bookmarksyellowverseID)">{{bookmarksyellowchapter}}<br />{{bookmarksyellowchapterid}}:{{bookmarksyellowverseID}}</div>
-                <div data-dismiss="modal" aria-hidden="true" style="background-color:Green; width:30%; height:100px; font-size:14px; font-weight:bold; vertical-align:middle; color:White" class="btn btn-primary btn-wide" ng-click="gotoBookmark(bookmarksgreenchapterid,bookmarksgreenverseID)">{{bookmarksgreenchapter}}<br />{{bookmarksgreenchapterid}}:{{bookmarksgreenverseID}}</div>
-                <div data-dismiss="modal" aria-hidden="true" style="background-color:Orange; width:30%; height:100px; font-size:14px; font-weight:bold; vertical-align:middle; color:Black" class="btn btn-primary btn-wide" ng-click="gotoBookmark(bookmarksorangechapterid,bookmarksorangeverseID)">{{bookmarksorangechapter}}<br />{{bookmarksorangechapterid}}:{{bookmarksorangeverseID}}</div>
+               <div data-dismiss="modal" aria-hidden="true" style="background-color:Yellow; width:30%; height:100px; font-size:14px; font-weight:bold; vertical-align:middle; color:Black" class="btn btn-primary btn-wide" ng-click="gotoBookmark(bookmarksyellowchapterid,bookmarksyellowverseID)"><div class="col-sm-1"><i class="fa fa-bookmark" style='font-size: 5.0em'></i> </div><div class="col-sm-3" style="margin-left:25px;">{{bookmarksyellowchapter}}<br />{{bookmarksyellowchapterid}}:{{bookmarksyellowverseID}}</div></div>
+                <div data-dismiss="modal" aria-hidden="true" style="background-color:Green; width:30%; height:100px; font-size:14px; font-weight:bold; vertical-align:middle; color:White" class="btn btn-primary btn-wide" ng-click="gotoBookmark(bookmarksgreenchapterid,bookmarksgreenverseID)"><div class="col-sm-1"><i class="fa fa-bookmark" style='font-size: 5.0em'></i> </div><div class="col-sm-3" style="margin-left:25px;">{{bookmarksgreenchapter}}<br />{{bookmarksgreenchapterid}}:{{bookmarksgreenverseID}}</div></div>
+                <div data-dismiss="modal" aria-hidden="true" style="background-color:Orange; width:30%; height:100px; font-size:14px; font-weight:bold; vertical-align:middle; color:Black" class="btn btn-primary btn-wide" ng-click="gotoBookmark(bookmarksorangechapterid,bookmarksorangeverseID)"><div class="col-sm-1"><i class="fa fa-bookmark" style='font-size: 5.0em'></i> </div><div class="col-sm-3" style="margin-left:25px;">{{bookmarksorangechapter}}<br />{{bookmarksorangechapterid}}:{{bookmarksorangeverseID}}</div></div>
                 </div>
-              </div>
+              
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-wide" data-dismiss="modal" aria-hidden="true" class="btn">Kapat</button>
+              
+            </div>
         </div>
     </div>
 </div>

@@ -455,14 +455,15 @@ angular.module('ionicApp')
 
         };
 
-
         //go to chapter / verse from navigation header
         $scope.goToVerse = function () {
+        
             $scope.query_chapter_id = $scope.goToVerseParameters.chapter.id;
             $scope.verse.number = $scope.goToVerseParameters.verse;
             $scope.queryVerse.keyword = ""; //reset keyword because we need the chapter.
             $scope.goToChapter();
         };
+       
 
         //action for detailed search screen
         $scope.detailedSearch = function () {
