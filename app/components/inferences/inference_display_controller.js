@@ -5,6 +5,11 @@ angular.module('ionicApp')
         $scope.inferenceId=0;
         $scope.circles = []; //id array
         $scope.users = []; //id array
+        $scope.circlesForSearch =[];
+        $scope.usersForSearch = [];
+        $scope.referenced = {};
+        $scope.referenced.verses = [];
+        $scope.referenced.selectedAuthor="";
 
         //All Display Variables
         $scope.edit_user = "";
@@ -14,12 +19,10 @@ angular.module('ionicApp')
         $scope.content = "";
         $scope.tags = [];
         $scope.open_edit = true;
-        $scope.authorlist = [];
+
 
         //Volkan
         $scope.initializeCircleLists(); //show circles
-        Circles_tags = [];
-        Users_tags = [];
 
         $scope.digercevre = false;
         $scope.digercevremodal = function () {
@@ -49,40 +52,6 @@ angular.module('ionicApp')
             return $scope.extendedCirclesForSearch;
         };
 
-        $scope.initializeCircleLists = function () {
-
-            Restangular.all("circles").customGET("", {}, {'access_token': $scope.access_token}).then(function (circleList) {
-
-                $scope.extendedCircles = [];
-                $scope.extendedCircles.push({'id': '-2', 'name': 'Tüm Çevrelerim'});
-                $scope.extendedCircles.push({'id': '-1', 'name': 'Herkes'});
-
-                $scope.extendedCirclesForSearch = [];
-                $scope.extendedCirclesForSearch.push({'id': '-2', 'name': 'Tüm Çevrelerim'});
-
-
-                $scope.circleDropdownArray = [];
-                $scope.circleDropdownArray.push({'id': '-2', 'name': 'Tüm Çevrelerim'});
-                $scope.circleDropdownArray.push({'id': '', 'name': 'Sadece Ben'});
-
-                $scope.query_circle_dropdown = $scope.circleDropdownArray[1];
-                Array.prototype.push.apply($scope.circleDropdownArray, circleList);
-
-                //also initialize extended circles
-                Array.prototype.push.apply($scope.extendedCircles, circleList);
-                Array.prototype.push.apply($scope.extendedCirclesForSearch, circleList);
-
-                $scope.$broadcast("circleLists ready");
-
-            });
-        }
-
-        //Authors
-        var AuthorsRestangular = Restangular.one("authors");
-        AuthorsRestangular.customGET("", {}, {}).then(function (data) {
-            $scope.authorlist = data;
-            $scope.selectedOption = $scope.authorlist[13].id;
-        });
 
         //Edit inference
         $scope.edit_inference = function () {
@@ -90,7 +59,7 @@ angular.module('ionicApp')
         }
         
         //View inference
-        function inference_info(inferenceId) {
+        $scope.inference_info = function(inferenceId) {
             var inferenceRestangular = Restangular.one("inferences", inferenceId);
             inferenceRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (data) {
                 $scope.inference_info = data;
@@ -102,8 +71,28 @@ angular.module('ionicApp')
                 $scope.content = data.content;
                 $scope.tags = data.tags;
 
+                for (var i = 0; i < data.references.length; i++) {
+                    var verseId = data.references[i];
+                    $scope.referenced.verses[verseId] = { translation:"", tags:[], verseId:verseId};
+                }
+
+                //array of referenced verse IDs
+                $scope.referenced.verseIds = Object.keys($scope.referenced.verses);
+
+                if($scope.authorMap.length == 0){
+                    $scope.$on("authorMap ready",function(){
+                        //$scope.referenced.selectedAuthor = authorMap[$scope.referenced.selectedAuthor];
+                        $scope.updateReferencedTranslations();
+                        $scope.updateTags();
+                    });
+                }
+                else{
+                    $scope.updateReferencedTranslations();
+                    $scope.updateTags();
+                }
+
             });
-        }
+        };
 
         //On Off Switch
         $scope.status = true;
@@ -112,55 +101,39 @@ angular.module('ionicApp')
             $scope.status = !$scope.status;
         }
 
-        $scope.do_array = function () {
-            Circles_tags.length = 0;
-            Users_tags.length = 0;
+        $scope.updateTags = function() {
+
+            var allAnnotationsParams = [];
+
+            var circleIDList = [];
+            var userIDList = [];
 
             for (var i = 0; i < $scope.circlesForSearch.length; i++) {
-                Circles_tags.push($scope.circlesForSearch[i].id);
+                circleIDList.push($scope.circlesForSearch[i].id);
             }
 
             for (var i = 0; i < $scope.usersForSearch.length; i++) {
-                Users_tags.push($scope.usersForSearch[i].id);
+                userIDList.push($scope.usersForSearch[i].id);
             }
 
-            lists();
-        }
-
-        function lists() {
-
-            //var headers = {'Content-Type': 'application/x-www-form-urlencoded', 'access_token': $scope.access_token};
-            //var postData = [];
-            //postData.push(encodeURIComponent("author") + "=" + encodeURIComponent($scope.selectedOption.valueOf()));
-
-            //var users = Users_tags.join(",");
-            //postData.push(encodeURIComponent("users") + "=" + encodeURIComponent(users));
-
-            //var circles = Circles_tags.join(",");
-            //postData.push(encodeURIComponent("circles") + "=" + encodeURIComponent(circles));
-
-            //var data = postData.join("&");
-            //var annotationRestangular = Restangular.all("annotations").one("tags");
-
-            //annotationRestangular.customGET(data, '', '', headers).then(function (data) {
-
-            //var a=data;
-            //});
-
-            $scope.allAnnotationsParams = [];
-
-            $scope.allAnnotationsParams.author = $scope.selectedOption.valueOf();
-
-            var users = Users_tags.join(",");
-            $scope.allAnnotationsParams.users = users;
-
-            var circles = Circles_tags.join(",");
-            $scope.allAnnotationsParams.circles = circles;
+            allAnnotationsParams.circles = circleIDList.join(",");
+            allAnnotationsParams.users = userIDList.join(",");
+            allAnnotationsParams.verses = Object.keys($scope.referenced.verses).join(",");
 
             var annotationRestangular = Restangular.one("annotations").all("tags");
-            annotationRestangular.customGET('', $scope.allAnnotationsParams, {access_token: $scope.access_token}).then(function (data) {
+            annotationRestangular.customGET('', allAnnotationsParams, {access_token: $scope.access_token}).then(function (data) {
 
-                var a = data;
+
+                //clear tag map
+                for (var i = 0; i < $scope.referenced.verseIds.length; i++) {
+                    $scope.referenced.verses[$scope.referenced.verseIds[i]].tags = [];
+                }
+                //update tag map
+                for (var i = 0; i < data.length; i++) {
+                    var verseId = data[i].verse_id;
+                    $scope.referenced.verses[verseId].tags = data[i].tags;
+                }
+
             });
 
         }
@@ -170,22 +143,18 @@ angular.module('ionicApp')
             var inferenceId=0;
             var circles = []; //id array
             var users = []; //id array
+            var author = "";
 
             var inferenceIdFromRoute = false;
             var circlesFromRoute = false;
             var usersFromRoute = false;
+            var authorFromRoute = false;
 
             $scope.checkUserLoginStatus();
 
             if (typeof $routeParams.inferenceId !== 'undefined') {
                 inferenceId = $routeParams.inferenceId;
-                inferenceIdFromRoute = true;
 
-                //View inference by id
-                $scope.inferenceId = inferenceId;
-                $timeout( function(){
-                    inference_info(inferenceId);
-                });
             }
             else {
                 alert("iferenceId can not be empty or null!!!!");
@@ -212,6 +181,16 @@ angular.module('ionicApp')
                 }
             }
 
+            if (typeof $routeParams.author !== 'undefined') {
+                try {
+                    author = $routeParams.author;
+                    authorFromRoute = true;
+                }
+                catch (err) {
+
+                }
+            }
+
             //all pages should have its name
             var localParameterData = localStorageService.get('inference_display_view_parameters');
 
@@ -220,6 +199,7 @@ angular.module('ionicApp')
                 localParameterData = {};
                 localParameterData.circles = [];
                 localParameterData.users = [];
+                localParameterData.author = 1024;
 
             }
             else {
@@ -230,6 +210,9 @@ angular.module('ionicApp')
                 if (usersFromRoute || !isDefined(localParameterData.users)) {
                     localParameterData.users = users;
                 }
+                if (authorFromRoute || !isDefined(localParameterData.author)) {
+                    localParameterData.author = author;
+                }
             }
 
             localParameterData.inferenceId = inferenceId;
@@ -239,13 +222,33 @@ angular.module('ionicApp')
             $scope.setInferenceDisplayPageURL();
 
 
-        }
+            //View inference by id
+            $scope.inferenceId = inferenceId;
+            $timeout( function(){
+                $scope.inference_info(inferenceId);
+            });
+
+            //Authors
+            /*
+            var AuthorsRestangular = Restangular.one("authors");
+            AuthorsRestangular.customGET("", {}, {}).then(function (data) {
+                $scope.authorlist = data;
+                $scope.referenced.selectedAuthor = $scope.authorlist[13].id;
+            });
+            */
+
+
+
+        };
+
+
 
 
         $scope.restoreInferenceDisplayViewParameters = function (localParameterData) {
             $scope.circlesForSearch = localParameterData.circles;
             $scope.usersForSearch = localParameterData.users;
             $scope.inferenceId = localParameterData.inferenceId;
+            $scope.referenced.selectedAuthor = localParameterData.author;
 
         };
 
@@ -255,20 +258,40 @@ angular.module('ionicApp')
 
             localParameterData.circles = $scope.circlesForSearch;
             localParameterData.users = $scope.usersForSearch;
+            localParameterData.selectedAuthor = $scope.referenced.selectedAuthor;
             //all pages have its name here
             localStorageService.set('inference_display_view_parameters', localParameterData);
         };
 
+
+        //use selected author and update referenced translation list
+        $scope.updateReferencedTranslations = function(){
+            //get referenced verse id list
+            var verseIds = Object.keys($scope.referenced.verses).join(",");
+            var translationsRestangular = Restangular.one("translations").all("list");
+            translationsRestangular.customGET("", {author:$scope.referenced.selectedAuthor, verse_list:verseIds}, {'access_token': $scope.access_token}).then(function (data) {
+                for (var i = 0; i < data.length; i++) {
+                    var verseId = data[i].verseId;
+                    $scope.referenced.verses[verseId].translation = data[i].content;
+                }
+
+            });
+        }
 
         //reflects the scope parameters to URL
         $scope.setInferenceDisplayPageURL = function () {
             var parameters =
             {
                 circles: Base64.encode(JSON.stringify($scope.circlesForSearch)),
-                users: Base64.encode(JSON.stringify($scope.usersForSearch))
+                users: Base64.encode(JSON.stringify($scope.usersForSearch)),
+                author: $scope.referenced.selectedAuthor
 
             }
             $location.path("/inference/display/"+$scope.inferenceId+"/", false).search(parameters);
+        };
+
+        $scope.getChapterVerseNotation = function(verseId){
+            return Math.floor(verseId/1000)+":"+ verseId%1000;
         };
 
         //definitions are finished. Now run initialization

@@ -62,8 +62,8 @@
             <tr>
                 <td align="left" style="width: 200px">
                     <select class="form-control" style="width: 200px" name="singleSelect"
-                            data-ng-model="selectedOption">
-                        <option ng-repeat="item in authorlist" value="{{item.id}}">{{item.name}}</option>
+                             ng-model="referenced.selectedAuthor" ng-change="updateReferencedTranslations()">
+                        <option ng-repeat="item in authorMap" value="{{item.id}}" ng-selected="item.id==referenced.selectedAuthor">{{item.name}}</option>
                     </select>
                 </td>
                 <td align="center" style="width: 310px">
@@ -83,15 +83,23 @@
                     </tags-input>
                 </td>
                 <td align="right" style="width: 230px">
-                    <button style="width:230px; height: 35px" ng-click="do_array()"
+                    <button style="width:230px; height: 35px" ng-click="updateTags()"
                             class="btn verse_tag ng-binding btn-info btn-xs">Çevreye / Kişiye ait etiketleri göster
                     </button>
                 </td>
             </tr>
         </table>
 
+
+
     </div>
 
+    <div ng-repeat="verseId in referenced.verseIds">
+        <b>{{getChapterVerseNotation(verseId)}}</b> {{referenced.verses[verseId].translation}}
+        <br>
+        <button ng-repeat="tag in referenced.verses[verseId].tags">{{tag}}</button>
+    </div>
+<br><br>
 </div>
 <div align="center">
     <digercevremodal title="Not Silme" visible="digercevre">
