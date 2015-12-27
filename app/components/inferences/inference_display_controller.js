@@ -239,6 +239,10 @@ angular.module('ionicApp')
 
         //use selected author and update referenced translation list
         $scope.updateReferencedTranslations = function(){
+
+            if($scope.referenced.verses.length == 0){
+                return;
+            }
             //get referenced verse id list
             var verseIds = Object.keys($scope.referenced.verses).join(",");
             var translationsRestangular = Restangular.one("translations").all("list");
@@ -255,10 +259,14 @@ angular.module('ionicApp')
 
         $scope.updateTags = function() {
 
+            if($scope.referenced.verses.length == 0){
+                return;
+            }
             var allAnnotationsParams = [];
 
             var circleIDList = [];
             var userIDList = [];
+
 
             for (var i = 0; i < $scope.circlesForSearch.length; i++) {
                 circleIDList.push($scope.circlesForSearch[i].id);
@@ -271,6 +279,7 @@ angular.module('ionicApp')
             allAnnotationsParams.circles = circleIDList.join(",");
             allAnnotationsParams.users = userIDList.join(",");
             allAnnotationsParams.verses = Object.keys($scope.referenced.verses).join(",");
+
 
             var annotationRestangular = Restangular.one("annotations").all("tags");
             annotationRestangular.customGET('', allAnnotationsParams, {access_token: $scope.access_token}).then(function (data) {

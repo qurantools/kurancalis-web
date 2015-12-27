@@ -45,21 +45,21 @@
             </tr>
             <tr>
                 <td align="left" style="padding-right: 15px; padding-left: 15px; padding-bottom: 15px; width: 1050px;
-                    padding-top: 15px; background-color:#ffecb8">
+                    padding-top: 15px; background-color:#fff6dc">
 
                     <p ng-bind-html="content"></p>
                 </td>
             </tr>
             <tr>
                 <td align="right" style="padding-right: 15px; padding-left: 15px; padding-bottom: 15px;
-                    width: 1050px; padding-top: 15px; background-color:#ffecb8">
+                    width: 1050px; padding-top: 15px; background-color:#fff6dc">
                     <strong>Çıkarım Etiketleri:</strong></strong><button ng-repeat="item in tags" class="btn verse_tag ng-binding btn-info btn-xs">{{item}}</button>
                 </td>
             </tr>
         </table>
         <br/>
-        <h4 align="left" style="width: 1024px">Referans Verilen Ayetler</h4>
-        <table>
+        <h6 align="left" style="width: 1024px">Referans Verilen Ayetler</h6>
+        <table ng-if="referenced.verses.length!=0">
             <tr>
                 <td align="left" style="width: 200px">
                     <select class="form-control" style="width: 200px" name="singleSelect"
@@ -85,7 +85,7 @@
                 </td>
                 <td align="right" style="width: 260px">
                     <button style="width:260px; height: 35px" ng-click="updateTags()"
-                            class="btn ng-binding btn-info btn-info">Çevreye / Kişiye ait etiketleri göster
+                            class="btn btn-primary btn-wide-">Çevreye / Kişiye ait etiketleri göster
                     </button>
                 </td>
             </tr>

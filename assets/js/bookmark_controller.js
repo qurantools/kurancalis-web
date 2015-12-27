@@ -46,7 +46,7 @@
                
                $scope.bookmarks = data;
                
-               for(var i=0;i<3;i++)
+               for(var i=0;i<data.length;i++)
                 {
                   if(data[i].color=="yellow")
                     {
@@ -114,5 +114,39 @@
             $scope.goToVerseParameters.verse = verseno;
             $scope.goToVerse();
 
-        }
-});
+        };
+
+        $scope.gotoYellowBookmark=function(){
+
+            if($scope.bookmarksyellowchapter == ""){
+                alert("Ayraç kullanılmıyor");
+            }
+            else{
+                $scope.gotoBookmark($scope.bookmarksyellowchapterid, $scope.bookmarksyellowverseID);
+            }
+        };
+
+        $scope.gotoGreenBookmark=function(){
+
+            if($scope.bookmarksgreenchapter == ""){
+                alert("Ayraç kullanılmıyor");
+            }
+            else{
+                $scope.gotoBookmark($scope.bookmarksgreenchapterid, $scope.bookmarksgreenverseID);
+            }
+        };
+
+        $scope.gotoOrangeBookmark=function(){
+
+            if($scope.bookmarksorangechapter == ""){
+                alert("Ayraç kullanılmıyor");
+            }
+            else{
+                $scope.gotoBookmark($scope.bookmarksorangechapterid, $scope.bookmarksorangeverseID);
+            }
+        };
+
+
+
+
+    });
