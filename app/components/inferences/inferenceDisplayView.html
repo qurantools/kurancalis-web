@@ -45,19 +45,20 @@
             </tr>
             <tr>
                 <td align="left" style="padding-right: 15px; padding-left: 15px; padding-bottom: 15px; width: 1050px;
-                    padding-top: 15px; background-color:#ffe599">
+                    padding-top: 15px; background-color:#ffecb8">
 
                     <p ng-bind-html="content"></p>
                 </td>
             </tr>
             <tr>
                 <td align="right" style="padding-right: 15px; padding-left: 15px; padding-bottom: 15px;
-                    width: 1050px; padding-top: 15px; background-color:#ffe599">
-                    <button ng-repeat="item in tags" class="btn verse_tag ng-binding btn-info btn-xs">{{item}}</button>
+                    width: 1050px; padding-top: 15px; background-color:#ffecb8">
+                    <strong>Çıkarım Etiketleri:</strong></strong><button ng-repeat="item in tags" class="btn verse_tag ng-binding btn-info btn-xs">{{item}}</button>
                 </td>
             </tr>
         </table>
         <br/>
+        <h4 align="left" style="width: 1024px">Referans Verilen Ayetler</h4>
         <table>
             <tr>
                 <td align="left" style="width: 200px">
@@ -66,8 +67,8 @@
                         <option ng-repeat="item in authorMap" value="{{item.id}}" ng-selected="item.id==referenced.selectedAuthor">{{item.name}}</option>
                     </select>
                 </td>
-                <td align="center" style="width: 310px">
-                    <tags-input style="width: 300px" ng-model="circlesForSearch" placeholder="Çevre Seçiniz"
+                <td align="center" style="width: 210px">
+                    <tags-input style="width: 200px" ng-model="circlesForSearch" placeholder="Çevre Seçiniz"
                                 display-property="name"
                                 replace-spaces-with-dashes="false" min-length="1" add-from-autocomplete-only="true"
                                 add-on-blur="false">
@@ -82,23 +83,23 @@
                         <auto-complete source="peoplelist($query)" min-length="2"></auto-complete>
                     </tags-input>
                 </td>
-                <td align="right" style="width: 230px">
-                    <button style="width:230px; height: 35px" ng-click="updateTags()"
-                            class="btn verse_tag ng-binding btn-info btn-xs">Çevreye / Kişiye ait etiketleri göster
+                <td align="right" style="width: 260px">
+                    <button style="width:260px; height: 35px" ng-click="updateTags()"
+                            class="btn ng-binding btn-info btn-info">Çevreye / Kişiye ait etiketleri göster
                     </button>
                 </td>
             </tr>
         </table>
-
-
-
-    </div>
-
-    <div ng-repeat="verseId in referenced.verseIds">
-        <b>{{getChapterVerseNotation(verseId)}}</b> {{referenced.verses[verseId].translation}}
         <br>
-        <button ng-repeat="tag in referenced.verses[verseId].tags">{{tag}}</button>
+        <div ng-repeat="verseId in referenced.verseIds" style="width: 900px" align="left" >
+            <b>{{getChapterVerseNotation(verseId)}}</b> {{referenced.verses[verseId].translation}}
+            <br>
+            <div style="height: 30px" align="right">
+                <button ng-repeat="tag in referenced.verses[verseId].tags" class="btn verse_tag ng-binding btn-info btn-xs">{{tag}}</button>
+            </div>
+        </div>
     </div>
+
 <br><br>
 </div>
 <div align="center">

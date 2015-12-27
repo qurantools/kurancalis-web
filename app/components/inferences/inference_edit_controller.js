@@ -113,7 +113,7 @@ angular.module('ionicApp')
             var postData = [];
             postData.push(encodeURIComponent("title") + "=" + encodeURIComponent($scope.title));
             postData.push(encodeURIComponent("image") + "=" + encodeURIComponent($scope.inferenceImage));
-            postData.push(encodeURIComponent("content") + "=" + encodeURIComponent($scope.contentCopy));
+            postData.push(encodeURIComponent("content") + "=" + encodeURIComponent($scope.content));
             var tags_add = tags.join(",");
             postData.push(encodeURIComponent("tags") + "=" + encodeURIComponent(tags_add));
 
@@ -158,7 +158,7 @@ angular.module('ionicApp')
 
                 $scope.title = data.title;
                 $scope.inferenceImage = data.image;
-                $scope.contentCopy = data.content;
+                $scope.content = data.content;
                 $scope.tags_entry = data.tags;
 
                 var inference_PermRestangular = Restangular.one("inferences", inferenceId).all("permissions");
@@ -255,8 +255,8 @@ angular.module('ionicApp')
             $scope.storeInferenceEditViewParameters
             $scope.setInferenceEditPageURL();
 
-
-            $scope.contentCopy = 'World';
+/*
+            $scope.content = 'World';
             var _scope = $scope;
     
             tinymce.init({
@@ -267,22 +267,32 @@ angular.module('ionicApp')
                 ],
                 setup: function (ed) {
                     ed.on('Change', function (e) {
-                        _scope.contentCopy = ed.getContent();
+                        _scope.content = ed.getContent();
                         $scope.$apply();
                     }),
                         ed.on('keyup', function (e) {
-                            _scope.contentCopy = ed.getContent();
+                            _scope.content = ed.getContent();
                             $scope.$apply();
                         })
                 },
                 toolbar: "undo redo | formatselect fontsizeselect | bold italic underline | alignleft aligncenter alignright | bullist numlist outdent indent | forecolor backcolor | link image preview"
             });
-
+*/
             $scope.tinymceOptions = {
-                setup: function (ed) {
-                    _scope.contentCopy = ed.getContent();
-                    $scope.$apply();
-                }
+                language: "tr_TR",
+                plugins: [
+                    "textcolor advlist autolink link image lists preview"
+                ],
+                setup: function (editor) {
+                    editor.on('Change', function (e) {
+                        $scope.content = editor.getContent();
+                    }),
+                        editor.on('keyup', function (e) {
+                            $scope.content = editor.getContent();
+                        })
+                },
+                toolbar: "undo redo | formatselect fontsizeselect | bold italic underline | alignleft aligncenter alignright | bullist numlist outdent indent | forecolor | link image preview"
+
             };
             
             $scope.$on('userInfoReady', function handler() {

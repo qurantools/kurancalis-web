@@ -1,5 +1,5 @@
 angular.module('ionicApp')
-    .controller('InferenceDisplayController', function ($scope, $routeParams, $location, authorization, localStorageService,  Restangular, $timeout) {
+    .controller('InferenceDisplayController', function ($scope, $routeParams, $location, authorization, localStorageService,  Restangular, $timeout,$sce) {
 
         //All scope variables
         $scope.inferenceId=0;
@@ -68,8 +68,9 @@ angular.module('ionicApp')
                 $scope.title = data.title;
                 $scope.info_author = data.userName;
                 $scope.photo = data.image;
-                $scope.content = data.content;
+                $scope.content = $sce.trustAsHtml(data.content);
                 $scope.tags = data.tags;
+
 
                 for (var i = 0; i < data.references.length; i++) {
                     var verseId = data.references[i];
@@ -101,49 +102,14 @@ angular.module('ionicApp')
             $scope.status = !$scope.status;
         }
 
-        $scope.updateTags = function() {
 
-            var allAnnotationsParams = [];
-
-            var circleIDList = [];
-            var userIDList = [];
-
-            for (var i = 0; i < $scope.circlesForSearch.length; i++) {
-                circleIDList.push($scope.circlesForSearch[i].id);
-            }
-
-            for (var i = 0; i < $scope.usersForSearch.length; i++) {
-                userIDList.push($scope.usersForSearch[i].id);
-            }
-
-            allAnnotationsParams.circles = circleIDList.join(",");
-            allAnnotationsParams.users = userIDList.join(",");
-            allAnnotationsParams.verses = Object.keys($scope.referenced.verses).join(",");
-
-            var annotationRestangular = Restangular.one("annotations").all("tags");
-            annotationRestangular.customGET('', allAnnotationsParams, {access_token: $scope.access_token}).then(function (data) {
-
-
-                //clear tag map
-                for (var i = 0; i < $scope.referenced.verseIds.length; i++) {
-                    $scope.referenced.verses[$scope.referenced.verseIds[i]].tags = [];
-                }
-                //update tag map
-                for (var i = 0; i < data.length; i++) {
-                    var verseId = data[i].verse_id;
-                    $scope.referenced.verses[verseId].tags = data[i].tags;
-                }
-
-            });
-
-        }
 
         //////////////Volkan
         $scope.initializeInferenceDisplayController = function () {
             var inferenceId=0;
             var circles = []; //id array
             var users = []; //id array
-            var author = "";
+            var author = 1024; //default: yasar nuri
 
             var inferenceIdFromRoute = false;
             var circlesFromRoute = false;
@@ -197,9 +163,9 @@ angular.module('ionicApp')
             if (localParameterData == null) {
 
                 localParameterData = {};
-                localParameterData.circles = [];
-                localParameterData.users = [];
-                localParameterData.author = 1024;
+                localParameterData.circles = circles;
+                localParameterData.users = users;
+                localParameterData.author = author;
 
             }
             else {
@@ -228,17 +194,6 @@ angular.module('ionicApp')
                 $scope.inference_info(inferenceId);
             });
 
-            //Authors
-            /*
-            var AuthorsRestangular = Restangular.one("authors");
-            AuthorsRestangular.customGET("", {}, {}).then(function (data) {
-                $scope.authorlist = data;
-                $scope.referenced.selectedAuthor = $scope.authorlist[13].id;
-            });
-            */
-
-
-
         };
 
 
@@ -250,6 +205,24 @@ angular.module('ionicApp')
             $scope.inferenceId = localParameterData.inferenceId;
             $scope.referenced.selectedAuthor = localParameterData.author;
 
+            //add Diyanet Fihristi if not exist
+            var found=false;
+            for(var i=0; i< $scope.usersForSearch.length; i++){
+                if($scope.usersForSearch[i].id==2413){
+                    found=true;
+                }
+            }
+            if(!found){
+                $scope.usersForSearch.push(
+                    {
+                        fbId: 100,
+                        id: 2413,
+                        name: "Diyanet Fihristi",
+                        photo: "https://upload.wikimedia.org/wikipedia/tr/f/f4/Diyanet_logo.jpg",
+                        username: "diyanetfihristi"
+                    }
+                );
+            }
         };
 
         $scope.storeInferenceDisplayViewParameters = function () {
@@ -258,7 +231,7 @@ angular.module('ionicApp')
 
             localParameterData.circles = $scope.circlesForSearch;
             localParameterData.users = $scope.usersForSearch;
-            localParameterData.selectedAuthor = $scope.referenced.selectedAuthor;
+            localParameterData.author = $scope.referenced.selectedAuthor;
             //all pages have its name here
             localStorageService.set('inference_display_view_parameters', localParameterData);
         };
@@ -276,6 +249,48 @@ angular.module('ionicApp')
                 }
 
             });
+            $scope.storeInferenceDisplayViewParameters();
+            $scope.setInferenceDisplayPageURL();
+        }
+
+        $scope.updateTags = function() {
+
+            var allAnnotationsParams = [];
+
+            var circleIDList = [];
+            var userIDList = [];
+
+            for (var i = 0; i < $scope.circlesForSearch.length; i++) {
+                circleIDList.push($scope.circlesForSearch[i].id);
+            }
+
+            for (var i = 0; i < $scope.usersForSearch.length; i++) {
+                userIDList.push($scope.usersForSearch[i].id);
+            }
+
+            allAnnotationsParams.circles = circleIDList.join(",");
+            allAnnotationsParams.users = userIDList.join(",");
+            allAnnotationsParams.verses = Object.keys($scope.referenced.verses).join(",");
+
+            var annotationRestangular = Restangular.one("annotations").all("tags");
+            annotationRestangular.customGET('', allAnnotationsParams, {access_token: $scope.access_token}).then(function (data) {
+
+
+                //clear tag map
+                for (var i = 0; i < $scope.referenced.verseIds.length; i++) {
+                    $scope.referenced.verses[$scope.referenced.verseIds[i]].tags = [];
+                }
+                //update tag map
+                for (var i = 0; i < data.length; i++) {
+                    var verseId = data[i].verse_id;
+                    $scope.referenced.verses[verseId].tags = data[i].tags;
+                }
+
+            });
+
+            $scope.storeInferenceDisplayViewParameters();
+            $scope.setInferenceDisplayPageURL();
+
         }
 
         //reflects the scope parameters to URL
