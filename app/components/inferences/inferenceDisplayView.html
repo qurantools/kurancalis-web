@@ -14,9 +14,9 @@
                             <td align="center" style="width:200px">
                                 <div ng-show="open_edit" style="width:200px">
                                     <button ng-if="edit_user == user.id" style="width:90px" ng-click="edit_inference()"
-                                            class="btn verse_tag ng-binding btn-info btn-xs">Düzenle</button>&nbsp;
+                                            class="btn verse_tag ng-binding btn-primary btn-xs">Düzenle</button>&nbsp;
                                         <button ng-if="edit_user == user.id" style="width:90px" ng-click="digercevremodal()"
-                                                class="btn verse_tag ng-binding btn-info btn-xs">Sil
+                                                class="btn verse_tag ng-binding btn-danger btn-xs">Sil
                                         </button>
                                 </div>
                             </td>
@@ -110,7 +110,7 @@
         </div>
         <div class="modal-footer">
             <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal">Vazgeç</a>
-            <a class="btn btn-primary btn-wide btn-info" ng-click="delete_inference()" data-dismiss="modal">Sil</a>
+            <a class="btn btn-primary btn-wide btn-danger" ng-click="delete_inference()" data-dismiss="modal">Sil</a>
         </div>
     </digercevremodal>
 </div>

@@ -5,10 +5,17 @@ angular.module('ionicApp')
         $scope.circles = []; //id array
         $scope.users = []; //id array
         $scope.pagePurpose = "new";
-        
+
         ///////Volkan
         $scope.extendedCirclesForSearch = []; //show circles
         $scope.initializeCircleLists(); //show circles
+
+        $scope.tags_entry = [];
+        $scope.circlesForSearch = [];
+        $scope.usersForSearch = [];
+        $scope.circlesForSearch1  = [];
+        $scope.usersForSearch1 = [];
+
         var tags = [];
         var canViewCircles_tags = [];
         var canCommentCircles_tags = [];
@@ -22,8 +29,8 @@ angular.module('ionicApp')
             return tagsRestangular.customGET("", {}, {'access_token': $scope.access_token});
         };
         //tags input auto complete function
-       
-        
+
+
         //tags input auto complete
         $scope.peoplelist = function (people_name) {
             var peoplesRestangular = Restangular.all("users/search");
@@ -31,13 +38,13 @@ angular.module('ionicApp')
             $scope.usersParams.search_query = people_name;
             return peoplesRestangular.customGET("", $scope.usersParams, {'access_token': $scope.access_token});
         };
-       
-        
+
+
         //tags input auto complete
         $scope.circleslistForSearch = function () {
             return $scope.extendedCirclesForSearch;
         };
-        
+
         $scope.initializeCircleLists = function () {
 
             Restangular.all("circles").customGET("", {}, {'access_token': $scope.access_token}).then(function (circleList) {
@@ -66,23 +73,24 @@ angular.module('ionicApp')
             });
         }
 
-        $scope.do_array=function()
-        {
-            tags.length=0;
+        $scope.do_array = function () {
+            tags.length = 0;
             canViewCircles_tags.length = 0;
             canCommentCircles_tags.length = 0;
             canViewUsers_tags.length = 0;
             canCommentUsers_tags.length = 0;
 
-            for(var i=0; i<$scope.tags_entry.length; i++) {
+            for (var i = 0; i < $scope.tags_entry.length; i++) {
                 tags.push($scope.tags_entry[i].name);
             }
 
-            for(var i=0; i<$scope.circlesForSearch.length; i++)
-            { canViewCircles_tags.push($scope.circlesForSearch[i].id); }
+            for (var i = 0; i < $scope.circlesForSearch.length; i++) {
+                canViewCircles_tags.push($scope.circlesForSearch[i].id);
+            }
 
-            for(var i=0; i<$scope.usersForSearch.length; i++)
-            { canViewUsers_tags.push($scope.usersForSearch[i].id); }
+            for (var i = 0; i < $scope.usersForSearch.length; i++) {
+                canViewUsers_tags.push($scope.usersForSearch[i].id);
+            }
 
             if ($scope.show_entry == false) {
                 for (var i = 0; i < $scope.circlesForSearch1.length; i++) {
@@ -102,13 +110,12 @@ angular.module('ionicApp')
                     canCommentUsers_tags.push($scope.usersForSearch[i].id);
                 }
             }
-            
+
             save_inferences();
         }
 
-        function save_inferences()
-        {
-           var headers = {'Content-Type': 'application/x-www-form-urlencoded', 'access_token': $scope.access_token};
+        function save_inferences() {
+            var headers = {'Content-Type': 'application/x-www-form-urlencoded', 'access_token': $scope.access_token};
             //var jsonData = annotation;
             var postData = [];
             postData.push(encodeURIComponent("title") + "=" + encodeURIComponent($scope.title));
@@ -145,8 +152,8 @@ angular.module('ionicApp')
                 var annotationRestangular = Restangular.one("inferences", $scope.inferenceId);
                 annotationRestangular.customPUT(data, '', '', headers).then(function (record) {
 
-                $scope.inferenceId = record.id;
-                $location.path('inference/display/' + $scope.inferenceId);
+                    $scope.inferenceId = record.id;
+                    $location.path('inference/display/' + $scope.inferenceId);
                 });
             }
         }
@@ -172,10 +179,11 @@ angular.module('ionicApp')
 
             });
         }
+
         ///////Volkan
 
         $scope.initializeInferenceEditController = function () {
-            var inferenceId=0;
+            var inferenceId = 0;
             var circles = []; //id array
             var users = []; //id array
 
@@ -185,11 +193,11 @@ angular.module('ionicApp')
 
             $scope.checkUserLoginStatus();
 
-            if($location.path()=="/inference/new/"){
+            if ($location.path() == "/inference/new/") {
                 $scope.pagePurpose = "new";
                 inferenceId = 0;
             }
-            else{
+            else {
                 $scope.pagePurpose = "edit";
             }
 
@@ -197,11 +205,11 @@ angular.module('ionicApp')
                 inferenceId = $routeParams.inferenceId;
                 inferenceIdFromRoute = true;
 
-                $timeout(function(){
+                $timeout(function () {
                     inference_info(inferenceId);
                 });
             }
-            else if( $scope.pagePurpose == "edit" ){
+            else if ($scope.pagePurpose == "edit") {
                 //edit page should have inferenceID
                 alert("Edit page needs inferenceId");
             }
@@ -255,29 +263,29 @@ angular.module('ionicApp')
             $scope.storeInferenceEditViewParameters
             $scope.setInferenceEditPageURL();
 
-/*
-            $scope.content = 'World';
-            var _scope = $scope;
-    
-            tinymce.init({
-                selector: "#mytextarea",
-                language: "tr_TR",
-                plugins: [
-                    "textcolor advlist autolink link image lists preview"
-                ],
-                setup: function (ed) {
-                    ed.on('Change', function (e) {
-                        _scope.content = ed.getContent();
-                        $scope.$apply();
-                    }),
-                        ed.on('keyup', function (e) {
-                            _scope.content = ed.getContent();
-                            $scope.$apply();
-                        })
-                },
-                toolbar: "undo redo | formatselect fontsizeselect | bold italic underline | alignleft aligncenter alignright | bullist numlist outdent indent | forecolor backcolor | link image preview"
-            });
-*/
+            /*
+             $scope.content = 'World';
+             var _scope = $scope;
+
+             tinymce.init({
+             selector: "#mytextarea",
+             language: "tr_TR",
+             plugins: [
+             "textcolor advlist autolink link image lists preview"
+             ],
+             setup: function (ed) {
+             ed.on('Change', function (e) {
+             _scope.content = ed.getContent();
+             $scope.$apply();
+             }),
+             ed.on('keyup', function (e) {
+             _scope.content = ed.getContent();
+             $scope.$apply();
+             })
+             },
+             toolbar: "undo redo | formatselect fontsizeselect | bold italic underline | alignleft aligncenter alignright | bullist numlist outdent indent | forecolor backcolor | link image preview"
+             });
+             */
             $scope.tinymceOptions = {
                 language: "tr_TR",
                 plugins: [
@@ -294,19 +302,18 @@ angular.module('ionicApp')
                 toolbar: "undo redo | formatselect fontsizeselect | bold italic underline | alignleft aligncenter alignright | bullist numlist outdent indent | forecolor | link image preview"
 
             };
-            
+
             $scope.$on('userInfoReady', function handler() {
-                initFileManager('theView',$scope.user.id,function () {
-                   //$('inferenceImage').onchange=
+                initFileManager('theView', $scope.user.id, function () {
+                    //$('inferenceImage').onchange=
                     $timeout(function () {
                         angular.element($('#inferenceImage')).triggerHandler('input');
                     });
                 });
-                console.log("Image manager initialized for: "+$scope.user.id);
+                console.log("Image manager initialized for: " + $scope.user.id);
             });
-            
-           
-           
+
+
         }
 
         $scope.restoreInferenceEditViewParameters = function (localParameterData) {
@@ -331,7 +338,7 @@ angular.module('ionicApp')
         $scope.setInferenceEditPageURL = function () {
 
 
-            if($scope.pagePurpose == "edit"){
+            if ($scope.pagePurpose == "edit") {
 
                 var parameters =
                 {
@@ -339,7 +346,7 @@ angular.module('ionicApp')
                     users: Base64.encode(JSON.stringify($scope.usersForSearch))
 
                 }
-                $location.path("/inference/edit/"+$scope.inferenceId+"/", false).search(parameters);
+                $location.path("/inference/edit/" + $scope.inferenceId + "/", false).search(parameters);
             }
         };
 
