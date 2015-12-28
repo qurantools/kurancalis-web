@@ -1360,7 +1360,7 @@ angular.module('ionicApp')
         $scope.displayAnnotationsWithTag = function (tag) {
             var parameters =
             {
-                authorMask: $scope.query_author_mask,
+                authorMask: MAX_AUTHOR_MASK,
                 verseTags: $scope.verseTagContentParams.verse_tags,
                 verseKeyword: "",
                 ownAnnotations: true,

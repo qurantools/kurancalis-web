@@ -7,17 +7,11 @@
             </div>
 
             <div class="modal-body">
-                <ul>
-                    <li ng-repeat="author in authors">
-                        <label>
-                            <input
-                                    type="checkbox"
-                                    name="selectedauthors[]"
-                                    value="{{author.id}}"
-                                    ng-checked="detailedSearchAuthorSelection.indexOf(author.id) > -1"
-                                    ng-click="detailedSearchAuthorToggleSelection(author.id)"
-                                    > {{author.name}}
-                        </label>
+                <ul class="selectable_list">
+                    <li ng-repeat="author in authors"
+                        ng-click="detailedSearchAuthorToggleSelection(author.id)"
+                        ng-class="{ 'selected_list_item': detailedSearchAuthorSelection.indexOf(author.id) > -1}">
+                        {{author.name}}
                     </li>
                 </ul>
             </div>
