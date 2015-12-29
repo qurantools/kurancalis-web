@@ -17,9 +17,12 @@ angular.module('ionicApp')
         $scope.info_author = "";
         $scope.photo = "";
         $scope.content = "";
+        $scope.contentOriginal = "";
         $scope.tags = [];
         $scope.open_edit = true;
 
+        //On Off Switch
+        $scope.inlineReferenceDisplay = false;
 
         //Volkan
         $scope.initializeCircleLists(); //show circles
@@ -57,7 +60,11 @@ angular.module('ionicApp')
         $scope.edit_inference = function () {
             $location.path('inference/edit/'+$scope.inferenceId+"/");
         }
-        
+
+        $scope.compileContent = function(original,verseList, inline){
+            return original;
+        };
+
         //View inference
         $scope.inference_info = function(inferenceId) {
             var inferenceRestangular = Restangular.one("inferences", inferenceId);
@@ -68,7 +75,8 @@ angular.module('ionicApp')
                 $scope.title = data.title;
                 $scope.info_author = data.userName;
                 $scope.photo = data.image;
-                $scope.content = $sce.trustAsHtml(data.content);
+                $scope.contentOriginal = $sce.trustAsHtml(data.content);
+
                 $scope.tags = data.tags;
 
 
@@ -92,14 +100,14 @@ angular.module('ionicApp')
                     $scope.updateTags();
                 }
 
+
+
             });
         };
 
-        //On Off Switch
-        $scope.status = true;
 
-        $scope.changeStatus = function () {
-            $scope.status = !$scope.status;
+        $scope.changeInlineReferenceDisplay = function () {
+            $scope.inlineReferenceDisplay = !$scope.inlineReferenceDisplay;
         }
 
 
@@ -251,6 +259,8 @@ angular.module('ionicApp')
                     var verseId = data[i].verseId;
                     $scope.referenced.verses[verseId].translation = data[i].content;
                 }
+
+                $scope.content = $scope.compileContent($scope.contentOriginal,$scope.referenced.verses, $scope.inlineReferenceDisplay);
 
             });
             $scope.storeInferenceDisplayViewParameters();

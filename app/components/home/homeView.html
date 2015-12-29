@@ -5,6 +5,7 @@
     <div ng-include="'app/components/partials/bookmark.htm'"></div>
     <div class="nav-bottom"></div>
     <div class="row">
+        <h2 style="text-align: center">{{chapter_title}}</h2>
         <div class="col-xs-12" id="translations">
             <div ng-repeat="verse in verses">
                 <div class="well translations col-xs-12" id="v_{{verse.id}}">
@@ -28,7 +29,7 @@
                                         <a href ng-click="scrollToVerse('{{verse.id+1}}')"><i class="fa fa-caret-down fa-2x"></i></a>
                                     </div>
                                   <div>
-                                    <a ng-click="popoveropen()" tabindex="0" role="button" data-toggle="popover" data-trigger="focus" data-content="<div class='form-control' style='width:220px; height:auto'><a href><div style='width:100%' ng-click='linkcreate({{translation.chapter}},{{translation.verse}})' data-target='#openlink' data-toggle='modal'><i class='fa fa-crosshairs' style='font-size: 1.3em'></i>&nbsp;&nbsp;&nbsp;&nbsp;Kelime Meali</div></a><hr style='width:100%' /><a href><div style='width:100%' data-target='#bookmark' data-toggle='modal' ng-click='openAddBookMarkModal({{translation.chapter}},{{translation.verse}},{{verse.id}})'><i class='fa fa-bookmark' style='font-size: 1.3em'></i>&nbsp;&nbsp;&nbsp;&nbsp;Burada Kaldım</div></a><hr style='width:100%' /><a href><div style='width:100%'><i class='fa fa-share-alt' style='font-size: 1.3em'></i>&nbsp;&nbsp;&nbsp;&nbsp;Ayeti Paylaş</div></a></div>" data-html="true"><i class="fa fa-ellipsis-h large_icon" ></i></a>
+                                    <a ng-click="popoveropen()" tabindex="0" role="button" data-toggle="popover" data-trigger="focus" data-content="<div class='form-control' style='width:220px; height:auto'><a href><div style='width:100%; height: 40px; padding-top:8px;' ng-click='linkcreate({{translation.chapter}},{{translation.verse}})' data-target='#openlink' data-toggle='modal'><i class='fa fa-crosshairs' style='font-size: 1.3em'></i>&nbsp;&nbsp;&nbsp;&nbsp;Kelime Meali</div></a><hr style='padding: 0; margin-top:0 !important; margin-bottom:0 !important; height:1px; width:100%' /><a href><div style='width:100%; height: 40px; padding-top:8px;' data-target='#bookmark' data-toggle='modal' ng-click='openAddBookMarkModal({{translation.chapter}},{{translation.verse}},{{verse.id}})'><i class='fa fa-bookmark' style='font-size: 1.3em'></i>&nbsp;&nbsp;&nbsp;&nbsp;Burada Kaldım</div></a><hr style='display: none; padding: 0; margin-top:0 !important; margin-bottom:0 !important; height:1px; width:100%' /><a href><div style='display: none; width:100%; height: 40px; padding-top:8px;'><i class='fa fa-share-alt' style='font-size: 1.3em'></i>&nbsp;&nbsp;&nbsp;&nbsp;Ayeti Paylaş</div></a></div>" data-html="true"><i class="fa fa-ellipsis-h large_icon" ></i></a>
                                    
                                     </div>
                                    

@@ -465,6 +465,7 @@ angular.module('ionicApp')
             $scope.verse.number = $scope.goToVerseParameters.verse;
             $scope.queryVerse.keyword = ""; //reset keyword because we need the chapter.
             $scope.goToChapter();
+
         };
        
 
@@ -692,6 +693,10 @@ angular.module('ionicApp')
 
             if(translationParams.verse_keyword !=""){
                 translationParams.chapter="";
+                $scope.chapter_title = "";
+            }
+            else{
+                $scope.chapter_title = $scope.chapters[translationParams.chapter-1].nameTr + " - " + $scope.chapters[translationParams.chapter-1].nameTr2 + " Sûresi";
             }
 
             verseTagContentRestangular.customGET("", translationParams, {}).then( function(data){
@@ -708,6 +713,7 @@ angular.module('ionicApp')
                         });
                     }
                 }
+
 
             });
 
