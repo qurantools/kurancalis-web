@@ -61,8 +61,19 @@ angular.module('ionicApp')
             $location.path('inference/edit/'+$scope.inferenceId+"/");
         }
 
-        $scope.compileContent = function(original,verseList, inline){
-            return original;
+        $scope.compileContent = function(original,verseList, verseIdList, inline){
+            var outContent=original;
+            for (var i = 0; i < verseIdList.length; i++) {
+                var verseId = verseIdList[i];
+                if(inline) {
+                    outContent = outContent.replace(verseId, Math.floor(verseId / 1000) + ":" + verseId % 1000 + " - " + $scope.referenced.verses[verseId].translation);
+                }
+                else{
+                    outContent = outContent.replace(verseId, Math.floor(verseId / 1000) + ":" + verseId % 1000);
+                }
+            }
+
+            return $sce.trustAsHtml(outContent);
         };
 
         //View inference
@@ -75,7 +86,7 @@ angular.module('ionicApp')
                 $scope.title = data.title;
                 $scope.info_author = data.userName;
                 $scope.photo = data.image;
-                $scope.contentOriginal = $sce.trustAsHtml(data.content);
+                $scope.contentOriginal = data.content;
 
                 $scope.tags = data.tags;
 
@@ -108,6 +119,7 @@ angular.module('ionicApp')
 
         $scope.changeInlineReferenceDisplay = function () {
             $scope.inlineReferenceDisplay = !$scope.inlineReferenceDisplay;
+            $scope.updateReferencedTranslations();
         }
 
 
@@ -248,7 +260,9 @@ angular.module('ionicApp')
         //use selected author and update referenced translation list
         $scope.updateReferencedTranslations = function(){
 
+
             if($scope.referenced.verses.length == 0){
+                $scope.content = $scope.compileContent($scope.contentOriginal,$scope.referenced.verses, $scope.referenced.verseIds, $scope.inlineReferenceDisplay);
                 return;
             }
             //get referenced verse id list
@@ -259,8 +273,7 @@ angular.module('ionicApp')
                     var verseId = data[i].verseId;
                     $scope.referenced.verses[verseId].translation = data[i].content;
                 }
-
-                $scope.content = $scope.compileContent($scope.contentOriginal,$scope.referenced.verses, $scope.inlineReferenceDisplay);
+                $scope.content = $scope.compileContent($scope.contentOriginal,$scope.referenced.verses, $scope.referenced.verseIds,$scope.inlineReferenceDisplay);
 
             });
             $scope.storeInferenceDisplayViewParameters();
