@@ -46,7 +46,7 @@
                         <tags-input ng-model="circlesForSearch" placeholder="Çevre Seçiniz" display-property="name"
                                     replace-spaces-with-dashes="false" min-length="1" add-from-autocomplete-only="true"
                                     add-on-blur="false">
-                            <auto-complete source="circleslistForSearch()" load-on-empty="true"
+                            <auto-complete source="extendedCircles" load-on-empty="true"
                                            load-on-focus="true"></auto-complete>
                         </tags-input>
                     </div>
@@ -75,7 +75,7 @@
                     <div style="width:360px">
                         Hangi Çevreler Yorum Yazabilir
                         <tags-input ng-model="circlesForSearch1" placeholder="Çevre Seçiniz" display-property="name" replace-spaces-with-dashes="false" min-length="1" add-from-autocomplete-only="true" add-on-blur="false">
-                        <AUTO-COMPLETE source="circleslistForSearch()" load-on-focus="true" load-on-empty="true"/>
+                        <AUTO-COMPLETE source="extendedCircles" load-on-focus="true" load-on-empty="true"/>
                         </tags-input>
                     </div>
                 </td>

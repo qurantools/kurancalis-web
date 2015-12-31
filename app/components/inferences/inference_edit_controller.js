@@ -7,8 +7,8 @@ angular.module('ionicApp')
         $scope.pagePurpose = "new";
 
         ///////Volkan
-        $scope.extendedCirclesForSearch = []; //show circles
-        $scope.initializeCircleLists(); //show circles
+        //$scope.extendedCirclesForSearch = []; //show circles
+        //$scope.initializeCircleLists(); //show circles
 
         $scope.tags_entry = [];
         $scope.circlesForSearch = [];
@@ -41,37 +41,9 @@ angular.module('ionicApp')
 
 
         //tags input auto complete
-        $scope.circleslistForSearch = function () {
-            return $scope.extendedCirclesForSearch;
+        $scope.circleslistExtended = function () {
+            return $scope.extendedCircles;
         };
-
-        $scope.initializeCircleLists = function () {
-
-            Restangular.all("circles").customGET("", {}, {'access_token': $scope.access_token}).then(function (circleList) {
-
-                $scope.extendedCircles = [];
-                $scope.extendedCircles.push({'id': '-2', 'name': 'T�m �evrelerim'});
-                $scope.extendedCircles.push({'id': '-1', 'name': 'Herkes'});
-
-                $scope.extendedCirclesForSearch = [];
-                $scope.extendedCirclesForSearch.push({'id': '-2', 'name': 'T�m �evrelerim'});
-
-
-                $scope.circleDropdownArray = [];
-                $scope.circleDropdownArray.push({'id': '-2', 'name': 'T�m �evrelerim'});
-                $scope.circleDropdownArray.push({'id': '', 'name': 'Sadece Ben'});
-
-                $scope.query_circle_dropdown = $scope.circleDropdownArray[1];
-                Array.prototype.push.apply($scope.circleDropdownArray, circleList);
-
-                //also initialize extended circles
-                Array.prototype.push.apply($scope.extendedCircles, circleList);
-                Array.prototype.push.apply($scope.extendedCirclesForSearch, circleList);
-
-                $scope.$broadcast("circleLists ready");
-
-            });
-        }
 
         $scope.do_array = function () {
             tags.length = 0;
