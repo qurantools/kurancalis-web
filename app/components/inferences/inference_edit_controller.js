@@ -137,7 +137,7 @@ angular.module('ionicApp')
 
                 $scope.title = data.title;
                 $scope.inferenceImage = data.image;
-                $scope.content = data.content;
+                $scope.content = $scope.prepareContentForEdit(data.content,data.references);
                 $scope.tags_entry = data.tags;
 
                 var inference_PermRestangular = Restangular.one("inferences", inferenceId).all("permissions");
@@ -151,6 +151,14 @@ angular.module('ionicApp')
 
             });
         }
+
+        $scope.prepareContentForEdit = function(contentOnSystem,references){
+            var content = contentOnSystem;
+            for(var i=0; i< references.length;i++){
+                content = content.replace("["+references[i]+"]",Math.floor(references[i]/1000)+":"+references[i]%1000);
+            }
+            return content;
+        };
 
         ///////Volkan
 
