@@ -165,6 +165,9 @@ angular.module('ionicApp')
             $scope.allInferencesParams.circles = cevreTags;
 
 
+            //TODO: TEMPORARILY ALL MY CIRCLES
+            $scope.allInferencesParams.circles = -2;
+
             $scope.allInferencesParams.orderby = $scope.allInferencesOrderBy;
 
             usersRestangular.customGET("", $scope.allInferencesParams, {'access_token': authorization.getAccessToken()}).then(function (inferences) {
