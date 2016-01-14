@@ -1,6 +1,8 @@
 ﻿angular.module('ionicApp')
     .controller('bookmarkController', function ($scope, Restangular, $sce, $compile) {
     
+    console.log('bookmark ctrl');
+    
             $scope.chapterinfo= "";  
             $scope.verseinfo = "";           
             $scope.bookmarkverseid = "";
@@ -25,7 +27,7 @@
             $scope.verseinfo = $scope.bookmarkParameters.verseinfo;
             $scope.bookmarkverseid = $scope.bookmarkParameters.bookmarkverseid;
             $scope.bookchaptername = $scope.chapters[$scope.chapterinfo - 1].nameTr;
-
+           
             bookmark_search();
         });
         
@@ -33,9 +35,7 @@
 
            bookmark_search();
         });
-                
-      
-       
+         
        function bookmark_search()
         {
         
@@ -123,6 +123,9 @@
             }
             else{
                 $scope.gotoBookmark($scope.bookmarksyellowchapterid, $scope.bookmarksyellowverseID);
+                if(config_data.isMobile){
+                    $scope.naviBookmarkModal.hide();
+                }
             }
         };
 
@@ -133,6 +136,9 @@
             }
             else{
                 $scope.gotoBookmark($scope.bookmarksgreenchapterid, $scope.bookmarksgreenverseID);
+                if(config_data.isMobile){
+                    $scope.naviBookmarkModal.hide();
+                }
             }
         };
 
@@ -143,6 +149,9 @@
             }
             else{
                 $scope.gotoBookmark($scope.bookmarksorangechapterid, $scope.bookmarksorangeverseID);
+                if(config_data.isMobile){
+                    $scope.naviBookmarkModal.hide();
+                }
             }
         };
 
