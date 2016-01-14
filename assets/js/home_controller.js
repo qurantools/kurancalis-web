@@ -1,5 +1,5 @@
 angular.module('ionicApp')
-    .controller('HomeCtrl', function ($scope, $compile, $q, $routeParams, $location, $timeout, ListAuthors, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService, $document, $filter, $rootScope, $state, $stateParams, $ionicModal, $ionicScrollDelegate, $ionicPosition, authorization, $sce) {
+    .controller('HomeCtrl', function ($scope, $compile, $q, $routeParams, $location, $timeout, ListAuthors, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService, $document, $filter, $rootScope, $state, $stateParams, $ionicModal, $ionicScrollDelegate, $ionicPosition, authorization,$ionicActionSheet, $sce) {
 
 
         $scope.linkno="";
@@ -79,7 +79,9 @@ angular.module('ionicApp')
 
             localStorageService.set('chapter_view_parameters', localParameterData);
         };
-          
+        
+       
+        
         $scope.openAddBookMarkModal = function(chapterinfo, verseinfo, bookmarkverseid){
             
            $scope.bookmarkParameters ={}; 
@@ -87,8 +89,8 @@ angular.module('ionicApp')
            $scope.bookmarkParameters.verseinfo = verseinfo;
            $scope.bookmarkParameters.bookmarkverseid = bookmarkverseid;
            $scope.bookmarkParameters.bookchaptername = $scope.chapters[chapterinfo - 1].nameTr;
-            
-            $scope.$broadcast('openAddBookMarkModal');
+           
+           $scope.$broadcast('openAddBookMarkModal');
         };
         
         $scope.searchBookMarkModal = function(){
@@ -1427,11 +1429,87 @@ angular.module('ionicApp')
         $scope.scrollDelegateTop = function(id){
             $ionicScrollDelegate.$getByHandle(id).scrollTop();
         };
+        
+        
+         $ionicModal.fromTemplateUrl('components/partials/bookmark.html', {
+            id:'1001',
+            scope: $scope,
+            animation: 'slide-in-up'
+        }).then(function(modal) {
+            $scope.bookmarkModal = modal;
+        });
+        
+        $ionicModal.fromTemplateUrl('components/partials/nav_bookmark.htm', {
+            id:'1002',
+            scope: $scope,
+            animation: 'slide-in-up'
+        }).then(function(modal) {
+            $scope.naviBookmarkModal = modal;
+        });
 
-
+        $scope.bookmarkActionSheet = function (chapter,verse,verseId) {
+           $ionicActionSheet.show({
+            buttons: [
+            { text: 'Burada Kaldim' }
+            ],
+            destructiveText: '',
+            titleText: '',
+            cancelText: 'Kapat',
+            cancel: function() {
+                // add cancel code..
+                },
+            buttonClicked: function(index) {
+                $scope.openAddBookMarkModal(chapter,verse,verseId);
+                $scope.bookmarkModal.show();
+            return true;
+            }
+            });
+            
+        }
+        
+        $scope.closeBookmarkModal =function () {
+            $scope.bookmarkModal.hide();
+            $scope.naviBookmarkModal.hide();
+        }
+        
+        $scope.openMenuModal = function () {
+             $ionicActionSheet.show({
+            buttons: [
+            { text: '<i class="icon ion-person"></i> Ceviri Secimi' },
+            { text: '<i class="icon ion-arrow-right-b"></i> Sure/Ayet Secimi' },
+            { text: '<i class="icon icon fa fa-search"></i> Notlari Filtrele' },
+            { text: '<i class="icon ion-android-bookmark"></i> Ayraclar' },
+            ],
+            destructiveText: '',
+            titleText: '',
+            cancelText: 'Kapat',
+            cancel: function() {
+                // add cancel code..
+                },
+            buttonClicked: function(index) {
+                
+                if(index==0){
+                    $scope.openModal('authors_list');
+                    
+                }else if(index==1){
+                    $scope.openModal('chapter_selection');
+                }else if(index==2){
+                    $scope.openModal('homesearch');
+                }else if(index==3){
+                    $scope.searchBookMarkModal();
+                    $scope.naviBookmarkModal.show();
+                }
+                
+            return true;
+            }
+            });
+        }
+        
         //initialization
 
         $scope.initializeHomeController();
+        
+        
 
     })
     .directive('toggle', function(){

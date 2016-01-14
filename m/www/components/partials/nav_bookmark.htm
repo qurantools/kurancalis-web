@@ -1,0 +1,66 @@
+<div class="modal modal-fullscreen" id="navbookmark" ng-controller="bookmarkController">
+    <ion-content>
+        <div class="modal-dialog fixed-dialog" style="width:90%;">
+        <div class="modal-content">
+             <div class="modal-body" style="width:100%">
+            Gitmek istediğiniz Ayracı Seçiniz.
+               </div>
+                <div style="width:100%; height:110px" align="center" >
+               <div data-dismiss="modal" aria-hidden="true" style="background-color:Yellow; width:100%; height:100px; font-size:14px; font-weight:bold; vertical-align:middle; color:Black;margin-right: 10px" class="btn btn-primary btn-wide" ng-click="gotoYellowBookmark()">
+                   <div class="col-m-sm-1">
+                       <i class="icon ion-android-bookmark" style='font-size: 5.0em;margin-left:-10px;'></i> 
+                   </div>
+                   <div align="center" class="col-m-sm-3">
+                       <h6 ng-if="bookmarksyellowchapter!=''" style="font-size:17px;padding-top: 16%;">{{bookmarksyellowchapter}}<br />{{bookmarksyellowchapterid}}:{{bookmarksyellowverseID}}</h6>
+                       <h4 ng-if="bookmarksyellowchapter==''" style="text-align: center;">BOŞ</h4>
+                   </div>
+               </div>
+                <div data-dismiss="modal" aria-hidden="true" style="background-color:Green; width:100%; height:100px; font-size:14px; font-weight:bold; vertical-align:middle; color:White;margin-right: 10px" class="btn btn-primary btn-wide" ng-click="gotoGreenBookmark()">
+                    <div class="col-m-sm-1">
+                        <i class="icon ion-android-bookmark" style='font-size: 5.0em;margin-left:-10px;'></i> 
+                        </div>
+                        <div align="center" class="col-m-sm-3" >
+                            <h6 ng-if="bookmarksgreenchapter!=''" style="font-size:17px;padding-top: 16%;">{{bookmarksgreenchapter}}<br />{{bookmarksgreenchapterid}}:{{bookmarksgreenverseID}}</h6>
+                            <h4 ng-if="bookmarksgreenchapter==''" style="text-align: center;">BOŞ</h4>
+                        </div>
+                </div>
+                <div data-dismiss="modal" aria-hidden="true" style="background-color:Orange; width:100%; height:100px; font-size:14px; font-weight:bold; vertical-align:middle; color:Black;margin-right: 10px" class="btn btn-primary btn-wide" ng-click="gotoOrangeBookmark()">
+                    <div class="col-m-sm-1">
+                        <i class="icon ion-android-bookmark" style='font-size: 5.0em;margin-left:-10px;'></i>
+                        </div>
+                        <div align="center" class="col-m-sm-3" >
+                            <h6 ng-if="bookmarksorangechapter!=''" style="font-size:17px;padding-top: 16%;">{{bookmarksorangechapter}}<br />{{bookmarksorangechapterid}}:{{bookmarksorangeverseID}}</h6>
+                            <h4 ng-if="bookmarksorangechapter==''" style="text-align: center;">BOŞ</h4>
+                        </div>
+                </div>
+                </div>
+              
+              <div class="modal-footer">
+                <button type="button" class="button button-positive"  style="width: 100%;margin-top: 15px;" data-dismiss="modal" aria-hidden="true" ng-click="closeBookmarkModal()">Kapat</button>
+              
+            </div>
+        </div>
+    </div>
+    </ion-content>
+    
+<style>
+    .col-m-sm-1{
+        width: 30%;
+        float: left;
+    }
+    .col-m-sm-1 .fa-bookmark{margin-top: 15%;}
+    .col-m-sm-3{
+        width: 60%;
+    }
+    .col-m-sm-3 h4{ text-align: left;line-height: 100px; }
+    
+    .modal-footer{
+        clear: both;
+    width: 100%;
+    text-align: center;
+    margin-top: 20px;
+    }
+
+</style>
+</div>
+
