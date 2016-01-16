@@ -303,7 +303,8 @@ margin: 0; }
     .col-m-sm-1{
         width: 30%;
         float: left;
-        margin-top: -6px;
+        height: 80px;
+    margin-top: -6px;
     }
     .col-m-sm-1 .fa-bookmark{margin-top: 15%;}
     .col-m-sm-3{
@@ -315,7 +316,7 @@ margin: 0; }
         clear: both;
     width: 100%;
     text-align: center;
-    margin-top: 20px;
+    margin-top: 15px;
     }
     
     .button-bookmark{
