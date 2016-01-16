@@ -1450,7 +1450,7 @@ angular.module('ionicApp')
         $scope.bookmarkActionSheet = function (chapter,verse,verseId) {
            $ionicActionSheet.show({
             buttons: [
-            { text: 'Burada Kaldim' }
+            { text: 'Burada Kaldım' }
             ],
             destructiveText: '',
             titleText: '',
@@ -1472,10 +1472,10 @@ angular.module('ionicApp')
             $scope.naviBookmarkModal.hide();
         }
         var buttons = [];
-        var butonCeviri = {  text: '<i class="icon ion-person"></i> Ceviri Secimi'  };
-        var butonSureAyet = {text: '<i class="icon ion-arrow-right-b"></i> Sure/Ayet Secimi' };
-        var butonFiltre = {text: '<i class="icon icon fa fa-search"></i> Notlari Filtrele' };
-        var butonAyraclar = {text: '<i class="icon ion-android-bookmark"></i> Ayraclar' };
+        var butonCeviri = {  text: '<i class="icon ion-person"></i> Çeviri Seçimi'  };
+        var butonSureAyet = {text: '<i class="icon ion-arrow-right-b"></i> Sure/Ayet Seçimi' };
+        var butonFiltre = {text: '<i class="icon icon fa fa-search"></i> Notları Filtrele' };
+        var butonAyraclar = {text: '<i class="icon ion-android-bookmark"></i> Ayraçlar' };
         buttons.push(butonCeviri);
         buttons.push(butonSureAyet);
         
