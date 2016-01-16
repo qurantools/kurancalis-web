@@ -303,6 +303,7 @@ margin: 0; }
     .col-m-sm-1{
         width: 30%;
         float: left;
+        margin-top: -6px;
     }
     .col-m-sm-1 .fa-bookmark{margin-top: 15%;}
     .col-m-sm-3{
