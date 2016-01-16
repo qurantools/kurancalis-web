@@ -1,5 +1,5 @@
 angular.module('ionicApp')
-    .controller('AnnotationsCtrl', function ($scope, $routeParams, Facebook, Restangular, $location, authorization, localStorageService, $ionicModal, $timeout, $ionicScrollDelegate) {
+    .controller('AnnotationsCtrl', function ($scope, $routeParams, Facebook, Restangular, $location, authorization, localStorageService, $ionicModal,$ionicPopup, $timeout, $ionicScrollDelegate) {
         console.log("annotations ctrl");
         $scope.allAnnotationsOrderBy='verse';
 
@@ -283,8 +283,21 @@ angular.module('ionicApp')
 
         //delete operation for annotations page
         $scope.deleteAnnotation = function (annotation) {
+
+
             var annotationRestangular = Restangular.one("annotations", annotation.annotationId);
-            annotationRestangular.customDELETE("", {}, {'access_token': $scope.access_token}).then(function (result) {
+
+                   if (config_data.isMobile) {
+                var confirmPopup = $ionicPopup.confirm({
+                     title: 'Ayet Notu Sil',
+                     template: 'Ayet notu silinecektir, onaylıyor musunuz?',
+                     cancelText: 'VAZGEC',
+                     okText: 'TAMAM',
+                     okType: 'button-assertive'
+                   });
+                   confirmPopup.then(function(res) {
+                     if(res) {
+                        annotationRestangular.customDELETE("", {}, {'access_token': $scope.access_token}).then(function (result) {
 
                 if (result.code == '200') {
                     var annotationIndex = $scope.getIndexOfArrayByElement($scope.annotations, 'annotationId', annotation.annotationId);
@@ -293,6 +306,12 @@ angular.module('ionicApp')
                     }
                 }
             });
+                     } else {
+                     }
+                   });
+            }
+
+            
         }
 
 

@@ -782,6 +782,7 @@ angular.module('ionicApp')
             $scope.filteredAnnotations = $scope.annotations;
         };
 
+        var tempAnnoIndex;
         //delete annotation from annotator library (highlight)
         $scope.deleteAnnotation = function (index) {
             //console.log("$scope.filteredAnnotations: "+JSON.stringify($scope.filteredAnnotations));
@@ -803,17 +804,27 @@ angular.module('ionicApp')
                      }
                    });
             }else{
-                 if (typeof $scope.filteredAnnotations != 'undefined' && $scope.filteredAnnotations.length > 0) {
-                index = $scope.getAnnotationIndexFromFilteredAnnotationIndex(index);
-            }
-            annotator.deleteAnnotation($scope.annotations[index]);
-            }
 
-           
+                $("#deleteAnnotationModal").modal("show");
+                tempAnnoIndex = index;
+                
+            }
 
         };
 
 
+        $scope.closeAnnotationModal = function(){
+            $("#deleteAnnotationModal").modal("hide");
+        }
+
+        $scope.mdeleteAnnotation = function(){
+            console.log('anno');
+             if (typeof $scope.filteredAnnotations != 'undefined' && $scope.filteredAnnotations.length > 0) {
+                index = $scope.getAnnotationIndexFromFilteredAnnotationIndex(tempAnnoIndex);
+            }
+            annotator.deleteAnnotation($scope.annotations[index]);
+            $("#deleteAnnotationModal").modal("hide");
+        }
 
 
         //remove annotation from scope
