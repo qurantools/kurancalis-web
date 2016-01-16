@@ -281,7 +281,7 @@ angular.module('ionicApp')
 
 
 
-        
+        $scope.tempAnnotation
         //delete operation for annotations page
         $scope.deleteAnnotation = function (annotation) {
 
@@ -313,7 +313,7 @@ angular.module('ionicApp')
             }else{
                 
                  $("#deleteAnnotationModal").modal("show");
-                 $scope.tempAnnotation = annotation;
+                 $scope.tempAnnotation =annotation;
             }
         }
 
@@ -323,7 +323,7 @@ angular.module('ionicApp')
         }
 
         $scope.mdeleteAnnotation = function(){
-             var annotationRestangular = Restangular.one("annotations", tempAnnoIndex.annotationId);
+             var annotationRestangular = Restangular.one("annotations", $scope.tempAnnotation.annotationId);
              annotationRestangular.customDELETE("", {}, {'access_token': $scope.access_token}).then(function (result) {
 
                 if (result.code == '200') {
