@@ -1471,15 +1471,26 @@ angular.module('ionicApp')
             $scope.bookmarkModal.hide();
             $scope.naviBookmarkModal.hide();
         }
+        var buttons = [];
+        var butonCeviri = {  text: '<i class="icon ion-person"></i> Ceviri Secimi'  };
+        var butonSureAyet = {text: '<i class="icon ion-arrow-right-b"></i> Sure/Ayet Secimi' };
+        var butonFiltre = {text: '<i class="icon icon fa fa-search"></i> Notlari Filtrele' };
+        var butonAyraclar = {text: '<i class="icon ion-android-bookmark"></i> Ayraclar' };
+        buttons.push(butonCeviri);
+        buttons.push(butonSureAyet);
+        
+        console.log('user');
+        setTimeout(function () {
+            if($scope.user){
+            buttons.push(butonFiltre);
+            buttons.push(butonAyraclar);
+        }
+        },2000);
+        
         
         $scope.openMenuModal = function () {
              $ionicActionSheet.show({
-            buttons: [
-            { text: '<i class="icon ion-person"></i> Ceviri Secimi' },
-            { text: '<i class="icon ion-arrow-right-b"></i> Sure/Ayet Secimi' },
-            { text: '<i class="icon icon fa fa-search"></i> Notlari Filtrele' },
-            { text: '<i class="icon ion-android-bookmark"></i> Ayraclar' },
-            ],
+            buttons: buttons,
             destructiveText: '',
             titleText: '',
             cancelText: 'Kapat',

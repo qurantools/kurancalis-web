@@ -4,12 +4,12 @@
         <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced">
             <ion-nav-buttons side="left">
                 <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
-                <button class="button button-icon icon ion-ios-gear" ng-if="user!=null" ng-click="openMenuModal()"></button>
+                <button class="button button-icon icon ion-ios-gear"  ng-click="openMenuModal()"></button>
                 <input type="hidden" ng-model="chapter_id"/>
                 <input type="hidden" ng-model="author_mask"/>
                 <!--author_mask:{{author_mask}}-->
-                <button class="button button-icon icon ion-plus" ng-if="user!=null"
-                        onclick="annotator.checkForStartSelection({ pageX : 300, pageY: 300});annotator.checkForEndSelection({ pageX : 300, pageY: 300});"></button>
+                <button class="button button-icon icon ion-plus"
+                        onclick="annotator.checkForStartSelection({ pageX : 300, pageY: 300});annotator.checkForEndSelection({ pageX : 300, pageY: 300});" ng-if="user!=null"></button>
 
             </ion-nav-buttons>
             <h1 class="title"></h1>
@@ -35,7 +35,11 @@
                         <div ng-repeat="verse in verses">
                             <div class="well translations col-xs-12" id="v_{{verse.id}}">
                                 <div ng-repeat="translation in verse.translations" class="selectable">
-                                    <div ng-if="$first"><h4>{{translation.chapter}}:{{translation.verse}} <img src="../../assets/img/sticky-note.png" width="18" height="18" ng-if="verseHasAnnotation(verse.id)" ng-click="showVerseAnnotations({{verse.id}})"><span ng-click="bookmarkActionSheet({{translation.chapter}},{{translation.verse}},{{verse.id}})">...</span></h4></div>
+                                    <div ng-if="$first"><h4>{{translation.chapter}}:{{translation.verse}} <img src="../../assets/img/sticky-note.png" width="18" height="18" ng-if="verseHasAnnotation(verse.id)" ng-click="showVerseAnnotations({{verse.id}})">
+                                    <button class="button button-balanced button-bookmark"ng-click="bookmarkActionSheet({{translation.chapter}},{{translation.verse}},{{verse.id}})">
+                                        <i class="icon ion-ios-more"></i>
+                                    </button>
+                                    </h4></div>
                                     <div id="t_{{translation.id}}">
                                         <div class="col-xs-12 col-sm-3 authorDiv_{{authorMap[translation.authorId].color}}">
                                             {{authorMap[translation.authorId].name}}
@@ -88,58 +92,6 @@
 
             </ion-content>
         </ion-nav-view>
-<style>
-    
-/* Android action sheet design */
-.platform-android .action-sheet-cancel {
-    display: block !important;
-}
-platform-android .action-sheet-backdrop.active {
-background-color: rgba(0, 0, 0, 0.2); }
-.platform-android .action-sheet {
-margin: 0; }
-
-.platform-android .action-sheet-up {
-    -webkit-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
-}
-
-.platform-android .action-sheet {
-    margin-left: 8px;
-    margin-right: 8px;
-    width: auto;
-    z-index: 11;
-    overflow: hidden;
-}
-
-.platform-android .action-sheet-options {
-    background: #f1f2f3;
-}
-
-.platform-android .action-sheet-group {
-    margin-bottom: 8px;
-    border-radius: 4px;
-    background-color: #fff;
-    overflow: hidden;
-}
-
-.platform-android .action-sheet .button {
-    display: block;
-    padding: 1px;
-    width: 100%;
-    border-radius: 0;
-    border-color: #d1d3d6;
-    background-color: transparent;
-    color: #007aff;
-    font-size: 21px;
-    text-align: center;
-}
-
-.platform-android .action-sheet-group .button:first-child:last-child {
-    border-width: 0;
-}
-
-</style>
 
         <!-- start of side menu part 2-->
     </ion-side-menu-content>
