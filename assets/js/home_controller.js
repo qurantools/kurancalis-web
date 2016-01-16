@@ -1,5 +1,5 @@
 angular.module('ionicApp')
-    .controller('HomeCtrl', function ($scope, $compile, $q, $routeParams, $location, $timeout, ListAuthors, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService, $document, $filter, $rootScope, $state, $stateParams, $ionicModal, $ionicScrollDelegate, $ionicPosition, authorization,$ionicActionSheet, $sce) {
+    .controller('HomeCtrl', function ($scope, $compile, $q, $routeParams, $location, $timeout, ListAuthors, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService, $document, $filter, $rootScope, $state, $stateParams, $ionicModal, $ionicScrollDelegate, $ionicPosition, authorization,$ionicActionSheet,$ionicPopup, $sce) {
 
 
         $scope.linkno="";
@@ -785,10 +785,31 @@ angular.module('ionicApp')
         //delete annotation from annotator library (highlight)
         $scope.deleteAnnotation = function (index) {
             //console.log("$scope.filteredAnnotations: "+JSON.stringify($scope.filteredAnnotations));
-            if (typeof $scope.filteredAnnotations != 'undefined' && $scope.filteredAnnotations.length > 0) {
+            if (config_data.isMobile) {
+                var confirmPopup = $ionicPopup.confirm({
+                     title: 'Ayet Notu Sil',
+                     template: 'Ayet notu silinecektir, onaylıyor musunuz?',
+                     cancelText: 'VAZGEC',
+                     okText: 'TAMAM',
+                     okType: 'button-assertive'
+                   });
+                   confirmPopup.then(function(res) {
+                     if(res) {
+                        if (typeof $scope.filteredAnnotations != 'undefined' && $scope.filteredAnnotations.length > 0) {
+                        index = $scope.getAnnotationIndexFromFilteredAnnotationIndex(index);
+                        }
+                        annotator.deleteAnnotation($scope.annotations[index]);
+                     } else {
+                     }
+                   });
+            }else{
+                 if (typeof $scope.filteredAnnotations != 'undefined' && $scope.filteredAnnotations.length > 0) {
                 index = $scope.getAnnotationIndexFromFilteredAnnotationIndex(index);
             }
             annotator.deleteAnnotation($scope.annotations[index]);
+            }
+
+           
 
         };
 
@@ -1450,7 +1471,7 @@ angular.module('ionicApp')
         $scope.bookmarkActionSheet = function (chapter,verse,verseId) {
            $ionicActionSheet.show({
             buttons: [
-            { text: 'Burada Kaldım' }
+            { text: 'Burada Kaldim' }
             ],
             destructiveText: '',
             titleText: '',
@@ -1472,10 +1493,10 @@ angular.module('ionicApp')
             $scope.naviBookmarkModal.hide();
         }
         var buttons = [];
-        var butonCeviri = {  text: '<i class="icon ion-person"></i> Çeviri Seçimi'  };
-        var butonSureAyet = {text: '<i class="icon ion-arrow-right-b"></i> Sure/Ayet Seçimi' };
-        var butonFiltre = {text: '<i class="icon icon fa fa-search"></i> Notları Filtrele' };
-        var butonAyraclar = {text: '<i class="icon ion-android-bookmark"></i> Ayraçlar' };
+        var butonCeviri = {  text: '<i class="icon ion-person"></i> Ceviri Secimi'  };
+        var butonSureAyet = {text: '<i class="icon ion-arrow-right-b"></i> Sure/Ayet Secimi' };
+        var butonFiltre = {text: '<i class="icon icon fa fa-search"></i> Notlari Filtrele' };
+        var butonAyraclar = {text: '<i class="icon ion-android-bookmark"></i> Ayraclar' };
         buttons.push(butonCeviri);
         buttons.push(butonSureAyet);
         
