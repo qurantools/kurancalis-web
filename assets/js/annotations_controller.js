@@ -281,6 +281,7 @@ angular.module('ionicApp')
 
 
 
+        var tempAnnoIndex;
         //delete operation for annotations page
         $scope.deleteAnnotation = function (annotation) {
 
@@ -301,20 +302,39 @@ angular.module('ionicApp')
 
                 if (result.code == '200') {
                     var annotationIndex = $scope.getIndexOfArrayByElement($scope.annotations, 'annotationId', annotation.annotationId);
-                    if (annotationIndex > -1) {
-                        $scope.annotations.splice(annotationIndex, 1);
-                    }
-                }
-            });
+                         if (annotationIndex > -1) {
+                         $scope.annotations.splice(annotationIndex, 1);
+                         }
+                 }
+                    });
                      } else {
                      }
                    });
+            }else{
+                
+                 $("#deleteAnnotationModal").modal("show");
+                 tempAnnoIndex =annotation;
             }
-
-            
         }
 
 
+         $scope.closeAnnotationModal = function(){
+            $("#deleteAnnotationModal").modal("hide");
+        }
+
+        $scope.mdeleteAnnotation = function(){
+             var annotationRestangular = Restangular.one("annotations", tempAnnoIndex.annotationId);
+             annotationRestangular.customDELETE("", {}, {'access_token': $scope.access_token}).then(function (result) {
+
+                if (result.code == '200') {
+                    var annotationIndex = $scope.getIndexOfArrayByElement($scope.annotations, 'annotationId', tempAnnoIndex.annotationId);
+                         if (annotationIndex > -1) {
+                         $scope.annotations.splice(annotationIndex, 1);
+                         }
+                 }
+                    });
+            $("#deleteAnnotationModal").modal("hide");
+        }
 
 
         $scope.submitEditor = function () {
