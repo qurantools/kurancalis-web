@@ -19,6 +19,8 @@ angular.module('ionicApp')
         $scope.filterOrderSelect = 'verseId';
         $scope.filteredAnnotations = [];
 
+        $scope.actionSheetButtons = [];
+
         //detailed search screen parameters
         $scope.query_chapter_id = $scope.chapter_id;
         $scope.query_author_mask = $scope.author_mask;
@@ -1425,6 +1427,10 @@ angular.module('ionicApp')
                 $scope.list_translations();
             });
 
+            $scope.$on('userInfoReady', function handler() {
+                $scope.initializeActionSheetButtons()
+            });
+
             $scope.$on('logout', function handler() {
                 if (typeof annotator != 'undefined') {
                     annotator.destroy();
@@ -1442,7 +1448,27 @@ angular.module('ionicApp')
                 }
             });
 
+            $scope.initializeActionSheetButtons();
+
         };
+
+        $scope.initializeActionSheetButtons = function(){
+            //initialize action sheets
+            $scope.actionSheetButtons = [];
+            var butonCeviri = {  text: '<i class="icon ion-person"></i> Çeviri Seç'  };
+            var butonSureAyet = {text: '<i class="icon ion-arrow-right-b"></i> Sure/Ayete Git' };
+            var butonFiltre = {text: '<i class="icon icon fa fa-search"></i> Notları Filtrele' };
+            var butonAyraclar = {text: '<i class="icon ion-android-bookmark"></i> Ayraçlar' };
+            $scope.actionSheetButtons.push(butonCeviri);
+            $scope.actionSheetButtons.push(butonSureAyet);
+
+            if($scope.loggedIn) {
+                if($scope.user){
+                    $scope.actionSheetButtons.push(butonFiltre);
+                    $scope.actionSheetButtons.push(butonAyraclar);
+                }
+            }
+        }
 
         $scope.selectDropdownCircle = function (item) {
 
@@ -1482,7 +1508,7 @@ angular.module('ionicApp')
         $scope.bookmarkActionSheet = function (chapter,verse,verseId) {
            $ionicActionSheet.show({
             buttons: [
-            { text: 'Burada Kaldim' }
+            { text: 'Burada Kaldım' }
             ],
             destructiveText: '',
             titleText: '',
@@ -1503,26 +1529,12 @@ angular.module('ionicApp')
             $scope.bookmarkModal.hide();
             $scope.naviBookmarkModal.hide();
         }
-        var buttons = [];
-        var butonCeviri = {  text: '<i class="icon ion-person"></i> Ceviri Secimi'  };
-        var butonSureAyet = {text: '<i class="icon ion-arrow-right-b"></i> Sure/Ayet Secimi' };
-        var butonFiltre = {text: '<i class="icon icon fa fa-search"></i> Notlari Filtrele' };
-        var butonAyraclar = {text: '<i class="icon ion-android-bookmark"></i> Ayraclar' };
-        buttons.push(butonCeviri);
-        buttons.push(butonSureAyet);
-        
-        console.log('user');
-        setTimeout(function () {
-            if($scope.user){
-            buttons.push(butonFiltre);
-            buttons.push(butonAyraclar);
-        }
-        },2000);
-        
+
+
         
         $scope.openMenuModal = function () {
              $ionicActionSheet.show({
-            buttons: buttons,
+            buttons: $scope.actionSheetButtons,
             destructiveText: '',
             titleText: '',
             cancelText: 'Kapat',
