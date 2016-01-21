@@ -1488,22 +1488,24 @@ angular.module('ionicApp')
             $ionicScrollDelegate.$getByHandle(id).scrollTop();
         };
         
-        
-         $ionicModal.fromTemplateUrl('components/partials/bookmark.html', {
-            id:'1001',
-            scope: $scope,
-            animation: 'slide-in-up'
-        }).then(function(modal) {
-            $scope.bookmarkModal = modal;
-        });
-        
-        $ionicModal.fromTemplateUrl('components/partials/nav_bookmark.htm', {
-            id:'1002',
-            scope: $scope,
-            animation: 'slide-in-up'
-        }).then(function(modal) {
-            $scope.naviBookmarkModal = modal;
-        });
+        if (config_data.isMobile) {
+            
+             $ionicModal.fromTemplateUrl('components/partials/bookmark.html', {
+                id:'1001',
+                scope: $scope,
+                animation: 'slide-in-up'
+            }).then(function(modal) {
+                $scope.bookmarkModal = modal;
+            });
+            
+            $ionicModal.fromTemplateUrl('components/partials/nav_bookmark.htm', {
+                id:'1002',
+                scope: $scope,
+                animation: 'slide-in-up'
+            }).then(function(modal) {
+                $scope.naviBookmarkModal = modal;
+            });
+        }
 
         $scope.bookmarkActionSheet = function (chapter,verse,verseId) {
            $ionicActionSheet.show({
