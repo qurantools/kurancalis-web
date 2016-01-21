@@ -317,7 +317,6 @@ angular.module('ionicApp')
             }
         }
 
-
          $scope.closeAnnotationModal = function(){
             $("#deleteAnnotationModal").modal("hide");
         }
