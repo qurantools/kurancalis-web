@@ -221,6 +221,10 @@ if (config_data.isMobile == false) { //false
             .when('/chapter/:chapter/author/:author/', {
                 redirectTo: '/translations/?chapter=:chapter&verse=1&author=:author'
             })
+			.when('/help/',{
+                controller:'HelpController',
+                templateUrl:'app/components/help/index.html'
+            })
             //.when('/:chapter/:verse', {
             //    redirectTo: '/translations?chapter=:chapter&verse=:verse&author=1040'
             //})
@@ -276,6 +280,10 @@ if (config_data.isMobile == false) { //false
                     })
                     .when('/chapter/:chapter/author/:author/', {
                         redirectTo: '/translations/?chapter=:chapter&verse=1&author=:author'
+                    })
+					.when('/help/',{
+                        controller:'HelpController',
+                        templateUrl:'app/components/help/index.html'
                     })
                     .otherwise({
                         redirectTo: '/translations/'

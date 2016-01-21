@@ -20,6 +20,9 @@
                         <li ng-class="{active: currentPage.search('people')==0}">
                             <a href="#/people/circles/" ng-if="user!=null">Kişiler</a>
                         </li>
+                        <li ng-class="{active: currentPage == 'help'}">
+                            <a href="#/help/" ng-click="" onclick="">Yardım</a>
+                        </li>
                         <li ng-if="user!=null">
                             <a href ng-click="logOut()" onclick="closeLeftPanel()">Çıkış</a>
                         </li>
