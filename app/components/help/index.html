@@ -1,0 +1,79 @@
+<body>
+<link href="../../../assets/css/help.css">
+<div class="container">
+    <div ng-include="'app/components/partials/navigation.html'"></div>
+    <div class="nav-bottom"></div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div ng-controller="HelpController" id="help">
+
+                <div class="list list-inset">
+                    <div class="item" ng-repeat="item in menuList"><a href="#cd-product-tour" data-type="cd-tour">{{item}}</a></div>
+                </div>
+
+
+
+
+                <div id="cd-product-tour">
+                    <ul>
+                        <li class="cd-single-item cd-active">
+                            <div class="cd-caption">
+                                <h2>What a great feature</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus praesentium, quis ab iusto possimus quaerat perspiciatis voluptas obcaecati ipsam autem.
+                                </p>
+                            </div>
+                            <div class="cd-image-container">
+                                <div>
+                                    <div class="cd-phone-frame"></div>
+                                    <div class="cd-image-wrapper">
+                                        <img src="img/screen-1.png" data-video="video/video-1" alt="Screen Preview 1">
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="cd-single-item cd-not-visible cd-move-right">
+                            <div class="cd-caption">
+                                <h2>This one is even better</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus praesentium, quis ab iusto possimus quaerat perspiciatis voluptas obcaecati ipsam autem.
+                                </p>
+                            </div>
+                            <div class="cd-image-container">
+                                <div>
+                                    <div class="cd-phone-frame"></div>
+                                    <div class="cd-image-wrapper">
+                                        <img src="img/screen-2.png" data-video="video/video-2" alt="Screen Preview 2">
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="cd-single-item cd-not-visible cd-move-right">
+                            <div class="cd-caption">
+                                <h2>Feature number 3</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus praesentium, quis ab iusto possimus quaerat perspiciatis voluptas obcaecati ipsam autem.
+                                </p>
+                            </div>
+                            <div class="cd-image-container">
+                                <div>
+                                    <div class="cd-phone-frame"></div>
+                                    <div class="cd-image-wrapper">
+                                        <img src="img/screen-3.png" data-video="video/video-3" alt="Screen Preview 3">
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div> <!-- cd-product-tour -->
+
+                <div class="cd-slider-nav">
+                    <a class="cd-prev" href="#0">Previous</a>
+                    <a class="cd-next" href="#0">Next</a>
+                </div> <!-- cd-slider-nav -->
+
+                <div class="cd-loader"></div> <!-- top loading bar -->
+
+            </div>
+        </div>
+    </div>
+</div>
+<div ng-include="'app/components/partials/off_canvas_menu.html'"></div>
+</body>
