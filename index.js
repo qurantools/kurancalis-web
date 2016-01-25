@@ -26,7 +26,7 @@ var app = angular.module('ionicApp', requiredModules)
     .filter('with_footnote_link', [
         function () {
             return function (text, translation_id, author_id) {
-                return text.replace(/\*+/g, "<button class='btn btn-default btn-xs' onclick='angular.element(document.getElementById(\"theView\")).scope().list_footnotes(" + translation_id + "," + author_id + ")'>dipnot</button>");
+                return text.replace(/\*+/g, "<button style='border:0;' class='label label-dipnot btn  btn-xs' onclick='angular.element(document.getElementById(\"theView\")).scope().list_footnotes(" + translation_id + "," + author_id + ")'>dipnot</button>");
             };
         }])
     .filter('with_next_link', [
@@ -1353,5 +1353,12 @@ function focusToChapterInput() {
     setTimeout(function () {
         document.getElementById('chapterSelection_chapter').focus();
         document.getElementById('chapterSelection_chapter').select();
+    }, 600);
+}
+
+function focusToInput(elementID) {
+    setTimeout(function () {
+        document.getElementById(elementID).focus();
+        document.getElementById(elementID).select();
     }, 600);
 }

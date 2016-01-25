@@ -101,9 +101,25 @@ angular.module('ionicApp')
         };
        
         $scope.popoveropen=function(){
-        $compile($('.popover.in').contents())($scope);
+            $compile($('.popover.in').contents())($scope);
+           // $(document).bind('click',$scope.popoverclose);
+            $('body').on('click', $scope.popoverclose);
         }
-        
+
+        $scope.popoverclose= function(e){
+            //did not click a popover toggle, or icon in popover toggle, or popover
+            if ($(e.target).data('toggle') !== 'popover'
+                && $(e.target).parents('[data-toggle="popover"]').length === 0
+                && $(e.target).parents('.popover.in').length === 0) {
+                $('[data-toggle="popover"]').popover('hide');
+
+                $('body').unbind('click',$scope.popoverclose);
+            }
+            //$(document).popover('hide');
+        }
+
+
+
         $scope.linkcreate=function(chapterno,verseno){
             if(verseno=="0")
             {verseno="1"; chapterno="1";  }
@@ -1150,6 +1166,7 @@ angular.module('ionicApp')
                     $scope.modal_view_user_search.show();
                 } else if (id == 'tagsearch') {
                     $scope.modal_tag_search.show();
+                    focusToInput('tagsearch_input');
 
                 }
             };
@@ -1508,22 +1525,24 @@ angular.module('ionicApp')
         }
 
         $scope.bookmarkActionSheet = function (chapter,verse,verseId) {
-           $ionicActionSheet.show({
-            buttons: [
-            { text: 'Burada Kaldım' }
-            ],
-            destructiveText: '',
-            titleText: '',
-            cancelText: 'Kapat',
-            cancel: function() {
-                // add cancel code..
-                },
-            buttonClicked: function(index) {
-                $scope.openAddBookMarkModal(chapter,verse,verseId);
-                $scope.bookmarkModal.show();
-            return true;
-            }
-            });
+            $timeout(function() {
+                $ionicActionSheet.show({
+                    buttons: [
+                        {text: 'Burada Kaldım'}
+                    ],
+                    destructiveText: '',
+                    titleText: '',
+                    cancelText: 'Kapat',
+                    cancel: function () {
+                        // add cancel code..
+                    },
+                    buttonClicked: function (index) {
+                        $scope.openAddBookMarkModal(chapter, verse, verseId);
+                        $scope.bookmarkModal.show();
+                        return true;
+                    }
+                });
+            },350);
             
         }
         
@@ -1535,31 +1554,33 @@ angular.module('ionicApp')
 
         
         $scope.openMenuModal = function () {
-             $ionicActionSheet.show({
-            buttons: $scope.actionSheetButtons,
-            destructiveText: '',
-            titleText: '',
-            cancelText: 'Kapat',
-            cancel: function() {
-                // add cancel code..
-                },
-            buttonClicked: function(index) {
-                
-                if(index==0){
-                    $scope.openModal('authors_list');
-                    
-                }else if(index==1){
-                    $scope.openModal('chapter_selection');
-                }else if(index==2){
-                    $scope.openModal('homesearch');
-                }else if(index==3){
-                    $scope.searchBookMarkModal();
-                    $scope.naviBookmarkModal.show();
-                }
-                
-            return true;
-            }
-            });
+            $timeout(function() {
+                $ionicActionSheet.show({
+                    buttons: $scope.actionSheetButtons,
+                    destructiveText: '',
+                    titleText: '',
+                    cancelText: 'Kapat',
+                    cancel: function () {
+                        // add cancel code..
+                    },
+                    buttonClicked: function (index) {
+
+                        if (index == 0) {
+                            $scope.openModal('authors_list');
+
+                        } else if (index == 1) {
+                            $scope.openModal('chapter_selection');
+                        } else if (index == 2) {
+                            $scope.openModal('homesearch');
+                        } else if (index == 3) {
+                            $scope.searchBookMarkModal();
+                            $scope.naviBookmarkModal.show();
+                        }
+
+                        return true;
+                    }
+                });
+            },350);
         }
         
         //initialization
@@ -1569,6 +1590,7 @@ angular.module('ionicApp')
         
 
     })
+
     .directive('toggle', function(){
   return {
     restrict: 'A',
@@ -1577,24 +1599,13 @@ angular.module('ionicApp')
         $(element).tooltip();
       }
       if (attrs.toggle=="popover"){
-        $(element).popover(
-        /*    {
-            html: true,
-            content: function () {
-                console.log(attrs.templatefile);
-                return $('#verse_popover').html();
-                /*$.get(attrs.templatefile).success(function (data) {
-                    return data;
-                });*/
-        //    }
-       // }
-
-        );
+        $(element).popover();
          
       }
     }
   };
 })
+;
 
 
 

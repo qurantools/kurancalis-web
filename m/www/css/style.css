@@ -58,6 +58,11 @@ ion-content {
     color: #fff;
 }
 
+.label-dipnot {
+    background-color: #757575;
+    color: #fff;
+}
+
 body .overflow-scroll {
     overflow: auto;
     overflow-x: hidden;
