@@ -99,23 +99,21 @@ angular.module('ionicApp')
             
             $scope.$broadcast('searchBookMarkModal');
         };
-       
+
         $scope.popoveropen=function(){
             $compile($('.popover.in').contents())($scope);
-           // $(document).bind('click',$scope.popoverclose);
             $('body').on('click', $scope.popoverclose);
         }
 
         $scope.popoverclose= function(e){
-            //did not click a popover toggle, or icon in popover toggle, or popover
+            //clicking on popover toggle button is processed itself. Any other place hides the popver
             if ($(e.target).data('toggle') !== 'popover'
-                && $(e.target).parents('[data-toggle="popover"]').length === 0
-                && $(e.target).parents('.popover.in').length === 0) {
+            //&& $(e.target).parents('[data-toggle="popover"]').length === 0    //for not hiding after clicking inside popover
+            //&& $(e.target).parents('.popover.in').length === 0                //for not hiding after clicking inside popover
+            ){
                 $('[data-toggle="popover"]').popover('hide');
-
                 $('body').unbind('click',$scope.popoverclose);
             }
-            //$(document).popover('hide');
         }
 
 
