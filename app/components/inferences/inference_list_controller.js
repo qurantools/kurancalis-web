@@ -106,17 +106,17 @@ angular.module('ionicApp')
         };
 
         $scope.getInferenceSearchTags = function(){
-            var verse_tags = "";
+            var tags = "";
             if(typeof $scope.filterTags =='undefined'){
                 $scope.filterTags=[];
             }
             for (var i = 0; i < $scope.filterTags.length; i++) {
                 if (i != 0){
-                    verse_tags += ",";
+                    tags += ",";
                 }
-                verse_tags += $scope.filterTags[i].name;
+                tags += $scope.filterTags[i].name;
             }
-            return verse_tags;
+            return tags;
 
         };
 
@@ -132,8 +132,8 @@ angular.module('ionicApp')
             $scope.allInferencesParams.limit = $scope.allInferencesOpts.limit;
             $scope.allInferencesParams.own_inferences = $scope.allInferencesOpts.own_inferences;
 
-            $scope.allInferencesParams.verse_keyword = $scope.allInferencesOpts.keyword;
-            $scope.allInferencesParams.verse_tags = "";
+            $scope.allInferencesParams.keyword = $scope.allInferencesOpts.keyword;
+            $scope.allInferencesParams.tags = "";
 
             var newTags = "";
 
@@ -144,7 +144,7 @@ angular.module('ionicApp')
                 if (i != 0)newTags += ",";
                 newTags += $scope.filterTags[i].name;
             }
-            $scope.allInferencesParams.verse_tags = newTags;
+            $scope.allInferencesParams.tags = newTags;
 
             //Volkan Ekledi.
              var kisiTags = "";
@@ -163,10 +163,6 @@ angular.module('ionicApp')
 
             $scope.allInferencesParams.users = kisiTags;
             $scope.allInferencesParams.circles = cevreTags;
-
-
-            //TODO: TEMPORARILY ALL MY CIRCLES
-            $scope.allInferencesParams.circles = -2;
 
             $scope.allInferencesParams.orderby = $scope.allInferencesOrderBy;
 
@@ -322,6 +318,12 @@ angular.module('ionicApp')
             var verseKeyword = "";
             var ownInferences = true;
             var circles = []; //id array
+            circles.push(
+                {
+                    id: -2,
+                    name: "Tüm Çevrelerim"
+                }
+                );
             var users = []; //id array
             var verseTags = [];
 
@@ -381,8 +383,8 @@ angular.module('ionicApp')
                 localParameterData.orderby = orderby;
                 localParameterData.verseKeyword = verseKeyword;
                 localParameterData.ownInferences = ownInferences;
-                localParameterData.circles = [];
-                localParameterData.users = [];
+                localParameterData.circles = circles;
+                localParameterData.users = users;
                 localParameterData.verseTags = verseTags;
 
             }
