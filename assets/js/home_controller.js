@@ -714,7 +714,17 @@ angular.module('ionicApp')
                 $scope.chapter_title = "";
             }
             else{
-                $scope.chapter_title = $scope.chapters[translationParams.chapter-1].nameTr + " - " + $scope.chapters[translationParams.chapter-1].nameTr2 + " Sûresi";
+                $timeout(function(){
+                    try{
+
+                        if (typeof translationParams.chapter != 'undefined' && typeof $scope.chapters[translationParams.chapter - 1] !== 'undefined') {
+                            $scope.chapter_title = $scope.chapters[translationParams.chapter - 1].nameTr + " - " + $scope.chapters[translationParams.chapter - 1].nameTr2 + " Sûresi";
+                        }
+                    }
+                    catch (err){
+
+                    }
+                },200);
             }
 
             verseTagContentRestangular.customGET("", translationParams, {}).then( function(data){
