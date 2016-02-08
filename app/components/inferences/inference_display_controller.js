@@ -334,7 +334,11 @@ angular.module('ionicApp')
                 author: $scope.referenced.selectedAuthor
 
             }
-            $location.path("/inference/display/"+$scope.inferenceId+"/", false).search(parameters);
+            if(!config_data.isMobile){
+                $location.path("/inference/display/"+$scope.inferenceId+"/", false).search(parameters);
+            }else{
+                $location.path("/m_inference/display/"+$scope.inferenceId+"/", false).search(parameters);
+            }
         };
 
         $scope.getChapterVerseNotation = function(verseId){

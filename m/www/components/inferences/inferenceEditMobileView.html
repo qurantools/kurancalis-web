@@ -1,0 +1,64 @@
+<ion-side-menus>
+    <ion-side-menu-content>
+        <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced">
+            <ion-nav-buttons side="left">
+                <button onclick="window.history.back()" class="button button-icon icon ion-arrow-left-b">Vazgec</button>
+
+                <input type="hidden" ng-model="chapter_id"/>
+                <input type="hidden" ng-model="author_mask"/>
+
+            </ion-nav-buttons>
+            <h1 class="title"></h1>
+            <ion-nav-buttons side="right">
+                <button class="button button-icon icon ion-checkmark" ng-click="do_array()" ng-if="user!=null">
+                </button>
+            </ion-nav-buttons>
+        </ion-nav-bar>
+        <ion-nav-buttons side="left">
+            <button class="button button-icon icon ion-navicon" menu-toggle="left">
+            </button>
+        </ion-nav-buttons>
+
+        <ion-nav-view name="appContent"></ion-nav-view>
+        <ion-nav-view id="mobile_inference_edit_content">
+            <ion-content overflow-scroll="true" style="padding-top: 30px" ng-controller="InferenceEditController">
+                <div class="list">
+                    <label class="item item-input">
+                        <span class="input-label">Baslik</span>
+                        <input type="text" id="title" ng-model="title">
+                    </label>
+                    <label class="item item-input">
+                        <input type="text" class="form-control" id="inferenceImage" style="width: 95%;display: none" placeholder="Image URL" ng-model="inferenceImage">
+                        <img style="background-image: url('../../assets/img/resim_ekle_tikla.png')" height="100" src="{{inferenceImage}}" width="165" class="file-manager-linked" data-input-id="inferenceImage"/>
+                    </label>
+                    <label class="item item-input" style="padding: 8px;">
+                         <textarea id="text-content" ng-model="content" ui-tinymce="tinymceOptions" style="height:150px">
+                        </textarea>
+                    </label>
+                </div>
+
+                <ion-list>
+                    <ion-item ng-repeat="tags in tags_entry">
+                        <i class="ion-minus-circled" style="font-size: 24px;color: red;"  ng-click=""></i>
+                        {{tags.name}}
+                    </ion-item>
+                </ion-list>
+
+                <div style="padding-left: 10px;padding-right: 10px">
+                    <button class="button button-positive" style="width: 100%" ng-click="addInferenceTag()">Etiket Ekle</button>
+                </div>
+
+                <ion-list >
+                    <ion-item ng-repeat="item in ViewUsers">
+                        <i class="ion-minus-circled" style="font-size: 24px;color: red;"  ng-click=""></i>
+                        {{item.name}}
+                    </ion-item>
+                </ion-list>
+
+                <div style="padding-left: 10px;padding-right: 10px">
+                    <button class="button button-positive" style="width: 100%" ng-click="openModal('viewusersearch')">Kisi Ekle</button>
+                </div>
+            </ion-content>
+        </ion-nav-view>
+    </ion-side-menu-content>
+</ion-side-menus>
