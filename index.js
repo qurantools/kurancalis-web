@@ -1258,7 +1258,14 @@ app.factory('ChapterVerses', function ($resource) {
         };
 
         $scope.kopyala = function(){
-            document.getElementById("url").value;
+            var url = document.getElementById("url").value;
+            var copyFrom = document.createElement("textarea");
+            copyFrom.textContent = url;
+            var body = document.getElementsByTagName('body')[0];
+            body.appendChild(copyFrom);
+            copyFrom.select();
+            document.execCommand('copy');
+            body.removeChild(copyFrom);
         }
 
         $scope.shareMessageChanged = function(){

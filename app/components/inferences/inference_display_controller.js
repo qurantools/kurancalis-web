@@ -20,7 +20,7 @@ angular.module('ionicApp')
         $scope.contentOriginal = "";
         $scope.tags = [];
         $scope.open_edit = true;
-        $scope.authorizedInferenceDisplay = false;
+        $scope.authorizedInferenceDisplay = 0;
 
         //On Off Switch
         $scope.inlineReferenceDisplay = false;
@@ -82,7 +82,7 @@ angular.module('ionicApp')
             var inferenceRestangular = Restangular.one("inferences", inferenceId);
             inferenceRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (data) {
                 $scope.inference_info = data;
-                $scope.authorizedInferenceDisplay = true;
+                $scope.authorizedInferenceDisplay = 1;
 
                 $scope.edit_user = data.userId;
                 $scope.title = data.title;
@@ -112,12 +112,9 @@ angular.module('ionicApp')
                     $scope.updateReferencedTranslations();
                     $scope.updateTags();
                 }
-
-
-
             }, function(response) {
                 if (response.status == "400"){
-                    $scope.authorizedInferenceDisplay = false;
+                    $scope.authorizedInferenceDisplay = 2;
                 }
              });
         };
