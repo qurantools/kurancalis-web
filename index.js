@@ -404,6 +404,11 @@ app.factory('ChapterVerses', function ($resource) {
         $scope.yrmcevres = [];
         $scope.yrmkisis = [];
 
+        //share modal
+        $scope.shareText = "";
+        $scope.shareUrl = "";
+        $scope.shareTitle = "";
+
         //    $scope.user = null;
 
         $scope.modal_editor = null;
@@ -1251,6 +1256,40 @@ app.factory('ChapterVerses', function ($resource) {
             }
 
         };
+
+        $scope.kopyala = function(){
+            document.getElementById("url").value;
+        }
+
+        $scope.shareMessageChanged = function(){
+            $scope.shareText = document.getElementById("shareMessage").value;
+            $scope.shareUrl = document.getElementById("url").value;
+
+            document.getElementById('st_facebook').setAttribute('st_msg', $scope.shareText);
+            document.getElementById('st_twitter').setAttribute('st_msg', $scope.shareText);
+            document.getElementById('st_googleplus').setAttribute('st_msg', $scope.shareText);
+            document.getElementById('st_linkedin').setAttribute('st_msg', $scope.shareText);
+            document.getElementById('st_pinterest').setAttribute('st_msg', $scope.shareText);
+            document.getElementById('st_email').setAttribute('st_msg', $scope.shareText);
+
+            document.getElementById('st_facebook').setAttribute('st_url', $scope.shareUrl);
+            document.getElementById('st_twitter').setAttribute('st_url', $scope.shareUrl);
+            document.getElementById('st_googleplus').setAttribute('st_url', $scope.shareUrl);
+            document.getElementById('st_linkedin').setAttribute('st_url', $scope.shareUrl);
+            document.getElementById('st_pinterest').setAttribute('st_url', $scope.shareUrl);
+            document.getElementById('st_email').setAttribute('st_url', $scope.shareUrl);
+
+            var metas = document.getElementsByTagName('meta');
+
+            for (i=0; i < metas.length; i++) {
+               if (metas[i].getAttribute("property") == "og:url") {
+                  metas[i].setAttribute("content", $scope.shareUrl);
+                  break;
+               }
+            }
+
+            stButtons.locateElements();
+        }
 
         //initialization
 

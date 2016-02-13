@@ -1,8 +1,9 @@
 <body>
 <div class="container">
     <div ng-include="'app/components/inferences/inferences_navigation.html'"></div>
+    <div ng-include="'app/components/partials/share_modal.html'"></div>
     <div class="nav-bottom"></div>
-    <div align="center" class="row">
+    <div align="center" class="row" ng-if="authorizedInferenceDisplay">
         <table cellpadding="0" cellspacing="0">
             <tr>
                 <td align="center" style="width:1050px">
@@ -58,7 +59,9 @@
             </tr>
         </table>
         <br/>
-        <div align="right" ng-include="'app/components/partials/share_this.html'" style="padding-right: 15px;"></div>
+        <div align="right" style="padding-right : 75px;">
+            <a id="share" ng-class="{back_orange: currentPage == 'people_have_you'}" ng-click="runShareModal()" data-target='#shareModal' data-toggle='modal' class="btn btn-primary">Paylaş</a>
+        </div>
         <br/>
         <h6 align="left" style="width: 1024px">Referans Verilen Ayetler</h6>
         <table ng-if="referenced.verses.length!=0">
@@ -102,6 +105,16 @@
         </div>
     </div>
 
+    <div align="center" class="row" ng-if="!authorizedInferenceDisplay">
+        <table cellpadding="0" cellspacing="0">
+            <tr>
+                <td align="center" style="padding-right: 15px; padding-left: 15px; padding-bottom: 15px;
+                    width: 1050px; padding-top: 15px; background-color:#fff6dc">
+                    <strong>Bu çıkarımı görüntüleme yetkisine sahip değilsiniz!</strong>
+                </td>
+            </tr>
+        </table>
+    </div>
 <br><br>
 </div>
 <div align="center">

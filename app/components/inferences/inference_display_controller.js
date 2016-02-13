@@ -1,5 +1,5 @@
 angular.module('ionicApp')
-    .controller('InferenceDisplayController', function ($scope, $routeParams, $location, authorization, localStorageService,  Restangular, $timeout,$sce) {
+    .controller('InferenceDisplayController', function ($scope, $routeParams, $location, authorization, localStorageService,  Restangular, $timeout,$sce,$ionicModal) {
 
         //All scope variables
         $scope.inferenceId=0;
@@ -20,6 +20,7 @@ angular.module('ionicApp')
         $scope.contentOriginal = "";
         $scope.tags = [];
         $scope.open_edit = true;
+        $scope.authorizedInferenceDisplay = false;
 
         //On Off Switch
         $scope.inlineReferenceDisplay = false;
@@ -81,6 +82,7 @@ angular.module('ionicApp')
             var inferenceRestangular = Restangular.one("inferences", inferenceId);
             inferenceRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (data) {
                 $scope.inference_info = data;
+                $scope.authorizedInferenceDisplay = true;
 
                 $scope.edit_user = data.userId;
                 $scope.title = data.title;
@@ -113,7 +115,11 @@ angular.module('ionicApp')
 
 
 
-            });
+            }, function(response) {
+                if (response.status == "400"){
+                    $scope.authorizedInferenceDisplay = false;
+                }
+             });
         };
 
 
@@ -340,6 +346,11 @@ angular.module('ionicApp')
         $scope.getChapterVerseNotation = function(verseId){
             return Math.floor(verseId/1000)+":"+ verseId%1000;
         };
+
+        $scope.runShareModal = function(){
+            $scope.shareUrl =  $location.absUrl().split('#')[0] + "#/inference/display/" + $scope.inferenceId;
+            $scope.shareTitle = "Çıkarım Paylaşma";
+        }
 
         //definitions are finished. Now run initialization
         $scope.initializeInferenceDisplayController();
