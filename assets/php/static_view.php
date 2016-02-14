@@ -17,9 +17,12 @@ function makePage($data, $siteRoot) {
     <!DOCTYPE html>
     <html>
     <head>
+        <meta property="fb:app_id" content="400142910165594" />
+        <meta property="og:url"    content="http://test.kurancalis.com/#/inference/display/254" />
         <meta property="og:title" content="<?php echo $data->title; ?>" />
         <meta property="og:description" content="<?php echo $data->brief; ?>" />
         <meta property="og:image" content="<?php echo $data->image; ?>" />
+        <meta property="og:type"   content="website" />
     </head>
     <body>
         <p><?php echo $data->content; ?></p>
