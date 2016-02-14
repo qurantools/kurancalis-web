@@ -220,7 +220,7 @@ angular.module('ionicApp')
             $timeout( function(){
                 $scope.inference_info(inferenceId);
             });
-            $scope.shareUrl =  $location.absUrl().split('#')[0] + "#/inference/display/" + $scope.inferenceId;
+            $scope.shareUrl =  $location.absUrl().split('#')[0] + "__/inference/display/" + $scope.inferenceId;
             $scope.shareTitle = "Çıkarım Paylaşma";
         };
 
