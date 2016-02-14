@@ -216,7 +216,8 @@ angular.module('ionicApp')
             $timeout( function(){
                 $scope.inference_info(inferenceId);
             });
-
+            $scope.shareUrl =  $location.absUrl().split('#')[0] + "#/inference/display/" + $scope.inferenceId;
+            $scope.shareTitle = "Çıkarım Paylaşma";
         };
 
 
@@ -343,11 +344,6 @@ angular.module('ionicApp')
         $scope.getChapterVerseNotation = function(verseId){
             return Math.floor(verseId/1000)+":"+ verseId%1000;
         };
-
-        $scope.runShareModal = function(){
-            $scope.shareUrl =  $location.absUrl().split('#')[0] + "#/inference/display/" + $scope.inferenceId;
-            $scope.shareTitle = "Çıkarım Paylaşma";
-        }
 
         //definitions are finished. Now run initialization
         $scope.initializeInferenceDisplayController();

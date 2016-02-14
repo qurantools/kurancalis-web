@@ -1,4 +1,4 @@
-var requiredModules = ['ionic', 'ngResource', 'ngRoute', 'facebook', 'restangular', 'LocalStorageModule', 'ngTagsInput', 'duScroll', 'directives.showVerse', 'directives.repeatCompleted', 'ui.select', 'myConfig', 'authorizationModule','ui.tinymce'];
+var requiredModules = ['ionic', 'ngResource', 'ngRoute', 'facebook', 'restangular', 'LocalStorageModule', 'ngTagsInput', 'duScroll', 'directives.showVerse', 'directives.repeatCompleted', 'ui.select', 'myConfig', 'authorizationModule','ui.tinymce','djds4rce.angular-socialshare'];
 
 if (config_data.isMobile) {
     var mobileModules = [];//'ionic'
@@ -1266,36 +1266,6 @@ app.factory('ChapterVerses', function ($resource) {
             copyFrom.select();
             document.execCommand('copy');
             body.removeChild(copyFrom);
-        }
-
-        $scope.shareMessageChanged = function(){
-            $scope.shareText = document.getElementById("shareMessage").value;
-            $scope.shareUrl = document.getElementById("url").value;
-
-            document.getElementById('st_facebook').setAttribute('st_msg', $scope.shareText);
-            document.getElementById('st_twitter').setAttribute('st_msg', $scope.shareText);
-            document.getElementById('st_googleplus').setAttribute('st_msg', $scope.shareText);
-            document.getElementById('st_linkedin').setAttribute('st_msg', $scope.shareText);
-            document.getElementById('st_pinterest').setAttribute('st_msg', $scope.shareText);
-            document.getElementById('st_email').setAttribute('st_msg', $scope.shareText);
-
-            document.getElementById('st_facebook').setAttribute('st_url', $scope.shareUrl);
-            document.getElementById('st_twitter').setAttribute('st_url', $scope.shareUrl);
-            document.getElementById('st_googleplus').setAttribute('st_url', $scope.shareUrl);
-            document.getElementById('st_linkedin').setAttribute('st_url', $scope.shareUrl);
-            document.getElementById('st_pinterest').setAttribute('st_url', $scope.shareUrl);
-            document.getElementById('st_email').setAttribute('st_url', $scope.shareUrl);
-
-            var metas = document.getElementsByTagName('meta');
-
-            for (i=0; i < metas.length; i++) {
-               if (metas[i].getAttribute("property") == "og:url") {
-                  metas[i].setAttribute("content", $scope.shareUrl);
-                  break;
-               }
-            }
-
-            stButtons.locateElements();
         }
 
         //initialization
