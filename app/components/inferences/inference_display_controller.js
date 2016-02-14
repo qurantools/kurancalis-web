@@ -86,6 +86,10 @@ angular.module('ionicApp')
 
                 $scope.edit_user = data.userId;
                 $scope.title = data.title;
+                //set page title as inference title
+                $scope.setPageTitle(data.title);
+                //$rootScope.pageTitle=data.title;
+
                 $scope.info_author = data.userName;
                 $scope.photo = data.image;
                 $scope.contentOriginal = data.content;

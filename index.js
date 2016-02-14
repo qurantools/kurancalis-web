@@ -130,6 +130,9 @@ var app = angular.module('ionicApp', requiredModules)
             }
         });
 
+        $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
+            $rootScope.pageTitle = current.$$route.pageTitle;
+        });
 
         /*var original = $location.path;
         $location.path = function (path, reload) {
@@ -162,53 +165,65 @@ if (config_data.isMobile == false) { //false
         RestangularProvider.setBaseUrl(config_data.webServiceUrl);
         localStorageServiceProvider.setStorageCookie(0, '/');
 
+
+
+
         //route
         $routeProvider
             .when('/translations/', {
                 controller: 'HomeCtrl',
                 templateUrl: 'app/components/home/homeView.html',
-                reloadOnSearch: false
+                reloadOnSearch: false,
+                pageTitle: 'Kuran Çalış - Sureler'
 
             })
             .when('/annotations/', {
                 controller: 'AnnotationsCtrl',
                 templateUrl: 'app/components/annotations/annotationsView.html',
-                reloadOnSearch: false
+                reloadOnSearch: false,
+                pageTitle: 'Kuran Çalış - Ayet Notları'
             })
             .when('/people/find_people/', {
                 controller: 'PeopleFindCtrl',
                 templateUrl: 'app/components/people/find_people.html',
-                reloadOnSearch: false
+                reloadOnSearch: false,
+                pageTitle: 'Kuran Çalış - Arkadaş Bul'
             })
             .when('/people/people_have_you/', {
                 controller: 'PeopleHaveYouCtrl',
                 templateUrl: 'app/components/people/people_have_you.html',
-                reloadOnSearch: false
+                reloadOnSearch: false,
+                pageTitle: 'Kuran Çalış - Seni Takip Eden Kişiler'
             })
             .when('/people/circles/', {
                 controller: 'PeopleCirclesCtrl',
                 templateUrl: 'app/components/people/circles.html',
-                reloadOnSearch: false
+                reloadOnSearch: false,
+                pageTitle: 'Kuran Çalış - Çevreler'
             })
             .when('/people/explore/', {
                 controller: 'PeopleExploreCtrl',
                 templateUrl: 'app/components/people/explore.html',
-                reloadOnSearch: false
+                reloadOnSearch: false,
+                pageTitle: 'Kuran Çalış - Arkadaş Bul'
             })
             .when('/inferences/', {
                 controller: 'InferenceListController',
                 templateUrl: 'app/components/inferences/inferencesListView.html',
-                reloadOnSearch: false
+                reloadOnSearch: false,
+                pageTitle: 'Kuran Çalış - Çıkarım Notları'
             })
             .when('/inference/new/', {
                 controller: 'InferenceEditController',
                 templateUrl: 'app/components/inferences/inferenceEditView.html',
-                reloadOnSearch: false
+                reloadOnSearch: false,
+                pageTitle: 'Kuran Çalış - Yeni Çıkarım Notu'
             })
             .when('/inference/edit/:inferenceId/', {
                 controller: 'InferenceEditController',
                 templateUrl: 'app/components/inferences/inferenceEditView.html',
-                reloadOnSearch: false
+                reloadOnSearch: false,
+                pageTitle: 'Kuran Çalış - Çıkarım Notu Düzenle'
             })
             .when('/inference/display/:inferenceId/', {
                 controller: 'InferenceDisplayController',
@@ -223,7 +238,9 @@ if (config_data.isMobile == false) { //false
             })
 			.when('/help/',{
                 controller:'HelpController',
-                templateUrl:'app/components/help/index.html'
+                templateUrl:'app/components/help/index.html',
+                pageTitle: 'Kuran Çalış - Yardım'
+
             })
             //.when('/:chapter/:verse', {
             //    redirectTo: '/translations?chapter=:chapter&verse=:verse&author=1040'
@@ -368,7 +385,7 @@ app.factory('ChapterVerses', function ($resource) {
     );
 })
 
-    .controller('MainCtrl', function ($scope, $q, $routeParams, $ionicSideMenuDelegate, $location, $timeout, ListAuthors, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService, $document, $filter, $rootScope, $state, $stateParams, $ionicModal, $ionicScrollDelegate, $ionicPosition, $ionicLoading, authorization) {
+    .controller('MainCtrl', function ($scope, $q, $routeParams, $ionicSideMenuDelegate, $location, $timeout, ListAuthors, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService, $document, $filter, $rootScope, $state, $stateParams, $ionicModal, $ionicScrollDelegate, $ionicPosition, $ionicLoading, authorization,$rootScope) {
         console.log("MainCtrl");
 
         //all root scope parameters should be defined and documented here
@@ -510,7 +527,11 @@ app.factory('ChapterVerses', function ($resource) {
             }
 
         }
-        
+
+        $scope.setPageTitle= function(title){
+            $rootScope.pageTitle = title;
+        }
+
         //currentPage
         $scope.getCurrentPage = function () {
             var retcp = "";
