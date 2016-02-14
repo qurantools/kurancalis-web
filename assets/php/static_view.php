@@ -18,7 +18,7 @@ function makePage($data, $siteRoot) {
     <html>
     <head>
         <meta property="og:title" content="<?php echo $data->title; ?>" />
-        <meta property="og:description" content="<?php echo $data->content; ?>" />
+        <meta property="og:description" content="<?php echo $data->brief; ?>" />
         <meta property="og:image" content="<?php echo $data->image; ?>" />
     </head>
     <body>
