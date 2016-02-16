@@ -37,23 +37,23 @@ angular.module('ionicApp')
              });
         };
         //tags input auto complete function
-        
+        var tagArray = [];
         if(config_data.isMobile){
 
-            $scope.mobil_tagsearched;
 
             $scope.title = " ";
             $scope.content = " ";
 
-               $ionicModal.fromTemplateUrl('components/partials/add_tag_to_inferences.html', {
-                   scope: $scope,
-                   //animation: 'slide-in-right',
-                   //animation: 'slide-left-right',
-                   animation: 'slide-in-up',
-                   id: 'inferencetagsearch'
-               }).then(function (modal) {
-                   $scope.inferenceTagModal = modal
-               });
+            $ionicModal.fromTemplateUrl('components/partials/add_tag_to_annotation.html', {
+                scope: $scope,
+                //animation: 'slide-in-right',
+                //animation: 'slide-left-right',
+                animation: 'slide-in-up',
+                id: 'tagsearch'
+            }).then(function (modal) {
+                $scope.modal_tag_search = modal
+            });
+
             $ionicModal.fromTemplateUrl('components/partials/add_canviewuser.html', {
                 scope: $scope,
                 //animation: 'slide-in-right',
@@ -73,9 +73,12 @@ angular.module('ionicApp')
                 $scope.loadTags2(query)
             }
 
-            $scope.mobil_addedtags = function (item) {
-                $scope.tags_entry.push(item);
-            }
+            //$scope.mobil_addedtags = function (item) {
+            //    console.log(item);
+            //    $scope.tags_entry.push(item);
+            //    tagArray.push(item);
+            //}
+
             $scope.closeInferenceModal = function () {
                 $scope.inferenceTagModal.hide();
             }
@@ -83,6 +86,8 @@ angular.module('ionicApp')
             $scope.openModal = function(id){
                 if (id == 'viewusersearch') {
                     $scope.modal_view_user_search.show();
+                }else if(id == "tagsearch"){
+                    $scope.modal_tag_search.show();
                 }
             }
             $scope.closeModal = function (id) {
@@ -128,11 +133,24 @@ angular.module('ionicApp')
 
         $scope.do_array = function () {
 
-          
+
             if(config_data.isMobile){
                 $scope.title = document.getElementById('title').value;
                 $scope.content = document.querySelectorAll("[ng-model=content]")[0].value;
                 $scope.usersForSearch = $scope.ViewUsers;
+                $scope.tags_entry = $scope.annotationModalDataTagsInput;
+
+
+                if($scope.title.length == " " || $scope.content.length == " "){
+                    alert("Baslik veya icerik bos olamaz");
+                    return;
+                }
+
+                for (var index = 0; index < $scope.mobileAnnotationEditorCircleListForSelection.length; ++index) {
+                    if ($scope.mobileAnnotationEditorCircleListForSelection[index].selected == true) {
+                        $scope.circlesForSearch.push($scope.mobileAnnotationEditorCircleListForSelection[index]);
+                    }
+                }
             }
 
             tags.length = 0;

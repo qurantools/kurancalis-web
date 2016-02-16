@@ -1,5 +1,5 @@
 angular.module('ionicApp')
-    .controller('InferenceDisplayController', function ($scope, $routeParams, $location, authorization, localStorageService,  Restangular, $timeout,$sce) {
+    .controller('InferenceDisplayController', function ($scope, $routeParams, $location, authorization, localStorageService,  Restangular, $timeout,$sce,$ionicPopup) {
 
         //All scope variables
         $scope.inferenceId=0;
@@ -37,10 +37,16 @@ angular.module('ionicApp')
 
             var inferenceRestangular = Restangular.one("inferences", $scope.inferenceId);
             inferenceRestangular.customDELETE("", {}, {'access_token': $scope.access_token}).then(function (data) {
-                $location.path('inferences/');
+                if(!config_data.isMobile){
+                    $location.path('inferences/');
+                }else {
+                    $location.path('m_inference/');
+                }
             });
 
         }
+
+
 
         //tags input auto complete
         $scope.peoplelist = function (people_name) {
@@ -58,7 +64,13 @@ angular.module('ionicApp')
 
         //Edit inference
         $scope.edit_inference = function () {
-            $location.path('inference/edit/'+$scope.inferenceId+"/");
+            if(!config_data.isMobile){
+                $location.path('inference/edit/'+$scope.inferenceId+"/");
+            }else
+            {
+                $location.path('m_inference/edit/'+$scope.inferenceId+"/");
+            }
+
         }
 
         $scope.compileContent = function(original,verseList, verseIdList, inline){
@@ -341,6 +353,31 @@ angular.module('ionicApp')
             }
         };
 
+        if(config_data.isMobile){
+
+            $scope.deleted = function() {
+                var confirmPopup = $ionicPopup.confirm({
+                    title: 'Notu Silme',
+                    template: 'Çıkarım notu silinecek Onaylıyor musunuz?',
+                    buttons: [{
+                        text : 'Vazgec',
+                        type: 'button-balanced',
+                    },
+                        {
+                            text : 'Sil',
+                            type : 'button-assertive'
+                        }]
+                });
+
+                confirmPopup.then(function(res) {
+                    if(res) {
+                        $scope.delete_inference();
+                    } else {
+                        console.log('You are not sure');
+                    }
+                });
+            };
+        }
         $scope.getChapterVerseNotation = function(verseId){
             return Math.floor(verseId/1000)+":"+ verseId%1000;
         };

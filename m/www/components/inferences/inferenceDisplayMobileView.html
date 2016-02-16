@@ -11,8 +11,8 @@
             </ion-nav-buttons>
             <h1 class="title"></h1>
             <ion-nav-buttons side="right">
-                <button class="button button-icon icon ion-edit" ng-if="edit_user == user.id" ng-click="edit_inferences()"></button>
-                <button class="button button-icon icon ion-trash-a"></button>
+                <button class="button button-icon icon ion-edit" ng-if="edit_user == user.id" ng-click="edit_inference()"></button>
+                <button class="button button-icon icon ion-trash-a" ng-if="edit_user == user.id" ng-click="deleted()"></button>
 
             </ion-nav-buttons>
         </ion-nav-bar>

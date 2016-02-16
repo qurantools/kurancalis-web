@@ -507,8 +507,6 @@ angular.module('ionicApp')
                     }
 
 
-
-
                 };
                 $scope.closeModal = function (id) {
                     $timeout(function() {

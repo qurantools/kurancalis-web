@@ -2,7 +2,7 @@
     <ion-side-menu-content>
         <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced">
             <ion-nav-buttons side="left">
-                <button onclick="window.history.back()" class="button button-icon icon ion-arrow-left-b">Vazgec</button>
+                <button onclick="window.history.go(-1)" class="button button-icon icon ion-arrow-left-b">Vazgec</button>
 
                 <input type="hidden" ng-model="chapter_id"/>
                 <input type="hidden" ng-model="author_mask"/>
@@ -37,27 +37,48 @@
                     </label>
                 </div>
 
-                <ion-list>
-                    <ion-item ng-repeat="tags in tags_entry">
-                        <i class="ion-minus-circled" style="font-size: 24px;color: red;"  ng-click=""></i>
-                        {{tags.name}}
-                    </ion-item>
-                </ion-list>
 
-                <div style="padding-left: 10px;padding-right: 10px">
-                    <button class="button button-positive" style="width: 100%" ng-click="addInferenceTag()">Etiket Ekle</button>
+
+                    <div class="item item-divider">
+                        Etiketler
+                    </div>
+                    <ion-list show-delete=true>
+                        <ion-item ng-repeat="tags in annotationModalDataTagsInput">
+                            <ion-delete-button class="ion-minus-circled"
+                                               ng-click="annotationModalDataTagsInput.splice($index,1)">
+                            </ion-delete-button>
+                            {{tags.name}}
+
+                        </ion-item>
+                    </ion-list>
+                    <div style="padding: 10px 0;">
+                        <button class="button button-positive" style="width: 100%" ng-click="openModal('tagsearch')">Etiket Ekle</button>
+                    </div>
+
+                <div class="item item-divider"> Paylaşılan Çevreler </div>
+                <div class="list">
+                    <ion-checkbox  ng-repeat="item in mobileAnnotationEditorCircleListForSelection"
+                                   ng-model="mobileAnnotationEditorCircleListForSelection[$index].selected"
+                                   ng-checked="mobileAnnotationEditorCircleListForSelection[$index].selected"
+                    >
+                        {{item.name}}
+                    </ion-checkbox>
                 </div>
-
-                <ion-list >
+                <div class="item item-divider">
+                    Paylaşılan Kişiler
+                </div>
+                <ion-list show-delete="true">
                     <ion-item ng-repeat="item in ViewUsers">
-                        <i class="ion-minus-circled" style="font-size: 24px;color: red;"  ng-click=""></i>
+                        <ion-delete-button class="ion-minus-circled"
+                                           ng-click="ViewUsers.splice($index, 1)">
+                        </ion-delete-button>
                         {{item.name}}
                     </ion-item>
                 </ion-list>
-
-                <div style="padding-left: 10px;padding-right: 10px">
+                <div style="padding: 10px 0;">
                     <button class="button button-positive" style="width: 100%" ng-click="openModal('viewusersearch')">Kisi Ekle</button>
                 </div>
+
             </ion-content>
         </ion-nav-view>
     </ion-side-menu-content>
