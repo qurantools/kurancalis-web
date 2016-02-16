@@ -1,0 +1,40 @@
+<!-- start of side menu part 1-->
+<ion-side-menus>
+    <ion-side-menu-content drag-content="false">
+        <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced">
+            <ion-nav-buttons side="left">
+                <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+            </ion-nav-buttons>
+            <h1 class="title"></h1>
+            <ion-nav-buttons side="right">
+                <button class="button" ng-click="login()" ng-if="user==null">Giriş</button>
+            </ion-nav-buttons>
+        </ion-nav-bar>
+        <ion-nav-buttons side="left">
+            <button class="button button-icon icon ion-navicon" menu-toggle="left">
+            </button>
+        </ion-nav-buttons>
+        <ion-nav-view name="appContent"></ion-nav-view>
+        <!-- end of side menu part 1 -->
+        <ion-nav-view id="chapter_translation_content" cache-view="true">
+            <ion-content overflow-scroll="true" delegate-handle="content" class="scroll_content"
+                         style="margin-top:30px;" ng-controller="HelpController">
+                <div class="row" delegate-handle="content" style="float: center">
+                    <div class="col-xs-12 bb" id="translations">
+                        <div style="width:100%; height:70px;margin:0 auto;" align="center">
+                            <ion-list>
+                                <ion-item ng-repeat="item in menuList" ng-click="runHelpModal($index)" >
+                                    <h2>{{item.title}}</h2>
+                                </ion-item>
+                            </ion-list>
+                        </div>
+                    </div>
+                </div>
+                <div style="height:50px;">&nbsp;</div>
+            </ion-content>
+        </ion-nav-view>
+        <!-- start of side menu part 2-->
+    </ion-side-menu-content>
+    <div ng-include="'components/navigation/left_menu.html'"></div>
+</ion-side-menus>
+<!-- end of side menu part 2-->

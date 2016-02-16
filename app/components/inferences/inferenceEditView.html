@@ -98,8 +98,11 @@
                 <table style="width: 760px">
                     <tr>
                         <td align="right" style="width: 620px">
-                            <a href="#/inference/display/{{inferenceId}}"><input id="Button1" class="form-control btn-warning" style="width:120px"
-                                   type="button" value="Vazgeç"/></a></td>
+                            <a ng-if="pagePurpose!='edit'" href="#/inferences"><input id="Button1" class="form-control btn-warning" style="width:120px"
+                                                                                 type="button" value="Vazgeç"/></a>
+                            <a ng-if="pagePurpose=='edit'" href="#/inference/display/{{inferenceId}}"><input id="Button1" class="form-control btn-warning" style="width:120px"
+                                   type="button" value="Vazgeç"/></a>
+                        </td>
                         <td align="right" style="width: 140px">
                             <input id="save" class="form-control btn-primary" style="width:120px" ng-click="do_array()"
                                    type="button" value="Kaydet"/></td>

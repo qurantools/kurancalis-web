@@ -1,0 +1,7 @@
+
+RewriteEngine On
+
+RewriteRule __/inference/display/(\d*)$ /#/inference/display/$1 [NE,R]
+# allow social media crawlers to work by redirecting them to a server-rendered static version on the page
+RewriteCond %{HTTP_USER_AGENT} (facebookexternalhit/[0-9]|Twitterbot|Pinterest|Google.*snippet)
+RewriteRule inference/display/(\d*)$ /assets/php/static_view.php?id=$1 [P]

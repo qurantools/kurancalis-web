@@ -1,4 +1,4 @@
-var requiredModules = ['ionic', 'ngResource', 'ngRoute', 'facebook', 'restangular', 'LocalStorageModule', 'ngTagsInput', 'duScroll', 'directives.showVerse', 'directives.repeatCompleted', 'ui.select', 'myConfig', 'authorizationModule','ui.tinymce'];
+var requiredModules = ['ionic', 'ngResource', 'ngRoute', 'facebook', 'restangular', 'LocalStorageModule', 'ngTagsInput', 'duScroll', 'directives.showVerse', 'directives.repeatCompleted', 'ui.select', 'myConfig', 'authorizationModule','ui.tinymce','djds4rce.angular-socialshare', 'ngSanitize', 'com.2fdevs.videogular','com.2fdevs.videogular.plugins.controls','com.2fdevs.videogular.plugins.overlayplay','com.2fdevs.videogular.plugins.poster'];
 
 if (config_data.isMobile) {
     var mobileModules = [];//'ionic'
@@ -26,7 +26,7 @@ var app = angular.module('ionicApp', requiredModules)
     .filter('with_footnote_link', [
         function () {
             return function (text, translation_id, author_id) {
-                return text.replace(/\*+/g, "<button class='btn btn-default btn-xs' onclick='angular.element(document.getElementById(\"theView\")).scope().list_footnotes(" + translation_id + "," + author_id + ")'>dipnot</button>");
+                return text.replace(/\*+/g, "<button style='border:0;' class='label label-dipnot btn  btn-xs' onclick='angular.element(document.getElementById(\"theView\")).scope().list_footnotes(" + translation_id + "," + author_id + ")'>dipnot</button>");
             };
         }])
     .filter('with_next_link', [
@@ -131,6 +131,9 @@ var app = angular.module('ionicApp', requiredModules)
             }
         });
 
+        $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
+            $rootScope.pageTitle = current.$$route.pageTitle;
+        });
 
         /*var original = $location.path;
         $location.path = function (path, reload) {
@@ -163,53 +166,65 @@ if (config_data.isMobile == false) { //false
         RestangularProvider.setBaseUrl(config_data.webServiceUrl);
         localStorageServiceProvider.setStorageCookie(0, '/');
 
+
+
+
         //route
         $routeProvider
             .when('/translations/', {
                 controller: 'HomeCtrl',
                 templateUrl: 'app/components/home/homeView.html',
-                reloadOnSearch: false
+                reloadOnSearch: false,
+                pageTitle: 'Kuran Çalış - Sureler'
 
             })
             .when('/annotations/', {
                 controller: 'AnnotationsCtrl',
                 templateUrl: 'app/components/annotations/annotationsView.html',
-                reloadOnSearch: false
+                reloadOnSearch: false,
+                pageTitle: 'Kuran Çalış - Ayet Notları'
             })
             .when('/people/find_people/', {
                 controller: 'PeopleFindCtrl',
                 templateUrl: 'app/components/people/find_people.html',
-                reloadOnSearch: false
+                reloadOnSearch: false,
+                pageTitle: 'Kuran Çalış - Arkadaş Bul'
             })
             .when('/people/people_have_you/', {
                 controller: 'PeopleHaveYouCtrl',
                 templateUrl: 'app/components/people/people_have_you.html',
-                reloadOnSearch: false
+                reloadOnSearch: false,
+                pageTitle: 'Kuran Çalış - Seni Takip Eden Kişiler'
             })
             .when('/people/circles/', {
                 controller: 'PeopleCirclesCtrl',
                 templateUrl: 'app/components/people/circles.html',
-                reloadOnSearch: false
+                reloadOnSearch: false,
+                pageTitle: 'Kuran Çalış - Çevreler'
             })
             .when('/people/explore/', {
                 controller: 'PeopleExploreCtrl',
                 templateUrl: 'app/components/people/explore.html',
-                reloadOnSearch: false
+                reloadOnSearch: false,
+                pageTitle: 'Kuran Çalış - Arkadaş Bul'
             })
             .when('/inferences/', {
                 controller: 'InferenceListController',
                 templateUrl: 'app/components/inferences/inferencesListView.html',
-                reloadOnSearch: false
+                reloadOnSearch: false,
+                pageTitle: 'Kuran Çalış - Çıkarım Notları'
             })
             .when('/inference/new/', {
                 controller: 'InferenceEditController',
                 templateUrl: 'app/components/inferences/inferenceEditView.html',
-                reloadOnSearch: false
+                reloadOnSearch: false,
+                pageTitle: 'Kuran Çalış - Yeni Çıkarım Notu'
             })
             .when('/inference/edit/:inferenceId/', {
                 controller: 'InferenceEditController',
                 templateUrl: 'app/components/inferences/inferenceEditView.html',
-                reloadOnSearch: false
+                reloadOnSearch: false,
+                pageTitle: 'Kuran Çalış - Çıkarım Notu Düzenle'
             })
             .when('/inference/display/:inferenceId/', {
                 controller: 'InferenceDisplayController',
@@ -222,6 +237,12 @@ if (config_data.isMobile == false) { //false
             })
             .when('/chapter/:chapter/author/:author/', {
                 redirectTo: '/translations/?chapter=:chapter&verse=1&author=:author'
+            })
+			.when('/help/',{
+                controller:'HelpController',
+                templateUrl:'app/components/help/index.html',
+                pageTitle: 'Kuran Çalış - Yardım'
+
             })
             //.when('/:chapter/:verse', {
             //    redirectTo: '/translations?chapter=:chapter&verse=:verse&author=1040'
@@ -279,6 +300,7 @@ if (config_data.isMobile == false) { //false
                     .when('/chapter/:chapter/author/:author/', {
                         redirectTo: '/translations/?chapter=:chapter&verse=1&author=:author'
                     })
+<<<<<<< HEAD
                     .when('/m_inference/', {
                         controller: 'InferenceListController',
                         templateUrl: 'components/inferences/inferenceListMobileView.html',
@@ -298,6 +320,11 @@ if (config_data.isMobile == false) { //false
                         controller: 'InferenceEditController',
                         templateUrl: 'components/inferences/inferenceEditMobileView.html',
                         reloadOnSearch: false
+=======
+					.when('/help/',{
+                        controller:'HelpController',
+                        templateUrl:'components/help/index.html'
+>>>>>>> f943e962b88caeb2b15c34f04296e074523cebff
                     })
                     .otherwise({
                         redirectTo: '/translations/'
@@ -382,7 +409,7 @@ app.factory('ChapterVerses', function ($resource) {
     );
 })
 
-    .controller('MainCtrl', function ($scope, $q, $routeParams, $ionicSideMenuDelegate, $location, $timeout, ListAuthors, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService, $document, $filter, $rootScope, $state, $stateParams, $ionicModal, $ionicScrollDelegate, $ionicPosition, $ionicLoading, authorization) {
+    .controller('MainCtrl', function ($scope, $q, $routeParams, $ionicSideMenuDelegate, $location, $timeout, ListAuthors, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService, $document, $filter, $rootScope, $state, $stateParams, $ionicModal, $ionicScrollDelegate, $ionicPosition, $ionicLoading, authorization,$rootScope) {
         console.log("MainCtrl");
 
         //all root scope parameters should be defined and documented here
@@ -417,6 +444,11 @@ app.factory('ChapterVerses', function ($resource) {
         $scope.ViewUsers = [];
         $scope.yrmcevres = [];
         $scope.yrmkisis = [];
+
+        //share modal
+        $scope.shareText = "";
+        $scope.shareUrl = "";
+        $scope.shareTitle = "";
 
         //    $scope.user = null;
 
@@ -465,6 +497,8 @@ app.factory('ChapterVerses', function ($resource) {
         //tutorial
         $scope.showTutorial = 0;
         $scope.tutorialCarouselActive = 0;
+
+        $scope.helpModalCarouselActive = 0;
 
         /* side panel */
         $scope.sidebarActive = 0;
@@ -517,9 +551,24 @@ app.factory('ChapterVerses', function ($resource) {
                 $('#tutorialCarousel').carousel('prev');
                 $scope.tutorialCarouselActive--;
             }
-
         }
-        
+
+        $scope.help = function (parameter) {
+            if (parameter == 'init') {
+                $('#helpModal').modal('show');
+            } else if (parameter == 'next') {
+                $('#helpModalCarousel').carousel('next');
+                $scope.helpModalCarouselActive++;
+            } else if (parameter == 'previous') {
+                $('#helpModalCarousel').carousel('prev');
+                $scope.helpModalCarouselActive--;
+            }
+        }
+
+        $scope.setPageTitle= function(title){
+            $rootScope.pageTitle = title;
+        }
+
         //currentPage
         $scope.getCurrentPage = function () {
             var retcp = "";
@@ -1266,6 +1315,16 @@ app.factory('ChapterVerses', function ($resource) {
 
         };
 
+        $scope.kopyala = function(url){
+            var copyFrom = document.createElement("textarea");
+            copyFrom.textContent = url;
+            var body = document.getElementsByTagName('body')[0];
+            body.appendChild(copyFrom);
+            copyFrom.select();
+            document.execCommand('copy');
+            body.removeChild(copyFrom);
+        }
+
         //initialization
 
         //initialization
@@ -1367,5 +1426,12 @@ function focusToChapterInput() {
     setTimeout(function () {
         document.getElementById('chapterSelection_chapter').focus();
         document.getElementById('chapterSelection_chapter').select();
+    }, 600);
+}
+
+function focusToInput(elementID) {
+    setTimeout(function () {
+        document.getElementById(elementID).focus();
+        document.getElementById(elementID).select();
     }, 600);
 }

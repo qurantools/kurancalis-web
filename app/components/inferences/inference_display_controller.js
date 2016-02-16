@@ -1,5 +1,9 @@
 angular.module('ionicApp')
+<<<<<<< HEAD
     .controller('InferenceDisplayController', function ($scope, $routeParams, $location, authorization, localStorageService,  Restangular, $timeout,$sce,$ionicPopup) {
+=======
+    .controller('InferenceDisplayController', function ($scope, $routeParams, $location, authorization, localStorageService,  Restangular, $timeout,$sce,$ionicModal) {
+>>>>>>> f943e962b88caeb2b15c34f04296e074523cebff
 
         //All scope variables
         $scope.inferenceId=0;
@@ -20,6 +24,7 @@ angular.module('ionicApp')
         $scope.contentOriginal = "";
         $scope.tags = [];
         $scope.open_edit = true;
+        $scope.authorizedInferenceDisplay = 0;
 
         //On Off Switch
         $scope.inlineReferenceDisplay = false;
@@ -93,9 +98,14 @@ angular.module('ionicApp')
             var inferenceRestangular = Restangular.one("inferences", inferenceId);
             inferenceRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (data) {
                 $scope.inference_info = data;
+                $scope.authorizedInferenceDisplay = 1;
 
                 $scope.edit_user = data.userId;
                 $scope.title = data.title;
+                //set page title as inference title
+                $scope.setPageTitle(data.title);
+                //$rootScope.pageTitle=data.title;
+
                 $scope.info_author = data.userName;
                 $scope.photo = data.image;
                 $scope.contentOriginal = data.content;
@@ -122,10 +132,11 @@ angular.module('ionicApp')
                     $scope.updateReferencedTranslations();
                     $scope.updateTags();
                 }
-
-
-
-            });
+            }, function(response) {
+                if (response.status == "400"){
+                    $scope.authorizedInferenceDisplay = 2;
+                }
+             });
         };
 
 
@@ -225,7 +236,8 @@ angular.module('ionicApp')
             $timeout( function(){
                 $scope.inference_info(inferenceId);
             });
-
+            $scope.shareUrl =  $location.absUrl().split('#')[0] + "__/inference/display/" + $scope.inferenceId;
+            $scope.shareTitle = "Çıkarım Paylaşma";
         };
 
 
