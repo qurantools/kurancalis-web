@@ -1,4 +1,4 @@
-var requiredModules = ['ionic', 'ngResource', 'ngRoute', 'facebook', 'restangular', 'LocalStorageModule', 'ngTagsInput', 'duScroll', 'directives.showVerse', 'directives.repeatCompleted', 'ui.select', 'myConfig', 'authorizationModule','ui.tinymce','djds4rce.angular-socialshare'];
+var requiredModules = ['ionic', 'ngResource', 'ngRoute', 'facebook', 'restangular', 'LocalStorageModule', 'ngTagsInput', 'duScroll', 'directives.showVerse', 'directives.repeatCompleted', 'ui.select', 'myConfig', 'authorizationModule','ui.tinymce','djds4rce.angular-socialshare', 'ngSanitize', 'com.2fdevs.videogular','com.2fdevs.videogular.plugins.controls','com.2fdevs.videogular.plugins.overlayplay','com.2fdevs.videogular.plugins.poster'];
 
 if (config_data.isMobile) {
     var mobileModules = [];//'ionic'
@@ -300,7 +300,7 @@ if (config_data.isMobile == false) { //false
                     })
 					.when('/help/',{
                         controller:'HelpController',
-                        templateUrl:'app/components/help/index.html'
+                        templateUrl:'components/help/index.html'
                     })
                     .otherwise({
                         redirectTo: '/translations/'
@@ -474,6 +474,8 @@ app.factory('ChapterVerses', function ($resource) {
         $scope.showTutorial = 0;
         $scope.tutorialCarouselActive = 0;
 
+        $scope.helpModalCarouselActive = 0;
+
         /* side panel */
         $scope.sidebarActive = 0;
         $scope.tagSearchResult = [];
@@ -525,7 +527,18 @@ app.factory('ChapterVerses', function ($resource) {
                 $('#tutorialCarousel').carousel('prev');
                 $scope.tutorialCarouselActive--;
             }
+        }
 
+        $scope.help = function (parameter) {
+            if (parameter == 'init') {
+                $('#helpModal').modal('show');
+            } else if (parameter == 'next') {
+                $('#helpModalCarousel').carousel('next');
+                $scope.helpModalCarouselActive++;
+            } else if (parameter == 'previous') {
+                $('#helpModalCarousel').carousel('prev');
+                $scope.helpModalCarouselActive--;
+            }
         }
 
         $scope.setPageTitle= function(title){
