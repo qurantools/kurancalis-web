@@ -1,9 +1,5 @@
 angular.module('ionicApp')
-<<<<<<< HEAD
-    .controller('InferenceDisplayController', function ($scope, $routeParams, $location, authorization, localStorageService,  Restangular, $timeout,$sce,$ionicPopup) {
-=======
-    .controller('InferenceDisplayController', function ($scope, $routeParams, $location, authorization, localStorageService,  Restangular, $timeout,$sce,$ionicModal) {
->>>>>>> f943e962b88caeb2b15c34f04296e074523cebff
+    .controller('InferenceDisplayController', function ($scope, $routeParams, $location, authorization, localStorageService,  Restangular, $timeout,$sce,$ionicModal,$ionicPopup) {
 
         //All scope variables
         $scope.inferenceId=0;
