@@ -300,7 +300,6 @@ if (config_data.isMobile == false) { //false
                     .when('/chapter/:chapter/author/:author/', {
                         redirectTo: '/translations/?chapter=:chapter&verse=1&author=:author'
                     })
-<<<<<<< HEAD
                     .when('/m_inference/', {
                         controller: 'InferenceListController',
                         templateUrl: 'components/inferences/inferenceListMobileView.html',
@@ -320,11 +319,10 @@ if (config_data.isMobile == false) { //false
                         controller: 'InferenceEditController',
                         templateUrl: 'components/inferences/inferenceEditMobileView.html',
                         reloadOnSearch: false
-=======
+					})
 					.when('/help/',{
                         controller:'HelpController',
                         templateUrl:'components/help/index.html'
->>>>>>> f943e962b88caeb2b15c34f04296e074523cebff
                     })
                     .otherwise({
                         redirectTo: '/translations/'
