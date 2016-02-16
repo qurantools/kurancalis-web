@@ -19,17 +19,11 @@
         <ion-nav-view id="chapter_translation_content" cache-view="true">
             <ion-content overflow-scroll="true" delegate-handle="content" class="scroll_content"
                          style="margin-top:30px;" ng-controller="HelpController">
-                <div class="row" delegate-handle="content" style="float: center">
-                    <div class="col-xs-12 bb" id="translations">
-                        <div style="width:100%; height:70px;margin:0 auto;" align="center">
-                            <ion-list>
-                                <ion-item ng-repeat="item in menuList" ng-click="runHelpModal($index)" >
-                                    <h2>{{item.title}}</h2>
-                                </ion-item>
-                            </ion-list>
-                        </div>
-                    </div>
-                </div>
+                    <ion-list>
+                        <ion-item ng-repeat="item in menuList" ng-click="runHelpModal($index)" >
+                            <h2>{{item.name}}</h2>
+                        </ion-item>
+                    </ion-list>
                 <div style="height:50px;">&nbsp;</div>
             </ion-content>
         </ion-nav-view>

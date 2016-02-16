@@ -1,6 +1,6 @@
 <div class="modal modal-fullscreen">
     <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced">
-        <ion-nav-title>{{menuList[selectedIndex].title}}</ion-nav-title>
+        <ion-nav-title>{{menuList[selectedMenu].submenu[selectedIndex].title}}</ion-nav-title>
         <ion-nav-buttons side="left">
             <button class="button button-icon icon-left ion-arrow-left-b" ng-click="closeModal()"
                     style="float: left"> Kapat
@@ -11,13 +11,12 @@
     <ion-content overflow-scroll="true">
         <div style="height:65px"></div>
         <div class="videogular-container row">
-            {{menuList[selectedIndex].id}}:{{menuList[selectedIndex].title}}:{{menuList[selectedIndex].src}}
-            <!--videogular vg-theme="controller.config.theme">
-                <vg-media vg-src="controller.config.sources"
-                          vg-tracks="controller.config.tracks">
+            <!--{{menuList[selectedIndex].id}}:{{menuList[selectedIndex].title}}:{{menuList[selectedIndex].src}} -->
+            <div videogular vg-theme="config.theme" vg-auto-play="true" vg-plays-inline="true" class="ng-isolate-scope" vg-error="onError($event)">
+                <vg-media vg-src="menuList[selectedMenu].submenu[selectedIndex].source" vg-type="video" class="ng-isolate-scope">
                 </vg-media>
 
-                <vg-controls>
+                <!--vg-controls>
                     <vg-play-pause-button></vg-play-pause-button>
                     <vg-time-display>{{ currentTime | date:'mm:ss' }}</vg-time-display>
                     <vg-scrub-bar>
@@ -29,11 +28,10 @@
                         <vg-volume-bar></vg-volume-bar>
                     </vg-volume>
                     <vg-fullscreen-button></vg-fullscreen-button>
-                </vg-controls>
-
-                <vg-overlay-play></vg-overlay-play>
-                <vg-poster vg-url='controller.config.plugins.poster'></vg-poster>
-            </videogular-->
+                </vg-controls-->
+                <!--vg-overlay-play></vg-overlay-play-->
+                <!--vg-poster vg-url='config.plugins.poster'></vg-poster-->
+            </div>
         </div>
     </ion-content>
 
@@ -45,10 +43,10 @@
             <i class="fa fa-chevron-left"></i> Kapat
         </button>
 
-        <button class="footer-bar-item item-right button button-balanced" ng-click="nextTutorial()" ng-if = "selectedIndex!=(menuList.length-1)">
+        <button class="footer-bar-item item-right button button-balanced" ng-click="nextTutorial()" ng-if = "selectedIndex!=(menuList[selectedMenu].submenu.length-1)">
             <i class="fa fa-chevron-right"></i> İleri
         </button>
-        <button class="footer-bar-item item-right button button-balanced" ng-click="closeModal()" ng-if = "selectedIndex==(menuList.length-1)">
+        <button class="footer-bar-item item-right button button-balanced" ng-click="closeModal()" ng-if = "selectedIndex==(menuList[selectedMenu].submenu.length-1)">
             <i class="fa fa-chevron-right"></i> Kapat
         </button>
     </ion-footer-bar>
