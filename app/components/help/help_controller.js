@@ -2,6 +2,8 @@ angular.module('ionicApp')
     .controller('HelpController', function ($scope, $routeParams, $location, $timeout, authorization,
                                                      localStorageService, Restangular, $ionicModal, $sce) {
         $scope.title = "Yardım";
+        $scope.helpController = this;
+        $scope.helpController.API = null;
 
         $scope.menuList=[
             {   name : "Intro",
@@ -50,16 +52,26 @@ angular.module('ionicApp')
                 ]
             }];
 
-        $scope.selectedIndex = 0;
-        $scope.selectedMenu = 0;
+        $scope.selectedIndex = -1;
+        $scope.selectedMenu = -1;
 
-        $scope.runHelpModal = function(index){
-           $scope.selectedMenu = index;
+        $scope.runHelpModal = function(name){
+           $scope.selectedMenu = -1;
+           for (var i = 0; i < $scope.menuList.length; i++) {
+               if ($scope.menuList[i].name === name) {
+                  $scope.selectedMenu = i;
+                  break;
+               }
+           }
+           if ($scope.selectedMenu == -1){
+              return;
+           }
            $scope.selectedIndex = 0;
            $scope.help_modal.show();
         }
 
         $scope.closeModal = function(){
+           $scope.stopPlaying();
            $scope.help_modal.hide();
         }
 
@@ -89,15 +101,26 @@ angular.module('ionicApp')
             }
         }
 
-        $scope.onError = function(event){
-            alert(event);
-        }
-
         this.config = {
             theme: "../../../assets/lib/videogular/videogular.css",
             plugins: {
                 poster: "http://www.videogular.com/assets/images/videogular.png"
             }
+        }
+
+        $scope.onPlayerReady = function (API) {
+            $scope.stopPlaying();
+            $scope.helpController.API = API;
+        };
+
+        $scope.vgChangeSource = function(source){
+            $scope.stopPlaying();
+        }
+
+        $scope.stopPlaying = function(){
+             if ($scope.helpController.API != null){
+                 $scope.helpController.API.stop();
+             }
         }
 
          $scope.initHelpParameters();

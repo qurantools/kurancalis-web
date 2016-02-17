@@ -4,8 +4,8 @@
         <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced">
             <ion-nav-buttons side="left">
                 <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+                <h1 class="title"></h1>
             </ion-nav-buttons>
-            <h1 class="title"></h1>
             <ion-nav-buttons side="right">
                 <button class="button" ng-click="login()" ng-if="user==null">Giriş</button>
             </ion-nav-buttons>
@@ -20,7 +20,7 @@
             <ion-content overflow-scroll="true" delegate-handle="content" class="scroll_content"
                          style="margin-top:30px;" ng-controller="HelpController">
                     <ion-list>
-                        <ion-item ng-repeat="item in menuList" ng-click="runHelpModal($index)" >
+                        <ion-item ng-repeat="item in menuList" ng-click="runHelpModal(item.name)" >
                             <h2>{{item.name}}</h2>
                         </ion-item>
                     </ion-list>
