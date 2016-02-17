@@ -101,7 +101,7 @@ angular.module('ionicApp')
             }
         }
 
-        this.config = {
+        $scope.config = {
             theme: "../../../assets/lib/videogular/videogular.css",
             plugins: {
                 poster: "http://www.videogular.com/assets/images/videogular.png"
@@ -109,12 +109,12 @@ angular.module('ionicApp')
         }
 
         $scope.onPlayerReady = function (API) {
-            $scope.stopPlaying();
             $scope.helpController.API = API;
         };
 
         $scope.vgChangeSource = function(source){
-            $scope.stopPlaying();
+            $scope.helpController.API.stop();
+            $timeout($scope.helpController.API.play.bind($scope.helpController.API), 100);
         }
 
         $scope.stopPlaying = function(){
