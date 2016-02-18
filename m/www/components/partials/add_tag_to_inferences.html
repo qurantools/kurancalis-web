@@ -12,7 +12,7 @@
     <ion-header-bar class="bar bar-subheader item-input-inset">
         <label class="item-input-wrapper search">
             <i class="icon ion-search placeholder-icon"></i>
-            <input ng-model="mobil_tagsearched " type="text" placeholder="Etiket ara / ekle" ng-change="tagsquery(mobil_tagsearched)"/>
+            <input id="addtagtoinference_input" ng-model="mobil_tagsearched " type="text" placeholder="Etiket ara / ekle" ng-change="tagsquery(mobil_tagsearched)"/>
         </label>
         <button ng-click="mobil_addedtags(mobil_tagsearched); closeInferenceModal();" style="width:40px"
                 class="button button-block button-positive">+

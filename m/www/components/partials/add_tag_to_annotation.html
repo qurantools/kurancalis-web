@@ -12,6 +12,7 @@
     <ion-header-bar class="bar bar-subheader item-input-inset">
         <label class="item-input-wrapper search">
             <i class="icon ion-search placeholder-icon"></i>
+            <input id="addtagtoannotation_input" ng-model="mobil_tagsearched " type="text" placeholder="Etiket ara / ekle" ng-change="tagsquery(mobil_tagsearched);scrollDelegateTop('tagsearch')"/>
         </label>
         <button ng-click="mobil_addedtags(annotationModalDataTagsInput,mobil_tagsearched); closeModal('tagsearch');" style="width:40px"
                 class="button button-block button-positive">+
