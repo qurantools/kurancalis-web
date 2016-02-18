@@ -1,7 +1,4 @@
 <div class="modal modal-fullscreen">
-    <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced">
-    </ion-nav-bar>
-
     <ion-content overflow-scroll="true">
         <div style="height:65px"></div>
         <div class="videogular-container row" style="height:100%;padding:0;margin:0;">
@@ -13,17 +10,17 @@
     </ion-content>
 
     <ion-footer-bar align-title="center" class="bar-balanced" style="height:10%;">
-        <button class="footer-bar-item item-left button button-balanced" ng-click="prevTutorial()" ng-if = "selectedIndex!=0" style="width: 5%;">
+        <button class="footer-bar-item item-left button button-balanced" ng-click="prevTutorial()" ng-if = "selectedIndex!=0">
             <i class="fa fa-chevron-left"></i> Geri
         </button>
-        <button class="footer-bar-item item-left button button-balanced" ng-click="closeModal()" ng-if = "selectedIndex==0" style="width: 5%;">
+        <button class="footer-bar-item item-left button button-balanced" ng-click="closeModal()" ng-if = "selectedIndex==0">
             <i class="fa fa-chevron-left"></i> Kapat
         </button>
 
-        <button class="footer-bar-item item-right button button-balanced" ng-click="nextTutorial()" ng-if = "selectedIndex!=(menuList[selectedMenu].submenu.length-1)" style="width: 5%;">
+        <button class="footer-bar-item item-right button button-balanced" ng-click="nextTutorial()" ng-if = "selectedIndex!=(menuList[selectedMenu].submenu.length-1)">
             İleri <i class="fa fa-chevron-right"></i>
         </button>
-        <button class="footer-bar-item item-right button button-balanced" ng-click="closeModal()" ng-if = "selectedIndex==(menuList[selectedMenu].submenu.length-1)" style="width: 5%;">
+        <button class="footer-bar-item item-right button button-balanced" ng-click="closeModal()" ng-if = "selectedIndex==(menuList[selectedMenu].submenu.length-1)">
             Kapat <i class="fa fa-chevron-right"></i>
         </button>
     </ion-footer-bar>
