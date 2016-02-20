@@ -21,6 +21,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "kurancalis-web", "..\", "{A
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
 		VWDPort = "23322"
+		SlnRelativePath = "..\..\kurancalis-web\"
 	EndProjectSection
 EndProject
 Global
