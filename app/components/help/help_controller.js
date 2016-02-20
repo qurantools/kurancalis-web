@@ -26,7 +26,7 @@ angular.module('ionicApp')
             },
             {   name : "Ayraç Kullanma",
                 submenu : [
-                    {id:31, title:"Ayraç Kullanma-1", source:[{src: $sce.trustAsResourceUrl(""), type: "video/mp4"}]},
+                    {id:31, title:"Ayraç Kullanma-1", source:[{src: $sce.trustAsResourceUrl("templates/playlist.html"), type: "html"}]},
                     {id:32, title:"Ayraç Kullanma-2", source:[{src: $sce.trustAsResourceUrl(""), type: "video/mp4"}]},
                     {id:33, title:"Ayraç Kullanma-3", source:[{src: $sce.trustAsResourceUrl("http://clips.vorwaerts-gmbh.de/VfE_html5.mp4"), type: "video/mp4"}]},
                     {id:34, title:"Ayraç Kullanma-4", source:[{src: $sce.trustAsResourceUrl(""), type: "video/mp4"}]},
@@ -55,7 +55,15 @@ angular.module('ionicApp')
         $scope.selectedIndex = -1;
         $scope.selectedMenu = -1;
 
-        $scope.runHelpModal = function(name){
+        $scope.runHelpModal = function(name, isCallFromHelpMenu){
+           if (!isCallFromHelpMenu){
+               var isRunBefore = localStorageService.get('help_modal_tutorial_' + name);
+               if (isRunBefore === null){
+                   localStorageService.set('help_modal_tutorial' + name, "true");
+               }else{
+                   return;
+               }
+           }
            $scope.selectedMenu = -1;
            for (var i = 0; i < $scope.menuList.length; i++) {
                if ($scope.menuList[i].name === name) {
