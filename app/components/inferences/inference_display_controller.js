@@ -73,9 +73,7 @@ angular.module('ionicApp')
             }
 
         }
-
-        }
-
+        
         $scope.compileContent = function(original,verseList, verseIdList, inline){
             var outContent=original;
             for (var i = 0; i < verseIdList.length; i++) {
