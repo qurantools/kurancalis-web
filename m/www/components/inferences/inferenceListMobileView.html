@@ -1,0 +1,68 @@
+<ion-side-menus>
+    <ion-side-menu-content drag-content="false">
+        <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced">
+            <ion-nav-buttons side="left">
+                <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+                
+                <input type="hidden" ng-model="chapter_id"/>
+                <input type="hidden" ng-model="author_mask"/>
+                
+            </ion-nav-buttons>
+            <h1 class="title"></h1>
+            <ion-nav-buttons side="right">
+                <button class="button button-icon icon ion-search" ng-click="openModal('viewusersearch')" ng-if="user!=null">
+                   
+                </button>
+                <a class="button button-icon icon ion-plus" href="#/m_inference/new/" ng-if="user!=null">
+                    Yeni Cikarim
+                </a>
+                
+            </ion-nav-buttons>
+        </ion-nav-bar>
+        <ion-nav-buttons side="left">
+            <button class="button button-icon icon ion-navicon" menu-toggle="left">
+            </button>
+        </ion-nav-buttons>
+        
+        <ion-nav-view name="appContent"></ion-nav-view>
+        <ion-nav-view id="mobile_inferences_content" cache-view="true">
+            <ion-content overflow-scroll="true" style="padding-top: 30px;">
+                <ion-list>
+                    <ion-item ng-repeat="inference in inferences">
+                        <div style="width: 250px;height: 200px;margin: 0 auto;"><img image-check ng-src="{{inference.image}}" alt="" style="width:100%;height: 100%;"/></div>
+                        <div style="text-align: center;" ><a href="#/m_inference/display/{{inference.id}}/" style="text-decoration: none;"><h4 style="margin-top:0;font-size: 18px">
+                            {{inference.title | limitTo:80}}</h4>
+                        </a></div>
+                        <div style="padding-left:10px;">
+                            <span ng-bind-html="inference.brief | to_trusted | limitTo:400"></span>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div ng-repeat="inferenceTag in inference.tags" class="tag label label-info s_a_tag">
+                                    {{inferenceTag}}
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div style="float: right;">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                {{inference.updated | date: 'dd/MM/yyyy HH:mm:ss'}}
+                            </div>
+                            <div class="col">
+                                <div style="float: right;">
+                                    {{inference.userName}}
+                                </div>
+                            </div>
+                        </div>
+                    </ion-item>
+                </ion-list>
+
+            </ion-content>
+        </ion-nav-view>
+    </ion-side-menu-content>
+    <div ng-include="'components/navigation/left_menu.html'"></div>
+</ion-side-menus>

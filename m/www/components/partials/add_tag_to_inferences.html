@@ -1,0 +1,31 @@
+<div class="modal modal-fullscreen" ng-controller="mobileInferenceTagsController">
+    <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced">
+        <ion-nav-title>Etiket Ekle</ion-nav-title>
+        <ion-nav-buttons side="left">
+            <button class="button button-icon icon-left ion-arrow-left-b" ng-click="closeInferenceModal()"
+                    style="float: left"> Vazgeç
+            </button>
+
+        </ion-nav-buttons>
+
+    </ion-nav-bar>
+    <ion-header-bar class="bar bar-subheader item-input-inset">
+        <label class="item-input-wrapper search">
+            <i class="icon ion-search placeholder-icon"></i>
+            <input ng-model="mobil_tagsearched_inference" type="text" placeholder="Etiket ara / ekle" ng-change="inferenceTagsquery(mobil_tagsearched_inference)"/>
+        </label>
+        <button ng-click="mobil_addedInferencetags(tagListInference,mobil_tagsearched_inference);closeModal('inferenceTagsearch');" style="width:40px"
+                class="button button-block button-positive">+
+        </button>
+    </ion-header-bar>
+    <button class="button button-icon icon-left ion-arrow-left-b" ng-click="closeModal('inferenceTagsearch');"
+            style="float: left" type="button">
+    </button>
+    <ion-content delegate-handle="tagsearch">
+        <div style="width:100%;  border-bottom: lightgray 1px solid; height:auto; padding-left:15px; padding-bottom:10px; padding-top:10px"
+             ng-click="mobil_addedInferencetags(tagListInference,item.name);closeModal('inferenceTagsearch');"
+             ng-repeat="item in inferenceTagslist">
+            {{item.name}}
+        </div>
+    </ion-content>
+</div>

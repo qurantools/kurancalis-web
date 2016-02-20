@@ -1,4 +1,5 @@
 angular.module('ionicApp')
+
     .controller('InferenceListController', function ($scope, $routeParams, Facebook, Restangular, $location, authorization, localStorageService, $ionicModal, $timeout, $ionicScrollDelegate) {
         console.log("Inference List Controller");
         /* facebook login */
@@ -66,7 +67,12 @@ angular.module('ionicApp')
                 users: Base64.encode(JSON.stringify($scope.usersForSearch))
 
             }
-            $location.path("/inferences/", false).search(parameters);
+            if (!config_data.isMobile) {
+                $location.path("/inferences/", false).search(parameters);
+            }else{
+                $location.path("/m_inference/", false).search(parameters);
+            }
+            
         };
 
 
@@ -416,7 +422,6 @@ angular.module('ionicApp')
 
             $scope.checkUserLoginStatus();
 
-
             $scope.get_all_inferences();
 
             if (config_data.isMobile) {
@@ -500,8 +505,6 @@ angular.module('ionicApp')
                     } else  if (id == 'addtagtosearch') {
                         $scope.modal_addtagtosearch.show();
                     }
-
-
 
 
                 };

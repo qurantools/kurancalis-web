@@ -329,6 +329,19 @@ margin: 0; }
     .button-bookmark i:before{line-height: 18px !important;font-size: 20px;}
 /* ! mobil bookmark */
 
+.btn-created,
+.btn-deleted{
+    min-height: 30px !important;
+    min-width: 30px !important;
+    width: 30px;
+    height: 30px;
+    padding: 0 7px !important;
+}
+.btn-created:before,
+.btn-deleted:before{
+    line-height: 28px !important;
+}
+
 @media screen and (min-width: 480px) {
     .mycol2 {
         width:600px;

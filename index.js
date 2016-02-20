@@ -111,6 +111,7 @@ var app = angular.module('ionicApp', requiredModules)
                 }
             };
         }])
+
     .run(['$route', '$rootScope', '$location', '$ionicPlatform', function ($route, $rootScope, $location, $ionicPlatform) {
 
         $ionicPlatform.ready(function () {
@@ -215,6 +216,7 @@ if (config_data.isMobile == false) { //false
                 templateUrl: 'app/components/inferences/inferenceDisplayView.html',
                 reloadOnSearch: false
             })
+            
             .when('/', {
                 redirectTo: '/translations/'
             })
@@ -276,6 +278,26 @@ if (config_data.isMobile == false) { //false
                     })
                     .when('/chapter/:chapter/author/:author/', {
                         redirectTo: '/translations/?chapter=:chapter&verse=1&author=:author'
+                    })
+                    .when('/m_inference/', {
+                        controller: 'InferenceListController',
+                        templateUrl: 'components/inferences/inferenceListMobileView.html',
+                        reloadOnSearch: false
+                    })
+                    .when('/m_inference/display/:inferenceId/', {
+                        controller: 'InferenceDisplayController',
+                        templateUrl: 'components/inferences/inferenceDisplayMobileView.html',
+                        reloadOnSearch: false
+                    })
+                    .when('/m_inference/new/', {
+                        controller: 'InferenceEditController',
+                        templateUrl: 'components/inferences/inferenceEditMobileView.html',
+                        reloadOnSearch: false
+                    })
+                    .when('/m_inference/edit/:inferenceId/', {
+                        controller: 'InferenceEditController',
+                        templateUrl: 'components/inferences/inferenceEditMobileView.html',
+                        reloadOnSearch: false
                     })
                     .otherwise({
                         redirectTo: '/translations/'
