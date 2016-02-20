@@ -1,7 +1,8 @@
 <div class="modal modal-fullscreen">
     <ion-content overflow-scroll="true">
         <div style="height:65px"></div>
-        <div class="videogular-container row" style="height:100%;padding:0;margin:0;">
+        <div ng-include src="menuList[selectedMenu].submenu[selectedIndex].source[0].src" ng-if="menuList[selectedMenu].submenu[selectedIndex].source[0].type.toLowerCase().indexOf('video') != 0"></div>
+        <div class="videogular-container row" style="height:100%;padding:0;margin:0;" ng-if="menuList[selectedMenu].submenu[selectedIndex].source[0].type.toLowerCase().indexOf('video') == 0">
             <div videogular vg-theme="config.theme" vg-auto-play="true" vg-plays-inline="true" vg-player-ready="onPlayerReady($API)" vg-change-source="vgChangeSource($source)" class="ng-isolate-scope">
                 <vg-media vg-src="menuList[selectedMenu].submenu[selectedIndex].source" vg-type="video" class="ng-isolate-scope" style="background-color: white;">
                 </vg-media>

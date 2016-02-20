@@ -20,7 +20,7 @@
             <ion-content overflow-scroll="true" delegate-handle="content" class="scroll_content"
                          style="margin-top:30px;" ng-controller="HelpController">
                     <ion-list>
-                        <ion-item ng-repeat="item in menuList" ng-click="runHelpModal(item.name)" >
+                        <ion-item ng-repeat="item in menuList" ng-click="runHelpModal(item.name, true)" >
                             <h2>{{item.name}}</h2>
                         </ion-item>
                     </ion-list>
