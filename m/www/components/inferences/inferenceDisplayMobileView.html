@@ -53,7 +53,6 @@
                         <option ng-repeat="item in authorMap" value="{{item.id}}" ng-selected="item.id==referenced.selectedAuthor">{{item.name}}</option>
                     </select>
                 </div>
-
                 <div ng-repeat="verseId in referenced.verseIds" align="left" >
                     <b>{{getChapterVerseNotation(verseId)}}</b> {{referenced.verses[verseId].translation}}
                     <br>
