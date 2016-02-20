@@ -496,7 +496,6 @@ app.factory('ChapterVerses', function ($resource) {
         $scope.showTutorial = 0;
         $scope.tutorialCarouselActive = 0;
 
-        $scope.helpModalCarouselActive = 0;
 
         /* side panel */
         $scope.sidebarActive = 0;
@@ -548,18 +547,6 @@ app.factory('ChapterVerses', function ($resource) {
             } else if (parameter == 'previous') {
                 $('#tutorialCarousel').carousel('prev');
                 $scope.tutorialCarouselActive--;
-            }
-        }
-
-        $scope.help = function (parameter) {
-            if (parameter == 'init') {
-                $('#helpModal').modal('show');
-            } else if (parameter == 'next') {
-                $('#helpModalCarousel').carousel('next');
-                $scope.helpModalCarouselActive++;
-            } else if (parameter == 'previous') {
-                $('#helpModalCarousel').carousel('prev');
-                $scope.helpModalCarouselActive--;
             }
         }
 
