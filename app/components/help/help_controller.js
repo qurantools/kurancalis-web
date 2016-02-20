@@ -8,7 +8,7 @@ angular.module('ionicApp')
         $scope.menuList=[
             {   name : "Intro",
                 submenu : [
-                    {id:11, title:"Intro-1", source:[{src: $sce.trustAsResourceUrl("http://clips.vorwaerts-gmbh.de/VfE_html5.mp4"), type: "video/mp4"}]},
+                    {id:11, title:"Intro-1", source:[{src: $sce.trustAsResourceUrl("../../assets/img/help/mobile/karalama.mp4"), type: "video/mp4"}]},
                     {id:12, title:"Intro-2", source:[{src: $sce.trustAsResourceUrl("https://youtu.be/uqROdKnNfQk"), type: "video/mp4"}]},
                     {id:13, title:"Intro-3", source:[{src: $sce.trustAsResourceUrl(""), type: "video/mp4"}]},
                     {id:14, title:"Intro-4", source:[{src: $sce.trustAsResourceUrl(""), type: "video/mp4"}]},
@@ -17,8 +17,8 @@ angular.module('ionicApp')
             },
             {   name : "Not Paylaşma",
                 submenu : [
-                    {id:21, title:"Not Paylaşma-1", source:[{src: $sce.trustAsResourceUrl("http://www.sample-videos.com/video/mp4/720/big_buck_bunny_720p_1mb.mp4"), type: "video/mp4"}]},
-                    {id:22, title:"Not Paylaşma-2", source:[{src: $sce.trustAsResourceUrl("http://clips.vorwaerts-gmbh.de/VfE_html5.mp4"), type: "video/mp4"}]},
+                    {id:21, title:"Not Paylaşma-1", source:[{src: $sce.trustAsResourceUrl("../../assets/img/help_deneme.mp4"), type: "video/mp4"}]},
+                    {id:22, title:"Not Paylaşma-2", source:[{src: $sce.trustAsResourceUrl("../../assets/img//VfE_html5.mp4"), type: "video/mp4"}]},
                     {id:23, title:"Not Paylaşma-3", source:[{src: $sce.trustAsResourceUrl(""), type: "video/mp4"}]},
                     {id:24, title:"Not Paylaşma-4", source:[{src: $sce.trustAsResourceUrl(""), type: "video/mp4"}]},
                     {id:25, title:"Not Paylaşma-5", source:[{src: $sce.trustAsResourceUrl(""), type: "video/mp4"}]}
