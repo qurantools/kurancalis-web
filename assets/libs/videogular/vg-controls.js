@@ -1,1 +1,1025 @@
-"use strict";angular.module("com.2fdevs.videogular.plugins.controls",[]).run(["$templateCache",function(a){a.put("vg-templates/vg-controls",'<div class="controls-container" ng-mousemove="onMouseMove()" ng-class="animationClass" ng-transclude></div>')}]).directive("vgControls",["$timeout","VG_STATES",function(a,b){return{restrict:"E",require:"^videogular",transclude:!0,templateUrl:function(a,b){return b.vgTemplate||"vg-templates/vg-controls"},scope:{vgAutohide:"=?",vgAutohideTime:"=?"},link:function(c,d,e,f){var g,h=2e3;c.API=f,c.onMouseMove=function(){c.vgAutohide&&c.showControls()},c.setAutohide=function(d){d&&f.currentState==b.PLAY?g=a(c.hideControls,h):(c.animationClass="",a.cancel(g),c.showControls())},c.setAutohideTime=function(a){h=a},c.hideControls=function(){c.animationClass="hide-animation"},c.showControls=function(){c.animationClass="show-animation",a.cancel(g),c.vgAutohide&&f.currentState==b.PLAY&&(g=a(c.hideControls,h))},f.isConfig?c.$watch("API.config",function(){if(c.API.config){var a=c.API.config.plugins.controls.autohide||!1,b=c.API.config.plugins.controls.autohideTime||2e3;c.vgAutohide=a,c.vgAutohideTime=b,c.setAutohideTime(b),c.setAutohide(a)}}):(void 0!=c.vgAutohide&&c.$watch("vgAutohide",c.setAutohide),void 0!=c.vgAutohideTime&&c.$watch("vgAutohideTime",c.setAutohideTime))}}}]),angular.module("com.2fdevs.videogular.plugins.controls").run(["$templateCache",function(a){a.put("vg-templates/vg-fullscreen-button",'<button class="iconButton" ng-click="onClickFullScreen()" ng-class="fullscreenIcon" aria-label="Toggle full screen" type="button"> </button>')}]).directive("vgFullscreenButton",[function(){return{restrict:"E",require:"^videogular",scope:{},templateUrl:function(a,b){return b.vgTemplate||"vg-templates/vg-fullscreen-button"},link:function(a,b,c,d){a.onChangeFullScreen=function(b){a.fullscreenIcon={enter:!b,exit:b}},a.onClickFullScreen=function(){d.toggleFullScreen()},a.fullscreenIcon={enter:!0},a.$watch(function(){return d.isFullScreen},function(b,c){b!=c&&a.onChangeFullScreen(b)})}}}]),angular.module("com.2fdevs.videogular.plugins.controls").run(["$templateCache",function(a){a.put("vg-templates/vg-play-pause-button",'<button class="iconButton" ng-click="onClickPlayPause()" ng-class="playPauseIcon" aria-label="Play/Pause" type="button"></button>')}]).directive("vgPlayPauseButton",["VG_STATES",function(a){return{restrict:"E",require:"^videogular",scope:{},templateUrl:function(a,b){return b.vgTemplate||"vg-templates/vg-play-pause-button"},link:function(b,c,d,e){b.setState=function(c){switch(c){case a.PLAY:b.playPauseIcon={pause:!0};break;case a.PAUSE:b.playPauseIcon={play:!0};break;case a.STOP:b.playPauseIcon={play:!0}}},b.onClickPlayPause=function(){e.playPause()},b.playPauseIcon={play:!0},b.$watch(function(){return e.currentState},function(a,c){a!=c&&b.setState(a)})}}}]),angular.module("com.2fdevs.videogular.plugins.controls").run(["$templateCache",function(a){a.put("vg-templates/vg-playback-button",'<button class="playbackValue iconButton" ng-click="onClickPlayback()">{{playback}}x</button>')}]).directive("vgPlaybackButton",["VG_UTILS",function(){return{restrict:"E",require:"^videogular",templateUrl:function(a,b){return b.vgTemplate||"vg-templates/vg-playback-button"},link:function(a,b,c,d){a.playback="1.0",a.onClickPlayback=function(){var b=[".5","1.0","1.5","2.0"],c=b.indexOf(a.playback)+1;a.playback=c>=b.length?b[0]:b[c],d.setPlayback(a.playback)},a.$watch(function(){return d.playback})}}}]),angular.module("com.2fdevs.videogular.plugins.controls").run(["$templateCache",function(a){a.put("vg-templates/vg-scrub-bar-cue-points",'<div class="cue-point-timeline" ng-style="timelineWidth"><div ng-repeat="cuePoint in vgCuePoints" class="cue-point" ng-style="cuePoint.$$style"></div></div>')}]).directive("vgScrubBarCuePoints",[function(){return{restrict:"E",require:"^videogular",templateUrl:function(a,b){return b.vgTemplate||"vg-templates/vg-scrub-bar-cue-points"},scope:{vgCuePoints:"="},link:function(a,b,c,d){var e;a.onPlayerReady=function(){a.updateCuePoints(a.vgCuePoints),e()},a.updateCuePoints=function(a){for(var c=parseInt(b[0].clientWidth),e=parseInt(b[0].offsetLeft),f=0,g=a.length;g>f;f++){var h=1e3*(a[f].timeLapse.end-a[f].timeLapse.start),i=e+c*a[f].timeLapse.start/d.totalTime*1e3+"px",j=0;"number"==typeof h&&d.totalTime&&(j=100*(h/d.totalTime)+"%"),a[f].$$style={width:j,left:i}}},e=a.$watch(function(){return d.totalTime},function(b){b>0&&a.onPlayerReady(b)})}}}]),angular.module("com.2fdevs.videogular.plugins.controls").directive("vgScrubBarCurrentTime",[function(){return{restrict:"E",require:"^videogular",link:function(a,b,c,d){var e=0;a.onUpdateTime=function(a){"number"==typeof a&&d.totalTime?(e=100*(a/d.totalTime),b.css("width",e+"%")):b.css("width",0)},a.$watch(function(){return d.currentTime},function(b){a.onUpdateTime(b)})}}}]),angular.module("com.2fdevs.videogular.plugins.controls").run(["$templateCache",function(a){a.put("vg-templates/vg-scrub-bar",'<div role="slider" aria-valuemax="{{ariaTime(API.totalTime)}}" aria-valuenow="{{ariaTime(API.currentTime)}}" aria-valuemin="0" aria-label="Time scrub bar" tabindex="0" ng-transclude ng-keydown="onScrubBarKeyDown($event)"></div>')}]).directive("vgScrubBar",["VG_STATES","VG_UTILS",function(a,b){return{restrict:"E",require:"^videogular",transclude:!0,templateUrl:function(a,b){return b.vgTemplate||"vg-templates/vg-scrub-bar"},link:function(c,d,e,f){var g=!1,h=!1,i=!1,j=0,k=37,l=39,m=5;c.API=f,c.ariaTime=function(a){return Math.round(a/1e3)},c.onScrubBarTouchStart=function(a){var e,k=a.originalEvent||a,l=k.touches;j=b.isiOSDevice()?-1*(l[0].clientX-k.layerX):k.layerX,e=l[0].clientX+j-l[0].target.offsetLeft,g=!0,h&&(i=!0),f.pause(),f.seekTime(e*f.mediaElement[0].duration/d[0].scrollWidth),c.$apply()},c.onScrubBarTouchEnd=function(a){a.originalEvent||a;i&&(i=!1,f.play()),g=!1,c.$apply()},c.onScrubBarTouchMove=function(a){var b,e=a.originalEvent||a,h=e.touches;g&&(b=h[0].clientX+j-h[0].target.offsetLeft,f.seekTime(b*f.mediaElement[0].duration/d[0].scrollWidth)),c.$apply()},c.onScrubBarTouchLeave=function(){g=!1,c.$apply()},c.onScrubBarMouseDown=function(a){a=b.fixEventOffset(a),g=!0,h&&(i=!0),f.pause(),f.seekTime(a.offsetX*f.mediaElement[0].duration/d[0].scrollWidth),c.$apply()},c.onScrubBarMouseUp=function(){i&&(i=!1,f.play()),g=!1,c.$apply()},c.onScrubBarMouseMove=function(a){g&&(a=b.fixEventOffset(a),f.seekTime(a.offsetX*f.mediaElement[0].duration/d[0].scrollWidth)),c.$apply()},c.onScrubBarMouseLeave=function(){g=!1,c.$apply()},c.onScrubBarKeyDown=function(a){var b=f.currentTime/f.totalTime*100;a.which===k||a.keyCode===k?(f.seekTime(b-m,!0),a.preventDefault()):(a.which===l||a.keyCode===l)&&(f.seekTime(b+m,!0),a.preventDefault())},c.setState=function(b){if(!g)switch(b){case a.PLAY:h=!0;break;case a.PAUSE:h=!1;break;case a.STOP:h=!1}},c.$watch(function(){return f.currentState},function(a,b){a!=b&&c.setState(a)}),b.isMobileDevice()?(d.bind("touchstart",c.onScrubBarTouchStart),d.bind("touchend",c.onScrubBarTouchEnd),d.bind("touchmove",c.onScrubBarTouchMove),d.bind("touchleave",c.onScrubBarTouchLeave)):(d.bind("mousedown",c.onScrubBarMouseDown),d.bind("mouseup",c.onScrubBarMouseUp),d.bind("mousemove",c.onScrubBarMouseMove),d.bind("mouseleave",c.onScrubBarMouseLeave))}}}]),angular.module("com.2fdevs.videogular.plugins.controls").directive("vgTimeDisplay",[function(){return{require:"^videogular",restrict:"E",link:function(a,b,c,d){a.currentTime=d.currentTime,a.timeLeft=d.timeLeft,a.totalTime=d.totalTime,a.isLive=d.isLive,a.$watch(function(){return d.currentTime},function(b){a.currentTime=b}),a.$watch(function(){return d.timeLeft},function(b){a.timeLeft=b}),a.$watch(function(){return d.totalTime},function(b){a.totalTime=b}),a.$watch(function(){return d.isLive},function(b){a.isLive=b})}}}]),angular.module("com.2fdevs.videogular.plugins.controls").run(["$templateCache",function(a){a.put("vg-templates/vg-mute-button",'<button type="button" class="iconButton" ng-class="muteIcon" ng-click="onClickMute()" ng-focus="onMuteButtonFocus()" ng-blur="onMuteButtonLoseFocus()" ng-keydown="onMuteButtonKeyDown($event)" aria-label="Mute"></button>')}]).directive("vgMuteButton",[function(){return{restrict:"E",require:"^videogular",templateUrl:function(a,b){return b.vgTemplate||"vg-templates/vg-mute-button"},link:function(a,b,c,d){var e=!1,f=38,g=40,h=.05;a.onClickMute=function(){e?a.currentVolume=a.defaultVolume:(a.currentVolume=0,a.muteIcon={mute:!0}),e=!e,d.setVolume(a.currentVolume)},a.onMuteButtonFocus=function(){a.volumeVisibility="visible"},a.onMuteButtonLoseFocus=function(){a.volumeVisibility="hidden"},a.onMuteButtonKeyDown=function(a){var b,c=null!=d.volume?d.volume:1;a.which===f||a.keyCode===f?(b=c+h,b>1&&(b=1),d.setVolume(b),a.preventDefault()):(a.which===g||a.keyCode===g)&&(b=c-h,0>b&&(b=0),d.setVolume(b),a.preventDefault())},a.onSetVolume=function(b){a.currentVolume=b,e?b>0&&(a.defaultVolume=b):a.defaultVolume=b;var c=Math.round(100*b);0==c?a.muteIcon={mute:!0}:c>0&&25>c?a.muteIcon={level0:!0}:c>=25&&50>c?a.muteIcon={level1:!0}:c>=50&&75>c?a.muteIcon={level2:!0}:c>=75&&(a.muteIcon={level3:!0})},a.defaultVolume=1,a.currentVolume=a.defaultVolume,a.muteIcon={level3:!0},a.onSetVolume(d.volume),a.$watch(function(){return d.volume},function(b,c){b!=c&&a.onSetVolume(b)})}}}]),angular.module("com.2fdevs.videogular.plugins.controls").run(["$templateCache",function(a){a.put("vg-templates/vg-volume-bar",'<div class="verticalVolumeBar">              <div class="volumeBackground" ng-click="onClickVolume($event)" ng-mousedown="onMouseDownVolume()" ng-mouseup="onMouseUpVolume()" ng-mousemove="onMouseMoveVolume($event)" ng-mouseleave="onMouseLeaveVolume()">                <div class="volumeValue"></div>                <div class="volumeClickArea"></div>              </div>            </div>')}]).directive("vgVolumeBar",["VG_UTILS",function(a){return{restrict:"E",require:"^videogular",templateUrl:function(a,b){return b.vgTemplate||"vg-templates/vg-volume-bar"},link:function(b,c,d,e){var f=!1,g=angular.element(c[0].getElementsByClassName("volumeBackground")),h=angular.element(c[0].getElementsByClassName("volumeValue"));b.onClickVolume=function(b){b=a.fixEventOffset(b);var c=parseInt(g.prop("offsetHeight")),d=100*b.offsetY/c,f=1-d/100;e.setVolume(f)},b.onMouseDownVolume=function(){f=!0},b.onMouseUpVolume=function(){f=!1},b.onMouseLeaveVolume=function(){f=!1},b.onMouseMoveVolume=function(b){if(f){b=a.fixEventOffset(b);var c=parseInt(g.prop("offsetHeight")),d=100*b.offsetY/c,h=1-d/100;e.setVolume(h)}},b.updateVolumeView=function(a){a=100*a,h.css("height",a+"%"),h.css("top",100-a+"%")},b.onChangeVisibility=function(a){c.css("visibility",a)},c.css("visibility",b.volumeVisibility),b.$watch("volumeVisibility",b.onChangeVisibility),b.updateVolumeView(e.volume),b.$watch(function(){return e.volume},function(a,c){a!=c&&b.updateVolumeView(a)})}}}]),angular.module("com.2fdevs.videogular.plugins.controls").directive("vgVolume",["VG_UTILS",function(a){return{restrict:"E",link:function(b,c){b.onMouseOverVolume=function(){b.$evalAsync(function(){b.volumeVisibility="visible"})},b.onMouseLeaveVolume=function(){b.$evalAsync(function(){b.volumeVisibility="hidden"})},a.isMobileDevice()?c.css("display","none"):(b.volumeVisibility="hidden",c.bind("mouseover",b.onMouseOverVolume),c.bind("mouseleave",b.onMouseLeaveVolume))}}}]);
+/**
+ * @license videogular v1.2.8 http://videogular.com
+ * Two Fucking Developers http://twofuckingdevelopers.com
+ * License: MIT
+ */
+/**
+ * @ngdoc directive
+ * @name com.2fdevs.videogular.plugins.controls.directive:vgControls
+ * @restrict E
+ * @description
+ * This directive acts as a container and you will need other directives to control the media.
+ * Inside this directive you can add other directives like vg-play-pause-button and vg-scrub-bar.
+ *
+ * <pre>
+ * <videogular vg-theme="config.theme.url">
+ *    <vg-media vg-src="sources"></vg-media>
+ *
+ *    <vg-controls vg-autohide='config.autohide' vg-autohide-time='config.autohideTime'></vg-controls>
+ * </videogular>
+ * </pre>
+ *
+ * @param {boolean=false} vgAutohide Boolean variable or value to activate autohide.
+ * @param {number=2000} vgAutohideTime Number variable or value that represents the time in milliseconds that will wait vgControls until it hides.
+ *
+ *
+ */
+"use strict";
+angular.module("com.2fdevs.videogular.plugins.controls", [])
+    .run(
+    ["$templateCache", function ($templateCache) {
+        $templateCache.put("vg-templates/vg-controls",
+            '<div class="controls-container" ng-mousemove="onMouseMove()" ng-class="animationClass" ng-transclude></div>');
+    }]
+)
+    .directive("vgControls",
+    ["$timeout", "VG_STATES", function ($timeout, VG_STATES) {
+        return {
+            restrict: "E",
+            require: "^videogular",
+            transclude: true,
+            templateUrl: function (elem, attrs) {
+                return attrs.vgTemplate || 'vg-templates/vg-controls';
+            },
+            scope: {
+                vgAutohide: "=?",
+                vgAutohideTime: "=?"
+            },
+            link: function (scope, elem, attr, API) {
+                var w = 0;
+                var h = 0;
+                var autoHideTime = 2000;
+                var hideInterval;
+
+                scope.API = API;
+
+                scope.onMouseMove = function onMouseMove() {
+                    if (scope.vgAutohide) scope.showControls();
+                };
+
+                scope.setAutohide = function setAutohide(value) {
+                    if (value && API.currentState == VG_STATES.PLAY) {
+                        hideInterval = $timeout(scope.hideControls, autoHideTime);
+                    }
+                    else {
+                        scope.animationClass = "";
+                        $timeout.cancel(hideInterval);
+                        scope.showControls();
+                    }
+                };
+
+                scope.setAutohideTime = function setAutohideTime(value) {
+                    autoHideTime = value;
+                };
+
+                scope.hideControls = function hideControls() {
+                    scope.animationClass = "hide-animation";
+                };
+
+                scope.showControls = function showControls() {
+                    scope.animationClass = "show-animation";
+                    $timeout.cancel(hideInterval);
+                    if (scope.vgAutohide && API.currentState == VG_STATES.PLAY) hideInterval = $timeout(scope.hideControls, autoHideTime);
+                };
+
+                if (API.isConfig) {
+                    scope.$watch("API.config",
+                        function () {
+                            if (scope.API.config) {
+                                var ahValue = scope.API.config.plugins.controls.autohide || false;
+                                var ahtValue = scope.API.config.plugins.controls.autohideTime || 2000;
+                                scope.vgAutohide = ahValue;
+                                scope.vgAutohideTime = ahtValue;
+                                scope.setAutohideTime(ahtValue);
+                                scope.setAutohide(ahValue);
+                            }
+                        }
+                    );
+                }
+                else {
+                    // If vg-autohide has been set
+                    if (scope.vgAutohide != undefined) {
+                        scope.$watch("vgAutohide", scope.setAutohide);
+                    }
+
+                    // If vg-autohide-time has been set
+                    if (scope.vgAutohideTime != undefined) {
+                        scope.$watch("vgAutohideTime", scope.setAutohideTime);
+                    }
+                }
+
+
+            }
+        }
+    }]
+);
+
+/**
+ * @ngdoc directive
+ * @name com.2fdevs.videogular.plugins.controls.directive:vgFullscreenButton
+ * @restrict E
+ * @description
+ * Directive to switch between fullscreen and normal mode.
+ *
+ * <pre>
+ * <videogular vg-theme="config.theme.url">
+ *    <vg-media vg-src="sources"></vg-media>
+ *
+ *    <vg-controls vg-autohide='config.autohide' vg-autohide-time='config.autohideTime'>
+ *        <vg-fullscreen-button></vg-fullscreen-button>
+ *    </vg-controls>
+ * </videogular>
+ * </pre>
+ *
+ */
+angular.module("com.2fdevs.videogular.plugins.controls")
+    .run(
+    ["$templateCache", function ($templateCache) {
+        $templateCache.put("vg-templates/vg-fullscreen-button",
+            '<button class="iconButton" ng-click="onClickFullScreen()" ng-class="fullscreenIcon" aria-label="Toggle full screen" type="button"> </button>');
+    }]
+)
+    .directive("vgFullscreenButton",
+    [function () {
+        return {
+            restrict: "E",
+            require: "^videogular",
+            scope: {},
+            templateUrl: function (elem, attrs) {
+                return attrs.vgTemplate || 'vg-templates/vg-fullscreen-button';
+            },
+            link: function (scope, elem, attr, API) {
+                scope.onChangeFullScreen = function onChangeFullScreen(isFullScreen) {
+                    scope.fullscreenIcon = {enter: !isFullScreen, exit: isFullScreen};
+                };
+
+                scope.onClickFullScreen = function onClickFullScreen() {
+                    API.toggleFullScreen();
+                };
+
+                scope.fullscreenIcon = {enter: true};
+
+                scope.$watch(
+                    function () {
+                        return API.isFullScreen;
+                    },
+                    function (newVal, oldVal) {
+                        if (newVal != oldVal) {
+                            scope.onChangeFullScreen(newVal);
+                        }
+                    }
+                );
+            }
+        }
+    }]
+);
+
+/**
+ * @ngdoc directive
+ * @name com.2fdevs.videogular.plugins.controls.directive:vgPlayPauseButton
+ * @restrict E
+ * @description
+ * Adds a button inside vg-controls to play and pause media.
+ *
+ * <pre>
+ * <videogular vg-theme="config.theme.url">
+ *    <vg-media vg-src="sources"></vg-media>
+ *
+ *    <vg-controls vg-autohide='config.autohide' vg-autohide-time='config.autohideTime'>
+ *        <vg-play-pause-button></vg-play-pause-button>
+ *    </vg-controls>
+ * </videogular>
+ * </pre>
+ *
+ */
+angular.module("com.2fdevs.videogular.plugins.controls")
+    .run(
+    ["$templateCache", function ($templateCache) {
+        $templateCache.put("vg-templates/vg-play-pause-button",
+            '<button class="iconButton" ng-click="onClickPlayPause()" ng-class="playPauseIcon" aria-label="Play/Pause" type="button"></button>');
+    }]
+)
+    .directive("vgPlayPauseButton",
+    ["VG_STATES", function (VG_STATES) {
+        return {
+            restrict: "E",
+            require: "^videogular",
+            scope: {},
+            templateUrl: function (elem, attrs) {
+                return attrs.vgTemplate || 'vg-templates/vg-play-pause-button';
+            },
+            link: function (scope, elem, attr, API) {
+                scope.setState = function setState(newState) {
+                    switch (newState) {
+                        case VG_STATES.PLAY:
+                            scope.playPauseIcon = {pause: true};
+                            break;
+
+                        case VG_STATES.PAUSE:
+                            scope.playPauseIcon = {play: true};
+                            break;
+
+                        case VG_STATES.STOP:
+                            scope.playPauseIcon = {play: true};
+                            break;
+                    }
+                };
+
+                scope.onClickPlayPause = function onClickPlayPause() {
+                    API.playPause();
+                };
+
+                scope.playPauseIcon = {play: true};
+
+                scope.$watch(
+                    function () {
+                        return API.currentState;
+                    },
+                    function (newVal, oldVal) {
+                        scope.setState(newVal);
+                    }
+                );
+            }
+        }
+    }]
+);
+
+/**
+ * @ngdoc directive
+ * @name com.2fdevs.videogular.plugins.controls.directive:ngPlaybackButton
+ * @restrict E
+ * @description
+ * Directive to display a playback buttom to control the playback rate.
+ *
+ * <pre>
+ * <videogular vg-theme="config.theme.url">
+ *    <vg-media vg-src="sources"></vg-media>
+ *
+ *    <vg-controls vg-autohide='config.autohide' vg-autohide-time='config.autohideTime'>
+ *        <vg-playback-button></vg-playback-button>
+ *    </vg-controls>
+ * </videogular>
+ * </pre>
+ *
+ */
+angular.module("com.2fdevs.videogular.plugins.controls")
+    .run(
+    ["$templateCache", function ($templateCache) {
+        $templateCache.put("vg-templates/vg-playback-button",
+            '<button class="playbackValue iconButton" ng-click="onClickPlayback()">{{playback}}x</button>');
+    }]
+)
+    .directive("vgPlaybackButton",
+    ["VG_UTILS", function (VG_UTILS) {
+        return {
+            restrict: "E",
+            require: "^videogular",
+            templateUrl: function (elem, attrs) {
+                return attrs.vgTemplate || 'vg-templates/vg-playback-button';
+            },
+            link: function (scope, elem, attr, API) {
+                scope.playback = '1.0';
+
+                scope.setPlayback = function(playback) {
+                    scope.playback = playback;
+                    API.setPlayback(parseFloat(playback));
+                };
+
+                scope.onClickPlayback = function onClickPlayback() {
+                    var playbackOptions = ['.5', '1.0', '1.5', '2.0'];
+                    var nextPlaybackRate = playbackOptions.indexOf(scope.playback) + 1 || 1;
+
+                    if (nextPlaybackRate >= playbackOptions.length) {
+                        scope.playback = playbackOptions[0];
+                    }
+                    else {
+                        scope.playback = playbackOptions[nextPlaybackRate];
+                    }
+
+                    scope.setPlayback(scope.playback);
+                };
+
+                scope.$watch(
+                    function () {
+                        return API.playback;
+                    },
+                    function(newVal, oldVal) {
+                        if (newVal != oldVal) {
+                            scope.setPlayback(newVal);
+                        }
+                    }
+                );
+            }
+        }
+    }]
+);
+/**
+ * @ngdoc directive
+ * @name com.2fdevs.videogular.plugins.controls.directive:vgScrubBarCuePoints
+ * @restrict E
+ * @description
+ * Layer inside vg-scrub-bar to display a cue point timeline.
+ *
+ * <pre>
+ * <videogular vg-theme="config.theme.url">
+ *    <vg-media vg-src="sources"></vg-media>
+ *
+ *    <vg-controls>
+ *        <vg-scrub-bar>
+ *            <vg-scrub-bar-cue-points vg-cue-points='config.cuePoints[0]'></vg-scrub-bar-cue-points>
+ *        </vg-scrub-bar>
+ *    </vg-controls>
+ * </videogular>
+ * </pre>
+ *
+ */
+angular.module("com.2fdevs.videogular.plugins.controls")
+    .run(
+    ["$templateCache", function ($templateCache) {
+        $templateCache.put("vg-templates/vg-scrub-bar-cue-points",
+            '<div class="cue-point-timeline" ng-style="timelineWidth">' +
+            '<div ng-repeat="cuePoint in vgCuePoints" class="cue-point" ng-style="cuePoint.$$style"></div>' +
+            '</div>');
+    }]
+)
+    .directive("vgScrubBarCuePoints",
+    [function () {
+        return {
+            restrict: "E",
+            require: "^videogular",
+            templateUrl: function (elem, attrs) {
+                return attrs.vgTemplate || 'vg-templates/vg-scrub-bar-cue-points';
+            },
+            scope: {
+                "vgCuePoints": "="
+            },
+            link: function (scope, elem, attr, API) {
+                scope.onPlayerReady = function onPlayerReady() {
+                    scope.updateCuePoints(scope.vgCuePoints);
+                };
+
+                scope.updateCuePoints = function onUpdateCuePoints(cuePoints) {
+                    var totalWidth;
+
+                    if (cuePoints) {
+                        totalWidth = parseInt(elem[0].clientWidth);
+
+                        for (var i = 0, l = cuePoints.length; i < l; i++) {
+                            var cuePointDuration = (cuePoints[i].timeLapse.end - cuePoints[i].timeLapse.start) * 1000;
+                            var position = (cuePoints[i].timeLapse.start * 100 / API.totalTime * 1000) + "%";
+                            var percentWidth = 0;
+
+                            if (typeof cuePointDuration === 'number' && API.totalTime) {
+                                percentWidth = ((cuePointDuration * 100) / API.totalTime) + "%";
+                            }
+
+                            cuePoints[i].$$style = {
+                                width: percentWidth,
+                                left: position
+                            };
+                        }
+                    }
+                };
+
+                scope.$watch("vgCuePoints", scope.updateCuePoints);
+
+                scope.$watch(
+                    function () {
+                        return API.totalTime;
+                    },
+                    function (newVal, oldVal) {
+                        if (newVal > 0) scope.onPlayerReady();
+                    }
+                );
+            }
+        }
+    }]
+);
+
+/**
+ * @ngdoc directive
+ * @name com.2fdevs.videogular.plugins.controls.directive:vgScrubBarCurrentTime
+ * @restrict E
+ * @description
+ * Layer inside vg-scrub-bar to display the current time.
+ *
+ * <pre>
+ * <videogular vg-theme="config.theme.url">
+ *    <vg-media vg-src="sources"></vg-media>
+ *
+ *    <vg-controls vg-autohide='config.autohide' vg-autohide-time='config.autohideTime'>
+ *        <vg-scrub-bar>
+ *            <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
+ *        </vg-scrub-bar>
+ *    </vg-controls>
+ * </videogular>
+ * </pre>
+ *
+ */
+angular.module("com.2fdevs.videogular.plugins.controls")
+    .directive("vgScrubBarCurrentTime",
+    [function () {
+        return {
+            restrict: "E",
+            require: "^videogular",
+            link: function (scope, elem, attr, API) {
+                var percentTime = 0;
+
+                scope.onUpdateTime = function onUpdateTime(newCurrentTime) {
+                    if (typeof newCurrentTime === 'number' && API.totalTime) {
+                        percentTime = 100 * (newCurrentTime / API.totalTime);
+                        elem.css("width", percentTime + "%");
+                    } else {
+                        elem.css("width", 0);
+                    }
+                };
+
+                scope.$watch(
+                    function () {
+                        return API.currentTime;
+                    },
+                    function (newVal, oldVal) {
+                        scope.onUpdateTime(newVal);
+                    }
+                );
+            }
+        }
+    }]
+);
+
+/**
+ * @ngdoc directive
+ * @name com.2fdevs.videogular.plugins.controls.directive:vgScrubBar
+ * @restrict E
+ * @description
+ * Directive to control the time and display other information layers about the progress of the media.
+ * This directive acts as a container and you can add more layers to display current time, cuepoints, buffer or whatever you need.
+ *
+ * <pre>
+ * <videogular vg-theme="config.theme.url">
+ *    <vg-media vg-src="sources"></vg-media>
+ *
+ *    <vg-controls vg-autohide='config.autohide' vg-autohide-time='config.autohideTime'>
+ *        <vg-scrub-bar></vg-scrub-bar>
+ *    </vg-controls>
+ * </videogular>
+ * </pre>
+ *
+ */
+angular.module("com.2fdevs.videogular.plugins.controls")
+    .run(
+    ["$templateCache", function ($templateCache) {
+        $templateCache.put("vg-templates/vg-scrub-bar",
+            '<div role="slider" aria-valuemax="{{ariaTime(API.totalTime)}}" aria-valuenow="{{ariaTime(API.currentTime)}}" aria-valuemin="0" aria-label="Time scrub bar" tabindex="0" ng-transclude ng-keydown="onScrubBarKeyDown($event)"></div>');
+    }]
+)
+    .directive("vgScrubBar",
+    ["VG_STATES", "VG_UTILS", function (VG_STATES, VG_UTILS) {
+        return {
+            restrict: "E",
+            require: "^videogular",
+            transclude: true,
+            templateUrl: function (elem, attrs) {
+                return attrs.vgTemplate || 'vg-templates/vg-scrub-bar';
+            },
+            link: function (scope, elem, attr, API) {
+                var isSeeking = false;
+                var isPlaying = false;
+                var isPlayingWhenSeeking = false;
+                var touchStartX = 0;
+                var LEFT = 37;
+                var RIGHT = 39;
+                var NUM_PERCENT = 5;
+
+                scope.API = API;
+                scope.ariaTime = function (time) {
+                    return Math.round(time / 1000);
+                };
+
+                scope.onScrubBarTouchStart = function onScrubBarTouchStart($event) {
+                    var event = $event.originalEvent || $event;
+                    var touches = event.touches;
+                    var touchX;
+
+                    if (VG_UTILS.isiOSDevice()) {
+                        touchStartX = (touches[0].clientX - event.layerX) * -1;
+                    }
+                    else {
+                        touchStartX = event.layerX;
+                    }
+
+                    touchX = touches[0].clientX + touchStartX - touches[0].target.offsetLeft;
+
+                    isSeeking = true;
+                    if (isPlaying) isPlayingWhenSeeking = true;
+                    API.pause();
+                    API.seekTime(touchX * API.mediaElement[0].duration / elem[0].scrollWidth);
+
+                    scope.$apply();
+                };
+
+                scope.onScrubBarTouchEnd = function onScrubBarTouchEnd($event) {
+                    var event = $event.originalEvent || $event;
+                    if (isPlayingWhenSeeking) {
+                        isPlayingWhenSeeking = false;
+                        API.play();
+                    }
+                    isSeeking = false;
+
+                    scope.$apply();
+                };
+
+                scope.onScrubBarTouchMove = function onScrubBarTouchMove($event) {
+                    var event = $event.originalEvent || $event;
+                    var touches = event.touches;
+                    var touchX;
+
+                    if (isSeeking) {
+                        touchX = touches[0].clientX + touchStartX - touches[0].target.offsetLeft;
+                        API.seekTime(touchX * API.mediaElement[0].duration / elem[0].scrollWidth);
+                    }
+
+                    scope.$apply();
+                };
+
+                scope.onScrubBarTouchLeave = function onScrubBarTouchLeave(event) {
+                    isSeeking = false;
+
+                    scope.$apply();
+                };
+
+                scope.onScrubBarMouseDown = function onScrubBarMouseDown(event) {
+                    event = VG_UTILS.fixEventOffset(event);
+
+                    isSeeking = true;
+                    if (isPlaying) isPlayingWhenSeeking = true;
+                    API.pause();
+
+                    API.seekTime(event.offsetX * API.mediaElement[0].duration / elem[0].scrollWidth);
+
+                    scope.$apply();
+                };
+
+                scope.onScrubBarMouseUp = function onScrubBarMouseUp(event) {
+                    //event = VG_UTILS.fixEventOffset(event);
+
+                    if (isPlayingWhenSeeking) {
+                        isPlayingWhenSeeking = false;
+                        API.play();
+                    }
+                    isSeeking = false;
+                    //API.seekTime(event.offsetX * API.mediaElement[0].duration / elem[0].scrollWidth);
+
+                    scope.$apply();
+                };
+
+                scope.onScrubBarMouseMove = function onScrubBarMouseMove(event) {
+                    if (isSeeking) {
+                        event = VG_UTILS.fixEventOffset(event);
+                        API.seekTime(event.offsetX * API.mediaElement[0].duration / elem[0].scrollWidth);
+                    }
+
+                    scope.$apply();
+                };
+
+                scope.onScrubBarMouseLeave = function onScrubBarMouseLeave(event) {
+                    isSeeking = false;
+
+                    scope.$apply();
+                };
+
+                scope.onScrubBarKeyDown = function onScrubBarKeyDown(event) {
+                    var currentPercent = (API.currentTime / API.totalTime) * 100;
+
+                    if (event.which === LEFT || event.keyCode === LEFT) {
+                        API.seekTime(currentPercent - NUM_PERCENT, true);
+                        event.preventDefault();
+                    }
+                    else if (event.which === RIGHT || event.keyCode === RIGHT) {
+                        API.seekTime(currentPercent + NUM_PERCENT, true);
+                        event.preventDefault();
+                    }
+                };
+
+                scope.setState = function setState(newState) {
+                    if (!isSeeking) {
+                        switch (newState) {
+                            case VG_STATES.PLAY:
+                                isPlaying = true;
+                                break;
+
+                            case VG_STATES.PAUSE:
+                                isPlaying = false;
+                                break;
+
+                            case VG_STATES.STOP:
+                                isPlaying = false;
+                                break;
+                        }
+                    }
+                };
+
+                scope.$watch(
+                    function () {
+                        return API.currentState;
+                    },
+                    function (newVal, oldVal) {
+                        if (newVal != oldVal) {
+                            scope.setState(newVal);
+                        }
+                    }
+                );
+
+                // Touch move is really buggy in Chrome for Android, maybe we could use mouse move that works ok
+                if (VG_UTILS.isMobileDevice()) {
+                    elem.bind("touchstart", scope.onScrubBarTouchStart);
+                    elem.bind("touchend", scope.onScrubBarTouchEnd);
+                    elem.bind("touchmove", scope.onScrubBarTouchMove);
+                    elem.bind("touchleave", scope.onScrubBarTouchLeave);
+                }
+                else {
+                    elem.bind("mousedown", scope.onScrubBarMouseDown);
+                    elem.bind("mouseup", scope.onScrubBarMouseUp);
+                    elem.bind("mousemove", scope.onScrubBarMouseMove);
+                    elem.bind("mouseleave", scope.onScrubBarMouseLeave);
+                }
+            }
+        }
+    }]
+);
+
+/**
+ * @ngdoc directive
+ * @name com.2fdevs.videogular.plugins.controls.directive:vgTimeDisplay
+ * @restrict E
+ * @description
+ * Adds a time display inside vg-controls to play and pause media.
+ * You have three scope variables to show current time, time left and total time.
+ *
+ * Those scope variables are in milliseconds, you can add a date filter to show the time as you wish.
+ *
+ * <pre>
+ * <videogular vg-theme="config.theme.url">
+ *    <vg-media vg-src="sources"></vg-media>
+ *
+ *    <vg-controls vg-autohide='config.autohide' vg-autohide-time='config.autohideTime'>
+ *        <vg-time-display>{{currentTime | date:'hh:mm'}}</vg-time-display>
+ *        <vg-time-display>{{timeLeft | date:'mm:ss'}}</vg-time-display>
+ *        <vg-time-display>{{totalTime | date:'hh:mm:ss'}}</vg-time-display>
+ *    </vg-controls>
+ * </videogular>
+ * </pre>
+ *
+ */
+angular.module("com.2fdevs.videogular.plugins.controls")
+    .directive("vgTimeDisplay",
+    [function () {
+        return {
+            require: "^videogular",
+            restrict: "E",
+            link: function (scope, elem, attr, API) {
+                scope.currentTime = API.currentTime;
+                scope.timeLeft = API.timeLeft;
+                scope.totalTime = API.totalTime;
+                scope.isLive = API.isLive;
+
+                scope.$watch(
+                    function () {
+                        return API.currentTime;
+                    },
+                    function (newVal, oldVal) {
+                        scope.currentTime = newVal;
+                    }
+                );
+
+                scope.$watch(
+                    function () {
+                        return API.timeLeft;
+                    },
+                    function (newVal, oldVal) {
+                        scope.timeLeft = newVal;
+                    }
+                );
+
+                scope.$watch(
+                    function () {
+                        return API.totalTime;
+                    },
+                    function (newVal, oldVal) {
+                        scope.totalTime = newVal;
+                    }
+                );
+
+                scope.$watch(
+                    function () {
+                        return API.isLive;
+                    },
+                    function (newVal, oldVal) {
+                        scope.isLive = newVal;
+                    }
+                );
+            }
+        }
+    }]
+);
+
+/**
+ * @ngdoc directive
+ * @name com.2fdevs.videogular.plugins.controls.directive:vgMuteButton
+ * @restrict E
+ * @description
+ * Directive to display a button to mute volume.
+ *
+ * <pre>
+ * <videogular vg-theme="config.theme.url">
+ *    <vg-media vg-src="sources"></vg-media>
+ *
+ *    <vg-controls vg-autohide='config.autohide' vg-autohide-time='config.autohideTime'>
+ *        <vg-volume>
+ *            <vg-mute-button><vg-mute-button>
+ *        </vg-volume>
+ *    </vg-controls>
+ * </videogular>
+ * </pre>
+ *
+ */
+angular.module("com.2fdevs.videogular.plugins.controls")
+    .run(
+    ["$templateCache", function ($templateCache) {
+        $templateCache.put("vg-templates/vg-mute-button",
+            '<button type="button" class="iconButton" ng-class="muteIcon" ng-click="onClickMute()" ng-focus="onMuteButtonFocus()" ng-blur="onMuteButtonLoseFocus()" ng-keydown="onMuteButtonKeyDown($event)" aria-label="Mute"></button>');
+    }]
+)
+    .directive("vgMuteButton",
+    [function () {
+        return {
+            restrict: "E",
+            require: "^videogular",
+            templateUrl: function (elem, attrs) {
+                return attrs.vgTemplate || 'vg-templates/vg-mute-button';
+            },
+            link: function (scope, elem, attr, API) {
+                var isMuted = false;
+                var UP = 38;
+                var DOWN = 40;
+                var CHANGE_PER_PRESS = 0.05;
+
+                scope.onClickMute = function onClickMute() {
+                    if (isMuted) {
+                        scope.currentVolume = scope.defaultVolume;
+                    }
+                    else {
+                        scope.currentVolume = 0;
+                        scope.muteIcon = {mute: true};
+                    }
+
+                    isMuted = !isMuted;
+
+                    API.setVolume(scope.currentVolume);
+                };
+
+                scope.onMuteButtonFocus = function onMuteButtonFocus() {
+                    scope.volumeVisibility = "visible";
+                };
+
+                scope.onMuteButtonLoseFocus = function onMuteButtonLoseFocus() {
+                    scope.volumeVisibility = "hidden";
+                };
+
+                scope.onMuteButtonKeyDown = function onMuteButtonKeyDown(event) {
+                    var currentVolume = (API.volume != null) ? API.volume : 1;
+                    var newVolume;
+
+                    if (event.which === UP || event.keyCode === UP) {
+                        newVolume = currentVolume + CHANGE_PER_PRESS;
+                        if (newVolume > 1) newVolume = 1;
+
+                        API.setVolume(newVolume);
+                        event.preventDefault();
+                    }
+                    else if (event.which === DOWN || event.keyCode === DOWN) {
+                        newVolume = currentVolume - CHANGE_PER_PRESS;
+                        if (newVolume < 0) newVolume = 0;
+
+                        API.setVolume(newVolume);
+                        event.preventDefault();
+                    }
+                };
+
+                scope.onSetVolume = function onSetVolume(newVolume) {
+                    scope.currentVolume = newVolume;
+
+                    isMuted = (scope.currentVolume === 0);
+
+                    // if it's not muted we save the default volume
+                    if (!isMuted) {
+                        scope.defaultVolume = newVolume;
+                    }
+                    else {
+                        // if was muted but the user changed the volume
+                        if (newVolume > 0) {
+                            scope.defaultVolume = newVolume;
+                        }
+                    }
+
+                    var percentValue = Math.round(newVolume * 100);
+                    if (percentValue == 0) {
+                        scope.muteIcon = {mute: true};
+                    }
+                    else if (percentValue > 0 && percentValue < 25) {
+                        scope.muteIcon = {level0: true};
+                    }
+                    else if (percentValue >= 25 && percentValue < 50) {
+                        scope.muteIcon = {level1: true};
+                    }
+                    else if (percentValue >= 50 && percentValue < 75) {
+                        scope.muteIcon = {level2: true};
+                    }
+                    else if (percentValue >= 75) {
+                        scope.muteIcon = {level3: true};
+                    }
+                };
+
+                scope.defaultVolume = 1;
+                scope.currentVolume = scope.defaultVolume;
+                scope.muteIcon = {level3: true};
+
+                //Update the mute button on initialization, then watch for changes
+                scope.onSetVolume(API.volume);
+                scope.$watch(
+                    function () {
+                        return API.volume;
+                    },
+                    function (newVal, oldVal) {
+                        if (newVal != oldVal) {
+                            scope.onSetVolume(newVal);
+                        }
+                    }
+                );
+            }
+        }
+    }]
+);
+
+/**
+ * @ngdoc directive
+ * @name com.2fdevs.videogular.plugins.controls.directive:vgVolumeBar
+ * @restrict E
+ * @description
+ * Directive to display a vertical volume bar to control the volume.
+ * This directive must be inside vg-volume directive and requires vg-mute-button to be displayed.
+ *
+ * <pre>
+ * <videogular vg-theme="config.theme.url">
+ *    <vg-media vg-src="sources"></vg-media>
+ *
+ *    <vg-controls vg-autohide='config.autohide' vg-autohide-time='config.autohideTime'>
+ *        <vg-volume>
+ *            <vg-mute-button><vg-mute-button>
+ *            <vg-volume-bar><vg-volume-bar>
+ *        </vg-volume>
+ *    </vg-controls>
+ * </videogular>
+ * </pre>
+ *
+ */
+angular.module("com.2fdevs.videogular.plugins.controls")
+    .run(
+    ["$templateCache", function ($templateCache) {
+        $templateCache.put("vg-templates/vg-volume-bar",
+            '<div class="verticalVolumeBar">\
+              <div class="volumeBackground" ng-click="onClickVolume($event)" ng-mousedown="onMouseDownVolume()" ng-mouseup="onMouseUpVolume()" ng-mousemove="onMouseMoveVolume($event)" ng-mouseleave="onMouseLeaveVolume()">\
+                <div class="volumeValue"></div>\
+                <div class="volumeClickArea"></div>\
+              </div>\
+            </div>');
+    }]
+)
+    .directive("vgVolumeBar",
+    ["VG_UTILS", function (VG_UTILS) {
+        return {
+            restrict: "E",
+            require: "^videogular",
+            templateUrl: function (elem, attrs) {
+                return attrs.vgTemplate || 'vg-templates/vg-volume-bar';
+            },
+            link: function (scope, elem, attr, API) {
+                var isChangingVolume = false;
+                var volumeBackElem = angular.element(elem[0].getElementsByClassName("volumeBackground"));
+                var volumeValueElem = angular.element(elem[0].getElementsByClassName("volumeValue"));
+
+                scope.onClickVolume = function onClickVolume(event) {
+                    event = VG_UTILS.fixEventOffset(event);
+                    var volumeHeight = parseInt(volumeBackElem.prop("offsetHeight"));
+                    var value = event.offsetY * 100 / volumeHeight;
+                    var volValue = 1 - (value / 100);
+
+                    API.setVolume(volValue);
+                };
+
+                scope.onMouseDownVolume = function onMouseDownVolume() {
+                    isChangingVolume = true;
+                };
+
+                scope.onMouseUpVolume = function onMouseUpVolume() {
+                    isChangingVolume = false;
+                };
+
+                scope.onMouseLeaveVolume = function onMouseLeaveVolume() {
+                    isChangingVolume = false;
+                };
+
+                scope.onMouseMoveVolume = function onMouseMoveVolume(event) {
+                    if (isChangingVolume) {
+                        event = VG_UTILS.fixEventOffset(event);
+                        var volumeHeight = parseInt(volumeBackElem.prop("offsetHeight"));
+                        var value = event.offsetY * 100 / volumeHeight;
+                        var volValue = 1 - (value / 100);
+
+                        API.setVolume(volValue);
+                    }
+                };
+
+                scope.updateVolumeView = function updateVolumeView(value) {
+                    value = value * 100;
+                    volumeValueElem.css("height", value + "%");
+                    volumeValueElem.css("top", (100 - value) + "%");
+                };
+
+                scope.onChangeVisibility = function onChangeVisibility(value) {
+                    elem.css("visibility", value);
+                };
+
+                elem.css("visibility", scope.volumeVisibility);
+
+                scope.$watch("volumeVisibility", scope.onChangeVisibility);
+
+                //Update the volume bar on initialization, then watch for changes
+                scope.updateVolumeView(API.volume);
+                scope.$watch(
+                    function () {
+                        return API.volume;
+                    },
+                    function (newVal, oldVal) {
+                        if (newVal != oldVal) {
+                            scope.updateVolumeView(newVal);
+                        }
+                    }
+                );
+            }
+        }
+    }]
+);
+
+/**
+ * @ngdoc directive
+ * @name com.2fdevs.videogular.plugins.controls.directive:vgVolume
+ * @restrict E
+ * @description
+ * Directive to control the volume.
+ * This directive acts as a container and you will need other directives like vg-mutebutton and vg-volumebar to control the volume.
+ * In mobile will be hided since volume API is disabled for mobile devices.
+ *
+ * <pre>
+ * <videogular vg-theme="config.theme.url">
+ *    <vg-media vg-src="sources"></vg-media>
+ *
+ *    <vg-controls vg-autohide='config.autohide' vg-autohide-time='config.autohideTime'>
+ *        <vg-volume></vg-volume>
+ *    </vg-controls>
+ * </videogular>
+ * </pre>
+ *
+ */
+angular.module("com.2fdevs.videogular.plugins.controls")
+    .directive("vgVolume",
+    ["VG_UTILS", function (VG_UTILS) {
+        return {
+            restrict: "E",
+            link: function (scope, elem, attr) {
+                scope.onMouseOverVolume = function onMouseOverVolume() {
+                    scope.$evalAsync(function () {
+                        scope.volumeVisibility = "visible";
+                    });
+                };
+
+                scope.onMouseLeaveVolume = function onMouseLeaveVolume() {
+                    scope.$evalAsync(function () {
+                        scope.volumeVisibility = "hidden";
+                    });
+                };
+
+                // We hide volume controls on mobile devices
+                if (VG_UTILS.isMobileDevice()) {
+                    elem.css("display", "none");
+                }
+                else {
+                    scope.volumeVisibility = "hidden";
+
+                    elem.bind("mouseover", scope.onMouseOverVolume);
+                    elem.bind("mouseleave", scope.onMouseLeaveVolume);
+                }
+            }
+        }
+    }]
+);
