@@ -633,8 +633,10 @@ angular.module('ionicApp')
                         $scope.modal_addUserToAllAnnotationsSearch.show();
                     } else  if (id == 'tagsearch') {
                         $scope.modal_tag_search.show();
+                        focusToInput('tagsearch_input');
                     } else  if (id == 'addtagtosearch') {
                         $scope.modal_addtagtosearch.show();
+                        focusToInput('addtagtosearch_input');
                     }
 
 

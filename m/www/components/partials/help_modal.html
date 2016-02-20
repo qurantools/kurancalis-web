@@ -1,0 +1,27 @@
+<div class="modal modal-fullscreen">
+    <ion-content overflow-scroll="true">
+        <div style="height:65px"></div>
+        <div class="videogular-container row" style="height:100%;padding:0;margin:0;">
+            <div videogular vg-theme="config.theme" vg-auto-play="true" vg-plays-inline="true" vg-player-ready="onPlayerReady($API)" vg-change-source="vgChangeSource($source)" class="ng-isolate-scope">
+                <vg-media vg-src="menuList[selectedMenu].submenu[selectedIndex].source" vg-type="video" class="ng-isolate-scope" style="background-color: white;">
+                </vg-media>
+            </div>
+        </div>
+    </ion-content>
+
+    <ion-footer-bar align-title="center" class="bar-balanced" style="height:10%;">
+        <button class="footer-bar-item item-left button button-balanced" ng-click="prevTutorial()" ng-if = "selectedIndex!=0" style="font-size: 14px !important;">
+            <i class="fa fa-chevron-left"></i> Geri
+        </button>
+        <button class="footer-bar-item item-left button button-balanced" ng-click="closeModal()" ng-if = "selectedIndex==0" style="font-size: 14px !important;">
+            <i class="fa fa-chevron-left"></i> Kapat
+        </button>
+
+        <button class="footer-bar-item item-right button button-balanced" ng-click="nextTutorial()" ng-if = "selectedIndex!=(menuList[selectedMenu].submenu.length-1)" style="font-size: 14px !important;">
+            İleri <i class="fa fa-chevron-right"></i>
+        </button>
+        <button class="footer-bar-item item-right button button-balanced" ng-click="closeModal()" ng-if = "selectedIndex==(menuList[selectedMenu].submenu.length-1)" style="font-size: 14px !important;">
+            Kapat <i class="fa fa-chevron-right"></i>
+        </button>
+    </ion-footer-bar>
+</div>

@@ -38,7 +38,15 @@
                     <span style="width: 10px;">&nbsp;</span>
                     
                      
-                    <a ng-click="popoveropen()" ng-if="user!=null && currentPage=='home'" class="btn btn-primary" tabindex="0" role="button" data-placement="bottom" data-toggle="popover" data-trigger="focus" data-content="<div class='form-control' style='width:220px; height:auto'><a href><div style='width:100%; height: 40px; padding-top:8px;' ng-click='searchBookMarkModal()' data-target='#navbookmark' data-toggle='modal'><i class='fa fa-bookmark' style='font-size: 1.3em'></i>&nbsp;&nbsp;Ayraçlar (Kaldığım Yer)</div></a><hr style='padding: 0; margin-top:0 !important; margin-bottom:0 !important; height:1px; width:100%'/><a href><div style='width:100%; height:40px; padding-top:8px' data-target='#homearama' data-toggle='modal'><i class='fa fa-search' style='font-size: 1.3em'></i>&nbsp;&nbsp;Not Arama / Filtreleme</div></a><hr style='padding: 0; margin-top:0 !important; margin-bottom:0 !important; height:1px; width:100%' /><a href><div style='width:100%; height:40px; padding-top:8px' data-target='#myModal' data-toggle='modal' type='button'> <i class='fa fa-user' style='font-size: 1.3em'></i>&nbsp;&nbsp;Meal Seçimi </div></a></div>" data-html="true">Araçlar</a>
+                    <a ng-click="popoveropen()" ng-if="user!=null && currentPage=='home'" class="btn btn-primary" tabindex="0" role="button" data-placement="bottom" data-toggle="popover"  data-content="
+                    <div class='form-control' style='width:220px; height:auto'>
+                        <a href><div style='width:100%; height:40px; padding-top:8px' data-target='#myModal' data-dismiss='modal'  data-toggle='modal' type='button'> <i class='fa fa-user' style='font-size: 1.3em'></i>&nbsp;&nbsp;Meal Seçimi </div></a>
+                        <hr style='padding: 0; margin-top:0 !important; margin-bottom:0 !important; height:1px; width:100%'/>
+                        <a href><div style='width:100%; height:40px; padding-top:8px' data-target='#homearama' data-toggle='modal'><i class='fa fa-search' style='font-size: 1.3em'></i>&nbsp;&nbsp;Not Arama / Filtreleme</div></a>
+                        <hr style='padding: 0; margin-top:0 !important; margin-bottom:0 !important; height:1px; width:100%' />
+                        <a href><div style='width:100%; height: 40px; padding-top:8px;' ng-click='searchBookMarkModal()' data-target='#navbookmark' data-toggle='modal'><i class='fa fa-bookmark' style='font-size: 1.3em'></i>&nbsp;&nbsp;Ayraçlar (Kaldığım Yer)</div></a>
+                        </div>"
+                       data-html="true">Araçlar</a>
                     
                     <a ng-if="user==null && currentPage!='annotations'" class="btn btn-primary" style='height:40px; padding-top:8px' data-target='#myModal' data-toggle='modal' type='button'> <i class='fa fa-user' style='font-size: 1.3em'></i>&nbsp;&nbsp;Meal Seçimi </a>
                     

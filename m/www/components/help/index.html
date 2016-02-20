@@ -1,0 +1,34 @@
+<!-- start of side menu part 1-->
+<ion-side-menus>
+    <ion-side-menu-content drag-content="false">
+        <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced" align-title="center">
+            <ion-nav-buttons side="left">
+                <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+                <h1 class="title">Yardım</h1>
+            </ion-nav-buttons>
+            <ion-nav-buttons side="right">
+                <button class="button" ng-click="login()" ng-if="user==null">Giriş</button>
+            </ion-nav-buttons>
+        </ion-nav-bar>
+        <ion-nav-buttons side="left">
+            <button class="button button-icon icon ion-navicon" menu-toggle="left">
+            </button>
+        </ion-nav-buttons>
+        <ion-nav-view name="appContent"></ion-nav-view>
+        <!-- end of side menu part 1 -->
+        <ion-nav-view id="chapter_translation_content" cache-view="true">
+            <ion-content overflow-scroll="true" delegate-handle="content" class="scroll_content"
+                         style="margin-top:30px;" ng-controller="HelpController">
+                    <ion-list>
+                        <ion-item ng-repeat="item in menuList" ng-click="runHelpModal(item.name)" >
+                            <h2>{{item.name}}</h2>
+                        </ion-item>
+                    </ion-list>
+                <div style="height:50px;">&nbsp;</div>
+            </ion-content>
+        </ion-nav-view>
+        <!-- start of side menu part 2-->
+    </ion-side-menu-content>
+    <div ng-include="'components/navigation/left_menu.html'"></div>
+</ion-side-menus>
+<!-- end of side menu part 2-->

@@ -1,0 +1,73 @@
+
+    <div style="width:550px" class="modal-dialog fixed-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" data-dismiss="modal" aria-hidden="true" style="float:right;"><i
+                        class="fa fa-close"></i></button>
+                <h4 class="modal-title">Çıkarım Notlarında Arama</h4>
+            </div>
+
+            <div class="modal-body">
+                <table style="width: 500px">
+                    <tr>
+
+                        <td style="width: 440px; height: 21px; padding-left: 15px; vertical-align: top;">
+
+                            <div class="well" ng-init="init()">
+                                <table>
+                                    <td>
+                                        <i class="fa fa-toggle-on aktif"
+                                           ng-if="allInferencesOpts.own_inferences == true || allInferencesOpts.own_inferences == 'true'"
+                                           ng-click="toggleInferenceSearchOwnInferences();"></i>
+                                        <i class="fa fa-toggle-on fa-rotate-180 inactive"
+                                           ng-if="allInferencesOpts.own_inferences == false || allInferencesOpts.own_inferences == 'false'"
+                                           ng-click="toggleInferenceSearchOwnInferences();"></i>
+                                    </td>
+                                    <td align="left" style="width:100%; padding-left: 15px;"> Benim notlarımı
+                                        göster
+                                    </td>
+                                </table>
+                            </div>
+                            <div>
+                                <input type="text" ng-model="allInferencesOpts.keyword" size="12"
+                                       class="form-control" placeholder="Aranacak kelime"/>
+                            </div>
+                            <br/>
+
+                            <div>
+                                Etikete sahip olan notlar
+                                <tags-input ng-model="filterTags" display-property="name" placeholder="Etiket girin"
+                                            replace-spaces-with-dashes="false"
+                                            min-length="2">
+                                    <auto-complete source="loadTags($query)" min-length="2"
+                                                   select-first-match="false"></auto-complete>
+                                </tags-input>
+                            </div>
+
+                            <br/>
+                            Kişilere ait olan notlar
+                            <tags-input ng-model="usersForSearch" placeholder="Kişi Seçiniz" display-property="name"
+                                        replace-spaces-with-dashes="false" min-length="2">
+                                <auto-complete source="kisilistele($query)" min-length="2"></auto-complete>
+                            </tags-input>
+
+                            <br/>
+                            Çevremdeki kişilere ait olan notlar
+                            <tags-input ng-model="circlesForSearch" placeholder="Çevre Seçiniz"
+                                        display-property="name" replace-spaces-with-dashes="false" min-length="1"
+                                        add-from-autocomplete-only="true" add-on-blur="false">
+                                <auto-complete source="cevrelisteleForSearch()" load-on-empty="true"
+                                               load-on-focus="true"></auto-complete>
+                            </tags-input>
+
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="modal-footer">
+                <a href="#" class="btn btn-primary btn-wide" data-dismiss="modal"
+                   ng-click="search_all_inferences()">Tamam</a>
+            </div>
+        </div>
+    </div>

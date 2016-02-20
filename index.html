@@ -1,7 +1,9 @@
 ﻿<!doctype html>
 <html ng-app="ionicApp" ng-controller="MainCtrl" id="MainCtrl" xmlns="http://www.w3.org/1999/html">
 <head>
+    <title ng-bind="$root.pageTitle"></title>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+
     <link rel="stylesheet" href="assets/css/font-awesome.min.css">
     <link rel="stylesheet" href="assets/css/annotator.min.css">
 
@@ -11,6 +13,9 @@
 
     <link rel="stylesheet" href="assets/css/common_style.css">
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/angular-socialshare.min.css">
+
+    <!-- <link href="assets/libs/introducation/style.css" rel="stylesheet" /> -->
 
     <link rel="stylesheet" href="assets/css/ng-tags-input.css">
     <link rel="shortcut icon" href="favicon.png">
@@ -33,6 +38,7 @@
     <script src="assets/js/angular-local-storage.js"></script>
     <script src="assets/js/select.min.js"></script>
     <script src="assets/js/angular-scroll.min.js"></script>
+    <script src="assets/js/angular-socialshare.min.js"></script>
     <script src="assets/js/auth.js"></script>
     <script src="assets/js/base64.js"></script>
 
@@ -46,6 +52,7 @@
     <script src="assets/js/annotator.js"></script>
     <script src="assets/js/annotator.store.js"></script>
 
+    <!--<script src="assets/libs/introducation/main.js"></script> -->
 
     <!-- Loading Bootstrap -->
     <link href="http://kurancalis.com/include/flat_ui/dist/css/vendor/bootstrap.min.css" rel="stylesheet">
@@ -69,11 +76,22 @@
     <script src="app/components/inferences/inference_list_controller.js"></script>
     <script src="app/components/inferences/inference_edit_controller.js"></script>
     <script src="app/components/inferences/inference_display_controller.js"></script>
+    <!--script src="app/components/partials/share_modal_controller.js"></script-->
     <script src="assets/js/bookmark_controller.js"></script>
+    <script src="app/components/help/help_controller.js"></script>
     <link href="assets/libs/file-manager/jquery.file.manager.css" rel="stylesheet">
     <script src="assets/libs/file-manager/jquery.file.manager.js"></script>
     <script src="assets/js/tinymce/tinymce.min.js"></script>
     <script src="assets/js/angular-ui-tinymce.js"></script>
+
+    <script src="http://platform.twitter.com/widgets.js"></script>
+
+    <link rel="stylesheet" href="../../assets/libs/videogular/videogular.css">
+    <script src="assets/libs/videogular/videogular.js"></script>
+    <script src="assets/libs/videogular/vg-controls.js"></script>
+    <script src="assets/libs/videogular/vg-overlay-play.js"></script>
+    <script src="assets/libs/videogular/vg-poster.js"></script>
+    <script src="assets/libs/videogular/vg-buffering.js"></script>
 
 </head>
 <body>

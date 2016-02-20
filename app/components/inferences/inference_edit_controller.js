@@ -218,7 +218,7 @@ angular.module('ionicApp')
 
                     $scope.inferenceId = record.id;
                     if(!config_data.isMobile){
-                        $location.path('inference/display/' + $scope.inferenceId);
+                    $location.path('inference/display/' + $scope.inferenceId);
                     }else{
                         $location.path('m_inference/display/' + $scope.inferenceId);
                     }
@@ -367,22 +367,22 @@ angular.module('ionicApp')
              */
 
             if(!config_data.isMobile){
-                $scope.tinymceOptions = {
-                    language: "tr_TR",
-                    plugins: [
-                        "textcolor advlist autolink link image lists preview"
-                    ],
-                    setup: function (editor) {
-                        editor.on('Change', function (e) {
+            $scope.tinymceOptions = {
+                language: "tr_TR",
+                plugins: [
+                    "textcolor advlist autolink link image lists preview"
+                ],
+                setup: function (editor) {
+                    editor.on('Change', function (e) {
+                        $scope.content = editor.getContent();
+                    }),
+                        editor.on('keyup', function (e) {
                             $scope.content = editor.getContent();
-                        }),
-                            editor.on('keyup', function (e) {
-                                $scope.content = editor.getContent();
-                            })
-                    },
-                    toolbar: "undo redo | formatselect fontsizeselect | bold italic underline | alignleft aligncenter alignright | bullist numlist outdent indent | forecolor | link image preview"
+                        })
+                },
+                toolbar: "undo redo | formatselect fontsizeselect | bold italic underline | alignleft aligncenter alignright | bullist numlist outdent indent | forecolor | link image preview"
 
-                };
+            };
             }else{
                 $scope.tinymceOptions = {
                     language: "tr_TR",
@@ -450,7 +450,7 @@ angular.module('ionicApp')
 
                 }
                 if(!config_data.isMobile){
-                    $location.path("/inference/edit/" + $scope.inferenceId + "/", false).search(parameters);
+                $location.path("/inference/edit/" + $scope.inferenceId + "/", false).search(parameters);
                 }else{
                     $location.path("/m_inference/edit/" + $scope.inferenceId + "/", false).search(parameters);
                 }

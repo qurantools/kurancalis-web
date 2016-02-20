@@ -1,0 +1,38 @@
+<div class="modal" id="shareModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">{{shareTitle}}</h4>
+            </div>
+            <div class="modal-body">
+                <div class="field">
+                    <table>
+                        <tr>
+                            <td><label class="inline" for="url">Link : </label></td>
+                            <td style="padding-left: 7px;padding-right: 7px;"><input id="url" class="form-control input" placeholder="" style="width: 300px;" type="text" value="{{shareUrl}}" disabled/></td>
+                            <td><button type="button" aria-hidden="true" class="btn" ng-click="kopyala()">Kopyala</button></td>
+                        </tr>
+                    </table>
+                </div>
+                <br />
+                <div class="field">
+                    <textarea id="shareMessage" rows="2" placeholder="Mesajınız" style="margin-left:5px;margin-top: 0px; margin-bottom: 0px; height: 80px; width: 460px;"
+                             ng-keyup="shareMessageChanged()"></textarea>
+                </div>
+                <!-- ng-change="shareMessageChanged()" -->
+            </div>
+            <div class="modal-footer">
+                <form>
+                    <div class="row">
+                        <span id='st_facebook' class='st_facebook_large' displayText='Facebook'></span>
+                        <span id='st_twitter' class='st_twitter_large' displayText='Tweet' st_title="" st_via="kurancalis"></span>
+                        <span id='st_googleplus' class='st_googleplus_large' displayText='Google +'></span>
+                        <span id='st_linkedin' class='st_linkedin_large' displayText='LinkedIn'></span>
+                        <span id='st_pinterest' class='st_pinterest_large' displayText='Pinterest'></span>
+                        <span id='st_email' class='st_email_large' displayText='Email'></span>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
