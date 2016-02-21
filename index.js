@@ -295,13 +295,11 @@ if (config_data.isMobile == false) { //false
                         templateUrl: 'components/annotations/all_annotations.html',
                         reloadOnSearch: false
                     })
-                    .when('/', {
-                        redirectTo: '/login/'
-                    })
+
                     .when('/chapter/:chapter/author/:author/', {
                         redirectTo: '/translations/?chapter=:chapter&verse=1&author=:author'
                     })
-                    .when('/inference/', {
+                    .when('/inferences/', {
                         controller: 'InferenceListController',
                         templateUrl: 'components/inferences/inferenceListMobileView.html',
                         reloadOnSearch: false
@@ -328,7 +326,11 @@ if (config_data.isMobile == false) { //false
                     })
                     .when('/login/',{
                         controller:'LoginController',
-                        templateUrl:'components/login/login.html'
+                        templateUrl:'components/login/login.html',
+                        pageTitle: 'Kuran Çalış - Giriş'
+                    })
+                    .when('/', {
+                        redirectTo: '/translations/'
                     })
                     .otherwise({
                         redirectTo: '/login/'
