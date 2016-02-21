@@ -217,11 +217,9 @@ angular.module('ionicApp')
                 annotationRestangular.customPUT(data, '', '', headers).then(function (record) {
 
                     $scope.inferenceId = record.id;
-                    if(!config_data.isMobile){
                     $location.path('inference/display/' + $scope.inferenceId);
-                    }else{
-                        $location.path('m_inference/display/' + $scope.inferenceId);
-                    }
+                    
+
                 });
             }
         }
@@ -272,10 +270,9 @@ angular.module('ionicApp')
             if ($location.path() == "/inference/new/") {
                 $scope.pagePurpose = "new";
                 inferenceId = 0;
-            }else if ($location.path() == "/m_inference/new/") {
-                $scope.pagePurpose = "new";
-                inferenceId = 0;
-            }
+             }
+           
+
             else {
                 $scope.pagePurpose = "edit";
             }
@@ -449,12 +446,8 @@ angular.module('ionicApp')
                     users: Base64.encode(JSON.stringify($scope.usersForSearch))
 
                 }
-                if(!config_data.isMobile){
                 $location.path("/inference/edit/" + $scope.inferenceId + "/", false).search(parameters);
-                }else{
-                    $location.path("/m_inference/edit/" + $scope.inferenceId + "/", false).search(parameters);
-                }
-
+                
             }
         };
 

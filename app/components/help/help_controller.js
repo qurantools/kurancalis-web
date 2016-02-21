@@ -6,7 +6,8 @@ angular.module('ionicApp')
         $scope.helpController.API = null;
 
         $scope.menuList=[
-            {   name : "Intro",
+            {   id: "intro",
+                name : "Intro",
                 submenu : [
                     {id:11, title:"Intro-1", source:[{src: $sce.trustAsResourceUrl("../../assets/img/help/mobile/karalama.mp4"), type: "video/mp4"}]},
                     {id:12, title:"Intro-2", source:[{src: $sce.trustAsResourceUrl("https://youtu.be/uqROdKnNfQk"), type: "video/mp4"}]},
@@ -15,7 +16,8 @@ angular.module('ionicApp')
                     {id:15, title:"Intro-5", source:[{src: $sce.trustAsResourceUrl(""), type: "video/mp4"}]}
                 ]
             },
-            {   name : "Not Paylaşma",
+            {   id: "annotation",
+                name : "Not Paylaşma",
                 submenu : [
                     {id:21, title:"Not Paylaşma-1", source:[{src: $sce.trustAsResourceUrl("../../assets/img/help_deneme.mp4"), type: "video/mp4"}]},
                     {id:22, title:"Not Paylaşma-2", source:[{src: $sce.trustAsResourceUrl("../../assets/img//VfE_html5.mp4"), type: "video/mp4"}]},
@@ -24,7 +26,8 @@ angular.module('ionicApp')
                     {id:25, title:"Not Paylaşma-5", source:[{src: $sce.trustAsResourceUrl(""), type: "video/mp4"}]}
                 ]
             },
-            {   name : "Ayraç Kullanma",
+            {   id: "bookmarks",
+                name : "Ayraç Kullanma",
                 submenu : [
                     {id:31, title:"Ayraç Kullanma-1", source:[{src: $sce.trustAsResourceUrl("templates/playlist.html"), type: "html"}]},
                     {id:32, title:"Ayraç Kullanma-2", source:[{src: $sce.trustAsResourceUrl(""), type: "video/mp4"}]},
@@ -33,7 +36,8 @@ angular.module('ionicApp')
                     {id:35, title:"Ayraç Kullanma-5", source:[{src: $sce.trustAsResourceUrl(""), type: "video/mp4"}]}
                 ]
             },
-            {   name : "Etiket Kullanımı",
+            {   id: "labels",
+                name : "Etiket Kullanımı",
                 submenu : [
                     {id:41, title:"Etiket Kullanımı-1", source:[{src: $sce.trustAsResourceUrl(""), type: "video/mp4"}]},
                     {id:42, title:"Etiket Kullanımı-2", source:[{src: $sce.trustAsResourceUrl(""), type: "video/mp4"}]},
@@ -42,7 +46,8 @@ angular.module('ionicApp')
                     {id:45, title:"Etiket Kullanımı-5", source:[{src: $sce.trustAsResourceUrl(""), type: "video/mp4"}]}
                 ]
             },
-            {   name : "Not Arama",
+            {   id: "search_annotation",
+                name : "Not Arama",
                 submenu : [
                     {id:51, title:"Not Arama-1", source:[{src: $sce.trustAsResourceUrl(""), type: "video/mp4"}]},
                     {id:52, title:"Not Arama-2", source:[{src: $sce.trustAsResourceUrl(""), type: "video/mp4"}]},
@@ -50,23 +55,40 @@ angular.module('ionicApp')
                     {id:54, title:"Not Arama-4", source:[{src: $sce.trustAsResourceUrl(""), type: "video/mp4"}]},
                     {id:55, title:"Not Arama-5", source:[{src: $sce.trustAsResourceUrl("http://clips.vorwaerts-gmbh.de/VfE_html5.mp4"), type: "video/mp4"}]}
                 ]
-            }];
+            },
+            {
+                id: "chapter",
+                name : "Intro",
+                submenu : [
+                    {id:61, title:"Intro-1", source:[{src: $sce.trustAsResourceUrl("../../assets/img/help/mobile/karalama.mp4"), type: "video/mp4"}]},
+                    {id:62, title:"Intro-2", source:[{src: $sce.trustAsResourceUrl("https://youtu.be/uqROdKnNfQk"), type: "video/mp4"}]},
+                ]
+            },
+            {
+                id: "annotations",
+                name : "Ayet Notları",
+                submenu : [
+                    {id:61, title:"Intro-1", source:[{src: $sce.trustAsResourceUrl("../../assets/img/help/mobile/karalama.mp4"), type: "video/mp4"}]},
+                    {id:62, title:"Intro-2", source:[{src: $sce.trustAsResourceUrl("https://youtu.be/uqROdKnNfQk"), type: "video/mp4"}]},
+                ]
+            }
+        ];
 
         $scope.selectedIndex = -1;
         $scope.selectedMenu = -1;
 
-        $scope.runHelpModal = function(name, isCallFromHelpMenu){
+        $scope.runHelpModal = function(id, isCallFromHelpMenu){
            if (!isCallFromHelpMenu){
-               var isRunBefore = localStorageService.get('help_modal_tutorial_' + name);
+               var isRunBefore = localStorageService.get('help_modal_tutorial_' + id);
                if (isRunBefore === null){
-                   localStorageService.set('help_modal_tutorial' + name, "true");
+                   localStorageService.set('help_modal_tutorial_' + id, "true");
                }else{
                    return;
                }
            }
            $scope.selectedMenu = -1;
            for (var i = 0; i < $scope.menuList.length; i++) {
-               if ($scope.menuList[i].name === name) {
+               if ($scope.menuList[i].id === id) {
                   $scope.selectedMenu = i;
                   break;
                }
@@ -84,15 +106,21 @@ angular.module('ionicApp')
         }
 
         $scope.initHelpParameters = function(){
-                if (config_data.isMobile) {
-                    $ionicModal.fromTemplateUrl('components/partials/help_modal.html', {
-                        scope: $scope,
-                        animation: 'slide-in-up',
-                        id: 'help_modal'
-                    }).then(function (modal) {
-                        $scope.help_modal = modal
-                    });
-                }
+            if (config_data.isMobile) {
+                $ionicModal.fromTemplateUrl('components/partials/help_modal.html', {
+                    scope: $scope,
+                    animation: 'slide-in-up',
+                    id: 'help_modal'
+                }).then(function (modal) {
+                    $scope.help_modal = modal
+                });
+
+                $scope.$on("displayTutorial",function(event, args) {
+                    $scope.runHelpModal(args.id,false);
+                });
+            }
+
+
          }
 
          $scope.prevTutorial = function(){

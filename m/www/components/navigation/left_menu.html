@@ -4,10 +4,9 @@
     </ion-header-bar>
     <ion-content>
         <ul class="list">
-            <a href="#/chapter/1/author/{{author_mask}}/verse/1/" class="item" menu-close="">Sureler</a>
-            <a ng-if="user!=null"href="#/annotations/" class="item" menu-close="">Ayet Notlar</a>
-            <a ng-if="user!=null"href="#/m_inference/" class="item" menu-close="">Çıkarım Notları</a>
-            <a ng-if="user!=null"href="#/annotations/" class="item" menu-close="">Tüm Notlar</a>
+            <a href="#/translations/" class="item" menu-close="">Sureler</a>
+            <a ng-if="user!=null"href="#/annotations/" class="item" menu-close="">Ayet Notları</a>
+            <a ng-if="user!=null"href="#/inferences/" class="item" menu-close="">Çıkarım Notları</a>
             <a href="#/help/" class="item" menu-close="">Yardım</a>
             <a ng-if="user!=null" href ng-click="logOut()" class="item">Çıkış</a>
             <a ng-if="user==null" href ng-click="login()" class="item" menu-close>Giriş</a>

@@ -229,7 +229,8 @@ if (config_data.isMobile == false) { //false
             .when('/inference/display/:inferenceId/', {
                 controller: 'InferenceDisplayController',
                 templateUrl: 'app/components/inferences/inferenceDisplayView.html',
-                reloadOnSearch: false
+                reloadOnSearch: false,
+                pageTitle: 'Kuran Çalış - Çıkarım Notu'
             })
             
             .when('/', {
@@ -294,35 +295,41 @@ if (config_data.isMobile == false) { //false
                         templateUrl: 'components/annotations/all_annotations.html',
                         reloadOnSearch: false
                     })
-                    .when('/', {
-                        redirectTo: '/translations/'
-                    })
                     .when('/chapter/:chapter/author/:author/', {
                         redirectTo: '/translations/?chapter=:chapter&verse=1&author=:author'
                     })
-                    .when('/m_inference/', {
+                    .when('/inferences/', {
                         controller: 'InferenceListController',
                         templateUrl: 'components/inferences/inferenceListMobileView.html',
                         reloadOnSearch: false
                     })
-                    .when('/m_inference/display/:inferenceId/', {
+                    .when('/inference/display/:inferenceId/', {
                         controller: 'InferenceDisplayController',
                         templateUrl: 'components/inferences/inferenceDisplayMobileView.html',
                         reloadOnSearch: false
                     })
-                    .when('/m_inference/new/', {
+                    .when('/inference/new/', {
                         controller: 'InferenceEditController',
                         templateUrl: 'components/inferences/inferenceEditMobileView.html',
                         reloadOnSearch: false
                     })
-                    .when('/m_inference/edit/:inferenceId/', {
+                    .when('/inference/edit/:inferenceId/', {
                         controller: 'InferenceEditController',
                         templateUrl: 'components/inferences/inferenceEditMobileView.html',
                         reloadOnSearch: false
+					})
+					.when('/help/',{
+                        controller:'HelpController',
+                        templateUrl:'components/help/index.html',
+                        pageTitle: 'Kuran Çalış - Yardım'
                     })
                     .when('/login/',{
                         controller:'LoginController',
-                        templateUrl:'components/login/login.html'
+                        templateUrl:'components/login/login.html',
+                        pageTitle: 'Kuran Çalış - Giriş'
+                    })
+                    .when('/', {
+                        redirectTo: '/translations/'
                     })
                     .otherwise({
                         redirectTo: '/translations/'
@@ -533,7 +540,6 @@ app.factory('ChapterVerses', function ($resource) {
                 }
             });
 
-
         }
 
         $scope.tutorial = function (parameter) {
@@ -553,7 +559,7 @@ app.factory('ChapterVerses', function ($resource) {
         $scope.setPageTitle= function(title){
             $rootScope.pageTitle = title;
         }
-        
+
         //currentPage
         $scope.getCurrentPage = function () {
             var retcp = "";
@@ -586,7 +592,6 @@ app.factory('ChapterVerses', function ($resource) {
                 $scope.logOut();
             }
             else {
-                alert("OLDU!!!!!");
                 $scope.access_token = responseData.token;
                 $scope.user = responseData.user;
                 $scope.loggedIn = true;
@@ -638,7 +643,6 @@ app.factory('ChapterVerses', function ($resource) {
                 }
             }
         );
-
         $scope.checkUserLoginStatus = function () {
             var status = false;
             var access_token = authorization.getAccessToken();
@@ -1085,7 +1089,13 @@ app.factory('ChapterVerses', function ($resource) {
                 for (var index = 0; index < $scope.mobileAllAnnotationsSearchCircleListForSelection.length; ++index) {
                     $scope.mobileAllAnnotationsSearchCircleListForSelection[index].selected=false;
                 }
-
+                // initialize mobileAllInferencessSearchCircleListForSelection
+                $scope.mobileAllInferencesSearchCircleListForSelection = [];
+                Array.prototype.push.apply($scope.mobileAllInferencesSearchCircleListForSelection, $scope.extendedCirclesForSearch);
+                //add isSelected property for mobile.
+                for (var index = 0; index < $scope.mobileAllInferencesSearchCircleListForSelection.length; ++index) {
+                    $scope.mobileAllInferencesSearchCircleListForSelection[index].selected = false;
+                }
                 $scope.$broadcast("circleLists ready");
 
             });
@@ -1264,7 +1274,7 @@ app.factory('ChapterVerses', function ($resource) {
             if (!$scope.checkUserLoginStatus()){
                 $location.path('login/');
             }
-            
+
         };//end of init controller
 
 

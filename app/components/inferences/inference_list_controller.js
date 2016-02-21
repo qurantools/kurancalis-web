@@ -7,8 +7,8 @@ angular.module('ionicApp')
         $scope.facebookIsReady = false;
         //    $scope.user = null;
 
-        $scope.usersForSearch=[];
-        $scope.circlesForSearch=[];
+        $scope.usersForSearch = [];
+        $scope.circlesForSearch = [];
 
         // inferences
         $scope.inferences = [];
@@ -18,8 +18,8 @@ angular.module('ionicApp')
         $scope.allInferencesOpts.limit = 10;
         $scope.allInferencesOpts.own_inferences = true;
         $scope.allInferencesOpts.keyword = "";
-        $scope.sureler="";
-        $scope.ayetler="";
+        $scope.sureler = "";
+        $scope.ayetler = "";
 
         $scope.inferenceSearchAuthorSelection = $scope.selection;
 
@@ -35,7 +35,7 @@ angular.module('ionicApp')
 
         };
 
-        $scope.storeInferencesViewParameters  = function () {
+        $scope.storeInferencesViewParameters = function () {
 
             var localParameterData = {};
 
@@ -67,17 +67,10 @@ angular.module('ionicApp')
                 users: Base64.encode(JSON.stringify($scope.usersForSearch))
 
             }
-            if (!config_data.isMobile) {
-                $location.path("/inferences/", false).search(parameters);
-            }else{
-                $location.path("/m_inference/", false).search(parameters);
-            }
-            
+            $location.path("/inferences/", false).search(parameters);
+           
         };
-
-
-
-
+        
         $scope.login = function () { //new
             authorization.login($scope.onFacebookLoginSuccess);
         }
@@ -88,20 +81,20 @@ angular.module('ionicApp')
 
 
         $scope.$watch(function () {
-                return Facebook.isReady();
-            }, function (newVal) {
-                if (newVal) {
-                    $scope.facebookIsReady = true;
-                }
+            return Facebook.isReady();
+        }, function (newVal) {
+            if (newVal) {
+                $scope.facebookIsReady = true;
             }
+        }
         );
 
         /* end of facebook login */
         /* end of auth */
 
-        $scope.setInferenceSearchTags = function(tagsString){
+        $scope.setInferenceSearchTags = function (tagsString) {
             $scope.filterTags = [];
-            if(tagsString!=""){
+            if (tagsString != "") {
                 var tagNames = tagsString.split(",");
 
                 for (var i = 0; i < tagNames.length; i++) {
@@ -111,13 +104,13 @@ angular.module('ionicApp')
             }
         };
 
-        $scope.getInferenceSearchTags = function(){
+        $scope.getInferenceSearchTags = function () {
             var tags = "";
-            if(typeof $scope.filterTags =='undefined'){
-                $scope.filterTags=[];
+            if (typeof $scope.filterTags == 'undefined') {
+                $scope.filterTags = [];
             }
             for (var i = 0; i < $scope.filterTags.length; i++) {
-                if (i != 0){
+                if (i != 0) {
                     tags += ",";
                 }
                 tags += $scope.filterTags[i].name;
@@ -127,8 +120,8 @@ angular.module('ionicApp')
         };
 
 
-        $scope.toggleInferenceSearchOwnInferences = function(){
-            $scope.allInferencesOpts.own_inferences =! $scope.allInferencesOpts.own_inferences;
+        $scope.toggleInferenceSearchOwnInferences = function () {
+            $scope.allInferencesOpts.own_inferences = !$scope.allInferencesOpts.own_inferences;
         }
 
         $scope.get_all_inferences = function () {
@@ -143,27 +136,27 @@ angular.module('ionicApp')
 
             var newTags = "";
 
-            if(typeof $scope.filterTags =='undefined'){
-                $scope.filterTags=[];
+            if (typeof $scope.filterTags == 'undefined') {
+                $scope.filterTags = [];
             }
             for (var i = 0; i < $scope.filterTags.length; i++) {
-                if (i != 0)newTags += ",";
+                if (i != 0) newTags += ",";
                 newTags += $scope.filterTags[i].name;
             }
             $scope.allInferencesParams.tags = newTags;
 
             //Volkan Ekledi.
-             var kisiTags = "";
-             var cevreTags = "";
+            var kisiTags = "";
+            var cevreTags = "";
 
             for (var i = 0; i < $scope.usersForSearch.length; i++) {
-                if (i != 0)kisiTags += ",";
+                if (i != 0) kisiTags += ",";
                 kisiTags += $scope.usersForSearch[i].id;
             }
 
 
             for (var i = 0; i < $scope.circlesForSearch.length; i++) {
-                if (i != 0)cevreTags += ",";
+                if (i != 0) cevreTags += ",";
                 cevreTags += $scope.circlesForSearch[i].id;
             }
 
@@ -172,23 +165,23 @@ angular.module('ionicApp')
 
             $scope.allInferencesParams.orderby = $scope.allInferencesOrderBy;
 
-            usersRestangular.customGET("", $scope.allInferencesParams, {'access_token': authorization.getAccessToken()}).then(function (inferences) {
-                    if ($scope.allInferencesParams.start == 0) {
-                        $scope.inferences = [];
-                    }
-                    if (inferences != "") {
-                        $scope.inferences = $scope.inferences.concat(inferences)
-                        $scope.allInferencesOpts.start += $scope.allInferencesOpts.limit;
-
-                        if (inferences.length < $scope.allInferencesOpts.limit) {
-                            $scope.allInferencesOpts.hasMore = false;
-                        } else {
-                            $scope.allInferencesOpts.hasMore = true;
-                        }
-                    } else {
-                        $scope.allInferencesOpts.hasMore = false;
-                    }
+            usersRestangular.customGET("", $scope.allInferencesParams, { 'access_token': authorization.getAccessToken() }).then(function (inferences) {
+                if ($scope.allInferencesParams.start == 0) {
+                    $scope.inferences = [];
                 }
+                if (inferences != "") {
+                    $scope.inferences = $scope.inferences.concat(inferences)
+                    $scope.allInferencesOpts.start += $scope.allInferencesOpts.limit;
+
+                    if (inferences.length < $scope.allInferencesOpts.limit) {
+                        $scope.allInferencesOpts.hasMore = false;
+                    } else {
+                        $scope.allInferencesOpts.hasMore = true;
+                    }
+                } else {
+                    $scope.allInferencesOpts.hasMore = false;
+                }
+            }
             );
 
             $scope.setInferencesPageURL();
@@ -197,11 +190,11 @@ angular.module('ionicApp')
 
         //go to chapter / verse from navigation header
         $scope.goToVerse = function () {
-            $scope.goToChapterWithParameters($scope.goToVerseParameters.chapter.id,"1040",$scope.goToVerseParameters.verse);
+            $scope.goToChapterWithParameters($scope.goToVerseParameters.chapter.id, "1040", $scope.goToVerseParameters.verse);
         };
 
 
-        $scope.toggleInferenceSearchOwnInferences = function(){
+        $scope.toggleInferenceSearchOwnInferences = function () {
             $scope.allInferencesOpts.own_inferences = !$scope.allInferencesOpts.own_inferences;
         }
 
@@ -209,10 +202,11 @@ angular.module('ionicApp')
 
         $scope.search_all_inferences = function () {
 
-            if(isMobile()){ //set query_circles from mobile selection
-                $scope.circlesForSearch=[];
+            if (isMobile()) { //set query_circles from mobile selection
+                $scope.circlesForSearch = [];
+                console.log($scope.mobileAllInferencesSearchCircleListForSelection);
                 for (var index = 0; index < $scope.mobileAllInferencesSearchCircleListForSelection.length; ++index) {
-                    if($scope.mobileAllInferencesSearchCircleListForSelection[index].selected==true){
+                    if ($scope.mobileAllInferencesSearchCircleListForSelection[index].selected == true) {
                         $scope.circlesForSearch.push($scope.mobileAllInferencesSearchCircleListForSelection[index]);
                     }
                 }
@@ -232,7 +226,7 @@ angular.module('ionicApp')
         //delete operation for inferences page
         $scope.deleteInference = function (inference) {
             var inferenceRestangular = Restangular.one("inferences", inference.inferenceId);
-            inferenceRestangular.customDELETE("", {}, {'access_token': $scope.access_token}).then(function (result) {
+            inferenceRestangular.customDELETE("", {}, { 'access_token': $scope.access_token }).then(function (result) {
 
                 if (result.code == '200') {
                     var inferenceIndex = $scope.getIndexOfArrayByElement($scope.inferences, 'inferenceId', inference.inferenceId);
@@ -250,9 +244,9 @@ angular.module('ionicApp')
 
             if (config_data.isMobile) {
                 //prepare canView circle list
-                $scope.ViewCircles=[];
+                $scope.ViewCircles = [];
                 for (var index = 0; index < $scope.mobileInferenceEditorCircleListForSelection.length; ++index) {
-                    if($scope.mobileInferenceEditorCircleListForSelection[index].selected==true){
+                    if ($scope.mobileInferenceEditorCircleListForSelection[index].selected == true) {
                         $scope.ViewCircles.push($scope.mobileInferenceEditorCircleListForSelection[index]);
                     }
                 }
@@ -283,7 +277,7 @@ angular.module('ionicApp')
 
         //update  inference fro Inferences page
         $scope.updateInference = function (inference) {
-            var headers = {'Content-Type': 'application/x-www-form-urlencoded', 'access_token': $scope.access_token};
+            var headers = { 'Content-Type': 'application/x-www-form-urlencoded', 'access_token': $scope.access_token };
             var jsonData = inference;
             var postData = [];
             postData.push(encodeURIComponent("start") + "=" + encodeURIComponent(jsonData.ranges[0].start));
@@ -319,7 +313,7 @@ angular.module('ionicApp')
             return inferenceRestangular.customPUT(data, '', '', headers);
         }
 
-        $scope.initInferencesParameters = function(){
+        $scope.initInferencesParameters = function () {
             var orderby = "verse";
             var verseKeyword = "";
             var ownInferences = true;
@@ -489,29 +483,26 @@ angular.module('ionicApp')
                 }).then(function (modal) {
                     $scope.modal_addtagtosearch = modal
                 });
-
-
+                
                 $scope.openModal = function (id) {
                     if (id == 'all_inferences_filter') {
                         $scope.modal_all_inferences_filter.show();
-                    }else if (id == 'all_inferences_sort') {
+                    } else if (id == 'all_inferences_sort') {
                         $scope.modal_all_inferences_sort.show();
-                    } else  if (id == 'editor') {
+                    } else if (id == 'editor') {
                         $scope.getModalEditor().show();
-                    } else  if (id == 'viewusersearch') {
+                    } else if (id == 'viewusersearch') {
                         $scope.modal_add_canviewuser.show();
-                    } else  if (id == 'addUserToAllInferencesSearch') {
+                    } else if (id == 'addUserToAllInferencesSearch') {
                         $scope.modal_addUserToAllInferencesSearch.show();
-                    } else  if (id == 'tagsearch') {
+                    } else if (id == 'tagsearch') {
                         $scope.modal_tag_search.show();
-                    } else  if (id == 'addtagtosearch') {
+                    } else if (id == 'addtagtosearch') {
                         $scope.modal_addtagtosearch.show();
                     }
-
-
                 };
                 $scope.closeModal = function (id) {
-                    $timeout(function() {
+                    $timeout(function () {
 
                         if (id == 'all_inferences_filter') {
                             $scope.modal_all_inferences_filter.hide();
@@ -529,12 +520,12 @@ angular.module('ionicApp')
                         } else if (id == 'addtagtosearch') {
                             $scope.modal_addtagtosearch.hide();
                         }
-                    },300);
+                    }, 300);
                 }
             }
 
-            $scope.$on('modal.shown', function(event, modal) {
-                if(config_data.isMobile) {
+            $scope.$on('modal.shown', function (event, modal) {
+                if (config_data.isMobile) {
                     $timeout(function () {
                         $scope.scrollDelegateTop(modal.id);
                     });
@@ -543,14 +534,14 @@ angular.module('ionicApp')
 
         };
 
-        $scope.editInference= function (inference){
+        $scope.editInference = function (inference) {
 
             $scope.showEditor(inference);
         }
 
 
 
-        $scope.scrollDelegateTop = function(id){
+        $scope.scrollDelegateTop = function (id) {
             $ionicScrollDelegate.$getByHandle(id).scrollTop();
         };
 

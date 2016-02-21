@@ -26,7 +26,7 @@ angular.module('ionicApp')
         $scope.addUserToAllAnnotationsSearch = function (index) {
 
             var control = "0";
-
+            console.log("fr");
             for (var i = 0; i < $scope.usersForSearch.length; i++) {
                 if ($scope.usersForSearch[i].id == $scope.friendSearchResult[index].id) {
                     control = "1";
@@ -38,6 +38,22 @@ angular.module('ionicApp')
             }
 
         }
+        $scope.addUserToAllInferencesSearch = function (index) {
+
+            var control = "0";
+            console.log("fr");
+            for (var i = 0; i < $scope.usersForSearch.length; i++) {
+                if ($scope.usersForSearch[i].id == $scope.friendSearchResult[index].id) {
+                    control = "1";
+                }
+            }
+
+            if (control == "0") {
+                $scope.usersForSearch.push($scope.friendSearchResult[index]);
+            }
+
+        }
+
 
 
         //People Search
