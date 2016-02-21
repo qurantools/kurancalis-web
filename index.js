@@ -538,8 +538,7 @@ app.factory('ChapterVerses', function ($resource) {
                     alert(data.message);
                 }
             });
-
-
+            
         }
 
         $scope.tutorial = function (parameter) {
