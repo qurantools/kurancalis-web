@@ -68,12 +68,7 @@ angular.module('ionicApp')
 
             }
             $location.path("/inferences/", false).search(parameters);
-            //if (!config_data.isMobile) {
-
-            //} else {
-            //    $location.path("/m_inference/", false).search(parameters);
-            //}
-
+           
         };
 
 
