@@ -603,7 +603,6 @@ app.factory('ChapterVerses', function ($resource) {
             }
         }
 
-
         //general logout.
         $scope.onFacebookLogOutSuccess = function (responseData) {
             if (responseData.loggedOut == true) {

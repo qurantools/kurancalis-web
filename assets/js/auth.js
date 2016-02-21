@@ -45,7 +45,7 @@ authorizationModule.factory("authorization", function (Facebook, User, localStor
 
         factory.onFBLoginResponse=function (tokenFb, faceBookResponseMethod ) {
             var responseData = {loggedIn: false, token: ""};
-
+            console.log("face token : "+ tokenFb);
             if (tokenFb != "") {
 
                 var headers = {'Content-Type': 'application/x-www-form-urlencoded'};
@@ -56,23 +56,23 @@ authorizationModule.factory("authorization", function (Facebook, User, localStor
                 var userRestangular = Restangular.all("users");
 
                 userRestangular.customPOST(data, '', '', headers).then(
-                    function(data){
-                        alert("erişim success data.token : "+ data.token);
+                    function(response){
+                        alert("erişim success data.token : "+ JSON.stringify(response));
                         //get token
-                        responseData.token = data.token;
+                        responseData.token = response.token;
                         responseData.loggedIn = true;
-                        responseData.user = data.user;
+                        responseData.user = response.user;
 
                         //set cookie
-                        localStorageService.set('access_token', data.token);
+                        localStorageService.set('access_token', response.token);
                         faceBookResponseMethod(responseData);
                     },
-                    function(data) {
-                        alert("erişim success fail : "+ data.code);
-                        if (data.code == '209') {
+                    function(resp) {
+                        alert("erişim success fail : "+ JSON.stringify(resp));
+                        if (resp.data.code == '209') {
                             alert("Sisteme giriş yapabilmek için e-posta adresi paylaşımına izin vermeniz gerekmektedir.");
                         }
-                        else if( data.code == '217') {
+                        else if( resp.data.code == '217') {
                             alert("Sisteme giriş yapabilmek için arkadaş listesi paylaşımına izin vermeniz gerekmektedir.");
                         }
 
@@ -115,8 +115,6 @@ authorizationModule.factory("authorization", function (Facebook, User, localStor
                 alert('Facebook girişi başarısız');
                 return;
             }
-            alert("face token : "+ response.authResponse.accessToken);
-            console.log("face token : "+ response.authResponse.accessToken);
             factory.onFBLoginResponse(response.authResponse.accessToken, faceBookResponseMethod);
         };
 
