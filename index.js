@@ -295,7 +295,7 @@ if (config_data.isMobile == false) { //false
                         reloadOnSearch: false
                     })
                     .when('/', {
-                        redirectTo: '/translations/'
+                        redirectTo: '/login/'
                     })
                     .when('/chapter/:chapter/author/:author/', {
                         redirectTo: '/translations/?chapter=:chapter&verse=1&author=:author'
@@ -324,8 +324,12 @@ if (config_data.isMobile == false) { //false
                         controller:'HelpController',
                         templateUrl:'components/help/index.html'
                     })
+                    .when('/login/',{
+                        controller:'LoginController',
+                        templateUrl:'components/login/login.html'
+                    })
                     .otherwise({
-                        redirectTo: '/translations/'
+                        redirectTo: '/login/'
                     });
 
 
