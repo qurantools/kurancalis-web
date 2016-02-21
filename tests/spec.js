@@ -12,7 +12,7 @@ describe('Cikarim notu Ekleme',function(){
     
      beforeEach(function() {
          browser.ignoreSynchronization = false;
-        browser.get(baseAddress+'/m/www/#/m_inference/new/');
+        browser.get(baseAddress+'/m/www/#/inference/new/');
     });
     
     function add(title,content,tags,userForSearch){
