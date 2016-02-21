@@ -295,7 +295,7 @@ if (config_data.isMobile == false) { //false
                         reloadOnSearch: false
                     })
                     .when('/', {
-                        redirectTo: '/login/'
+                        redirectTo: '/translations/'
                     })
                     .when('/chapter/:chapter/author/:author/', {
                         redirectTo: '/translations/?chapter=:chapter&verse=1&author=:author'
@@ -325,7 +325,7 @@ if (config_data.isMobile == false) { //false
                         templateUrl:'components/login/login.html'
                     })
                     .otherwise({
-                        redirectTo: '/login/'
+                        redirectTo: '/translations/'
                     });
 
 
@@ -586,6 +586,7 @@ app.factory('ChapterVerses', function ($resource) {
                 $scope.logOut();
             }
             else {
+                alert("OLDU!!!!!");
                 $scope.access_token = responseData.token;
                 $scope.user = responseData.user;
                 $scope.loggedIn = true;
@@ -637,6 +638,7 @@ app.factory('ChapterVerses', function ($resource) {
                 }
             }
         );
+
         $scope.checkUserLoginStatus = function () {
             var status = false;
             var access_token = authorization.getAccessToken();
@@ -1039,8 +1041,6 @@ app.factory('ChapterVerses', function ($resource) {
 
         $scope.initializeCircleLists = function () {
 
-
-
             Restangular.all("circles").customGET("", {}, {'access_token': $scope.access_token}).then(function (circleList) {
 
                 $scope.extendedCircles = [];
@@ -1260,6 +1260,10 @@ app.factory('ChapterVerses', function ($resource) {
                     });
                 }
             });
+
+            if (!$scope.checkUserLoginStatus()){
+                $location.path('login/');
+            }
             
         };//end of init controller
 

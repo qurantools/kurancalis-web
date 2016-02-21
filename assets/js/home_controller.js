@@ -1453,7 +1453,7 @@ angular.module('ionicApp')
             });
 
             $scope.$on('userInfoReady', function handler() {
-                $scope.initializeActionSheetButtons()
+                $scope.initializeActionSheetButtons();
             });
 
             $scope.$on('logout', function handler() {
