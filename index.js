@@ -295,7 +295,6 @@ if (config_data.isMobile == false) { //false
                         templateUrl: 'components/annotations/all_annotations.html',
                         reloadOnSearch: false
                     })
-
                     .when('/chapter/:chapter/author/:author/', {
                         redirectTo: '/translations/?chapter=:chapter&verse=1&author=:author'
                     })
@@ -333,7 +332,7 @@ if (config_data.isMobile == false) { //false
                         redirectTo: '/translations/'
                     })
                     .otherwise({
-                        redirectTo: '/login/'
+                        redirectTo: '/translations/'
                     });
 
 
@@ -540,7 +539,7 @@ app.factory('ChapterVerses', function ($resource) {
                     alert(data.message);
                 }
             });
-            
+
         }
 
         $scope.tutorial = function (parameter) {
@@ -603,7 +602,6 @@ app.factory('ChapterVerses', function ($resource) {
                 $scope.$broadcast('userInfoReady');
             }
         }
-
 
         //general logout.
         $scope.onFacebookLogOutSuccess = function (responseData) {
@@ -1046,8 +1044,6 @@ app.factory('ChapterVerses', function ($resource) {
 
         $scope.initializeCircleLists = function () {
 
-
-
             Restangular.all("circles").customGET("", {}, {'access_token': $scope.access_token}).then(function (circleList) {
 
                 $scope.extendedCircles = [];
@@ -1281,7 +1277,11 @@ app.factory('ChapterVerses', function ($resource) {
                     });
                 }
             });
-            
+
+            if (!$scope.checkUserLoginStatus()){
+                $location.path('login/');
+            }
+
         };//end of init controller
 
 

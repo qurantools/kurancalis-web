@@ -1,6 +1,6 @@
 var authorizationModule = angular.module('authorizationModule', ['facebook', 'LocalStorageModule', 'restangular']);
 
-authorizationModule.factory("authorization", function (Facebook, User, localStorageService, Restangular) {
+authorizationModule.factory("authorization", function (Facebook, User, localStorageService, Restangular, $ionicLoading, $q) {
 
         var fbLoginStatus = 'disconnected';
         var factory = {};
@@ -31,7 +31,7 @@ authorizationModule.factory("authorization", function (Facebook, User, localStor
                             alert('Facebook girişi başarısız');
                         }
                     }, {scope: permissions});
-
+                return;
             }
 
 
@@ -45,7 +45,7 @@ authorizationModule.factory("authorization", function (Facebook, User, localStor
 
         factory.onFBLoginResponse=function (tokenFb, faceBookResponseMethod ) {
             var responseData = {loggedIn: false, token: ""};
-
+            console.log("face token : "+ tokenFb);
             if (tokenFb != "") {
 
                 var headers = {'Content-Type': 'application/x-www-form-urlencoded'};
@@ -56,22 +56,23 @@ authorizationModule.factory("authorization", function (Facebook, User, localStor
                 var userRestangular = Restangular.all("users");
 
                 userRestangular.customPOST(data, '', '', headers).then(
-                    function(data){
-
+                    function(response){
+                        alert("erişim success data.token : "+ JSON.stringify(response));
                         //get token
-                        responseData.token = data.token;
+                        responseData.token = response.token;
                         responseData.loggedIn = true;
-                        responseData.user = data.user;
+                        responseData.user = response.user;
 
                         //set cookie
-                        localStorageService.set('access_token', data.token);
+                        localStorageService.set('access_token', response.token);
                         faceBookResponseMethod(responseData);
                     },
-                    function(response) {
-                        if (error.data.code == '209') {
+                    function(resp) {
+                        alert("erişim success fail : "+ JSON.stringify(resp));
+                        if (resp.data.code == '209') {
                             alert("Sisteme giriş yapabilmek için e-posta adresi paylaşımına izin vermeniz gerekmektedir.");
                         }
-                        else if( error.data.code == '217') {
+                        else if( resp.data.code == '217') {
                             alert("Sisteme giriş yapabilmek için arkadaş listesi paylaşımına izin vermeniz gerekmektedir.");
                         }
 
@@ -107,6 +108,32 @@ authorizationModule.factory("authorization", function (Facebook, User, localStor
         factory.getAccessToken = function(){
             return localStorageService.get('access_token');
         }
+/****************************NATIVE LOGIN**********************************************************************/
+        factory.fbLoginSuccess = function(response, faceBookResponseMethod) {
+            $ionicLoading.hide();
+            if (!response.authResponse){
+                alert('Facebook girişi başarısız');
+                return;
+            }
+            factory.onFBLoginResponse(response.authResponse.accessToken, faceBookResponseMethod);
+        };
+
+        factory.fbLoginError = function(error, faceBookResponseMethod){
+            $ionicLoading.hide();
+            alert('Facebook girişi başarısız');
+        };
+
+        //This method is executed when the user press the "Login with facebook" button
+        factory.facebookSignIn = function(faceBookResponseMethod) {
+            $ionicLoading.show({
+                template: 'Logging in...'
+            });
+            facebookConnectPlugin.login(['email', 'user_friends'], function(response){
+                factory.fbLoginSuccess (response, faceBookResponseMethod);
+            }, function(response){
+                factory.fbLoginError (response, faceBookResponseMethod);
+            });
+        };
 
         return factory;
     });

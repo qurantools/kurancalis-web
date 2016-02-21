@@ -174,7 +174,7 @@ if (cordova.platformId == "browser") {
         }
     }());
 
-//    module.exports = facebookConnectPlugin;
+    module.exports = facebookConnectPlugin;
 
 } else {
 
@@ -225,5 +225,5 @@ if (cordova.platformId == "browser") {
         }
     };
 
-//    module.exports = facebookConnectPlugin;
+    module.exports = facebookConnectPlugin;
 }
