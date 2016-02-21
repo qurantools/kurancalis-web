@@ -38,11 +38,12 @@ angular.module('ionicApp')
 
             var inferenceRestangular = Restangular.one("inferences", $scope.inferenceId);
             inferenceRestangular.customDELETE("", {}, {'access_token': $scope.access_token}).then(function (data) {
-                if(!config_data.isMobile){
                 $location.path('inferences/');
-                }else {
-                    $location.path('m_inference/');
-                }
+                //if (!config_data.isMobile) {
+                //$location.path('inferences/');
+                //}else {
+                //    $location.path('m_inference/');
+                //}
             });
 
         }
@@ -354,11 +355,13 @@ angular.module('ionicApp')
                 author: $scope.referenced.selectedAuthor
 
             }
-            if(!config_data.isMobile){
-            $location.path("/inference/display/"+$scope.inferenceId+"/", false).search(parameters);
-            }else{
-                $location.path("/m_inference/display/"+$scope.inferenceId+"/", false).search(parameters);
-            }
+            $location.path("/inference/display/" + $scope.inferenceId + "/", false).search(parameters);
+
+            //if(!config_data.isMobile){
+            //$location.path("/inference/display/"+$scope.inferenceId+"/", false).search(parameters);
+            //}else{
+            //    $location.path("/m_inference/display/"+$scope.inferenceId+"/", false).search(parameters);
+            //}
         };
 
         if(config_data.isMobile){

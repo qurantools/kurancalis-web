@@ -300,22 +300,22 @@ if (config_data.isMobile == false) { //false
                     .when('/chapter/:chapter/author/:author/', {
                         redirectTo: '/translations/?chapter=:chapter&verse=1&author=:author'
                     })
-                    .when('/m_inference/', {
+                    .when('/inference/', {
                         controller: 'InferenceListController',
                         templateUrl: 'components/inferences/inferenceListMobileView.html',
                         reloadOnSearch: false
                     })
-                    .when('/m_inference/display/:inferenceId/', {
+                    .when('/inference/display/:inferenceId/', {
                         controller: 'InferenceDisplayController',
                         templateUrl: 'components/inferences/inferenceDisplayMobileView.html',
                         reloadOnSearch: false
                     })
-                    .when('/m_inference/new/', {
+                    .when('/inference/new/', {
                         controller: 'InferenceEditController',
                         templateUrl: 'components/inferences/inferenceEditMobileView.html',
                         reloadOnSearch: false
                     })
-                    .when('/m_inference/edit/:inferenceId/', {
+                    .when('/inference/edit/:inferenceId/', {
                         controller: 'InferenceEditController',
                         templateUrl: 'components/inferences/inferenceEditMobileView.html',
                         reloadOnSearch: false
@@ -1085,7 +1085,13 @@ app.factory('ChapterVerses', function ($resource) {
                 for (var index = 0; index < $scope.mobileAllAnnotationsSearchCircleListForSelection.length; ++index) {
                     $scope.mobileAllAnnotationsSearchCircleListForSelection[index].selected=false;
                 }
-
+                // initialize mobileAllInferencessSearchCircleListForSelection
+                $scope.mobileAllInferencesSearchCircleListForSelection = [];
+                Array.prototype.push.apply($scope.mobileAllInferencesSearchCircleListForSelection, $scope.extendedCirclesForSearch);
+                //add isSelected property for mobile.
+                for (var index = 0; index < $scope.mobileAllInferencesSearchCircleListForSelection.length; ++index) {
+                    $scope.mobileAllInferencesSearchCircleListForSelection[index].selected = false;
+                }
                 $scope.$broadcast("circleLists ready");
 
             });
