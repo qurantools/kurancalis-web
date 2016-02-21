@@ -34,7 +34,6 @@ angular.module('ionicApp')
             var tagsRestangular = Restangular.one('tags', query);
              tagsRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (resp) {
                  $scope.tagListInference =resp;
-
              });
         };
         //tags input auto complete function
@@ -43,7 +42,19 @@ angular.module('ionicApp')
 
             $scope.title = "";
             $scope.content = "";
+            $scope.imageDefined = false;
 
+            setTimeout(function () {
+                if (typeof $scope.inferenceImage === "undefined" || $scope.inferenceImage == "undefined") {
+                    $scope.imageDefined = false;                   
+                } else {
+                    $scope.imageDefined = true;
+                }
+            },1000);
+
+            $scope.pagePrevious = function () {
+                window.history.go(-2);
+            }
             var tempTaglist = [];
             $rootScope.$on('addInferenceTags', function (event, data) {
                 tempTaglist.push(data);
@@ -113,8 +124,7 @@ angular.module('ionicApp')
             $scope.usersParams.search_query = people_name;
             return peoplesRestangular.customGET("", $scope.usersParams, {'access_token': $scope.access_token});
         };
-
-
+        
         //tags input auto complete
         $scope.circleslistExtended = function () {
             return $scope.extendedCircles;
@@ -130,9 +140,9 @@ angular.module('ionicApp')
                 $scope.tags_entry = tempTaglist;
 
 
-                for (var index = 0; index < $scope.mobileAnnotationEditorCircleListForSelection.length; ++index) {
-                    if ($scope.mobileAnnotationEditorCircleListForSelection[index].selected == true) {
-                        $scope.circlesForSearch.push($scope.mobileAnnotationEditorCircleListForSelection[index]);
+                for (var index = 0; index < $scope.mobileInferencesEditorCircleListForSelection.length; ++index) {
+                    if ($scope.mobileInferencesEditorCircleListForSelection[index].selected == true) {
+                        $scope.circlesForSearch.push($scope.mobileInferencesEditorCircleListForSelection[index]);
                     }
                 }
             }
@@ -233,6 +243,7 @@ angular.module('ionicApp')
                 $scope.inferenceImage = data.image;
                 $scope.content = $scope.prepareContentForEdit(data.content,data.references);
                 $scope.tags_entry = data.tags;
+                $scope.tagListInference = data.tags;
 
                 var inference_PermRestangular = Restangular.one("inferences", inferenceId).all("permissions");
                 inference_PermRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (data) {
@@ -241,6 +252,7 @@ angular.module('ionicApp')
                     $scope.usersForSearch = data.canViewUsers;
                     $scope.circlesForSearch1 = data.canCommentCircles;
                     $scope.usersForSearch1 = data.canCommentUsers;
+                    $scope.ViewUsers = data.canViewUsers;
                 });
 
             });
@@ -270,10 +282,7 @@ angular.module('ionicApp')
             if ($location.path() == "/inference/new/") {
                 $scope.pagePurpose = "new";
                 inferenceId = 0;
-             }
-           
-
-            else {
+             }else {
                 $scope.pagePurpose = "edit";
             }
 
@@ -404,6 +413,7 @@ angular.module('ionicApp')
                     //$('inferenceImage').onchange=
                     $timeout(function () {
                         angular.element($('#inferenceImage')).triggerHandler('input');
+                       
                     });
                 });
                 console.log("Image manager initialized for: " + $scope.user.id);

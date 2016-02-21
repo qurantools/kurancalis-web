@@ -1092,6 +1092,14 @@ app.factory('ChapterVerses', function ($resource) {
                 for (var index = 0; index < $scope.mobileAllAnnotationsSearchCircleListForSelection.length; ++index) {
                     $scope.mobileAllAnnotationsSearchCircleListForSelection[index].selected=false;
                 }
+
+                $scope.mobileInferencesEditorCircleListForSelection = [];
+                Array.prototype.push.apply($scope.mobileInferencesEditorCircleListForSelection, $scope.extendedCircles);
+                //add isSelected property for mobile.
+                for (var index = 0; index < $scope.mobileInferencesEditorCircleListForSelection.length; ++index) {
+                    $scope.mobileInferencesEditorCircleListForSelection[index].selected = false;
+                }
+
                 // initialize mobileAllInferencessSearchCircleListForSelection
                 $scope.mobileAllInferencesSearchCircleListForSelection = [];
                 Array.prototype.push.apply($scope.mobileAllInferencesSearchCircleListForSelection, $scope.extendedCirclesForSearch);

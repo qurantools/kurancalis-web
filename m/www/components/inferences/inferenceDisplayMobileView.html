@@ -3,7 +3,7 @@
         <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced">
             <ion-nav-buttons side="left">
                 <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
-
+                <button class="button button-icon icon ion-search"></button>
                 <input type="hidden" ng-model="chapter_id"/>
                 <input type="hidden" ng-model="author_mask"/>
 
@@ -11,9 +11,8 @@
             </ion-nav-buttons>
             <h1 class="title"></h1>
             <ion-nav-buttons side="right">
-                <button class="button button-icon icon ion-edit" ng-if="edit_user == user.id" ng-click="edit_inference()"></button>
-                <button class="button button-icon icon ion-trash-a" ng-if="edit_user == user.id" ng-click="deleted()"></button>
-
+                <button class="button button-icon icon ion-ios-compose-outline" ng-if="edit_user == user.id" ng-click="edit_inference()"></button>
+                <button class="button button-icon icon ion-ios-trash-outline" ng-if="edit_user == user.id" ng-click="deleted()"></button>
             </ion-nav-buttons>
         </ion-nav-bar>
         <ion-nav-buttons side="left">
@@ -29,12 +28,12 @@
                     <div style="text-align: center;margin:8px 0;font-weight:600;">
                         {{title}}
                     </div>
-                <div style="padding: 10px; background-color:#fff6dc">
+                <div style="padding: 10px; background-color:#fff6dc">                    
                     <p ng-bind-html="content"></p>
-                </div>
-                <div>
-                    <button style="margin:8px 0;float: right;min-height: 20px;height: 30px;line-height: 15px;" ng-repeat="item in tags" class="button button-positive btn-xs">{{item}}</button>
-                </div>
+                    <div style="text-align:right;">
+                        <button style="margin:8px 0;min-height: 20px;vertical-align: bottom;height: 30px;line-height: 15px;margin-right: 2px;" ng-repeat="item in tags" class="button button-positive btn-xs">{{item}}</button> 
+                    </div>
+                </div>               
                 <div style="clear: both;"></div>
                 <div>
                     <label class="toggle toggle-balanced" ng-click="changeInlineReferenceDisplay();">
@@ -45,19 +44,25 @@
                         Referanslarin icerigini goster
                     </label>
                 </div>
-                <div ng-if="referenced.verses.length!=0">
-                    <label style="display: block;">Ceviri/Yazar</label>
+                <div class="list" ng-if="referenced.verses.length!=0">
 
-                    <select class="form-control" name="singleSelect"
-                            ng-model="referenced.selectedAuthor" ng-change="updateReferencedTranslations()">
-                        <option ng-repeat="item in authorMap" value="{{item.id}}" ng-selected="item.id==referenced.selectedAuthor">{{item.name}}</option>
-                    </select>
+                    <label class="item item-input item-select">
+                        <div class="input-label">
+                            Ceviri/Yazar
+                        </div>
+                        <select name="singleSelect"
+                                ng-model="referenced.selectedAuthor" ng-change="updateReferencedTranslations()">
+                            <option ng-repeat="item in authorMap" value="{{item.id}}" ng-selected="item.id==referenced.selectedAuthor">{{item.name}}</option>
+                        </select>
+                    </label>
+
+                    
                 </div>
                 <div ng-repeat="verseId in referenced.verseIds" align="left" >
                     <b>{{getChapterVerseNotation(verseId)}}</b> {{referenced.verses[verseId].translation}}
                     <br>
                     <div style="height: 30px" align="right">
-                        <button ng-repeat="tag in referenced.verses[verseId].tags" style="margin-bottom:8px;;min-height: 20px;height: 30px;line-height: 15px;" class="button button-positive btn-xs">{{tag}}</button>
+                        <button ng-repeat="tag in referenced.verses[verseId].tags" style="margin-bottom:8px;margin-right: 2px;min-height: 20px;line-height: 21px;text-align:right;" class="button button-positive btn-xs">{{tag}}</button>
                     </div>
                 </div>
                
