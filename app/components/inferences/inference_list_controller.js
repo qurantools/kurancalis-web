@@ -70,10 +70,7 @@ angular.module('ionicApp')
             $location.path("/inferences/", false).search(parameters);
            
         };
-
-
-
-
+        
         $scope.login = function () { //new
             authorization.login($scope.onFacebookLoginSuccess);
         }
