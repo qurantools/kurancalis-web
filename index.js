@@ -319,10 +319,6 @@ if (config_data.isMobile == false) { //false
                         controller: 'InferenceEditController',
                         templateUrl: 'components/inferences/inferenceEditMobileView.html',
                         reloadOnSearch: false
-					})
-					.when('/help/',{
-                        controller:'HelpController',
-                        templateUrl:'components/help/index.html'
                     })
                     .when('/login/',{
                         controller:'LoginController',
@@ -557,7 +553,7 @@ app.factory('ChapterVerses', function ($resource) {
         $scope.setPageTitle= function(title){
             $rootScope.pageTitle = title;
         }
-
+        
         //currentPage
         $scope.getCurrentPage = function () {
             var retcp = "";

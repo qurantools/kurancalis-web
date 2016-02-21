@@ -39,7 +39,7 @@ angular.module('ionicApp')
             var inferenceRestangular = Restangular.one("inferences", $scope.inferenceId);
             inferenceRestangular.customDELETE("", {}, {'access_token': $scope.access_token}).then(function (data) {
                 if(!config_data.isMobile){
-                    $location.path('inferences/');
+                $location.path('inferences/');
                 }else {
                     $location.path('m_inference/');
                 }
@@ -66,14 +66,14 @@ angular.module('ionicApp')
         //Edit inference
         $scope.edit_inference = function () {
             if(!config_data.isMobile){
-                $location.path('inference/edit/'+$scope.inferenceId+"/");
+            $location.path('inference/edit/'+$scope.inferenceId+"/");
             }else
             {
                 $location.path('m_inference/edit/'+$scope.inferenceId+"/");
             }
 
         }
-
+        
         $scope.compileContent = function(original,verseList, verseIdList, inline){
             var outContent=original;
             for (var i = 0; i < verseIdList.length; i++) {
@@ -132,7 +132,7 @@ angular.module('ionicApp')
                 if (response.status == "400"){
                     $scope.authorizedInferenceDisplay = 2;
                 }
-             });
+            });
         };
 
 
@@ -355,7 +355,7 @@ angular.module('ionicApp')
 
             }
             if(!config_data.isMobile){
-                $location.path("/inference/display/"+$scope.inferenceId+"/", false).search(parameters);
+            $location.path("/inference/display/"+$scope.inferenceId+"/", false).search(parameters);
             }else{
                 $location.path("/m_inference/display/"+$scope.inferenceId+"/", false).search(parameters);
             }
@@ -368,22 +368,17 @@ angular.module('ionicApp')
                     title: 'Notu Silme',
                     template: 'Çıkarım notu silinecek Onaylıyor musunuz?',
                     buttons: [{
-                        text : 'Vazgec',
+                        text : 'Vazgeç',
                         type: 'button-balanced',
                     },
-                        {
-                            text : 'Sil',
-                            type : 'button-assertive'
-                        }]
-                });
-
-                confirmPopup.then(function(res) {
-                    if(res) {
-                        $scope.delete_inference();
-                    } else {
-                        console.log('You are not sure');
-                    }
-                });
+                    {
+                        text : 'Sil',
+                        type: 'button-assertive',
+                        onTap: function (e) {
+                            $scope.delete_inference();
+                        }
+                    }]
+                });                              
             };
         }
         $scope.getChapterVerseNotation = function(verseId){

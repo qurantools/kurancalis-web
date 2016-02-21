@@ -1,5 +1,5 @@
 angular.module('ionicApp')
-    .controller('InferenceEditController', function ($scope,$q, $routeParams, $location, $timeout,$ionicModal, authorization, localStorageService, Restangular) {
+    .controller('InferenceEditController', function ($rootScope,$scope,$q, $routeParams, $location, $timeout,$ionicModal, authorization, localStorageService, Restangular) {
 
         $scope.inferenceId = 0;
         $scope.circles = []; //id array
@@ -15,6 +15,7 @@ angular.module('ionicApp')
         $scope.usersForSearch = [];
         $scope.circlesForSearch1  = [];
         $scope.usersForSearch1 = [];
+        $scope.tagListInference =[]; // mobil icin
 
         var tags = [];
         var canViewCircles_tags = [];
@@ -32,7 +33,7 @@ angular.module('ionicApp')
 
             var tagsRestangular = Restangular.one('tags', query);
              tagsRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (resp) {
-                 $scope.tagslist =resp;
+                 $scope.tagListInference =resp;
 
              });
         };
@@ -40,18 +41,20 @@ angular.module('ionicApp')
         var tagArray = [];
         if(config_data.isMobile){
 
+            $scope.title = "";
+            $scope.content = "";
 
-            $scope.title = " ";
-            $scope.content = " ";
+            var tempTaglist = [];
+            $rootScope.$on('addInferenceTags', function (event, data) {
+                tempTaglist.push(data);
+            });
 
-            $ionicModal.fromTemplateUrl('components/partials/add_tag_to_annotation.html', {
-                scope: $scope,
-                //animation: 'slide-in-right',
-                //animation: 'slide-left-right',
+            $ionicModal.fromTemplateUrl('components/partials/add_tag_to_inferences.html', {
+                scope: $scope,              
                 animation: 'slide-in-up',
-                id: 'tagsearch'
+                id: 'inferenceTagsearch'
             }).then(function (modal) {
-                $scope.modal_tag_search = modal
+                $scope.modal_inference_tag_search = modal
             });
 
             $ionicModal.fromTemplateUrl('components/partials/add_canviewuser.html', {
@@ -64,30 +67,15 @@ angular.module('ionicApp')
                 $scope.modal_view_user_search = modal
             });
 
-            $scope.addInferenceTag = function () {
-                $scope.inferenceTagModal.show();
-            }
-
             $scope.tagsquery= function (query) {
-
                 $scope.loadTags2(query)
-            }
-
-            //$scope.mobil_addedtags = function (item) {
-            //    console.log(item);
-            //    $scope.tags_entry.push(item);
-            //    tagArray.push(item);
-            //}
-
-            $scope.closeInferenceModal = function () {
-                $scope.inferenceTagModal.hide();
             }
 
             $scope.openModal = function(id){
                 if (id == 'viewusersearch') {
                     $scope.modal_view_user_search.show();
-                }else if(id == "tagsearch"){
-                    $scope.modal_tag_search.show();
+                }else if(id == "inferenceTagsearch"){
+                    $scope.modal_inference_tag_search.show();
                 }
             }
             $scope.closeModal = function (id) {
@@ -105,8 +93,9 @@ angular.module('ionicApp')
                         $scope.modal_home_search.hide();
                     } else if (id == 'friendsearch') {
                         $scope.modal_friend_search.hide();
-                    } else if (id == 'tagsearch') {
-                        $scope.modal_tag_search.hide();
+                    } else if (id == 'inferenceTagsearch') {
+                        $scope.modal_inference_tag_search.hide();
+
                     } else if (id == 'viewusersearch') {
                         $scope.modal_view_user_search.hide();
                     } else if (id == 'editor') {
@@ -133,18 +122,13 @@ angular.module('ionicApp')
 
         $scope.do_array = function () {
 
-
             if(config_data.isMobile){
+
                 $scope.title = document.getElementById('title').value;
                 $scope.content = document.querySelectorAll("[ng-model=content]")[0].value;
                 $scope.usersForSearch = $scope.ViewUsers;
-                $scope.tags_entry = $scope.annotationModalDataTagsInput;
+                $scope.tags_entry = tempTaglist;
 
-
-                if($scope.title.length == " " || $scope.content.length == " "){
-                    alert("Baslik veya icerik bos olamaz");
-                    return;
-                }
 
                 for (var index = 0; index < $scope.mobileAnnotationEditorCircleListForSelection.length; ++index) {
                     if ($scope.mobileAnnotationEditorCircleListForSelection[index].selected == true) {
@@ -234,7 +218,7 @@ angular.module('ionicApp')
 
                     $scope.inferenceId = record.id;
                     if(!config_data.isMobile){
-                        $location.path('inference/display/' + $scope.inferenceId);
+                    $location.path('inference/display/' + $scope.inferenceId);
                     }else{
                         $location.path('m_inference/display/' + $scope.inferenceId);
                     }
@@ -383,22 +367,22 @@ angular.module('ionicApp')
              */
 
             if(!config_data.isMobile){
-                $scope.tinymceOptions = {
-                    language: "tr_TR",
-                    plugins: [
-                        "textcolor advlist autolink link image lists preview"
-                    ],
-                    setup: function (editor) {
-                        editor.on('Change', function (e) {
+            $scope.tinymceOptions = {
+                language: "tr_TR",
+                plugins: [
+                    "textcolor advlist autolink link image lists preview"
+                ],
+                setup: function (editor) {
+                    editor.on('Change', function (e) {
+                        $scope.content = editor.getContent();
+                    }),
+                        editor.on('keyup', function (e) {
                             $scope.content = editor.getContent();
-                        }),
-                            editor.on('keyup', function (e) {
-                                $scope.content = editor.getContent();
-                            })
-                    },
-                    toolbar: "undo redo | formatselect fontsizeselect | bold italic underline | alignleft aligncenter alignright | bullist numlist outdent indent | forecolor | link image preview"
+                        })
+                },
+                toolbar: "undo redo | formatselect fontsizeselect | bold italic underline | alignleft aligncenter alignright | bullist numlist outdent indent | forecolor | link image preview"
 
-                };
+            };
             }else{
                 $scope.tinymceOptions = {
                     language: "tr_TR",
@@ -436,6 +420,10 @@ angular.module('ionicApp')
             $scope.usersForSearch = localParameterData.users;
             $scope.inferenceId = localParameterData.inferenceId;
 
+            if(config_data.isMobile){
+                $scope.ViewUsers = localParameterData.users;
+            }
+
         };
 
         $scope.storeInferenceEditViewParameters = function () {
@@ -462,7 +450,7 @@ angular.module('ionicApp')
 
                 }
                 if(!config_data.isMobile){
-                    $location.path("/inference/edit/" + $scope.inferenceId + "/", false).search(parameters);
+                $location.path("/inference/edit/" + $scope.inferenceId + "/", false).search(parameters);
                 }else{
                     $location.path("/m_inference/edit/" + $scope.inferenceId + "/", false).search(parameters);
                 }

@@ -22,12 +22,12 @@
         </ion-nav-buttons>
         <ion-nav-view name="appContent"></ion-nav-view>
         <ion-nav-view id="mobile_inference_display_content">
-            <ion-content overflow-scroll="true" style="padding-top: 30px;" class="padding">
+            <ion-content overflow-scroll="true" style="padding-top: 30px;margin-bottom: 30px;" class="padding">
                     <div style="margin: 0 auto;width: 250px;height: 200px">
                         <img src="{{photo}}" alt="" style="width: 100%;height: 100%;" />
                     </div>
-                    <div style="text-align: center;margin:8px 0;">
-                        {{title | limitTo:70}}
+                    <div style="text-align: center;margin:8px 0;font-weight:600;">
+                        {{title}}
                     </div>
                 <div style="padding: 10px; background-color:#fff6dc">
                     <p ng-bind-html="content"></p>
@@ -53,7 +53,6 @@
                         <option ng-repeat="item in authorMap" value="{{item.id}}" ng-selected="item.id==referenced.selectedAuthor">{{item.name}}</option>
                     </select>
                 </div>
-
                 <div ng-repeat="verseId in referenced.verseIds" align="left" >
                     <b>{{getChapterVerseNotation(verseId)}}</b> {{referenced.verses[verseId].translation}}
                     <br>
@@ -61,6 +60,7 @@
                         <button ng-repeat="tag in referenced.verses[verseId].tags" style="margin-bottom:8px;;min-height: 20px;height: 30px;line-height: 15px;" class="button button-positive btn-xs">{{tag}}</button>
                     </div>
                 </div>
+               
             </ion-content>
         </ion-nav-view>
     </ion-side-menu-content>

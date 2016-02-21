@@ -34,7 +34,7 @@
                             {{inference.title | limitTo:80}}</h4>
                         </a></div>
                         <div style="padding-left:10px;">
-                            <span ng-bind-html="inference.brief | to_trusted | limitTo:400"></span>
+                            <span ng-bind-html="inference.brief | to_trusted | limitTo:400" style="white-space: pre-wrap;"></span>
                         </div>
                         <div class="row">
                             <div class="col">
