@@ -210,7 +210,8 @@ angular.module('ionicApp')
         $scope.search_all_inferences = function () {
 
             if(isMobile()){ //set query_circles from mobile selection
-                $scope.circlesForSearch=[];
+                $scope.circlesForSearch = [];
+                console.log($scope.mobileAllInferencesSearchCircleListForSelection);
                 for (var index = 0; index < $scope.mobileAllInferencesSearchCircleListForSelection.length; ++index) {
                     if($scope.mobileAllInferencesSearchCircleListForSelection[index].selected==true){
                         $scope.circlesForSearch.push($scope.mobileAllInferencesSearchCircleListForSelection[index]);

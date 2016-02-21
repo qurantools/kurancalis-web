@@ -10,8 +10,8 @@
             </ion-nav-buttons>
             <h1 class="title"></h1>
             <ion-nav-buttons side="right">
-                <button class="button button-icon icon ion-search" ng-click="openModal('viewusersearch')" ng-if="user!=null">
-                   
+                <button class="button button-icon icon ion-search" ng-click="openModal('all_inferences_filter')" ng-if="user!=null">
+                   Ara
                 </button>
                 <a class="button button-icon icon ion-plus" href="#/m_inference/new/" ng-if="user!=null">
                     Yeni Cikarim
@@ -28,7 +28,7 @@
         <ion-nav-view id="mobile_inferences_content" cache-view="true">
             <ion-content overflow-scroll="true" style="padding-top: 30px;">
                 <ion-list>
-                    <ion-item ng-repeat="inference in inferences">
+                    <ion-item ng-repeat="inference in inferences | filter:allInferencesOpts.keyword">
                         <div style="width: 250px;height: 200px;margin: 0 auto;"><img image-check ng-src="{{inference.image}}" alt="" style="width:100%;height: 100%;"/></div>
                         <div style="text-align: center;" ><a href="#/m_inference/display/{{inference.id}}/" style="text-decoration: none;"><h4 style="margin-top:0;font-size: 18px">
                             {{inference.title | limitTo:80}}</h4>
