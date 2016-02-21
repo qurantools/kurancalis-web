@@ -229,7 +229,8 @@ if (config_data.isMobile == false) { //false
             .when('/inference/display/:inferenceId/', {
                 controller: 'InferenceDisplayController',
                 templateUrl: 'app/components/inferences/inferenceDisplayView.html',
-                reloadOnSearch: false
+                reloadOnSearch: false,
+                pageTitle: 'Kuran Çalış - Çıkarım Notu'
             })
             
             .when('/', {
@@ -319,6 +320,11 @@ if (config_data.isMobile == false) { //false
                         controller: 'InferenceEditController',
                         templateUrl: 'components/inferences/inferenceEditMobileView.html',
                         reloadOnSearch: false
+					})
+					.when('/help/',{
+                        controller:'HelpController',
+                        templateUrl:'components/help/index.html',
+                        pageTitle: 'Kuran Çalış - Yardım'
                     })
                     .when('/login/',{
                         controller:'LoginController',
@@ -553,7 +559,7 @@ app.factory('ChapterVerses', function ($resource) {
         $scope.setPageTitle= function(title){
             $rootScope.pageTitle = title;
         }
-        
+
         //currentPage
         $scope.getCurrentPage = function () {
             var retcp = "";

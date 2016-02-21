@@ -21,7 +21,7 @@
                          style="margin-top:30px;" ng-controller="HelpController">
                 <div style="height:40px"></div>
                     <ion-list>
-                        <ion-item ng-repeat="item in menuList" ng-click="runHelpModal(item.name, true)" >
+                        <ion-item ng-repeat="item in menuList" ng-click="runHelpModal(item.id, true)" >
                             <h2>{{item.name}}</h2>
                         </ion-item>
                     </ion-list>

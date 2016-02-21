@@ -168,7 +168,7 @@ i.inactive {color: #d9534f}
 
 .translation_rtl{
     /* direction: rtl; */
-    font-size: 35px;
+    font-size: 35px !important;
 
 }
 
