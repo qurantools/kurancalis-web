@@ -535,8 +535,9 @@ angular.module('ionicApp')
         };
 
         $scope.editInference = function (inference) {
-
-            $scope.showEditor(inference);
+            console.log("inf : ", inference);
+            $location.path('inference/edit/' + inference.id + "/");
+          //  $scope.showEditor(inference);
         }
 
 

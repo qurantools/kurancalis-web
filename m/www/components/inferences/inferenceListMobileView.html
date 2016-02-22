@@ -22,8 +22,7 @@
         <ion-nav-buttons side="left">
             <button class="button button-icon icon ion-navicon" menu-toggle="left">
             </button>
-        </ion-nav-buttons>
-        
+        </ion-nav-buttons>        
         <ion-nav-view name="appContent"></ion-nav-view>
         <ion-nav-view id="mobile_inferences_content" cache-view="true">
             <ion-content overflow-scroll="true" style="padding-top: 30px;">
@@ -58,6 +57,17 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row" style="float: right;width: 75px;">
+                            <div style="float: right">
+                                <button type="button" class="button button-balanced button-small" ng-click="editInference(inference)">
+                                    <i class="fa fa-pencil-square-o "></i>
+                                </button>
+                                <button type="button" class="button button-assertive button-small"
+                                        ng-click="deleteInference(inference)">
+                                    <i class="fa fa-trash-o"></i>
+                                </button>
+                            </div>
+                        </div>   
                     </ion-item>
                 </ion-list>
 
