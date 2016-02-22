@@ -28,12 +28,12 @@
             <ion-content overflow-scroll="true" style="padding-top: 30px;">
                 <ion-list>
                     <ion-item ng-repeat="inference in inferences | filter:allInferencesOpts.keyword">
-                        <div style="width: 250px;height: 200px;margin: 0 auto;"><img image-check ng-src="{{inference.image}}" alt="" style="width:100%;height: 100%;"/></div>
-                        <div style="text-align: center;" ><a href="#/inference/display/{{inference.id}}/" style="text-decoration: none;"><h4 style="margin-top:0;font-size: 18px">
+                        <div align="center" style="margin: 0 auto;"><a href="#/inference/display/{{inference.id}}/"><img image-check ng-src="{{inference.image}}" alt="" style="max-width: 200px; max-height: 150px; "/></a></div>
+                        <div style="text-align: left; height: 20px" ><a href="#/inference/display/{{inference.id}}/" style="text-decoration: none;"><h4 style="margin-top:0;font-size: 18px">
                             {{inference.title | limitTo:80}}</h4>
                         </a></div>
                         <div style="padding-left:10px;">
-                            <span ng-bind-html="inference.brief | to_trusted | limitTo:400" style="white-space: pre-wrap;"></span>
+                            <span ng-bind-html="inference.brief | to_trusted | limitTo:400" style="line-height: 1;white-space: pre-wrap; font-size: 10pt"></span> <a href="#/inference/display/{{inference.id}}/" style="color: blue; font-size: 10pt">devamını oku...</a>
                         </div>
                         <div class="row">
                             <div class="col">
@@ -57,17 +57,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row" style="float: right;width: 75px;">
-                            <div style="float: right">
-                                <button type="button" class="button button-balanced button-small" ng-click="editInference(inference)">
-                                    <i class="fa fa-pencil-square-o "></i>
-                                </button>
-                                <button type="button" class="button button-assertive button-small"
-                                        ng-click="deleteInference(inference)">
-                                    <i class="fa fa-trash-o"></i>
-                                </button>
-                            </div>
-                        </div>   
+
                     </ion-item>
                 </ion-list>
 
