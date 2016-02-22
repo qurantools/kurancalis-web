@@ -36,14 +36,17 @@
                     <button style="margin:8px 0;float: right;min-height: 20px;height: 30px;line-height: 15px;" ng-repeat="item in tags" class="button button-positive btn-xs">{{item}}</button>
                 </div>
                 <div style="clear: both;"></div>
-                <div>
-                    <label class="toggle toggle-balanced" ng-click="changeInlineReferenceDisplay();">
+                <div style="width: 100%;overflow-x: auto;overflow-y: hidden;margin-top: 10px;">
+                    <label class="toggle toggle-balanced" ng-click="changeInlineReferenceDisplay();" style="width: 50%;float: left;">
                         <input type="checkbox">
                         <div class="track">
                             <div class="handle"></div>
                         </div>
                         Referanslarin icerigini goster
                     </label>
+                    <div align="right" style="padding-right : 25px;width: 50%;float: left;">
+                        <button class="button button-balanced button-small" ng-click="shareInference()">Paylaş</button>
+                    </div>
                 </div>
                 <div ng-if="referenced.verses.length!=0">
                     <label style="display: block;">Ceviri/Yazar</label>

@@ -8,7 +8,6 @@ angular.module('ionicApp')
         }
 
         $scope.onFacebookLoginSuccess = function(responseData){
-            alert("login controller onFacebookLoginSuccess loggedIn : "+ responseData.loggedIn);
             if (responseData.loggedIn == false) {
                 $scope.loggedIn = false;
                 $scope.logOut();

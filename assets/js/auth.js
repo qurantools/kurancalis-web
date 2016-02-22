@@ -45,7 +45,6 @@ authorizationModule.factory("authorization", function (Facebook, User, localStor
 
         factory.onFBLoginResponse=function (tokenFb, faceBookResponseMethod ) {
             var responseData = {loggedIn: false, token: ""};
-            console.log("face token : "+ tokenFb);
             if (tokenFb != "") {
 
                 var headers = {'Content-Type': 'application/x-www-form-urlencoded'};
@@ -57,7 +56,6 @@ authorizationModule.factory("authorization", function (Facebook, User, localStor
 
                 userRestangular.customPOST(data, '', '', headers).then(
                     function(response){
-                        alert("erişim success data.token : "+ JSON.stringify(response));
                         //get token
                         responseData.token = response.token;
                         responseData.loggedIn = true;
@@ -68,7 +66,6 @@ authorizationModule.factory("authorization", function (Facebook, User, localStor
                         faceBookResponseMethod(responseData);
                     },
                     function(resp) {
-                        alert("erişim success fail : "+ JSON.stringify(resp));
                         if (resp.data.code == '209') {
                             alert("Sisteme giriş yapabilmek için e-posta adresi paylaşımına izin vermeniz gerekmektedir.");
                         }
@@ -98,6 +95,10 @@ authorizationModule.factory("authorization", function (Facebook, User, localStor
                 Facebook.getLoginStatus(function (response) {
                     fbLoginStatus = response.status;
                 });
+            });
+
+            facebookConnectPlugin.getLoginStatus(function(response){
+                fbLoginStatus = response.status;
             });
 
             localStorageService.remove('access_token');

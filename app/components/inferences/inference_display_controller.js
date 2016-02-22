@@ -1,5 +1,5 @@
 angular.module('ionicApp')
-    .controller('InferenceDisplayController', function ($scope, $routeParams, $location, authorization, localStorageService,  Restangular, $timeout,$sce,$ionicModal,$ionicPopup) {
+    .controller('InferenceDisplayController', function ($scope, $routeParams, $location, authorization, localStorageService,  Restangular, $timeout,$sce,$ionicModal,$ionicPopup, $cordovaSocialSharing) {
 
         //All scope variables
         $scope.inferenceId=0;
@@ -225,12 +225,13 @@ angular.module('ionicApp')
             $timeout( function(){
                 $scope.inference_info(inferenceId);
             });
-            $scope.shareUrl =  $location.absUrl().split('#')[0] + "__/inference/display/" + $scope.inferenceId;
+            if(config_data.isMobile){
+                $scope.shareUrl =  config_data.mobileAddress + "/#/inference/display/" + $scope.inferenceId;
+            }else{
+                $scope.shareUrl =  $location.absUrl().split('#')[0] + "#/inference/display/" + $scope.inferenceId;
+            }
             $scope.shareTitle = "Çıkarım Paylaşma";
         };
-
-
-
 
         $scope.restoreInferenceDisplayViewParameters = function (localParameterData) {
             $scope.circlesForSearch = localParameterData.circles;
@@ -375,6 +376,10 @@ angular.module('ionicApp')
         $scope.getChapterVerseNotation = function(verseId){
             return Math.floor(verseId/1000)+":"+ verseId%1000;
         };
+
+        $scope.shareInference = function(){
+            $cordovaSocialSharing.share($scope.title, $scope.shareTitle, null, $scope.shareUrl);
+        }
 
         //definitions are finished. Now run initialization
         $scope.initializeInferenceDisplayController();
