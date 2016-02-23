@@ -64,7 +64,10 @@ angular.module('ionicApp')
         $scope.edit_inference = function () {
             $location.path('inference/edit/' + $scope.inferenceId + "/");           
         }
-        
+        $scope.goToInferenceList = function () {
+            $location.path('inferences');
+        }
+
         $scope.compileContent = function(original,verseList, verseIdList, inline){
             var outContent=original;
             for (var i = 0; i < verseIdList.length; i++) {
