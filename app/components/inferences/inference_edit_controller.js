@@ -30,7 +30,6 @@ angular.module('ionicApp')
             return tagsRestangular.customGET("", {}, {'access_token': $scope.access_token});
         };
         $scope.loadTags2 = function (query) {
-
             var tagsRestangular = Restangular.one('tags', query);
              tagsRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (resp) {
                  $scope.tagListInference =resp;
@@ -138,7 +137,8 @@ angular.module('ionicApp')
                 $scope.content = document.querySelectorAll("[ng-model=content]")[0].value;
                 $scope.usersForSearch = $scope.ViewUsers;
                 $scope.tags_entry = tempTaglist;
-
+                console.log($scope.tagListInference);
+                console.log(tempTaglist);
 
                 for (var index = 0; index < $scope.mobileInferencesEditorCircleListForSelection.length; ++index) {
                     if ($scope.mobileInferencesEditorCircleListForSelection[index].selected == true) {
@@ -243,8 +243,12 @@ angular.module('ionicApp')
                 $scope.inferenceImage = data.image;
                 $scope.content = $scope.prepareContentForEdit(data.content,data.references);
                 $scope.tags_entry = data.tags;
-                $scope.tagListInference = data.tags;
 
+                for (var i = 0; i < data.tags.length; i++) {
+                    $scope.tagListInference.push({ name: data.tags[i] });
+                    tempTaglist.push({ name: data.tags[i] });
+                }              
+                
                 var inference_PermRestangular = Restangular.one("inferences", inferenceId).all("permissions");
                 inference_PermRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (data) {
 
@@ -253,6 +257,18 @@ angular.module('ionicApp')
                     $scope.circlesForSearch1 = data.canCommentCircles;
                     $scope.usersForSearch1 = data.canCommentUsers;
                     $scope.ViewUsers = data.canViewUsers;
+                    console.log("1 :", $scope.mobileInferencesEditorCircleListForSelection);
+                    console.log("2 :", $scope.circlesForSearch);
+
+                    for (var i = 0; i < $scope.mobileInferencesEditorCircleListForSelection.length; i++) {
+                        for (var x = 0; x < $scope.circlesForSearch.length; x++) {
+                            if ($scope.mobileInferencesEditorCircleListForSelection[i].name == $scope.circlesForSearch[x].name) {
+                                $scope.mobileInferencesEditorCircleListForSelection[i].selected = true;
+                                break;
+                            }
+                        }
+                    }
+                    
                 });
 
             });
