@@ -551,8 +551,7 @@ angular.module('ionicApp')
             $scope.setAnnotationsPageURL();
 
             $scope.checkUserLoginStatus();
-
-
+            
             $scope.get_all_annotations();
 
             if (config_data.isMobile) {
