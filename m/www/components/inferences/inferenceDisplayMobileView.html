@@ -38,15 +38,21 @@
                 </div>               
                 <div style="clear: both;"></div>
                 <div style="width: 100%;overflow-x: auto;overflow-y: hidden;margin-top: 10px;">
-                    <label class="toggle toggle-balanced" ng-click="changeInlineReferenceDisplay();" style="width: 50%;float: left;">
+                    <div class="border-top-radius">
+                        <label class="toggle toggle-balanced" ng-click="changeInlineReferenceDisplay();" style="float: left;">
                         <input type="checkbox">
                         <div class="track">
                             <div class="handle"></div>
                         </div>
-                        Referanslarin icerigini goster
+
                     </label>
-                    <div align="right" style="padding-right : 25px;width: 50%;float: left;">
-                        <button class="button button-balanced button-small" ng-click="shareInference()">Paylaş</button>
+
+                    <div style="padding-left: 3px; width: 50%;float: left; font-size: small; text-align: left">
+                        Referanslarin icerigini goster
+                    </div>
+                    </div>
+                    <div align="right" style="padding-right : 3px;float: right; ">
+                        <button class="button button-balanced button-small  icon ion-android-share-alt" ng-click="shareInference()" style="font-size: medium; font-weight: bold"> Paylaş</button>
                     </div>
                 </div>
                 <div class="list" ng-if="referenced.verses.length!=0">
@@ -66,8 +72,8 @@
                 <div ng-repeat="verseId in referenced.verseIds" align="left" >
                     <b>{{getChapterVerseNotation(verseId)}}</b> {{referenced.verses[verseId].translation}}
                     <br>
-                    <div style="height: 30px" align="right">
-                        <button ng-repeat="tag in referenced.verses[verseId].tags" style="margin-bottom:8px;margin-right: 2px;min-height: 20px;line-height: 21px;text-align:right;" class="button button-positive btn-xs">{{tag}}</button>
+                    <div style="" align="right">
+                        <button ng-repeat="tag in referenced.verses[verseId].tags" class="tag label label-info s_a_tag">{{tag}}</button>
                     </div>
                 </div>
                
