@@ -4,7 +4,12 @@ angular.module('ionicApp')
         var onFacebookLogOutSuccess = function(){};
 
         $scope.facebookSignIn = function(){
-            authorization.facebookSignIn($scope.onFacebookLoginSuccess);
+            var nativeApp = document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1;
+            if (!nativeApp) {
+                authorization.login($scope.onFacebookLoginSuccess);
+            }else{
+                authorization.facebookSignIn($scope.onFacebookLoginSuccess);
+            }
         }
 
         $scope.onFacebookLoginSuccess = function(responseData){

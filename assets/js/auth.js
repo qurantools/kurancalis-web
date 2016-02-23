@@ -87,19 +87,22 @@ authorizationModule.factory("authorization", function (Facebook, User, localStor
 
         factory.logOut = function (faceBookResponseMethod) {
             var responseData = {loggedOut: false};
+            var nativeApp = document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1;
 
-            //remove auth
-            Facebook.api({
-                method: 'Auth.revokeAuthorization'
-            }, function (response) {
-                Facebook.getLoginStatus(function (response) {
+            if (nativeApp){
+                facebookConnectPlugin.getLoginStatus(function(response){
                     fbLoginStatus = response.status;
                 });
-            });
-
-            facebookConnectPlugin.getLoginStatus(function(response){
-                fbLoginStatus = response.status;
-            });
+            }else{
+                //remove auth
+                Facebook.api({
+                    method: 'Auth.revokeAuthorization'
+                }, function (response) {
+                    Facebook.getLoginStatus(function (response) {
+                        fbLoginStatus = response.status;
+                    });
+                });
+            }
 
             localStorageService.remove('access_token');
             responseData.loggedOut=true;
