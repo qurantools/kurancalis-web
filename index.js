@@ -288,35 +288,42 @@ if (config_data.isMobile == false) { //false
                     .when('/translations/', {
                         controller: 'HomeCtrl',
                         templateUrl: 'components/home/home.html',
-                        reloadOnSearch: false
+                        reloadOnSearch: false,
+                        pageTitle: 'Kuran Çalış - Sure'
                     })
                     .when('/annotations/', {
                         controller: 'AnnotationsCtrl',
                         templateUrl: 'components/annotations/all_annotations.html',
-                        reloadOnSearch: false
+                        reloadOnSearch: false,
+                        pageTitle: 'Kuran Çalış - Ayet Notları'
                     })
                     .when('/chapter/:chapter/author/:author/', {
-                        redirectTo: '/translations/?chapter=:chapter&verse=1&author=:author'
+                        redirectTo: '/translations/?chapter=:chapter&verse=1&author=:author',
+                        pageTitle: 'Kuran Çalış'
                     })
                     .when('/inferences/', {
                         controller: 'InferenceListController',
                         templateUrl: 'components/inferences/inferenceListMobileView.html',
-                        reloadOnSearch: false
+                        reloadOnSearch: false,
+                        pageTitle: 'Kuran Çalış - Çıkarım Notları'
                     })
                     .when('/inference/display/:inferenceId/', {
                         controller: 'InferenceDisplayController',
                         templateUrl: 'components/inferences/inferenceDisplayMobileView.html',
-                        reloadOnSearch: false
+                        reloadOnSearch: false,
+                        pageTitle: 'Kuran Çalış'
                     })
                     .when('/inference/new/', {
                         controller: 'InferenceEditController',
                         templateUrl: 'components/inferences/inferenceEditMobileView.html',
-                        reloadOnSearch: false
+                        reloadOnSearch: false,
+                        pageTitle: 'Kuran Çalış - Yeni Çıkarım Notu'
                     })
                     .when('/inference/edit/:inferenceId/', {
                         controller: 'InferenceEditController',
                         templateUrl: 'components/inferences/inferenceEditMobileView.html',
-                        reloadOnSearch: false
+                        reloadOnSearch: false,
+                        pageTitle: 'Kuran Çalış'
 					})
 					.when('/help/',{
                         controller:'HelpController',
@@ -329,10 +336,13 @@ if (config_data.isMobile == false) { //false
                         pageTitle: 'Kuran Çalış - Giriş'
                     })
                     .when('/', {
-                        redirectTo: '/translations/'
+                        redirectTo: '/translations/',
+                        pageTitle: 'Kuran Çalış'
                     })
                     .otherwise({
-                        redirectTo: '/translations/'
+                        redirectTo: '/translations/',
+                        pageTitle: 'Kuran Çalış'
+
                     });
 
 
