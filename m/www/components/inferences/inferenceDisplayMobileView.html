@@ -52,7 +52,8 @@
                     </div>
                     </div>
                     <div align="right" style="padding-right : 3px;float: right; ">
-                        <button class="button button-balanced button-small  icon ion-android-share-alt" ng-click="shareInference()" style="font-size: medium; font-weight: bold"> Paylaş</button>
+                        <a id="url" class="btn btn-primary btn-xs" ng-click="kopyala(shareUrl);callUrlCopied()" style="margin-bottom: 11px;" ng-if="!isNative"><i class="fa fa-link"></i> Linki Kopyala</a>
+                        <button class="button button-balanced button-small  icon ion-android-share-alt" ng-click="shareInference()" style="font-size: medium; font-weight: bold" ng-if="isNative"> Paylaş</button>
                     </div>
                 </div>
                 <div class="list" ng-if="referenced.verses.length!=0">

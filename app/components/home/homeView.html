@@ -87,29 +87,8 @@
                           style="text-align: right;width:100%">
                         <hr/>
                         <button ng-repeat="verseTag in verseTagsJSON[verse.id].tags" class="btn btn-xs btn-info verse_tag"
-                                ng-click="goToVerseTag(verse.id,verseTag.tag)" onclick="verseTagClicked(this)">
+                                ng-click="goToVerseTag(verse.id,verseTag.tag)" data-target='#taggedVerseModal' data-dismiss='modal' data-toggle='modal'>
                             {{verseTag.tag}}</button>
-                    </div>
-                    <div ng-if="targetVerseForTagContent==verse.id" class="verse_tag_content">
-                        <h4>Etiketli Ayetler:</h4>
-                        <a style="float: right;" href ng-click="displayAnnotationsWithTag()">Etiketli Notları
-                            Göster>></a>
-                        <select class="verseTagContentAuthor"
-                                ng-options="author.id as author.name for author in authors | filter:authorFilter"
-                                ng-model="verseTagContentAuthor"
-                                ng-change="verseTagContentAuthorUpdate(verseTagContentAuthor)">
-                        </select>
-
-
-                        <div ng-repeat="verseTagContent in verseTagContents">
-                            <div ng-repeat="verseTagContentTranslation in verseTagContent.translations"
-                                 ng-if="verseTagContentTranslation.authorId==verseTagContentAuthor">
-                                <strong>{{verseTagContentTranslation.verseId / 1000 |
-                                    number:0}}:{{verseTagContentTranslation.verseId % 1000}}</strong>
-                                <span ng-class="{translation_rtl: authorMap[verseTagContentTranslation.authorId].language=='ar'}">{{verseTagContentTranslation.content}}</span>
-                            </div>
-
-                        </div>
                     </div>
                 </div>
             </div>
@@ -190,13 +169,7 @@
     <!-- cd-panel-container -->
 </div>
 <!-- cd-panel -->
-
-
 <div ng-include="'app/components/partials/off_canvas_menu.html'"></div>
-<div ng-include="'app/components/partials/tutorial_modal.html'">
-                                        
-                                    </div>
-
-       
-
+<div ng-include="'app/components/partials/tutorial_modal.html'"></div>
+<div ng-include="'app/components/partials/tagged_verse_modal.html'"></div>
 </body>
