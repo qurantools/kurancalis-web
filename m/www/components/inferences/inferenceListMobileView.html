@@ -26,7 +26,7 @@
         <ion-nav-view name="appContent"></ion-nav-view>
         <ion-nav-view id="mobile_inferences_content" cache-view="true">
             <ion-content overflow-scroll="true" style="padding-top: 30px;">
-                <ion-list>
+                <ion-list style="margin-bottom:45px;">
                     <ion-item ng-repeat="inference in inferences | filter:allInferencesOpts.keyword">
                         <div align="center" style="margin: 0 auto;"><a href="#/inference/display/{{inference.id}}/"><img image-check ng-src="{{inference.image}}" alt="" style="max-width: 200px; max-height: 150px; "/></a></div>
                         <div style="text-align: left; height: 20px" ><a href="#/inference/display/{{inference.id}}/" style="text-decoration: none;"><h4 style="margin-top:0;font-size: 18px">
@@ -57,12 +57,20 @@
                                 </div>
                             </div>
                         </div>
-
                     </ion-item>
-                </ion-list>
+                    <div style="text-align: center; padding-top:10px;" ng-if="allInferencesOpts.hasMore==true">
+                        <button ng-click="get_all_inferences()" class="btn btn-info btn-hg">Daha fazla</button>
+                    </div>
 
+                </ion-list>
             </ion-content>
         </ion-nav-view>
     </ion-side-menu-content>
     <div ng-include="'components/navigation/left_menu.html'"></div>
 </ion-side-menus>
+
+<style>
+    .list:last-child{margin-bottom:45px;
+
+    }
+</style>
