@@ -125,6 +125,10 @@ angular.module('ionicApp')
                 }
             }, function(response) {
                 if (response.status == "400"){
+                    if (config_data.isMobile && $scope.access_token != ""){
+                        $location.path('/');
+                        return;
+                    }
                     $scope.authorizedInferenceDisplay = 2;
                 }
             });

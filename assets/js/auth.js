@@ -9,20 +9,18 @@ authorizationModule.factory("authorization", function (Facebook, User, localStor
 
         factory.login = function (faceBookResponseMethod) {
 
-            var nativeApp = document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1;
             var permissions = 'email,user_friends';
 
-            if (config_data.isMobile && !nativeApp) {
+            if (config_data.isMobile && !config_data.isNative) {
                 //different FB login for mobile web app
                 var permissionUrl = "https://m.facebook.com/dialog/oauth?client_id=" + config_data.FBAppID + "&response_type=code&redirect_uri=" + encodeURIComponent(config_data.mobileLoginCallbackAddress) + "&scope=" + permissions;
                 window.location = permissionUrl;
                 return;
-            }
-            else if(config_data.isMobile && nativeApp) {
+            }else if(config_data.isMobile && config_data.isNative) {
                 //different FB login for cordoba
                 // Settings
 
-                openFB.login(
+                /*openFB.login(
                     function(response) {
                         if(response.status === 'connected') {
                             var token = response.authResponse.accessToken;
@@ -30,7 +28,8 @@ authorizationModule.factory("authorization", function (Facebook, User, localStor
                         } else {
                             alert('Facebook girişi başarısız');
                         }
-                    }, {scope: permissions});
+                    }, {scope: permissions});*/
+                factory.facebookSignIn(faceBookResponseMethod);
                 return;
             }
 
@@ -80,16 +79,12 @@ authorizationModule.factory("authorization", function (Facebook, User, localStor
                         localStorageService.remove('access_token');
                         faceBookResponseMethod(responseData);
                     });
-
-
             }
         }
 
         factory.logOut = function (faceBookResponseMethod) {
             var responseData = {loggedOut: false};
-            var nativeApp = document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1;
-
-            if (nativeApp){
+            if (config_data.isNative){
                 facebookConnectPlugin.getLoginStatus(function(response){
                     fbLoginStatus = response.status;
                 });

@@ -276,9 +276,8 @@ if (config_data.isMobile == false) { //false
                 var mobileURL = currentPath + 'm/www/'+ locationURL;
                 console.log("Redirectiong to mobile version:" + mobileURL);
                 window.location.href = mobileURL;
-
-            }
-            else {
+                return;
+            }else {
                 RestangularProvider.setBaseUrl(config_data.webServiceUrl);
                 localStorageServiceProvider.setStorageCookie(0, '/');
                 //route
@@ -342,11 +341,11 @@ if (config_data.isMobile == false) { //false
                     .otherwise({
                         redirectTo: '/translations/',
                         pageTitle: 'Kuran Çalış'
-
                     });
 
-
-                openFB.init({appId: config_data.FBAppID});
+                if (config_data.isNative){
+                    openFB.init({appId: config_data.FBAppID});
+                }
             }
             /*
              $ionicAppProvider.identify({
@@ -1287,12 +1286,18 @@ app.factory('ChapterVerses', function ($resource) {
                 }
             });
 
-            if (!$scope.checkUserLoginStatus()){
+            if (!$scope.checkUserLoginStatus() && !$scope.isAllowUrlWithoutLogin()){
                 $location.path('login/');
             }
-
         };//end of init controller
 
+        $scope.isAllowUrlWithoutLogin = function(){
+            var url = $location.path();
+            if (url.indexOf('/inference/display/')>-1){
+                return true;
+            }
+            return false;
+        }
 
         $scope.showProgress = function(operationName) {
 
