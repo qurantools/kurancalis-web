@@ -228,7 +228,7 @@ angular.module('ionicApp')
                 $scope.inference_info(inferenceId);
             });
             if(config_data.isMobile){
-                $scope.shareUrl =  config_data.webAddress + "/#/inference/display/" + $scope.inferenceId;
+                $scope.shareUrl =  config_data.webAddress + "/__/inference/display/" + $scope.inferenceId;
             }else{
                 $scope.shareUrl =  $location.absUrl().split('#')[0] + "#/inference/display/" + $scope.inferenceId;
             }
