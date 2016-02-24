@@ -1,0 +1,28 @@
+<div class="modal" id="taggedVerseModal" ng-controller="TaggedVerseCtrl">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">{{verseTagContentParams.verse_tags}}</h4>
+                <button type="button" data-dismiss="modal" aria-hidden="true" class="btn" style="float: right;margin-top: -35px;">Tamam</button>
+            </div>
+            <div class="modal-body">
+                <div class="verse_tag_content">
+                    <a style="float: right;" href ng-click="displayAnnotationsWithTag()">Etiketli Notları Göster>></a>
+                    <select class="verseTagContentAuthor"
+                            ng-options="author.id as author.name for author in authors | filter:authorFilter"
+                            ng-model="verseTagContentAuthor"
+                            ng-change="verseTagContentAuthorUpdate(verseTagContentAuthor)">
+                    </select>
+
+                    <div ng-repeat="verseTagContent in verseTagContents">
+                        <div ng-repeat="verseTagContentTranslation in verseTagContent.translations"
+                             ng-if="verseTagContentTranslation.authorId==verseTagContentAuthor">
+                            <strong>{{verseTagContentTranslation.verseId / 1000 | number:0}}:{{verseTagContentTranslation.verseId % 1000}}</strong>
+                            <span ng-class="{translation_rtl: authorMap[verseTagContentTranslation.authorId].language=='ar'}">{{verseTagContentTranslation.content}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
