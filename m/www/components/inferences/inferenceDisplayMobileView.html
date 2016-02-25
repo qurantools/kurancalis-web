@@ -25,7 +25,7 @@
             <ion-content overflow-scroll="true" style="padding-top: 30px;margin-bottom: 30px;" class="padding" ng-if="authorizedInferenceDisplay == 1">
                 <div style="height: 20px"></div>
                     <div align="center" style="margin: 0 auto;">
-                        <img src="{{photo}}" alt="" style="max-width: 100%; max-height: 300px; " />
+                        <img src="{{photo}}" onerror='this.style.display = "none"' style="max-width: 100%; max-height: 300px; " />
                     </div>
                     <div style="text-align: center;margin:8px 0;font-weight:600;">
                         {{title}}
