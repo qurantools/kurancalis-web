@@ -276,6 +276,7 @@ if (config_data.isMobile == false) { //false
                 var mobileURL = currentPath + 'm/www/'+ locationURL;
                 console.log("Redirectiong to mobile version:" + mobileURL);
                 window.location.href = mobileURL;
+                $timeout(function(){},5000);
                 return;
             }else {
                 RestangularProvider.setBaseUrl(config_data.webServiceUrl);

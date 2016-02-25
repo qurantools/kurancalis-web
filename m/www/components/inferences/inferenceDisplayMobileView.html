@@ -22,10 +22,11 @@
 
         <ion-nav-view name="appContent"></ion-nav-view>
         <ion-nav-view id="mobile_inference_display_content">
-            <ion-content overflow-scroll="true" style="padding-top: 30px;margin-bottom: 30px;" class="padding" ng-if="authorizedInferenceDisplay == 1">
+            <ion-content overflow-scroll="true" style="padding-top: 30px;margin-bottom: 30px;" class="padding" >
                 <div style="height: 20px"></div>
                     <div align="center" style="margin: 0 auto;">
-                        <img src="{{photo}}" onerror='this.style.display = "none"' style="max-width: 100%; max-height: 300px; " />
+                        <img src="{{photo}}" style="max-width: 100%; max-height: 300px; " />
+                        <!--onerror='this.style.display = "none"' -->
                     </div>
                     <div style="text-align: center;margin:8px 0;font-weight:600;">
                         {{title}}
@@ -79,9 +80,7 @@
                 </div>
                
             </ion-content>
-            <ion-content overflow-scroll="true" style="padding-top: 30px;margin-bottom: 30px;" class="padding" ng-if="authorizedInferenceDisplay == 2">
-                <strong>Bu çıkarımı görüntüleme yetkisine sahip değilsiniz! Giriş yapmadıysanız lütfen giriş yapınız.</strong>
-            </ion-content>
+
         </ion-nav-view>
     </ion-side-menu-content>
     <div ng-include="'components/navigation/left_menu.html'"></div>

@@ -21,20 +21,20 @@
         <ion-nav-view name="appContent"></ion-nav-view>
         <ion-nav-view id="mobile_inference_edit_content">
             <ion-content overflow-scroll="true" style="padding-top: 30px;margin-bottom: 30px;" ng-controller="InferenceEditController">
+                <div style="height: 30px"></div>
                 <div class="list">
                     <label class="item item-input">                        
                         <input type="text" id="title" ng-model="title" placeholder="Başlık">
                     </label>
-                    <label class="item item-input" ng-show="imageDefined">
+                    <label class="item item-input" ng-show="imageDefined" >
                         <input type="text" class="form-control" id="inferenceImage" style="width: 95%;display: none" placeholder="Image URL" ng-model="inferenceImage">
-                        <img style="background-image: url('../../assets/img/resim_ekle_tikla.png')" height="100" src="{{inferenceImage}}"   width="165" class="file-manager-linked" data-input-id="inferenceImage"/>
-                    </label>
-                    <label class="item item-input" style="padding: 8px;">
-                         <textarea id="text-content" ng-model="content" ui-tinymce="tinymceOptions" style="height:150px">
-                        </textarea>
+                        <img style="background-image: url('../../assets/img/resim_ekle_tikla.png');max-height: 150px;max-width: 250px;"  src="{{inferenceImage}}"    class="file-manager-linked" data-input-id="inferenceImage"/>
                     </label>
                 </div>
-
+                <div style="height: 300px">
+                         <textarea id="text-content" ng-model="content" ui-tinymce="tinymceOptions" style="height: 250px; font-size: medium ">
+                        </textarea>
+                </div>
                     <div class="item item-divider">
                         Etiketler
                     </div>

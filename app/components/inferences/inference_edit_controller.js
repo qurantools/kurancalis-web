@@ -419,7 +419,8 @@ angular.module('ionicApp')
                                 $scope.content = editor.getContent();
                             })
                     },
-                    toolbar: " bold italic underline | alignleft aligncenter alignright |  forecolor "
+                    toolbar: " bold italic underline | alignleft aligncenter  |  bullist ",
+                    menu: {}
 
                 };
             }
