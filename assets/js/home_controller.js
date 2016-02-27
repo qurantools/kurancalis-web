@@ -470,7 +470,7 @@ angular.module('ionicApp')
         $scope.goToChapter = function () {
             $scope.showProgress("goToChapter");
             $scope.list_translations();
-            $scope.updateVerseTagContent();
+            //$scope.updateVerseTagContent();
             $scope.storeChapterViewParameters();
             $scope.setTranslationsPageURL();
 
@@ -989,8 +989,8 @@ angular.module('ionicApp')
         //Retrieve verses with the tag.
         $scope.goToVerseTag = function (verseId, tag) {
             $timeout(function(){
-                $scope.$broadcast("tagged_verse_modal",{verseId:verseId, tag:tag});
-            },2000);
+                $scope.$broadcast("tagged_verse_modal",{verseId:verseId, tag:tag, circles:$scope.query_circles, users:$scope.query_users});
+            });
         };
 
         $scope.singleAuthorView = function (author, verse) {

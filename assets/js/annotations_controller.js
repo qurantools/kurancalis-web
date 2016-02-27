@@ -680,7 +680,11 @@ angular.module('ionicApp')
             $scope.showEditor(annotation);
         }
 
-
+        $scope.goToVerseTag = function (verseId, tag) {
+            $timeout(function(){
+                $scope.$broadcast("tagged_verse_modal",{verseId:verseId, tag:tag, circles:$scope.circlesForSearch, users:$scope.usersForSearch });
+            });
+        };
 
         $scope.scrollDelegateTop = function(id){
             $ionicScrollDelegate.$getByHandle(id).scrollTop();

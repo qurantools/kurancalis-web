@@ -6,12 +6,33 @@
                 <button type="button" data-dismiss="modal" aria-hidden="true" class="btn" style="float: right;margin-top: -35px;">Tamam</button>
             </div>
             <div class="modal-body">
+                Kişilere ait olan notlar
+                <tags-input ng-model="taggedVerseUsers" placeholder="Kişi Seçiniz" display-property="name"
+                            replace-spaces-with-dashes="false" min-length="2">
+                    <auto-complete source="kisilistele($query)" min-length="2"></auto-complete>
+                </tags-input>
+
+                <br/>
+                Çevremdeki kişilere ait olan notlar
+                <tags-input ng-model="taggedVerseCircles" placeholder="Çevre Seçiniz"
+                            display-property="name" replace-spaces-with-dashes="false" min-length="1"
+                            add-from-autocomplete-only="true" add-on-blur="false">
+                    <auto-complete source="cevrelisteleForSearch()" load-on-empty="true"
+                                   load-on-focus="true"></auto-complete>
+                </tags-input>
+                <div style="float: right;">
+                    <button type="button" ng-click="goToVerseTag(verseId, verseTagContentParams.verse_tags)"
+                            class="btn btn-primary">
+                        <i class="fa fa-search" style="font-size: 1.3em"></i>&nbsp;&nbsp;Etiketli Ayetleri Göster
+                    </button>
+                </div>
+                <div style="height: 50px"></div>
                 <div class="verse_tag_content">
                     <a style="float: right;" href ng-click="displayAnnotationsWithTag()">Etiketli Notları Göster>></a>
                     <select class="verseTagContentAuthor"
-                            ng-options="author.id as author.name for author in authors | filter:authorFilter"
+                            ng-options="author.id as author.name for author in authors"
                             ng-model="verseTagContentAuthor"
-                            ng-change="verseTagContentAuthorUpdate(verseTagContentAuthor)">
+                            ng-change="verseTagContentAuthorUpdate()">
                     </select>
 
                     <div ng-repeat="verseTagContent in verseTagContents">
