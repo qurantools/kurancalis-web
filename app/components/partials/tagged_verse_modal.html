@@ -1,31 +1,38 @@
 <div class="modal" id="taggedVerseModal" ng-controller="TaggedVerseCtrl">
-    <div class="modal-dialog">
+    <div class="modal-xl modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">{{verseTagContentParams.verse_tags}}</h4>
                 <button type="button" data-dismiss="modal" aria-hidden="true" class="btn" style="float: right;margin-top: -35px;">Tamam</button>
             </div>
             <div class="modal-body">
-                Kişilere ait olan notlar
-                <tags-input ng-model="taggedVerseUsers" placeholder="Kişi Seçiniz" display-property="name"
-                            replace-spaces-with-dashes="false" min-length="2">
-                    <auto-complete source="kisilistele($query)" min-length="2"></auto-complete>
-                </tags-input>
-
-                <br/>
-                Çevremdeki kişilere ait olan notlar
-                <tags-input ng-model="taggedVerseCircles" placeholder="Çevre Seçiniz"
-                            display-property="name" replace-spaces-with-dashes="false" min-length="1"
-                            add-from-autocomplete-only="true" add-on-blur="false">
-                    <auto-complete source="cevrelisteleForSearch()" load-on-empty="true"
-                                   load-on-focus="true"></auto-complete>
-                </tags-input>
-                <div style="float: right;">
-                    <button type="button" ng-click="goToVerseTag(verseId, verseTagContentParams.verse_tags)"
-                            class="btn btn-primary">
-                        <i class="fa fa-search" style="font-size: 1.3em"></i>&nbsp;&nbsp;Etiketli Ayetleri Göster
-                    </button>
-                </div>
+                <table style="width: 100%">
+                    <col width="45%">
+                    <col width="45%">
+                    <col width="10%">
+                    <tr>
+                        <td style="padding: 4px;">
+                            <tags-input ng-model="taggedVerseUsers" placeholder="Kişi Seçiniz" display-property="name"
+                                        replace-spaces-with-dashes="false" min-length="2">
+                                <auto-complete source="kisilistele($query)" min-length="2"></auto-complete>
+                            </tags-input>
+                        </td>
+                        <td style="padding: 4px;">
+                            <tags-input ng-model="taggedVerseCircles" placeholder="Çevre Seçiniz"
+                                        display-property="name" replace-spaces-with-dashes="false" min-length="1"
+                                        add-from-autocomplete-only="true" add-on-blur="false">
+                                <auto-complete source="cevrelisteleForSearch()" load-on-empty="true"
+                                               load-on-focus="true"></auto-complete>
+                            </tags-input>
+                        </td>
+                        <td style="padding: 4px;">
+                            <button type="button" ng-click="goToVerseTag(verseId, verseTagContentParams.verse_tags)"
+                                    class="btn btn-primary">
+                                <i class="fa fa-search" style="font-size: 1.3em"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </table>
                 <div style="height: 50px"></div>
                 <div class="verse_tag_content">
                     <a style="float: right;" href ng-click="displayAnnotationsWithTag()">Etiketli Notları Göster>></a>

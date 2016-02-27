@@ -680,9 +680,9 @@ angular.module('ionicApp')
             $scope.showEditor(annotation);
         }
 
-        $scope.goToVerseTag = function (verseId, tag) {
+        $scope.goToVerseTag = function (authorId, verseId, tag) {
             $timeout(function(){
-                $scope.$broadcast("tagged_verse_modal",{verseId:verseId, tag:tag, circles:$scope.circlesForSearch, users:$scope.usersForSearch });
+                $scope.$broadcast("tagged_verse_modal",{verseId:verseId, tag:tag, circles:$scope.circlesForSearch, users:$scope.usersForSearch, author:authorId });
             });
         };
 

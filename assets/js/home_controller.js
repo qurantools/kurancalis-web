@@ -987,9 +987,9 @@ angular.module('ionicApp')
         };
 
         //Retrieve verses with the tag.
-        $scope.goToVerseTag = function (verseId, tag) {
+        $scope.goToVerseTag = function (authorId, verseId, tag) {
             $timeout(function(){
-                $scope.$broadcast("tagged_verse_modal",{verseId:verseId, tag:tag, circles:$scope.query_circles, users:$scope.query_users});
+                $scope.$broadcast("tagged_verse_modal",{verseId:verseId, tag:tag, circles:$scope.query_circles, users:$scope.query_users, author:authorId+""});
             });
         };
 

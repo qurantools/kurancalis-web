@@ -61,7 +61,7 @@
                 {{annotationTag}}
             </div-->
             <button ng-repeat="annotationTag in annotation.tags" class="btn btn-xs btn-info verse_tag"
-                    ng-click="goToVerseTag(annotation.verseId, annotationTag)" data-target='#taggedVerseModal' data-dismiss='modal'
+                    ng-click="goToVerseTag(annotation.author_id, annotation.verseId, annotationTag)" data-target='#taggedVerseModal' data-dismiss='modal'
                     data-toggle='modal'>
                 {{annotationTag}}
             </button>

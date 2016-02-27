@@ -86,8 +86,13 @@ angular.module('ionicApp')
                 }else{
                     $scope.taggedVerseCircles = $scope.circlesForSearch;
                 }
-                $scope.verseTagContentAuthor = $scope.authors[0].id;
-
+                if ($scope.verseTagContentAuthor == MAX_AUTHOR_MASK){
+                    if (isDefined(args.author)){
+                        $scope.verseTagContentAuthor = args.author;
+                    }else{
+                        $scope.verseTagContentAuthor = $scope.authors[0].id;
+                    }
+                }
                 $scope.goToVerseTag(args.verseId, args.tag);
             });
         };
