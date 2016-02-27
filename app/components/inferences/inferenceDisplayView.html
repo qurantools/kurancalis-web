@@ -103,7 +103,10 @@
             <b>{{getChapterVerseNotation(verseId)}}</b> {{referenced.verses[verseId].translation}}
             <br>
             <div style="height: 30px" align="right">
-                <button ng-repeat="tag in referenced.verses[verseId].tags" class="btn verse_tag ng-binding btn-info btn-xs">{{tag}}</button>
+                <button ng-repeat="tag in referenced.verses[verseId].tags" class="btn verse_tag ng-binding btn-info btn-xs"
+                        ng-click="goToVerseTag(referenced.selectedAuthor, verseId, tag)" data-target='#taggedVerseModal' data-dismiss='modal'
+                        data-toggle='modal'
+                >{{tag}}</button>
             </div>
         </div>
     </div>
@@ -132,7 +135,6 @@
         </div>
     </digercevremodal>
 </div>
-
-
 <div ng-include="'app/components/partials/off_canvas_menu.html'"></div>
+<div ng-include="'app/components/partials/tagged_verse_modal.html'"></div>
 </body>
