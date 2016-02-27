@@ -402,6 +402,12 @@ angular.module('ionicApp')
             }, 1700);
         };
 
+        $scope.goToVerseTag = function (authorId, verseId, tag) {
+            $timeout(function(){
+                $scope.$broadcast("tagged_verse_modal",{verseId:verseId, tag:tag, circles:$scope.circlesForSearch, users:$scope.usersForSearch, author:$scope.referenced.selectedAuthor });
+            });
+        };
+
         //definitions are finished. Now run initialization
         $scope.initializeInferenceDisplayController();
 

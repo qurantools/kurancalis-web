@@ -77,6 +77,16 @@ angular.module('ionicApp')
                 $scope.modal_view_user_search = modal
             });
 
+            $ionicModal.fromTemplateUrl('components/inferences/inferenceEditTinyMobileView.html', {
+                scope: $scope,
+                //animation: 'slide-in-right',
+                //animation: 'slide-left-right',
+                animation: 'slide-in-up',
+                id: 'inference_mobile_tiny_edit'
+            }).then(function (modal) {
+                $scope.modal_edit_inference_tiny = modal
+            });
+
             $scope.tagsquery= function (query) {
                 $scope.loadTags2(query)
             }
@@ -86,31 +96,19 @@ angular.module('ionicApp')
                     $scope.modal_view_user_search.show();
                 }else if(id == "inferenceTagsearch"){
                     $scope.modal_inference_tag_search.show();
+                }else if(id == "inference_mobile_tiny_edit"){
+                    $scope.modal_edit_inference_tiny.show();
                 }
             }
             $scope.closeModal = function (id) {
                 $timeout(function(){
 
-                    if (id == 'annotations_on_page') {
-                        $scope.modal_annotations_on_page.hide();
-                    } else if (id == 'chapter_selection') {
-                        $scope.modal_chapter_selection.hide();
-                    } else if (id == 'authors_list') {
-                        $scope.modal_authors_list.hide();
-                    } else if (id == 'annotations_on_page_sort') {
-                        $scope.modal_annotations_on_page_sort.hide();
-                    } else if (id == 'homesearch') {
-                        $scope.modal_home_search.hide();
-                    } else if (id == 'friendsearch') {
-                        $scope.modal_friend_search.hide();
-                    } else if (id == 'inferenceTagsearch') {
-                        $scope.modal_inference_tag_search.hide();
-
-                    } else if (id == 'viewusersearch') {
+                    if (id == 'viewusersearch') {
                         $scope.modal_view_user_search.hide();
-                    } else if (id == 'editor') {
-                        clearTextSelection();
-                        $scope.getModalEditor().hide();
+                    }else if(id == "inferenceTagsearch"){
+                        $scope.modal_inference_tag_search.hide();
+                    }else if(id == "inference_mobile_tiny_edit"){
+                        $scope.modal_edit_inference_tiny.hide();
                     }
                 },300);
             }
@@ -420,8 +418,22 @@ angular.module('ionicApp')
                             })
                     },
                     toolbar: " bold italic underline | alignleft aligncenter  |  bullist ",
+                    inline: false,
+                    theme : 'modern',
                     menu: {}
 
+                };
+
+                $scope.froalaOptions = {
+                    charCounterCount: false,
+                    toolbarInline: true
+                };
+
+                $scope.initialize = function(initControls) {
+                    $scope.initControls = initControls;
+                    $scope.deleteAll = function() {
+                        initControls.getEditor()('html.set', '');
+                    };
                 };
             }
 

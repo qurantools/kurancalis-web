@@ -1,0 +1,27 @@
+<ion-side-menus>
+    <ion-side-menu-content>
+        <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced">
+
+            </ion-nav-buttons>
+            <h1 class="title"></h1>
+            <ion-nav-buttons side="right">
+                <button class="button button-icon icon ion-checkmark"  ng-click="closeModal('inference_mobile_tiny_edit')" >Tamam
+                </button>
+            </ion-nav-buttons>
+        </ion-nav-bar>
+        <ion-nav-view name="appContents"></ion-nav-view>
+        <ion-nav-view id="mobile_inference_edit_content_tiny">
+            <ion-content overflow-scroll="true" >
+                <div style="height: 30px"></div>
+                <div style="height: 100%; width: 100%">
+                    {{title}}
+                    {{content}}
+                    {{tinymceOptions}}
+                         <textarea id="tiny-content" ng-model="content" ui-tinymce style="font-size: medium ">
+                        </textarea>
+                </div>
+
+            </ion-content>
+        </ion-nav-view>
+</ion-side-menu-content>
+    </ion-side-menus>

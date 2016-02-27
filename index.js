@@ -1,4 +1,4 @@
-var requiredModules = ['ionic', 'ngResource', 'ngRoute', 'facebook', 'restangular', 'LocalStorageModule', 'ngTagsInput', 'duScroll', 'directives.showVerse', 'directives.repeatCompleted', 'ui.select', 'myConfig', 'authorizationModule','ui.tinymce','djds4rce.angular-socialshare', 'ngSanitize', 'com.2fdevs.videogular','com.2fdevs.videogular.plugins.controls','com.2fdevs.videogular.plugins.overlayplay','com.2fdevs.videogular.plugins.poster', 'ngCordova'];
+var requiredModules = ['ionic', 'ngResource', 'ngRoute', 'facebook', 'restangular', 'LocalStorageModule', 'ngTagsInput', 'duScroll', 'directives.showVerse', 'directives.repeatCompleted', 'ui.select', 'myConfig', 'authorizationModule','djds4rce.angular-socialshare', 'ngSanitize', 'com.2fdevs.videogular','com.2fdevs.videogular.plugins.controls','com.2fdevs.videogular.plugins.overlayplay','com.2fdevs.videogular.plugins.poster', 'ngCordova','ui.tinymce'];
 
 if (config_data.isMobile) {
     var mobileModules = [];//'ionic'
@@ -132,7 +132,9 @@ var app = angular.module('ionicApp', requiredModules)
         });
 
         $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
-            $rootScope.pageTitle = current.$$route.pageTitle;
+            if( typeof current.$$route !== "undefined"){
+                $rootScope.pageTitle = current.$$route.pageTitle;
+            }
         });
 
         /*var original = $location.path;
@@ -1298,6 +1300,10 @@ app.factory('ChapterVerses', function ($resource) {
                 return true;
             }
             return false;
+        }
+        
+        $scope.navigateTo = function (target) {
+            $location.path(target);
         }
 
         $scope.showProgress = function(operationName) {
