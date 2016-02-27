@@ -74,10 +74,10 @@ angular.module('ionicApp')
             for (var i = 0; i < verseIdList.length; i++) {
                 var verseId = verseIdList[i];
                 if(inline) {
-                    outContent = outContent.replace(verseId, Math.floor(verseId / 1000) + ":" + verseId % 1000 + " - " + $scope.referenced.verses[verseId].translation);
+                    outContent = outContent.replace(new RegExp("\\["+verseId+"\\]", 'g'), "["+Math.floor(verseId / 1000) + ":" + verseId % 1000 + " - " + $scope.referenced.verses[verseId].translation+"]");
                 }
                 else{
-                    outContent = outContent.replace(verseId, Math.floor(verseId / 1000) + ":" + verseId % 1000);
+                    outContent = outContent.replace(new RegExp("\\["+verseId+"\\]", 'g'), "["+Math.floor(verseId / 1000) + ":" + verseId % 1000+"]");
                 }
             }
 
