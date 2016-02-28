@@ -111,8 +111,7 @@ var app = angular.module('ionicApp', requiredModules)
                 }
             };
         }])
-
-    .run(['$route', '$rootScope', '$location', '$ionicPlatform', function ($route, $rootScope, $location, $ionicPlatform) {
+    .run(['$route', '$rootScope', '$location', '$ionicPlatform', function ($route, $rootScope, $location, $ionicPlatform, $ionicPopup) {
 
         $ionicPlatform.ready(function () {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -164,12 +163,39 @@ var app = angular.module('ionicApp', requiredModules)
 
 if (config_data.isMobile == false) { //false
     //desktop version
-    app.config(function ($routeProvider, FacebookProvider, RestangularProvider, localStorageServiceProvider) {
+    app.config(function ($routeProvider, FacebookProvider, RestangularProvider, localStorageServiceProvider, $httpProvider) {
         RestangularProvider.setBaseUrl(config_data.webServiceUrl);
         localStorageServiceProvider.setStorageCookie(0, '/');
 
+        $httpProvider.interceptors.push(function ($q, $injector) {
+            var isConfirmPopupCalledBefore = false;
+            return {
+                'responseError': function (rejection) {
+                    var ionicPopup = $injector.get('$ionicPopup');
+                    var route = $injector.get('$route');
+                    //var modal = $injector.get('$modal');
+                    if (rejection.status == 0 && !isConfirmPopupCalledBefore) {
+                        isConfirmPopupCalledBefore = true;
+                        var answer = confirm("İnternet bağlantınız bulunmamaktadır. Yapabileceğiniz İşlemler kısıtlanmıştır. İşlem listesi aşağıdaki şekildedir...",
+                                "Internet Bağlantı Problemi!","TAMAM,'YENIDEN DENE'");
 
+                        /*var confirmPop = ionicPopup.confirm({
+                         title: 'Internet Bağlantı Problemi!',
+                         template: 'İnternet bağlantınız bulunmamaktadır. Yapabileceğiniz İşlemler kısıtlanmıştır. İşlem listesi aşağıdaki şekildedir...',
+                         cancelText: 'DEVAM',
+                         okText: 'YENİDEN DENE'
+                         });
 
+                         confirmPop.then(function (res) {
+                         if (res) {
+                         route.reload();
+                         }
+                         });*/
+                    }
+                    return $q.reject(rejection);
+                }
+            }
+        });
 
         //route
         $routeProvider
@@ -263,7 +289,7 @@ if (config_data.isMobile == false) { //false
     });
 
 } else {
-    app.config(function ($routeProvider, FacebookProvider, RestangularProvider, localStorageServiceProvider, $stateProvider, $urlRouterProvider) {
+    app.config(function ($routeProvider, FacebookProvider, RestangularProvider, localStorageServiceProvider, $stateProvider, $urlRouterProvider, $httpProvider) {
             console.log("mobile version")
 
 
@@ -284,6 +310,32 @@ if (config_data.isMobile == false) { //false
                 RestangularProvider.setBaseUrl(config_data.webServiceUrl);
                 localStorageServiceProvider.setStorageCookie(0, '/');
                 //route
+
+                $httpProvider.interceptors.push(function ($q, $injector) {
+                    var isConfirmPopupCalledBefore = false;
+                    return {
+                        'responseError': function (rejection) {
+                            var ionicPopup = $injector.get('$ionicPopup');
+                            var route = $injector.get('$route');
+                            if (rejection.status == 0 && !isConfirmPopupCalledBefore) {
+                                isConfirmPopupCalledBefore = true;
+                                var confirmPop = ionicPopup.confirm({
+                                    title: 'Internet Bağlantı Problemi!',
+                                    template: 'İnternet bağlantınız bulunmamaktadır. Yapabileceğiniz İşlemler kısıtlanmıştır. İşlem listesi aşağıdaki şekildedir...',
+                                    cancelText: 'DEVAM',
+                                    okText: 'YENİDEN DENE'
+                                });
+
+                                confirmPop.then(function (res) {
+                                    if (res) {
+                                        route.reload();
+                                    }
+                                });
+                            }
+                            return $q.reject(rejection);
+                        }
+                    };
+                });
 
                 //route
                 $routeProvider
@@ -425,8 +477,7 @@ app.factory('ChapterVerses', function ($resource) {
         }
     );
 })
-
-    .controller('MainCtrl', function ($scope, $q, $routeParams, $ionicSideMenuDelegate, $location, $timeout, ListAuthors, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService, $document, $filter, $rootScope, $state, $stateParams, $ionicModal, $ionicScrollDelegate, $ionicPosition, $ionicLoading, authorization,$rootScope) {
+    .controller('MainCtrl', function ($scope, $q, $routeParams, $ionicSideMenuDelegate, $location, $timeout, ListAuthors, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService, $document, $filter, $rootScope, $state, $stateParams, $ionicModal, $ionicScrollDelegate, $ionicPosition, $ionicLoading, authorization,$rootScope, $ionicPopup) {
         console.log("MainCtrl");
 
         //all root scope parameters should be defined and documented here
@@ -691,7 +742,16 @@ app.factory('ChapterVerses', function ($resource) {
                 },
                 function(response) {
                     console.log("Error occured while validating user login with status code", response.status);
-                    $scope.logOut();
+                    var infoPopup = $ionicPopup.alert({
+                        title: 'Var olan oturumuzun süresi dolmuştur. Çıkış yapılıyor.',
+                        template: '',
+                        buttons: []
+                    });
+
+                    $timeout(function() {
+                        infoPopup.close();
+                        $scope.logOut();
+                    }, 1700);
                 }
             );
         }
@@ -1361,7 +1421,6 @@ app.factory('ChapterVerses', function ($resource) {
 
 
     });
-
 
 function sidebarInit() {
     $('.cd-panel').on('click', function (event) {
