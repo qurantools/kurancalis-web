@@ -1,4 +1,4 @@
-var requiredModules = ['ionic', 'ngResource', 'ngRoute', 'facebook', 'restangular', 'LocalStorageModule', 'ngTagsInput', 'duScroll', 'directives.showVerse', 'directives.repeatCompleted', 'ui.select', 'myConfig', 'authorizationModule','djds4rce.angular-socialshare', 'ngSanitize', 'com.2fdevs.videogular','com.2fdevs.videogular.plugins.controls','com.2fdevs.videogular.plugins.overlayplay','com.2fdevs.videogular.plugins.poster', 'ngCordova','ui.tinymce'];
+var requiredModules = ['ionic', 'ngResource', 'ngRoute', 'facebook', 'restangular', 'LocalStorageModule', 'ngTagsInput', 'duScroll', 'directives.showVerse', 'directives.repeatCompleted', 'ui.select', 'myConfig', 'authorizationModule','djds4rce.angular-socialshare', 'ngSanitize', 'com.2fdevs.videogular','com.2fdevs.videogular.plugins.controls','com.2fdevs.videogular.plugins.overlayplay','com.2fdevs.videogular.plugins.poster', 'ngCordova','ui.tinymce', 'ui.bootstrap'];
 
 if (config_data.isMobile) {
     var mobileModules = [];//'ionic'
@@ -163,7 +163,7 @@ var app = angular.module('ionicApp', requiredModules)
 
 if (config_data.isMobile == false) { //false
     //desktop version
-    app.config(function ($routeProvider, FacebookProvider, RestangularProvider, localStorageServiceProvider, $httpProvider) {
+    app.config(function ($routeProvider, FacebookProvider, RestangularProvider, localStorageServiceProvider, $httpProvider, $modalProvider) {
         RestangularProvider.setBaseUrl(config_data.webServiceUrl);
         localStorageServiceProvider.setStorageCookie(0, '/');
 
@@ -171,26 +171,22 @@ if (config_data.isMobile == false) { //false
             var isConfirmPopupCalledBefore = false;
             return {
                 'responseError': function (rejection) {
-                    var ionicPopup = $injector.get('$ionicPopup');
-                    var route = $injector.get('$route');
-                    //var modal = $injector.get('$modal');
+                    var $route = $injector.get('$route');
+                    var $modal = $injector.get('$modal');
                     if (rejection.status == 0 && !isConfirmPopupCalledBefore) {
                         isConfirmPopupCalledBefore = true;
-                        var answer = confirm("İnternet bağlantınız bulunmamaktadır. Yapabileceğiniz İşlemler kısıtlanmıştır. İşlem listesi aşağıdaki şekildedir...",
-                                "Internet Bağlantı Problemi!","TAMAM,'YENIDEN DENE'");
-
-                        /*var confirmPop = ionicPopup.confirm({
-                         title: 'Internet Bağlantı Problemi!',
-                         template: 'İnternet bağlantınız bulunmamaktadır. Yapabileceğiniz İşlemler kısıtlanmıştır. İşlem listesi aşağıdaki şekildedir...',
-                         cancelText: 'DEVAM',
-                         okText: 'YENİDEN DENE'
-                         });
-
-                         confirmPop.then(function (res) {
-                         if (res) {
-                         route.reload();
-                         }
-                         });*/
+                        $modal.open({
+                            templateUrl: 'app/components/templates/no_internet_connection_modal.html',
+                            controller: function($scope, $modalInstance){
+                                $scope.retry = function() {
+                                    $modalInstance.close();
+                                    $route.reload();
+                                };
+                                $scope.cancel = function() {
+                                    $modalInstance.dismiss();
+                                };
+                            }
+                        })
                     }
                     return $q.reject(rejection);
                 }
