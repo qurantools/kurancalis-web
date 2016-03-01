@@ -66,7 +66,7 @@
                                 <div id="tt_{{translation.id}}" ng-show="selectedSingleAuthor==translation.authorId || !showSingleAuthor"
                                      class="col-xs-9"
                                      ng-class="{translation_rtl: authorMap[translation.authorId].language=='ar', translation_content: authorMap[translation.authorId].language!='ar'}"><span
-                                        ng-bind-html="translation.content | with_footnote_link:translation.id:translation.authorId | with_next_link:translation.chapter:translation.authorId:translation.id | to_trusted"></span>
+                                        ng-bind-html="translation.content | with_footnote_link:translation.id:translation.authorId | to_trusted"></span>
                                 </div>
                             </div>
 
@@ -172,4 +172,5 @@
 <div ng-include="'app/components/partials/off_canvas_menu.html'"></div>
 <div ng-include="'app/components/partials/tutorial_modal.html'"></div>
 <div ng-include="'app/components/partials/tagged_verse_modal.html'"></div>
+<div ng-include="'app/components/partials/detailed_verse.html'"></div>
 </body>

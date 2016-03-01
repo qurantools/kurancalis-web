@@ -1,0 +1,131 @@
+<div class="modal" id="detailedVerseModal" ng-controller="DetailedVerseCtrl">
+    <div class="modal-xl modal-dialog">
+        <div class="modal-content well">
+            <div class="modal-header">
+                <div style="float: left;">
+                    <ui-select ng-model="goToVerseParameters.chapter"
+                               theme="bootstrap"
+                               reset-search-input="false"
+                               style="width: 150px;"
+                               ng-enter="">
+                        <ui-select-match placeholder="Sure">{{$select.selected.nameTr}} - {{$select.selected.id}}</ui-select-match>
+                        <ui-select-choices repeat="chapter in chapters | selectionFilter: {id: $select.search,nameTr: $select.search,nameTr2: $select.search}">
+                            {{chapter.id}}: {{chapter.nameTr}} / {{chapter.nameTr2}}
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+                <div style="float: left" data-placement="bottom">
+                    <input type="text" ng-model="goToVerseParameters.verse" size="3" ng-enter="verseNumberValidation()" placeholder="Ayet" class="form-control"/>
+                </div>
+                <div style="float: left">
+                    <input type="hidden" ng-model="goToVerseParameters.chapter"/>
+                </div>
+
+                <div style="float: left; ">
+                    <button type="button" ng-click="verseNumberValidation()"
+                            class="btn btn-primary">
+                        <i class="fa fa-arrow-right" style="font-size: 1.3em"></i>
+                    </button>
+                </div>
+
+                <div>
+                    <div class="translation_nav_col1">
+                        <a href ng-click="scrollToVerse('{{verse.id-1}}')"><i class="fa fa-caret-left fa-2x"></i></a>
+                    </div>
+                    <div class="translation_nav_col1">
+                        <a href ng-click="scrollToVerse('{{verse.id-1}}')"><i class="fa fa-caret-right fa-2x"></i></a>
+                    </div>
+                </div>
+                <button type="button" data-dismiss="modal" aria-hidden="true" class="btn" style="float: right;margin-top: -35px;">Tamam</button>
+            </div>
+            <div class="modal-body">
+                <div style="height: 50px"></div>
+                <div class="row">
+                    <div class="col-sm-12">
+                    <div class="col-sm-2">
+                        <ul class="selectable_list">
+                            <li ng-repeat="author in authors"
+                                ng-click="detailedSearchAuthorToggleSelection(author.id)"
+                                ng-class="{ 'selected_list_item': detailedSearchAuthorSelection.indexOf(author.id) > -1}">
+                                {{author.name}}
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-10">
+                        <!-- translations-->
+                        <div class="well translations col-xs-12" id="v_{{verse.id}}">
+                            <div class="row">
+                                <div ng-repeat="translation in verse.translations">
+                                    <div class="col-xs-11" id="t_{{translation.id}}">
+                                        <div class="authorDiv_{{authorMap[translation.authorId].color}}">
+                                            {{authorMap[translation.authorId].name}}
+                                        </div>
+                                        <div id="tt_{{translation.id}}"
+                                             ng-class="{translation_rtl: authorMap[translation.authorId].language=='ar', translation_content: authorMap[translation.authorId].language!='ar'}"><span
+                                                ng-bind-html="translation.content | with_footnote_link:translation.id:translation.authorId | to_trusted"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-11">
+                                        <hr/>
+                                    </div>
+                                    <div class="col-xs-11">
+                                        <show-verse data="showVerseData.data" ng-if="showVerseAtTranslation==translation.id"
+                                                    class="showVerseData"></show-verse>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="verseTags_{{verse.id}}"
+                                 style="text-align: right;width:100%">
+                                <hr/>
+                                <button ng-repeat="verseTag in verseTagsJSON[verse.id].tags" class="btn btn-xs btn-info verse_tag"
+                                        ng-click="goToVerseTag(verse.translations[0].authorId, verse.id,verseTag.tag)" data-target='#taggedVerseModal' data-dismiss='modal' data-toggle='modal'>
+                                    {{verseTag.tag}}</button>
+                            </div>
+                        </div>
+                        <!-- tags-->
+
+                        <!-- inferences-->
+                        <div ng-repeat="inference in inferences" class="box">
+                            <div class="s_a_header">
+                                <div style="float:right;">{{inference.userName | limitTo: 25}}</div>
+                            </div>
+                            <div class="small_space">&nbsp;</div>
+                            <div>
+                                <table style="width: 100%;">
+                                    <tr>
+                                        <td>
+                                            <div style="float: left; width:200px; height:150px">
+                                                <a  href="#/inference/display/{{inference.id}}/"><img style="max-width: 200px; max-height: 150px" src="{{inference.image}}"></a>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div style="float: right">
+                                                <div style="text-align: center;" ><a href="#/inference/display/{{inference.id}}/"><h4 style="margin-top:0;">
+                                                    {{inference.title}}</h4>
+                                                </a></div>
+                                                <div style="padding-left:10px;">
+                                                    <span ng-bind-html="inference.brief | to_trusted"></span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div style="clear: both"></div>
+                            <div class="has-footer small_space">&nbsp;</div>
+                            <div ng-repeat="inferenceTag in inference.tags" class="tag label label-info s_a_tag">
+                                {{inferenceTag}}
+                            </div>
+                            <div class="small_space">&nbsp;</div>
+                            <div class="row" style="padding:0 15px">
+                                <div style="float: left">{{inference.updated | date: 'dd/MM/yyyy HH:mm:ss'}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -100,7 +100,9 @@
         </table>
         <br>
         <div ng-repeat="verseId in referenced.verseIds" style="width: 900px" align="left" >
-            <b>{{getChapterVerseNotation(verseId)}}</b> {{referenced.verses[verseId].translation}}
+            <b>
+                <a href="" ng-click='showVerseDetail(verseId)' data-target='#detailedVerseModal' data-dismiss='modal' data-toggle='modal'>{{getChapterVerseNotation(verseId)}}</a>
+            </b> {{referenced.verses[verseId].translation}}
             <br>
             <div style="height: 30px" align="right">
                 <button ng-repeat="tag in referenced.verses[verseId].tags" class="btn verse_tag ng-binding btn-info btn-xs"
@@ -137,4 +139,5 @@
 </div>
 <div ng-include="'app/components/partials/off_canvas_menu.html'"></div>
 <div ng-include="'app/components/partials/tagged_verse_modal.html'"></div>
+<div ng-include="'app/components/partials/detailed_verse.html'"></div>
 </body>

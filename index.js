@@ -1026,6 +1026,12 @@ app.factory('ChapterVerses', function ($resource) {
             });
         };
 
+        $scope.showVerseDetail = function (chapterVerse){
+            $timeout(function(){
+                var chapterAndVerse = seperateChapterAndVerse(chapterVerse);
+                $scope.$broadcast("open_verse_detail",{chapterVerse: chapterAndVerse.chapter * 1000 + chapterAndVerse.verse});
+            });
+        };
 
         $scope.showVerseFromFootnote = function (chapterVerse, author, translationId) {
 

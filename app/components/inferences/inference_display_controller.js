@@ -385,6 +385,12 @@ angular.module('ionicApp')
             return Math.floor(verseId/1000)+":"+ verseId%1000;
         };
 
+        $scope.showVerseDetail = function (verseId){
+            $timeout(function(){
+                $scope.$broadcast("open_verse_detail",{chapterVerse:verseId});
+            });
+        };
+
         $scope.shareInference = function(){
             $cordovaSocialSharing.share($scope.title, $scope.shareTitle, null, $scope.shareUrl);
         }
