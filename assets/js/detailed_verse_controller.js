@@ -1,17 +1,19 @@
 angular.module('ionicApp')
     .controller('DetailedVerseCtrl', function ($scope, $timeout, Restangular, $location, authorization) {
 
-        $scope.detailedChapters = null;
-        $scope.detailedVerseCircles = null;
-        $scope.detailedVerseUsers = null;
+        $scope.detailedChapters = [];
+        $scope.detailedVerseCircles = [];
+        $scope.detailedVerseUsers = [];
 
         $scope.verseId = -1;
         $scope.goToVerseParameters = [];
-        $scope.goToVerseParameters.chapter = 1;
+        $scope.goToVerseParameters.chapter = [];
+        $scope.goToVerseParameters.chapter.id = 0;
         $scope.goToVerseParameters.verse = 0;
 
         $scope.verse = [];
         $scope.inferences = [];
+        $scope.detailedTags = [];
 
         $scope.allInferencesParams = [];
         $scope.allInferencesParams.own_inferences = true;
@@ -21,13 +23,19 @@ angular.module('ionicApp')
 
         $scope.translationDivMap = [];
 
+        $scope.detailed_query_author_mask = 0;
+        $scope.localDetailedSearchAuthorSelection = [];
+
         $scope.goToVerse = function(verseId){
+            $scope.goToVerseParameters.chapter = $scope.detailedChapters[Math.floor($scope.verseId/1000) -1];
+            $scope.goToVerseParameters.verse = $scope.verseId%1000;
             $scope.getVerseTranslations();
+            $scope.getAnnotations();
             $scope.get_inferences();
         }
 
         $scope.verseNumberValidation = function () {
-            var chapters = $scope.chapters;
+            var chapters = $scope.detailedChapters;
             var chapter_id = $scope.goToVerseParameters.chapter.id;
             var verse_number = $scope.goToVerseParameters.verse;
 
@@ -43,6 +51,7 @@ angular.module('ionicApp')
                     alert(validationErrorMessage);
                 }
             } else {
+                $scope.verseId = chapter_id * 1000 + verse_number;
                 $scope.goToVerse();
             }
         };
@@ -54,13 +63,12 @@ angular.module('ionicApp')
             var kisiTags = "";
             var cevreTags = "";
 
-            for (var i = 0; i < $scope.detailedVerseUsers.length; i++) {
+            for (var i = 0; isDefined($scope.detailedVerseUsers) && i < $scope.detailedVerseUsers.length; i++) {
                 if (i != 0) kisiTags += ",";
                 kisiTags += $scope.detailedVerseUsers[i].id;
             }
 
-
-            for (var i = 0; i < $scope.detailedVerseCircles.length; i++) {
+            for (var i = 0; isDefined($scope.detailedVerseCircles) && i < $scope.detailedVerseCircles.length; i++) {
                 if (i != 0) cevreTags += ",";
                 cevreTags += $scope.detailedVerseCircles[i].id;
             }
@@ -73,7 +81,41 @@ angular.module('ionicApp')
                     $scope.inferences = $scope.inferences.concat(inferences);
                 }
             );
-        }
+        };
+
+        $scope.getAnnotations = function(){
+
+            var annotationsRestangular = Restangular.all("annotations");
+            $scope.allAnnotationsParams = [];
+            $scope.allAnnotationsParams.author = $scope.detailed_query_author_mask;
+
+            var kisiTags = "";
+            var cevreTags = "";
+
+            for (var i = 0; i < isDefined($scope.detailedVerseUsers)&& $scope.detailedVerseUsers.length; i++) {
+                if (i != 0)kisiTags += ",";
+                kisiTags += $scope.detailedVerseUsers[i].id;
+            }
+
+            for (var i = 0; i < isDefined($scope.detailedVerseCircles) && $scope.detailedVerseCircles.length; i++) {
+                if (i != 0)cevreTags += ",";
+                cevreTags += $scope.detailedVerseCircles[i].id;
+            }
+
+            $scope.allAnnotationsParams.users = kisiTags;
+            $scope.allAnnotationsParams.circles = cevreTags;
+            $scope.allAnnotationsParams.chapters = Math.floor($scope.verseId/1000);
+            $scope.allAnnotationsParams.verse = $scope.verseId%1000;
+
+            annotationsRestangular.customGET("", $scope.allAnnotationsParams, {'access_token': authorization.getAccessToken()}).then(function (annotations) {
+                $scope.detailedTags = [];
+                for (var i = 0; i < annotations.length; i++){
+                    for (var j = 0; j < annotations[i].tags.length; j++){
+                        $scope.detailedTags.push(annotations[i].tags[j]);
+                    }
+                }
+            });
+        };
 
         $scope.getVerseTranslations = function () {
             $scope.translationDivMap = [];
@@ -81,7 +123,7 @@ angular.module('ionicApp')
             var verseTagContentRestangular = Restangular.all("translations");
             var translationParams = [];
 
-            translationParams.author = $scope.query_author_mask;
+            translationParams.author = $scope.detailed_query_author_mask;
             translationParams.chapter = Math.floor($scope.verseId/1000);
             translationParams.verse = $scope.verseId%1000;
 
@@ -111,22 +153,70 @@ angular.module('ionicApp')
             $scope.verse = data[0];
         };
 
+        $scope.detailedSearchAuthorToggleSelection = function (author_id) {
+            var idx = $scope.localDetailedSearchAuthorSelection.indexOf(author_id);
+            if (idx > -1) {
+                $scope.localDetailedSearchAuthorSelection.splice(idx, 1);
+            }
+            else {
+                $scope.localDetailedSearchAuthorSelection.push(author_id);
+            }
+            $scope.detailed_query_author_mask = 0;
+            for (var index in $scope.localDetailedSearchAuthorSelection) {
+                $scope.detailed_query_author_mask = $scope.detailed_query_author_mask | $scope.localDetailedSearchAuthorSelection[index];
+            }
+            $scope.getVerseTranslations();
+        };
+
+        $scope.setDetailedSearchAuthorSelection = function (authorMask) {
+            $scope.localDetailedSearchAuthorSelection = [];
+            for (var index in $scope.authorMap) {
+                if (authorMask & $scope.authorMap[index].id) {
+                    $scope.localDetailedSearchAuthorSelection.push($scope.authorMap[index].id);
+                }
+            }
+            $scope.detailed_query_author_mask = authorMask;
+        };
+
+        $scope.gotoNext = function(){
+            var lastVerse = $scope.detailedChapters[113].id * 1000 + $scope.detailedChapters[113].verseCount;
+            if ($scope.verseId == lastVerse)
+                return;
+            if ($scope.verseId%1000 == $scope.detailedChapters[Math.floor($scope.verseId/1000)-1].verseCount){
+                var nextChapter = $scope.detailedChapters[Math.floor($scope.verseId/1000)];
+                $scope.verseId = nextChapter.id * 1000;
+            }
+            $scope.verseId = $scope.verseId + 1;
+            $scope.goToVerse();
+        }
+
+        $scope.gotoPrev = function(){
+            if ($scope.verseId == 1001)
+                return;
+            if ($scope.verseId%1000 == 1){
+                var previousChapter = $scope.detailedChapters[Math.floor($scope.verseId/1000)-2];
+                $scope.verseId = previousChapter.id * 1000 + previousChapter.verseCount + 1;
+            }
+            $scope.verseId = $scope.verseId - 1;
+            $scope.goToVerse();
+        }
+
         $scope.initializeTaggedVerseController = function () {
             $scope.$on('open_verse_detail', function(event, args) {
                 $scope.verseId = args.chapterVerse;
-                if (!isDefined($scope.detailedChapters)){
+                $scope.detailedVerseCircles = args.circles;
+                $scope.detailedVerseUsers = args.users;
+                if ($scope.detailedChapters.length == 0){
                     $scope.detailedChapters = $scope.chapters;
                 }
-                if (!isDefined($scope.detailedAuthors)){
-                    $scope.detailedAuthors = $scope.authorMap;
-                }
-                if ($scope.detailedVerseCircles == null)
+                if (!isDefined($scope.detailedVerseCircles) || $scope.detailedVerseCircles.length == 0)
                     $scope.detailedVerseCircles = $scope.circlesForSearch;
-                if ($scope.detailedVerseUsers == null)
+                if (!isDefined($scope.detailedVerseUsers) || $scope.detailedVerseUsers.length == 0)
                     $scope.detailedVerseUsers = $scope.usersForSearch;
 
-                $scope.goToVerseParameters.chapter = Math.floor($scope.verseId/1000);
-                $scope.goToVerseParameters.verse = $scope.verseId%1000;
+                if ($scope.localDetailedSearchAuthorSelection.length == 0){
+                    $scope.setDetailedSearchAuthorSelection($scope.query_author_mask);
+                }
                 $scope.goToVerse();
             });
         };

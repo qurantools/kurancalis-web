@@ -2,56 +2,65 @@
     <div class="modal-xl modal-dialog">
         <div class="modal-content well">
             <div class="modal-header">
-                <div style="float: left;">
-                    <ui-select ng-model="goToVerseParameters.chapter"
-                               theme="bootstrap"
-                               reset-search-input="false"
-                               style="width: 150px;"
-                               ng-enter="">
-                        <ui-select-match placeholder="Sure">{{$select.selected.nameTr}} - {{$select.selected.id}}</ui-select-match>
-                        <ui-select-choices repeat="chapter in chapters | selectionFilter: {id: $select.search,nameTr: $select.search,nameTr2: $select.search}">
-                            {{chapter.id}}: {{chapter.nameTr}} / {{chapter.nameTr2}}
-                        </ui-select-choices>
-                    </ui-select>
-                </div>
-                <div style="float: left" data-placement="bottom">
-                    <input type="text" ng-model="goToVerseParameters.verse" size="3" ng-enter="verseNumberValidation()" placeholder="Ayet" class="form-control"/>
-                </div>
-                <div style="float: left">
-                    <input type="hidden" ng-model="goToVerseParameters.chapter"/>
-                </div>
-
-                <div style="float: left; ">
-                    <button type="button" ng-click="verseNumberValidation()"
-                            class="btn btn-primary">
-                        <i class="fa fa-arrow-right" style="font-size: 1.3em"></i>
-                    </button>
-                </div>
-
-                <div>
-                    <div class="translation_nav_col1">
-                        <a href ng-click="scrollToVerse('{{verse.id-1}}')"><i class="fa fa-caret-left fa-2x"></i></a>
-                    </div>
-                    <div class="translation_nav_col1">
-                        <a href ng-click="scrollToVerse('{{verse.id-1}}')"><i class="fa fa-caret-right fa-2x"></i></a>
-                    </div>
-                </div>
-                <button type="button" data-dismiss="modal" aria-hidden="true" class="btn" style="float: right;margin-top: -35px;">Tamam</button>
             </div>
             <div class="modal-body">
-                <div style="height: 50px"></div>
+                <!-- search header-->
+                <div style="margin-top: -10px;">
+                    <!-- navigation-->
+                    <div align="center">
+                        <div style="float: left;">
+                            <ui-select ng-model="goToVerseParameters.chapter"
+                                       theme="bootstrap"
+                                       reset-search-input="false"
+                                       style="width: 150px;"
+                                       ng-enter="">
+                                <ui-select-match placeholder="Sure">{{$select.selected.nameTr}} - {{$select.selected.id}}</ui-select-match>
+                                <ui-select-choices repeat="chapter in detailedChapters | selectionFilter: {id: $select.search,nameTr: $select.search,nameTr2: $select.search}">
+                                    {{chapter.id}}: {{chapter.nameTr}} / {{chapter.nameTr2}}
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                        <div style="float: left" data-placement="bottom">
+                            <input type="text" ng-model="goToVerseParameters.verse" size="3" ng-enter="verseNumberValidation()" placeholder="Ayet" class="form-control"/>
+                        </div>
+                        <div style="float: left">
+                            <input type="hidden" ng-model="goToVerseParameters.chapter"/>
+                        </div>
+
+                        <div style="float: left; ">
+                            <button type="button" ng-click="verseNumberValidation()"
+                                    class="btn btn-primary">
+                                <i class="fa fa-arrow-right" style="font-size: 1.3em"></i>
+                            </button>
+                        </div>
+                        <div>
+                            <div class="translation_nav_col1">
+                                <a href ng-click="gotoPrev()"><i class="fa fa-caret-left fa-2x"></i></a>
+                            </div>
+                            <div class="translation_nav_col1">
+                                <a href ng-click="gotoNext()"><i class="fa fa-caret-right fa-2x"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- right buttons-->
+                    <div>
+                        <button type="button" data-dismiss="modal" aria-hidden="true" class="btn" style="float: right;">Tamam</button>
+                    </div>
+                </div>
+                <div style="height: 50px;"></div>
+                <!-- body-->
                 <div class="row">
                     <div class="col-sm-12">
-                    <div class="col-sm-2">
+                    <div class="col-sm-3">
                         <ul class="selectable_list">
                             <li ng-repeat="author in authors"
                                 ng-click="detailedSearchAuthorToggleSelection(author.id)"
-                                ng-class="{ 'selected_list_item': detailedSearchAuthorSelection.indexOf(author.id) > -1}">
+                                ng-class="{ 'selected_list_item': localDetailedSearchAuthorSelection.indexOf(author.id) > -1}">
                                 {{author.name}}
                             </li>
                         </ul>
                     </div>
-                    <div class="col-sm-10">
+                    <div class="col-sm-9">
                         <!-- translations-->
                         <div class="well translations col-xs-12" id="v_{{verse.id}}">
                             <div class="row">
@@ -78,13 +87,12 @@
                             <div id="verseTags_{{verse.id}}"
                                  style="text-align: right;width:100%">
                                 <hr/>
-                                <button ng-repeat="verseTag in verseTagsJSON[verse.id].tags" class="btn btn-xs btn-info verse_tag"
-                                        ng-click="goToVerseTag(verse.translations[0].authorId, verse.id,verseTag.tag)" data-target='#taggedVerseModal' data-dismiss='modal' data-toggle='modal'>
-                                    {{verseTag.tag}}</button>
+                                <button ng-repeat="verseTag in detailedTags" class="btn btn-xs btn-info verse_tag"
+                                        ng-click="goToVerseTag(verse.translations[0].authorId, verse.id,verseTag)" data-target='#taggedVerseModal' data-dismiss='modal' data-toggle='modal'>
+                                    {{verseTag}}</button>
                             </div>
                         </div>
                         <!-- tags-->
-
                         <!-- inferences-->
                         <div ng-repeat="inference in inferences" class="box">
                             <div class="s_a_header">

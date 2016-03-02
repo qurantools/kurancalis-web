@@ -906,7 +906,8 @@ angular.module('ionicApp')
                     for (index = 0; index < dataLength; ++index) {
                         //add verse links
                         //   dataContent = data[index].replace(/(\d{1,3}:\d{1,3})/g, "<a href='javascript: redirectToVerseByChapterAndVerse(\"$1\");'>$1</a>");
-                        dataContent = data[index].replace(/(\d{1,3}:\d{1,3})/g, "<a href=\"\" ng-click=\"showVerseDetail('$1')\" data-target='#detailedVerseModal' data-dismiss='modal' data-toggle='modal'>$1</a>");
+                        //dataContent = data[index].replace(/(\d{1,3}:\d{1,3})/g, "<a href='javascript: angular.element(document.getElementById(\"MainCtrl\")).scope().showVerseDetail(\"$1\")' data-target='#detailedVerseModal' data-dismiss='modal' data-toggle='modal'>$1</a>");
+                        dataContent = data[index].replace(/(\d{1,3}:\d{1,3})/g, "<a ng-href='#MainCtrl' onclick='javascript: angular.element(document.getElementById(\"MainCtrl\")).scope().showVerseDetail(\"$1\")' data-target='#detailedVerseModal' data-dismiss='modal' data-toggle='modal'>$1</a>");
 
                         html += "<div><div class='col-xs-1 footnote_bullet'>&#149;</div><div class='col-xs-11 footnotebg'>" + dataContent + "</div></div>";
                     }
