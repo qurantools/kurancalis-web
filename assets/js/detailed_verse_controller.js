@@ -199,7 +199,7 @@ angular.module('ionicApp')
             }
             $scope.verseId = $scope.verseId - 1;
             $scope.goToVerse();
-        }
+        };
 
         $scope.initializeTaggedVerseController = function () {
             $scope.$on('open_verse_detail', function(event, args) {

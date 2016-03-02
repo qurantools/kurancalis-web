@@ -43,8 +43,9 @@
                         </div>
                     </div>
                     <!-- right buttons-->
-                    <div>
-                        <button type="button" data-dismiss="modal" aria-hidden="true" class="btn" style="float: right;">Tamam</button>
+                    <div style="float: right;margin-top: -15px">
+                        <button type="button" data-dismiss="modal" aria-hidden="true" class="btn">Tamam</button>
+                        <a href data-dismiss="modal"><div style='width:100%; height: 40px; padding-top:8px;' data-target='#bookmark' data-toggle='modal' ng-click='openAddBookMarkModal({{goToVerseParameters.chapter.id}},{{verseId%1000}},{{verseId}})'><i class='fa fa-bookmark' style='font-size: 1.3em'></i>&nbsp;&nbsp;&nbsp;&nbsp;Burada Kaldım</div></a>
                     </div>
                 </div>
                 <div style="height: 50px;"></div>
