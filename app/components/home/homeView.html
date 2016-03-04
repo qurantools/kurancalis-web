@@ -31,10 +31,12 @@
                                   <div>
                                     <a ng-click="popoveropen()" tabindex="0" role="button" data-toggle="popover"  data-content="
                                     <div class='form-control' style='width:220px; height:auto'>
-                                    <a href><div style='width:100%; height: 40px; padding-top:8px;' ng-click='linkcreate({{translation.chapter}},{{translation.verse}})' data-target='#openlink' data-toggle='modal'><i class='fa fa-crosshairs' style='font-size: 1.3em'></i>&nbsp;&nbsp;&nbsp;&nbsp;Kelime Meali</div></a>
-                                    <hr style='padding: 0; margin-top:0 !important; margin-bottom:0 !important; height:1px; width:100%' />
-                                    <a href><div style='width:100%; height: 40px; padding-top:8px;' data-target='#bookmark' data-toggle='modal' ng-click='openAddBookMarkModal({{translation.chapter}},{{translation.verse}},{{verse.id}})'><i class='fa fa-bookmark' style='font-size: 1.3em'></i>&nbsp;&nbsp;&nbsp;&nbsp;Burada Kaldım</div></a>
-                                    <hr style='display: none; padding: 0; margin-top:0 !important; margin-bottom:0 !important; height:1px; width:100%' />
+                                        <a href><div style='width:100%; height: 40px; padding-top:8px;' ng-click='linkcreate({{translation.chapter}},{{translation.verse}})' data-target='#openlink' data-toggle='modal'><i class='fa fa-crosshairs' style='font-size: 1.3em'></i>&nbsp;&nbsp;&nbsp;&nbsp;Kelime Meali</div></a>
+                                        <hr style='padding: 0; margin-top:0 !important; margin-bottom:0 !important; height:1px; width:100%' />
+                                        <a href><div style='width:100%; height: 40px; padding-top:8px;' data-target='#bookmark' data-toggle='modal' ng-click='openAddBookMarkModal({{translation.chapter}},{{translation.verse}},{{verse.id}})'><i class='fa fa-bookmark' style='font-size: 1.3em'></i>&nbsp;&nbsp;&nbsp;&nbsp;Burada Kaldım</div></a>
+                                        <hr style='padding: 0; margin-top:0 !important; margin-bottom:0 !important; height:1px; width:100%' />
+                                        <a href><div style='width:100%; height: 40px; padding-top:8px;' data-target='#detailedVerseModal' data-toggle='modal' ng-click='showVerseDetail({{verse.id}})'><i class='fa fa-eye' style='font-size: 1.3em'></i>&nbsp;&nbsp;&nbsp;&nbsp;Ayet İnceleme</div></a>
+                                        <hr style='display: none; padding: 0; margin-top:0 !important; margin-bottom:0 !important; height:1px; width:100%' />
                                     </div>
                                     " data-html="true"><i data-toggle="popover"  class="fa fa-ellipsis-h large_icon" ></i></a>
                                    
