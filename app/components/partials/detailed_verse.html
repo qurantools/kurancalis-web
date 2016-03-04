@@ -1,13 +1,11 @@
 <div class="modal" id="detailedVerseModal" ng-controller="DetailedVerseCtrl">
     <div class="modal-xl modal-dialog">
         <div class="modal-content well">
-            <div class="modal-header">
-            </div>
-            <div class="modal-body">
+            <div class="modal-header" style="height: 60px;">
                 <!-- search header-->
-                <div style="margin-top: -10px;">
+                <div style="margin-top: -10px;position: absolute;left: 43%;">
                     <!-- navigation-->
-                    <div align="center">
+                    <div align="center" style="position: relative;left: -50%;">
                         <div style="float: left;">
                             <ui-select ng-model="goToVerseParameters.chapter"
                                        theme="bootstrap"
@@ -33,7 +31,7 @@
                                 <i class="fa fa-arrow-right" style="font-size: 1.3em"></i>
                             </button>
                         </div>
-                        <div>
+                        <div style="float: left;">
                             <div class="translation_nav_col1">
                                 <a href ng-click="gotoPrev()"><i class="fa fa-caret-left fa-2x"></i></a>
                             </div>
@@ -42,97 +40,97 @@
                             </div>
                         </div>
                     </div>
-                    <!-- right buttons-->
-                    <div style="float: right;margin-top: -15px">
-                        <button type="button" data-dismiss="modal" aria-hidden="true" class="btn">Tamam</button>
-                        <a href data-dismiss="modal"><div style='width:100%; height: 40px; padding-top:8px;' data-target='#bookmark' data-toggle='modal' ng-click='openAddBookMarkModal({{goToVerseParameters.chapter.id}},{{verseId%1000}},{{verseId}})'><i class='fa fa-bookmark' style='font-size: 1.3em'></i>&nbsp;&nbsp;&nbsp;&nbsp;Burada Kaldım</div></a>
-                    </div>
                 </div>
-                <div style="height: 50px;"></div>
+                <!-- right buttons-->
+                <div style="float: right;margin-top: -10px;">
+                    <button type="button" data-dismiss="modal" aria-hidden="true" class="btn">Tamam</button>
+                </div>
+            </div>
+            <div class="modal-body">
                 <!-- body-->
                 <div class="row">
                     <div class="col-sm-12">
-                    <div class="col-sm-3">
-                        <ul class="selectable_list">
-                            <li ng-repeat="author in authors"
-                                ng-click="detailedSearchAuthorToggleSelection(author.id)"
-                                ng-class="{ 'selected_list_item': localDetailedSearchAuthorSelection.indexOf(author.id) > -1}">
-                                {{author.name}}
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="col-sm-9">
-                        <!-- translations-->
-                        <div class="well translations col-xs-12" id="v_{{verse.id}}">
-                            <div class="row">
-                                <div ng-repeat="translation in verse.translations">
-                                    <div class="col-xs-11" id="t_{{translation.id}}">
-                                        <div class="authorDiv_{{authorMap[translation.authorId].color}}">
-                                            {{authorMap[translation.authorId].name}}
+                        <div class="col-sm-3">
+                            <a href data-dismiss="modal"><div style='width:100%; height: 40px; padding-left: 40px;;' data-target='#bookmark' data-toggle='modal' ng-click='openAddBookMarkModal()'><i class='fa fa-bookmark' style='font-size: 1.3em'></i>&nbsp;&nbsp;&nbsp;&nbsp;Burada Kaldım</div></a>
+                            <ul class="selectable_list">
+                                <li ng-repeat="author in authors"
+                                    ng-click="detailedSearchAuthorToggleSelection(author.id)"
+                                    ng-class="{ 'selected_list_item': localDetailedSearchAuthorSelection.indexOf(author.id) > -1}">
+                                    {{author.name}}
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-9">
+                            <!-- translations-->
+                            <div class="well translations col-xs-12" id="v_{{verse.id}}">
+                                <div class="row">
+                                    <div ng-repeat="translation in verse.translations">
+                                        <div class="col-xs-11" id="t_{{translation.id}}">
+                                            <div class="authorDiv_{{authorMap[translation.authorId].color}}">
+                                                {{authorMap[translation.authorId].name}}
+                                            </div>
+                                            <div id="tt_{{translation.id}}"
+                                                 ng-class="{translation_rtl: authorMap[translation.authorId].language=='ar', translation_content: authorMap[translation.authorId].language!='ar'}"><span
+                                                    ng-bind-html="translation.content | with_footnote_link:translation.id:translation.authorId | to_trusted"></span>
+                                            </div>
                                         </div>
-                                        <div id="tt_{{translation.id}}"
-                                             ng-class="{translation_rtl: authorMap[translation.authorId].language=='ar', translation_content: authorMap[translation.authorId].language!='ar'}"><span
-                                                ng-bind-html="translation.content | with_footnote_link:translation.id:translation.authorId | to_trusted"></span>
+                                        <div class="col-xs-11">
+                                            <hr/>
                                         </div>
-                                    </div>
-                                    <div class="col-xs-11">
-                                        <hr/>
-                                    </div>
-                                    <div class="col-xs-11">
-                                        <show-verse data="showVerseData.data" ng-if="showVerseAtTranslation==translation.id"
-                                                    class="showVerseData"></show-verse>
+                                        <div class="col-xs-11">
+                                            <show-verse data="showVerseData.data" ng-if="showVerseAtTranslation==translation.id"
+                                                        class="showVerseData"></show-verse>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div id="verseTags_{{verse.id}}"
-                                 style="text-align: right;width:100%">
-                                <hr/>
-                                <button ng-repeat="verseTag in detailedTags" class="btn btn-xs btn-info verse_tag"
-                                        ng-click="goToVerseTag(verse.translations[0].authorId, verse.id,verseTag)" data-target='#taggedVerseModal' data-dismiss='modal' data-toggle='modal'>
-                                    {{verseTag}}</button>
+                                <div id="verseTags_{{verse.id}}"
+                                     style="text-align: right;width:100%">
+                                    <button ng-repeat="verseTag in detailedTags" class="btn btn-xs btn-info verse_tag"
+                                            ng-click="goToVerseTag(verse.translations[0].authorId, verse.id,verseTag)" data-target='#taggedVerseModal' data-dismiss='modal' data-toggle='modal'>
+                                        {{verseTag}}</button>
+                                </div>
                             </div>
-                        </div>
-                        <!-- tags-->
-                        <!-- inferences-->
-                        <div ng-repeat="inference in inferences" class="box">
-                            <div class="s_a_header">
-                                <div style="float:right;">{{inference.userName | limitTo: 25}}</div>
-                            </div>
-                            <div class="small_space">&nbsp;</div>
-                            <div>
-                                <table style="width: 100%;">
-                                    <tr>
-                                        <td>
-                                            <div style="float: left; width:200px; height:150px">
-                                                <a  href="#/inference/display/{{inference.id}}/"><img style="max-width: 200px; max-height: 150px" src="{{inference.image}}"></a>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div style="float: right">
-                                                <div style="text-align: center;" ><a href="#/inference/display/{{inference.id}}/"><h4 style="margin-top:0;">
-                                                    {{inference.title}}</h4>
-                                                </a></div>
-                                                <div style="padding-left:10px;">
-                                                    <span ng-bind-html="inference.brief | to_trusted"></span>
+                            <!-- tags-->
+                            <!-- inferences-->
+                            <div ng-repeat="inference in inferences" class="box">
+                                <div class="s_a_header">
+                                    <div style="float:right;">{{inference.userName | limitTo: 25}}</div>
+                                </div>
+                                <div class="small_space">&nbsp;</div>
+                                <div>
+                                    <table style="width: 100%;">
+                                        <tr>
+                                            <td>
+                                                <div style="float: left; width:200px; height:150px">
+                                                    <a  href="#/inference/display/{{inference.id}}/"><img style="max-width: 200px; max-height: 150px" src="{{inference.image}}"></a>
                                                 </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                            <div style="clear: both"></div>
-                            <div class="has-footer small_space">&nbsp;</div>
-                            <div ng-repeat="inferenceTag in inference.tags" class="tag label label-info s_a_tag">
-                                {{inferenceTag}}
-                            </div>
-                            <div class="small_space">&nbsp;</div>
-                            <div class="row" style="padding:0 15px">
-                                <div style="float: left">{{inference.updated | date: 'dd/MM/yyyy HH:mm:ss'}}</div>
+                                            </td>
+                                            <td>
+                                                <div style="float: right">
+                                                    <div style="text-align: center;" ><a href="#/inference/display/{{inference.id}}/"><h4 style="margin-top:0;">
+                                                        {{inference.title}}</h4>
+                                                    </a></div>
+                                                    <div style="padding-left:10px;">
+                                                        <span ng-bind-html="inference.brief | to_trusted"></span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div style="clear: both"></div>
+                                <div class="has-footer small_space">&nbsp;</div>
+                                <div ng-repeat="inferenceTag in inference.tags" class="tag label label-info s_a_tag">
+                                    {{inferenceTag}}
+                                </div>
+                                <div class="small_space">&nbsp;</div>
+                                <div class="row" style="padding:0 15px">
+                                    <div style="float: left">{{inference.updated | date: 'dd/MM/yyyy HH:mm:ss'}}</div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
                 </div>
             </div>
         </div>

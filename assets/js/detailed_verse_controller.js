@@ -92,12 +92,12 @@ angular.module('ionicApp')
             var kisiTags = "";
             var cevreTags = "";
 
-            for (var i = 0; i < isDefined($scope.detailedVerseUsers)&& $scope.detailedVerseUsers.length; i++) {
+            for (var i = 0; isDefined($scope.detailedVerseUsers) && i < $scope.detailedVerseUsers.length; i++) {
                 if (i != 0)kisiTags += ",";
                 kisiTags += $scope.detailedVerseUsers[i].id;
             }
 
-            for (var i = 0; i < isDefined($scope.detailedVerseCircles) && $scope.detailedVerseCircles.length; i++) {
+            for (var i = 0; isDefined($scope.detailedVerseCircles) && i < $scope.detailedVerseCircles.length; i++) {
                 if (i != 0)cevreTags += ",";
                 cevreTags += $scope.detailedVerseCircles[i].id;
             }
@@ -200,6 +200,15 @@ angular.module('ionicApp')
             $scope.verseId = $scope.verseId - 1;
             $scope.goToVerse();
         };
+
+        $scope.openAddBookMarkModal = function(){
+            $scope.bookmarkParameters ={};
+            $scope.bookmarkParameters.chapterinfo = Math.floor($scope.verseId / 1000);
+            $scope.bookmarkParameters.verseinfo = $scope.verseId % 1000;
+            $scope.bookmarkParameters.bookmarkverseid = $scope.verseId;
+            $scope.bookmarkParameters.bookchaptername = $scope.detailedChapters[$scope.goToVerseParameters.chapter.id - 1].nameTr;
+            $scope.$broadcast('openAddBookMarkModal');
+        }
 
         $scope.initializeTaggedVerseController = function () {
             $scope.$on('open_verse_detail', function(event, args) {
