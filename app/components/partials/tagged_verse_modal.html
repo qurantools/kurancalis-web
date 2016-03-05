@@ -34,7 +34,7 @@
                     </tr>
                 </table>
                 <div style="height: 5px"></div>
-                <div class="verse_tag_content">
+                <div class="verse_tag_content" style="max-height: calc(100vh - 212px);overflow-y: auto;">
                     <a style="float: right;" href ng-click="displayAnnotationsWithTag()">Etiketli Notları Göster>></a>
                     <select class="verseTagContentAuthor"
                             ng-options="author.id as author.name for author in authors"
