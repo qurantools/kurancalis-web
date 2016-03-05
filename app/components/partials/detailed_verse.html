@@ -60,9 +60,9 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="col-sm-9">
+                        <div class="well col-sm-9">
                             <!-- translations-->
-                            <div class="well translations col-xs-12" id="v_{{verse.id}}">
+                            <div class="translations col-xs-12" id="v_{{verse.id}}">
                                 <div class="row">
                                     <div ng-repeat="translation in verse.translations">
                                         <div class="col-xs-11" id="t_{{translation.id}}">
@@ -83,17 +83,88 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                <div id="verseTags_{{verse.id}}"
-                                     style="text-align: right;width:100%">
-                                    <button ng-repeat="verseTag in detailedTags" class="btn btn-xs btn-info verse_tag"
-                                            ng-click="goToVerseTag(verse.translations[0].authorId, verse.id,verseTag)" data-target='#taggedVerseModal' data-dismiss='modal' data-toggle='modal'>
-                                        {{verseTag}}</button>
-                                </div>
+                            </div>
+                            <!-- circle and user search area-->
+                            <div>
+                                <table style="width: 100%;margin-top: -20px;">
+                                    <col width="45%">
+                                    <col width="45%">
+                                    <col width="10%">
+                                    <tr>
+                                        <td style="padding: 4px;">
+                                            <tags-input ng-model="detailedVerseUsers" placeholder="Kişi Seçiniz" display-property="name"
+                                                        replace-spaces-with-dashes="false" min-length="2">
+                                                <auto-complete source="kisilistele($query)" min-length="2"></auto-complete>
+                                            </tags-input>
+                                        </td>
+                                        <td style="padding: 4px;">
+                                            <tags-input ng-model="detailedVerseCircles" placeholder="Çevre Seçiniz"
+                                                        display-property="name" replace-spaces-with-dashes="false" min-length="1"
+                                                        add-from-autocomplete-only="true" add-on-blur="false">
+                                                <auto-complete source="cevrelisteleForSearch()" load-on-empty="true"
+                                                               load-on-focus="true"></auto-complete>
+                                            </tags-input>
+                                        </td>
+                                        <td style="padding: 4px;">
+                                            <button type="button" ng-click="getVerseDetails()"
+                                                    class="btn btn-primary">
+                                                <i class="fa fa-search" style="font-size: 1.3em"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </table>
                             </div>
                             <!-- tags-->
+                            <div id="verseTags_{{verse.id}}" style="text-align: right;width:100%;margin-top: 5px" ng-show="detailedTags.length > 0">
+                                <button ng-repeat="verseTag in detailedTags" class="btn btn-xs btn-info verse_tag"
+                                        ng-click="goToVerseTag(verse.translations[0].authorId, verse.id,verseTag)" data-target='#taggedVerseModal' data-dismiss='modal' data-toggle='modal'>
+                                    {{verseTag}}</button>
+                            </div>
+                            <!-- tagged verses-->
+                            <div ng-show="detailedTaggedVerses.length > 0" style="margin-top: 5px;">
+                                <div style="font-size: 20px"><i class='fa fa-bookmark' style='font-size: 1.3em'></i>Etiketler</div>
+                                <div class="verse_tag_content">
+                                    <a style="float: right;" href ng-click="displayAnnotationsWithTag()">Etiketli Ayetler</a>
+                                    <select class="detailedVerseTagContentAuthor"
+                                            ng-options="author.id as author.name for author in authors"
+                                            ng-model="detailedVerseTagContentAuthor"
+                                            ng-change="detailedVerseTagContentAuthorUpdate()">
+                                    </select>
+                                    <div ng-repeat="detailedTaggedVerse in detailedTaggedVerses">
+                                        <div ng-repeat="verseTagContentTranslation in detailedTaggedVerse.translations"
+                                             ng-if="verseTagContentTranslation.authorId==detailedVerseTagContentAuthor">
+                                            <strong><a href ng-click="goToVerseFromVerseDetail(verseTagContentTranslation.verseId)">{{verseTagContentTranslation.verseId / 1000 | number:0}}:{{verseTagContentTranslation.verseId % 1000}}</a></strong>
+                                            <span ng-class="{translation_rtl: authorMap[verseTagContentTranslation.authorId].language=='ar'}">{{verseTagContentTranslation.content}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- annotations-->
+                            <div ng-show="detailedAnnotations.length > 0" style="margin-top: 5px;">
+                                <div style="font-size: 20px"><i class='fa fa-bookmark' style='font-size: 1.3em'></i>Ayet Notları</div>
+                                <div ng-repeat="annotation in detailedAnnotations" class="box">
+                                    <div class="s_a_header">
+                                        <div style="float:left">{{annotation.updated | date: 'dd/MM/yyyy'}}</div>
+                                        <div style="float:right;">{{annotation.userName | limitTo: 25}}</div>
+                                    </div>
+                                    <div class="small_space" style="height: 20px;">&nbsp;</div>
+                                    <div class="s_a_text">
+                                        <span ng-bind-html="annotation.text | newLineAllowed | to_trusted"></span>
+                                    </div>
+                                    <div class="small_space" style="height: 5px;">&nbsp;</div>
+                                    <div style="float: right">
+                                        <button ng-repeat="annotationTag in annotation.tags" class="btn btn-xs btn-info verse_tag"
+                                                ng-click="goToVerseTag(annotation.author_id, annotation.verseId, annotationTag)" data-target='#taggedVerseModal' data-dismiss='modal' data-toggle='modal'>
+                                            {{annotationTag}}
+                                        </button>
+                                    </div>
+                                    <div class="small_space" style="height: 20px">&nbsp;</div>
+                                </div>
+                            </div>
                             <!-- inferences-->
-                            <div ng-repeat="inference in inferences" class="box">
+                            <div ng-show="inferences.length > 0" style="margin-top: 5px;">
+                                <div style="font-size: 20px"><i class='fa fa-bookmark' style='font-size: 1.3em'></i>Referanslar Veren Çıkarım Notları</div>
+                                <div ng-repeat="inference in inferences" class="well box">
                                 <div class="s_a_header">
                                     <div style="float:right;">{{inference.userName | limitTo: 25}}</div>
                                 </div>
@@ -128,6 +199,7 @@
                                 <div class="row" style="padding:0 15px">
                                     <div style="float: left">{{inference.updated | date: 'dd/MM/yyyy HH:mm:ss'}}</div>
                                 </div>
+                            </div>
                             </div>
                         </div>
                     </div>
