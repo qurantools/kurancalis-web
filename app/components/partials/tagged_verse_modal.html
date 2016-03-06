@@ -45,7 +45,9 @@
                     <div ng-repeat="verseTagContent in verseTagContents">
                         <div ng-repeat="verseTagContentTranslation in verseTagContent.translations"
                              ng-if="verseTagContentTranslation.authorId==verseTagContentAuthor">
-                            <strong>{{verseTagContentTranslation.verseId / 1000 | number:0}}:{{verseTagContentTranslation.verseId % 1000}}</strong>
+                            <strong>
+                                <a href="" ng-click='showVerseDetail(verseTagContentTranslation.verseId, taggedVerseUsers, taggedVerseCircles)' data-target='#detailedVerseModal' data-dismiss='modal' data-toggle='modal'>{{verseTagContentTranslation.verseId / 1000 | number:0}}:{{verseTagContentTranslation.verseId % 1000}}</a>
+                            </strong>
                             <span ng-class="{translation_rtl: authorMap[verseTagContentTranslation.authorId].language=='ar'}">{{verseTagContentTranslation.content}}</span>
                         </div>
                     </div>
