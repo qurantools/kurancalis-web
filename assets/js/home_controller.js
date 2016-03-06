@@ -1225,7 +1225,7 @@ angular.module('ionicApp')
         $scope.checked = function (durum) {
 
             $scope.query_own_annotations.value = durum;
-        }
+        };
         
         $scope.initChapterViewParameters = function () {
 

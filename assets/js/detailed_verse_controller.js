@@ -15,7 +15,6 @@ angular.module('ionicApp')
         $scope.inferences = [];
         $scope.detailedTags = [];
         $scope.detailedAnnotations = [];
-        $scope.detailedTaggedVerses = [];
 
         $scope.allInferencesParams = [];
         $scope.allInferencesParams.own_inferences = true;
@@ -39,7 +38,6 @@ angular.module('ionicApp')
         };
 
         $scope.getVerseDetails = function(){
-            $scope.getTaggedVerses();
             $scope.getAnnotations();
             $scope.get_inferences();
         };
@@ -68,28 +66,6 @@ angular.module('ionicApp')
 
         $scope.getSelectedVerseTagContentAuthor = function () {
             return $scope.detailedVerseTagContentAuthor;
-        };
-
-        $scope.goToVerseFromVerseDetail = function (verseId) {
-            $scope.verseId = verseId;
-            $scope.goToVerse();
-        };
-
-        $scope.getTaggedVerses = function(){
-            /*$scope.detailedVerseTagContentParams = [];
-            $scope.detailedVerseTagContentParams.author = $scope.getSelectedVerseTagContentAuthor();
-
-            $scope.detailedVerseTagContentParams.circles = !isDefined($scope.detailedVerseCircles) ? '' : $scope.getTagsWithCommaSeparated($scope.detailedVerseCircles);
-            $scope.detailedVerseTagContentParams.users = !isDefined($scope.detailedVerseUsers) ? '' : $scope.getTagsWithCommaSeparated($scope.detailedVerseUsers);
-
-            var verseTagContentRestangular = Restangular.all("translations");
-            verseTagContentRestangular.customGET("", $scope.detailedVerseTagContentParams, {'access_token': $scope.access_token}).then(function (verseTagContent) {
-                $scope.detailedTaggedVerses = verseTagContent;
-            });*/
-        };
-
-        $scope.detailedVerseTagContentAuthorUpdate = function (){
-            $scope.getTaggedVerses();
         };
 
         $scope.get_inferences = function () {
@@ -246,22 +222,6 @@ angular.module('ionicApp')
             $scope.$broadcast('openAddBookMarkModal', {bookmarkParameters:bookmarkParameters});
         };
 
-        $scope.displayAnnotationsWithTag = function () {
-            var parameters =
-            {
-                authorMask: MAX_AUTHOR_MASK,
-                verseTags: $scope.detailedVerseTagContentParams.verse_tags,
-                verseKeyword: "",
-                ownAnnotations: true,
-                orderby: "time",
-                chapters: Math.floor($scope.verseId/1000),
-                verses: $scope.verseId%1000,
-                circles: Base64.encode(JSON.stringify($scope.detailedVerseCircles)),
-                users: Base64.encode(JSON.stringify($scope.detailedVerseUsers))
-            }
-            $location.path("/annotations/", false).search(parameters);
-        };
-
         $scope.initializeTaggedVerseController = function () {
             $scope.$on('open_verse_detail', function(event, args) {
                 $scope.verseId = args.chapterVerse;
@@ -271,9 +231,9 @@ angular.module('ionicApp')
                     $scope.detailedChapters = $scope.chapters;
                 }
                 if (!isDefined($scope.detailedVerseCircles) || $scope.detailedVerseCircles.length == 0)
-                    $scope.detailedVerseCircles = $scope.circlesForSearch;
+                    $scope.detailedVerseCircles = $scope.query_circles;
                 if (!isDefined($scope.detailedVerseUsers) || $scope.detailedVerseUsers.length == 0)
-                    $scope.detailedVerseUsers = $scope.usersForSearch;
+                    $scope.detailedVerseUsers = $scope.query_users;
 
                 if ($scope.localDetailedSearchAuthorSelection.length == 0){
                     $scope.setDetailedSearchAuthorSelection($scope.authors[5].id);

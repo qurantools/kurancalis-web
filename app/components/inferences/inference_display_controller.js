@@ -387,7 +387,7 @@ angular.module('ionicApp')
 
         $scope.showVerseDetail = function (verseId){
             $timeout(function(){
-                $scope.$broadcast("open_verse_detail",{chapterVerse:verseId});
+                $scope.$broadcast("open_verse_detail",{chapterVerse:verseId, circles:$scope.circlesForSearch, users:$scope.usersForSearch});
             });
         };
 

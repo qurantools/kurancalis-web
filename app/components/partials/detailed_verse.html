@@ -115,33 +115,17 @@
                                 </table>
                             </div>
                             <!-- tags-->
-                            <div id="verseTags_{{verse.id}}" style="text-align: right;width:100%;margin-top: 5px" ng-show="detailedTags.length > 0">
-                                <button ng-repeat="verseTag in detailedTags" class="btn btn-xs btn-info verse_tag"
-                                        ng-click="goToVerseTag(verse.translations[0].authorId, verse.id,verseTag)" data-target='#taggedVerseModal' data-dismiss='modal' data-toggle='modal'>
-                                    {{verseTag}}</button>
-                            </div>
-                            <!-- tagged verses-->
-                            <div ng-show="detailedTaggedVerses.length > 0" style="margin-top: 5px;">
-                                <div style="font-size: 20px"><i class='fa fa-bookmark' style='font-size: 1.3em'></i>Etiketler</div>
-                                <div class="verse_tag_content">
-                                    <a style="float: right;" href ng-click="displayAnnotationsWithTag()">Etiketli Ayetler</a>
-                                    <select class="detailedVerseTagContentAuthor"
-                                            ng-options="author.id as author.name for author in authors"
-                                            ng-model="detailedVerseTagContentAuthor"
-                                            ng-change="detailedVerseTagContentAuthorUpdate()">
-                                    </select>
-                                    <div ng-repeat="detailedTaggedVerse in detailedTaggedVerses">
-                                        <div ng-repeat="verseTagContentTranslation in detailedTaggedVerse.translations"
-                                             ng-if="verseTagContentTranslation.authorId==detailedVerseTagContentAuthor">
-                                            <strong><a href ng-click="goToVerseFromVerseDetail(verseTagContentTranslation.verseId)">{{verseTagContentTranslation.verseId / 1000 | number:0}}:{{verseTagContentTranslation.verseId % 1000}}</a></strong>
-                                            <span ng-class="{translation_rtl: authorMap[verseTagContentTranslation.authorId].language=='ar'}">{{verseTagContentTranslation.content}}</span>
-                                        </div>
-                                    </div>
+                            <div id="verseTags_{{verse.id}}" style="width:100%;margin-top: 5px" ng-show="detailedTags.length > 0">
+                                <div style="font-size: 20px"><i class='fa fa-bookmark' style='font-size: 1.3em;margin-right: 10px;'></i>Etiketler</div>
+                                <div style="text-align: right;">
+                                    <button ng-repeat="verseTag in detailedTags" class="btn btn-xs btn-info verse_tag"
+                                            ng-click="goToVerseTag(verse.translations[0].authorId, verse.id,verseTag)" data-target='#taggedVerseModal' data-dismiss='modal' data-toggle='modal'>
+                                        {{verseTag}}</button>
                                 </div>
                             </div>
                             <!-- annotations-->
                             <div ng-show="detailedAnnotations.length > 0" style="margin-top: 5px;">
-                                <div style="font-size: 20px"><i class='fa fa-bookmark' style='font-size: 1.3em'></i>Ayet Notları</div>
+                                <div style="font-size: 20px"><i class='fa fa-bookmark' style='font-size: 1.3em;margin-right: 10px;'></i>Ayet Notları</div>
                                 <div ng-repeat="annotation in detailedAnnotations" class="box">
                                     <div class="s_a_header">
                                         <div style="float:left">{{annotation.updated | date: 'dd/MM/yyyy'}}</div>
@@ -163,7 +147,7 @@
                             </div>
                             <!-- inferences-->
                             <div ng-show="inferences.length > 0" style="margin-top: 5px;">
-                                <div style="font-size: 20px"><i class='fa fa-bookmark' style='font-size: 1.3em'></i>Referanslar Veren Çıkarım Notları</div>
+                                <div style="font-size: 20px"><i class='fa fa-bookmark' style='font-size: 1.3em;margin-right: 10px;'></i>Referanslar Veren Çıkarım Notları</div>
                                 <div ng-repeat="inference in inferences" class="well box">
                                 <div class="s_a_header">
                                     <div style="float:right;">{{inference.userName | limitTo: 25}}</div>
