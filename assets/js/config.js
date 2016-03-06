@@ -5,8 +5,8 @@ var config_module = angular.module('myConfig', []);
 var domain = "http://localhost:63342/kurancalis-web";
 
 var config_data = {
-    'webServiceUrl': 'https://securewebserver.net/jetty/qttest/rest',
-    //'webServiceUrl': 'http://localhost:8080/QuranToolsApp/rest',
+    //'webServiceUrl': 'https://securewebserver.net/jetty/qttest/rest',
+    'webServiceUrl': 'http://localhost:8080/QuranToolsApp/rest',
     'webAddress': domain,
     'mobileAddress': domain+'/m/www',
     'mobileLoginCallbackAddress': domain +'/m/www/components/mobile_auth/login_callback.html',

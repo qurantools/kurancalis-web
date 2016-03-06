@@ -82,19 +82,6 @@ angular.module('ionicApp')
             localStorageService.set('chapter_view_parameters', localParameterData);
         };
         
-       
-        
-        $scope.openAddBookMarkModal = function(chapterinfo, verseinfo, bookmarkverseid){
-            
-           var bookmarkParameters ={};
-           bookmarkParameters.chapterinfo = chapterinfo;
-           bookmarkParameters.verseinfo = verseinfo;
-           bookmarkParameters.bookmarkverseid = bookmarkverseid;
-           bookmarkParameters.bookchaptername = $scope.chapters[chapterinfo - 1].nameTr;
-           
-           $scope.$broadcast('openAddBookMarkModal', {bookmarkParameters:bookmarkParameters});
-        };
-        
         $scope.searchBookMarkModal = function(){
             
             $scope.$broadcast('searchBookMarkModal');

@@ -213,15 +213,6 @@ angular.module('ionicApp')
             $scope.goToVerse();
         };
 
-        $scope.openAddBookMarkModal = function(){
-            var bookmarkParameters ={};
-            bookmarkParameters.chapterinfo = Math.floor($scope.verseId / 1000);
-            bookmarkParameters.verseinfo = $scope.verseId % 1000;
-            bookmarkParameters.bookmarkverseid = $scope.verseId;
-            bookmarkParameters.bookchaptername = $scope.detailedChapters[$scope.goToVerseParameters.chapter.id - 1].nameTr;
-            $scope.$broadcast('openAddBookMarkModal', {bookmarkParameters:bookmarkParameters});
-        };
-
         $scope.initializeTaggedVerseController = function () {
             $scope.$on('open_verse_detail', function(event, args) {
                 $scope.verseId = args.chapterVerse;

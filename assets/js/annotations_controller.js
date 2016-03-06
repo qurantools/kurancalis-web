@@ -686,12 +686,6 @@ angular.module('ionicApp')
             $ionicScrollDelegate.$getByHandle(id).scrollTop();
         };
 
-        $scope.showVerseDetail = function (verseId){
-            $timeout(function(){
-                $scope.$broadcast("open_verse_detail",{chapterVerse:verseId, circles:$scope.circlesForSearch, users:$scope.usersForSearch});
-            });
-        };
-
         $scope.initAnnotationsParameters();
         $timeout(function(){
             $scope.$broadcast("displayTutorial",{id:"annotations"})

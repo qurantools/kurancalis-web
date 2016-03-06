@@ -2,7 +2,6 @@
 <div class="container">
     <div ng-include="'app/components/partials/navigation.html'"></div>
     <div ng-include="'app/components/partials/kelimeal.htm'"></div>
-    <div ng-include="'app/components/partials/bookmark.htm'"></div>
     <div class="nav-bottom"></div>
     <div class="row">
         <h2 style="text-align: center">{{chapter_title}}</h2>
@@ -33,7 +32,7 @@
                                     <div class='form-control' style='width:220px; height:auto'>
                                         <a href><div style='width:100%; height: 40px; padding-top:8px;' ng-click='linkcreate({{translation.chapter}},{{translation.verse}})' data-target='#openlink' data-toggle='modal'><i class='fa fa-crosshairs' style='font-size: 1.3em'></i>&nbsp;&nbsp;&nbsp;&nbsp;Kelime Meali</div></a>
                                         <hr style='padding: 0; margin-top:0 !important; margin-bottom:0 !important; height:1px; width:100%' />
-                                        <a href><div style='width:100%; height: 40px; padding-top:8px;' data-target='#bookmark' data-toggle='modal' ng-click='openAddBookMarkModal({{translation.chapter}},{{translation.verse}},{{verse.id}})'><i class='fa fa-bookmark' style='font-size: 1.3em'></i>&nbsp;&nbsp;&nbsp;&nbsp;Burada Kaldım</div></a>
+                                        <a href><div style='width:100%; height: 40px; padding-top:8px;' data-target='#bookmark' data-toggle='modal' ng-click='openAddBookMarkModal({{verse.id}})'><i class='fa fa-bookmark' style='font-size: 1.3em'></i>&nbsp;&nbsp;&nbsp;&nbsp;Burada Kaldım</div></a>
                                         <hr style='padding: 0; margin-top:0 !important; margin-bottom:0 !important; height:1px; width:100%' />
                                         <a href><div style='width:100%; height: 40px; padding-top:8px;' data-target='#detailedVerseModal' data-toggle='modal' ng-click='showVerseDetail({{verse.id}})'><i class='fa fa-eye' style='font-size: 1.3em'></i>&nbsp;&nbsp;&nbsp;&nbsp;Ayet İnceleme</div></a>
                                         <hr style='display: none; padding: 0; margin-top:0 !important; margin-bottom:0 !important; height:1px; width:100%' />
@@ -61,7 +60,7 @@
                                     <div class='form-control' style='width:220px; height:auto'>
                                     <a href><div style='width:100%' ng-click='linkcreate({{translation.chapter}},{{translation.verse}})' data-target='#openlink' data-toggle='modal'>Kelime Meali</div></a>
                                     <hr style='width:100%' />
-                                    <a href><div style='width:100%' data-target='#bookmark' data-toggle='modal' ng-click='openAddBookMarkModal({{translation.chapter}},{{translation.verse}},{{verse.id}})'>Burada Kaldım</div></a>
+                                    <a href><div style='width:100%' data-target='#bookmark' data-toggle='modal' ng-click='openAddBookMarkModal({{verse.id}})'>Burada Kaldım</div></a>
                                     </div>" data-html="true"><i data-toggle="popover" class="fa fa-ellipsis-h large_icon" ></i></a>
                                   
                                 </div>
@@ -173,6 +172,4 @@
 <!-- cd-panel -->
 <div ng-include="'app/components/partials/off_canvas_menu.html'"></div>
 <div ng-include="'app/components/partials/tutorial_modal.html'"></div>
-<div ng-include="'app/components/partials/tagged_verse_modal.html'"></div>
-<div ng-include="'app/components/partials/detailed_verse.html'"></div>
 </body>
