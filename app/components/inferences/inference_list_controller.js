@@ -464,7 +464,7 @@ angular.module('ionicApp')
                     $scope.modal_addUserToAllInferencesSearch = modal
                 });
 
-                $ionicModal.fromTemplateUrl('components/partials/add_tag_to_inference.html', {
+                $ionicModal.fromTemplateUrl('components/partials/add_tag_to_inferences.html', {
                     scope: $scope,
                     //animation: 'slide-in-right',
                     //animation: 'slide-left-right',
@@ -540,7 +540,11 @@ angular.module('ionicApp')
           //  $scope.showEditor(inference);
         }
 
-
+        $scope.allInferencesOrderByChanged = function (selectedOrderOption) {
+            $scope.allInferencesOrderBy = selectedOrderOption;
+            $scope.allInferencesParams.start = 0;
+            $scope.get_all_inferences();
+        }
 
         $scope.scrollDelegateTop = function (id) {
             $ionicScrollDelegate.$getByHandle(id).scrollTop();
