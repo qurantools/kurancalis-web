@@ -45,7 +45,7 @@ angular.module('ionicApp')
         $scope.verseNumberValidation = function () {
             var chapters = $scope.detailedChapters;
             var chapter_id = $scope.goToVerseParameters.chapter.id;
-            var verse_number = $scope.goToVerseParameters.verse;
+            var verse_number = parseInt($scope.goToVerseParameters.verse);
 
             //search array with id
             var validationErrorMessage = "Geçerli ayet ve sure numarası giriniz";
