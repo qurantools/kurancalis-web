@@ -51,7 +51,7 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="col-sm-3">
-                            <a href data-dismiss="modal"><div style='width:100%; height: 40px; padding-left: 40px;;' data-target='#bookmark' data-toggle='modal' ng-click="openAddBookMarkModal(verse.id)"><i class='fa fa-bookmark' style='font-size: 1.3em'></i>&nbsp;&nbsp;&nbsp;&nbsp;Burada Kaldım</div></a>
+                            <a href><div style='width:100%; height: 40px; padding-left: 40px;;' data-target='#bookmark' data-toggle='modal' ng-click="openAddBookMarkModal(verse.id)"><i class='fa fa-bookmark' style='font-size: 1.3em'></i>&nbsp;&nbsp;&nbsp;&nbsp;Burada Kaldım</div></a>
                             <ul class="selectable_list">
                                 <li ng-repeat="author in authors"
                                     ng-click="detailedSearchAuthorToggleSelection(author.id)"
@@ -119,7 +119,7 @@
                                 <div style="font-size: 20px"><i class='fa fa-bookmark' style='font-size: 1.3em;margin-right: 10px;'></i>Etiketler</div>
                                 <div style="text-align: right;">
                                     <button ng-repeat="verseTag in detailedTags" class="btn btn-xs btn-info verse_tag"
-                                            ng-click="goToVerseTag(verse.translations[0].authorId, verse.id,verseTag)" data-target='#taggedVerseModal' data-dismiss='modal' data-toggle='modal'>
+                                            ng-click="goToVerseTag(verse.translations[0].authorId, verse.id,verseTag)" data-target='#taggedVerseModal' data-toggle='modal'>
                                         {{verseTag}}</button>
                                 </div>
                             </div>
@@ -138,7 +138,7 @@
                                     <div class="small_space" style="height: 5px;">&nbsp;</div>
                                     <div style="float: right">
                                         <button ng-repeat="annotationTag in annotation.tags" class="btn btn-xs btn-info verse_tag"
-                                                ng-click="goToVerseTag(annotation.author_id, annotation.verseId, annotationTag)" data-target='#taggedVerseModal' data-dismiss='modal' data-toggle='modal'>
+                                                ng-click="goToVerseTag(annotation.author_id, annotation.verseId, annotationTag)" data-target='#taggedVerseModal' data-toggle='modal'>
                                             {{annotationTag}}
                                         </button>
                                     </div>

@@ -215,7 +215,7 @@ angular.module('ionicApp')
 
         $scope.initializeTaggedVerseController = function () {
             $scope.$on('open_verse_detail', function(event, args) {
-                $scope.verseId = args.chapterVerse;
+                $scope.verseId = parseInt(args.chapterVerse);
                 $scope.detailedVerseCircles = args.circles;
                 $scope.detailedVerseUsers = args.users;
                 if ($scope.detailedChapters.length == 0){
