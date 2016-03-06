@@ -36,7 +36,7 @@
     <div>
         <div ng-repeat="annotation in annotations" class="box">
             <div class="s_a_header">
-                <a href='' ng-click="showVerseDetail(annotation.verseId)" data-target='#detailedVerseModal' data-dismiss='modal' data-toggle='modal'>{{annotation.verseId / 1000 | number:0}}:{{annotation.verseId % 1000}}</a>
+                <a href='' ng-click="showVerseDetail(annotation.verseId, usersForSearch, circlesForSearch)" data-target='#detailedVerseModal' data-dismiss='modal' data-toggle='modal'>{{annotation.verseId / 1000 | number:0}}:{{annotation.verseId % 1000}}</a>
                 <button ng-click="showVerse(annotation)" class="btn btn-primary btn-xs"
                         ng-if="showVerseData.annotationId!=annotation.annotationId"><i
                         class="fa fa-cog"></i></button>

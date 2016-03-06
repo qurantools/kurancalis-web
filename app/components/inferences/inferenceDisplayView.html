@@ -101,7 +101,7 @@
         <br>
         <div ng-repeat="verseId in referenced.verseIds" style="width: 900px" align="left" >
             <b>
-                <a href="" ng-click='showVerseDetail(verseId)' data-target='#detailedVerseModal' data-dismiss='modal' data-toggle='modal'>{{getChapterVerseNotation(verseId)}}</a>
+                <a href="" ng-click='showVerseDetail(verseId, usersForSearch, circlesForSearch)' data-target='#detailedVerseModal' data-dismiss='modal' data-toggle='modal'>{{getChapterVerseNotation(verseId)}}</a>
             </b> {{referenced.verses[verseId].translation}}
             <br>
             <div style="height: 30px" align="right">
