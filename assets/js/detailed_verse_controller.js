@@ -227,13 +227,11 @@ angular.module('ionicApp')
                     $scope.detailedVerseUsers = $scope.query_users;
 
                 if ($scope.localDetailedSearchAuthorSelection.length == 0){
-                    $scope.setDetailedSearchAuthorSelection($scope.authors[5].id);
+                    $scope.setDetailedSearchAuthorSelection(MAX_AUTHOR_MASK);
                 }
                 if ($scope.detailedVerseTagContentAuthor == MAX_AUTHOR_MASK){
                     if (isDefined(args.author)){
                         $scope.detailedVerseTagContentAuthor = args.author;
-                    }else{
-                        $scope.detailedVerseTagContentAuthor = $scope.authors[5].id;
                     }
                 }
                 $scope.goToVerse();
