@@ -19,6 +19,7 @@ var config_data = {
 }
 
 var MAX_AUTHOR_MASK = "2147483647"; //32 authors
+var DEFAULT_TURKISH_AUTHOR_MASK = "523794";
 
 function isMobile() {
     //test for mobile

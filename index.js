@@ -1028,12 +1028,7 @@ app.factory('ChapterVerses', function ($resource) {
 
         $scope.showVerseDetail = function (chapterVerse, users, circles){
             $timeout(function(){
-               // if (typeof chapterVerse === 'number'){
-                    $scope.$broadcast("open_verse_detail",{chapterVerse: chapterVerse, circles:circles, users:users});
-               //     return;
-               // }
-                //var chapterAndVerse = seperateChapterAndVerse(chapterVerse);
-                //$scope.$broadcast("open_verse_detail",{chapterVerse: parseInt(chapterAndVerse.chapter) * 1000 + parseInt(chapterAndVerse.verse), circles:$scope.circlesForSearch, users:$scope.usersForSearch});
+                $scope.$broadcast("open_verse_detail",{chapterVerse: chapterVerse, circles:circles, users:users});
             });
         };
 
