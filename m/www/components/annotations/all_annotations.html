@@ -81,7 +81,7 @@
                             <div>
                                 <button ng-repeat="annotationTag in annotation.tags" class="tag label label-info s_a_tag btn btn-xs btn-info verse_tag"
                                         style="border: 0;"
-                                        ng-click="goToVerseTag(annotation.author_id, annotation.verseId, annotationTag)" >
+                                        ng-click="goToVerseTag(annotation.author_id, annotation.verseId, annotationTag, usersForSearch, circlesForSearch)" >
                                     {{annotationTag}}
                                 </button>
                             </div>

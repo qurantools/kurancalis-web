@@ -106,7 +106,7 @@
             <br>
             <div style="height: 30px" align="right">
                 <button ng-repeat="tag in referenced.verses[verseId].tags" class="btn verse_tag ng-binding btn-info btn-xs"
-                        ng-click="goToVerseTag(referenced.selectedAuthor, verseId, tag)" data-target='#taggedVerseModal' data-dismiss='modal'
+                        ng-click="goToVerseTag(referenced.selectedAuthor, verseId, tag, usersForSearch, circlesForSearch)" data-target='#taggedVerseModal' data-dismiss='modal'
                         data-toggle='modal'
                 >{{tag}}</button>
             </div>

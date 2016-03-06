@@ -672,14 +672,7 @@ angular.module('ionicApp')
         };
 
         $scope.editAnnotation= function (annotation){
-
             $scope.showEditor(annotation);
-        }
-
-        $scope.goToVerseTag = function (authorId, verseId, tag) {
-            $timeout(function(){
-                $scope.$broadcast("tagged_verse_modal",{verseId:verseId, tag:tag, circles:$scope.circlesForSearch, users:$scope.usersForSearch, author:authorId });
-            });
         };
 
         $scope.scrollDelegateTop = function(id){

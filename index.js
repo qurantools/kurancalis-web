@@ -1265,6 +1265,9 @@ app.factory('ChapterVerses', function ($resource) {
             $scope.$broadcast('openAddBookMarkModal', {verseId:verseId});
         };
 
+        $scope.goToVerseTag = function (authorId, verseId, tag, users, circles) {
+            $scope.$broadcast("tagged_verse_modal",{verseId:verseId, tag:tag, circles:circles, users:users, author:authorId+""});
+        };
 
         $scope.initializeController = function () {
 

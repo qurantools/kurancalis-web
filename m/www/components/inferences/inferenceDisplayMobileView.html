@@ -72,7 +72,7 @@
                     <div style="" align="right">
                         <button ng-repeat="tag in referenced.verses[verseId].tags"
                                 style="border: 0;"
-                                ng-click="goToVerseTag(referenced.selectedAuthor, verseId, tag)"
+                                ng-click="goToVerseTag(referenced.selectedAuthor, verseId, tag, usersForSearch, circlesForSearch)"
                                 class="tag label label-info s_a_tag">{{tag}}</button>
                     </div>
                 </div>
