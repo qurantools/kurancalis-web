@@ -21,15 +21,15 @@
             $scope.bookmarksorangechapter = "";
             $scope.bookmarksorangechapterid = "";             
             
-            $scope.$on("openAddBookMarkModal", function(event) {
+            $scope.$on("openAddBookMarkModal", function(event, args) {
+                $scope.bookmarkParameters = args.bookmarkParameters;
+                $scope.chapterinfo = $scope.bookmarkParameters.chapterinfo;
+                $scope.verseinfo = $scope.bookmarkParameters.verseinfo;
+                $scope.bookmarkverseid = $scope.bookmarkParameters.bookmarkverseid;
+                $scope.bookchaptername = $scope.chapters[$scope.chapterinfo - 1].nameTr;
 
-            $scope.chapterinfo = $scope.bookmarkParameters.chapterinfo;
-            $scope.verseinfo = $scope.bookmarkParameters.verseinfo;
-            $scope.bookmarkverseid = $scope.bookmarkParameters.bookmarkverseid;
-            $scope.bookchaptername = $scope.chapters[$scope.chapterinfo - 1].nameTr;
-           
-            bookmark_search();
-        });
+                bookmark_search();
+            });
         
         $scope.$on("searchBookMarkModal", function(event) {
 

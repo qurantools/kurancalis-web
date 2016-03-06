@@ -39,7 +39,7 @@
                     <select class="verseTagContentAuthor"
                             ng-options="author.id as author.name for author in authors"
                             ng-model="verseTagContentAuthor"
-                            ng-change="verseTagContentAuthorUpdate()">
+                            ng-change="verseTagContentAuthorUpdate(verseTagContentAuthor)">
                     </select>
 
                     <div ng-repeat="verseTagContent in verseTagContents">

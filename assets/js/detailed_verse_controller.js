@@ -79,8 +79,8 @@ angular.module('ionicApp')
             $scope.detailedVerseTagContentParams = [];
             $scope.detailedVerseTagContentParams.author = $scope.getSelectedVerseTagContentAuthor();
 
-            $scope.detailedVerseTagContentParams.circles = $scope.getTagsWithCommaSeparated($scope.detailedVerseCircles);
-            $scope.detailedVerseTagContentParams.users = $scope.getTagsWithCommaSeparated($scope.detailedVerseUsers);
+            $scope.detailedVerseTagContentParams.circles = !isDefined($scope.detailedVerseCircles) ? '' : $scope.getTagsWithCommaSeparated($scope.detailedVerseCircles);
+            $scope.detailedVerseTagContentParams.users = !isDefined($scope.detailedVerseUsers) ? '' : $scope.getTagsWithCommaSeparated($scope.detailedVerseUsers);
 
             var verseTagContentRestangular = Restangular.all("translations");
             verseTagContentRestangular.customGET("", $scope.detailedVerseTagContentParams, {'access_token': $scope.access_token}).then(function (verseTagContent) {
@@ -238,12 +238,12 @@ angular.module('ionicApp')
         };
 
         $scope.openAddBookMarkModal = function(){
-            $scope.bookmarkParameters ={};
-            $scope.bookmarkParameters.chapterinfo = Math.floor($scope.verseId / 1000);
-            $scope.bookmarkParameters.verseinfo = $scope.verseId % 1000;
-            $scope.bookmarkParameters.bookmarkverseid = $scope.verseId;
-            $scope.bookmarkParameters.bookchaptername = $scope.detailedChapters[$scope.goToVerseParameters.chapter.id - 1].nameTr;
-            $scope.$broadcast('openAddBookMarkModal');
+            var bookmarkParameters ={};
+            bookmarkParameters.chapterinfo = Math.floor($scope.verseId / 1000);
+            bookmarkParameters.verseinfo = $scope.verseId % 1000;
+            bookmarkParameters.bookmarkverseid = $scope.verseId;
+            bookmarkParameters.bookchaptername = $scope.detailedChapters[$scope.goToVerseParameters.chapter.id - 1].nameTr;
+            $scope.$broadcast('openAddBookMarkModal', {bookmarkParameters:bookmarkParameters});
         };
 
         $scope.displayAnnotationsWithTag = function () {

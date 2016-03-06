@@ -281,7 +281,7 @@ angular.module('ionicApp')
 
 
 
-        $scope.tempAnnotation
+        $scope.tempAnnotation;
         //delete operation for annotations page
         $scope.deleteAnnotation = function (annotation) {
 
@@ -637,10 +637,6 @@ angular.module('ionicApp')
                         $scope.modal_addtagtosearch.show();
                         focusToInput('addtagtosearch_input');
                     }
-
-
-
-
                 };
                 $scope.closeModal = function (id) {
                     $timeout(function() {
