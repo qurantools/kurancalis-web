@@ -5,6 +5,9 @@
                 <!-- search header-->
                 <div style="margin-top: -10px;position: absolute;left: 43%;">
                     <!-- navigation-->
+                    <div align="left">
+                        Ayet İnceleme
+                    </div>
                     <div align="center" style="position: relative;left: -50%;">
                         <div style="float: left;">
                             <ui-select ng-model="goToVerseParameters.chapter"
@@ -60,9 +63,9 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="well col-sm-9">
+                        <div class="col-sm-9">
                             <!-- translations-->
-                            <div class="translations col-xs-12" id="v_{{verse.id}}">
+                            <div class="well translations col-xs-12" id="v_{{verse.id}}">
                                 <div class="row">
                                     <div ng-repeat="translation in verse.translations">
                                         <div class="col-xs-11" id="t_{{translation.id}}">
@@ -116,7 +119,7 @@
                             </div>
                             <!-- tags-->
                             <div id="verseTags_{{verse.id}}" style="width:100%;margin-top: 5px" ng-show="detailedTags.length > 0">
-                                <div style="font-size: 20px"><i class='fa fa-bookmark' style='font-size: 1.3em;margin-right: 10px;'></i>Etiketler</div>
+                                <div style="font-size: 20px"><i class='fa' style='font-size: 1.3em;margin-right: 10px;'></i><b>Etiketler</b></div>
                                 <div style="text-align: right;">
                                     <button ng-repeat="verseTag in detailedTags" class="btn btn-xs btn-info verse_tag"
                                             ng-click="goToVerseTag(verse.translations[0].authorId, verse.id,verseTag, detailedVerseUsers, detailedVerseCircles)" data-target='#taggedVerseModal' data-dismiss="modal" data-toggle='modal'>
@@ -125,7 +128,7 @@
                             </div>
                             <!-- annotations-->
                             <div ng-show="detailedAnnotations.length > 0" style="margin-top: 5px;">
-                                <div style="font-size: 20px"><i class='fa fa-bookmark' style='font-size: 1.3em;margin-right: 10px;'></i>Ayet Notları</div>
+                                <div style="font-size: 20px"><i class='fa' style='font-size: 1.3em;margin-right: 10px;'></i><br><b>Ayet Notları</b></div>
                                 <div ng-repeat="annotation in detailedAnnotations" class="box">
                                     <div class="s_a_header">
                                         <div style="float:left">{{annotation.updated | date: 'dd/MM/yyyy'}}</div>
@@ -147,7 +150,7 @@
                             </div>
                             <!-- inferences-->
                             <div ng-show="inferences.length > 0" style="margin-top: 5px;">
-                                <div style="font-size: 20px"><i class='fa fa-bookmark' style='font-size: 1.3em;margin-right: 10px;'></i>Referanslar Veren Çıkarım Notları</div>
+                                <div style="font-size: 20px"><i class='fa' style='font-size: 1.3em;margin-right: 10px;'></i><br><b>Referanslar Veren Çıkarım Notları</b></div>
                                 <div ng-repeat="inference in inferences" class="well box">
                                 <div class="s_a_header">
                                     <div style="float:right;">{{inference.userName | limitTo: 25}}</div>

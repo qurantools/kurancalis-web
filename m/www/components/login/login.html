@@ -1,16 +1,27 @@
 <ion-side-menus>
     <ion-side-menu-content drag-content="false">
         <ion-nav-view cache-view="true">
-            <ion-content overflow-scroll="true" delegate-handle="content"  class="scroll_content"
-                         style="background-color: #F89406;color: #ffffff;">
-                <div style="width: 90%;height: 275px;display: table;margin: 0px auto;">
-                      <div style="margin: 0px auto;display: table-cell;vertical-align: middle;text-align: center;">
-                        Kuran Çalış
-                      </div>
+            <ion-content  delegate-handle="content"  style="background-color: #fbbe46;color: #f5f5f5;vertical-align: middle">
+                <div style="top: 50%;height: 70%; vertical-align: middle">
+                <div class="row row-center" style="margin-top: 10%">
+                    <div class="col"></div>
+                    <div class="col col-50"><img style="max-width:100%; alignment: center" src="../../assets/img/kurancalis_logo_transparent.png"/></div>
+                    <div class="col"></div>
                 </div>
-                <div>
-                    <a class="facebook-sign-in button button-block" ng-click="facebookSignIn()"
-                       style="margin-left: 5%;margin-right: 5%;border-radius: 5px;background-color: #3a5795;color: #ffffff;">Login with Facebook</a>
+                    <div style="text-align: center !important;"><h1>Kuran Çalış</h1></div>
+                <div style="font-style:oblique; text-align: center;margin-left: 3%;margin-right: 3%;color: #5c5c5c;font-size: 16px">
+                    <b>Birlikte</b> Dosdoğru Yolu Bulmak İçin...
+                </div>
+                <div style="margin-left: 3%;margin-right: 3%;color: #000000;font-size: 16px">
+                    Çalışmalarınızı saklamak, yönetmek ve arkadaşlarınız ile paylaşmak için lütfen giriş yapınız.
+                </div>
+                <div class="button-bar" style="alignment: center">
+                    <button class="facebook-sign-in button button-block" ng-click="facebookSignIn()"
+                       style="font-size: 20px; !important;margin-left: 5%;margin-right: 3%;border-radius: 5px; border-color:#395695;background-color: #3a5795;color: #ffffff;">Facebook ile Giriş</button>
+                </div>
+                    <div style="margin-left: 3%;margin-right: 3%;color: #000000;font-size: 13px">
+                    Sistemizin daha hızlı yaygınlaşması ve sizin kayıt ihtiyacı olmaksızın kolayca giriş yapabilmeniz için Facebook hesabı ile giriş yapılmaktadır. Facebook asla şifreleri paylaşmaz; tarafımıza sadece eposta adresiniz ve isminiz sağlanmaktadır.
+                    </div>
                 </div>
             </ion-content>
         </ion-nav-view>
