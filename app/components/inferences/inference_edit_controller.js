@@ -54,10 +54,6 @@ angular.module('ionicApp')
             $scope.pagePrevious = function () {
                 window.history.go(-2);
             }
-            var tempTaglist = [];
-            $rootScope.$on('addInferenceTags', function (event, data) {
-                tempTaglist.push(data);
-            });
 
             $ionicModal.fromTemplateUrl('components/partials/add_tag_to_inferences.html', {
                 scope: $scope,              
@@ -131,12 +127,8 @@ angular.module('ionicApp')
 
             if(config_data.isMobile){
 
-                $scope.title = document.getElementById('title').value;
-                $scope.content = document.querySelectorAll("[ng-model=content]")[0].value;
                 $scope.usersForSearch = $scope.ViewUsers;
-                $scope.tags_entry = tempTaglist;
-                console.log($scope.tagListInference);
-                console.log(tempTaglist);
+                $scope.circlesForSearch.length=0;
 
                 for (var index = 0; index < $scope.mobileInferencesEditorCircleListForSelection.length; ++index) {
                     if ($scope.mobileInferencesEditorCircleListForSelection[index].selected == true) {
@@ -151,8 +143,8 @@ angular.module('ionicApp')
             canViewUsers_tags.length = 0;
             canCommentUsers_tags.length = 0;
 
-            for (var i = 0; i < $scope.tags_entry.length; i++) {
-                tags.push($scope.tags_entry[i].name);
+            for (var i = 0; i < $scope.tagListInference.length; i++) {
+                tags.push($scope.tagListInference[i].name);
             }
 
             for (var i = 0; i < $scope.circlesForSearch.length; i++) {
@@ -244,8 +236,7 @@ angular.module('ionicApp')
 
                 for (var i = 0; i < data.tags.length; i++) {
                     $scope.tagListInference.push({ name: data.tags[i] });
-                    tempTaglist.push({ name: data.tags[i] });
-                }              
+                }
                 
                 var inference_PermRestangular = Restangular.one("inferences", inferenceId).all("permissions");
                 inference_PermRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (data) {
@@ -275,7 +266,7 @@ angular.module('ionicApp')
         $scope.prepareContentForEdit = function(contentOnSystem,references){
             var content = contentOnSystem;
             for(var i=0; i< references.length;i++){
-                content = content.replace("["+references[i]+"]",Math.floor(references[i]/1000)+":"+references[i]%1000);
+                content = content.replace(new RegExp("\\["+references[i]+"\\]", 'g'),Math.floor(references[i]/1000)+":"+references[i]%1000);
             }
             return content;
         };
@@ -429,25 +420,20 @@ angular.module('ionicApp')
                     toolbarInline: true
                 };
 
-                $scope.initialize = function(initControls) {
-                    $scope.initControls = initControls;
-                    $scope.deleteAll = function() {
-                        initControls.getEditor()('html.set', '');
-                    };
-                };
             }
 
-            $scope.$on('userInfoReady', function handler() {
-                initFileManager('theView', $scope.user.id, function () {
-                    //$('inferenceImage').onchange=
-                    $timeout(function () {
-                        angular.element($('#inferenceImage')).triggerHandler('input');
-                       
-                    });
-                });
-                console.log("Image manager initialized for: " + $scope.user.id);
-            });
+            if(!config_data.isMobile) {
+                $scope.$on('userInfoReady', function handler() {
+                    initFileManager('theView', $scope.user.id, function () {
+                        //$('inferenceImage').onchange=
+                        $timeout(function () {
+                            angular.element($('#inferenceImage')).triggerHandler('input');
 
+                        });
+                    });
+                    console.log("Image manager initialized for: " + $scope.user.id);
+                });
+            }
 
         }
 

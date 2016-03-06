@@ -23,7 +23,7 @@
         <ion-nav-view id="mobile_inferences_content" cache-view="true">
             <ion-content overflow-scroll="true" style="padding-top: 30px;">
                 <ion-list style="margin-bottom:45px;">
-                    <ion-item ng-repeat="inference in inferences | filter:allInferencesOpts.keyword">
+                    <ion-item ng-repeat="inference in inferences">
                         <div align="center" style="margin: 0 auto;"><a href="#/inference/display/{{inference.id}}/"><img image-check ng-src="{{inference.image}}" onerror='this.style.display = "none"' style="max-width: 200px; max-height: 150px; "/></a></div>
                         <div style="text-align: left; height: 20px" ><a href="#/inference/display/{{inference.id}}/" style="text-decoration: none;"><h4 style="margin-top:0;font-size: 18px">
                             {{inference.title | limitTo:80}}</h4>

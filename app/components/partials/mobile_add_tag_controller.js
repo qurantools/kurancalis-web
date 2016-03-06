@@ -22,6 +22,20 @@ angular.module('ionicApp')
             }
         };
 
+        //TagsQuery
+        $scope.inferenceTagsQuery = function (query) {
+
+            if ((query != "") && (query.length > 2)) {
+                var tagsRestangular = Restangular.one('tags', query);
+                tagsRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (taglist) {
+                    $scope.tagslist = taglist;
+                });
+            }
+            else {
+                $scope.tagslist = [];
+            }
+        };
+
         //Addicionar selected tags
         $scope.mobil_addedtags = function (targetTagList, tag) {
 
