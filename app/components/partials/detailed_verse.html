@@ -2,12 +2,12 @@
     <div class="modal-xl modal-dialog">
         <div class="modal-content well">
             <div class="modal-header" style="height: 60px;">
+                <!-- navigation-->
+                <div style="float: left;font-size: 20px;">
+                    <b>Ayet İnceleme</b>
+                </div>
                 <!-- search header-->
                 <div style="margin-top: -10px;position: absolute;left: 43%;">
-                    <!-- navigation-->
-                    <div align="left">
-                        Ayet İnceleme
-                    </div>
                     <div align="center" style="position: relative;left: -50%;">
                         <div style="float: left;">
                             <ui-select ng-model="goToVerseParameters.chapter"
@@ -161,12 +161,12 @@
                                         <tr>
                                             <td>
                                                 <div style="float: left; width:200px; height:150px">
-                                                    <a  href="#/inference/display/{{inference.id}}/"><img style="max-width: 200px; max-height: 150px" src="{{inference.image}}"></a>
+                                                    <a  href="#/inference/display/{{inference.id}}/" data-dismiss="modal"><img style="max-width: 200px; max-height: 150px" src="{{inference.image}}"></a>
                                                 </div>
                                             </td>
                                             <td>
                                                 <div style="float: right">
-                                                    <div style="text-align: center;" ><a href="#/inference/display/{{inference.id}}/"><h4 style="margin-top:0;">
+                                                    <div style="text-align: center;" ><a href="#/inference/display/{{inference.id}}/" data-dismiss="modal"><h4 style="margin-top:0;">
                                                         {{inference.title}}</h4>
                                                     </a></div>
                                                     <div style="padding-left:10px;">
