@@ -16,22 +16,21 @@
         </div>
     </ion-header-bar>
     <ion-content>
-        <div class="col-xs-12 col-sm-3 authorDiv_13">
-            &nbsp;&nbsp;Etiket Sahipleri
-        </div>
         <div class="col-xs-12 col-sm-9" ng-click="openModal('tagged_verse_detailed_search');">
             <div class="list">
                 <div class="item item-divider">
-                    Çevreler
+                    Etiket Sahipleri
                 </div>
-                <div class="item" ng-repeat="circle in taggedVerseCircles" style="color: #3498db">
-                    {{circle.name}}
-                </div>
-                <div class="item item-divider">
-                    Kişiler
-                </div>
-                <div class="item" ng-repeat="user in taggedVerseUsers" style="color: #28a54c;">
-                    {{user.name}}
+                <div class="item">
+                    <div class="row">
+                        <div class="col-90">
+                            <div style="color: #3498db;width: 90%">&nbsp;{{taggedValues(taggedVerseCircles)}}</div>
+                            <div style="color: #28a54c;width: 90%">&nbsp;{{taggedValues(taggedVerseUsers)}}</div>
+                        </div>
+                        <div class="col-10">
+                            <button class="button button-positive" style="float: right">Değiştir<i class="fa fa-chevron-right"></i></button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
