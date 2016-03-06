@@ -76,7 +76,7 @@ angular.module('ionicApp')
         };
 
         $scope.getTaggedVerses = function(){
-            $scope.detailedVerseTagContentParams = [];
+            /*$scope.detailedVerseTagContentParams = [];
             $scope.detailedVerseTagContentParams.author = $scope.getSelectedVerseTagContentAuthor();
 
             $scope.detailedVerseTagContentParams.circles = !isDefined($scope.detailedVerseCircles) ? '' : $scope.getTagsWithCommaSeparated($scope.detailedVerseCircles);
@@ -85,7 +85,7 @@ angular.module('ionicApp')
             var verseTagContentRestangular = Restangular.all("translations");
             verseTagContentRestangular.customGET("", $scope.detailedVerseTagContentParams, {'access_token': $scope.access_token}).then(function (verseTagContent) {
                 $scope.detailedTaggedVerses = verseTagContent;
-            });
+            });*/
         };
 
         $scope.detailedVerseTagContentAuthorUpdate = function (){
