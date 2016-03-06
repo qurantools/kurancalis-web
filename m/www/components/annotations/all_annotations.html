@@ -2,7 +2,7 @@
 <ion-side-menus>
     <ion-side-menu-content>
         <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced">
-            <ion-nav-title>Tüm Notlar</ion-nav-title>
+            <ion-nav-title>Etiketli Ayetler</ion-nav-title>
             <ion-nav-buttons side="left">
                 <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
                 <input type="hidden" ng-model="chapter_id"/>
@@ -79,14 +79,13 @@
                             <span ng-bind-html="annotation.text | newLineAllowed | to_trusted" class="s_a_text"></span>
 
                             <div>
-                                <div ng-repeat="annotationTag in annotation.tags" class="label label-info">
+                                <button ng-repeat="annotationTag in annotation.tags" class="tag label label-info s_a_tag btn btn-xs btn-info verse_tag"
+                                        style="border: 0;"
+                                        ng-click="goToVerseTag(annotation.author_id, annotation.verseId, annotationTag)" >
                                     {{annotationTag}}
-                                </div>
+                                </button>
                             </div>
-
                         </div>
-
-
                         <div class="item item-divider">
                             <div style="float: left">{{annotation.updated | date: 'dd/MM/yyyy HH:mm:ss'}}</div>
                             <div style="float: right">
@@ -115,6 +114,7 @@
         </ion-nav-view>
 
         <div ng-controller="HelpController"></div>
+        <div ng-controller="TaggedVerseCtrl"></div>
         <!-- start of side menu part 2-->
     </ion-side-menu-content>
     <div ng-include="'components/navigation/left_menu.html'"></div>

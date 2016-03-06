@@ -1,0 +1,60 @@
+<div class="modal modal-fullscreen">
+    <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced" align-title="center">
+        <ion-nav-title>Etiketli Ayetler</ion-nav-title>
+        <ion-nav-buttons side="right">
+            <button class="button button-icon icon-left ion-checkmark"
+                    ng-click="closeModal('tagged_verse');"
+                    style="float: right">
+            </button>
+        </ion-nav-buttons>
+    </ion-nav-bar>
+    <ion-header-bar class="bar bar-subheader item-input-inset">
+        <div class="col-xs-12 col-sm-9">
+            <label class="item-input-wrapper">
+                {{verseTagContentParams.verse_tags}}
+            </label><br/>
+        </div>
+    </ion-header-bar>
+    <ion-content>
+        <div class="col-xs-12 col-sm-3 authorDiv_13">
+            &nbsp;&nbsp;Etiket Sahipleri
+        </div>
+        <div class="col-xs-12 col-sm-9" ng-click="openModal('tagged_verse_detailed_search');">
+            <div style="float: left;width: 96%;">
+                <div style="color: #3498db">&nbsp;{{taggedValues(taggedVerseCircles)}}</div>
+                <div style="color: #28a54c;">&nbsp;{{taggedValues(taggedVerseUsers)}}</div>
+            </div>
+            <div style="float: right;margin-top: 10px;">
+                <i class="fa fa-chevron-right"></i>
+            </div>
+        </div>
+        <div class="item item-input item-select">
+            <div class="input-label">
+                Çeviri/Yazar
+            </div>
+            <select class="verseTagContentAuthor"
+                    ng-options="author.id as author.name for author in authors"
+                    ng-model="verseTagContentAuthor"
+                    ng-change="verseTagContentAuthorUpdate(verseTagContentAuthor)">
+            </select>
+        </div>
+        <div>
+            <div ng-repeat="verseTagContent in verseTagContents">
+                <div ng-repeat="verseTagContentTranslation in verseTagContent.translations"
+                     ng-if="verseTagContentTranslation.authorId==verseTagContentAuthor">
+                    <strong>{{verseTagContentTranslation.verseId / 1000 | number:0}}:{{verseTagContentTranslation.verseId % 1000}}</strong>
+                    <span ng-class="{translation_rtl: authorMap[verseTagContentTranslation.authorId].language=='ar'}">{{verseTagContentTranslation.content}}</span>
+                </div>
+            </div>
+        </div>
+        <div style="height:20px"></div>
+    </ion-content>
+    <ion-footer-bar align-title="center" class="bar-stable" style="height:50px">
+        <div class="button-bar">
+            <button class="footer-bar-item item-right button button-positive" style="font-size: 20px; !important;" ng-click="displayAnnotationsWithTag();closeModal('tagged_verse')">
+                <div style="float: left">Etiketli Ayetler</div>
+                <div style="float: right"><i class="fa fa-chevron-right"></i></div>
+            </button>
+        </div>
+    </ion-footer-bar>
+</div>

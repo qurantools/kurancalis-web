@@ -70,11 +70,14 @@
                     <b>{{getChapterVerseNotation(verseId)}}</b> {{referenced.verses[verseId].translation}}
                     <br>
                     <div style="" align="right">
-                        <button ng-repeat="tag in referenced.verses[verseId].tags" class="tag label label-info s_a_tag">{{tag}}</button>
+                        <button ng-repeat="tag in referenced.verses[verseId].tags"
+                                style="border: 0;"
+                                ng-click="goToVerseTag(referenced.selectedAuthor, verseId, tag)"
+                                class="tag label label-info s_a_tag">{{tag}}</button>
                     </div>
                 </div>
             </ion-content>
-
+            <div ng-controller="TaggedVerseCtrl"></div>
         </ion-nav-view>
     </ion-side-menu-content>
     <div ng-include="'components/navigation/left_menu.html'"></div>

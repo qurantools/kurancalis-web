@@ -34,11 +34,13 @@
                         <div ng-repeat="verse in verses">
                             <div class="well translations col-xs-12" id="v_{{verse.id}}">
                                 <div ng-repeat="translation in verse.translations" class="selectable">
-                                    <div ng-if="$first"><h4>{{translation.chapter}}:{{translation.verse}} <img src="../../assets/img/sticky-note.png" width="18" height="18" ng-if="verseHasAnnotation(verse.id)" ng-click="showVerseAnnotations({{verse.id}})">
-                                    <button ng-if="user!=null" class="button button-balanced button-bookmark"ng-click="bookmarkActionSheet({{translation.chapter}},{{translation.verse}},{{verse.id}})">
-                                        <i class="icon ion-ios-more"></i>
-                                    </button>
-                                    </h4></div>
+                                    <div ng-if="$first">
+                                        <h4>{{translation.chapter}}:{{translation.verse}} <img src="../../assets/img/sticky-note.png" width="18" height="18" ng-if="verseHasAnnotation(verse.id)" ng-click="showVerseAnnotations({{verse.id}})">
+                                            <button ng-if="user!=null" class="button button-balanced button-bookmark"ng-click="bookmarkActionSheet({{translation.chapter}},{{translation.verse}},{{verse.id}})">
+                                                <i class="icon ion-ios-more"></i>
+                                            </button>
+                                        </h4>
+                                    </div>
                                     <div id="t_{{translation.id}}">
                                         <div class="col-xs-12 col-sm-3 authorDiv_{{authorMap[translation.authorId].color}}">
                                             {{authorMap[translation.authorId].name}}
@@ -59,40 +61,19 @@
                                     <button ng-repeat="verseTag in verseTagsJSON[verse.id].tags"
                                             class="tag label label-info s_a_tag btn btn-xs btn-info verse_tag"
                                             style="border:0;"
-                                            ng-click="goToVerseTag(verse.id,verseTag.tag)"
-                                            onclick="verseTagClicked(this)">
+                                            ng-click="goToVerseTag(verse.translations[0].authorId,verse.id,verseTag.tag)">
                                         {{verseTag.tag}}
                                     </button>
-                                </div>
-                                <div ng-if="targetVerseForTagContent==verse.id" class="verse_tag_content">
-                                    <h4>Etiketli Ayetler</h4>
-                                    <select class="verseTagContentAuthor"
-                                            ng-options="author.id as author.name for author in authors | filter:authorFilter"
-                                            ng-model="verseTagContentAuthor"
-                                            ng-change="verseTagContentAuthorUpdate(verseTagContentAuthor)">
-                                    </select>
-
-
-                                    <div ng-repeat="verseTagContent in verseTagContents">
-                                        <div ng-repeat="verseTagContentTranslation in verseTagContent.translations"
-                                             ng-if="verseTagContentTranslation.authorId==verseTagContentAuthor">
-                                            <strong>{{verseTagContentTranslation.verseId / 1000 |
-                                                number:0}}:{{verseTagContentTranslation.verseId % 1000}}</strong>
-                                            {{verseTagContentTranslation.content}}
-                                        </div>
-
-                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div style="height:50px;">&nbsp;</div>
-
             </ion-content>
             <div ng-controller="HelpController"></div>
+            <div ng-controller="TaggedVerseCtrl"></div>
         </ion-nav-view>
-
         <!-- start of side menu part 2-->
     </ion-side-menu-content>
     <div ng-include="'components/navigation/left_menu.html'"></div>

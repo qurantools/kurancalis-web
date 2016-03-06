@@ -1,5 +1,5 @@
 angular.module('ionicApp')
-    .controller('TaggedVerseCtrl', function ($scope, $timeout, Restangular, $location) {
+    .controller('TaggedVerseCtrl', function ($scope, $timeout, Restangular, $location, $ionicModal) {
 
         $scope.taggedVerseCircles = null;
         $scope.taggedVerseUsers = null;
@@ -8,6 +8,10 @@ angular.module('ionicApp')
         $scope.verseTagContents = [];
         $scope.verseTagContentParams = [];
         $scope.verseId = 0;
+
+        //mobile parameters
+        $scope.taggedVerseCirclesForMobileSearch = null;
+        $scope.taggedVerseUsersForMobileSearch = null;
 
         //Get verses of the tag from server
         $scope.loadVerseTagContent = function (verseTagContentParams, verseId) {
@@ -53,11 +57,12 @@ angular.module('ionicApp')
         };
 
         $scope.verseTagContentAuthorUpdate = function (item) {
+            $scope.verseTagContentAuthor = item;
             $scope.updateVerseTagContent();
         };
 
         //reflects the scope parameters to URL
-        $scope.displayAnnotationsWithTag = function (tag) {
+        $scope.displayAnnotationsWithTag = function () {
             var parameters =
             {
                 authorMask: MAX_AUTHOR_MASK,
@@ -74,7 +79,73 @@ angular.module('ionicApp')
             $location.path("/annotations/", false).search(parameters);
         };
 
+        $scope.openModal = function (item){
+            if (item == 'tagged_verse'){
+                $scope.tagged_verse_modal.show();
+            }else if (item == 'tagged_verse_detailed_search'){
+                $scope.tagged_verse_detailed_search.show();
+            }else if (item == 'friendsearch'){
+                $scope.modal_friend_search.show();
+            }
+        };
+
+        $scope.closeModal = function (item){
+            if (item == 'tagged_verse'){
+                $scope.tagged_verse_modal.hide();
+            }else if (item == 'tagged_verse_detailed_search'){
+                $scope.tagged_verse_detailed_search.hide();
+            }else if (item == 'friendsearch'){
+                $scope.modal_friend_search.hide();
+            }
+        };
+
+        $scope.taggedValues = function(tagList){
+            var tagParameter = [];
+            for (var i = 0; tagList && i < tagList.length; i++) {
+                tagParameter[i] = tagList[i].name;
+            }
+            return tagParameter.join(',');
+        };
+
+        $scope.taggedVerseDetailedSearch = function(){
+            $scope.taggedVerseCircles = [];
+            for (var i = 0; i < $scope.taggedVerseCirclesForMobileSearch.length; i++) {
+                if ($scope.taggedVerseCirclesForMobileSearch[i].selected){
+                    $scope.taggedVerseCircles.push($scope.taggedVerseCirclesForMobileSearch[i]);
+                }
+            }
+            $scope.taggedVerseUsers = $scope.taggedVerseUsersForMobileSearch;
+            $scope.closeModal('tagged_verse_detailed_search');
+            $scope.updateVerseTagContent();
+        };
+
         $scope.initializeTaggedVerseController = function () {
+            if (config_data.isMobile) {
+                $ionicModal.fromTemplateUrl('components/partials/tagged_verse_modal.html', {
+                    scope: $scope,
+                    animation: 'slide-in-up',
+                    id: 'tagged_verse_modal'
+                }).then(function (modal) {
+                    $scope.tagged_verse_modal = modal
+                });
+                $ionicModal.fromTemplateUrl('components/partials/tagged_verse_detailed_search.html', {
+                    scope: $scope,
+                    animation: 'slide-in-up',
+                    id: 'tagged_verse_detailed_search'
+                }).then(function (modal) {
+                    $scope.tagged_verse_detailed_search = modal
+                });
+                $ionicModal.fromTemplateUrl('components/partials/add_friend_to_search.html', {
+                    scope: $scope,
+                    //animation: 'slide-in-right',
+                    //animation: 'slide-left-right',
+                    animation: 'slide-in-up',
+                    id: 'friendsearch'
+                }).then(function (modal) {
+                    $scope.modal_friend_search = modal
+                });
+            };
+
             $scope.$on('tagged_verse_modal', function(event, args) {
                 if (isDefined(args.users) && args.users.length >= 0){
                     $scope.taggedVerseUsers = args.users;
@@ -86,6 +157,8 @@ angular.module('ionicApp')
                 }else{
                     $scope.taggedVerseCircles = $scope.circlesForSearch;
                 }
+                $scope.taggedVerseCirclesForMobileSearch = $scope.taggedVerseCircles;
+                $scope.taggedVerseUsersForMobileSearch = $scope.taggedVerseUsers;
                 if ($scope.verseTagContentAuthor == MAX_AUTHOR_MASK){
                     if (isDefined(args.author)){
                         $scope.verseTagContentAuthor = args.author;
@@ -94,6 +167,9 @@ angular.module('ionicApp')
                     }
                 }
                 $scope.goToVerseTag(args.verseId, args.tag);
+                if (config_data.isMobile){
+                    $scope.tagged_verse_modal.show();
+                }
             });
         };
 

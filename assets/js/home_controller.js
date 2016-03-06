@@ -86,13 +86,13 @@ angular.module('ionicApp')
         
         $scope.openAddBookMarkModal = function(chapterinfo, verseinfo, bookmarkverseid){
             
-           $scope.bookmarkParameters ={}; 
-           $scope.bookmarkParameters.chapterinfo = chapterinfo;
-           $scope.bookmarkParameters.verseinfo = verseinfo;
-           $scope.bookmarkParameters.bookmarkverseid = bookmarkverseid;
-           $scope.bookmarkParameters.bookchaptername = $scope.chapters[chapterinfo - 1].nameTr;
+           var bookmarkParameters ={};
+           bookmarkParameters.chapterinfo = chapterinfo;
+           bookmarkParameters.verseinfo = verseinfo;
+           bookmarkParameters.bookmarkverseid = bookmarkverseid;
+           bookmarkParameters.bookchaptername = $scope.chapters[chapterinfo - 1].nameTr;
            
-           $scope.$broadcast('openAddBookMarkModal');
+           $scope.$broadcast('openAddBookMarkModal', {bookmarkParameters:bookmarkParameters});
         };
         
         $scope.searchBookMarkModal = function(){
@@ -141,7 +141,6 @@ angular.module('ionicApp')
             }
             $location.path("/translations/", false).search(parameters);
         };
-
 
         $scope.detailedSearchAuthorToggleSelection = function (author_id) {
             var idx = $scope.detailedSearchAuthorSelection.indexOf(author_id);
