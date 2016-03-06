@@ -213,6 +213,10 @@ angular.module('ionicApp')
             $scope.goToVerse();
         };
 
+        $scope.gotoInference = function (inferenceId){
+            $location.path("/inference/display/"+inferenceId+"/");
+        }
+
         $scope.initializeTaggedVerseController = function () {
             $scope.$on('open_verse_detail', function(event, args) {
                 $scope.verseId = parseInt(args.chapterVerse);

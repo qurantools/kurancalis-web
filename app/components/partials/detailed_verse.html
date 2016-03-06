@@ -161,12 +161,12 @@
                                         <tr>
                                             <td>
                                                 <div style="float: left; width:200px; height:150px">
-                                                    <a  href="#/inference/display/{{inference.id}}/" data-dismiss="modal"><img style="max-width: 200px; max-height: 150px" src="{{inference.image}}"></a>
+                                                    <a href ng-click="gotoInference({{inference.id}})" data-dismiss="modal"><img style="max-width: 200px; max-height: 150px" src="{{inference.image}}"></a>
                                                 </div>
                                             </td>
                                             <td>
                                                 <div style="float: right">
-                                                    <div style="text-align: center;" ><a href="#/inference/display/{{inference.id}}/" data-dismiss="modal"><h4 style="margin-top:0;">
+                                                    <div style="text-align: center;" ><a href data-dismiss="modal" ng-click="gotoInference({{inference.id}})"><h4 style="margin-top:0;">
                                                         {{inference.title}}</h4>
                                                     </a></div>
                                                     <div style="padding-left:10px;">
