@@ -29,6 +29,12 @@ var app = angular.module('ionicApp', requiredModules)
                 return text.replace(/\*+/g, "<button style='border:0;' class='label label-dipnot btn  btn-xs' onclick='angular.element(document.getElementById(\"theView\")).scope().list_footnotes(" + translation_id + "," + author_id + ")'>dipnot</button>");
             };
         }])
+    .filter('with_detailed_footnote_link', [  //filter for footnotes on detailed verse page
+        function () {
+            return function (text, translation_id, author_id) {
+                return text.replace(/\*+/g, "<button style='border:0;' class='label label-dipnot btn  btn-xs' onclick='angular.element(document.getElementById(\"detailedVerseModal\")).scope().list_detailed_footnotes(" + translation_id + "," + author_id + ")'>dipnot</button>");
+            };
+        }])
     .filter('with_next_link', [
         function () {
             return function (text, chapter_id, author_id, translation_id) {

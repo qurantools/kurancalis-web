@@ -242,6 +242,38 @@ angular.module('ionicApp')
             });
         };
 
+        //list footnotes
+        $scope.list_detailed_footnotes = function (translation_id, author_id) {
+
+            var footnotesRestangular = Restangular.one("translations",translation_id).all("footnotes");
+
+            footnotesRestangular.getList().then(function (data) {
+                    var footnoteDivElement = document.getElementById('detail_t_' + translation_id);
+                    //don't list if already listed
+                    if (!document.getElementById("detail_fn_" + translation_id)) {
+                        var html = "<div id='detail_fn_" + translation_id + "'>";
+                        var dataLength = data.length;
+                        for (index = 0; index < dataLength; ++index) {
+                            //add verse links
+                            dataContent = data[index].replace(/(\d{1,3}):(\d{1,3})/g, "<a ng-href='#MainCtrl' onclick='javascript: angular.element(document.getElementById(\"MainCtrl\")).scope().showVerseDetail($1*1000+$2)' data-target='#detailedVerseModal' data-dismiss='modal' data-toggle='modal'>$1:$2</a>");
+
+                            html += "<div><div class='col-xs-1 footnote_bullet'>&#149;</div><div class='col-xs-11 footnotebg'>" + dataContent + "</div></div>";
+                        }
+                        html += '</div>';
+                        footnoteDivElement.innerHTML = footnoteDivElement.innerHTML + html;
+                    } else {
+                        var el = document.getElementById('detail_fn_' + translation_id);
+                        el.parentNode.removeChild(el);
+
+                        //hide show verse when footnote collapses
+                        $(".showVerseData").hide();
+                    }
+                }
+            );
+
+
+        }
+
         //initialization
         $scope.initializeTaggedVerseController();
     });
