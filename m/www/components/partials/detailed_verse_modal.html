@@ -1,4 +1,4 @@
-<div class="modal modal-fullscreen">
+<div class="modal modal-fullscreen" id="detailedVerseModal">
     <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced" align-title="center">
         <ion-nav-buttons side="left">
             <button class="button button-icon button-clear ion-navicon" ng-click="openFooterMenu()"/>
@@ -27,13 +27,13 @@
                 <!-- translations-->
                 <div class="well translations col-xs-12" id="v_{{verse.id}}">
                     <div ng-repeat="translation in verse.translations">
-                        <div class="col-xs-11" id="t_{{translation.id}}">
+                        <div class="col-xs-11" id="detail_t_{{translation.id}}">
                             <div class="authorDiv_{{authorMap[translation.authorId].color}}">
                                 {{authorMap[translation.authorId].name}}
                             </div>
                             <div id="tt_{{translation.id}}"
                                  ng-class="{translation_rtl: authorMap[translation.authorId].language=='ar', translation_content: authorMap[translation.authorId].language!='ar'}"><span
-                                    ng-bind-html="translation.content | with_footnote_link:translation.id:translation.authorId | to_trusted"></span>
+                                    ng-bind-html="translation.content | with_detailed_footnote_link:translation.id:translation.authorId | to_trusted"></span>
                             </div>
                         </div>
                     </div>
