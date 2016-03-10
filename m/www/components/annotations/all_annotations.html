@@ -61,7 +61,7 @@
                     <div style="clear: both">&nbsp;</div>
                     <div class="card" ng-repeat="annotation in annotations">
                         <div class="item item-divider">
-                            {{annotation.verseId / 1000 | number:0}}:{{annotation.verseId % 1000}}
+                            <a href='' style="text-decoration: none !important;" ng-click="showVerseDetail(annotation.verseId, usersForSearch, circlesForSearch)">{{annotation.verseId / 1000 | number:0}}:{{annotation.verseId % 1000}}</a>
                             <button ng-click="showVerse(annotation)" class="btn btn-primary btn-xs"
                                     ng-if="showVerseData.annotationId!=annotation.annotationId"><i
                                     class="fa fa-cog"></i></button>
@@ -115,6 +115,7 @@
 
         <div ng-controller="HelpController"></div>
         <div ng-controller="TaggedVerseCtrl"></div>
+        <div ng-controller="DetailedVerseCtrl"></div>
         <!-- start of side menu part 2-->
     </ion-side-menu-content>
     <div ng-include="'components/navigation/left_menu.html'"></div>

@@ -35,7 +35,9 @@
                             <div class="well translations col-xs-12" id="v_{{verse.id}}">
                                 <div ng-repeat="translation in verse.translations" class="selectable">
                                     <div ng-if="$first">
-                                        <h4>{{translation.chapter}}:{{translation.verse}} <img src="../../assets/img/sticky-note.png" width="18" height="18" ng-if="verseHasAnnotation(verse.id)" ng-click="showVerseAnnotations({{verse.id}})">
+                                        <h4>
+                                            <a href style="text-decoration: none !important;" ng-click='showVerseDetail({{verse.id}}, {{query_users}}, {{query_circles}})'>{{translation.chapter}}:{{translation.verse}}</a>
+                                            <img src="../../assets/img/sticky-note.png" width="18" height="18" ng-if="verseHasAnnotation(verse.id)" ng-click="showVerseAnnotations({{verse.id}})">
                                             <button ng-if="user!=null" class="button button-balanced button-bookmark"ng-click="bookmarkActionSheet({{translation.chapter}},{{translation.verse}},{{verse.id}})">
                                                 <i class="icon ion-ios-more"></i>
                                             </button>
@@ -73,6 +75,7 @@
             </ion-content>
             <div ng-controller="HelpController"></div>
             <div ng-controller="TaggedVerseCtrl"></div>
+            <div ng-controller="DetailedVerseCtrl"></div>
         </ion-nav-view>
         <!-- start of side menu part 2-->
     </ion-side-menu-content>

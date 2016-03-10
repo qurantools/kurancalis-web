@@ -28,8 +28,8 @@
             $scope.bookmarkParameters.chapterinfo = Math.floor(verseId / 1000);
             $scope.bookmarkParameters.verseinfo = verseId % 1000;
             $scope.bookmarkParameters.bookmarkverseid = verseId;
+            $scope.bookmarkverseid = verseId;
             $scope.bookmarkParameters.bookchaptername = $scope.chapters[$scope.bookmarkParameters.chapterinfo - 1].nameTr;
-
         });
 
         $scope.$on("searchBookMarkModal", function (event) {

@@ -63,11 +63,12 @@
                             <option ng-repeat="item in authorMap" value="{{item.id}}" ng-selected="item.id==referenced.selectedAuthor">{{item.name}}</option>
                         </select>
                     </label>
-
-
                 </div>
                 <div ng-repeat="verseId in referenced.verseIds" align="left" >
-                    <b>{{getChapterVerseNotation(verseId)}}</b> {{referenced.verses[verseId].translation}}
+                    <b>
+                        <a href='' style="text-decoration: none !important;" ng-click="showVerseDetail(verseId, usersForSearch, circlesForSearch)">{{getChapterVerseNotation(verseId)}}</a>
+                    </b>
+                    {{referenced.verses[verseId].translation}}
                     <br>
                     <div style="" align="right">
                         <button ng-repeat="tag in referenced.verses[verseId].tags"
@@ -78,6 +79,7 @@
                 </div>
             </ion-content>
             <div ng-controller="TaggedVerseCtrl"></div>
+            <div ng-controller="DetailedVerseCtrl"></div>
         </ion-nav-view>
     </ion-side-menu-content>
     <div ng-include="'components/navigation/left_menu.html'"></div>
