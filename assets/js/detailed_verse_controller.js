@@ -389,11 +389,20 @@ angular.module('ionicApp')
                     $scope.detailedChapters = $scope.chapters;
                 }
                 if (!isDefined($scope.detailedVerseCircles) || $scope.detailedVerseCircles.length == 0)
-                    $scope.detailedVerseCircles = $scope.query_circles;
+                    $scope.detailedVerseCircles = $scope.extendedCirclesForSearch;
                 if (!isDefined($scope.detailedVerseUsers) || $scope.detailedVerseUsers.length == 0)
                     $scope.detailedVerseUsers = $scope.query_users;
 
-                $scope.taggedVerseCirclesForMobileSearch = $scope.detailedVerseCircles;
+                $scope.taggedVerseCirclesForMobileSearch = $scope.extendedCirclesForSearch;
+                for (var i =0; i< $scope.taggedVerseCirclesForMobileSearch.length; i++){
+                    $scope.taggedVerseCirclesForMobileSearch[i].selected = false;
+                    for (var j = 0; j < $scope.detailedVerseCircles.length; j++){
+                        if ($scope.taggedVerseCirclesForMobileSearch[i].id == $scope.detailedVerseCircles[j].id){
+                            $scope.taggedVerseCirclesForMobileSearch[i].selected = true;
+                            break;
+                        }
+                    }
+                }
                 $scope.taggedVerseUsersForMobileSearch = $scope.detailedVerseUsers;
 
                 if ($scope.localDetailedSearchAuthorSelection.length == 0){
