@@ -593,6 +593,7 @@ app.factory('ChapterVerses', function ($resource) {
         $scope.mobileDetailedSearchCircleListForSelection = [];
         //mobile: circle list for all annotations search
         $scope.mobileAllAnnotationsSearchCircleListForSelection = [];
+        $scope.query_users = [];
 
         $scope.checkAPIVersion = function(){
             var versionRestangular = Restangular.all("apiversioncompatibility");

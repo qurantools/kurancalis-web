@@ -10,8 +10,7 @@ angular.module('ionicApp')
         $scope.peopleaddlist = function (index) {
 
             var control = "0";
-
-            for (var i = 0; i < $scope.query_users.length; i++) {
+            for (var i = 0;  i < $scope.query_users.length; i++) {
                 if ($scope.query_users[i].id == $scope.friendSearchResult[index].id) {
                     control = "1";
                 }

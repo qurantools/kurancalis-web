@@ -30,6 +30,10 @@ angular.module('ionicApp')
         $scope.detailedVerseTagContentAuthor = MAX_AUTHOR_MASK;
         $scope.detailedVerseTagContentParams = [];
 
+        //mobile parameters
+        $scope.taggedVerseCirclesForMobileSearch = [];
+        $scope.taggedVerseUsersForMobileSearch = [];
+
         $scope.footerMenuButtons = [];
         var buttonSelectTranslation = {  text: 'Çeviri Seç'  };
         var buttonAddToList = {text: 'Listeye Ekle' };
@@ -283,6 +287,7 @@ angular.module('ionicApp')
             }else if (item == 'tagged_verse_detailed_search'){
                 $scope.tagged_verse_detailed_search.hide();
             }else if (item == 'friendsearch'){
+                $scope.taggedVerseUsersForMobileSearch = $scope.query_users;
                 $scope.modal_friend_search.hide();
             } else if (item == 'bookmark') {
                 $scope.bookmarkModal.hide();
@@ -388,6 +393,9 @@ angular.module('ionicApp')
                 if (!isDefined($scope.detailedVerseUsers) || $scope.detailedVerseUsers.length == 0)
                     $scope.detailedVerseUsers = $scope.query_users;
 
+                $scope.taggedVerseCirclesForMobileSearch = $scope.detailedVerseCircles;
+                $scope.taggedVerseUsersForMobileSearch = $scope.detailedVerseUsers;
+
                 if ($scope.localDetailedSearchAuthorSelection.length == 0){
                     $scope.setDetailedSearchAuthorSelection(MAX_AUTHOR_MASK);
                 }
@@ -401,6 +409,18 @@ angular.module('ionicApp')
                     $scope.detailed_verse_modal.show();
                 }
             });
+        };
+
+        $scope.taggedVerseDetailedSearch = function(){
+            $scope.detailedVerseCircles = [];
+            for (var i = 0; isDefined($scope.taggedVerseCirclesForMobileSearch) && i < $scope.taggedVerseCirclesForMobileSearch.length; i++) {
+                if ($scope.taggedVerseCirclesForMobileSearch[i].selected){
+                    $scope.detailedVerseCircles.push($scope.taggedVerseCirclesForMobileSearch[i]);
+                }
+            }
+            $scope.detailedVerseUsers = $scope.taggedVerseUsersForMobileSearch;
+            $scope.closeModal('tagged_verse_detailed_search');
+            $scope.getVerseDetails();
         };
 
         //list footnotes
