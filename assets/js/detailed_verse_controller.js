@@ -256,6 +256,19 @@ angular.module('ionicApp')
             }else if (item == 'tagged_verse_modal'){
                 $scope.tagged_verse_modal.show();
             }else if (item == 'tagged_verse_detailed_search'){
+                for (var i =0; i< $scope.taggedVerseCirclesForMobileSearch.length; i++){
+                    $scope.taggedVerseCirclesForMobileSearch[i].selected = false;
+                    for (var j = 0; j < $scope.detailedVerseCircles.length; j++){
+                        if ($scope.taggedVerseCirclesForMobileSearch[i].id == $scope.detailedVerseCircles[j].id){
+                            $scope.taggedVerseCirclesForMobileSearch[i].selected = true;
+                            break;
+                        }
+                    }
+                }
+                $scope.taggedVerseUsersForMobileSearch = [];
+                for (var i = 0; i < $scope.detailedVerseUsers.length; i++) {
+                    $scope.taggedVerseUsersForMobileSearch.push($scope.detailedVerseUsers[i]);
+                }
                 $scope.tagged_verse_detailed_search.show();
             }else if (item == 'friendsearch'){
                 $scope.modal_friend_search.show();
@@ -403,7 +416,11 @@ angular.module('ionicApp')
                         }
                     }
                 }
-                $scope.taggedVerseUsersForMobileSearch = $scope.detailedVerseUsers;
+
+                for (var i =0; i< $scope.detailedVerseUsers.length; i++){
+                    $scope.taggedVerseUsersForMobileSearch.push($scope.detailedVerseUsers[i]);
+                }
+                $scope.query_users = $scope.taggedVerseUsersForMobileSearch;
 
                 if ($scope.localDetailedSearchAuthorSelection.length == 0){
                     $scope.setDetailedSearchAuthorSelection(MAX_AUTHOR_MASK);
@@ -422,12 +439,15 @@ angular.module('ionicApp')
 
         $scope.taggedVerseDetailedSearch = function(){
             $scope.detailedVerseCircles = [];
+            $scope.detailedVerseUsers = [];
             for (var i = 0; isDefined($scope.taggedVerseCirclesForMobileSearch) && i < $scope.taggedVerseCirclesForMobileSearch.length; i++) {
                 if ($scope.taggedVerseCirclesForMobileSearch[i].selected){
                     $scope.detailedVerseCircles.push($scope.taggedVerseCirclesForMobileSearch[i]);
                 }
             }
-            $scope.detailedVerseUsers = $scope.taggedVerseUsersForMobileSearch;
+            for (var i = 0; isDefined($scope.taggedVerseUsersForMobileSearch) && i < $scope.taggedVerseUsersForMobileSearch.length; i++) {
+                $scope.detailedVerseUsers.push($scope.taggedVerseUsersForMobileSearch[i]);
+            }
             $scope.closeModal('tagged_verse_detailed_search');
             $scope.getVerseDetails();
         };

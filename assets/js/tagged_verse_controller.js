@@ -1,8 +1,8 @@
 angular.module('ionicApp')
     .controller('TaggedVerseCtrl', function ($scope, $timeout, Restangular, $location, $ionicModal) {
 
-        $scope.taggedVerseCircles = null;
-        $scope.taggedVerseUsers = null;
+        $scope.taggedVerseCircles = [];
+        $scope.taggedVerseUsers = [];
         $scope.verseTagContentAuthor = MAX_AUTHOR_MASK;
         $scope.targetVerseForTagContent = 0;
         $scope.verseTagContents = [];
@@ -83,6 +83,19 @@ angular.module('ionicApp')
             if (item == 'tagged_verse'){
                 $scope.tagged_verse_modal.show();
             }else if (item == 'tagged_verse_detailed_search'){
+                for (var i =0; i< $scope.taggedVerseCirclesForMobileSearch.length; i++){
+                    $scope.taggedVerseCirclesForMobileSearch[i].selected = false;
+                    for (var j = 0; j < $scope.taggedVerseCircles.length; j++){
+                        if ($scope.taggedVerseCirclesForMobileSearch[i].id == $scope.taggedVerseCircles[j].id){
+                            $scope.taggedVerseCirclesForMobileSearch[i].selected = true;
+                            break;
+                        }
+                    }
+                }
+                $scope.taggedVerseUsersForMobileSearch = [];
+                for (var i = 0; i < $scope.taggedVerseUsers.length; i++) {
+                    $scope.taggedVerseUsersForMobileSearch.push($scope.taggedVerseUsers[i]);
+                }
                 $scope.tagged_verse_detailed_search.show();
             }else if (item == 'friendsearch'){
                 $scope.modal_friend_search.show();
@@ -93,6 +106,7 @@ angular.module('ionicApp')
             if (item == 'tagged_verse'){
                 $scope.tagged_verse_modal.hide();
             }else if (item == 'tagged_verse_detailed_search'){
+
                 $scope.tagged_verse_detailed_search.hide();
             }else if (item == 'friendsearch'){
                 $scope.modal_friend_search.hide();
@@ -114,7 +128,10 @@ angular.module('ionicApp')
                     $scope.taggedVerseCircles.push($scope.taggedVerseCirclesForMobileSearch[i]);
                 }
             }
-            $scope.taggedVerseUsers = $scope.taggedVerseUsersForMobileSearch;
+            $scope.taggedVerseUsers = [];
+            for (var i = 0; i < $scope.taggedVerseUsersForMobileSearch.length; i++) {
+                $scope.taggedVerseUsers.push($scope.taggedVerseUsersForMobileSearch[i]);
+            }
             $scope.closeModal('tagged_verse_detailed_search');
             $scope.updateVerseTagContent();
         };
@@ -157,8 +174,21 @@ angular.module('ionicApp')
                 }else{
                     $scope.taggedVerseCircles = $scope.circlesForSearch;
                 }
-                $scope.taggedVerseCirclesForMobileSearch = $scope.taggedVerseCircles;
-                $scope.taggedVerseUsersForMobileSearch = $scope.taggedVerseUsers;
+                $scope.taggedVerseCirclesForMobileSearch = $scope.extendedCirclesForSearch;
+                for (var i =0; i< $scope.taggedVerseCirclesForMobileSearch.length; i++){
+                    $scope.taggedVerseCirclesForMobileSearch[i].selected = false;
+                    for (var j = 0; j < $scope.taggedVerseCircles.length; j++){
+                        if ($scope.taggedVerseCirclesForMobileSearch[i].id == $scope.taggedVerseCircles[j].id){
+                            $scope.taggedVerseCirclesForMobileSearch[i].selected = true;
+                            break;
+                        }
+                    }
+                }
+                for (var i =0; i< $scope.taggedVerseUsers.length; i++){
+                    $scope.taggedVerseUsersForMobileSearch.push($scope.taggedVerseUsers[i]);
+                }
+                $scope.query_users = $scope.taggedVerseUsersForMobileSearch;
+
                 if ($scope.verseTagContentAuthor == MAX_AUTHOR_MASK){
                     if (isDefined(args.author)){
                         $scope.verseTagContentAuthor = args.author;

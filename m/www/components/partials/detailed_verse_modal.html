@@ -12,13 +12,17 @@
     </ion-nav-bar>
     <ion-header-bar class="bar bar-subheader item-input-inset">
         <div style="float: left" class="col-xs-12 col-sm-3">
-            <i class="icon ion-arrow-left-b" ng-click="gotoPrev()"></i>
+            <button class="btn" ng-click="gotoPrev()">
+                <i class="btn icon ion-arrow-left-b large_icon"></i>
+            </button>
         </div>
         <div class="col-xs-12 col-sm-6" style="width: 100%;height: 100%;background: #eee;margin: 0px 40px;" align="center" ng-click="openModal('chapter_selection_modal')">
             {{goToVerseParameters.chapter.id}} : ({{detailedChapters[goToVerseParameters.chapter.id-1].nameTr}}) {{goToVerseParameters.verse}}
         </div>
         <div style="float: right" class="col-xs-12 col-sm-3">
-            <i class="icon ion-arrow-right-b" ng-click="gotoNext()"></i>
+            <button class="btn" ng-click="gotoNext()">
+                <i class="icon ion-arrow-right-b large_icon"></i>
+            </button>
         </div>
     </ion-header-bar>
     <ion-content>
@@ -46,11 +50,11 @@
                         </div>
                         <div class="item">
                             <div class="row">
-                                <div class="col-80">
-                                    <div class="wordwrap" style="color: #3498db;width: 90%">&nbsp;{{taggedValues(detailedVerseCircles)}}</div>
-                                    <div class="wordwrap" style="color: #28a54c;width: 90%">&nbsp;{{taggedValues(detailedVerseUsers)}}</div>
+                                <div class="col-sm-9" style="width: 100%;">
+                                    <div class="wordwrap" style="color: #3498db;" align="left">{{taggedValues(detailedVerseCircles)}}</div>
+                                    <div class="wordwrap" style="color: #28a54c;" align="left">{{taggedValues(detailedVerseUsers)}}</div>
                                 </div>
-                                <div class="col-20">
+                                <div class="col-sm-3">
                                     <button class="button button-positive" style="float: right">Düzenle</button>
                                 </div>
                             </div>
@@ -60,17 +64,14 @@
                 <!-- tags-->
                 <div class="well translations col-xs-12" id="verseTags_{{verse.id}}" ng-show="detailedTags.length > 0">
                     <div style="font-size: 20px"><b>Etiketler</b></div>
-                    <div style="text-align: right;width: 100% !important">
-                        <hr style="height:1px;border:none;color:#333;background-color:#333;margin-top: 3px !important;margin-bottom: 3px !important;width: 90% !important" />
-                        <div style="width: 95% !important">
-                            <button ng-repeat="verseTag in detailedTags"
-                                    class="tag label label-info s_a_tag btn btn-xs btn-info verse_tag"
-                                    style="border:0;"
-                                    ng-click="goToVerseTag(verse.translations[0].authorId, verse.id,verseTag, detailedVerseUsers, detailedVerseCircles)">
-                                {{verseTag}}
-                            </button>
-                        </div>
-                        <hr style="height:1px;border:none;color:#333;background-color:#333;margin-top: 3px !important;margin-bottom: 3px !important;width: 90% !important" />
+                    <div class="list" style="margin-top: 10px;">
+                        <a class="item item-icon-right" href=""
+                           ng-click="goToVerseTag(verse.translations[0].authorId, verse.id,verseTag, detailedVerseUsers, detailedVerseCircles)"
+                           ng-repeat="verseTag in detailedTags"
+                           >
+                            {{verseTag}}
+                            <i class="icon ion-chevron-right icon-accessory"></i>
+                        </a>
                     </div>
                 </div>
                 <!-- annotations-->
