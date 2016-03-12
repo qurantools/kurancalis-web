@@ -184,6 +184,7 @@ angular.module('ionicApp')
                         }
                     }
                 }
+                $scope.taggedVerseUsersForMobileSearch = [];
                 for (var i =0; i< $scope.taggedVerseUsers.length; i++){
                     $scope.taggedVerseUsersForMobileSearch.push($scope.taggedVerseUsers[i]);
                 }

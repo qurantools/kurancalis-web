@@ -416,7 +416,7 @@ angular.module('ionicApp')
                         }
                     }
                 }
-
+                $scope.taggedVerseUsersForMobileSearch = [];
                 for (var i =0; i< $scope.detailedVerseUsers.length; i++){
                     $scope.taggedVerseUsersForMobileSearch.push($scope.detailedVerseUsers[i]);
                 }
