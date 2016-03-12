@@ -10,8 +10,8 @@ angular.module('ionicApp')
         $scope.verseId = 0;
 
         //mobile parameters
-        $scope.taggedVerseCirclesForMobileSearch = null;
-        $scope.taggedVerseUsersForMobileSearch = null;
+        $scope.taggedVerseCirclesForMobileSearch = [];
+        $scope.taggedVerseUsersForMobileSearch = [];
 
         //Get verses of the tag from server
         $scope.loadVerseTagContent = function (verseTagContentParams, verseId) {
