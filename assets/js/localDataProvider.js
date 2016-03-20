@@ -21,36 +21,91 @@ angular.module('ionicApp').factory("localDataProvider", function (Restangular, $
     };
 
     factory.listAuthors = function (callback) {
-        var authors = [];
-        console.log("authors list called in localDataProvider. : ");
+        var resultSet = [];
         var query = "SELECT * FROM author a order by a.display_order";
         $cordovaSQLite.execute(factory.db, query).then(function(res) {
-            console.log("authors list result : " + JSON.stringify(res));
-            if(res.rows.length > 0) {
-                for (var i = 0; i < res.rows.length; i++){
-                    var item = res.rows.item(i);
-                    console.log("item ("+ i + ") : " + JSON.stringify(item));
-                    var author = {};
-                    author.color = item.color;
-                    author.displayOrder = item.display_order;
-                    author.id = item.id;
-                    author.language = item.language;
-                    author.name = item.name;
-                    author.title = item.title;
-                    authors.push(author);
-                }
-            } else {
-                console.log("No results found for authors");
+            for (var i = 0; i < res.rows.length; i++){
+                var item = res.rows.item(i);
+                var author = {};
+                author.color = item.color;
+                author.displayOrder = item.display_order;
+                author.id = item.id;
+                author.language = item.language;
+                author.name = item.name;
+                author.title = item.title;
+                resultSet.push(author);
             }
-            callback(authors);
+            callback(resultSet);
         }, function (err) {
-            console.error("list_authors " + JSON.stringify(err));
-            callback(authors);
+            callback(resultSet);
         });
     };
 
     factory.listFootnotes = function (args, callback) {
-        console.log("list footness called.");
+        var resultSet = [];
+        var query = "SELECT f.content FROM footnote f WHERE f.translation_id = ?";
+        $cordovaSQLite.execute(factory.db, query, [args.id]).then(function(res) {
+            for (var i = 0; i < res.rows.length; i++){
+                var item = res.rows.item(i);
+                resultSet.push(item.content);
+            }
+            callback(resultSet);
+        }, function (err) {
+            callback(resultSet);
+        });
     };
+
+    factory.listTranslations = function (args, callback) {
+        var resultSet = [];
+        var query = "SELECT t.* FROM translation t " +
+                     "JOIN author a ON t.author_id = a.id ";
+        var groupBy = " GROUP BY verse_id, author_id ";
+        var orderBy = " ORDER BY verse_id, display_order ASC ";
+
+        var criteria = [];
+        if (isDefined(args.chapter)){
+            criteria.push("t.chapter = " + args.chapter + " ");
+        }
+        if (isDefined(args.author)){
+            criteria.push("t.author_id & " + args.author + " ");
+        }
+        if (isDefined(args.verse_keyword) && args.verse_keyword != ""){
+            criteria.push("t.content like '%" + args.verse_keyword + "%'");
+        }
+        if (criteria.length > 0){
+            query += " WHERE " + criteria.join(" AND ") + groupBy +orderBy;
+        }else{
+            query += groupBy +orderBy;
+        }
+        console.log("query : " + query);
+        $cordovaSQLite.execute(factory.db, query).then(function(res) {
+            for (var i = 0; i < res.rows.length; i++){
+                var item = res.rows.item(i);
+                var translation = {};
+                translation.authorId = item.author_id;
+                translation.chapter = item.chapter;
+                translation.content = item.content;
+                translation.id = item.id;
+                translation.verse = item.verse;
+                translation.verseId = item.verse_id;
+                translation.version = item.version;
+                resultSet.push(translation);
+            }
+            var newTranslations = _.chain( resultSet ).reduce(function( memo, translation ) {
+                memo[ translation.verseId ] = memo[ translation.verseId ] || [];
+                memo[ translation.verseId ].push( translation );
+                return memo;
+            }, {}).map(function(translations, id) {
+                return {
+                    id: id,
+                    translations: translations
+                };
+            }).value();
+            callback(newTranslations);
+        }, function (err) {
+            callback(resultSet);
+        });
+    };
+
     return factory;
 });

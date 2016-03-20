@@ -1068,7 +1068,6 @@ app.factory('ChapterVerses', function ($resource) {
             $scope.authors = new Object();
             dataProvider.listAuthors(function(data){
                 $scope.authors = data;
-                console.log("$scope.list_authors : " + JSON.stringify(data));
                 var arrayLength = data.length;
                 for (var i = 0; i < arrayLength; i++) {
                     $scope.authorMap[data[i].id] = data[i];

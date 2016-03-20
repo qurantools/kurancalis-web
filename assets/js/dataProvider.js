@@ -11,7 +11,6 @@ angular.module('ionicApp').factory("dataProvider", function (Restangular, localD
         };
 
         factory.listAuthors = function (callback) {
-            console.log("authors list called in dataProvider. config_data.isNative : " + config_data.isNative);
             if (config_data.isNative){
                 localDataProvider.listAuthors(callback);
             }else{
@@ -53,7 +52,9 @@ angular.module('ionicApp').factory("dataProvider", function (Restangular, localD
             if (config_data.isNative){
                 localDataProvider.listTranslations(args, callback);
             }else{
-
+                Restangular.all("translations").customGET("", args, {}).then(function(data){
+                    callback(data);
+                });
             }
         };
         return factory;

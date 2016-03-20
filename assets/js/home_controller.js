@@ -688,9 +688,7 @@ angular.module('ionicApp')
 
             $scope.translationDivMap = [];
 
-            var verseTagContentRestangular = Restangular.all("translations");
             var translationParams = [];
-
             translationParams.author = $scope.query_author_mask;
             translationParams.chapter = $scope.query_chapter_id;
             translationParams.verse_keyword = $scope.queryVerse.keyword;
@@ -698,11 +696,9 @@ angular.module('ionicApp')
             if(translationParams.verse_keyword !=""){
                 translationParams.chapter="";
                 $scope.chapter_title = "";
-            }
-            else{
+            }else{
                 $timeout(function(){
                     try{
-
                         if (typeof translationParams.chapter != 'undefined' && typeof $scope.chapters[translationParams.chapter - 1] !== 'undefined') {
                             $scope.chapter_title = $scope.chapters[translationParams.chapter - 1].nameTr + " - " + $scope.chapters[translationParams.chapter - 1].nameTr2 + " Sûresi";
                         }
@@ -713,7 +709,7 @@ angular.module('ionicApp')
                 },200);
             }
 
-            verseTagContentRestangular.customGET("", translationParams, {}).then( function(data){
+            dataProvider.listTranslations(translationParams, function(data){
                 $scope.prepareTranslationDivMap(data);
                 //mark annotations
                 $scope.annotate_it();
@@ -727,11 +723,7 @@ angular.module('ionicApp')
                         });
                     }
                 }
-
-
             });
-
-
         };
 
 
@@ -880,10 +872,10 @@ angular.module('ionicApp')
 
         //list footnotes
         $scope.list_footnotes = function (translation_id, author_id) {
-
-            $scope.footnotes = dataProvider.listFootnotes({
+            dataProvider.listFootnotes({
                 id: translation_id
             }, function (data) {
+                $scope.footnotes = data;
                 var footnoteDivElement = document.getElementById('t_' + translation_id);
                 //don't list if already listed
                 if (!document.getElementById("fn_" + translation_id)) {
@@ -905,7 +897,7 @@ angular.module('ionicApp')
                     $(".showVerseData").hide();
                 }
             });
-        }
+        };
 
         //degisti $scope.list_translations();
 
