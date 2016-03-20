@@ -117,7 +117,7 @@ var app = angular.module('ionicApp', requiredModules)
                 }
             };
         }])
-    .run(['$route', '$rootScope', '$location', '$ionicPlatform', function ($route, $rootScope, $location, $ionicPlatform, $ionicPopup) {
+    .run(function ($rootScope, $ionicPlatform, dataProvider) {
 
         $ionicPlatform.ready(function () {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -134,6 +134,7 @@ var app = angular.module('ionicApp', requiredModules)
                 // org.apache.cordova.statusbar required
                 StatusBar.styleLightContent();
             }
+            dataProvider.initDB();
         });
 
         $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
@@ -153,7 +154,7 @@ var app = angular.module('ionicApp', requiredModules)
             }
             return original.apply($location, [path]);
         };*/
-    }]).directive('ngEnter', function () {
+    }).directive('ngEnter', function () {
         return function (scope, element, attrs) {
             element.bind("keydown keypress", function (event) {
                 if (event.which === 13) {
@@ -166,10 +167,9 @@ var app = angular.module('ionicApp', requiredModules)
         };
     });
 
-
 if (config_data.isMobile == false) { //false
     //desktop version
-    app.config(function ($routeProvider, FacebookProvider, RestangularProvider, localStorageServiceProvider, $httpProvider, $modalProvider) {
+    app.config(function ($routeProvider, FacebookProvider, RestangularProvider, localStorageServiceProvider, $httpProvider) {
         RestangularProvider.setBaseUrl(config_data.webServiceUrl);
         localStorageServiceProvider.setStorageCookie(0, '/');
 
@@ -289,11 +289,9 @@ if (config_data.isMobile == false) { //false
         FacebookProvider.init(config_data.FBAppID);
 
     });
-
 } else {
     app.config(function ($routeProvider, FacebookProvider, RestangularProvider, localStorageServiceProvider, $stateProvider, $urlRouterProvider, $httpProvider) {
             console.log("mobile version")
-
 
             //redirect / to /m/www/
             var currentPath = window.location.pathname;
@@ -416,9 +414,7 @@ if (config_data.isMobile == false) { //false
              */
         }
     );
-
 }
-
 app.factory('ChapterVerses', function ($resource) {
     return $resource(config_data.webServiceUrl + '/chapters/:chapter_id/authors/:author_mask', {
         chapter_id: '@chapter_id',
@@ -433,30 +429,9 @@ app.factory('ChapterVerses', function ($resource) {
             isArray: true
         }
     });
-}).factory('Footnotes', function ($resource) {
-    return $resource(config_data.webServiceUrl + '/translations/:id/footnotes', {
-        chapter_id: '@translation_id'
-    }, {
-        query: {
-            method: 'GET',
-            params: {
-                id: '@translation_id'
-            },
-            isArray: true
-        }
-    });
-}).factory('ListAuthors', function ($resource) {
-    return $resource(config_data.webServiceUrl + '/authors', {
-        query: {
-            method: 'GET',
-            isArray: true
-        }
-    });
 }).factory('User', function ($resource) {
-
     return $resource(config_data.webServiceUrl + '/users',
         {},
-
         {
             query: {
                 method: 'GET',
@@ -478,8 +453,7 @@ app.factory('ChapterVerses', function ($resource) {
             }
         }
     );
-})
-    .controller('MainCtrl', function ($scope, $q, $routeParams, $ionicSideMenuDelegate, $location, $timeout, ListAuthors, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService, $document, $filter, $rootScope, $state, $stateParams, $ionicModal, $ionicScrollDelegate, $ionicPosition, $ionicLoading, authorization,$rootScope, $ionicPopup) {
+}).controller('MainCtrl', function ($scope, $q, $routeParams, $ionicSideMenuDelegate, $location, $timeout, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService, $document, $filter, $rootScope, $state, $stateParams, $ionicModal, $ionicScrollDelegate, $ionicPosition, $ionicLoading, authorization,$rootScope, $ionicPopup, dataProvider, $ionicPlatform) {
         console.log("MainCtrl");
 
         //all root scope parameters should be defined and documented here
@@ -1092,7 +1066,7 @@ app.factory('ChapterVerses', function ($resource) {
         //list authors
         $scope.list_authors = function () {
             $scope.authorMap = new Object();
-            $scope.authors = ListAuthors.query(function (data) {
+            $scope.authors = dataProvider.listAuthors(function(data){
                 var arrayLength = data.length;
                 for (var i = 0; i < arrayLength; i++) {
                     $scope.authorMap[data[i].id] = data[i];
@@ -1102,7 +1076,6 @@ app.factory('ChapterVerses', function ($resource) {
             });
         };
 
-
         //tags input auto complete function
         $scope.loadTags = function (query) {
             var tagsRestangular = Restangular.one('tags', query);
@@ -1111,7 +1084,6 @@ app.factory('ChapterVerses', function ($resource) {
 
         //tags input auto complete
         $scope.cevrelistele = function () {
-
             return $scope.extendedCircles;
         };
 
@@ -1426,16 +1398,17 @@ app.factory('ChapterVerses', function ($resource) {
             copyFrom.select();
             document.execCommand('copy');
             body.removeChild(copyFrom);
-        }
+        };
+
+        $scope.preInit = function(){
+            $scope.initRoute();
+            $scope.initializeController();
+        };
 
         //initialization
-
-        //initialization
-        $scope.initRoute();
-
-        $scope.initializeController();
-
-
+        $ionicPlatform.ready(function(){
+            $scope.preInit();
+        });
     });
 
 function sidebarInit() {
@@ -1446,7 +1419,6 @@ function sidebarInit() {
         }
     });
 }
-
 function openPanel() {
     $('#cd-panel-right').addClass('is-visible');
 document.getElementById("openbtn").style.border = "1px solid blue";
@@ -1469,7 +1441,6 @@ function openLeftPanel() {
 function closeLeftPanel() {
     $('#cd-panel-left').removeClass('is-visible');
 }
-
 function toggleLeftPanel() {
     if ($('#cd-panel-left').hasClass('is-visible')) {
         closeLeftPanel();
@@ -1477,7 +1448,6 @@ function toggleLeftPanel() {
         openLeftPanel();
     }
 }
-
 function verseTagClicked(elem) {
 
     var closeClick = false;
@@ -1496,7 +1466,6 @@ function verseTagClicked(elem) {
         $(elem).addClass("btn-warning").addClass("activeTag").addClass("btn-sm").removeClass('btn-info').removeClass('btn-xs');
     }
 }
-
 function seperateChapterAndVerse(data) {
     var ret = [];
     var seperator = data.indexOf(':');
@@ -1504,7 +1473,6 @@ function seperateChapterAndVerse(data) {
     ret.verse = data.substring(seperator + 1, data.length);
     return ret;
 }
-
 function clearTextSelection() {
     if (window.getSelection) {
         if (window.getSelection().empty) {  // Chrome
@@ -1516,21 +1484,18 @@ function clearTextSelection() {
         document.selection.empty();
     }
 }
-
 function focusToVerseInput() {
     setTimeout(function () {
         document.getElementById('chapterSelection_verse').focus();
         document.getElementById('chapterSelection_verse').select();
     }, 600);
 }
-
 function focusToChapterInput() {
     setTimeout(function () {
         document.getElementById('chapterSelection_chapter').focus();
         document.getElementById('chapterSelection_chapter').select();
     }, 600);
 }
-
 function focusToInput(elementID) {
     setTimeout(function () {
         document.getElementById(elementID).focus();

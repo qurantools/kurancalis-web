@@ -1,5 +1,5 @@
 angular.module('ionicApp')
-    .controller('HomeCtrl', function ($scope, $compile, $q, $routeParams, $location, $timeout, ListAuthors, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService, $document, $filter, $rootScope, $state, $stateParams, $ionicModal, $ionicScrollDelegate, $ionicPosition, authorization,$ionicActionSheet,$ionicPopup, $sce) {
+    .controller('HomeCtrl', function ($scope, $compile, $q, $routeParams, $location, $timeout, ChapterVerses, User, Facebook, Restangular, localStorageService, $document, $filter, $rootScope, $state, $stateParams, $ionicModal, $ionicScrollDelegate, $ionicPosition, authorization,$ionicActionSheet,$ionicPopup, $sce, dataProvider, $ionicPlatform) {
 
 
         $scope.linkno="";
@@ -8,7 +8,7 @@ angular.module('ionicApp')
         $scope.switchAuthorViewVerseId = 0;
         $scope.switchScrollWatch=false;
 
-    
+
         ///////////////////////
 
         $scope.DETAILED_SEARCH_ITEM = {'id': '', 'name': 'DETAYLI ARAMA'};
@@ -52,7 +52,7 @@ angular.module('ionicApp')
         $scope.mobil_tagsearched = "";
 
         $scope.verseAnnotationData = [];
-      
+
         $scope.restoreChapterViewParameters = function (localParameterData) {
             $scope.query_author_mask = localParameterData.author_mask;
             $scope.query_chapter_id = localParameterData.chapter_id;
@@ -81,9 +81,9 @@ angular.module('ionicApp')
 
             localStorageService.set('chapter_view_parameters', localParameterData);
         };
-        
+
         $scope.searchBookMarkModal = function(){
-            
+
             $scope.$broadcast('searchBookMarkModal');
         };
 
@@ -111,7 +111,7 @@ angular.module('ionicApp')
 
             $scope.linkno="http://kuranharitasi.com/kuran.aspx?sureno=" + chapterno + "&ayetno=" + verseno + "#ContentPlaceHolder1_ayettekikoklergrid";
             $scope.currentProjectUrl = $sce.trustAsResourceUrl($scope.linkno);
-        
+
         };
 
         //reflects the scope parameters to URL
@@ -464,14 +464,14 @@ angular.module('ionicApp')
 
         //go to chapter / verse from navigation header
         $scope.goToVerse = function () {
-        
+
             $scope.query_chapter_id = $scope.goToVerseParameters.chapter.id;
             $scope.verse.number = $scope.goToVerseParameters.verse;
             $scope.queryVerse.keyword = ""; //reset keyword because we need the chapter.
             $scope.goToChapter();
 
         };
-       
+
 
         //action for detailed search screen
         $scope.detailedSearch = function () {
@@ -584,7 +584,7 @@ angular.module('ionicApp')
 
             //it is just like clicked on annotations
             $scope.onHighlightClicked(verseAnnotations);
-           
+
         };
 
         $scope.onHighlightClicked = function (clickedAnnotations) {
@@ -722,8 +722,8 @@ angular.module('ionicApp')
                 if ($scope.user == null) {
                     if (typeof $scope.verse.number != 'undefined') {
                         var verseId = parseInt($scope.query_chapter_id * 1000) + parseInt($scope.verse.number);
-                         $timeout(function () {
-                            $scope.scrollToVerse(verseId);                
+                        $timeout(function () {
+                            $scope.scrollToVerse(verseId);
                         });
                     }
                 }
@@ -731,7 +731,7 @@ angular.module('ionicApp')
 
             });
 
-           
+
         };
 
 
@@ -800,26 +800,26 @@ angular.module('ionicApp')
             //console.log("$scope.filteredAnnotations: "+JSON.stringify($scope.filteredAnnotations));
             if (config_data.isMobile) {
                 var confirmPopup = $ionicPopup.confirm({
-                     title: 'Ayet Notu Sil',
-                     template: 'Ayet notu silinecektir, onaylıyor musunuz?',
-                     cancelText: 'VAZGEC',
-                     okText: 'TAMAM',
-                     okType: 'button-assertive'
-                   });
-                   confirmPopup.then(function(res) {
-                     if(res) {
+                    title: 'Ayet Notu Sil',
+                    template: 'Ayet notu silinecektir, onaylıyor musunuz?',
+                    cancelText: 'VAZGEC',
+                    okText: 'TAMAM',
+                    okType: 'button-assertive'
+                });
+                confirmPopup.then(function(res) {
+                    if(res) {
                         if (typeof $scope.filteredAnnotations != 'undefined' && $scope.filteredAnnotations.length > 0) {
-                        index = $scope.getAnnotationIndexFromFilteredAnnotationIndex(index);
+                            index = $scope.getAnnotationIndexFromFilteredAnnotationIndex(index);
                         }
                         annotator.deleteAnnotation($scope.annotations[index]);
-                     } else {
-                     }
-                   });
+                    } else {
+                    }
+                });
             }else{
 
                 $("#deleteAnnotationModal").modal("show");
                 tempAnnoIndex = index;
-                
+
             }
 
         };
@@ -831,7 +831,7 @@ angular.module('ionicApp')
 
         $scope.mdeleteAnnotation = function(){
             console.log('anno');
-             if (typeof $scope.filteredAnnotations != 'undefined' && $scope.filteredAnnotations.length > 0) {
+            if (typeof $scope.filteredAnnotations != 'undefined' && $scope.filteredAnnotations.length > 0) {
                 index = $scope.getAnnotationIndexFromFilteredAnnotationIndex(tempAnnoIndex);
             }
             annotator.deleteAnnotation($scope.annotations[index]);
@@ -881,7 +881,7 @@ angular.module('ionicApp')
         //list footnotes
         $scope.list_footnotes = function (translation_id, author_id) {
 
-            $scope.footnotes = Footnotes.query({
+            $scope.footnotes = dataProvider.listFootnotes({
                 id: translation_id
             }, function (data) {
                 var footnoteDivElement = document.getElementById('t_' + translation_id);
@@ -904,7 +904,6 @@ angular.module('ionicApp')
                     //hide show verse when footnote collapses
                     $(".showVerseData").hide();
                 }
-
             });
         }
 
@@ -947,7 +946,7 @@ angular.module('ionicApp')
 
             }
         }
-           
+
         $scope.verseNumberValidation = function (chapters, chapter_id, verse_number) {
             var chapters = $scope.chapters;
             var chapter_id = $scope.goToVerseParameters.chapter.id;
@@ -1076,7 +1075,7 @@ angular.module('ionicApp')
             }).then(function (modal) {
                 $scope.modal_view_user_search = modal
             });
-            
+
             $scope.openModal = function (id) {
                 if (id == 'annotations_on_page') {
                     $scope.modal_annotations_on_page.show();
@@ -1144,7 +1143,7 @@ angular.module('ionicApp')
         $scope.changeStatus = function () {
             $scope.status = !$scope.status;
         }
-        
+
         $scope.restoreMobileDetailedSearchCircleSelections = function(){
             //restore mobile circle selections
             for (var index = 0; index < $scope.mobileDetailedSearchCircleListForSelection.length; ++index) {
@@ -1203,7 +1202,7 @@ angular.module('ionicApp')
 
             $scope.query_own_annotations.value = durum;
         };
-        
+
         $scope.initChapterViewParameters = function () {
 
             var chapterId = 1;
@@ -1395,7 +1394,6 @@ angular.module('ionicApp')
             var butonAyraclar = {text: '<i class="icon ion-android-bookmark"></i> Ayraçlar' };
             $scope.actionSheetButtons.push(butonCeviri);
             $scope.actionSheetButtons.push(butonSureAyet);
-
             if($scope.loggedIn) {
                 if($scope.user){
                     $scope.actionSheetButtons.push(butonFiltre);
@@ -1421,17 +1419,17 @@ angular.module('ionicApp')
         $scope.scrollDelegateTop = function(id){
             $ionicScrollDelegate.$getByHandle(id).scrollTop();
         };
-        
+
         if (config_data.isMobile) {
-            
-             $ionicModal.fromTemplateUrl('components/partials/bookmark.html', {
+
+            $ionicModal.fromTemplateUrl('components/partials/bookmark.html', {
                 id:'1001',
                 scope: $scope,
                 animation: 'slide-in-up'
             }).then(function(modal) {
                 $scope.bookmarkModal = modal;
             });
-            
+
             $ionicModal.fromTemplateUrl('components/partials/nav_bookmark.htm', {
                 id:'1002',
                 scope: $scope,
@@ -1454,22 +1452,22 @@ angular.module('ionicApp')
                         // add cancel code..
                     },
                     buttonClicked: function (index) {
-                        $scope.openAddBookMarkModal(verseId);
+                        $scope.openAddBookMarkModal(chapter, verse, verseId);
                         $scope.bookmarkModal.show();
                         return true;
                     }
                 });
             },350);
-            
+
         }
-        
+
         $scope.closeBookmarkModal =function () {
             $scope.bookmarkModal.hide();
             $scope.naviBookmarkModal.hide();
         }
 
 
-        
+
         $scope.openMenuModal = function () {
             $timeout(function() {
                 $ionicActionSheet.show({
@@ -1487,7 +1485,7 @@ angular.module('ionicApp')
 
                         } else if (index == 1) {
                             $scope.openModal('chapter_selection');
-                        } else if (index == 2) {
+                        }else if (index == 2) {
                             $scope.openModal('homesearch');
                         } else if (index == 3) {
                             $scope.searchBookMarkModal();
@@ -1499,30 +1497,25 @@ angular.module('ionicApp')
                 });
             },350);
         }
-        
+
         //initialization
-
-        $scope.initializeHomeController();
-        
-        
-
+        $ionicPlatform.ready(function(){
+            $scope.initializeHomeController();
+        });
     })
 
     .directive('toggle', function(){
-  return {
-    restrict: 'A',
-    link: function(scope, element, attrs){
-      if (attrs.toggle=="tooltip"){
-        $(element).tooltip();
-      }
-      if (attrs.toggle=="popover"){
-        $(element).popover();
-         
-      }
-    }
-  };
-})
+        return {
+            restrict: 'A',
+            link: function(scope, element, attrs){
+                if (attrs.toggle=="tooltip"){
+                    $(element).tooltip();
+                }
+                if (attrs.toggle=="popover"){
+                    $(element).popover();
+
+                }
+            }
+        };
+    })
 ;
-
-
-
