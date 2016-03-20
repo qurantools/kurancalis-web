@@ -134,7 +134,7 @@ var app = angular.module('ionicApp', requiredModules)
                 // org.apache.cordova.statusbar required
                 StatusBar.styleLightContent();
             }
-            dataProvider.initDB();
+            dataProvider.initDB($rootScope);
         });
 
         $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
@@ -1062,11 +1062,13 @@ app.factory('ChapterVerses', function ($resource) {
         };
         /* end of show verse */
 
-
         //list authors
         $scope.list_authors = function () {
             $scope.authorMap = new Object();
-            $scope.authors = dataProvider.listAuthors(function(data){
+            $scope.authors = new Object();
+            dataProvider.listAuthors(function(data){
+                $scope.authors = data;
+                console.log("$scope.list_authors : " + JSON.stringify(data));
                 var arrayLength = data.length;
                 for (var i = 0; i < arrayLength; i++) {
                     $scope.authorMap[data[i].id] = data[i];
@@ -1387,7 +1389,6 @@ app.factory('ChapterVerses', function ($resource) {
                     //}
                 }
             }
-
         };
 
         $scope.kopyala = function(url){
@@ -1400,16 +1401,17 @@ app.factory('ChapterVerses', function ($resource) {
             body.removeChild(copyFrom);
         };
 
-        $scope.preInit = function(){
-            $scope.initRoute();
-            $scope.initializeController();
-        };
+        $scope.initRoute();
 
         //initialization
-        $ionicPlatform.ready(function(){
-            $scope.preInit();
-        });
-    });
+        if(config_data.isNative) {
+            $scope.$on('db.init.finish', function() {
+                $scope.initializeController();
+            });
+        }else{
+            $scope.initializeController();
+        }
+});
 
 function sidebarInit() {
     $('.cd-panel').on('click', function (event) {

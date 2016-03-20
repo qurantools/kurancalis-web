@@ -2,9 +2,9 @@ angular.module('ionicApp').factory("dataProvider", function (Restangular, localD
         var factory = {};
         factory.callback = function(){};
 
-        factory.initDB = function() {
+        factory.initDB = function(rt) {
             if (config_data.isNative){
-                localDataProvider.initDB();
+                localDataProvider.initDB(rt);
             }else{
                 //nothing
             }
@@ -56,8 +56,6 @@ angular.module('ionicApp').factory("dataProvider", function (Restangular, localD
 
             }
         };
-
-
         return factory;
 }).factory('ListAuthors', function ($resource) {
     return $resource(config_data.webServiceUrl + '/authors', {

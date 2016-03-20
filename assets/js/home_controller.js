@@ -1009,7 +1009,6 @@ angular.module('ionicApp')
                 $scope.modal_chapter_selection = modal
             });
 
-
             $ionicModal.fromTemplateUrl('components/partials/authors_list_modal.html', {
                 scope: $scope,
                 //animation: 'slide-in-left',
@@ -1026,14 +1025,6 @@ angular.module('ionicApp')
                 id: 'annotations_on_page_sort'
             }).then(function (modal) {
                 $scope.modal_annotations_on_page_sort = modal
-            });
-
-            $ionicModal.fromTemplateUrl('components/partials/editor_modal.html', {
-                scope: $scope,
-                //animation: 'slide-in-left',
-                id: 'editor'
-            }).then(function (modal) {
-                $scope.setModalEditor(modal);
             });
 
             $ionicModal.fromTemplateUrl('components/partials/detailed_search.html', {
@@ -1064,6 +1055,22 @@ angular.module('ionicApp')
                 id: 'tagsearch'
             }).then(function (modal) {
                 $scope.modal_tag_search = modal
+            });
+
+            $ionicModal.fromTemplateUrl('components/partials/bookmark.html', {
+                id:'1001',
+                scope: $scope,
+                animation: 'slide-in-up'
+            }).then(function(modal) {
+                $scope.bookmarkModal = modal;
+            });
+
+            $ionicModal.fromTemplateUrl('components/partials/nav_bookmark.htm', {
+                id:'1002',
+                scope: $scope,
+                animation: 'slide-in-up'
+            }).then(function(modal) {
+                $scope.naviBookmarkModal = modal;
             });
 
             $ionicModal.fromTemplateUrl('components/partials/add_canviewuser.html', {
@@ -1097,7 +1104,6 @@ angular.module('ionicApp')
                 } else if (id == 'tagsearch') {
                     $scope.modal_tag_search.show();
                     focusToInput('tagsearch_input');
-
                 }
             };
 
@@ -1125,7 +1131,7 @@ angular.module('ionicApp')
                         $scope.getModalEditor().hide();
                     }
                 },300);
-            }
+            };
 
             $scope.hideAllMobileModals = function () {
                 $scope.modal_annotations_on_page.hide();
@@ -1134,7 +1140,6 @@ angular.module('ionicApp')
                 $scope.modal_annotations_on_page_sort.hide();
                 $scope.modal_editor.hide();
             };
-
         }
 
         //On Off Switch
@@ -1176,8 +1181,7 @@ angular.module('ionicApp')
             if (control == "0") {
                 $scope.query_circles.push($scope.circlesname[index]);
             }
-
-        }
+        };
 
         //Select circles addicionar for parameter
         $scope.mobil_addViewCircles = function (index) {
@@ -1319,7 +1323,6 @@ angular.module('ionicApp')
                 $scope.query_circle_dropdown = $scope.ONLY_MINE_ITEM;
             }
 
-
             //set screen variables for author mask
             $scope.$on("authorMap ready", function handler() {
                 $scope.setDetailedSearchAuthorSelection($scope.query_author_mask);
@@ -1346,7 +1349,6 @@ angular.module('ionicApp')
         };
 
         $scope.initializeHomeController = function () {
-
 
             $scope.initChapterViewParameters();
             $scope.list_translations();
@@ -1383,6 +1385,15 @@ angular.module('ionicApp')
                 $scope.$broadcast("displayTutorial",{id:"chapter"})
             },2000);
 
+            if (config_data.isMobile){
+                $ionicModal.fromTemplateUrl('components/partials/editor_modal.html', {
+                    scope: $scope,
+                    //animation: 'slide-in-left',
+                    id: 'editor'
+                }).then(function (modal) {
+                    $scope.setModalEditor(modal);
+                });
+            }
         };
 
         $scope.initializeActionSheetButtons = function(){
@@ -1420,25 +1431,6 @@ angular.module('ionicApp')
             $ionicScrollDelegate.$getByHandle(id).scrollTop();
         };
 
-        if (config_data.isMobile) {
-
-            $ionicModal.fromTemplateUrl('components/partials/bookmark.html', {
-                id:'1001',
-                scope: $scope,
-                animation: 'slide-in-up'
-            }).then(function(modal) {
-                $scope.bookmarkModal = modal;
-            });
-
-            $ionicModal.fromTemplateUrl('components/partials/nav_bookmark.htm', {
-                id:'1002',
-                scope: $scope,
-                animation: 'slide-in-up'
-            }).then(function(modal) {
-                $scope.naviBookmarkModal = modal;
-            });
-        }
-
         $scope.bookmarkActionSheet = function (chapter,verse,verseId) {
             $timeout(function() {
                 $ionicActionSheet.show({
@@ -1459,14 +1451,12 @@ angular.module('ionicApp')
                 });
             },350);
 
-        }
+        };
 
         $scope.closeBookmarkModal =function () {
             $scope.bookmarkModal.hide();
             $scope.naviBookmarkModal.hide();
-        }
-
-
+        };
 
         $scope.openMenuModal = function () {
             $timeout(function() {
@@ -1476,10 +1466,9 @@ angular.module('ionicApp')
                     titleText: '',
                     cancelText: 'Kapat',
                     cancel: function () {
-                        // add cancel code..
+                        // add cancel code..home_controller
                     },
                     buttonClicked: function (index) {
-
                         if (index == 0) {
                             $scope.openModal('authors_list');
 
@@ -1491,17 +1480,20 @@ angular.module('ionicApp')
                             $scope.searchBookMarkModal();
                             $scope.naviBookmarkModal.show();
                         }
-
                         return true;
                     }
                 });
             },350);
-        }
+        };
 
         //initialization
-        $ionicPlatform.ready(function(){
+        if(config_data.isNative) {
+            $scope.$on('db.init.finish', function() {
+                $scope.initializeHomeController();
+            });
+        }else{
             $scope.initializeHomeController();
-        });
+        }
     })
 
     .directive('toggle', function(){
