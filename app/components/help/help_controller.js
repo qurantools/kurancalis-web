@@ -9,11 +9,10 @@ angular.module('ionicApp')
             {   id: "intro",
                 name : "Intro",
                 submenu : [
-                    {id:11, title:"Intro-1", source:[{src: $sce.trustAsResourceUrl("../../assets/img/help/mobile/karalama.mp4"), type: "video/mp4"}]},
-                    {id:12, title:"Intro-2", source:[{src: $sce.trustAsResourceUrl("https://youtu.be/uqROdKnNfQk"), type: "video/mp4"}]},
-                    {id:13, title:"Intro-3", source:[{src: $sce.trustAsResourceUrl(""), type: "video/mp4"}]},
-                    {id:14, title:"Intro-4", source:[{src: $sce.trustAsResourceUrl(""), type: "video/mp4"}]},
-                    {id:15, title:"Intro-5", source:[{src: $sce.trustAsResourceUrl(""), type: "video/mp4"}]}
+                    {id:11, title:"Intro-1", source:[{src: $sce.trustAsResourceUrl("../../assets/img/help/mobile/ana_menu.mp4"), type: "video/mp4"}]},
+                    {id:11, title:"Intro-1", source:[{src: $sce.trustAsResourceUrl("../../assets/img/help/mobile/sure_alt_menu.mp4"), type: "video/mp4"}]},
+                    {id:12, title:"Intro-2", source:[{src: $sce.trustAsResourceUrl("../../assets/img/help/mobile/karalama.mp4"), type: "video/mp4"}]},
+                    {id:13, title:"Intro-3", source:[{src: $sce.trustAsResourceUrl("../../assets/img/help/mobile/suredeki_ayet_notlari.mp4"), type: "video/mp4"}]}
                 ]
             },
             {   id: "annotation",

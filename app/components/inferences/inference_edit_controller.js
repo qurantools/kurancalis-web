@@ -411,8 +411,8 @@ angular.module('ionicApp')
                                 $scope.inferenceData.content = editor.getContent();
                             })
                     },
-                    height: 250,
-                    max_height: 250,
+                    height: 210,
+                    max_height: 210,
                     selector: "textarea#editable",
                     toolbar: " bold italic underline | alignleft aligncenter  |  bullist ",
                     inline: false,
