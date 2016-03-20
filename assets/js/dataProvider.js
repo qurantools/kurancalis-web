@@ -40,11 +40,13 @@ angular.module('ionicApp').factory("dataProvider", function (Restangular, localD
             }
         };
 
-        factory.listChapters = function (args, callback) {
+        factory.listChapters = function (callback) {
             if (config_data.isNative){
-                localDataProvider.listChapters(args, callback);
+                localDataProvider.listChapters(callback);
             }else{
-
+                Restangular.all('chapters').getList().then(function(data){
+                   callback(data);
+                });
             }
         };
 

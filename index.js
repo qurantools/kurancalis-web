@@ -1307,7 +1307,7 @@ app.factory('ChapterVerses', function ($resource) {
             var localChaptersVersion = localStorageService.get('chaptersVersion');
 
             if (localChaptersVersion == null || localChaptersVersion < chaptersVersion) {
-                Restangular.all('chapters').getList().then(function (data) {
+                dataProvider.listChapters(function (data) {
                     $scope.chapters = data;
                     localStorageService.set('chapters', data);
                     localStorageService.set('chaptersVersion', chaptersVersion);

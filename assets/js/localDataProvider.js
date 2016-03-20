@@ -5,18 +5,13 @@ angular.module('ionicApp').factory("localDataProvider", function (Restangular, $
     factory.callback = function(){};
 
     factory.initDB = function(rt) {
-        console.log("sqllite openDB start");
         var dbName = "kurancalis.db";
         window.plugins.sqlDB.copy(dbName, 0, function () {
-            console.log("sqllite db copied");
             factory.db = $cordovaSQLite.openDB(dbName);
             rt.$broadcast('db.init.finish');
-            console.log("sqllite openDB end : 1");
         }, function (error) {
-            console.error("There was an error copying the database: " + JSON.stringify(error));
             factory.db = $cordovaSQLite.openDB(dbName);
             rt.$broadcast('db.init.finish');
-            console.log("sqllite openDB end : 2");
         });
     };
 
@@ -77,7 +72,6 @@ angular.module('ionicApp').factory("localDataProvider", function (Restangular, $
         }else{
             query += groupBy +orderBy;
         }
-        console.log("query : " + query);
         $cordovaSQLite.execute(factory.db, query).then(function(res) {
             for (var i = 0; i < res.rows.length; i++){
                 var item = res.rows.item(i);
@@ -105,6 +99,30 @@ angular.module('ionicApp').factory("localDataProvider", function (Restangular, $
         }, function (err) {
             callback(resultSet);
         });
+    };
+
+    factory.listChapters = function (callback) {
+        var resultSet = [];
+        var query = "select * from chapter";
+        $cordovaSQLite.execute(factory.db, query).then(function(res) {
+            for (var i = 0; i < res.rows.length; i++){
+                var item = res.rows.item(i);
+                var chapter = {};
+                chapter.nameEn = item.name_en;
+                chapter.nameTr = item.name_tr;
+                chapter.id = item.id;
+                chapter.nameTr2 = item.name_tr2;
+                chapter.verseCount = item.verse_count;
+                resultSet.push(chapter);
+            }
+            callback(resultSet);
+        }, function (err) {
+            callback(resultSet);
+        });
+    };
+
+    factory.listVerses = function (args, callback) {
+
     };
 
     return factory;
