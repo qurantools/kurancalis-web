@@ -11,10 +11,8 @@
             <h1 class="title"></h1>
             <ion-nav-buttons side="right">
                 <button class="button button-icon icon ion-search" ng-click="openModal('all_inferences_filter')" ng-if="user!=null">
-                   Ara
                 </button>
-                <a class="button button-icon icon ion-plus" href="#/inference/new/" ng-if="user!=null">
-                    Yeni Cikarim
+                <a data-tap-disabled="true" class="button button-icon icon ion-plus" href="#/inference/new/" ng-if="user!=null">
                 </a>
                 
             </ion-nav-buttons>

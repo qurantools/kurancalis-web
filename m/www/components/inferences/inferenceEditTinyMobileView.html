@@ -14,11 +14,15 @@
             <ion-content overflow-scroll="true" >
                 <div style="height: 30px"></div>
                 <div style="height: 100%; width: 100%">
-                    {{title}}
-                    {{content}}
+                    {{inferenceData.title}}
+                    inferenceData.content
                     {{tinymceOptions}}
-                         <textarea id="tiny-content" ng-model="content" ui-tinymce style="font-size: medium ">
-                        </textarea>
+                    <div data-tap-disabled="true">
+                    <!--textarea
+                         id="tiny-content2" ng-model="inferenceData.content" ui-tinymce="tinymceOptions" style="font-size: medium ">
+                         </textarea-->
+
+                </div>
                 </div>
 
             </ion-content>

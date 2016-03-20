@@ -1454,7 +1454,7 @@ angular.module('ionicApp')
                         // add cancel code..
                     },
                     buttonClicked: function (index) {
-                        $scope.openAddBookMarkModal(chapter, verse, verseId);
+                        $scope.openAddBookMarkModal(verseId);
                         $scope.bookmarkModal.show();
                         return true;
                     }

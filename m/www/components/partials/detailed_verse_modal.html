@@ -1,22 +1,22 @@
 <div class="modal modal-fullscreen" id="detailedVerseModal">
     <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced" align-title="center">
         <ion-nav-buttons side="left">
-            <button class="button button-icon button-clear ion-navicon" ng-click="openFooterMenu()"/>
+            <button class="button button-icon button-clear ion-ios-gear" ng-click="openFooterMenu()"/>
         </ion-nav-buttons>
         <ion-nav-title>Ayet inceleme</ion-nav-title>
         <ion-nav-buttons side="right">
-            <button class="button button-icon icon-left ion-checkmark"
+            <button class="button button-icon icon-left ion-close-circled"
                     ng-click="closeModal('detailed_verse_modal');"
                     style="float: right"/>
         </ion-nav-buttons>
     </ion-nav-bar>
-    <ion-header-bar class="bar bar-subheader item-input-inset">
+    <ion-header-bar class="bar bar-subheader item-input-inset" >
         <div style="float: left" class="col-xs-12 col-sm-3">
             <button class="btn" ng-click="gotoPrev()">
                 <i class="btn icon ion-arrow-left-b large_icon"></i>
             </button>
         </div>
-        <div class="col-xs-12 col-sm-6" style="width: 100%;height: 100%;background: #eee;margin: 0px 40px;" align="center" ng-click="openModal('chapter_selection_modal')">
+        <div data-tap-disabled="true" class="col-xs-12 col-sm-6" style="font-weight:bold; width: 100%;height: 100%;background: #eee;margin-left: 15px; margin-right: 10px;" align="center" ng-click="openModal('chapter_selection_modal')">
             {{goToVerseParameters.chapter.id}} : ({{detailedChapters[goToVerseParameters.chapter.id-1].nameTr}}) {{goToVerseParameters.verse}}
         </div>
         <div style="float: right" class="col-xs-12 col-sm-3">
@@ -64,8 +64,8 @@
                 <!-- tags-->
                 <div class="well translations col-xs-12" id="verseTags_{{verse.id}}" ng-show="detailedTags.length > 0">
                     <div style="font-size: 20px"><b>Etiketler</b></div>
-                    <div class="list" style="margin-top: 10px;">
-                        <a class="item item-icon-right" href=""
+                    <div class="list" style="margin-top: 10px; ">
+                        <a class="item item-icon-right" style="font-weight: bold" href=""
                            ng-click="goToVerseTag(verse.translations[0].authorId, verse.id,verseTag, detailedVerseUsers, detailedVerseCircles)"
                            ng-repeat="verseTag in detailedTags"
                            >

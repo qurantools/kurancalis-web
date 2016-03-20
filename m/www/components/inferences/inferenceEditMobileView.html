@@ -22,15 +22,17 @@
                 <div style="height: 30px"></div>
                 <div class="list">
                     <label class="item item-input">                        
-                        <input type="text" id="title" ng-model="title" placeholder="Başlık">
+                        <input type="text" id="title" ng-model="inferenceData.title" placeholder="Başlık">
                     </label>
                     <label class="item item-input" ng-show="imageDefined" >
-                        <input type="text" class="form-control" id="inferenceImage" style="width: 95%;display: none" placeholder="Image URL" ng-model="inferenceImage">
-                        <img style="background-image: url('../../assets/img/resim_ekle_tikla.png');max-height: 150px;max-width: 250px;"  src="{{inferenceImage}}"  class="file-manager-linked" data-input-id="inferenceImage"/>
+                        <input type="text" class="form-control" id="inferenceImage" style="width: 95%;display: none" placeholder="Image URL" ng-model="inferenceData.image">
+                        <img style="background-image: url('../../assets/img/resim_ekle_tikla.png');max-height: 150px;max-width: 250px;"  src="{{inferenceData.image}}"  class="file-manager-linked" data-input-id="inferenceImage"/>
                     </label>
                 </div>
-                <div data-tap-disabled="true"
-                         id="tiny-content" ng-model="content" ui-tinymce="tinymceOptions" style="height: 30%; font-size: medium ">
+                <!--a ng-click="openModal('inference_mobile_tiny_edit')">özet</a-->
+                <div data-tap-disabled="true" style="height: 100%">
+                    <textarea
+                         id="tiny-content" ng-model="inferenceData.content" ui-tinymce="tinymceOptions" style="font-size: medium "></textarea>
 
                 </div>
                 <!--textarea id="froala-sample-2" froala ng-model="content"></textarea-->

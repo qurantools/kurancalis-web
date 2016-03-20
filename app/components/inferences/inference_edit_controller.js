@@ -6,9 +6,12 @@ angular.module('ionicApp')
         $scope.users = []; //id array
         $scope.pagePurpose = "new";
 
+
+        $scope.inferenceData={};
         ///////Volkan
         //$scope.extendedCirclesForSearch = []; //show circles
         //$scope.initializeCircleLists(); //show circles
+
 
         $scope.tags_entry = [];
         $scope.circlesForSearch = [];
@@ -39,12 +42,12 @@ angular.module('ionicApp')
         var tagArray = [];
         if(config_data.isMobile){
 
-            $scope.title = "";
-            $scope.content = "";
+            $scope.inferenceData.title = "";
+            $scope.inferenceData.content = "";
             $scope.imageDefined = false;
 
             setTimeout(function () {
-                if (typeof $scope.inferenceImage === "undefined" || $scope.inferenceImage == "undefined") {
+                if (typeof $scope.inferenceData.image === "undefined" || $scope.inferenceData.image == "undefined") {
                     $scope.imageDefined = false;                   
                 } else {
                     $scope.imageDefined = true;
@@ -182,9 +185,9 @@ angular.module('ionicApp')
             var headers = {'Content-Type': 'application/x-www-form-urlencoded', 'access_token': $scope.access_token};
             //var jsonData = annotation;
             var postData = [];
-            postData.push(encodeURIComponent("title") + "=" + encodeURIComponent($scope.title));
-            postData.push(encodeURIComponent("image") + "=" + encodeURIComponent($scope.inferenceImage));
-            postData.push(encodeURIComponent("content") + "=" + encodeURIComponent($scope.content));
+            postData.push(encodeURIComponent("title") + "=" + encodeURIComponent($scope.inferenceData.title));
+            postData.push(encodeURIComponent("image") + "=" + encodeURIComponent($scope.inferenceData.image));
+            postData.push(encodeURIComponent("content") + "=" + encodeURIComponent($scope.inferenceData.content));
             var tags_add = tags.join(",");
             postData.push(encodeURIComponent("tags") + "=" + encodeURIComponent(tags_add));
 
@@ -229,9 +232,9 @@ angular.module('ionicApp')
             var inferenceRestangular = Restangular.one("inferences", inferenceId);
             inferenceRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (data) {
 
-                $scope.title = data.title;
-                $scope.inferenceImage = data.image;
-                $scope.content = $scope.prepareContentForEdit(data.content,data.references);
+                $scope.inferenceData.title = data.title;
+                $scope.inferenceData.image = data.image;
+                $scope.inferenceData.content = $scope.prepareContentForEdit(data.content,data.references);
                 $scope.tags_entry = data.tags;
 
                 for (var i = 0; i < data.tags.length; i++) {
@@ -385,10 +388,10 @@ angular.module('ionicApp')
                 ],
                 setup: function (editor) {
                     editor.on('Change', function (e) {
-                        $scope.content = editor.getContent();
+                        $scope.inferenceData.content = editor.getContent();
                     }),
                         editor.on('keyup', function (e) {
-                            $scope.content = editor.getContent();
+                            $scope.inferenceData.content = editor.getContent();
                         })
                 },
                 toolbar: "undo redo | formatselect fontsizeselect | bold italic underline | alignleft aligncenter alignright | bullist numlist outdent indent | forecolor | link image preview"
@@ -402,12 +405,15 @@ angular.module('ionicApp')
                     ],
                     setup: function (editor) {
                         editor.on('Change', function (e) {
-                            $scope.content = editor.getContent();
+                            $scope.inferenceData.content = editor.getContent();
                         }),
                             editor.on('keyup', function (e) {
-                                $scope.content = editor.getContent();
+                                $scope.inferenceData.content = editor.getContent();
                             })
                     },
+                    height: 250,
+                    max_height: 250,
+                    selector: "textarea#editable",
                     toolbar: " bold italic underline | alignleft aligncenter  |  bullist ",
                     inline: false,
                     theme : 'modern',

@@ -278,7 +278,13 @@ angular.module('ionicApp')
             } else if (item == 'add_to_list') {
 
             } else if (item == 'go_to_verse') {
-                window.location.href = '#/translations/?author='+$scope.detailed_query_author_mask+'&chapter='+$scope.goToVerseParameters.chapter.id+'&verse='+$scope.goToVerseParameters.verse;
+                $location.path("/translations").search(
+                    {
+                        chapter: $scope.goToVerseParameters.chapter.id,
+                        verse: $scope.goToVerseParameters.verse
+                    }
+                );
+                $scope.scopeApply();
                 $scope.closeModal('detailed_verse_modal');
             } else if (item == 'bookmark') {
                 $scope.openAddBookMarkModal($scope.verseId);

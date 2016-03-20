@@ -1,15 +1,15 @@
 <div class="modal modal-fullscreen">
     <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced" align-title="center">
         <ion-nav-title>Etiketli Ayetler</ion-nav-title>
-        <ion-nav-buttons side="right">
-            <button class="button button-icon icon-left ion-checkmark"
+        <ion-nav-buttons side="left">
+            <button class="button button-icon icon-left ion-close-circled"
                     ng-click="closeModal('tagged_verse');"
                     style="float: right">
             </button>
         </ion-nav-buttons>
     </ion-nav-bar>
     <ion-header-bar class="bar bar-subheader item-input-inset">
-        <div class="col-xs-12 col-sm-9" style="width: 100%;height: 100%;">
+        <div class="col-xs-12 col-sm-9" style="width: 100%;height: 100%; font-weight: bold">
             <label class="item-input-wrapper">
                 {{verseTagContentParams.verse_tags}}
             </label><br/>
@@ -47,8 +47,10 @@
         <div>
             <div ng-repeat="verseTagContent in verseTagContents">
                 <div ng-repeat="verseTagContentTranslation in verseTagContent.translations"
-                     ng-if="verseTagContentTranslation.authorId==verseTagContentAuthor">
-                    <strong>{{verseTagContentTranslation.verseId / 1000 | number:0}}:{{verseTagContentTranslation.verseId % 1000}}</strong>
+                     ng-if="verseTagContentTranslation.authorId==verseTagContentAuthor" style="padding-left: 3px;padding-right: 5px">
+                    <a ng-click='showVerseDetail(verseTagContentTranslation.verseId, taggedVerseUsers, taggedVerseCircles)'>
+                        <strong >{{verseTagContentTranslation.verseId / 1000 | number:0}}:{{verseTagContentTranslation.verseId % 1000}}</strong>
+                    </a>
                     <span ng-class="{translation_rtl: authorMap[verseTagContentTranslation.authorId].language=='ar'}">{{verseTagContentTranslation.content}}</span>
                 </div>
             </div>

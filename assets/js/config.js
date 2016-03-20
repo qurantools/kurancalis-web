@@ -13,7 +13,7 @@ var config_data = {
     'FBAppID': '400142910165594',
     //'FBAppID': '506964319483452',
     'clientSecret':'e1c0f664bd3e803fce38a8d6399dba2d',
-    'version':"1.4",
+    'version':"1.5",
     'isMobile':isMobile(),
     'isNative':isNative()
 }

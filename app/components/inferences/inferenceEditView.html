@@ -10,19 +10,19 @@
     <table>
         <tr>
             <td style="vertical-align: top; width: 600px" align="left">
-                            <input id="title" ng-model="title" class="form-control" placeholder="Başlık" style="width: 580px" type="text" /><br />
+                            <input id="title" ng-model="inferenceData.title" class="form-control" placeholder="Başlık" style="width: 580px" type="text" /><br />
                 <br />
                 <br />
                 </td>
             <td align="center" style="vertical-align: top; width: 180px">
-            <input type="text" class="form-control" id="inferenceImage" style="width: 165px" placeholder="Image URL" ng-model="inferenceImage">
-            <img style="background-image: url('assets/img/resim_ekle_tikla.png')" height="100" src="{{inferenceImage}}" width="165" class="file-manager-linked" data-input-id="inferenceImage"/></td>
+            <input type="text" class="form-control" id="inferenceImage" style="width: 165px" placeholder="Image URL" ng-model="inferenceData.image">
+            <img style="background-image: url('assets/img/resim_ekle_tikla.png')" height="100" src="{{inferenceData.image}}" width="165" class="file-manager-linked" data-input-id="inferenceImage"/></td>
         </tr>
     </table>
         <br />
 
         <div style="width : 770px;">
-            <textarea ng-model="content" ui-tinymce="tinymceOptions" style="height:350px">
+            <textarea ng-model="inferenceData.content" ui-tinymce="tinymceOptions" style="height:350px">
 
             </textarea>
 

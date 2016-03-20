@@ -7,19 +7,16 @@
 
             </ion-nav-buttons>
             <h1 class="title"></h1>
-            <ion-nav-buttons side="right">
+            <ion-nav-buttons data-tap-disabled="true" side="right">
                 <button class="button button-icon icon ion-ios-compose-outline" ng-if="edit_user == user.id" ng-click="edit_inference()"></button>
                 <button class="button button-icon icon ion-ios-trash-outline" ng-if="edit_user == user.id" ng-click="deleted()"></button>
             </ion-nav-buttons>
         </ion-nav-bar>
         <ion-nav-view name="appContent"></ion-nav-view>
         <ion-nav-view id="mobile_inference_display_content" cache-view="true">
-            <ion-content overflow-scroll="true" style="padding-top: 30px;margin-bottom: 30px;" class="padding" delegate-handle="content"  class="scroll_content">
-                Tanrılarınızı Korumayı Bırakın
-
-
+            <ion-content style="padding-top: 30px;margin-bottom: 30px;" class="padding" delegate-handle="content"  >
                 <div style="height: 20px"></div>
-                    <div align="center" style="margin: 0 auto;">
+                    <div ng-if="photo != 'undefined'" align="center" style="margin: 0 auto;">
                         <img src="{{photo}}" style="max-width: 100%; max-height: 300px; " />
                         <!--onerror='this.style.display = "none"' -->
                     </div>
