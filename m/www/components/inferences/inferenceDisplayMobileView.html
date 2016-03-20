@@ -8,8 +8,8 @@
             </ion-nav-buttons>
             <h1 class="title"></h1>
             <ion-nav-buttons data-tap-disabled="true" side="right">
-                <button class="button button-icon icon ion-ios-compose-outline" ng-if="edit_user == user.id" ng-click="edit_inference()"></button>
-                <button class="button button-icon icon ion-ios-trash-outline" ng-if="edit_user == user.id" ng-click="deleted()"></button>
+                <button data-tap-disabled="true" class="button button-icon icon ion-ios-compose-outline" ng-if="edit_user == user.id" ng-click="edit_inference()"></button>
+                <button data-tap-disabled="true" class="button button-icon icon ion-ios-trash-outline" ng-if="edit_user == user.id" ng-click="deleted()"></button>
             </ion-nav-buttons>
         </ion-nav-bar>
         <ion-nav-view name="appContent"></ion-nav-view>
