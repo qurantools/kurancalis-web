@@ -121,6 +121,46 @@ angular.module('ionicApp').factory("localDataProvider", function (Restangular, $
         });
     };
 
+    factory.fetchTranslationById = function (id, callback) {
+        var translation = {};
+        var query = "SELECT t.* FROM translation t WHERE t.id = ? ";
+        $cordovaSQLite.execute(factory.db, query, [id]).then(function(res) {
+            if (res.rows.length == 1){
+                var item = res.rows.item(0);
+                translation.authorId = item.author_id;
+                translation.chapter = item.chapter;
+                translation.content = item.content;
+                translation.id = item.id;
+                translation.verse = item.verse;
+                translation.verseId = item.verse_id;
+                translation.version = item.version;
+            }
+            callback(translation);
+        }, function (err) {
+            callback(translation);
+        });
+    };
+
+    factory.fetchTranslationByAuthorAndVerseId = function (args, callback) {
+        var translation = {};
+        var query = "SELECT t.* FROM translation t where t.author_id = ? and t.verse_id = ? ";
+        $cordovaSQLite.execute(factory.db, query, [args.authorId, args.verseId]).then(function(res) {
+            if (res.rows.length == 1){
+                var item = res.rows.item(0);
+                translation.authorId = item.author_id;
+                translation.chapter = item.chapter;
+                translation.content = item.content;
+                translation.id = item.id;
+                translation.verse = item.verse;
+                translation.verseId = item.verse_id;
+                translation.version = item.version;
+            }
+            callback(translation);
+        }, function (err) {
+            callback(translation);
+        });
+    };
+
     factory.listVerses = function (args, callback) {
 
     };

@@ -999,7 +999,7 @@ app.factory('ChapterVerses', function ($resource) {
         //Hizli Meal Gosterimi / Fast Translation Display
         $scope.showVerse = function (annotation) {
             $scope.showVerseData = {};
-            Restangular.one('translations', annotation.translationId).get().then(function (translation) {
+            dataProvider.fetchTranslationById(annotation.translationId, function (translation) {
                 $scope.markVerseAnnotations = true;
                 $scope.showVerseData.annotationId = annotation.annotationId;
                 $scope.showVerseData.data = translation;
@@ -1051,9 +1051,7 @@ app.factory('ChapterVerses', function ($resource) {
             showVerseParameters.verse = $scope.showVerseData.data.verse;
 
             var verseId = $scope.showVerseData.data.chapter * 1000 + parseInt($scope.showVerseData.data.verse);
-            var showVerseRestangular = Restangular.one('authors', $scope.showVerseData.data.authorId)
-                                                .one('verse', verseId);
-            showVerseRestangular.get().then(function (translation) {
+            dataProvider.fetchTranslationByAuthorAndVerseId({authorId : $scope.showVerseData.data.authorId, verseId: verseId},function (translation) {
                 if (translation != "") {
                     $scope.markVerseAnnotations = false;
                     $scope.showVerseData.data = translation;

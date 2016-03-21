@@ -59,6 +59,27 @@ angular.module('ionicApp').factory("dataProvider", function (Restangular, localD
                 });
             }
         };
+
+        factory.fetchTranslationById = function (id, callback) {
+            if (config_data.isNative){
+                localDataProvider.fetchTranslationById(id, callback);
+            }else{
+                Restangular.one('translations', id).get().then(function(data){
+                    callback(data);
+                });
+            }
+        };
+
+        factory.fetchTranslationByAuthorAndVerseId = function (args, callback) {
+            if (config_data.isNative){
+                localDataProvider.fetchTranslationByAuthorAndVerseId(args, callback);
+            }else{
+                Restangular.one('authors', args.authorId)
+                    .one('verse', args.verseId).get().then(function(data){
+                    callback(data);
+                });
+            }
+        };
         return factory;
 }).factory('ListAuthors', function ($resource) {
     return $resource(config_data.webServiceUrl + '/authors', {
