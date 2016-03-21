@@ -1,5 +1,5 @@
 angular.module('ionicApp')
-    .controller('DetailedVerseCtrl', function ($scope, $timeout, Restangular, $location, authorization, $ionicModal, $ionicActionSheet) {
+    .controller('DetailedVerseCtrl', function ($scope, $timeout, Restangular, $location, authorization, $ionicModal, $ionicActionSheet, dataProvider) {
 
         $scope.detailedChapters = [];
         $scope.detailedVerseCircles = [];
@@ -146,14 +146,12 @@ angular.module('ionicApp')
         $scope.getVerseTranslations = function () {
             $scope.translationDivMap = [];
 
-            var verseTagContentRestangular = Restangular.all("translations");
             var translationParams = [];
-
             translationParams.author = $scope.detailed_query_author_mask;
             translationParams.chapter = Math.floor($scope.verseId/1000);
             translationParams.verse = $scope.verseId%1000;
 
-            verseTagContentRestangular.customGET("", translationParams, {}).then( function(data){
+            dataProvider.listTranslations(translationParams, function(data){
                 $scope.prepareTranslationDivMap(data);
             });
         };
@@ -461,9 +459,9 @@ angular.module('ionicApp')
         //list footnotes
         $scope.list_detailed_footnotes = function (translation_id, author_id) {
 
-            var footnotesRestangular = Restangular.one("translations",translation_id).all("footnotes");
-
-            footnotesRestangular.getList().then(function (data) {
+            dataProvider.listFootnotes({
+                    id: translation_id
+                },function (data) {
                     var footnoteDivElement = document.getElementById('detail_t_' + translation_id);
                     //don't list if already listed
                     if (!document.getElementById("detail_fn_" + translation_id)) {

@@ -64,6 +64,9 @@ angular.module('ionicApp').factory("localDataProvider", function (Restangular, $
         if (isDefined(args.author)){
             criteria.push("t.author_id & " + args.author + " ");
         }
+        if (isDefined(args.verse) && args.verse != ""){
+            criteria.push("t.verse = " + args.verse + " ");
+        }
         if (isDefined(args.verse_keyword) && args.verse_keyword != ""){
             criteria.push("t.content like '%" + args.verse_keyword + "%'");
         }
