@@ -1,5 +1,5 @@
 angular.module('ionicApp')
-    .controller('InferenceDisplayController', function ($scope, $routeParams, $location, authorization, localStorageService,  Restangular, $timeout,$sce,$ionicModal,$ionicPopup, $cordovaSocialSharing) {
+    .controller('InferenceDisplayController', function ($scope, $routeParams, $location, authorization, localStorageService,  Restangular, $timeout,$sce,$ionicModal,$ionicPopup, $cordovaSocialSharing, dataProvider) {
 
         //All scope variables
         $scope.inferenceId=0;
@@ -286,8 +286,7 @@ angular.module('ionicApp')
             }
             //get referenced verse id list
             var verseIds = Object.keys($scope.referenced.verses).join(",");
-            var translationsRestangular = Restangular.one("translations").all("list");
-            translationsRestangular.customGET("", {author:$scope.referenced.selectedAuthor, verse_list:verseIds}, {'access_token': $scope.access_token}).then(function (data) {
+            dataProvider.fetchTranslationByAuthorAndVerseList({author:$scope.referenced.selectedAuthor, verse_list:verseIds, access_token:$scope.access_token}, function (data) {
                 for (var i = 0; i < data.length; i++) {
                     var verseId = data[i].verseId;
                     $scope.referenced.verses[verseId].translation = data[i].content;

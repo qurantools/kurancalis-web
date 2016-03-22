@@ -118,7 +118,6 @@ var app = angular.module('ionicApp', requiredModules)
             };
         }])
     .run(function ($rootScope, $ionicPlatform, dataProvider) {
-
         $ionicPlatform.ready(function () {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
             // for form inputs)
@@ -134,6 +133,7 @@ var app = angular.module('ionicApp', requiredModules)
                 // org.apache.cordova.statusbar required
                 StatusBar.styleLightContent();
             }
+            $rootScope.sqliteDbInit = false;
             dataProvider.initDB($rootScope);
         });
 
@@ -1401,7 +1401,7 @@ app.factory('ChapterVerses', function ($resource) {
         $scope.initRoute();
 
         //initialization
-        if(config_data.isNative) {
+        if(config_data.isNative && !$scope.sqliteDbInit) {
             $scope.$on('db.init.finish', function() {
                 $scope.initializeController();
             });

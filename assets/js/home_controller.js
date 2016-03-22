@@ -1477,9 +1477,8 @@ angular.module('ionicApp')
                 });
             },350);
         };
-
         //initialization
-        if(config_data.isNative) {
+        if(config_data.isNative && !$scope.sqliteDbInit) {
             $scope.$on('db.init.finish', function() {
                 $scope.initializeHomeController();
             });

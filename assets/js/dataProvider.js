@@ -32,14 +32,6 @@ angular.module('ionicApp').factory("dataProvider", function (Restangular, localD
             }
         };
 
-        factory.listVerses = function (args, callback) {
-            if (config_data.isNative){
-                localDataProvider.listVerses(args, callback);
-            }else{
-
-            }
-        };
-
         factory.listChapters = function (callback) {
             if (config_data.isNative){
                 localDataProvider.listChapters(callback);
@@ -80,6 +72,18 @@ angular.module('ionicApp').factory("dataProvider", function (Restangular, localD
                 });
             }
         };
+
+        factory.fetchTranslationByAuthorAndVerseList = function (args, callback) {
+            if (config_data.isNative){
+                localDataProvider.fetchTranslationByAuthorAndVerseList(args, callback);
+            }else{
+                var translationsRestangular = Restangular.one("translations").all("list");
+                translationsRestangular.customGET("", {author:args.author, verse_list:args.verse_list}, {'access_token': args.access_token}).then(function(data){
+                    callback(data);
+                });
+            }
+        };
+
         return factory;
 }).factory('ListAuthors', function ($resource) {
     return $resource(config_data.webServiceUrl + '/authors', {

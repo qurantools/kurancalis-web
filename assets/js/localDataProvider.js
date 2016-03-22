@@ -9,9 +9,11 @@ angular.module('ionicApp').factory("localDataProvider", function (Restangular, $
         window.plugins.sqlDB.copy(dbName, 0, function () {
             factory.db = $cordovaSQLite.openDB(dbName);
             rt.$broadcast('db.init.finish');
+            rt.sqliteDbInit = true;
         }, function (error) {
             factory.db = $cordovaSQLite.openDB(dbName);
             rt.$broadcast('db.init.finish');
+            rt.sqliteDbInit = true;
         });
     };
 
@@ -164,8 +166,26 @@ angular.module('ionicApp').factory("localDataProvider", function (Restangular, $
         });
     };
 
-    factory.listVerses = function (args, callback) {
-
+    factory.fetchTranslationByAuthorAndVerseList = function (args, callback) {
+        var resultSet = [];
+        var query = "SELECT t.* FROM Translation t WHERE t.verse_id IN ("+ args.verse_list +") AND t.author_id = " + args.author;
+        $cordovaSQLite.execute(factory.db, query).then(function(res) {
+            for (var i = 0; i < res.rows.length; i++){
+                var item = res.rows.item(i);
+                var translation = {};
+                translation.authorId = item.author_id;
+                translation.chapter = item.chapter;
+                translation.content = item.content;
+                translation.id = item.id;
+                translation.verse = item.verse;
+                translation.verseId = item.verse_id;
+                translation.version = item.version;
+                resultSet.push(translation);
+            }
+            callback(resultSet);
+        }, function (err) {
+            callback(resultSet);
+        });
     };
 
     return factory;
