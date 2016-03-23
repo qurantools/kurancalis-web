@@ -1335,9 +1335,7 @@ app.factory('ChapterVerses', function ($resource) {
                     });
                 }
             });
-			console.log("scope.checkUserLoginStatus() : " + $scope.checkUserLoginStatus() + ", $scope.isAllowUrlWithoutLogin() : " + $scope.isAllowUrlWithoutLogin());
             if (!$scope.checkUserLoginStatus() && !$scope.isAllowUrlWithoutLogin()){
-                console.log("redirecting to login");
                 $timeout(function(){
                     $location.path('/login').search();
                     $scope.scopeApply();
