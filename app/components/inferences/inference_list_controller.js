@@ -493,12 +493,14 @@ angular.module('ionicApp')
                         $scope.getModalEditor().show();
                     } else if (id == 'viewusersearch') {
                         $scope.modal_add_canviewuser.show();
+
                     } else if (id == 'addUserToAllInferencesSearch') {
                         $scope.modal_addUserToAllInferencesSearch.show();
                     } else if (id == 'tagsearch') {
                         $scope.modal_tag_search.show();
                     } else if (id == 'addtagtosearch') {
                         $scope.modal_addtagtosearch.show();
+                        focusToInput('addtagtosearch_input');
                     }
                 };
                 $scope.closeModal = function (id) {

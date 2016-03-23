@@ -883,7 +883,7 @@ angular.module('ionicApp')
                     var dataLength = data.length;
                     for (index = 0; index < dataLength; ++index) {
                         //add verse links
-                        dataContent = data[index].replace(/(\d{1,3}):(\d{1,3})/g, "<a ng-href='#MainCtrl' onclick='javascript: angular.element(document.getElementById(\"MainCtrl\")).scope().showVerseDetail($1*1000+$2)' data-target='#detailedVerseModal' data-dismiss='modal' data-toggle='modal'>$1:$2</a>");
+                        dataContent = data[index].replace(/(\d{1,3}):(\d{1,3})/g, "<a ng-href='#MainCtrl' onclick='javascript: angular.element(document.getElementById(\"MainCtrl\")).scope().showVerseDetail($1*1000+$2)' data-target='#detailedVerseModal' data-dismiss='modal' data-toggle='modal' style='color: blue'>$1:$2</a>");
 
                         html += "<div><div class='col-xs-1 footnote_bullet'>&#149;</div><div class='col-xs-11 footnotebg'>" + dataContent + "</div></div>";
                     }
@@ -1095,7 +1095,7 @@ angular.module('ionicApp')
                     $scope.modal_view_user_search.show();
                 } else if (id == 'tagsearch') {
                     $scope.modal_tag_search.show();
-                    focusToInput('tagsearch_input');
+                    focusToInput('addtagtoannotation_input');
                 }
             };
 
@@ -1423,7 +1423,7 @@ angular.module('ionicApp')
             $ionicScrollDelegate.$getByHandle(id).scrollTop();
         };
 
-        $scope.bookmarkActionSheet = function (chapter,verse,verseId) {
+        $scope.verseActionSheet = function (chapter,verse,verseId) {
             $timeout(function() {
                 $ionicActionSheet.show({
                     buttons: [
@@ -1436,7 +1436,7 @@ angular.module('ionicApp')
                         // add cancel code..
                     },
                     buttonClicked: function (index) {
-                        $scope.openAddBookMarkModal(chapter, verse, verseId);
+                        $scope.openAddBookMarkModal(verseId);
                         $scope.bookmarkModal.show();
                         return true;
                     }

@@ -628,11 +628,13 @@ angular.module('ionicApp')
                         $scope.getModalEditor().show();
                     } else  if (id == 'viewusersearch') {
                         $scope.modal_add_canviewuser.show();
+                        focusToInput('mobil_peoples')
                     } else  if (id == 'addUserToAllAnnotationsSearch') {
                         $scope.modal_addUserToAllAnnotationsSearch.show();
+                        focusToInput('add_view_user_toAllAnnotationsSearch_people');
                     } else  if (id == 'tagsearch') {
                         $scope.modal_tag_search.show();
-                        focusToInput('tagsearch_input');
+                        focusToInput('addtagtoannotation_input');
                     } else  if (id == 'addtagtosearch') {
                         $scope.modal_addtagtosearch.show();
                         focusToInput('addtagtosearch_input');

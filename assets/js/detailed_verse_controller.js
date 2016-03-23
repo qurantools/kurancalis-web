@@ -40,7 +40,7 @@ angular.module('ionicApp')
         var buttonGotoVerse = {text: 'Sure İçerisinde Gör' };
         var buttonBookmark = {text: 'Burada Kaldım' };
         $scope.footerMenuButtons.push(buttonSelectTranslation);
-        $scope.footerMenuButtons.push(buttonAddToList);
+        //$scope.footerMenuButtons.push(buttonAddToList);
         $scope.footerMenuButtons.push(buttonGotoVerse);
         $scope.footerMenuButtons.push(buttonBookmark);
 
@@ -334,11 +334,11 @@ angular.module('ionicApp')
                 buttonClicked: function (index) {
                     if (index == 0) {
                         $scope.openModal('select_author');
+                    //} else if (index == 1) {
+                    //    $scope.openModal('add_to_list');
                     } else if (index == 1) {
-                        $scope.openModal('add_to_list');
-                    } else if (index == 2) {
                         $scope.openModal('go_to_verse');
-                    } else if (index == 3) {
+                    } else if (index == 2) {
                         $scope.openModal('bookmark');
                     }
                     return true;
@@ -469,7 +469,7 @@ angular.module('ionicApp')
                         var dataLength = data.length;
                         for (index = 0; index < dataLength; ++index) {
                             //add verse links
-                            dataContent = data[index].replace(/(\d{1,3}):(\d{1,3})/g, "<a ng-href='#MainCtrl' onclick='javascript: angular.element(document.getElementById(\"MainCtrl\")).scope().showVerseDetail($1*1000+$2)' data-target='#detailedVerseModal' data-dismiss='modal' data-toggle='modal'>$1:$2</a>");
+                            dataContent = data[index].replace(/(\d{1,3}):(\d{1,3})/g, "<a ng-href='#MainCtrl' onclick='javascript: angular.element(document.getElementById(\"MainCtrl\")).scope().showVerseDetail($1*1000+$2)' data-target='#detailedVerseModal' data-dismiss='modal' data-toggle='modal' style='color: blue'>$1:$2</a>");
 
                             html += "<div><div class='col-xs-1 footnote_bullet'>&#149;</div><div class='col-xs-11 footnotebg'>" + dataContent + "</div></div>";
                         }

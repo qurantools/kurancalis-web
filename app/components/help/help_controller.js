@@ -7,14 +7,15 @@ angular.module('ionicApp')
 
         $scope.menuList=[
             {   id: "intro",
-                name : "Intro",
+                name : "Sure Okuma Tanıtım",
                 submenu : [
                     {id:11, title:"Intro-1", source:[{src: $sce.trustAsResourceUrl("../../assets/img/help/mobile/ana_menu.mp4"), type: "video/mp4"}]},
                     {id:11, title:"Intro-1", source:[{src: $sce.trustAsResourceUrl("../../assets/img/help/mobile/sure_alt_menu.mp4"), type: "video/mp4"}]},
                     {id:12, title:"Intro-2", source:[{src: $sce.trustAsResourceUrl("../../assets/img/help/mobile/karalama.mp4"), type: "video/mp4"}]},
                     {id:13, title:"Intro-3", source:[{src: $sce.trustAsResourceUrl("../../assets/img/help/mobile/suredeki_ayet_notlari.mp4"), type: "video/mp4"}]}
                 ]
-            },
+            }
+            /*,
             {   id: "annotation",
                 name : "Not Paylaşma",
                 submenu : [
@@ -70,7 +71,7 @@ angular.module('ionicApp')
                     {id:61, title:"Intro-1", source:[{src: $sce.trustAsResourceUrl("../../assets/img/help/mobile/karalama.mp4"), type: "video/mp4"}]},
                     {id:62, title:"Intro-2", source:[{src: $sce.trustAsResourceUrl("https://youtu.be/uqROdKnNfQk"), type: "video/mp4"}]},
                 ]
-            }
+            }*/
         ];
 
         $scope.selectedIndex = -1;
