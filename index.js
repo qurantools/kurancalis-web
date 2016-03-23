@@ -1335,9 +1335,13 @@ app.factory('ChapterVerses', function ($resource) {
                     });
                 }
             });
-
+			console.log("scope.checkUserLoginStatus() : " + $scope.checkUserLoginStatus() + ", $scope.isAllowUrlWithoutLogin() : " + $scope.isAllowUrlWithoutLogin());
             if (!$scope.checkUserLoginStatus() && !$scope.isAllowUrlWithoutLogin()){
-                $location.path('login/');
+                console.log("redirecting to login");
+                $timeout(function(){
+                    $location.path('/login').search();
+                    $scope.scopeApply();
+                },2500);
             }
         };//end of init controller
 
@@ -1348,7 +1352,7 @@ app.factory('ChapterVerses', function ($resource) {
             }
             return false;
         }
-        
+
         $scope.navigateTo = function (target) {
             $location.path(target);
         }
