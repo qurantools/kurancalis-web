@@ -93,8 +93,10 @@ angular.module('ionicApp')
             $scope.openModal = function(id){
                 if (id == 'viewusersearch') {
                     $scope.modal_view_user_search.show();
+                    focusToInput('mobil_peoples');
                 }else if(id == "inferenceTagsearch"){
                     $scope.modal_inference_tag_search.show();
+                    focusToInput('inference_tag_input');
                 }else if(id == "inference_mobile_tiny_edit"){
                     $scope.modal_edit_inference_tiny.show();
                 }

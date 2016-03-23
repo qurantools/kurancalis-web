@@ -1,7 +1,17 @@
 <div class="modal modal-fullscreen" id="navbookmark" ng-controller="bookmarkController">
     <ion-content>
+        <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced" align-title="center">
+            <ion-nav-title>Burada Kaldım</ion-nav-title>
+            <ion-nav-buttons side="left">
+                <button class="button button-icon icon-left ion-close-circled"
+                        ng-click="closeBookmarkModal()"
+                        style="float: right">
+                </button>
+            </ion-nav-buttons>
+        </ion-nav-bar>
         <div class="modal-dialog fixed-dialog" style="width:90%;">
         <div class="modal-content">
+            <div style="height: 50px"></div>
              <div class="modal-body" style="width:100%">
             Gitmek istediğiniz Ayracı Seçiniz.
                </div>
@@ -35,10 +45,6 @@
                 </div>
                 </div>
               
-              <div class="modal-footer">
-                <button type="button" class="button button-positive"  style="width: 100%;margin-top: 15px;" data-dismiss="modal" aria-hidden="true" ng-click="closeBookmarkModal()">Kapat</button>
-              
-            </div>
         </div>
     </div>
     </ion-content>
