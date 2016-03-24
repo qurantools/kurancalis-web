@@ -718,17 +718,30 @@ app.factory('ChapterVerses', function ($resource) {
                     $scope.$broadcast('userInfoReady');
                 },
                 function(response) {
-                    console.log("Error occured while validating user login with status code", response.status);
-                    var infoPopup = $ionicPopup.alert({
-                        title: 'Var olan oturumuzun süresi dolmuştur. Çıkış yapılıyor.',
-                        template: '',
-                        buttons: []
-                    });
+                    if( config_data.isNative){
+                        if(navigator.connection.type == Connection.NONE) {
+                            $ionicPopup.confirm({
+                                    title: "Internet Bağlantısı Yok",
+                                    content: "Internet baglantısı olmadığı için kullanıcı işlemleri yapılamayacaktır"
+                                });
 
-                    $timeout(function() {
-                        infoPopup.close();
-                        $scope.logOut();
-                    }, 1700);
+                        }
+
+
+                    }
+                    else {
+                        console.log("Error occured while validating user login with status code", response.status);
+                        var infoPopup = $ionicPopup.alert({
+                            title: 'Var olan oturumuzun süresi dolmuştur. Çıkış yapılıyor.',
+                            template: '',
+                            buttons: []
+                        });
+
+                        $timeout(function () {
+                            infoPopup.close();
+                            $scope.logOut();
+                        }, 1700);
+                    }
                 }
             );
         }

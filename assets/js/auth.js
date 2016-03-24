@@ -111,6 +111,7 @@ authorizationModule.factory("authorization", function (Facebook, User, localStor
         factory.fbLoginSuccess = function(response, faceBookResponseMethod) {
             $ionicLoading.hide();
             if (!response.authResponse){
+                console.log(response);
                 alert('Facebook girişi başarısız');
                 return;
             }
@@ -127,9 +128,11 @@ authorizationModule.factory("authorization", function (Facebook, User, localStor
             $ionicLoading.show({
                 template: 'Logging in...'
             });
+            facebookConnectPlugin.logout(); //cleaning for a bug on IOS
             facebookConnectPlugin.login(['email', 'user_friends'], function(response){
                 factory.fbLoginSuccess (response, faceBookResponseMethod);
             }, function(response){
+                console.log(response);
                 factory.fbLoginError (response, faceBookResponseMethod);
             });
         };

@@ -377,8 +377,8 @@
                 message = Annotator._t("Sorry we could not search the store for annotations");
             } else if (xhr._action === 'read' && !xhr._id) {
                 //  message = Annotator._t("Sorry we could not ") + action + Annotator._t(" the annotations from the store");
-                message = Annotator._t("Oturum süresi dolmuştur");
-                angular.element(document.getElementById('theView')).scope().logOut();
+                message = Annotator._t("Ayet notu işlemi yapılamamaktadır");
+                //angular.element(document.getElementById('theView')).scope().logOut();
             }
             switch (xhr.status) {
                 case 401:
