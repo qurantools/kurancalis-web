@@ -4,3 +4,29 @@
         max-width:1200px;
     }
 }
+
+.bottom-nav{
+    font-family: 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    font-weight: normal;
+    margin: 0;
+    padding: 0;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    -o-box-shadow: none;
+    box-shadow: none;
+    z-index: 1020;
+    color: #fff;
+    bottom: 0px;
+    left: 0;
+    width: 100%;
+    font-size: 14px;
+    line-height: 50px;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.9);
+    border-bottom: 4px solid #d4d4d4;
+    -webkit-transition: bottom .4s ease-out;
+    -moz-transition: bottom .4s ease-out;
+    -o-transition: bottom .4s ease-out;
+    transition: bottom .4s ease-out;
+    position: fixed;
+}
