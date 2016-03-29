@@ -1,0 +1,48 @@
+<body>
+<div class="container">
+    <div ng-include="'app/components/search/translation_search_navigation.html'"></div>
+    <div ng-include="'app/components/partials/off_canvas_menu.html'"></div>
+    <div class="nav-bottom"></div>
+    <div class="row">
+        <div class="col-xs-12" id="translations">
+            <div ng-repeat="verse in verses">
+                <div class="well translations col-xs-12" id="v_{{verse.id}}">
+                    <div class="row">
+                        <div ng-repeat="translation in verse.translations">
+                            <div class="col-xs-1" ng-if="$first" style="text-align: center">
+                                <div class="chapter_verse_number">
+                                    {{translation.chapter}}:{{translation.verse}}
+                                </div>
+                            </div>
+                            <div class="col-xs-11" id="t_{{translation.id}}" style="float: right">
+                                <div class="col-xs-3 authorDiv_{{authorMap[translation.authorId].color}}" ng-show="!verse.showSingleAuthor">
+                                    <span class="author">
+                                        <a href ng-click="singleAuthorView({{translation.authorId}},$parent.$index)">(-)</a>
+                                    </span>
+                                    {{authorMap[translation.authorId].name}}
+                                </div>
+                                <div class="col-xs-3 authorDiv_{{authorMap[translation.authorId].color}}" ng-show="verse.selectedSingleAuthor==translation.authorId">
+                                    <span class="author">
+                                        <a href ng-click="multipleAuthorsView($parent.$index)" ng-show="verse.translations.length>1">(+)</a>
+                                    </span>
+                                    {{authorMap[translation.authorId].name}}
+                                </div>
+                                <div id="tt_{{translation.id}}" ng-show="verse.selectedSingleAuthor==translation.authorId || !verse.showSingleAuthor"
+                                     class="col-xs-9"
+                                     ng-class="{translation_rtl: authorMap[translation.authorId].language=='ar', translation_content: authorMap[translation.authorId].language!='ar'}"><span
+                                        ng-bind-html="translation.content | with_search_text:verseSearchText | to_trusted"></span>
+                                </div>
+                            </div>
+                            <div class="col-xs-8" style="float: right" ng-if="!$last && !verse.showSingleAuthor">
+                                <hr/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /row-->
+</div>
+<!-- /container-->
+</body>

@@ -117,6 +117,12 @@ var app = angular.module('ionicApp', requiredModules)
                 }
             };
         }])
+    .filter('with_search_text', [
+        function () {
+            return function (text, searched_text) {
+                return text.replace(new RegExp(searched_text, 'g'), "<div style='color: red;background-color:yellow;display: inline-block;'>"+searched_text+"</div>");
+            };
+        }])
     .run(function ($rootScope, $ionicPlatform, dataProvider) {
         $ionicPlatform.ready(function () {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -275,7 +281,12 @@ if (config_data.isMobile == false) { //false
                 reloadOnSearch: false,
                 pageTitle: 'Kuran Çalış - Çıkarım Notu'
             })
-
+            .when('/search_translations/', {
+                controller: 'SearchTranslationsController',
+                templateUrl: 'app/components/search/translations.html',
+                reloadOnSearch: false,
+                pageTitle: 'Ayet Arama'
+            })
             .when('/', {
                 redirectTo: '/translations/'
             })
@@ -646,6 +657,8 @@ app.factory('ChapterVerses', function ($resource) {
             retcp = "people_find";
         } else if ( url == "/people/explore/"){
             retcp = "people_explore";
+        } else if ( url == "/search_translations/"){
+            retcp = "search_translations";
         }
         else {
             retcp = 'home';

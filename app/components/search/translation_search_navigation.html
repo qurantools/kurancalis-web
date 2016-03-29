@@ -1,0 +1,44 @@
+<nav class="navbar navbar-default navbar-fixed-top container" role="navigation">
+    <div>
+        <form>
+            <div class="row" style="padding-left: 15px;">
+                <div style="float: left;">
+                    <button onclick="toggleLeftPanel()" class="btn btn-primary"><i
+                            class="fa fa-bars"></i> MENÜ
+                    </button>
+                </div>
+                <div style="float: left;margin-left: 5px;" data-placement="bottom">
+                    <input type="text" ng-model="verseSearchText" size="50" placeholder="Meallerde ara" class="form-control" ng-change="searchTextChange(verseSearchText)" min-length="3"/>
+                </div>
+
+                <div style="float: left;margin-left: 20px;">
+                    <select ng-model="searchTranslationsAuthor"
+                            ng-options="author.value as author.text for author in searchAuthorMap"
+                            ng-change="searchTranslationsAuthorChanged(searchTranslationsAuthor)" class="form-control">
+                        <option style="display:none" value="">Meal Seç</option>
+                    </select>
+                </div>
+
+                <div style="float: left;margin-left: 20px;">
+                    <a class="btn btn-primary" ng-click="searchTranslations()">
+                        <i class="fa fa-search" style="font-size: 1.3em"></i>
+                    </a>
+                </div>
+
+                <div ng-show="facebookIsReady" class="facebook_area">
+                    <div ng-if="user==null">
+                        <button type="button" id="login" ng-click="login()" class="btn btn-primary">
+                            <b>Birlikte</b> dosdoğru yolu bulmak için > <img src="assets/img/fb.png" width="25" height="25"> Giriş
+                        </button>
+                    </div>
+                    <div ng-if="user!=null">
+                        <img ng-src="{{user.photo}}" height="40"/>
+                    </div>
+                </div>
+            </div>
+            <div ng-include="'app/components/partials/nav_bookmark.htm'"></div>
+        </form>
+    </div>
+    <!-- /.navbar-collapse -->
+</nav>
+<!-- /navbar -->
