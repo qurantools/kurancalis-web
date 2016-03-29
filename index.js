@@ -182,12 +182,13 @@ if (config_data.isMobile == false) { //false
         $httpProvider.interceptors.push(function ($q, $injector, $rootScope) {
             var isConfirmPopupCalledBefore = false;
             var isDisplay = false;
-            var regex = /.*\.(html|js|css|png|jep|jepg|htm)$/;
+            var regex = /.*\.(html|js|css|png|jep|jepg|htm|video)$/;
             return {
                 'response' : function (response){
                     if (isDisplay && !regex.test(response.config.url)){
                         $rootScope.$broadcast('onlineNetworkConnection');
                         isConfirmPopupCalledBefore = !isConfirmPopupCalledBefore;
+                        isDisplay = false;
                     }
                     return response;
                 },
@@ -344,6 +345,7 @@ if (config_data.isMobile == false) { //false
                             if (isDisplay && !regex.test(response.config.url)){
                                 $rootScope.$broadcast('onlineNetworkConnection');
                                 isConfirmPopupCalledBefore = !isConfirmPopupCalledBefore;
+                                isDisplay = false;
                             }
                             return response;
                         },
