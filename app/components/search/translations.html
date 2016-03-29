@@ -2,8 +2,9 @@
 <div class="container">
     <div ng-include="'app/components/search/translation_search_navigation.html'"></div>
     <div ng-include="'app/components/partials/off_canvas_menu.html'"></div>
+    <div ng-include="'app/components/partials/detailed_verse.html'"></div>
     <div class="nav-bottom"></div>
-    <div class="row">
+    <div class="row" style="margin-top: 25px;">
         <div class="col-xs-12" id="translations">
             <div ng-repeat="verse in verses">
                 <div class="well translations col-xs-12" id="v_{{verse.id}}">
@@ -11,10 +12,15 @@
                         <div ng-repeat="translation in verse.translations">
                             <div class="col-xs-1" ng-if="$first" style="text-align: center">
                                 <div class="chapter_verse_number">
-                                    {{translation.chapter}}:{{translation.verse}}
+                                    <a style="color: blue" ng-click='showVerseDetail(verse.id)' data-target='#detailedVerseModal' data-toggle='modal'>
+                                        <strong>{{translation.chapter}}:{{translation.verse}}</strong>
+                                    </a>
                                 </div>
                             </div>
-                            <div class="col-xs-11" id="t_{{translation.id}}" style="float: right">
+                            <div class="col-xs-1" ng-show="verse.selectedSingleAuthor==translation.authorId">
+                                <a href ng-click="multipleAuthorsView($parent.$index)" ng-show="verse.translations.length>1">(+)</a>
+                            </div>
+                            <div class="col-xs-10" id="t_{{translation.id}}" style="float: right">
                                 <div class="col-xs-3 authorDiv_{{authorMap[translation.authorId].color}}" ng-show="!verse.showSingleAuthor">
                                     <span class="author">
                                         <a href ng-click="singleAuthorView({{translation.authorId}},$parent.$index)">(-)</a>
@@ -22,9 +28,6 @@
                                     {{authorMap[translation.authorId].name}}
                                 </div>
                                 <div class="col-xs-3 authorDiv_{{authorMap[translation.authorId].color}}" ng-show="verse.selectedSingleAuthor==translation.authorId">
-                                    <span class="author">
-                                        <a href ng-click="multipleAuthorsView($parent.$index)" ng-show="verse.translations.length>1">(+)</a>
-                                    </span>
                                     {{authorMap[translation.authorId].name}}
                                 </div>
                                 <div id="tt_{{translation.id}}" ng-show="verse.selectedSingleAuthor==translation.authorId || !verse.showSingleAuthor"

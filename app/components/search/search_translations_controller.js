@@ -36,6 +36,9 @@ angular.module('ionicApp').controller('SearchTranslationsController', function (
     };
 
     $scope.searchTranslations = function(){
+        if ($scope.verseSearchText.length < 3){
+            return;
+        }
         $scope.verses = [];
         var translationParams = [];
         translationParams.author = $scope.searchTranslationsAuthor;
@@ -50,6 +53,14 @@ angular.module('ionicApp').controller('SearchTranslationsController', function (
                 token.selectedSingleAuthor = token.translations.length > 0 ? token.translations[0].authorId : 0;
                 return token.translations.length > 0;
             });
+        });
+    };
+
+    $scope.expandAllTranslations = function(){
+        $scope.verses = _.filter($scope.verses, function(token) {
+            token.showSingleAuthor = false;
+            token.selectedSingleAuthor = 0;
+            return token.translations.length > 0;
         });
     };
 
