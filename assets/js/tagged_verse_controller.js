@@ -106,9 +106,9 @@ angular.module('ionicApp')
             if (item == 'tagged_verse'){
                 $scope.tagged_verse_modal.hide();
             }else if (item == 'tagged_verse_detailed_search'){
-
                 $scope.tagged_verse_detailed_search.hide();
             }else if (item == 'friendsearch'){
+                $scope.taggedVerseUsersForMobileSearch = $scope.query_users;
                 $scope.modal_friend_search.hide();
             }
         };
