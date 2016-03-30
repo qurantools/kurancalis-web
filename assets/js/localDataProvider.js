@@ -188,5 +188,9 @@ angular.module('ionicApp').factory("localDataProvider", function (Restangular, $
         });
     };
 
+    factory.searchTranslationByKeyword = function (args, callback) {
+        callback([]);
+    };
+
     return factory;
 });

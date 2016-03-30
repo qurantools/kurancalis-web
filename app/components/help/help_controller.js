@@ -10,9 +10,9 @@ angular.module('ionicApp')
                 name : "Sure Okuma Tanıtım",
                 submenu : [
                     {id:11, title:"Intro-1", source:[{src: $sce.trustAsResourceUrl("../../assets/img/help/mobile/ana_menu.mp4"), type: "video/mp4"}]},
-                    {id:11, title:"Intro-1", source:[{src: $sce.trustAsResourceUrl("../../assets/img/help/mobile/sure_alt_menu.mp4"), type: "video/mp4"}]},
-                    {id:12, title:"Intro-2", source:[{src: $sce.trustAsResourceUrl("../../assets/img/help/mobile/karalama.mp4"), type: "video/mp4"}]},
-                    {id:13, title:"Intro-3", source:[{src: $sce.trustAsResourceUrl("../../assets/img/help/mobile/suredeki_ayet_notlari.mp4"), type: "video/mp4"}]}
+                    {id:12, title:"Intro-2", source:[{src: $sce.trustAsResourceUrl("../../assets/img/help/mobile/sure_alt_menu.mp4"), type: "video/mp4"}]},
+                    {id:13, title:"Intro-3", source:[{src: $sce.trustAsResourceUrl("../../assets/img/help/mobile/karalama.mp4"), type: "video/mp4"}]},
+                    {id:14, title:"Intro-4", source:[{src: $sce.trustAsResourceUrl("../../assets/img/help/mobile/suredeki_ayet_notlari.mp4"), type: "video/mp4"}]}
                 ]
             }
             /*,

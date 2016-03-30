@@ -84,6 +84,17 @@ angular.module('ionicApp').factory("dataProvider", function (Restangular, localD
             }
         };
 
+        factory.searchTranslationByKeyword = function(args, callback){
+            if (config_data.isNative){
+                localDataProvider.searchTranslationByKeyword(args, callback);
+            }else{
+                var translationsRestangular = Restangular.one("translations").all("search_keyword");
+                translationsRestangular.customGET("", {language:args.language, keyword:args.keyword}, {}).then(function(data){
+                    callback(data);
+                });
+            }
+        };
+
         return factory;
 }).factory('ListAuthors', function ($resource) {
     return $resource(config_data.webServiceUrl + '/authors', {

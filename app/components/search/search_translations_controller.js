@@ -5,10 +5,9 @@ angular.module('ionicApp').controller('SearchTranslationsController', function (
     console.log("Search Translations List Controller");
 
     $scope.searchAuthorMap = [
-        {text : "Türkçe", value : "521744"},
-        {text : "İngilizce", value : "480"},
-        {text : "Arapça", value : "2049"},
-        {text : "Transliterasyon", value : "10"}
+        {text : "Türkçe", value : "tr"},
+        {text : "İngilizce", value : "en"},
+        {text : "Arapça", value : "ar"}
     ];
 
     $scope.verseSearchText = "";
@@ -41,14 +40,11 @@ angular.module('ionicApp').controller('SearchTranslationsController', function (
         }
         $scope.verses = [];
         var translationParams = [];
-        translationParams.author = $scope.searchTranslationsAuthor;
-        translationParams.verse_keyword = $scope.verseSearchText;
+        translationParams.language = $scope.searchTranslationsAuthor;
+        translationParams.keyword = $scope.verseSearchText;
 
-        dataProvider.listTranslations(translationParams, function(data){
+        dataProvider.searchTranslationByKeyword(translationParams, function(data){
             $scope.verses = _.filter(data, function(token) {
-                token.translations = _.filter(token.translations, function(innerToken) {
-                    return innerToken.content.indexOf($scope.verseSearchText) > -1;
-                });
                 token.showSingleAuthor = true;
                 token.selectedSingleAuthor = token.translations.length > 0 ? token.translations[0].authorId : 0;
                 return token.translations.length > 0;
