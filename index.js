@@ -537,7 +537,7 @@ app.factory('ChapterVerses', function ($resource) {
     //    $scope.user = null;
 
     $scope.modal_editor = null;
-    $scope.author_mask = 1040;
+    $scope.author_mask = 8208;
     $scope.authorMaskCheckPoint = $scope.author_mask;
 
     $scope.verse = {};

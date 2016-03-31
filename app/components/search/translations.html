@@ -4,6 +4,36 @@
     <div ng-include="'app/components/partials/off_canvas_menu.html'"></div>
     <div ng-include="'app/components/partials/detailed_verse.html'"></div>
     <div class="nav-bottom"></div>
+
+    <div style="float: left;margin-left: 100px;" data-placement="bottom">
+        <input type="text" ng-model="verseSearchText"
+               size="50" placeholder="Meallerde ara"
+               class="form-control" ng-enter="searchTranslations()"
+               ng-change="searchTextChange(verseSearchText)"
+               min-length="3"/>
+    </div>
+
+    <div style="float: left;margin-left: 20px;">
+        <select ng-model="searchTranslationsAuthor"
+                ng-options="author.value as author.text for author in searchAuthorMap"
+                ng-change="searchTranslationsAuthorChanged(searchTranslationsAuthor)"
+                class="form-control">
+            <option style="display:none" value="">Meal Seç</option>
+        </select>
+    </div>
+
+    <div style="float: left;margin-left: 20px;">
+        <a class="btn btn-primary" ng-click="searchTranslations()">
+            <i class="fa fa-search" style="font-size: 1.3em"></i>
+        </a>
+    </div>
+
+    <div style="float: right;margin-right: 10px;">
+        <button ng-click="expandAllTranslations()" class="btn btn-primary">
+            Tüm mealleri aç
+        </button>
+    </div>
+    <div style="height: 40px;"></div>
     <div class="row" style="margin-top: 25px;">
         <div class="col-xs-12" id="translations">
             <div ng-repeat="verse in verses">

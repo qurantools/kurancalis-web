@@ -1203,7 +1203,7 @@ angular.module('ionicApp')
 
             var chapterId = 1;
             var verseKeyword = "";
-            var authorMask = 1040;
+            var authorMask = 8208;
             var verseNumber = 1;
             var ownAnnotations = true;
             var circles = []; //id array
