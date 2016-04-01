@@ -120,7 +120,7 @@ var app = angular.module('ionicApp', requiredModules)
     .filter('with_search_text', [
         function () {
             return function (text, searched_text) {
-                return text.replace(new RegExp(searched_text, 'g'), "<div style='color: red;background-color:yellow;display: inline-block;'>"+searched_text+"</div>");
+                return text.replace(searched_text, "<div style='color: red;background-color:yellow;display: inline-block;'>"+searched_text+"</div>");
             };
         }])
     .run(function ($rootScope, $ionicPlatform, dataProvider) {

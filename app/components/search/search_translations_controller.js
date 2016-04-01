@@ -11,6 +11,7 @@ angular.module('ionicApp').controller('SearchTranslationsController', function (
     ];
 
     $scope.verseSearchText = "";
+    $scope.verseSearchedText = "";
     $scope.verses = [];
     $scope.searchTranslationsAuthor = {};
 
@@ -44,6 +45,8 @@ angular.module('ionicApp').controller('SearchTranslationsController', function (
         translationParams.keyword = $scope.verseSearchText;
 
         dataProvider.searchTranslationByKeyword(translationParams, function(data){
+            var d =$scope.verseSearchText;
+            $scope.verseSearchedText = d;
             $scope.verses = _.filter(data, function(token) {
                 token.showSingleAuthor = true;
                 token.selectedSingleAuthor = token.translations.length > 0 ? token.translations[0].authorId : 0;

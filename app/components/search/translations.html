@@ -42,7 +42,7 @@
                         <div ng-repeat="translation in verse.translations">
                             <div class="col-xs-1" ng-if="$first" style="text-align: center">
                                 <div class="chapter_verse_number">
-                                    <a style="color: blue" ng-click='showVerseDetail(verse.id)' data-target='#detailedVerseModal' data-toggle='modal'>
+                                    <a href style="color: blue" ng-click='showVerseDetail(verse.id)' data-target='#detailedVerseModal' data-toggle='modal'>
                                         <strong>{{translation.chapter}}:{{translation.verse}}</strong>
                                     </a>
                                 </div>
@@ -63,7 +63,7 @@
                                 <div id="tt_{{translation.id}}" ng-show="verse.selectedSingleAuthor==translation.authorId || !verse.showSingleAuthor"
                                      class="col-xs-9"
                                      ng-class="{translation_rtl: authorMap[translation.authorId].language=='ar', translation_content: authorMap[translation.authorId].language!='ar'}"><span
-                                        ng-bind-html="translation.content | with_search_text:verseSearchText | to_trusted"></span>
+                                        ng-bind-html="translation.content | with_search_text:verseSearchedText | to_trusted"></span>
                                 </div>
                             </div>
                             <div class="col-xs-8" style="float: right" ng-if="!$last && !verse.showSingleAuthor">
