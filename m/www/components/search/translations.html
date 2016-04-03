@@ -9,16 +9,16 @@
         </ion-nav-bar>
         <!-- end of side menu part 1 -->
         <ion-nav-view id="content" cache-view="true">
-            <ion-content overflow-scroll="true" delegate-handle="content"  class="scroll_content" style="margin-top:30px;">
+            <ion-content overflow-scroll="true" delegate-handle="scrollHandle" on-scroll="checkPosition()" class="scroll_content" style="margin-top:30px;">
                 <div class="row" delegate-handle="content">
-                    <div class="col-xs-12 bb" id="translations">
-                        <div class="item item-input button-block">
+                    <div class="col-xs-12 bb" id="translations" style="display: block;width: 100%;">
+                        <div class="item item-input button-block" style="margin-top: 20px;border-color: black;border-width: 1px;border-style: solid;">
                             <input type="text" placeholder="Meallerde ara"
                                    ng-model="verseSearchText" ng-enter="searchTranslations()"
                                    ng-change="searchTextChange(verseSearchText)"
-                                   min-length="3">
+                                   min-length="3" style="color: black;">
                         </div>
-                        <div class="item item-input item-select">
+                        <div class="item item-input item-select" style="margin-top: 5px;border-color: black;border-width: 1px;border-style: solid;">
                             <div class="input-label">
                                 Dil
                             </div>
@@ -29,16 +29,20 @@
                                 <option style="display:none" value="">Meal Seç</option>
                             </select>
                         </div>
-                        <button class="button icon-left ion-search" style="width: 100%" ng-click="searchTranslations()">Ara</button>
+                        <div class="button button-icon" style="align-content: center;width: 100%;margin-top: 5px;background-color: #47E;border-color: black;border-width: 1px;border-style: solid;"
+                             ng-click="searchTranslations()">
+                            <i class="icon ion-search"></i>
+                            Ara
+                        </div>
                         <div ng-repeat="verse in verses">
-                            <div class="well translations col-xs-12" id="v_{{verse.id}}">
-                                <div ng-repeat="translation in verse.translations" class="selectable">
-                                    <div ng-if="$first">
+                            <div class="well translations col-xs-12 list" id="v_{{verse.id}}">
+                                <div ng-repeat="translation in verse.translations" class="item-container selectable" sticky watch-variable="verse.translations">
+                                    <div ng-if="$first" class="item-divider">
                                         <h4>
                                             <a href style="text-decoration: none !important;" ng-click='showVerseDetail({{verse.id}})'>{{translation.chapter}}:{{translation.verse}}</a>
                                         </h4>
                                     </div>
-                                    <div id="t_{{translation.id}}">
+                                    <div id="t_{{translation.id}}" class="transaction-item">
                                         <div class="col-xs-12 col-sm-3 authorDiv_{{authorMap[translation.authorId].color}}" ng-show="!verse.showSingleAuthor">
                                             {{authorMap[translation.authorId].name}}
                                         </div>
@@ -52,7 +56,8 @@
                                         </div>
                                         <div class="col-xs-1" ng-show="verse.selectedSingleAuthor==translation.authorId && verse.translations.length>1" ng-click="multipleAuthorsView($parent.$index)"
                                             style="text-align: center;background-color:#F4E288;border-color: black;border-width: 1px;border-style: solid;margin:5px 12px 0 12px;">
-                                            (+) Diğer mealleri göster
+                                            <img src="../../assets/img/expand.png" width="18" height="18" style="vertical-align: middle;">
+                                            Diğer mealleri göster
                                         </div>
                                     </div>
                                     <div class="row" ng-if="!$last && !verse.showSingleAuthor" style="height: 10px;">
