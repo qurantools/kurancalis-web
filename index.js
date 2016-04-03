@@ -120,7 +120,8 @@ var app = angular.module('ionicApp', requiredModules)
     .filter('with_search_text', [
         function () {
             return function (text, searched_text) {
-                return text.replace(searched_text, "<div style='color: red;background-color:yellow;display: inline-block;'>"+searched_text+"</div>");
+                var re = new RegExp('('+searched_text + ')', 'i');
+                return text.replace(re, "<div style='color: red;background-color:yellow;display: inline-block;'>$1</div>");
             };
         }])
     .run(function ($rootScope, $ionicPlatform, dataProvider) {
@@ -428,6 +429,11 @@ if (config_data.isMobile == false) { //false
                         controller:'LoginController',
                         templateUrl:'components/login/login.html',
                         pageTitle: 'Kuran Çalış - Giriş'
+                    })
+                    .when('/search_translations/', {
+                        controller: 'SearchTranslationsController',
+                        templateUrl: 'components/search/translations.html',
+                        pageTitle: 'Ayet Arama'
                     })
                     .when('/', {
                         redirectTo: '/translations/',

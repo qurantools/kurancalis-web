@@ -189,7 +189,66 @@ angular.module('ionicApp').factory("localDataProvider", function (Restangular, $
     };
 
     factory.searchTranslationByKeyword = function (args, callback) {
-        callback([]);
+        var language=args.language, keyword=args.keyword, authorMask=args.author;
+
+        var resultSet = [];
+        if ("" == keyword || keyword.length < 3 || "" == language){
+            callback(resultSet);
+            return;
+        }
+
+        var select = "SELECT t.* FROM translation t ";
+        var join = "JOIN author a ON t.author_id = a.id ";
+        var where = "WHERE ";
+        var groupBy = " ORDER BY t.chapter,t.verse_id ";
+
+        var queryParams = [];
+        var whereCriterias = [];
+
+        if ("" != keyword) {
+            whereCriterias.push("t.content like ? ");
+            queryParams.push("%" +keyword + "%");
+        }
+        if ("" != language) {
+            select += join;
+            whereCriterias.push("a.language = ? ");
+            queryParams.push(language);
+        }
+        if(authorMask != null) {
+            whereCriterias.push("t.author_id & ? ");
+            queryParams.push(authorMask);
+        }
+        if (queryParams.length > 0){
+            where = where + whereCriterias.join(" AND ");
+        }
+        var query = select + where + groupBy;
+        $cordovaSQLite.execute(factory.db, query, queryParams).then(function(res) {
+            for (var i = 0; i < res.rows.length; i++){
+                var item = res.rows.item(i);
+                var translation = {};
+                translation.authorId = item.author_id;
+                translation.chapter = item.chapter;
+                translation.content = item.content;
+                translation.id = item.id;
+                translation.verse = item.verse;
+                translation.verseId = item.verse_id;
+                translation.version = item.version;
+                resultSet.push(translation);
+            }
+            var newTranslations = _.chain( resultSet ).reduce(function( memo, translation ) {
+                memo[ translation.verseId ] = memo[ translation.verseId ] || [];
+                memo[ translation.verseId ].push( translation );
+                return memo;
+            }, {}).map(function(translations, id) {
+                return {
+                    id: id,
+                    translations: translations
+                };
+            }).value();
+            callback(newTranslations);
+        }, function (err) {
+            callback(resultSet);
+        });
     };
 
     return factory;
