@@ -11,14 +11,17 @@
                         <li ng-class="{active: currentPage == 'home'}">
                             <a href="#/translations/" class="leftMenuLink">Sureler</a>
                         </li>
-                        <li ng-class="{active: currentPage == 'annotations'}">
-                            <a href="#/annotations/" ng-if="user!=null">Ayet notları</a>
+                        <li ng-class="{active: currentPage == 'annotations'}" ng-if="user!=null">
+                            <a href="#/annotations/">Ayet notları</a>
                         </li>
-                         <li ng-class="{active: currentPage.search('inference')==0}">
-                            <a href="#/inferences/" ng-if="user!=null">Çıkarım Notları</a>
+                         <li ng-class="{active: currentPage.search('inference')==0}" ng-if="user!=null">
+                            <a href="#/inferences/">Çıkarım Notları</a>
                         </li>
-                        <li ng-class="{active: currentPage.search('people')==0}">
-                            <a href="#/people/circles/" ng-if="user!=null">Kişiler</a>
+                        <li ng-class="{active: currentPage.search('people')==0}" ng-if="user!=null">
+                            <a href="#/people/circles/">Kişiler</a>
+                        </li>
+                        <li ng-class="{active: currentPage == 'verse_lists'}" ng-if="user!=null">
+                            <a href="#/lists/verse">Ayet Listelerim</a>
                         </li>
                         <li ng-class="{active: currentPage == 'search_on_translations'}">
                             <a href="#/search_translations/" class="leftMenuLink">Meallerde Ara</a>

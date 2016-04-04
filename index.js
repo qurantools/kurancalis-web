@@ -289,6 +289,12 @@ if (config_data.isMobile == false) { //false
                 reloadOnSearch: false,
                 pageTitle: 'Ayet Arama'
             })
+            .when('/lists/verse', {
+                controller: 'VerseListController',
+                templateUrl: 'app/components/lists/verse_list.html',
+                reloadOnSearch: false,
+                pageTitle: 'Ayet Listelerim'
+            })
             .when('/', {
                 redirectTo: '/translations/'
             })
@@ -667,8 +673,9 @@ app.factory('ChapterVerses', function ($resource) {
             retcp = "people_explore";
         } else if ( url == "/search_translations/"){
             retcp = "search_translations";
-        }
-        else {
+        } else if ( url == "/lists/verse"){
+            retcp = "verse_lists";
+        } else {
             retcp = 'home';
         }
 

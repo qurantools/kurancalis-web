@@ -1,0 +1,72 @@
+<body>
+<div class="container">
+    <div ng-include="'app/components/lists/verse_lists_navigation.html'"></div>
+    <div ng-include="'app/components/partials/off_canvas_menu.html'"></div>
+    <div ng-include="'app/components/partials/detailed_verse.html'"></div>
+    <div class="nav-bottom"></div>
+
+    <div class="row" style="width: 100%;">
+        <div class="col-xs-3" style="visibility: hidden">
+            asdfasfd
+        </div>
+        <div class="col-xs-9 pull-right">
+            <h3 style="text-align: center">Liste : {{selectedVerseList.name}}</h3>
+            <select ng-model="verseListAuthor"
+                    ng-options="author.id as author.name for author in authors"
+                    ng-change="verseListsAuthorChanged(verseListAuthor)"
+                    class="form-control">
+                <option style="display:none" value="">Yazar Seçiniz</option>
+            </select>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 10px;">
+        <div class="col-xs-3" style="border-color: black;border-width: 1px;border-style: solid;">
+            <ul class="selectable_list" style="-webkit-padding-start: 0;">
+                <li ng-repeat="verselist in verselists"
+                    ng-click="verseListsToggleSelection(verselist.id)"
+                    ng-class="{ 'selected_list_item': localVerseListSelection.indexOf(verselist.id) > -1}">
+                    <i class="fa fa-edit"></i> &nbsp;&nbsp;{{verselist.name}}
+                </li>
+            </ul>
+        </div>
+        <div class="col-xs-9" id="translations">
+            <div ng-repeat="verse in verses">
+                <div class="well translations col-xs-12" id="v_{{verse.id}}">
+                    <div class="row">
+                        <div class="col-xs-1" style="text-align: center">
+                            <div class="chapter_verse_number">
+                                <a href style="color: blue" ng-click='showVerseDetail(verse.verseId)' data-target='#detailedVerseModal' data-toggle='modal'>
+                                    <strong>{{verse.chapter}}:{{verse.verse}}</strong>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-xs-10">
+                            <div class="col-xs-9"
+                                 ng-class="{translation_rtl: authorMap[verse.authorId].language=='ar', translation_content: authorMap[verse.authorId].language!='ar'}"><span
+                                    ng-bind-html="verse.content | to_trusted"></span>
+                            </div>
+                        </div>
+                        <div class="col-xs-1">
+                            <button type="button" class="btn btn-default btn-circle" ng-click="deleteVerseFromVerseList(selectedVerseList.id,verse.verseId)"><i class="fa fa-minus"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /row-->
+</div>
+<!-- /container-->
+
+<div>
+    <modal title="Yeni Ayet Listesi Ekleme" visible="newVerseListModal">
+        <div class="form-group">
+            <input type="text" class="form-control" ng-model="newVerseList" placeholder="Ayet Listesi Tanımı"/>
+        </div>
+        <div class="modal-footer">
+            <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal">İptal</a>
+            <a class="btn btn-primary btn-wide" ng-click="addVerseList(newVerseList)" data-dismiss="modal">Tamam</a>
+        </div>
+    </modal>
+</div>
+</body>
