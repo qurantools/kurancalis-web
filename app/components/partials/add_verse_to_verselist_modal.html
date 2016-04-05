@@ -1,0 +1,22 @@
+<div class="modal" id="addVerseToVerseListModal" ng-controller="VerseListController">
+    <div class="modal-xl modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Ayeti Listeye Ekle</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <tags-input ng-model="selectedVerseListsForVerseToAdd" placeholder="Liste Seçiniz"
+                                display-property="name" replace-spaces-with-dashes="false" min-length="1"
+                                add-from-autocomplete-only="true" add-on-blur="false">
+                        <auto-complete source="verselists" load-on-empty="true" load-on-focus="true"></auto-complete>
+                    </tags-input>
+                </div>
+                <div class="modal-footer">
+                    <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal">İptal</a>
+                    <a class="btn btn-primary btn-wide" ng-click="addVerseToVerseLists(editedVerseList)" data-dismiss="modal">Tamam</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
