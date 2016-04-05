@@ -625,6 +625,8 @@ app.factory('ChapterVerses', function ($resource) {
     $scope.internet_display_show = false;
     $scope.internet_display_style = {"background-color": "orange"};
 
+    $scope.verselists = [];
+
     $scope.checkAPIVersion = function(){
         var versionRestangular = Restangular.all("apiversioncompatibility");
         $scope.versionParams = [];
@@ -752,7 +754,7 @@ app.factory('ChapterVerses', function ($resource) {
 
             //Show Circles - Kullanıcı login olduğunda çevre listesi çekilir.
             $scope.initializeCircleLists();
-
+            $scope.initializeVerseLists();
         }
         else {
             $scope.loggedIn = false;
@@ -1085,6 +1087,12 @@ app.factory('ChapterVerses', function ($resource) {
         });
     };
 
+    $scope.addVerseToVerseList = function (verse){
+        $timeout(function(){
+            $scope.$broadcast("add_verse_to_verse_lists",{verse: verse});
+        });
+    };
+
     $scope.showVerseFromFootnote = function (chapterVerse, author, translationId) {
 
         $scope.showVerseData = {};
@@ -1228,9 +1236,13 @@ app.factory('ChapterVerses', function ($resource) {
             $scope.$broadcast("circleLists ready");
 
         });
+    };
 
-    }
-
+    $scope.initializeVerseLists = function(){
+        Restangular.all("verselists").customGET("", {}, {'access_token': $scope.access_token}).then(function (verselists) {
+            $scope.verselists = verselists;
+        });
+    };
 
     //tags input auto complete
     $scope.kisilistele = function (kisiad) {

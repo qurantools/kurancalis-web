@@ -25,7 +25,7 @@
                 <li ng-repeat="verselist in verselists"
                     ng-click="verseListsToggleSelection(verselist.id)"
                     ng-class="{ 'selected_list_item': localVerseListSelection.indexOf(verselist.id) > -1}">
-                    <i class="fa fa-edit"></i> &nbsp;&nbsp;{{verselist.name}}
+                    <i class="fa fa-edit" ng-click="editVerseList(verselist)"></i> &nbsp;&nbsp;{{verselist.name}}
                 </li>
             </ul>
         </div>
@@ -66,6 +66,20 @@
         <div class="modal-footer">
             <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal">İptal</a>
             <a class="btn btn-primary btn-wide" ng-click="addVerseList(newVerseList)" data-dismiss="modal">Tamam</a>
+        </div>
+    </modal>
+</div>
+
+<div>
+    <modal title="Liste Düzenle" visible="editVerseListModal">
+        <div class="form-group">
+            <input type="text" class="form-control" ng-model="editedVerseList.name" placeholder="Ayet Listesi Tanımı"/>
+            <a class="btn btn-danger btn-wide" ng-click="deleteVerseList(editedVerseList)" data-dismiss="modal"
+               style="margin: 12px 5px;width: 51%;float: right;">Listeyi Sil</a>
+        </div>
+        <div class="modal-footer">
+            <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal">İptal</a>
+            <a class="btn btn-primary btn-wide" ng-click="updateVerseList(editedVerseList)" data-dismiss="modal">Tamam</a>
         </div>
     </modal>
 </div>

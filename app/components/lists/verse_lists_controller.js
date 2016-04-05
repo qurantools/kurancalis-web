@@ -7,8 +7,9 @@ angular.module('ionicApp').controller('VerseListController', function ($scope, R
     $scope.verseListAuthor = "8192"; //Diyanet
     $scope.newVerseListModal = false;
     $scope.newVerseList = "";
-    $scope.verselists = [];
     $scope.localVerseListSelection = [];
+    $scope.verseForAddToLists = {};
+    $scope.selectedVerseListsForVerseToAdd = [];
     $scope.verses = [];
 
     $scope.openNewVerseListModal = function(){
@@ -52,14 +53,6 @@ angular.module('ionicApp').controller('VerseListController', function ($scope, R
     $scope.listVerseLists = function(){
         Restangular.all("verselists").customGET("", {}, {'access_token': $scope.access_token}).then(function (verselists) {
             $scope.verselists = verselists;
-            $scope.dverselists = verselists;
-        });
-    };
-
-    $scope.listVerseLists = function(){
-        Restangular.all("verselists").customGET("", {}, {'access_token': $scope.access_token}).then(function (verselists) {
-            $scope.verselists = verselists;
-            $scope.dverselists = verselists;
         });
     };
 
@@ -90,8 +83,37 @@ angular.module('ionicApp').controller('VerseListController', function ($scope, R
         $scope.getVerseListsVerse();
     };
 
+    $scope.editVerseList = function(verselist){
+        $scope.editVerseListModal = true;
+        $scope.editedVerseList = verselist;
+    };
+
+    $scope.updateVerseList = function(verselist){
+        $scope.editVerseListModal = false;
+        var headers = {'Content-Type': 'application/x-www-form-urlencoded', 'access_token': $scope.access_token};
+        var jsonData = verselist.name;
+        var postData = [];
+        postData.push(encodeURIComponent("name") + "=" + encodeURIComponent(jsonData));
+        var data = postData.join("&");
+
+        Restangular.one("verselists", verselist.id).customPUT(data, '', '', headers).then(function (data) {
+            var idx = $scope.verselists.indexOf(verselist);
+            $scope.verselists[idx] = verselist;
+        });
+    };
+
+    $scope.addVerseToVerseLists = function(){
+        for (var i = 0; i < $scope.selectedVerseListsForVerseToAdd.length; i++){
+            Restangular.one("verselists", $scope.selectedVerseListsForVerseToAdd[i].id).one("verses", $scope.verseForAddToLists).customPOST("", "", "", {'access_token': $scope.access_token}).then(function (data) {
+            });
+        }
+    };
+
     $scope.initVerseListController = function(){
-         $scope.listVerseLists();
+        $scope.$on('add_verse_to_verse_lists', function(event, args) {
+            $scope.verseForAddToLists = args.verse;
+            $scope.selectedVerseListsForVerseToAdd = [];
+        });
     };
 
     $scope.initVerseListController();
