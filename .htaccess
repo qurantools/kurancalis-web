@@ -1,9 +1,15 @@
-
 RewriteEngine On
 
 RewriteRule __/inference/display/(\d*)$ /#/inference/display/$1 [NE,R]
+RewriteRule __/translations/yazar/(\d*)/sure/(\d*) /#/translations/?author=$1&chapter=$2 [NE,R]
 RewriteRule __/translations /#/translations [NE,R]
+
+
 # allow social media crawlers to work by redirecting them to a server-rendered static version on the page
 RewriteCond %{HTTP_USER_AGENT} (facebookexternalhit/[0-9]|Twitterbot|Pinterest|Google.*snippet)
 RewriteRule inference/display/(\d*)$ /assets/php/static_view.php?id=$1 [P]
+
+RewriteCond %{HTTP_USER_AGENT} (facebookexternalhit/[0-9]|Twitterbot|Pinterest|Google.*snippet)
+RewriteRule translations/yazar/(\d*)/sure/(\d*)$ /assets/php/static_view.php?page=translations&author=$1&chapter=$2 [P]
 #RewriteRule translations/?author=(\d*)$ /assets/php/static_view.php?page=translations&author=$1 [P]
+#
