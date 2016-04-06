@@ -102,6 +102,14 @@ angular.module('ionicApp').controller('VerseListController', function ($scope, R
         });
     };
 
+    $scope.deleteVerseList = function(verselist){
+        $scope.editVerseListModal = false;
+        Restangular.one("verselists", verselist.id).customDELETE("" , {}, {'access_token': $scope.access_token}).then(function (data) {
+            var idx = $scope.verselists.indexOf(verselist);
+            $scope.verselists.splice(idx, 1);
+        });
+    };
+
     $scope.addVerseToVerseLists = function(){
         for (var i = 0; i < $scope.selectedVerseListsForVerseToAdd.length; i++){
             Restangular.one("verselists", $scope.selectedVerseListsForVerseToAdd[i].id).one("verses", $scope.verseForAddToLists).customPOST("", "", "", {'access_token': $scope.access_token}).then(function (data) {
