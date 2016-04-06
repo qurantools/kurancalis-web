@@ -168,6 +168,7 @@ angular.module('ionicApp').controller('VerseListController', function ($scope, $
         $timeout(function(){
             if ($scope.verselists.length > 0){
                 $scope.localVerseListSelection.push($scope.verselists[0].id);
+                $scope.selectedVerseList = $scope.verselists[0];
                 $scope.getVerseListsVerse();
             }
 
