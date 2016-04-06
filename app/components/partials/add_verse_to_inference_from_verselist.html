@@ -1,0 +1,62 @@
+<div class="modal" id="addVerseToInferenceFromVerseList" ng-controller="VerseListController">
+    <div class="modal-xl modal-dialog">
+        <div class="modal-content well">
+            <div class="modal-header" style="height: 60px;">
+                <div style="float: left;font-size: 26px;">
+                    <b>Ayet seçiniz</b>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="col-xs-9 pull-right">
+                    <select ng-model="verseListAuthor"
+                            ng-options="author.id as author.name for author in authors"
+                            ng-change="verseListsAuthorChanged(verseListAuthor)"
+                            class="form-control">
+                        <option style="display:none" value="">Yazar Seçiniz</option>
+                    </select>
+                </div>
+                <!-- body-->
+                <div class="row" style="margin-top: 50px;">
+                    <div class="col-sm-12">
+                        <div class="col-sm-3">
+                            <ul class="selectable_list">
+                                <li ng-repeat="verselist in verselists"
+                                    ng-click="verseListsToggleSelection(verselist.id)"
+                                    ng-class="{ 'selected_list_item': localVerseListSelection.indexOf(verselist.id) > -1}">
+                                    &nbsp;&nbsp;{{verselist.name}}
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-9">
+                            <!-- translations-->
+                            <div ng-repeat="verse in verses">
+                                <div class="well translations col-xs-12" id="v_{{verse.id}}" ng-click="selectVerse($index)"
+                                     ng-style="verse.selected && {'background-color': 'rgba(0, 255, 0, 0.3)'}">
+                                    <div class="row">
+                                        <div class="col-xs-1" style="text-align: center">
+                                            <div class="chapter_verse_number">
+                                                <strong>{{verse.chapter}}:{{verse.verse}}</strong>
+                                                <br/><br/>
+                                                <input type="checkbox" ng-checked="verse.selected == true"/>&nbsp;<br/>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-10">
+                                            <div ng-class="{translation_rtl: authorMap[verse.authorId].language=='ar', translation_content: authorMap[verse.authorId].language!='ar'}"><span
+                                                    ng-bind-html="verse.content | to_trusted"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal">Vazgeç</a>
+                    <a class="btn btn-primary btn-wide" ng-click="selectSelectedVerses()" data-dismiss="modal">Seç</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,16 +1,20 @@
 /**
  * Created by mehmet.gungoren on 04.04.2016.
  */
-angular.module('ionicApp').controller('VerseListController', function ($scope, Restangular, dataProvider) {
+angular.module('ionicApp').controller('VerseListController', function ($scope, $timeout, Restangular, dataProvider) {
 
     $scope.selectedVerseList = {};
     $scope.verseListAuthor = "8192"; //Diyanet
     $scope.newVerseListModal = false;
     $scope.newVerseList = "";
     $scope.localVerseListSelection = [];
-    $scope.verseForAddToLists = {};
     $scope.selectedVerseListsForVerseToAdd = [];
+    $scope.verseForAddToLists = {};
     $scope.verses = [];
+
+    $scope.filteredVerselists = [];
+
+    $scope.callBackFunctionOfVerseSelectionFromVerseList;
 
     $scope.openNewVerseListModal = function(){
         $scope.newVerseListModal = true;
@@ -44,7 +48,10 @@ angular.module('ionicApp').controller('VerseListController', function ($scope, R
                     author: $scope.verseListAuthor,
                     verse_list: verselist
                 }, function (data) {
-                    $scope.verses = data;
+                    $scope.verses = _.filter(data, function(token) {
+                        token.selected = false;
+                        return true;
+                    });
                 })
             });
         }
@@ -65,8 +72,10 @@ angular.module('ionicApp').controller('VerseListController', function ($scope, R
 
         Restangular.one("verselists").customPOST(data, '', '', headers).then(function (verseList) {
             $scope.verselists.push({'verseCount': '0', 'id': verseList.id, 'name': verseList.name});
+            $scope.filteredVerselists.push({'verseCount': '0', 'id': verseList.id, 'name': verseList.name});
             $scope.newVerseListModal = false;
             $scope.newVerseList = "";
+            $scope.filterVerseLists($scope.newVerseList);
         });
     };
 
@@ -110,18 +119,61 @@ angular.module('ionicApp').controller('VerseListController', function ($scope, R
         });
     };
 
-    $scope.addVerseToVerseLists = function(){
-        for (var i = 0; i < $scope.selectedVerseListsForVerseToAdd.length; i++){
-            Restangular.one("verselists", $scope.selectedVerseListsForVerseToAdd[i].id).one("verses", $scope.verseForAddToLists).customPOST("", "", "", {'access_token': $scope.access_token}).then(function (data) {
+    $scope.addVerseToVerseLists = function(list){
+        for (var i = 0; i < list.length; i++){
+            Restangular.one("verselists", list[i]).one("verses", $scope.verseForAddToLists).customPOST("", "", "", {'access_token': $scope.access_token}).then(function (data) {
             });
         }
+    };
+
+    $scope.filterVerseListsToggleSelection = function(verselist_id){
+        var idx = $scope.localVerseListSelection.indexOf(verselist_id);
+        if (idx > -1) {
+            $scope.localVerseListSelection.splice(idx, 1);
+        }else {
+            $scope.localVerseListSelection.push(verselist_id);
+        }
+    };
+
+    $scope.filterVerseLists = function(newVerseList){
+        $scope.filteredVerselists = $scope.verselists.filter(function(item){
+            return item.name.indexOf(newVerseList) > -1;
+        });
+    };
+
+    $scope.selectVerse = function(index){
+        $scope.verses[index].selected = !$scope.verses[index].selected;
+    };
+
+    $scope.selectSelectedVerses = function(){
+        var selected = $scope.verses.filter(function(item){
+            return item.selected;
+        }).map(function (elem) {
+            return elem.chapter + ":" + elem.verse;
+        }).join(" ");
+        $scope.callBackFunctionOfVerseSelectionFromVerseList(selected);
     };
 
     $scope.initVerseListController = function(){
         $scope.$on('add_verse_to_verse_lists', function(event, args) {
             $scope.verseForAddToLists = args.verse;
             $scope.selectedVerseListsForVerseToAdd = [];
+            $scope.localVerseListSelection = [];
         });
+
+        $scope.$on('open_verse_for_verse_selection', function(event, args) {
+            $scope.callBackFunctionOfVerseSelectionFromVerseList = args.callback;
+        });
+
+        $timeout(function(){
+            if ($scope.verselists.length > 0){
+                $scope.localVerseListSelection.push($scope.verselists[0].id);
+                $scope.getVerseListsVerse();
+            }
+
+            angular.copy($scope.verselists, $scope.filteredVerselists);
+        },200);
+        $scope.localVerseListSelection = [];
     };
 
     $scope.initVerseListController();

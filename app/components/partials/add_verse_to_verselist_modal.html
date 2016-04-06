@@ -1,20 +1,33 @@
 <div class="modal" id="addVerseToVerseListModal" ng-controller="VerseListController">
-    <div class="modal-xl modal-dialog">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Ayeti Listeye Ekle</h4>
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <tags-input ng-model="selectedVerseListsForVerseToAdd" placeholder="Liste Seçiniz"
-                                display-property="name" replace-spaces-with-dashes="false" min-length="1"
-                                add-from-autocomplete-only="true" add-on-blur="false">
-                        <auto-complete source="verselists" load-on-empty="true" load-on-focus="true"></auto-complete>
-                    </tags-input>
+                    <div style="width: 100%">
+                        <table>
+                            <td class="col-sm-10">
+                                <input type="text" class="form-control" ng-model="newVerseList" ng-change="filterVerseLists(newVerseList)" placeholder="Ara / Yeni Liste"/>
+                            </td>
+                            <td  class="col-sm-2" style="width:100%; padding-left: 15px;">
+                                <a class="btn btn-primary btn-wide" ng-click="addVerseList(newVerseList)"><i class="fa fa-plus"></i>Yeni Liste Oluştur</a>
+                            </td>
+                        </table>
+                    </div>
+                    <br/><br/><br/>
+                    <ul class="selectable_list" style="-webkit-padding-start: 0;">
+                        <li ng-repeat="verselist in filteredVerselists"
+                            ng-click="filterVerseListsToggleSelection(verselist.id)"
+                            ng-class="{ 'selected_list_item': localVerseListSelection.indexOf(verselist.id) > -1}">
+                            {{verselist.name}}
+                        </li>
+                    </ul>
                 </div>
                 <div class="modal-footer">
                     <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal">İptal</a>
-                    <a class="btn btn-primary btn-wide" ng-click="addVerseToVerseLists(editedVerseList)" data-dismiss="modal">Tamam</a>
+                    <a class="btn btn-primary btn-wide" ng-click="addVerseToVerseLists(localVerseListSelection)" data-dismiss="modal" ng-class="{ 'disabled': localVerseListSelection.length < 1}">Tamam</a>
                 </div>
             </div>
         </div>

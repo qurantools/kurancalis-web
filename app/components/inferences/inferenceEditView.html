@@ -2,6 +2,7 @@
 <div ng-include="'app/components/partials/off_canvas_menu.html'"></div>
 <div class="container" ng-init="initializeCircleLists()">
     <div ng-include="'app/components/inferences/inferences_navigation.html'"></div>
+    <div ng-include="'app/components/partials/add_verse_to_inference_from_verselist.html'"></div>
     <div class="nav-bottom"></div>
     <div class="row" align="center">
     <br />
@@ -25,10 +26,14 @@
             <textarea ng-model="inferenceData.content" ui-tinymce="tinymceOptions" style="height:350px">
 
             </textarea>
-
         </div>
-             <br />
-      <br />
+        <br /><br />
+
+        <div align="left" style="width:760px">
+            <input class="form-control btn-primary" style="width:initial" type="button" value="Referans Ayet Ekle" data-target='#addVerseToInferenceFromVerseList' data-toggle='modal' ng-click="openVerseListForVerseSelection(copyValueFromSelectedList)"/>
+        </div>
+        <br />
+
         <div align="left" style="width:760px">
         Etiketler
             <tags-input ng-model="tags_entry" display-property="name" placeholder="Etiket girin" replace-spaces-with-dashes="false" min-length="2">

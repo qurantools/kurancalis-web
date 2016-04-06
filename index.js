@@ -1089,7 +1089,7 @@ app.factory('ChapterVerses', function ($resource) {
 
     $scope.addVerseToVerseList = function (verse){
         $timeout(function(){
-            $scope.$broadcast("add_verse_to_verse_lists",{verse: verse});
+            $scope.$broadcast("add_verse_to_verse_lists", {verse:verse});
         });
     };
 
@@ -1324,6 +1324,10 @@ app.factory('ChapterVerses', function ($resource) {
 
     $scope.goToVerseTag = function (authorId, verseId, tag, users, circles) {
         $scope.$broadcast("tagged_verse_modal",{verseId:verseId, tag:tag, circles:circles, users:users, author:authorId+""});
+    };
+
+    $scope.openVerseListForVerseSelection = function (callback) {
+        $scope.$broadcast("open_verse_for_verse_selection",{callback:callback});
     };
 
     $scope.initializeController = function () {

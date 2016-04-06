@@ -484,6 +484,11 @@ angular.module('ionicApp')
             }
         };
 
+        $scope.copyValueFromSelectedList = function (selected) {
+            $scope.inferenceData.content = $scope.inferenceData.content.concat("<p>" + selected + "</p>");
+            $scope.kopyala(selected);
+        };
+
 
         //definitions are finished. Now run initialization
         $scope.initializeInferenceEditController();
