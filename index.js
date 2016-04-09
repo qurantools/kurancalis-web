@@ -318,8 +318,6 @@ if (config_data.isMobile == false) { //false
 //        $route.routes['/:chapter/:verse'].regexp = /^\/(?:artist\/(\d+))$/
 
         //facebook
-        FacebookProvider.init(config_data.FBAppID);
-
     });
 } else {
     app.config(function ($routeProvider, FacebookProvider, RestangularProvider, localStorageServiceProvider, $stateProvider, $urlRouterProvider, $httpProvider) {
@@ -485,10 +483,6 @@ if (config_data.isMobile == false) { //false
                         redirectTo: '/translations/',
                         pageTitle: 'Kuran Çalış'
                     });
-
-                if (config_data.isNative){
-                    openFB.init({appId: config_data.FBAppID});
-                }
             }
             /*
              $ionicAppProvider.identify({
@@ -500,6 +494,7 @@ if (config_data.isMobile == false) { //false
              // gcm_id: 'YOUR_GCM_ID'
              });
              */
+            FacebookProvider.init(config_data.FBAppID);
         }
     );
 }
@@ -1370,7 +1365,6 @@ app.factory('ChapterVerses', function ($resource) {
     };
 
     $scope.initializeController = function () {
-
         $scope.checkAPIVersion();
 
         $scope.$on('$routeChangeStart', function(next, current) {
