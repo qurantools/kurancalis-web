@@ -17,6 +17,9 @@
                         <li ng-class="{active: currentPage == 'help'}">
                             <a href="#/help/" ng-if="user!=null">Yardım</a>
                         </li>
+                        <li ng-class="{active: currentPage.search('people')==0}" ng-if="user!=null">
+                            <a href="#/people/home/">Kişiler</a>
+                        </li>
                         <li ng-class="{active: currentPage == 'search_on_translations'}">
                             <a href="#/search_translations/" class="leftMenuLink">Meallerde Ara</a>
                         </li>

@@ -1,0 +1,60 @@
+<!-- start of side menu part 1-->
+<ion-side-menus>
+    <ion-side-menu-content drag-content="false">
+        <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced">
+            <ion-nav-title>Kişiler</ion-nav-title>
+            <ion-nav-buttons side="left">
+                <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+            </ion-nav-buttons>
+        </ion-nav-bar>
+        <ion-nav-buttons side="left">
+            <button class="button button-icon icon ion-navicon" menu-toggle="left">
+            </button>
+        </ion-nav-buttons>
+        <ion-nav-view name="appContent"></ion-nav-view>
+        <!-- end of side menu part 1 -->
+        <ion-nav-view id="chapter_translation_content" cache-view="true">
+            <ion-content overflow-scroll="true" delegate-handle="content"  class="scroll_content"
+                         style="margin-top:30px;">
+                <div style="height: 65px;">&nbsp;</div>
+                <div class="row" delegate-handle="content">
+                    <div style="text-align: center;width: 100% !important">
+                        <a class="button button-positive" style="border:0;margin-right: 10px;" href="#/people/circles/">
+                            Çevrelerim
+                        </a>
+                        <a class="button button-positive"  style="border:0;margin-left: 10px;" href="#/people/people_have_you/">
+                            Takipçilerim
+                        </a>
+                    </div>
+                </div>
+                <div class="row" delegate-handle="content">
+                    <div class="well col-xs-12" style="text-align: center;margin-top: 50px;width: 100%;border: 0;">
+                        <div class="item" style="text-align: center;border-color: #fff;">
+                            <h4>Keşfet</h4>
+                        </div>
+                        <div class="item" style="text-align: center;border-color: #fff;">
+                            <a class="button button-positive"  style="border:0;width: 100%;" href="#/people/find_people/">
+                                Kuran Çalışan Arkadaşlarım
+                            </a>
+                        </div>
+                        <div class="item" style="text-align: center;border-color: #fff;">
+                            <a class="button button-positive"  style="border:0;width: 100%;" href="" ng-click="inviteFriends()">
+                                Arkadaşlarımı Davet Et
+                            </a>
+                        </div>
+                        <div class="item" style="text-align: center;border-color: #fff;">
+                            <a class="button button-positive"  style="border:0;width: 100%;" href="#/people/search_people/">
+                                Kişi Ara
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div style="height:50px;">&nbsp;</div>
+            </ion-content>
+            <div ng-controller="HelpController"></div>
+        </ion-nav-view>
+        <!-- start of side menu part 2-->
+    </ion-side-menu-content>
+    <div ng-include="'components/navigation/left_menu.html'"></div>
+</ion-side-menus>
+<!-- end of side menu part 2-->

@@ -441,6 +441,42 @@ if (config_data.isMobile == false) { //false
                         templateUrl: 'components/search/translations.html',
                         pageTitle: 'Ayet Arama'
                     })
+                    .when('/people/home/', {
+                        controller: 'PeopleFindCtrl',
+                        templateUrl: 'components/people/index.html',
+                        reloadOnSearch: false,
+                        pageTitle: 'Kuran Çalış - Kişiler'
+                    })
+                    .when('/people/find_people/', {
+                        controller: 'PeopleFindCtrl',
+                        templateUrl: 'components/people/find_people.html',
+                        reloadOnSearch: false,
+                        pageTitle: 'Kuran Çalış - FB Arkadaşlarını Bul'
+                    })
+                    .when('/people/search_people/', {
+                        controller: 'friendSearchController',
+                        templateUrl: 'components/people/search_people.html',
+                        reloadOnSearch: false,
+                        pageTitle: 'Kuran Çalış - Arkadaş Bul'
+                    })
+                    .when('/people/people_have_you/', {
+                        controller: 'PeopleHaveYouCtrl',
+                        templateUrl: 'components/people/people_have_you.html',
+                        reloadOnSearch: false,
+                        pageTitle: 'Kuran Çalış - Seni Takip Eden Kişiler'
+                    })
+                    .when('/people/circles/', {
+                        controller: 'PeopleCirclesCtrl',
+                        templateUrl: 'components/people/circles.html',
+                        reloadOnSearch: false,
+                        pageTitle: 'Kuran Çalış - Çevreler'
+                    })
+                    .when('/people/peoples/:circleid/', {
+                        controller: 'PeopleCirclesCtrl',
+                        templateUrl: 'components/people/peoples.html',
+                        reloadOnSearch: false,
+                        pageTitle: 'Kuran Çalış - Arkadaş Bul'
+                    })
                     .when('/', {
                         redirectTo: '/translations/',
                         pageTitle: 'Kuran Çalış'
@@ -626,6 +662,8 @@ app.factory('ChapterVerses', function ($resource) {
     $scope.internet_display_style = {"background-color": "orange"};
 
     $scope.verselists = [];
+
+    $scope.cevreadlar = [];
 
     $scope.checkAPIVersion = function(){
         var versionRestangular = Restangular.all("apiversioncompatibility");
@@ -1176,6 +1214,7 @@ app.factory('ChapterVerses', function ($resource) {
 
         Restangular.all("circles").customGET("", {}, {'access_token': $scope.access_token}).then(function (circleList) {
 
+            $scope.cevreadlar = circleList;
             $scope.extendedCircles = [];
             $scope.extendedCircles.push({'id': '-2', 'name': 'Tüm Çevrelerim'});
             $scope.extendedCircles.push({'id': '-1', 'name': 'Herkes'});

@@ -1,0 +1,21 @@
+<div class="modal modal-fullscreen">
+    <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced">
+        <ion-nav-buttons side="left">
+            <a class="button button-icon icon ion-arrow-left-b" ng-click="closeModal('create_circle')"></a>
+        </ion-nav-buttons>
+        <ion-nav-title>Çevre Ekle</ion-nav-title>
+    </ion-nav-bar>
+    <ion-content overflow-scroll="true" delegate-handle="content"  class="scroll_content"
+                 style="margin-top:30px;" ng-controller="PeopleNewCirclesCtrl">
+        <div style="margin-top:50px;"></div>
+        <label class="item item-input" style="margin: 10px;">
+            <input ng-model="cevread.text" type="text" placeholder="Çevre Tanımı" style="width:100%"/>
+        </label>
+
+        <div class="item" style="text-align: center;border-color: #fff;">
+            <a class="button button-positive"  style="border:0;width: 100%;" ng-click="cevrekle(cevread.text)">
+                Çevre Oluştur
+            </a>
+        </div>
+    </ion-content>
+</div>

@@ -1,5 +1,5 @@
 angular.module('ionicApp')
-    .controller('PeopleHaveYouCtrl', function ($scope, $routeParams, Facebook, Restangular, localStorageService) {
+    .controller('PeopleHaveYouCtrl', function ($scope, $routeParams, Facebook, Restangular, localStorageService, $location, $ionicModal) {
          var value = [];
        var csec;
        $scope.hidden_visible = true;
@@ -35,7 +35,6 @@ angular.module('ionicApp')
                 value.push({'people_id': people_id, 'status': status});
                 $scope.hidden_visible = false;
             }
-
         };
         
          $scope.other_circle = false;
@@ -47,6 +46,7 @@ angular.module('ionicApp')
            var view_circleRestangular = Restangular.all("circles");
             view_circleRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (circle_list) {
                 $scope.circle_names = circle_list;
+                $scope.cevreadlar = circle_list;
            });
            
            //Peoples add    
@@ -82,6 +82,35 @@ angular.module('ionicApp')
 
             value.length = 0;
             $scope.hidden_visible = true;
-
         };
+
+        $scope.openModal = function (item, userid){
+            if (item == "circle_selection"){
+                $scope.$broadcast("add_user_to_circle", {callback:function(new_circle){
+                    $scope.closeModal("circle_selection");
+                    $location.path("/people/circles/");
+                }, users: [{'kisid': userid, 'drm': true}]});
+                $scope.modal_circle_selection.show();
+            };
+        };
+
+        $scope.closeModal = function (item){
+            if (item == "circle_selection"){
+                $scope.modal_circle_selection.hide();
+            }
+        };
+
+        $scope.init = function () {
+            if (config_data.isMobile){
+                $ionicModal.fromTemplateUrl('components/partials/add_user_to_circle.html', {
+                    scope: $scope,
+                    animation: 'slide-in-up',
+                    id: 'circle_selection'
+                }).then(function (modal) {
+                    $scope.modal_circle_selection = modal
+                });
+            };
+        };
+
+        $scope.init();
     });
