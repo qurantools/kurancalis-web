@@ -1,5 +1,5 @@
 var mymodal = angular.module('ionicApp')
-    .controller('PeopleCirclesCtrl', function ($scope, $routeParams, Facebook, Restangular, localStorageService, $window, $timeout, $ionicModal, $location) {
+    .controller('PeopleCirclesCtrl', function ($scope, $routeParams, Facebook, Restangular, localStorageService, $window, $timeout, $ionicModal, $location, $ionicPopup) {
 
         $scope.testData = "circles";
         $scope.ackapakisi = true;
@@ -107,7 +107,9 @@ var mymodal = angular.module('ionicApp')
         cevregoster = function (circleid, cvrad) {
             var cevregosterRestangular = Restangular.all("circles");
             cevregosterRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (cevreliste) {
-                //$scope.cevreadlar = cevreliste;
+                if (config_data.isMobile){
+                    $scope.cevreadlar = cevreliste;
+                }
                 $scope.dcevreadlar = cevreliste;
                 for (var i = 0; i < cevreliste.length; i++) {
                     var ls = cevreliste[i].id;
@@ -388,6 +390,39 @@ var mymodal = angular.module('ionicApp')
             } else if (item == "circle_selection"){
                 $scope.modal_circle_selection.hide();
             }
+        };
+
+        $scope.deleteCircle = function(item){
+            var confirmPop = $ionicPopup.confirm({
+                title: 'Çevre Silme',
+                template: '<b>'+ item.name + "</b> çevresini silmek istiyor musunuz?",
+                cancelText: 'Hayır',
+                okText: 'Sil',
+                okType : 'button-assertive'
+            });
+
+            confirmPop.then(function (res) {
+                if (res) {
+                    $scope.cevresil(item.id);
+                }
+            });
+        };
+
+        $scope.updateCircle = function (item) {
+            $scope.item = $.extend( true, {}, item );
+            var promptPopup = $ionicPopup.prompt({
+                template: '<input type="text" ng-model="item.name">',
+                title: 'İsim Değiştirme',
+                scope : $scope,
+                inputType: 'text',
+                inputPlaceholder: 'Çevre Tanımı',
+            });
+
+            promptPopup.then(function(res) {
+                if (isDefined(res) && $scope.item.name != item.name){
+                    $scope.cevredegistir(item.id, $scope.item.name);
+                }
+            });
         };
 
         $scope.initializePeopleCircles = function () {

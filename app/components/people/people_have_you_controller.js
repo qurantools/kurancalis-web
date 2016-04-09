@@ -84,12 +84,12 @@ angular.module('ionicApp')
             $scope.hidden_visible = true;
         };
 
-        $scope.openModal = function (item, userid){
+        $scope.openModal = function (item){
             if (item == "circle_selection"){
                 $scope.$broadcast("add_user_to_circle", {callback:function(new_circle){
                     $scope.closeModal("circle_selection");
                     $location.path("/people/circles/");
-                }, users: [{'kisid': userid, 'drm': true}]});
+                }, users: value});
                 $scope.modal_circle_selection.show();
             };
         };

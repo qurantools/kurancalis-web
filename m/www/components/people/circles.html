@@ -7,6 +7,7 @@
             </ion-nav-buttons>
             <ion-nav-title>Çevrelerim</ion-nav-title>
             <ion-nav-buttons side="right">
+                <a class="button button-icon icon ion-edit" ng-click="toggleButton()"></a>
                 <button class="button button-icon icon ion-plus" ng-click="openModal('create_circle')"></button>
             </ion-nav-buttons>
         </ion-nav-bar>
@@ -17,9 +18,13 @@
             <ion-content overflow-scroll="true" delegate-handle="content"  class="scroll_content"
                          style="margin-top:50px;">
                 <ion-list>
-                    <ion-item ng-repeat="item in cevreadlar" item="item" class="item-remove-animate" href="#/people/peoples/{{item.id}}/">
-                        <label id="ad{{item.id}}">{{item.name}}</label>
-                        <i class="icon ion-chevron-right icon-accessory" style="float: right"></i>
+                    <ion-item ng-repeat="item in cevreadlar" item="item" class="item-remove-animate" style="width: 100%;display: table;">
+                        <ion-button class="ion-minus-circled" ng-click="deleteCircle(item)" ng-show="showAddButton" style="margin: 0px 3px;color: #ef473a;"></ion-button>
+                        <ion-button ng-click="updateCircle(item)" ng-show="showAddButton" style="margin: 0px 3px;color:blue;">a|b</ion-button>
+                        <a href="#/people/peoples/{{item.id}}/" style="text-decoration: none;color: black;display: table-cell;width: inherit;">
+                            <label id="ad{{item.id}}"><b>{{item.name}}</b></label>
+                            <i class="icon ion-chevron-right icon-accessory" style="float: right"></i>
+                        </a>
                     </ion-item>
                 </ion-list>
             </ion-content>
