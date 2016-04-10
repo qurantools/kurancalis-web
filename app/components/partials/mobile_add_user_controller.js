@@ -87,33 +87,4 @@ angular.module('ionicApp')
             }
         }
 
-        $scope.openModal = function (item, userid){
-            if (item == "circle_selection"){
-                $scope.$broadcast("add_user_to_circle", {callback:function(circle){
-                    $scope.closeModal("circle_selection");
-                    $location.path("/people/home/");
-                }, users: [{'kisid': userid, 'drm': true}]});
-                $scope.modal_circle_selection.show();
-            };
-        };
-
-        $scope.closeModal = function (item){
-            if (item == "circle_selection"){
-                $scope.modal_circle_selection.hide();
-            }
-        };
-
-        $scope.init = function () {
-            if (config_data.isMobile){
-                $ionicModal.fromTemplateUrl('components/partials/add_user_to_circle.html', {
-                    scope: $scope,
-                    animation: 'slide-in-up',
-                    id: 'circle_selection'
-                }).then(function (modal) {
-                    $scope.modal_circle_selection = modal
-                });
-            };
-        };
-
-        $scope.init();
     });
