@@ -1,5 +1,5 @@
 angular.module('ionicApp')
-    .controller('PeopleFindCtrl', function ($scope, $routeParams, Facebook, Restangular, localStorageService, $ionicModal, $location) {
+    .controller('PeopleFindCtrl', function ($scope, $routeParams, Facebook, Restangular, localStorageService, $ionicModal) {
        
        var value = [];
        var select_circle;
@@ -112,7 +112,6 @@ angular.module('ionicApp')
                     $scope.cevreadd(circle.id);
                     $scope.peoples_add_circle();
                     $scope.closeModal("circle_selection");
-                    $location.path("/people/home/");
                 }, users: value});
                 $scope.modal_circle_selection.show();
             };

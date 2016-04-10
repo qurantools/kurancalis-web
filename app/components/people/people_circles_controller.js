@@ -1,5 +1,5 @@
 var mymodal = angular.module('ionicApp')
-    .controller('PeopleCirclesCtrl', function ($scope, $routeParams, Facebook, Restangular, localStorageService, $window, $timeout, $ionicModal, $location, $ionicPopup) {
+    .controller('PeopleCirclesCtrl', function ($scope, $routeParams, Facebook, Restangular, localStorageService, $window, $timeout, $ionicModal, $ionicPopup) {
 
         $scope.testData = "circles";
         $scope.ackapakisi = true;
@@ -372,7 +372,6 @@ var mymodal = angular.module('ionicApp')
             } else if (item == "circle_selection"){
                 $scope.$broadcast("add_user_to_circle", {callback:function(new_circle){
                     $scope.closeModal("circle_selection");
-                    $location.path("/people/circles/");
                 }, users: deger});
                 $scope.modal_circle_selection.show();
             };

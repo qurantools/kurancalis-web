@@ -1,5 +1,5 @@
 angular.module('ionicApp')
-    .controller('PeopleHaveYouCtrl', function ($scope, $routeParams, Facebook, Restangular, localStorageService, $location, $ionicModal) {
+    .controller('PeopleHaveYouCtrl', function ($scope, $routeParams, Facebook, Restangular, localStorageService, $ionicModal) {
          var value = [];
        var csec;
        $scope.hidden_visible = true;
@@ -88,7 +88,6 @@ angular.module('ionicApp')
             if (item == "circle_selection"){
                 $scope.$broadcast("add_user_to_circle", {callback:function(new_circle){
                     $scope.closeModal("circle_selection");
-                    $location.path("/people/circles/");
                 }, users: value});
                 $scope.modal_circle_selection.show();
             };
