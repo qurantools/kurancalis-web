@@ -1,4 +1,4 @@
-var requiredModules = ['ionic', 'ngResource', 'ngRoute', 'facebook', 'restangular', 'LocalStorageModule', 'ngTagsInput', 'duScroll', 'directives.showVerse', 'directives.repeatCompleted', 'ui.select', 'myConfig', 'authorizationModule','djds4rce.angular-socialshare', 'ngSanitize', 'com.2fdevs.videogular','com.2fdevs.videogular.plugins.controls','com.2fdevs.videogular.plugins.overlayplay','com.2fdevs.videogular.plugins.poster', 'ngCordova','ui.tinymce', 'ui.bootstrap'];
+var requiredModules = ['ionic', 'ngResource', 'ngRoute', 'facebook', 'restangular', 'LocalStorageModule', 'ngTagsInput', 'duScroll', 'directives.showVerse', 'directives.repeatCompleted', 'ui.select', 'myConfig', 'authorizationModule','djds4rce.angular-socialshare', 'ngSanitize', 'com.2fdevs.videogular','com.2fdevs.videogular.plugins.controls','com.2fdevs.videogular.plugins.overlayplay','com.2fdevs.videogular.plugins.poster', 'ngCordova','ui.tinymce', 'ui.bootstrap', 'ion-affix'];
 
 if (config_data.isMobile) {
     var mobileModules = [];//'ionic'
