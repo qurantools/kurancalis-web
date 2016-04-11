@@ -20,6 +20,9 @@
                         <li ng-class="{active: currentPage.search('people')==0}" ng-if="user!=null">
                             <a href="#/people/home/">Kişiler</a>
                         </li>
+                        <li ng-class="{active: currentPage == 'verse_lists'}" ng-if="user!=null">
+                            <a href="#/lists/verse">Ayet Listelerim</a>
+                        </li>
                         <li ng-class="{active: currentPage == 'search_on_translations'}">
                             <a href="#/search_translations/" class="leftMenuLink">Meallerde Ara</a>
                         </li>

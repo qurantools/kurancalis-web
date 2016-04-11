@@ -1041,8 +1041,6 @@ angular.module('ionicApp')
 
             $ionicModal.fromTemplateUrl('components/partials/add_tag_to_annotation.html', {
                 scope: $scope,
-                //animation: 'slide-in-right',
-                //animation: 'slide-left-right',
                 animation: 'slide-in-up',
                 id: 'tagsearch'
             }).then(function (modal) {
@@ -1055,6 +1053,14 @@ angular.module('ionicApp')
                 animation: 'slide-in-up'
             }).then(function(modal) {
                 $scope.bookmarkModal = modal;
+            });
+
+            $ionicModal.fromTemplateUrl('components/partials/add_verse_to_verselist.html', {
+                scope: $scope,
+                animation: 'slide-in-up',
+                id: 'verse_selection'
+            }).then(function (modal) {
+                $scope.modal_verse_selection = modal
             });
 
             $ionicModal.fromTemplateUrl('components/partials/nav_bookmark.htm', {
@@ -1121,6 +1127,8 @@ angular.module('ionicApp')
                     } else if (id == 'editor') {
                         clearTextSelection();
                         $scope.getModalEditor().hide();
+                    } else if (id == 'verselist_selection'){
+                        $scope.modal_verse_selection.hide();
                     }
                 },300);
             };
@@ -1427,7 +1435,8 @@ angular.module('ionicApp')
             $timeout(function() {
                 $ionicActionSheet.show({
                     buttons: [
-                        {text: 'Burada Kaldım'}
+                        {text: 'Burada Kaldım'},
+                        {text: 'Ayeti Listeye Ekle'}
                     ],
                     destructiveText: '',
                     titleText: '',
@@ -1436,8 +1445,13 @@ angular.module('ionicApp')
                         // add cancel code..
                     },
                     buttonClicked: function (index) {
-                        $scope.openAddBookMarkModal(verseId);
-                        $scope.bookmarkModal.show();
+                        if (index  == 0){
+                            $scope.openAddBookMarkModal(verseId);
+                            $scope.bookmarkModal.show();
+                        }else if (index == 1){
+                            $scope.addVerseToVerseList(verseId, $scope.closeModal);
+                            $scope.modal_verse_selection.show();
+                        }
                         return true;
                     }
                 });

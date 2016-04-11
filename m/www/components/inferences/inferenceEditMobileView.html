@@ -33,25 +33,25 @@
                 <div data-tap-disabled="true" style="height: 300px">
                     <textarea
                          id="tiny-content" ng-model="inferenceData.content" ui-tinymce="tinymceOptions" style="font-size: medium "></textarea>
-
                 </div>
                 <!--textarea id="froala-sample-2" froala ng-model="content"></textarea-->
-
-                    <div class="item item-divider">
-                        Etiketler
-                    </div>
-                    <ion-list show-delete=true>
-                        <ion-item ng-repeat="tags in tagListInference">
-                            <ion-delete-button class="ion-minus-circled"
-                                               ng-click="tagListInference.splice($index,1)">
-                            </ion-delete-button>
-                            {{tags.name}}
-                        </ion-item>
-                    </ion-list>
-                    <div style="padding: 10px 0;">
-                        <button class="button button-positive" style="width: 100%" ng-click="openModal('inferenceTagsearch')">Etiket Ekle</button>
-                    </div>
-
+                <div style="padding: 10px 0;">
+                    <button class="button button-positive" style="width: 100%" ng-click="openModal('add_verse_to_inference_from_verselist')">Referans Ayet Ekle</button>
+                </div>
+                <div class="item item-divider">
+                    Etiketler
+                </div>
+                <ion-list show-delete=true>
+                    <ion-item ng-repeat="tags in tagListInference">
+                        <ion-delete-button class="ion-minus-circled"
+                                           ng-click="tagListInference.splice($index,1)">
+                        </ion-delete-button>
+                        {{tags.name}}
+                    </ion-item>
+                </ion-list>
+                <div style="padding: 10px 0;">
+                    <button class="button button-positive" style="width: 100%" ng-click="openModal('inferenceTagsearch')">Etiket Ekle</button>
+                </div>
                 <div class="item item-divider"> Paylaşılan Çevreler </div>
                 <div class="list">
                     <ion-checkbox  ng-repeat="item in mobileInferencesEditorCircleListForSelection"

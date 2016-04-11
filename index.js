@@ -475,6 +475,18 @@ if (config_data.isMobile == false) { //false
                         reloadOnSearch: false,
                         pageTitle: 'Kuran Çalış - Arkadaş Bul'
                     })
+                    .when('/lists/verse/', {
+                        controller: 'VerseListController',
+                        templateUrl: 'components/lists/verse_lists.html',
+                        reloadOnSearch: false,
+                        pageTitle: 'Ayet Listelerim'
+                    })
+                    .when('/lists/verse/:listid/', {
+                        controller: 'VerseListController',
+                        templateUrl: 'components/lists/verses.html',
+                        reloadOnSearch: false,
+                        pageTitle: 'Ayet Listelerim'
+                    })
                     .when('/', {
                         redirectTo: '/translations/',
                         pageTitle: 'Kuran Çalış'
@@ -1120,9 +1132,9 @@ app.factory('ChapterVerses', function ($resource) {
         });
     };
 
-    $scope.addVerseToVerseList = function (verse){
+    $scope.addVerseToVerseList = function (verse, closeModal){
         $timeout(function(){
-            $scope.$broadcast("add_verse_to_verse_lists", {verse:verse});
+            $scope.$broadcast("add_verse_to_verse_lists", {verse:verse, closeModal:closeModal});
         });
     };
 
@@ -1360,8 +1372,8 @@ app.factory('ChapterVerses', function ($resource) {
         $scope.$broadcast("tagged_verse_modal",{verseId:verseId, tag:tag, circles:circles, users:users, author:authorId+""});
     };
 
-    $scope.openVerseListForVerseSelection = function (callback) {
-        $scope.$broadcast("open_verse_for_verse_selection",{callback:callback});
+    $scope.openVerseListForVerseSelection = function (callback, closeModal) {
+        $scope.$broadcast("open_verse_for_verse_selection",{callback:callback, closeModal:closeModal});
     };
 
     $scope.initializeController = function () {

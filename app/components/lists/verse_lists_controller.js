@@ -1,8 +1,9 @@
 /**
  * Created by mehmet.gungoren on 04.04.2016.
  */
-angular.module('ionicApp').controller('VerseListController', function ($scope, $timeout, Restangular, dataProvider) {
+angular.module('ionicApp').controller('VerseListController', function ($scope, $timeout, Restangular, dataProvider, $routeParams, $ionicModal, $ionicPopup) {
 
+    console.log("verse list ctrl");
     $scope.selectedVerseList = {};
     $scope.verseListAuthor = "8192"; //Diyanet
     $scope.newVerseListModal = false;
@@ -15,6 +16,9 @@ angular.module('ionicApp').controller('VerseListController', function ($scope, $
     $scope.filteredVerselists = [];
 
     $scope.callBackFunctionOfVerseSelectionFromVerseList;
+    $scope.callBackCloseModal;
+
+    $scope.showLeftButton = false;
 
     $scope.openNewVerseListModal = function(){
         $scope.newVerseListModal = true;
@@ -106,7 +110,7 @@ angular.module('ionicApp').controller('VerseListController', function ($scope, $
         var data = postData.join("&");
 
         Restangular.one("verselists", verselist.id).customPUT(data, '', '', headers).then(function (data) {
-            var idx = $scope.verselists.indexOf(verselist);
+            var idx = $scope.verselists.map(function(e) { return e.id; }).indexOf(verselist.id);
             $scope.verselists[idx] = verselist;
         });
     };
@@ -114,7 +118,7 @@ angular.module('ionicApp').controller('VerseListController', function ($scope, $
     $scope.deleteVerseList = function(verselist){
         $scope.editVerseListModal = false;
         Restangular.one("verselists", verselist.id).customDELETE("" , {}, {'access_token': $scope.access_token}).then(function (data) {
-            var idx = $scope.verselists.indexOf(verselist);
+            var idx = $scope.verselists.map(function(e) { return e.id; }).indexOf(verselist.id);
             $scope.verselists.splice(idx, 1);
         });
     };
@@ -124,6 +128,7 @@ angular.module('ionicApp').controller('VerseListController', function ($scope, $
             Restangular.one("verselists", list[i]).one("verses", $scope.verseForAddToLists).customPOST("", "", "", {'access_token': $scope.access_token}).then(function (data) {
             });
         }
+        $scope.closeModal('verselist_selection');
     };
 
     $scope.filterVerseListsToggleSelection = function(verselist_id){
@@ -154,21 +159,93 @@ angular.module('ionicApp').controller('VerseListController', function ($scope, $
         $scope.callBackFunctionOfVerseSelectionFromVerseList(selected);
     };
 
+    $scope.toggleButton = function(){
+      $scope.showLeftButton = !$scope.showLeftButton;
+    };
+
+    $scope.deleteVerseListWithConfirm = function(verselist){
+        var confirmPop = $ionicPopup.confirm({
+            title: 'Liste Silme',
+            template: '<b>'+ verselist.name + "</b> listesini silmek istiyor musunuz?",
+            cancelText: 'Hayır',
+            okText: 'Sil',
+            okType : 'button-assertive'
+        });
+
+        confirmPop.then(function (res) {
+            if (res) {
+                $scope.deleteVerseList(verselist);
+            }
+        });
+    };
+
+    $scope.updateVerseListWithConfirm = function(verselist){
+        $scope.item = $.extend( true, {}, verselist );
+        var promptPopup = $ionicPopup.prompt({
+            template: '<input type="text" ng-model="item.name">',
+            title: 'İsim Değiştirme',
+            scope : $scope,
+            inputType: 'text',
+            inputPlaceholder: 'Liste Tanımı',
+        });
+
+        promptPopup.then(function(res) {
+            if (isDefined(res) && $scope.item.name != verselist.name){
+                $scope.updateVerseList($scope.item);
+            }
+        });
+    };
+
+    $scope.createNewVerseList = function(){
+        $scope.item = {};
+        $scope.item.name = "";
+        var promptPopup = $ionicPopup.prompt({
+            template: '<input type="text" ng-model="item.name">',
+            title: 'Yeni Liste Oluştur',
+            scope : $scope,
+            inputType: 'text',
+            inputPlaceholder: 'Liste Tanımı',
+        });
+
+        promptPopup.then(function(res) {
+            if (isDefined(res) && $scope.item.name != ""){
+                $scope.addVerseList($scope.item.name);
+            }
+        });
+    };
+
+    $scope.closeModal = function (item){
+        if (item == "verselist_selection" && config_data.isMobile && isDefined($scope.callBackCloseModal)){
+            $scope.callBackCloseModal(item);
+        } else if (item == 'add_verse_to_inference_from_verselist' && config_data.isMobile && isDefined($scope.callBackCloseModal)){
+            $scope.callBackCloseModal(item);
+        }
+    };
+
     $scope.initVerseListController = function(){
         $scope.$on('add_verse_to_verse_lists', function(event, args) {
             $scope.verseForAddToLists = args.verse;
+            $scope.callBackCloseModal = args.closeModal;
             $scope.selectedVerseListsForVerseToAdd = [];
             $scope.localVerseListSelection = [];
         });
 
         $scope.$on('open_verse_for_verse_selection', function(event, args) {
             $scope.callBackFunctionOfVerseSelectionFromVerseList = args.callback;
+            $scope.callBackCloseModal = args.closeModal;
         });
 
         $timeout(function(){
+            var selectedVerseId = $scope.verselists.length > 0 ?  $scope.verselists[0].id : undefined;
+            if (config_data.isMobile){
+                if (typeof $routeParams.listid !== 'undefined') {
+                    selectedVerseId = $routeParams.listid;
+                }
+            }
             if ($scope.verselists.length > 0){
-                $scope.localVerseListSelection.push($scope.verselists[0].id);
-                $scope.selectedVerseList = $scope.verselists[0];
+                $scope.localVerseListSelection.push(selectedVerseId);
+                var idx = $scope.verselists.map(function(e) { return e.id + ""; }).indexOf(selectedVerseId);
+                $scope.selectedVerseList = $scope.verselists[idx];
                 $scope.getVerseListsVerse();
             }
 

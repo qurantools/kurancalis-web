@@ -40,7 +40,7 @@ angular.module('ionicApp')
         var buttonGotoVerse = {text: 'Sure İçerisinde Gör' };
         var buttonBookmark = {text: 'Burada Kaldım' };
         $scope.footerMenuButtons.push(buttonSelectTranslation);
-        //$scope.footerMenuButtons.push(buttonAddToList);
+        $scope.footerMenuButtons.push(buttonAddToList);
         $scope.footerMenuButtons.push(buttonGotoVerse);
         $scope.footerMenuButtons.push(buttonBookmark);
 
@@ -274,7 +274,8 @@ angular.module('ionicApp')
                 $scope.detailedSearchAuthorSelection = $scope.localDetailedSearchAuthorSelection;
                 $scope.modal_authors_list.show();
             } else if (item == 'add_to_list') {
-
+                $scope.addVerseToVerseList($scope.verseId, $scope.closeModal);
+                $scope.modal_verse_selection.show();
             } else if (item == 'go_to_verse') {
                 $location.path("/translations").search(
                     {
@@ -312,6 +313,8 @@ angular.module('ionicApp')
                 $scope.modal_authors_list.hide();
             } else if (item == 'chapter_selection'){
                 $scope.chapter_selection_modal.hide();
+            } else if (item == 'verselist_selection'){
+                $scope.modal_verse_selection.hide();
             }
         };
 
@@ -334,11 +337,11 @@ angular.module('ionicApp')
                 buttonClicked: function (index) {
                     if (index == 0) {
                         $scope.openModal('select_author');
-                    //} else if (index == 1) {
-                    //    $scope.openModal('add_to_list');
                     } else if (index == 1) {
-                        $scope.openModal('go_to_verse');
+                        $scope.openModal('add_to_list');
                     } else if (index == 2) {
+                        $scope.openModal('go_to_verse');
+                    } else if (index == 3) {
                         $scope.openModal('bookmark');
                     }
                     return true;
@@ -396,6 +399,13 @@ angular.module('ionicApp')
                     id: 'chapter_selection_modal'
                 }).then(function (modal) {
                     $scope.chapter_selection_modal = modal
+                });
+                $ionicModal.fromTemplateUrl('components/partials/add_verse_to_verselist.html', {
+                    scope: $scope,
+                    animation: 'slide-in-up',
+                    id: 'verse_selection'
+                }).then(function (modal) {
+                    $scope.modal_verse_selection = modal
                 });
             };
             $scope.$on('open_verse_detail', function(event, args) {

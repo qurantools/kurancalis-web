@@ -86,6 +86,14 @@ angular.module('ionicApp')
                 $scope.modal_edit_inference_tiny = modal
             });
 
+            $ionicModal.fromTemplateUrl('components/partials/add_verse_to_inference_from_verselist.html', {
+                scope: $scope,
+                animation: 'slide-in-up',
+                id: 'add_reference_from_list'
+            }).then(function (modal) {
+                $scope.modal_add_reference_from_verse_list = modal
+            });
+
             $scope.tagsquery= function (query) {
                 $scope.loadTags2(query)
             }
@@ -99,7 +107,10 @@ angular.module('ionicApp')
                     focusToInput('inference_tag_input');
                 }else if(id == "inference_mobile_tiny_edit"){
                     $scope.modal_edit_inference_tiny.show();
-                }
+                }else if (id == "add_verse_to_inference_from_verselist"){
+                    $scope.openVerseListForVerseSelection($scope.copyValueFromSelectedList, $scope.closeModal);
+                    $scope.modal_add_reference_from_verse_list.show();
+                };
             }
             $scope.closeModal = function (id) {
                 $timeout(function(){
@@ -110,6 +121,8 @@ angular.module('ionicApp')
                         $scope.modal_inference_tag_search.hide();
                     }else if(id == "inference_mobile_tiny_edit"){
                         $scope.modal_edit_inference_tiny.hide();
+                    }else if (id == "add_verse_to_inference_from_verselist"){
+                        $scope.modal_add_reference_from_verse_list.hide();
                     }
                 },300);
             }
@@ -487,8 +500,11 @@ angular.module('ionicApp')
         $scope.copyValueFromSelectedList = function (selected) {
             $scope.inferenceData.content = $scope.inferenceData.content.concat("<p>" + selected + "</p>");
             $scope.kopyala(selected);
-        };
 
+            if (config_data.isMobile){
+                $scope.closeModal('add_verse_to_inference_from_verselist');
+            }
+        };
 
         //definitions are finished. Now run initialization
         $scope.initializeInferenceEditController();

@@ -1,0 +1,31 @@
+<ion-side-menus>
+    <ion-side-menu-content drag-content="false">
+        <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced">
+            <ion-nav-buttons side="left">
+                <a menu-toggle="left" class="button button-icon icon ion-navicon"></a>
+            </ion-nav-buttons>
+            <ion-nav-title>Ayet Listelerim</ion-nav-title>
+            <ion-nav-buttons side="right">
+                <a class="button button-icon icon ion-minus" ng-click="toggleButton()"></a>
+                <a class="button button-icon icon ion-plus" ng-click="createNewVerseList()"></a>
+            </ion-nav-buttons>
+        </ion-nav-bar>
+        <ion-nav-view name="appContent"></ion-nav-view>
+        <ion-nav-view id="chapter_translation_content" cache-view="true">
+            <ion-content overflow-scroll="true" delegate-handle="content"  class="scroll_content"
+                         style="margin-top:40px;">
+                <ion-list>
+                    <ion-item ng-repeat="item in verselists" item="item" class="item-remove-animate" style="width: 100%;display: table;">
+                        <ion-button class="ion-minus-circled" ng-click="deleteVerseListWithConfirm(item)" ng-show="showLeftButton" style="margin: 0px 3px;color: #ef473a;"></ion-button>
+                        <ion-button ng-click="updateVerseListWithConfirm(item)" ng-show="showLeftButton" style="margin: 0px 3px;color:blue;">a|b</ion-button>
+                        <a href="#/lists/verse/{{item.id}}/" style="text-decoration: none;color: black;display: table-cell;width: inherit;">
+                            <label id="ad{{item.id}}"><b>{{item.name}}</b></label>
+                            <i class="icon ion-chevron-right icon-accessory" style="float: right"></i>
+                        </a>
+                    </ion-item>
+                </ion-list>
+            </ion-content>
+        </ion-nav-view>
+    </ion-side-menu-content>
+    <div ng-include="'components/navigation/left_menu.html'"></div>
+</ion-side-menus>

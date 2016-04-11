@@ -11,7 +11,6 @@
         <ion-nav-view cache-view="true">
             <ion-content overflow-scroll="true" delegate-handle="content"  class="scroll_content"
                          style="margin-top:80px;">
-
                 <div class="bar bar-header item-input-inset">
                     <label class="item-input-wrapper">
                         <i class="icon ion-ios-search placeholder-icon"></i>
@@ -25,7 +24,7 @@
                         <div class="row" style="align-items: center;">
                             <img width="50px" height="50px" src={{item.photo}} style="margin-right: 20px;">{{item.name}}
                         </div>
-                        <ion-delete-button class="ion-plus-circled" ng-click="openModal('circle_selection',item.id)"></ion-delete-button>
+                        <ion-delete-button class="ion-plus-circled" ng-click="openModal('circle_selection',item.id)" ng-controller="PeopleFindCtrl"></ion-delete-button>
                     </ion-item>
                 </ion-list>
             </ion-content>

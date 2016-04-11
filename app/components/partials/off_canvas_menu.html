@@ -14,6 +14,9 @@
                         <li ng-class="{active: currentPage == 'annotations'}" ng-if="user!=null">
                             <a href="#/annotations/">Ayet notları</a>
                         </li>
+                        <!-- <li ng-class="{active: currentPage == 'help'}">
+                             <a href="#/help/" ng-click="" onclick="">Yardım</a>
+                         </li> -->
                          <li ng-class="{active: currentPage.search('inference')==0}" ng-if="user!=null">
                             <a href="#/inferences/">Çıkarım Notları</a>
                         </li>
@@ -26,9 +29,6 @@
                         <li ng-class="{active: currentPage == 'search_on_translations'}">
                             <a href="#/search_translations/" class="leftMenuLink">Meallerde Ara</a>
                         </li>
-                       <!-- <li ng-class="{active: currentPage == 'help'}">
-                            <a href="#/help/" ng-click="" onclick="">Yardım</a>
-                        </li> -->
                         <li ng-if="user!=null">
                             <a href ng-click="logOut()" onclick="closeLeftPanel()">Çıkış</a>
                         </li>

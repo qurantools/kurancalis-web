@@ -1,0 +1,30 @@
+<div class="modal modal-fullscreen" ng-controller="VerseListController">
+    <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced">
+        <ion-nav-buttons side="left">
+            <a class="button button-icon icon ion-arrow-left-b" ng-click="closeModal('verselist_selection')"></a>
+        </ion-nav-buttons>
+        <ion-nav-title>Listeye Ekle</ion-nav-title>
+        <ion-nav-buttons side="right">
+            <a class="button button-icon icon ion-checkmark" ng-click="addVerseToVerseLists(localVerseListSelection)"></a>
+        </ion-nav-buttons>
+    </ion-nav-bar>
+    <ion-content overflow-scroll="true" delegate-handle="content"  class="scroll_content" style="margin-top:30px;">
+        <div style="margin-top:50px;"></div>
+        <div align="left">
+            <div class="bar bar-header item-input-inset">
+                <label class="item-input-wrapper">
+                    <i class="icon ion-ios-search placeholder-icon"></i>
+                    <input ng-model="newVerseList" type="search" placeholder="Ara / Yeni Liste"
+                           ng-change="filterVerseLists(newVerseList);"/>
+                </label>
+                <button ng-click="addVerseList(newVerseList)" class="button ion-plus"></button>
+            </div>
+            <div class="list">
+                <a class="item item-icon-right" ng-repeat="verselist in filteredVerselists" ng-click="filterVerseListsToggleSelection(verselist.id)">
+                    {{verselist.name}}
+                    <i class="icon item-note ion-checkmark" ng-show="localVerseListSelection.indexOf(verselist.id) > -1"></i>
+                </a>
+            </div>
+        </div>
+    </ion-content>
+</div>
