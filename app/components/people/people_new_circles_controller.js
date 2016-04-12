@@ -43,7 +43,7 @@ var mymodal = angular.module('ionicApp')
 
         $scope.toggleCircle = function (item) {
             $scope.circle = item;
-        }
+        };
 
         $scope.initializePeopleCircles = function () {
             $scope.$on("create_circle", function(event, args){

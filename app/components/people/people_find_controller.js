@@ -34,7 +34,7 @@ angular.module('ionicApp')
             }
 
             if (ekle == "1") {
-                value.push({'people_id': people_id, 'status': status});
+                value.push({'people_id': people_id, 'status': status, 'drm' : status, 'kisid' : people_id});
                 $scope.visible_hidden = false;
             }
 
@@ -106,13 +106,20 @@ angular.module('ionicApp')
             }
         };
 
-        $scope.openModal = function (item){
+        $scope.openModal = function (item, id){
             if (item == "circle_selection"){
-                $scope.$broadcast("add_user_to_circle", {callback:function(circle){
-                    $scope.cevreadd(circle.id);
-                    $scope.peoples_add_circle();
+                var values = id === undefined ? value : [{'kisid' : id, 'drm' : true}];
+                $scope.$broadcast("add_user_to_circle", {callback:function(circle) {
+                    if (id === undefined){
+                        $scope.cevreadd(circle.id);
+                        $scope.peoples_add_circle();
+                        $scope.fb_friends.filter(function (item) {
+                            $scope.people_add(item.fbId, false);
+                            document.getElementById(item.fbId).children[0].children[0].checked = false;
+                        });
+                    }
                     $scope.closeModal("circle_selection");
-                }, users: value});
+                }, users: values});
                 $scope.modal_circle_selection.show();
             };
         };
