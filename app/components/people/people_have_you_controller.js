@@ -32,7 +32,7 @@ angular.module('ionicApp')
             }
 
             if (add == "1") {
-                value.push({'people_id': people_id, 'status': status});
+                value.push({'people_id': people_id, 'status': status, 'drm' : status, 'kisid' : people_id});
                 $scope.hidden_visible = false;
             }
         };
@@ -87,6 +87,11 @@ angular.module('ionicApp')
         $scope.openModal = function (item){
             if (item == "circle_selection"){
                 $scope.$broadcast("add_user_to_circle", {callback:function(new_circle){
+                    $scope.circle_friends.filter(function(item){
+                        $scope.add_people(item.user_id, false);
+                        document.getElementById(item.user_id).children[0].children[0].checked = false;
+                    });
+                    $scope.scopeApply();
                     $scope.closeModal("circle_selection");
                 }, users: value});
                 $scope.modal_circle_selection.show();
