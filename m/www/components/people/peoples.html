@@ -19,8 +19,8 @@
                 <ion-list>
                     <ion-item ng-repeat="item in cevrekisiler" item="item item-avatar" style="padding: 5px 0px 5px 5px;">
                         <div class="row" style="align-items: center;">
-                            <ion-checkbox ng-show="showAddButton" ng-model="secimyap" style="width: 10px;border-width: 0;" ng-click="kisiadd(item.user_id,secimyap)"></ion-checkbox>
-                            <img width="50px" height="50px" src={{item.photo}} style="margin-right: 20px;">{{item.name}}
+                            <ion-checkbox ng-show="showAddButton" ng-model="secimyap" style="width: 10px;border-width: 0;padding-left: 38px;padding-right: 7px;" ng-click="kisiadd(item.user_id,secimyap)"></ion-checkbox>
+                            <img width="50px" height="50px" src={{item.photo}} style="margin-right: 20px;margin-left: 20px;">{{item.name}}
                         </div>
                     </ion-item>
                 </ion-list>

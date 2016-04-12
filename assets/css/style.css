@@ -366,3 +366,8 @@ margin: 0; }
     white-space: -o-pre-wrap;   /* Opera 7 */
     word-wrap: break-word;      /* IE */
 }
+
+div.checkbox.checkbox-input-hidden.checkbox-circle{
+    padding-left: 0px;
+    padding-right: 0px;
+}
