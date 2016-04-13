@@ -318,6 +318,7 @@ if (config_data.isMobile == false) { //false
 //        $route.routes['/:chapter/:verse'].regexp = /^\/(?:artist\/(\d+))$/
 
         //facebook
+        FacebookProvider.init(config_data.FBAppID);
     });
 } else {
     app.config(function ($routeProvider, FacebookProvider, RestangularProvider, localStorageServiceProvider, $stateProvider, $urlRouterProvider, $httpProvider) {

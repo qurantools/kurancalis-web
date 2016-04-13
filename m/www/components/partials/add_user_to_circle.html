@@ -9,14 +9,14 @@
                  style="margin-top:30px;" ng-controller="PeopleNewCirclesCtrl">
         <div style="margin-top:50px;"></div>
 
-        <div align="left">
+        <div align="left" radio-group [(ng-model)]="selectedCircle">
             <label style="margin-bottom: 5px;">Seçtiğiniz kişileri aşağıdaki seçeceğiniz çevreye de ekleyebilirsiniz.</label>
-            <ion-radio ng-repeat="item in cevreadlar" ng-click="toggleCircle(item)">
+            <ion-radio ng-repeat="item in cevreadlar" ng-click="toggleCircle(item)" ng-value="item.id">
                 {{ item.name }}
             </ion-radio>
         </div>
         <div class="item" style="text-align: center;border-color: #fff;">
-            <a class="button button-positive"  style="border:0;width: 100%;" ng-click="kisiekcevre()">
+            <a class="button button-positive"  style="border:0;width: 100%;" ng-click="kisiekcevre()" ng-disabled="disableButton">
                 Ekle
             </a>
         </div>

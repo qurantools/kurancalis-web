@@ -6,8 +6,6 @@ angular.module('ionicApp').controller('VerseListController', function ($scope, $
     console.log("verse list ctrl");
     $scope.selectedVerseList = {};
     $scope.verseListAuthor = "8192"; //Diyanet
-    $scope.newVerseListModal = false;
-    $scope.newVerseList = "";
     $scope.localVerseListSelection = [];
     $scope.selectedVerseListsForVerseToAdd = [];
     $scope.verseForAddToLists = {};
@@ -20,9 +18,28 @@ angular.module('ionicApp').controller('VerseListController', function ($scope, $
 
     $scope.showLeftButton = false;
 
+    //modal
+    $scope.newVerseListModal = false;
+    $scope.newVerseList = "";
+    $scope.bulkInsertVerseToVerseListFlag = false;
+    $scope.versesForBulkInsert = "";
+    $scope.bulkInsertTagToVerseListFlag = false;
+    $scope.tagsForBulkInsert = "";
+    $scope.errorBulkInsert = false;
+
     $scope.openNewVerseListModal = function(){
         $scope.newVerseListModal = true;
         $scope.newVerseList = "";
+    };
+
+    $scope.openBulkInsertVerseModal = function(){
+        $scope.bulkInsertVerseToVerseListFlag = true;
+        $scope.versesForBulkInsert = "";
+    };
+
+    $scope.openBulkInsertTagsModal = function(){
+        $scope.bulkInsertTagToVerseListFlag = true;
+        $scope.tagsForBulkInsert = "";
     };
 
     $scope.verseListsToggleSelection = function(verselist_id){
@@ -84,7 +101,9 @@ angular.module('ionicApp').controller('VerseListController', function ($scope, $
     };
 
     $scope.deleteVerseFromVerseList = function (listId, verseId){
-        Restangular.one("verselists", listId).one("verses", verseId).customDELETE("", {}, {'access_token': $scope.access_token}).then(function (data) {
+        var headers = {'access_token': $scope.access_token};
+        var data = encodeURIComponent("verse_id_set") + "=" + encodeURIComponent(verseId);
+        Restangular.one("verselists", listId).one("verses?"+data).customDELETE('', {}, headers).then(function (data) {
             $scope.verses = $scope.verses.filter(function (item) {
                 return item.verseId != verseId;
             });
@@ -125,7 +144,9 @@ angular.module('ionicApp').controller('VerseListController', function ($scope, $
 
     $scope.addVerseToVerseLists = function(list){
         for (var i = 0; i < list.length; i++){
-            Restangular.one("verselists", list[i]).one("verses", $scope.verseForAddToLists).customPOST("", "", "", {'access_token': $scope.access_token}).then(function (data) {
+            var headers = {'Content-Type': 'application/x-www-form-urlencoded', 'access_token': $scope.access_token};
+            var data = encodeURIComponent("verse_id_set") + "=" + encodeURIComponent($scope.verseForAddToLists);
+            Restangular.one("verselists", list[i]).one("verses").customPOST(data, "", "", headers).then(function (data) {
             });
         }
         $scope.closeModal('verselist_selection');
@@ -148,6 +169,27 @@ angular.module('ionicApp').controller('VerseListController', function ($scope, $
 
     $scope.selectVerse = function(index){
         $scope.verses[index].selected = !$scope.verses[index].selected;
+    };
+
+    $scope.bulkInsertVerse = function(verselist, versesAsString){
+
+        var verses = versesAsString.split(" ");
+        var headers = {'Content-Type': 'application/x-www-form-urlencoded', 'access_token': $scope.access_token};
+        var jsonData = [];
+        verses.forEach(function(verse, index){
+            var r = verse.split(":");
+            jsonData.push(encodeURIComponent("verse_id_set") + "=" + encodeURIComponent(parseInt(r[0])*1000 + parseInt(r[1])))
+        });
+        var data = jsonData.join("&");
+        Restangular.one("verselists", verselist.id).all("verses").customPOST(data, '', '', headers).then(function (data) {
+            $scope.getVerseListsVerse();
+        }, function(error){
+            $scope.errorBulkInsert = true;
+        });
+    };
+
+    $scope.bulkInsertTag = function(verses, tagges){
+
     };
 
     $scope.selectSelectedVerses = function(){
@@ -244,7 +286,7 @@ angular.module('ionicApp').controller('VerseListController', function ($scope, $
             }
             if ($scope.verselists.length > 0){
                 $scope.localVerseListSelection.push(selectedVerseId);
-                var idx = $scope.verselists.map(function(e) { return e.id + ""; }).indexOf(selectedVerseId);
+                var idx = $scope.verselists.map(function(e) { return e.id; }).indexOf(selectedVerseId);
                 $scope.selectedVerseList = $scope.verselists[idx];
                 $scope.getVerseListsVerse();
             }

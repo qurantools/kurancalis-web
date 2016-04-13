@@ -20,14 +20,17 @@
         </div>
     </div>
     <div class="row" style="margin-top: 10px;">
-        <div class="col-xs-3" style="border-color: black;border-width: 1px;border-style: solid;">
-            <ul class="selectable_list" style="-webkit-padding-start: 0;">
-                <li ng-repeat="verselist in verselists"
-                    ng-click="verseListsToggleSelection(verselist.id)"
-                    ng-class="{ 'selected_list_item': localVerseListSelection.indexOf(verselist.id) > -1}">
-                    <i class="fa fa-edit" ng-click="editVerseList(verselist)"></i> &nbsp;&nbsp;{{verselist.name}}
-                </li>
-            </ul>
+        <div class="col-xs-3">
+            <table>
+                <tr ng-repeat="verselist in verselists" ng-click="verseListsToggleSelection(verselist.id)">
+                    <td class="col-xs-3"><i class="fa fa-edit" ng-click="editVerseList(verselist)"></i></td>
+                    <td class="col-xs-9 selectable_list"
+                        ng-class="{ 'selected_list_item': localVerseListSelection.indexOf(verselist.id) > -1}"
+                        ng-style="localVerseListSelection.indexOf(verselist.id) < 0 && { 'background-color' : '#f5f5f5'}"
+                        style="padding-left: 20px;">
+                     {{verselist.name}}</td>
+                </tr>
+            </table>
         </div>
         <div class="col-xs-9" id="translations">
             <div ng-repeat="verse in verses">
@@ -79,6 +82,47 @@
         <div class="modal-footer">
             <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal">İptal</a>
             <a class="btn btn-primary btn-wide" ng-click="updateVerseList(editedVerseList)" data-dismiss="modal">Tamam</a>
+        </div>
+    </modal>
+</div>
+
+<div>
+    <modal title="Toplu Ayet Ekleme" visible="bulkInsertVerseToVerseListFlag">
+        <div class="form-group">
+            <div><b>{{selectedVerseList.name}}</b> listesine eklemek istediğiniz ayetleri "34:5 23:10 19:78" şeklinde arada boşluklar olacak şekilde giriniz.</div>
+            <input type="text" class="form-control" ng-model="versesForBulkInsert"/>
+        </div>
+        <div class="modal-footer">
+            <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal">İptal</a>
+            <a class="btn btn-primary btn-wide" ng-click="bulkInsertVerse(selectedVerseList,versesForBulkInsert)" data-dismiss="modal">Tamam</a>
+        </div>
+    </modal>
+</div>
+
+<div>
+    <modal title="Listedeki Ayetleri Etiketleme" visible="bulkInsertTagToVerseListFlag">
+        <div class="form-group">
+            <div><b>{{selectedVerseList.name}}</b> listesindeki tüm ayetler aşağıda belirtiğiniz şekilde etiketlenecektir.</div>
+            <div>Her etiketleme işlemi ayrı bir ayet notu olacağından verceğiniz tüm etiketleri bir seferde burada belirtmeniz faydalı olacaktır.</div>
+            <div>Burada verdiğiniz etiketleri silmek için ilgili ayet notlarını silmelisiniz.</div>
+            <tags-input ng-model="tagsForBulkInsert" display-property="name"
+                        placeholder="Etiket girin" replace-spaces-with-dashes="false"
+                        min-length="2">
+            </tags-input>
+        </div>
+        <div class="modal-footer">
+            <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal">İptal</a>
+            <a class="btn btn-primary btn-wide" ng-click="bulkInsertTag(verses,tagsForBulkInsert)" data-dismiss="modal">Tamam</a>
+        </div>
+    </modal>
+</div>
+<div>
+    <modal title="Toplu Ayet Eklemede Hata!" visible="errorBulkInsert">
+        <div class="form-group">
+            <p>Girmiş olduğunuz ayetlerin en az bir tanesinde hata olduğundan ayetler listeye eklenememiştir.</p>
+        </div>
+        <div class="modal-footer">
+            <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal">Kapat</a>
         </div>
     </modal>
 </div>
