@@ -1,5 +1,5 @@
 angular.module('ionicApp')
-    .controller('DetailedVerseCtrl', function ($scope, $timeout, Restangular, $location, authorization, $ionicModal, $ionicActionSheet, dataProvider) {
+    .controller('DetailedVerseCtrl', function ($scope, $timeout, Restangular, $location, authorization, $ionicModal, $ionicActionSheet, dataProvider, $ionicScrollDelegate) {
 
         $scope.detailedChapters = [];
         $scope.detailedVerseCircles = [];
@@ -175,6 +175,9 @@ angular.module('ionicApp')
                 }
             }
             $scope.verse = data[0];
+            if (config_data.isMobile){
+                $ionicScrollDelegate.scrollTop();
+            }
         };
 
         $scope.detailedSearchAuthorToggleSelection = function (author_id) {

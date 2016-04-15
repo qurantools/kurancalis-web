@@ -1,5 +1,5 @@
 angular.module('ionicApp')
-    .controller('TaggedVerseCtrl', function ($scope, $timeout, Restangular, $location, $ionicModal) {
+    .controller('TaggedVerseCtrl', function ($scope, $timeout, Restangular, $location, $ionicModal, $ionicScrollDelegate) {
 
         $scope.taggedVerseCircles = [];
         $scope.taggedVerseUsers = [];
@@ -21,7 +21,10 @@ angular.module('ionicApp')
                 $scope.targetVerseForTagContent = verseId;
                 $scope.verseTagContents = verseTagContent;
                 $scope.scopeApply();
-                $scope.hideProgress("loadVerseTagContent")
+                $scope.hideProgress("loadVerseTagContent");
+                if (config_data.isMobile){
+                    $ionicScrollDelegate.scrollTop();
+                }
             });
         };
 
