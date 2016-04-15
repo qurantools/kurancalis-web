@@ -4,22 +4,6 @@ var mymodal = angular.module('ionicApp')
         $scope.createNewCircleCallBack = $scope.createNewCircleCallBack || function(cevre){};
         $scope.users = [];
         $scope.circle = {};
-        $scope.disableButton = true;
-        $scope.selectedCircle = -1;
-
-        $scope.cevrekle = function (cevread) {
-            var headers = {'Content-Type': 'application/x-www-form-urlencoded', 'access_token': $scope.access_token};
-            var jsonData = cevread;
-            var postData = [];
-            postData.push(encodeURIComponent("name") + "=" + encodeURIComponent(jsonData));
-            var data = postData.join("&");
-            var cevreRestangular = Restangular.one("circles");
-
-            var postDataL = [];
-            cevreRestangular.customPOST(data, '', '', headers).then(function (circleUsers) {
-                $scope.createNewCircleCallBack({'user_count': '0', 'id': circleUsers.id, 'name': circleUsers.name});
-            });
-        };
 
         $scope.kisiekcevre = function () {
             for (var i = 0; i < $scope.users.length; i++) {
@@ -45,21 +29,12 @@ var mymodal = angular.module('ionicApp')
 
         $scope.toggleCircle = function (item) {
             $scope.circle = item;
-            $scope.disableButton = false;
         };
 
         $scope.initializePeopleCircles = function () {
-            $scope.$on("create_circle", function(event, args){
-                $scope.createNewCircleCallBack = args.callback;
-                $scope.disableButton = true;
-                $scope.selectedCircle = -1;
-            });
-
             $scope.$on("add_user_to_circle", function(event, args){
                 $scope.createNewCircleCallBack = args.callback;
                 $scope.users = args.users;
-                $scope.selectedCircle = -1;
-                $scope.disableButton = true;
             });
         };
 

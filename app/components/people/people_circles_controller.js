@@ -363,12 +363,6 @@ var mymodal = angular.module('ionicApp')
                     return true;
                 });
                 $scope.modal_friend_search.show();
-            } else if (item == "create_circle"){
-                $scope.$broadcast("create_circle", {callback:function(new_circle){
-                    $scope.cevreadlar.push(new_circle);
-                    $scope.closeModal("create_circle");
-                }});
-                $scope.modal_create_circle.show();
             } else if (item == "circle_selection"){
                 $scope.$broadcast("add_user_to_circle", {callback:function(new_circle){
                     $scope.closeModal("circle_selection");
@@ -384,11 +378,27 @@ var mymodal = angular.module('ionicApp')
                     $scope.kisiekle(user.id,$scope.cvrid);
                 }
                 $scope.modal_friend_search.hide();
-            } else if (item == "create_circle"){
-                $scope.modal_create_circle.hide();
             } else if (item == "circle_selection"){
                 $scope.modal_circle_selection.hide();
             }
+        };
+
+        $scope.createNewCircle = function(){
+            $scope.item = {};
+            $scope.item.name = "";
+            var promptPopup = $ionicPopup.prompt({
+                template: '<input type="text" ng-model="item.name">',
+                title: 'Yeni Çevre Oluştur',
+                scope : $scope,
+                inputType: 'text',
+                inputPlaceholder: 'Çevre Tanımı',
+            });
+
+            promptPopup.then(function(res) {
+                if (isDefined(res) && $scope.item.name != ""){
+                    $scope.cevrekle($scope.item.name);
+                }
+            });
         };
 
         $scope.deleteCircle = function(item){
@@ -438,13 +448,6 @@ var mymodal = angular.module('ionicApp')
                     id: 'friendsearch'
                 }).then(function (modal) {
                     $scope.modal_friend_search = modal
-                });
-                $ionicModal.fromTemplateUrl('components/partials/new_circle.html', {
-                    scope: $scope,
-                    animation: 'slide-in-up',
-                    id: 'create_circle'
-                }).then(function (modal) {
-                    $scope.modal_create_circle = modal
                 });
                 $ionicModal.fromTemplateUrl('components/partials/add_user_to_circle.html', {
                     scope: $scope,
