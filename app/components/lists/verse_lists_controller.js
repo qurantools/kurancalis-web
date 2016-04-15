@@ -176,10 +176,15 @@ angular.module('ionicApp').controller('VerseListController', function ($scope, $
         var verses = versesAsString.split(" ");
         var headers = {'Content-Type': 'application/x-www-form-urlencoded', 'access_token': $scope.access_token};
         var jsonData = [];
-        verses.forEach(function(verse, index){
-            var r = verse.split(":");
-            jsonData.push(encodeURIComponent("verse_id_set") + "=" + encodeURIComponent(parseInt(r[0])*1000 + parseInt(r[1])))
-        });
+        try {
+            verses.forEach(function (verse, index) {
+                var r = verse.split(":");
+                jsonData.push(encodeURIComponent("verse_id_set") + "=" + encodeURIComponent(parseInt(r[0]) * 1000 + parseInt(r[1])))
+            });
+        }catch (err){
+            $scope.errorBulkInsert = true;
+            return;
+        }
         var data = jsonData.join("&");
         Restangular.one("verselists", verselist.id).all("verses").customPOST(data, '', '', headers).then(function (data) {
             $scope.getVerseListsVerse();
