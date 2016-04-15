@@ -14,7 +14,11 @@
                 <ion-list>
                     <ion-item ng-repeat="item in fb_friends" item="item item-avatar" style="padding: 5px 0px 5px 5px;">
                         <div class="row" style="align-items: center;">
-                            <ion-checkbox id="{{item.fbId}}" ng-model="secimyap" style="width: 10px;border-width: 0;" ng-click="people_add(item.fbId,secimyap)"></ion-checkbox>
+                            <div class="item-checkbox" id="{{item.fbId}}" style="width: 10px;border-width: 0;" ng-click="people_add(item.fbId,secimyap)">
+                                <label class="checkbox">
+                                    <input type="checkbox" ng-model="secimyap">
+                                </label>
+                            </div>
                             <img width="50px" height="50px" src={{item.photo}} style="margin-right: 20px;">{{item.name}}
                         </div>
                     </ion-item>
