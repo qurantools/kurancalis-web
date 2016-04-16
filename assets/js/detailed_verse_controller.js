@@ -486,6 +486,27 @@ angular.module('ionicApp')
 
                             html += "<div><div class='col-xs-1 footnote_bullet'>&#149;</div><div class='col-xs-11 footnotebg'>" + dataContent + "</div></div>";
                         }
+                        if (author_id == $scope.author_hakki_yilmaz){
+                            if (config_data.isMobile){
+                                html += "<div>" +
+                                            "<div class='col-xs-1'>&nbsp;</div>" +
+                                            "<div class='col-xs-11 footnotebg'>" +
+                                                "<a ng-href='#MainCtrl' onclick='javascript: angular.element(document.getElementById(\"MainCtrl\")).scope().openModal(\"hakki_yilmaz_notes\")'>" +
+                                                    "<div style='color: #6b006d;margin-bottom: 8px;'>Tüm Notlar</div>" +
+                                                "</a>" +
+                                            "</div>" +
+                                        "</div>";
+                            }else{
+                                html += "<div>" +
+                                            "<div class='col-xs-1'>&nbsp;</div>" +
+                                            "<div class='col-xs-11 footnotebg'>" +
+                                                "<a style='float: right;'>" +
+                                                    "<div style='width:100%; height: 40px; padding-top:8px;' data-target='#hakkiYilmazAllNotesModal' data-toggle='modal'>Tüm Notlar</div>" +
+                                                "</a>" +
+                                            "</div>" +
+                                        "</div>";
+                            }
+                        }
                         html += '</div>';
                         footnoteDivElement.innerHTML = footnoteDivElement.innerHTML + html;
                     } else {

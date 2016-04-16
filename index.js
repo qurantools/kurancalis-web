@@ -594,6 +594,7 @@ app.factory('ChapterVerses', function ($resource) {
 
     $scope.modal_editor = null;
     $scope.author_mask = 8208;
+    $scope.author_hakki_yilmaz = 262144;
     $scope.authorMaskCheckPoint = $scope.author_mask;
 
     $scope.verse = {};
@@ -1411,9 +1412,18 @@ app.factory('ChapterVerses', function ($resource) {
                 return $scope.modal_editor;
             };
 
+            $ionicModal.fromTemplateUrl('components/partials/hakki_yilmaz_all_notes_modal.html', {
+                scope: $scope,
+                animation: 'slide-in-up',
+            }).then(function (modal) {
+                $scope.hakki_yilmaz_modal = modal
+            });
+
             $scope.openModal = function (id) {
                 if (id == 'editor') {
                     $scope.modal_editor.show();
+                } else if (id === 'hakki_yilmaz_notes'){
+                    $scope.hakki_yilmaz_modal.show();
                 }
             };
 
@@ -1423,6 +1433,8 @@ app.factory('ChapterVerses', function ($resource) {
                     if (id == 'editor') {
                         clearTextSelection();
                         $scope.modal_editor.hide();
+                    } else if (id === 'hakki_yilmaz_notes'){
+                        $scope.hakki_yilmaz_modal.hide();
                     }
                 },300);
             }
