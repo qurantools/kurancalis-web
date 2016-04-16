@@ -41,3 +41,8 @@
     border-radius: 7.5px;
     background-color: #e74c3c;
 }
+
+#verselist_verses_content .item-content{
+    padding: 5px !important;
+    text-align: justify;
+}

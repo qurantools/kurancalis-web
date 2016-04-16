@@ -13,7 +13,7 @@
         <ion-nav-view id="chapter_translation_content" cache-view="true">
             <ion-content overflow-scroll="true" delegate-handle="content"  class="scroll_content"
                          style="margin-top:30px;">
-                <div style="height: 5px;">&nbsp;</div>
+                <div style="height: 20px;">&nbsp;</div>
                 <h4 style="text-align: center;">{{selectedVerseList.name}}</h4>
                 <div class="list">
                     <label class="item item-input item-select">
@@ -27,10 +27,10 @@
                     </label>
                 </div>
                 <ion-list show-delete="showLeftButton">
-                    <ion-item ng-repeat="verse in verses" item="item item-avatar" style="padding: 5px 0px 5px 5px;">
-                        <div class="col-xs-1">
+                    <ion-item ng-repeat="verse in verses" item="item item-avatar" id="verselist_verses_content" class="well">
+                        <div class="col-xs-1 translations selectable">
                             <div class="chapter_verse_number" style="background-color: #DDD;width: 100%">
-                                <a href style="color: blue" ng-click='showVerseDetail(verse.verseId)' data-target='#detailedVerseModal' data-toggle='modal'>
+                                <a href style="text-decoration: none !important;" ng-click='showVerseDetail(verse.verseId)' data-target='#detailedVerseModal' data-toggle='modal'>
                                     <strong>{{verse.chapter}}:{{verse.verse}}</strong>
                                 </a>
                             </div>

@@ -291,7 +291,7 @@ angular.module('ionicApp').controller('VerseListController', function ($scope, $
             var selectedVerseId = $scope.verselists.length > 0 ?  $scope.verselists[0].id : undefined;
             if (config_data.isMobile){
                 if (typeof $routeParams.listid !== 'undefined') {
-                    selectedVerseId = $routeParams.listid;
+                    selectedVerseId = parseInt($routeParams.listid);
                 }
             }
             if ($scope.verselists.length > 0){
