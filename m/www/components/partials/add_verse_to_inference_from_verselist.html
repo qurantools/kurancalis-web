@@ -3,6 +3,7 @@
         <ion-nav-buttons side="left">
             <a class="button button-icon icon ion-arrow-left-b" ng-click="closeModal('add_verse_to_inference_from_verselist')"></a>
         </ion-nav-buttons>
+        <ion-nav-title>Ayete Referans Ver</ion-nav-title>
         <ion-nav-buttons side="right">
             <a class="button button-icon icon ion-checkmark" ng-click="selectSelectedVerses()"></a>
         </ion-nav-buttons>
@@ -31,15 +32,25 @@
             <ion-list>
                 <ion-item ng-repeat="verse in verses" item="item item-avatar"
                           ng-click="selectVerse($index)"
-                          style="padding: 5px 0px 5px 5px;" ng-style="verse.selected && {'background-color': 'rgba(0, 255, 0, 0.3)'}">
-                    <ion-checkbox ng-checked="verse.selected == true"/>&nbsp;<br/>
-                    <div class="col">
-                        <div class="chapter_verse_number" style="background-color: #DDD;width: 100%">
-                            <strong>{{verse.chapter}}:{{verse.verse}}</strong>
+                          style="padding: 5px 0px 5px 5px;margin-left: -10px;"
+                          ng-style="verse.selected && {'background-color': 'rgba(0, 255, 0, 0.3)'} ">
+                    <div class="row">
+                        <div class="item-checkbox" style="width: 10px;border-width: 0;padding-left: 30px;">
+                            <label class="checkbox">
+                                <input type="checkbox" ng-checked="verse.selected == true">
+                            </label>
                         </div>
-                        <div ng-class="{translation_rtl: authorMap[verse.authorId].language=='ar', translation_content: authorMap[verse.authorId].language!='ar'}"
-                             style="white-space: initial;text-align: left">
-                            <span ng-bind-html="verse.content | to_trusted"></span>
+                        <div class="col">
+                            <div class="chapter_verse_number"
+                                 ng-style="verse.selected && {'background-color': 'rgba(0, 255, 0, 0.3)'} ||
+                                 !verse.selected && {'background-color': '#DDD'}"
+                                 style="width: 100%">
+                                <strong>{{verse.chapter}}:{{verse.verse}}</strong>
+                            </div>
+                            <div ng-class="{translation_rtl: authorMap[verse.authorId].language=='ar', translation_content: authorMap[verse.authorId].language!='ar'}"
+                                 style="white-space: initial;text-align: left">
+                                <span ng-bind-html="verse.content | to_trusted" style="text-align: justify"></span>
+                            </div>
                         </div>
                     </div>
                 </ion-item>
