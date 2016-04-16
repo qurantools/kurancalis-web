@@ -15,10 +15,10 @@
             <div class="bar bar-header item-input-inset">
                 <label class="item-input-wrapper">
                     <i class="icon ion-ios-search placeholder-icon"></i>
-                    <input ng-model="newVerseList" type="search" placeholder="Ara / Yeni Liste"
-                           ng-change="filterVerseLists(newVerseList);"/>
+                    <input ng-model="newVerseList.name" type="search" placeholder="Ara / Yeni Liste"
+                           ng-change="filterVerseLists(newVerseList.name);"/>
                 </label>
-                <button ng-click="addVerseList(newVerseList)" class="button ion-plus"></button>
+                <button ng-click="addVerseList(newVerseList.name)" class="button ion-plus"></button>
             </div>
             <div class="list">
                 <a class="item item-icon-right" ng-repeat="verselist in filteredVerselists" ng-click="filterVerseListsToggleSelection(verselist.id)">

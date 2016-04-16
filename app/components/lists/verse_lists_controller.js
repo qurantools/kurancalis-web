@@ -20,7 +20,8 @@ angular.module('ionicApp').controller('VerseListController', function ($scope, $
 
     //modal
     $scope.newVerseListModal = false;
-    $scope.newVerseList = "";
+    $scope.newVerseList = {};
+    $scope.newVerseList.name = "";
     $scope.bulkInsertVerseToVerseListFlag = false;
     $scope.versesForBulkInsert = "";
     $scope.bulkInsertTagToVerseListFlag = false;
@@ -29,7 +30,7 @@ angular.module('ionicApp').controller('VerseListController', function ($scope, $
 
     $scope.openNewVerseListModal = function(){
         $scope.newVerseListModal = true;
-        $scope.newVerseList = "";
+        $scope.newVerseList.name = "";
     };
 
     $scope.openBulkInsertVerseModal = function(){
@@ -95,8 +96,8 @@ angular.module('ionicApp').controller('VerseListController', function ($scope, $
             $scope.verselists.push({'verseCount': '0', 'id': verseList.id, 'name': verseList.name});
             $scope.filteredVerselists.push({'verseCount': '0', 'id': verseList.id, 'name': verseList.name});
             $scope.newVerseListModal = false;
-            $scope.newVerseList = "";
-            $scope.filterVerseLists($scope.newVerseList);
+            $scope.newVerseList.name = "";
+            $scope.filterVerseLists($scope.newVerseList.name);
         });
     };
 
@@ -275,7 +276,7 @@ angular.module('ionicApp').controller('VerseListController', function ($scope, $
             $scope.callBackCloseModal = args.closeModal;
             $scope.selectedVerseListsForVerseToAdd = [];
             $scope.localVerseListSelection = [];
-            $scope.newVerseList = "";
+            $scope.newVerseList.name = "";
             $scope.filterVerseLists("");
             var chapterNotation = Math.floor($scope.verseForAddToLists/1000)+":"+ $scope.verseForAddToLists%1000;
             var chpaterText = "("+ $scope.chapters[Math.floor($scope.verseForAddToLists/1000) -1 ].nameTr +":"+($scope.verseForAddToLists%1000) +")";

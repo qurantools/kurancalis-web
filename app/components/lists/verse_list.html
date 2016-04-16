@@ -63,11 +63,11 @@
 <div>
     <modal title="Yeni Ayet Listesi Ekleme" visible="newVerseListModal">
         <div class="form-group">
-            <input type="text" class="form-control" ng-model="newVerseList" placeholder="Ayet Listesi Tanımı"/>
+            <input type="text" class="form-control" ng-model="newVerseList.name" placeholder="Ayet Listesi Tanımı"/>
         </div>
         <div class="modal-footer">
             <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal">İptal</a>
-            <a class="btn btn-primary btn-wide" ng-click="addVerseList(newVerseList)" data-dismiss="modal">Tamam</a>
+            <a class="btn btn-primary btn-wide" ng-click="addVerseList(newVerseList.name)" data-dismiss="modal">Tamam</a>
         </div>
     </modal>
 </div>

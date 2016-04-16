@@ -9,10 +9,10 @@
                     <div style="width: 100%">
                         <table>
                             <td class="col-sm-10">
-                                <input type="text" class="form-control" ng-model="newVerseList" ng-change="filterVerseLists(newVerseList)" placeholder="Ara / Yeni Liste"/>
+                                <input type="text" class="form-control" ng-model="newVerseList.name" ng-change="filterVerseLists(newVerseList.name)" placeholder="Ara / Yeni Liste"/>
                             </td>
                             <td  class="col-sm-2" style="width:100%; padding-left: 15px;">
-                                <a class="btn btn-primary btn-wide" ng-click="addVerseList(newVerseList)"><i class="fa fa-plus"></i>Yeni Liste Oluştur</a>
+                                <a class="btn btn-primary btn-wide" ng-click="addVerseList(newVerseList.name)"><i class="fa fa-plus"></i>Yeni Liste Oluştur</a>
                             </td>
                         </table>
                     </div>
