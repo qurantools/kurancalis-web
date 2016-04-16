@@ -275,6 +275,11 @@ angular.module('ionicApp').controller('VerseListController', function ($scope, $
             $scope.callBackCloseModal = args.closeModal;
             $scope.selectedVerseListsForVerseToAdd = [];
             $scope.localVerseListSelection = [];
+            $scope.newVerseList = "";
+            $scope.filterVerseLists("");
+            var chapterNotation = Math.floor($scope.verseForAddToLists/1000)+":"+ $scope.verseForAddToLists%1000;
+            var chpaterText = "("+ $scope.chapters[Math.floor($scope.verseForAddToLists/1000) -1 ].nameTr +":"+($scope.verseForAddToLists%1000) +")";
+            $scope.versesInfo = chapterNotation +  chpaterText;
         });
 
         $scope.$on('open_verse_for_verse_selection', function(event, args) {
