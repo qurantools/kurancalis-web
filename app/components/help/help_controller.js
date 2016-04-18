@@ -6,7 +6,7 @@ angular.module('ionicApp')
         $scope.helpController.API = null;
 
         $scope.menuList=[
-            {   id: "intro",
+            {   id: "chapter",
                 name : "Sure Okuma Tanıtım",
                 submenu : [
                     {id:11, title:"Intro-1", source:[{src: $sce.trustAsResourceUrl("../../assets/img/help/mobile/ana_menu.mp4"), type: "video/mp4"}]},

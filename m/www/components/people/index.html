@@ -15,40 +15,28 @@
         <!-- end of side menu part 1 -->
         <ion-nav-view id="chapter_translation_content" cache-view="true">
             <ion-content overflow-scroll="true" delegate-handle="content"  class="scroll_content"
-                         style="margin-top:30px;">
-                <div style="height: 65px;">&nbsp;</div>
-                <div class="row" delegate-handle="content">
-                    <div style="text-align: center;width: 100% !important">
-                        <a class="button button-positive" style="border:0;margin-right: 10px;font-size: 20px;" href="#/people/circles/">
-                            Çevrelerim
-                        </a>
-                        <a class="button button-positive"  style="border:0;margin-left: 10px;font-size: 20px;" href="#/people/people_have_you/">
-                            Takipçilerim
-                        </a>
-                    </div>
-                </div>
-                <div class="row" delegate-handle="content">
-                    <div class="well col-xs-12" style="text-align: center;margin-top: 50px;width: 100%;border: 0;background-color: #eee">
+                         style="margin-top:30px; padding-left: 15px; padding-right: 15px">
+                <div style="height: 60px;">&nbsp;</div>
+                <a class="button button-block button-positive" href="#/people/circles/">
+                    Çevrelerim
+                </a>
+                <a class="button button-block button-positive" href="#/people/people_have_you/">
+                    Takipçilerim
+                </a>
+                    <div class="well col-xs-12" style="margin-top: 10px;background-color: #eee;padding-left: 10px; padding-right: 10px" >
                         <div class="item" style="text-align: center;border-color: #eee;background-color: #eee">
-                            <h1>Keşfet</h1>
+                            <h2>Keşfet</h2>
                         </div>
-                        <div class="item" style="text-align: center;border-color: #eee;background-color: #eee;">
-                            <a class="button button-positive"  style="border:0;width: 100%;font-size: 20px;" href="#/people/find_people/">
+                            <a class="button button-block button-positive"  href="#/people/find_people/">
                                 Kuran Çalışan Arkadaşlarım
                             </a>
-                        </div>
-                        <div class="item" style="text-align: center;border-color: #eee;background-color: #eee">
-                            <a class="button button-positive"  style="border:0;width: 100%;font-size: 20px;" href="" ng-click="inviteFriends()">
+                            <a class="button button-block button-positive"   href="" ng-click="inviteFriends()">
                                 Arkadaşlarımı Davet Et
                             </a>
-                        </div>
-                        <div class="item" style="text-align: center;border-color: #eee;background-color: #eee">
-                            <a class="button button-positive"  style="border:0;width: 100%;font-size: 20px;" href="#/people/search_people/">
+                            <a class="button button-block button-positive"  href="#/people/search_people/">
                                 Kişi Ara
                             </a>
-                        </div>
                     </div>
-                </div>
                 <div style="height:50px;">&nbsp;</div>
             </ion-content>
             <div ng-controller="HelpController"></div>

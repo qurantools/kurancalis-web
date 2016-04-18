@@ -11,11 +11,11 @@
                         <li ng-class="{active: currentPage == 'home'}">
                             <a href="#/chapter/1/author/{{author_mask}}/verse/1" class="leftMenuLink">Sureler</a>
                         </li>
+                        <li ng-class="{active: currentPage == 'search_on_translations'}">
+                            <a href="#/search_translations/" class="leftMenuLink">Meallerde Ara</a>
+                        </li>
                         <li ng-class="{active: currentPage == 'annotations'}">
                             <a href="#/annotations/" ng-if="user!=null">Tüm notlar</a>
-                        </li>
-                        <li ng-class="{active: currentPage == 'help'}">
-                            <a href="#/help/" ng-if="user!=null">Yardım</a>
                         </li>
                         <li ng-class="{active: currentPage.search('people')==0}" ng-if="user!=null">
                             <a href="#/people/home/">Kişiler</a>
@@ -23,8 +23,8 @@
                         <li ng-class="{active: currentPage == 'verse_lists'}" ng-if="user!=null">
                             <a href="#/lists/verse">Ayet Listelerim</a>
                         </li>
-                        <li ng-class="{active: currentPage == 'search_on_translations'}">
-                            <a href="#/search_translations/" class="leftMenuLink">Meallerde Ara</a>
+                        <li ng-class="{active: currentPage == 'help'}">
+                            <a href="#/help/" ng-if="user!=null">Yardım</a>
                         </li>
                         <li ng-if="user!=null">
                             <a href ng-click="logOut()" onclick="closeLeftPanel()">Çıkış</a>

@@ -11,6 +11,9 @@
                         <li ng-class="{active: currentPage == 'home'}">
                             <a href="#/translations/" class="leftMenuLink">Sureler</a>
                         </li>
+                        <li ng-class="{active: currentPage == 'search_on_translations'}">
+                            <a href="#/search_translations/" class="leftMenuLink">Meallerde Ara</a>
+                        </li>
                         <li ng-class="{active: currentPage == 'annotations'}" ng-if="user!=null">
                             <a href="#/annotations/">Ayet notları</a>
                         </li>
@@ -25,9 +28,6 @@
                         </li>
                         <li ng-class="{active: currentPage == 'verse_lists'}" ng-if="user!=null">
                             <a href="#/lists/verse">Ayet Listelerim</a>
-                        </li>
-                        <li ng-class="{active: currentPage == 'search_on_translations'}">
-                            <a href="#/search_translations/" class="leftMenuLink">Meallerde Ara</a>
                         </li>
                         <li ng-if="user!=null">
                             <a href ng-click="logOut()" onclick="closeLeftPanel()">Çıkış</a>
