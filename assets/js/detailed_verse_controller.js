@@ -101,9 +101,8 @@ angular.module('ionicApp')
 
             $scope.allInferencesParams.users = kisiTags;
             $scope.allInferencesParams.circles = cevreTags;
-
+            $scope.inferences = [];
             inferencesRestangular.customGET("", $scope.allInferencesParams, { 'access_token': authorization.getAccessToken() }).then(function (inferences) {
-                    $scope.inferences = [];
                     $scope.inferences = $scope.inferences.concat(inferences);
                 }
             );
@@ -131,9 +130,9 @@ angular.module('ionicApp')
             $scope.allAnnotationsParams.circles = cevreTags;
             $scope.allAnnotationsParams.chapters = Math.floor($scope.verseId/1000);
             $scope.allAnnotationsParams.verse = $scope.verseId%1000;
-
+            $scope.detailedTags = [];
+            $scope.detailedAnnotations = [];
             annotationsRestangular.customGET("", $scope.allAnnotationsParams, {'access_token': authorization.getAccessToken()}).then(function (annotations) {
-                $scope.detailedTags = [];
                 $scope.detailedAnnotations = annotations;
                 for (var i = 0; i < annotations.length; i++){
                     for (var j = 0; j < annotations[i].tags.length; j++){
@@ -150,7 +149,7 @@ angular.module('ionicApp')
             translationParams.author = $scope.detailed_query_author_mask;
             translationParams.chapter = Math.floor($scope.verseId/1000);
             translationParams.verse = $scope.verseId%1000;
-
+            $scope.verse = [];
             dataProvider.listTranslations(translationParams, function(data){
                 $scope.prepareTranslationDivMap(data);
             });

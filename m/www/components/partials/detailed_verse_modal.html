@@ -74,6 +74,10 @@
                         </a>
                     </div>
                 </div>
+                <div ng-show="internet_display_show && internet_display_style['background-color'] == 'orange'">
+                    <div style="font-size: 20px"><b>Etiketler</b></div>
+                    <div>İnternet olmadığı için görüntülenemiyor.</div>
+                </div>
                 <!-- annotations-->
                 <div ng-show="detailedAnnotations.length > 0" style="margin-top: 5px;">
                     <div style="font-size: 20px"><i class='fa' style='font-size: 1.3em;margin-right: 10px;'></i><br><b>Ayet Notları</b></div>
@@ -97,6 +101,10 @@
                             <div style="float: left">{{annotation.updated | date: 'dd/MM/yyyy HH:mm:ss'}}</div>
                         </div>
                     </div>
+                </div>
+                <div ng-show="internet_display_show && internet_display_style['background-color'] == 'orange'" style="margin-top: 5px;">
+                    <div style="font-size: 20px"><i class='fa' style='font-size: 1.3em;margin-right: 10px;'></i><br><b>Ayet Notları</b></div>
+                    <div>İnternet olmadığı için görüntülenemiyor.</div>
                 </div>
                 <!-- inferences-->
                 <div ng-show="inferences.length > 0" style="margin-top: 5px;">
@@ -143,6 +151,12 @@
                             </div>
                         </ion-item>
                     </ion-list>
+                </div>
+                <div ng-show="internet_display_show && internet_display_style['background-color'] == 'orange'" style="margin-top: 5px;">
+                    <div style="font-size: 20px">
+                        <b>Çıkarım Notları</b>
+                    </div>
+                    <div>İnternet olmadığı için görüntülenemiyor.</div>
                 </div>
             </div>
         </div>
