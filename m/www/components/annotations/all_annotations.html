@@ -2,7 +2,7 @@
 <ion-side-menus>
     <ion-side-menu-content>
         <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced">
-            <ion-nav-title>Etiketli Ayetler</ion-nav-title>
+            <ion-nav-title>Ayet Notları</ion-nav-title>
             <ion-nav-buttons side="left">
                 <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
                 <input type="hidden" ng-model="chapter_id"/>
@@ -62,12 +62,6 @@
                     <div class="card" ng-repeat="annotation in annotations">
                         <div class="item item-divider">
                             <a href='' style="text-decoration: none !important;" ng-click="showVerseDetail(annotation.verseId, usersForSearch, circlesForSearch)">{{annotation.verseId / 1000 | number:0}}:{{annotation.verseId % 1000}}</a>
-                            <button ng-click="showVerse(annotation)" class="btn btn-primary btn-xs"
-                                    ng-if="showVerseData.annotationId!=annotation.annotationId"><i
-                                    class="fa fa-cog"></i></button>
-                            <button ng-click="showVerseData.annotationId=-1" class="btn btn-xs"
-                                    ng-if="showVerseData.annotationId==annotation.annotationId"><i
-                                    class="fa fa-cog "></i></button>
                             <div style="float:right;">{{annotation.userName | limitTo: 25}}</div>
                         </div>
                         <show-verse data="showVerseData.data"

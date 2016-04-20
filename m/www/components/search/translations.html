@@ -9,16 +9,16 @@
         </ion-nav-bar>
         <!-- end of side menu part 1 -->
         <ion-nav-view id="content" cache-view="true">
-            <ion-content style="margin-top:45px;">
+            <ion-content style="margin-top:65px;">
                 <div class="row" scroll-event-interval="5">
                     <div class="col-xs-12 bb" id="translations" style="display: block;width: 100%;">
-                        <div class="item item-input button-block" style="margin-top: 20px;border-color: black;border-width: 1px;border-style: solid;">
-                            <input type="text" placeholder="Meallerde ara"
+                        <div class="item item-input button-block" style="margin-top: 20px;border-width: 1px;border-style: solid;font-size: large">
+                            <input style="font-size: medium" type="text" placeholder="Meallerde ara"
                                    ng-model="verseSearchText" ng-enter="searchTranslations()"
                                    ng-change="searchTextChange(verseSearchText)"
-                                   min-length="3" style="color: black;">
+                                   min-length="3">
                         </div>
-                        <div class="item item-input item-select" style="margin-top: 5px;border-color: black;border-width: 1px;border-style: solid;">
+                        <div class="item item-input item-select" style="margin-top: 5px;border-width: 1px;border-style: solid;font-size: larger">
                             <div class="input-label">
                                 Dil
                             </div>
@@ -29,18 +29,17 @@
                                 <option style="display:none" value="">Meal Seç</option>
                             </select>
                         </div>
-                        <div class="button button-icon" style="align-content: center;width: 100%;margin-top: 5px;background-color: #47E;border-color: black;border-width: 1px;border-style: solid;"
-                             ng-click="searchTranslations()">
+                        <button style="font-size: large" class="button button-block button-positive" ng-click="searchTranslations()">
                             <i class="icon ion-search"></i>
                             Ara
-                        </div>
+                        </button>
                         <div ng-repeat="verse in verses">
                             <div class="list" id="v_{{verse.id}}">
                                 <div ng-repeat="translation in verse.translations">
                                     <div ng-show="$first" class="item item-divider" ion-affix data-affix-within-parent-with-class="list">
-                                        <h4>
+                                        <h3>
                                             <a href style="text-decoration: none !important;" ng-click='showVerseDetail({{verse.id}})'>{{translation.chapter}}:{{translation.verse}}</a>
-                                        </h4>
+                                        </h3>
                                     </div>
                                     <div id="t_{{translation.id}}" class="item item-text-wrap" ng-show="verse.selectedSingleAuthor==translation.authorId || !verse.showSingleAuthor">
                                         <div class="col-xs-12 col-sm-3 authorDiv_{{authorMap[translation.authorId].color}}" ng-show="!verse.showSingleAuthor">

@@ -362,7 +362,7 @@ if (config_data.isMobile == false) { //false
                                 isConfirmPopupCalledBefore = true;
                                 var confirmPop = $ionicPopup.confirm({
                                     title: 'Internet Bağlantı Problemi!',
-                                    template: 'İnternet bağlantınız bulunmamaktadır. Yapabileceğiniz İşlemler kısıtlanmıştır. İşlem listesi aşağıdaki şekildedir...',
+                                    template: 'İnternet bağlantınız bulunmamaktadır. Yapabileceğiniz İşlemler kısıtlıdır.',
                                     cancelText: 'DEVAM',
                                     okText: 'YENİDEN DENE'
                                 });
@@ -450,7 +450,7 @@ if (config_data.isMobile == false) { //false
                         controller: 'PeopleFindCtrl',
                         templateUrl: 'components/people/find_people.html',
                         reloadOnSearch: false,
-                        pageTitle: 'Kuran Çalış - FB Arkadaşlarını Bul'
+                        pageTitle: 'Kuran Çalış - Facebook Arkadaşlarımı Bul'
                     })
                     .when('/people/search_people/', {
                         controller: 'friendSearchController',

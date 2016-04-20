@@ -36,13 +36,11 @@
                             <div class="well translations col-xs-12" id="v_{{verse.id}}">
                                 <div ng-repeat="translation in verse.translations" class="selectable">
                                     <div ng-if="$first">
-                                        <h4>
-                                            <a href style="text-decoration: none !important;" ng-click='showVerseDetail({{verse.id}}, {{query_users}}, {{query_circles}})'>{{translation.chapter}}:{{translation.verse}}</a>
-                                            <img src="../../assets/img/sticky-note.png" width="18" height="18" ng-if="verseHasAnnotation(verse.id)" ng-click="showVerseAnnotations({{verse.id}})">
-                                            <button ng-if="user!=null" class="button button-balanced button-bookmark"ng-click="verseActionSheet({{translation.chapter}},{{translation.verse}},{{verse.id}})">
-                                                <i class="icon ion-ios-more"></i>
+                                            <a href style="margin-left:4px; margin-right:4px;font-weight:bold; font-size:20px; text-decoration: none !important;" ng-click='showVerseDetail({{verse.id}}, {{query_users}}, {{query_circles}})'>{{translation.chapter}}:{{translation.verse}}</a>
+                                            <img style="margin-left: 10px" src="../../assets/img/sticky-note.png" width="20" height="20" ng-if="verseHasAnnotation(verse.id)" ng-click="showVerseAnnotations({{verse.id}})">
+                                            <button ng-if="user!=null" class="button button-balanced button-bookmark large_icon"ng-click="verseActionSheet({{translation.chapter}},{{translation.verse}},{{verse.id}})">
+                                                <i class="icon ionicons ion-ios-more"></i>
                                             </button>
-                                        </h4>
                                     </div>
                                     <div id="t_{{translation.id}}">
                                         <div class="col-xs-12 col-sm-3 authorDiv_{{authorMap[translation.authorId].color}}">

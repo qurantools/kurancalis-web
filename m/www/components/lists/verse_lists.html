@@ -13,13 +13,13 @@
         <ion-nav-view name="appContent"></ion-nav-view>
         <ion-nav-view id="chapter_translation_content" cache-view="true">
             <ion-content overflow-scroll="true" delegate-handle="content"  class="scroll_content"
-                         style="margin-top:40px;">
+                         style="margin-top:65px;">
                 <ion-list>
-                    <ion-item ng-repeat="item in verselists" item="item" class="item-remove-animate" style="width: 100%;display: table;font-size: 25px;padding-left: 6px;padding-right: 6px;">
+                    <ion-item data-tap-disabled="true" ng-repeat="item in verselists" item="item" class="item-remove-animate" style="width: 100%;display: table;font-size: 25px;padding-left: 6px;padding-right: 6px;">
                         <ion-button class="ion-minus-circled" ng-click="deleteVerseListWithConfirm(item)" ng-show="showLeftButton" style="margin: 0px 3px;color: #ef473a;"></ion-button>
                         <ion-button ng-click="updateVerseListWithConfirm(item)" ng-show="showLeftButton" style="margin: 0px 3px;color:blue;">a|b</ion-button>
                         <a href="#/lists/verse/{{item.id}}/" style="text-decoration: none;color: black;display: table-cell;width: inherit;">
-                            <label id="ad{{item.id}}" style="font-size: 25px;">{{item.name}}</label>
+                            <label id="ad{{item.id}}" style="font-size: large">{{item.name}}</label>
                             <i class="icon ion-chevron-right icon-accessory" style="float: right"></i>
                         </a>
                     </ion-item>
