@@ -25,9 +25,9 @@
             </button>
         </div>
     </ion-header-bar>
-    <ion-content>
-        <div class="row" delegate-handle="content">
-            <div class="col-xs-12 bb" id="translations">
+    <ion-content delegate-handle="content" id="detailed_verse_content">
+        <div class="row">
+            <div class="col-xs-12 bb">
                 <!-- translations-->
                 <div class="well translations col-xs-12" id="v_{{verse.id}}">
                     <div ng-repeat="translation in verse.translations">

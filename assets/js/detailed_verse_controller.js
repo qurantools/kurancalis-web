@@ -176,7 +176,12 @@ angular.module('ionicApp')
             }
             $scope.verse = data[0];
             if (config_data.isMobile){
-                $ionicScrollDelegate.scrollTop();
+                $timeout(function() {
+                    var delegate = _.filter($ionicScrollDelegate._instances, function(item){
+                         return item.element.innerHTML.indexOf('detailed_verse_content') > -1;
+                    })[0];
+                    delegate.scrollTop();
+                });
             }
         };
 
