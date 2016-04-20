@@ -1,4 +1,4 @@
-<div class="modal modal-fullscreen">
+<div class="modal modal-fullscreen"  id="taggedVerseModal">
     <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced" align-title="center">
         <ion-nav-title>Etiketli Ayetler</ion-nav-title>
         <ion-nav-buttons side="left">
@@ -15,8 +15,8 @@
             </label><br/>
         </div>
     </ion-header-bar>
-    <ion-content>
-        <div class="col-xs-12 col-sm-9" ng-click="openModal('tagged_verse_detailed_search');">
+    <ion-content delegate-handle="content">
+        <div class="col-xs-12 col-sm-9" ng-click="openModal('tagged_verse_detailed_search');" id="tagged_verse_content">
             <div class="list">
                 <div class="item item-divider">
                     Etiket Sahipleri
