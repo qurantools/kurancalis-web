@@ -48,12 +48,12 @@
                                 </div>
                             </div>
                             <div class="col-xs-1" ng-show="verse.selectedSingleAuthor==translation.authorId">
-                                <a href ng-click="multipleAuthorsView($parent.$index)" ng-show="verse.translations.length>1">(+)</a>
+                                <a href ng-click="multipleAuthorsView($parent.$index)" ng-show="verse.translations.length>1"><i class="fa fa-plus-square-o fa-2x" aria-hidden="true"></i></a>
                             </div>
                             <div class="col-xs-10" id="t_{{translation.id}}" style="float: right">
                                 <div class="col-xs-3 authorDiv_{{authorMap[translation.authorId].color}}" ng-show="!verse.showSingleAuthor">
                                     <span class="author">
-                                        <a href ng-click="singleAuthorView({{translation.authorId}},$parent.$index)">(-)</a>
+                                        <a href ng-click="singleAuthorView({{translation.authorId}},$parent.$index)"><i class="fa fa-minus-square-o" aria-hidden="true"></i></a>
                                     </span>
                                     {{authorMap[translation.authorId].name}}
                                 </div>
