@@ -223,7 +223,7 @@ angular.module('ionicApp')
 
 
 
-        //delete operation for inferences page
+        //elete operation for inferences page
         $scope.deleteInference = function (inference) {
             var inferenceRestangular = Restangular.one("inferences", inference.inferenceId);
             inferenceRestangular.customDELETE("", {}, { 'access_token': $scope.access_token }).then(function (result) {
@@ -235,10 +235,7 @@ angular.module('ionicApp')
                     }
                 }
             });
-        }
-
-
-
+        };
 
         $scope.submitEditor = function () {
 
@@ -540,13 +537,13 @@ angular.module('ionicApp')
             console.log("inf : ", inference);
             $location.path('inference/edit/' + inference.id + "/");
           //  $scope.showEditor(inference);
-        }
+        };
 
         $scope.allInferencesOrderByChanged = function (selectedOrderOption) {
             $scope.allInferencesOrderBy = selectedOrderOption;
             $scope.allInferencesParams.start = 0;
             $scope.get_all_inferences();
-        }
+        };
 
         $scope.scrollDelegateTop = function (id) {
             $ionicScrollDelegate.$getByHandle(id).scrollTop();

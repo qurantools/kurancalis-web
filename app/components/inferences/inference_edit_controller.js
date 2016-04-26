@@ -96,7 +96,7 @@ angular.module('ionicApp')
 
             $scope.tagsquery= function (query) {
                 $scope.loadTags2(query)
-            }
+            };
 
             $scope.openModal = function(id){
                 if (id == 'viewusersearch') {
@@ -111,7 +111,8 @@ angular.module('ionicApp')
                     $scope.openVerseListForVerseSelection($scope.copyValueFromSelectedList, $scope.closeModal);
                     $scope.modal_add_reference_from_verse_list.show();
                 };
-            }
+            };
+
             $scope.closeModal = function (id) {
                 $timeout(function(){
 
@@ -125,8 +126,7 @@ angular.module('ionicApp')
                         $scope.modal_add_reference_from_verse_list.hide();
                     }
                 },300);
-            }
-
+            };
         }
         //tags input auto complete
         $scope.peoplelist = function (people_name) {

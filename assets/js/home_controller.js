@@ -250,7 +250,6 @@ angular.module('ionicApp')
 
         };
 
-
         $scope.updateVerseTags = function (verseId, oldTags, newTags) {
             var arrLen = oldTags.length;
             for (var i = 0; i < arrLen; i++) {
@@ -353,22 +352,15 @@ angular.module('ionicApp')
             }
         };
 
-
         $scope.editAnnotation = function (index) {
             if (typeof $scope.filteredAnnotations != 'undefined' && $scope.filteredAnnotations.length > 0) {
                 index = $scope.getAnnotationIndexFromFilteredAnnotationIndex(index);
             }
             annotator.onEditAnnotation($scope.annotations[index]);
-
         };
 
-        $scope.submitEditor = function () {
-
-            $scope.showProgress("submitEditor");
-
+        $scope.submitEditor = function (annotationModalData) {
             $timeout(function () {
-
-
                 if (config_data.isMobile) {
                     //prepare canView circle list
                     $scope.ViewCircles = [];
@@ -386,24 +378,14 @@ angular.module('ionicApp')
                     oldTags = $scope.annotationModalData.tags;
                 }
 
-                //get tag Parameters
-                var tagParameters = $scope.getTagParametersForAnnotatorStore($scope.ViewCircles, $scope.yrmcevres, $scope.ViewUsers, $scope.yrmkisis, $scope.annotationModalDataTagsInput)
-                //now annotationModalData belogs to root scope, may be we can get it later
-                $scope.annotationModalData.canViewCircles = tagParameters.canViewCircles;
-                $scope.annotationModalData.canCommentCircles = tagParameters.canCommentCircles;
-                $scope.annotationModalData.canViewUsers = tagParameters.canViewUsers;
-                $scope.annotationModalData.canCommentUsers = tagParameters.canCommentUsers;
-                $scope.annotationModalData.tags = tagParameters.tags;
-
-                annotator.publish('annotationEditorSubmit', [annotator.editor, $scope.annotationModalData]);
+                annotator.publish('annotationEditorSubmit', [annotator.editor, annotationModalData]);
                 $scope.editorSubmitted = 1;
 
-                $scope.updateVerseTags($scope.annotationModalData.verseId, oldTags, $scope.annotationModalData.tags);
-
+                $scope.updateVerseTags(annotationModalData.verseId, oldTags, annotationModalData.tags);
 
                 //coming from another page fix
-                if ($scope.getIndexOfArrayByElement($scope.annotations, 'annotationId', $scope.annotationModalData.annotationId) == -1) {
-                    $scope.addAnnotation($scope.annotationModalData);
+                if ($scope.getIndexOfArrayByElement($scope.annotations, 'annotationId', annotationModalData.annotationId) == -1) {
+                    $scope.addAnnotation(annotationModalData);
                 }
 
                 annotator.onEditorHide();
@@ -412,15 +394,7 @@ angular.module('ionicApp')
                 if (config_data.isMobile) {
                     $scope.closeModal('editor');
                 }
-
-                $('#annotationModal').modal('hide');
-
-                $scope.hideProgress("submitEditor");
-
-
             },350);
-
-
         };
 
 
@@ -496,18 +470,10 @@ angular.module('ionicApp')
 
         };
 
-
-        //customized showEditor for home controller
         var parentShowEditor = $scope.showEditor;
         $scope.showEditor = function (annotation, position) {
             //call parent show editor
-            parentShowEditor(annotation, position);
-            if (!config_data.isMobile) {
-                $('#annotationModal').on('hidden.bs.modal', function () {
-                    annotator.onEditorHide();
-                })
-            }
-
+            parentShowEditor(annotation, position, $scope.submitEditor);
         };
 
         $scope.annotate_it = function () {
@@ -563,13 +529,9 @@ angular.module('ionicApp')
                 if (config_data.isMobile) {
                     $(document).unbind('mouseup');
                     $(document).unbind('mousedown');
-
                 }
             }
-
-
         };
-
 
         $scope.showVerseAnnotations = function (verseId){
 
@@ -739,33 +701,6 @@ angular.module('ionicApp')
             });
         };
 
-        $scope.colorTheAnnotation = function (annotation) {
-            var cat = annotation.colour;
-            var highlights = annotation.highlights;
-            if (cat) {
-                for (var h in highlights) {
-                    var classes = highlights[h].className.split(" ");
-                    var newClass = "";
-
-                    //remove the class if already coloured
-                    for (var theClass in classes) {
-                        if (classes[theClass].indexOf("a_hl_") > -1) { //the class is a colour class
-                            classes.splice(theClass, 1);
-                        }
-                    }
-                    newClass = classes.join(" ");
-                    newClass = newClass + ' a_hl_' + cat;
-                    highlights[h].className = newClass;
-                }
-            }
-        };
-
-        $scope.colorAnnotations = function (annotations) {
-            for (var annotationIndex in annotations) {
-                $scope.colorTheAnnotation(annotations[annotationIndex]);
-            }
-        };
-
         $scope.loadAnnotations = function (annotations) {
 
             $scope.annotations = annotations;
@@ -773,10 +708,7 @@ angular.module('ionicApp')
             $scope.scopeApply();
             $scope.resetAnnotationFilter();
             $scope.colorAnnotations(annotations);
-
-
         };
-
 
         //add annotation to scope
         $scope.addAnnotation = function (annotation) {
@@ -786,10 +718,8 @@ angular.module('ionicApp')
             $scope.filteredAnnotations = $scope.annotations;
         };
 
-        var tempAnnoIndex;
         //delete annotation from annotator library (highlight)
         $scope.deleteAnnotation = function (index) {
-            //console.log("$scope.filteredAnnotations: "+JSON.stringify($scope.filteredAnnotations));
             if (config_data.isMobile) {
                 var confirmPopup = $ionicPopup.confirm({
                     title: 'Ayet Notu Sil',
@@ -808,32 +738,21 @@ angular.module('ionicApp')
                     }
                 });
             }else{
-
-                $("#deleteAnnotationModal").modal("show");
-                tempAnnoIndex = index;
-
+                $scope.showAnnotationDeleteModal(index, $scope.mdeleteAnnotation);
             }
-
         };
 
-
-        $scope.closeAnnotationModal = function(){
-            $("#deleteAnnotationModal").modal("hide");
-        }
-
-        $scope.mdeleteAnnotation = function(){
+        $scope.mdeleteAnnotation = function(index){
             console.log('anno');
             if (typeof $scope.filteredAnnotations != 'undefined' && $scope.filteredAnnotations.length > 0) {
-                index = $scope.getAnnotationIndexFromFilteredAnnotationIndex(tempAnnoIndex);
+                index = $scope.getAnnotationIndexFromFilteredAnnotationIndex(index);
             }
             annotator.deleteAnnotation($scope.annotations[index]);
-            $("#deleteAnnotationModal").modal("hide");
-        }
-
+            $scope.closeAnnotationModal();
+        };
 
         //remove annotation from scope
         $scope.deleteAnnotationFromScope = function (annotation) {
-
 
             var verseId = annotation.verseId;
             var arrLen = $scope.annotations.length;
@@ -855,7 +774,6 @@ angular.module('ionicApp')
                 if($scope.verseAnnotationData[verseId].annotations.length == 0){
                     delete verseAnnotationData[verseId];
                 }
-
             }
 
             for (var i = 0; i < arrLen; i++) {

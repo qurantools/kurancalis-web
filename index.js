@@ -100,7 +100,7 @@ var app = angular.module('ionicApp', requiredModules)
     .filter('mark_verse_annotation', [
         function () {
             return function (translation, annotation, markVerseAnnotations) {
-                if (markVerseAnnotations == true) {
+                if (markVerseAnnotations == true && annotation.ranges[0] != undefined) {
                     var startOffset = annotation.ranges[0].startOffset;
                     var endOffset = annotation.ranges[0].endOffset;
 
@@ -183,7 +183,7 @@ if (config_data.isMobile == false) { //false
         $httpProvider.interceptors.push(function ($q, $injector, $rootScope) {
             var isConfirmPopupCalledBefore = false;
             var isDisplay = false;
-            var regex = /.*\.(html|js|css|png|jep|jepg|htm|video)$/;
+            var regex = /.*(html?|js|css|png|je?pg|video|audio)$/;
             return {
                 'response' : function (response){
                     if (isDisplay && !regex.test(response.config.url)){
@@ -345,7 +345,7 @@ if (config_data.isMobile == false) { //false
                 $httpProvider.interceptors.push(function ($q, $injector, $rootScope) {
                     var isConfirmPopupCalledBefore = false;
                     var isDisplay = false;
-                    var regex = /.*\.(html|js|css|png|jep|jepg|htm)$/;
+                    var regex = /.*\.(html?|js|css|png|jpg|jepg|video|audio|mp4)$/;
                     return {
                         'response' : function (response){
                             if (isDisplay && !regex.test(response.config.url)){
@@ -372,7 +372,6 @@ if (config_data.isMobile == false) { //false
                                         $route.reload();
                                     }
                                 });
-                                $rootScope.$broadcast('offlineNetworkConnection', rejection);
                             }
                             if (rejection.status == 0 ){
                                 $rootScope.$broadcast('offlineNetworkConnection', rejection);
@@ -684,8 +683,7 @@ app.factory('ChapterVerses', function ($resource) {
                 alert(data.message);
             }
         });
-
-    }
+    };
 
     $scope.tutorial = function (parameter) {
         if (parameter == 'init') {
@@ -699,11 +697,11 @@ app.factory('ChapterVerses', function ($resource) {
             $('#tutorialCarousel').carousel('prev');
             $scope.tutorialCarouselActive--;
         }
-    }
+    };
 
     $scope.setPageTitle= function(title){
         $rootScope.pageTitle = title;
-    }
+    };
 
     //currentPage
     $scope.getCurrentPage = function () {
@@ -729,7 +727,7 @@ app.factory('ChapterVerses', function ($resource) {
         }
 
         return retcp;
-    }
+    };
 
 
     /* auth */
@@ -738,8 +736,7 @@ app.factory('ChapterVerses', function ($resource) {
         if (responseData.loggedIn == false) {
             $scope.loggedIn = false;
             $scope.logOut();
-        }
-        else {
+        } else {
             $scope.access_token = responseData.token;
             $scope.user = responseData.user;
             $scope.loggedIn = true;
@@ -749,7 +746,7 @@ app.factory('ChapterVerses', function ($resource) {
             $scope.$broadcast('login', responseData);
             $scope.$broadcast('userInfoReady');
         }
-    }
+    };
 
     //general logout.
     $scope.onFacebookLogOutSuccess = function (responseData) {
@@ -765,7 +762,7 @@ app.factory('ChapterVerses', function ($resource) {
             $scope.$broadcast('logout', responseData);
             $location.path('/login');
         }
-    }
+    };
 
 
     //sub page should write the its function if it needs custom login.
@@ -778,8 +775,7 @@ app.factory('ChapterVerses', function ($resource) {
             $ionicSideMenuDelegate.toggleLeft();
         }
         authorization.logOut($scope.onFacebookLogOutSuccess);
-
-    }
+    };
 
     $scope.$watch(function () {
             return Facebook.isReady();
@@ -807,7 +803,6 @@ app.factory('ChapterVerses', function ($resource) {
             $scope.loggedIn = false;
             //do some cleaning
         }
-
         return status;
     };
 
@@ -852,7 +847,7 @@ app.factory('ChapterVerses', function ($resource) {
                 }
             }
         );
-    }
+    };
 
 
     //     $scope.checkUserLoginStatus();
@@ -882,15 +877,13 @@ app.factory('ChapterVerses', function ($resource) {
         for (var i = 0; i < tagList.length; i++) {
             tagParameter[i] = tagList[i].id;
         }
-
         return tagParameter.join(',');
     };
 
     $scope.getIdArrayFromCommaSeparated = function (tagList) {
         if(tagList.length==0){
             return [];
-        }
-        else{
+        } else{
             return tagList.split(',');
         }
     };
@@ -980,8 +973,6 @@ app.factory('ChapterVerses', function ($resource) {
         });
     };
 
-
-
     $scope.setMobileAnnotationEditorCircleListForSelection = function(circles){
         //reset mobileAnnotationEditorCircleListForSelection
         for (var checkboxIndex = 0; checkboxIndex < $scope.mobileAnnotationEditorCircleListForSelection.length; checkboxIndex++) {
@@ -995,82 +986,47 @@ app.factory('ChapterVerses', function ($resource) {
                     $scope.mobileAnnotationEditorCircleListForSelection[checkboxIndex].selected=true;
                 }
             }
-
         }
     };
 
-
-
-    $scope.showEditor = function (annotation, position) {
-
-        //debug for annotation start - end
-        //this will be used after html structure change
-        console.log(annotation.ranges[0].start);
-
-
-
-        //prepare canView circles.
-        if (typeof annotation.annotationId != 'undefined') {
-            $scope.ViewCircles = [];
-            $scope.ViewUsers = [];
-            $scope.yrmcevres = [];
-            $scope.yrmkisis = [];
-            $scope.restoreScopeAnnotationPermissions(annotation.annotationId);
-        }
-        else {
-            if ($scope.ViewCircles.length == 0 && $scope.ViewUsers.length == 0 && $scope.yrmcevres.length == 0 && $scope.yrmkisis.length == 0) {
-                //all empty //share to everyone by default
-
-                $scope.ViewCircles.push({'id': '-1', 'name': 'Herkes'});
-            }
-            else { //use previous values.
-
-            }
-            //do some special for mobile widget
-            $scope.setMobileAnnotationEditorCircleListForSelection($scope.ViewCircles);
-        }
-
-
-        var newTags = [];
-
-        //Volkan Ekledi.
-        var cvrtags = [];
-        if (typeof annotation.vcircles != 'undefined') {
-            for (var i = 0; i < annotation.vcircles.length; i++) {
-                cvrtags.push({"id": annotation.vcircles[i]});
-
-            }
-        }
-        //
-
-        if (typeof annotation.tags != 'undefined') {
-            for (var i = 0; i < annotation.tags.length; i++) {
-                newTags.push({"name": annotation.tags[i]});
-            }
-        }
-
-        $scope.annotationModalData = annotation;
-        $scope.annotationModalDataTagsInput = newTags;
-        if (typeof $scope.annotationModalData.text == 'undefined') {
-            $scope.annotationModalData.text = "";
-        }
-        //set default color
-        if (typeof $scope.annotationModalData.colour == 'undefined') {
-            $scope.annotationModalData.colour = 'yellow';
-        }
-        $scope.annotationModalDataVerse = Math.floor(annotation.verseId / 1000) + ":" + annotation.verseId % 1000;
-
-        $scope.scopeApply();
-        if (!config_data.isMobile) {
-            $('#annotationModal').modal('show');
-
-        } else {
-
-            $scope.openModal('editor');
-        }
-
+    $scope.showEditor = function (annotation, position, postCallback) {
+        $timeout(function(){
+            $scope.$broadcast("show_editor",{annotation: annotation, position:position, postCallback: postCallback});
+        });
     };
 
+    $scope.showAnnotationDeleteModal = function (index, postCallback) {
+        $timeout(function(){
+            $scope.$broadcast("show_delete_editor_modal",{index:index, postCallback: postCallback});
+        });
+    };
+
+    $scope.colorTheAnnotation = function (annotation) {
+        var cat = annotation.colour;
+        var highlights = annotation.highlights;
+        if (cat) {
+            for (var h in highlights) {
+                var classes = highlights[h].className.split(" ");
+                var newClass = "";
+
+                //remove the class if already coloured
+                for (var theClass in classes) {
+                    if (classes[theClass].indexOf("a_hl_") > -1) { //the class is a colour class
+                        classes.splice(theClass, 1);
+                    }
+                }
+                newClass = classes.join(" ");
+                newClass = newClass + ' a_hl_' + cat;
+                highlights[h].className = newClass;
+            }
+        }
+    };
+
+    $scope.colorAnnotations = function (annotations) {
+        for (var annotationIndex in annotations) {
+            $scope.colorTheAnnotation(annotations[annotationIndex]);
+        }
+    };
 
     //go to chapter for general purpuse.
     $scope.goToChapter = function () {
@@ -1386,7 +1342,6 @@ app.factory('ChapterVerses', function ($resource) {
         });
 
         $scope.$on('onlineNetworkConnection', function() {
-            console.log("online");
             $scope.internet_display_show = true;
             $scope.internet_display_style = {"background-color": "green"};
             $scope.internet_display_message = "Internet bağlantınız sağlandı.";
@@ -1396,7 +1351,6 @@ app.factory('ChapterVerses', function ($resource) {
         });
 
         $scope.$on('offlineNetworkConnection', function(message) {
-            console.log("offline : " + JSON.stringify(message.config));
             $scope.internet_display_show = true;
             $scope.internet_display_style = {"background-color": "orange"};
             $scope.internet_display_message = "Internet bağlantınız kesildi. Yapabileceğiniz işlemler kısıtlıdır.";
@@ -1500,7 +1454,7 @@ app.factory('ChapterVerses', function ($resource) {
         });
 
         if (!$scope.checkUserLoginStatus() && !$scope.isAllowUrlWithoutLogin()){
-            $location.path('login/');
+            $location.path('/login/');
         }
     };//end of init controller
 
