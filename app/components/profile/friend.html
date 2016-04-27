@@ -13,7 +13,6 @@
                 <div ng-if="feed.study_type == 'annotation'" class="well" style="padding-top: 10px !important;padding-bottom: 10px !important;">
                     <div class="s_a_header">
                         <a href='' ng-click="showVerseDetail(feed.anno_verse_id, usersForSearch, circlesForSearch)" data-target='#detailedVerseModal' data-dismiss='modal' data-toggle='modal'>{{feed.anno_verse_id / 1000 | number:0}}:{{feed.anno_verse_id % 1000}}</a>
-                        <div style="float:right;">{{feed.owner_name | limitTo: 25}}</div>
                     </div>
                     <div class="small_space">&nbsp;</div>
                     <div>
@@ -45,9 +44,6 @@
                     </div>
                 </div>
                 <div ng-if="feed.study_type == 'inference'" class="well" style="padding-top: 10px !important;padding-bottom: 10px !important;">
-                    <div class="s_a_header">
-                        <div style="float:right;">{{feed.owner_name | limitTo: 25}}</div>
-                    </div>
                     <div class="small_space">&nbsp;</div>
                     <div class="row">
                         <div class="col-sm-2" style="width:200px; height:150px">

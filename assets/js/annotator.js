@@ -1231,7 +1231,6 @@
             return this;
         };
 
-
         Annotator.prototype.onEditorHide = function () {
             this.publish('annotationEditorHidden', [this.editor]);
             return this.ignoreMouseup = false;

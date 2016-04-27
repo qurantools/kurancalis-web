@@ -50,7 +50,10 @@ angular.module('ionicApp')
         };
 
         $scope.showEditor = function(annotation){
-            $scope.showEditorModal(annotation, position, $scope.updateAnnotation);
+            annotation.verseId = annotation.anno_verse_id;
+            annotation.text = annotation.content;
+            annotation.quote = annotation.anno_quote;
+            $scope.showEditorModal(annotation, -1, $scope.updateAnnotation);
         };
 
         $scope.updateAnnotation = function (annotation) {
