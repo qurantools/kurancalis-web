@@ -470,10 +470,8 @@ angular.module('ionicApp')
 
         };
 
-        var parentShowEditor = $scope.showEditor;
         $scope.showEditor = function (annotation, position) {
-            //call parent show editor
-            parentShowEditor(annotation, position, $scope.submitEditor);
+            $scope.showEditorModal(annotation, position, $scope.submitEditor);
         };
 
         $scope.annotate_it = function () {
@@ -1030,7 +1028,7 @@ angular.module('ionicApp')
                 } else if (id == 'annotations_on_page_sort') {
                     $scope.modal_annotations_on_page_sort.show();
                 } else if (id == 'editor') {
-                    $scope.modal_editor.show();
+                    $scope.getModalEditor().show();
                 } else if (id == 'homesearch') {
                     $scope.restoreMobileDetailedSearchCircleSelections();
                     $scope.modal_home_search.show();
@@ -1323,16 +1321,6 @@ angular.module('ionicApp')
             $timeout(function() {
                 $scope.$broadcast("displayTutorial",{id:"chapter"})
             },2000);
-
-            if (config_data.isMobile){
-                $ionicModal.fromTemplateUrl('components/partials/editor_modal.html', {
-                    scope: $scope,
-                    //animation: 'slide-in-left',
-                    id: 'editor'
-                }).then(function (modal) {
-                    $scope.setModalEditor(modal);
-                });
-            }
         };
 
         $scope.initializeActionSheetButtons = function(){

@@ -29,15 +29,17 @@
         <div class="row" id="detailed_verse_content">
             <div class="col-xs-12 bb">
                 <!-- translations-->
-                <div class="well translations col-xs-12" id="v_{{verse.id}}">
-                    <div ng-repeat="translation in verse.translations">
-                        <div class="col-xs-11" id="detail_t_{{translation.id}}">
-                            <div class="authorDiv_{{authorMap[translation.authorId].color}}">
-                                {{authorMap[translation.authorId].name}}
-                            </div>
-                            <div id="tt_{{translation.id}}"
-                                 ng-class="{translation_rtl: authorMap[translation.authorId].language=='ar', translation_content: authorMap[translation.authorId].language!='ar'}"><span
-                                    ng-bind-html="translation.content | with_detailed_footnote_link:translation.id:translation.authorId | to_trusted"></span>
+                <div id="detailed_translations">
+                    <div class="well translations col-xs-12" id="v_{{verse.id}}">
+                        <div ng-repeat="translation in verse.translations">
+                            <div class="col-xs-11" id="detail_t_{{translation.id}}">
+                                <div class="authorDiv_{{authorMap[translation.authorId].color}}">
+                                    {{authorMap[translation.authorId].name}}
+                                </div>
+                                <div id="tt_{{translation.id}}"
+                                     ng-class="{translation_rtl: authorMap[translation.authorId].language=='ar', translation_content: authorMap[translation.authorId].language!='ar'}"><span
+                                        ng-bind-html="translation.content | with_detailed_footnote_link:translation.id:translation.authorId | to_trusted"></span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -98,7 +100,18 @@
                             </div>
                         </div>
                         <div class="item item-divider">
-                            <div style="float: left">{{annotation.updated | date: 'dd/MM/yyyy HH:mm:ss'}}</div>
+                            <div style="float: left">{{annotation.updated | date: 'dd/MM/yyyy'}}</div>
+                            <div style="float: right">
+                                <button type="button" class="button button-balanced button-small"
+                                        ng-click="showEditor(annotation)"
+                                        ng-if="annotation.userId==user.id">
+                                    <i class="fa fa-pencil-square-o "></i>
+                                </button>
+                                <button type="button" class="button button-assertive button-small"
+                                        ng-click="deleteAnnotation($index)"
+                                        ng-if="annotation.userId==user.id">
+                                    <i class="fa fa-trash-o"></i></button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -162,6 +175,7 @@
         </div>
         <div style="height:20px"></div>
     </ion-content>
+    <div ng-controller="annotationEditorController"></div>
     <!--ion-footer-bar align-title="center" class="bar-stable" style="height:50px">
         <div class="button-bar">
             <button class="footer-bar-item item-right button button-positive" style="font-size: 20px; !important;" ng-click="displayAnnotationsWithTag();closeModal('tagged_verse')">

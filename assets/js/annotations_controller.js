@@ -277,11 +277,8 @@ angular.module('ionicApp')
             $scope.allAnnotationsOrderBy = selectedOrderOption;
             $scope.allAnnotationsOpts.start = 0;
             $scope.get_all_annotations();
-        }
+        };
 
-
-
-        $scope.tempAnnotation;
         //delete operation for annotations page
         $scope.deleteAnnotation = function (annotation) {
 
@@ -552,14 +549,6 @@ angular.module('ionicApp')
                     $scope.modal_all_annotations_sort = modal
                 });
 
-                $ionicModal.fromTemplateUrl('components/partials/editor_modal.html', {
-                    scope: $scope,
-                    animation: 'slide-in-left',
-                    id: 'editor'
-                }).then(function (modal) {
-                    $scope.setModalEditor(modal);
-                });
-
                 $ionicModal.fromTemplateUrl('components/partials/add_canviewuser.html', {
                     scope: $scope,
                     //animation: 'slide-in-right',
@@ -655,9 +644,8 @@ angular.module('ionicApp')
 
         };
 
-        var parentShowEditor = $scope.showEditor;
         $scope.showEditor = function (annotation, position) {
-            parentShowEditor(annotation, position, $scope.submitEditor);
+            $scope.showEditorModal(annotation, position, $scope.submitEditor);
         };
 
         $scope.editAnnotation= function (annotation){

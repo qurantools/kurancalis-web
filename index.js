@@ -227,7 +227,6 @@ if (config_data.isMobile == false) { //false
                 templateUrl: 'app/components/home/homeView.html',
                 reloadOnSearch: false,
                 pageTitle: 'Kuran Çalış - Sureler'
-
             })
             .when('/annotations/', {
                 controller: 'AnnotationsCtrl',
@@ -294,6 +293,30 @@ if (config_data.isMobile == false) { //false
                 templateUrl: 'app/components/lists/verse_list.html',
                 reloadOnSearch: false,
                 pageTitle: 'Ayet Listelerim'
+            })
+            .when('/profile/user/', {
+                controller: 'ProfileController',
+                templateUrl: 'app/components/profile/friend.html',
+                reloadOnSearch: false,
+                pageTitle: 'Kuran Çalış - Kullanıcı Profili'
+            })
+            .when('/profile/user/:friendName/', {
+                controller: 'ProfileController',
+                templateUrl: 'app/components/profile/friend.html',
+                reloadOnSearch: false,
+                pageTitle: 'Kuran Çalış - Kullanıcı Profili'
+            })
+            .when('/profile/circle/', {
+                controller: 'ProfileController',
+                templateUrl: 'app/components/profile/circle.html',
+                reloadOnSearch: false,
+                pageTitle: 'Kuran Çalış - Çevre Zaman Tüneli'
+            })
+            .when('/profile/circle/:circleId/', {
+                controller: 'ProfileController',
+                templateUrl: 'app/components/profile/circle.html',
+                reloadOnSearch: false,
+                pageTitle: 'Kuran Çalış - Çevre Zaman Tüneli'
             })
             .when('/', {
                 redirectTo: '/translations/'
@@ -722,6 +745,10 @@ app.factory('ChapterVerses', function ($resource) {
             retcp = "search_translations";
         } else if ( url == "/lists/verse"){
             retcp = "verse_lists";
+        } else if ( url.indexOf("/profile/user/") > -1){
+            retcp = "profile_user";
+        } else if ( url.indexOf("/profile/circle/") > -1){
+            retcp = "profile_circle";
         } else {
             retcp = 'home';
         }
@@ -989,7 +1016,7 @@ app.factory('ChapterVerses', function ($resource) {
         }
     };
 
-    $scope.showEditor = function (annotation, position, postCallback) {
+    $scope.showEditorModal = function (annotation, position, postCallback) {
         $timeout(function(){
             $scope.$broadcast("show_editor",{annotation: annotation, position:position, postCallback: postCallback});
         });
@@ -1357,12 +1384,15 @@ app.factory('ChapterVerses', function ($resource) {
         });
 
         if (config_data.isMobile) {
-
-            $scope.setModalEditor= function(modal){
+            $ionicModal.fromTemplateUrl('components/partials/editor_modal.html', {
+                scope: $scope,
+                animation: 'slide-in-left',
+                id: 'editor'
+            }).then(function (modal) {
                 $scope.modal_editor = modal;
-            };
+            });
 
-            $scope.getModalEditor= function(){
+            $scope.getModalEditor = function(){
                 return $scope.modal_editor;
             };
 

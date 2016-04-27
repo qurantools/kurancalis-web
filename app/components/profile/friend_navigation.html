@@ -1,0 +1,43 @@
+<nav class="navbar navbar-default navbar-fixed-top container" role="navigation">
+    <div>
+        <form>
+            <div class="row" style="padding-left: 15px;">
+                <div style="float: left;">
+                    <button onclick="toggleLeftPanel()" class="btn btn-primary"><i
+                            class="fa fa-bars"></i> MENÜ
+                    </button>
+                </div>
+                <div style="float: left; padding-left: 20px;width: 23%;">
+                    <div>
+                        <input type="text" class="form-control" ng-model="kisieklead.text" placeholder="Kişi ismi"
+                               ng-change="kisilistele(kisieklead.text)"/>
+                    </div>
+                    <div>
+                        <table ng-repeat="item in kisiliste" style="margin-top: 15px; margin-bottom: 15px;">
+                            <tr>
+                                <td style="width: 70px; padding-right: 15px; padding-left: 5px; padding-top: 5px; padding-bottom: 5px">
+                                    <img height="50" width="50" src={{item.photo}}>
+                                </td>
+                                <td style="width: 100%">
+                                    <a class="btn btn-primary btn-wide" ng-click="navigateToProfile('{{item.id}}')">{{item.name}}</a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div ng-show="facebookIsReady" class="facebook_area">
+                    <div ng-if="user==null">
+                        <button type="button" id="login" ng-click="login()" class="btn btn-primary">
+                            <b>Birlikte</b> dosdoğru yolu bulmak için > <img src="assets/img/fb.png" width="25" height="25"> Giriş
+                        </button>
+                    </div>
+                    <div ng-if="user!=null">
+                        <img ng-src="{{user.photo}}" height="40"/>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!-- /.navbar-collapse -->
+</nav>
+<!-- /navbar -->

@@ -8,6 +8,12 @@
             <div class="side-menu">
                 <div class="side-menu-container">
                     <ul class="nav navbar-nav">
+                        <li ng-class="{active: currentPage == 'profile_user'}">
+                            <a href="#/profile/user/" class="leftMenuLink">Zaman Tüneli - Kişiler</a>
+                        </li>
+                        <li ng-class="{active: currentPage == 'profile_circle'}">
+                            <a href="#/profile/circle/" class="leftMenuLink">Zaman Tüneli - Çevreler</a>
+                        </li>
                         <li ng-class="{active: currentPage == 'home'}">
                             <a href="#/translations/" class="leftMenuLink">Sureler</a>
                         </li>

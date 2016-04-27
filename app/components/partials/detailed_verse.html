@@ -125,7 +125,7 @@
                             <!-- annotations-->
                             <div ng-show="detailedAnnotations.length > 0" style="margin-top: 5px;">
                                 <div style="font-size: 20px"><i class='fa' style='font-size: 1.3em;margin-right: 10px;'></i><br><b>Ayet Notları</b></div>
-                                <div ng-repeat="annotation in detailedAnnotations" class="box">
+                                <div ng-repeat="annotation in detailedAnnotations | filter:{annotationId:'!!'}" class="box">
                                     <div class="s_a_header">
                                         <div style="float:left">{{annotation.updated | date: 'dd/MM/yyyy'}}</div>
                                         <div style="float:right;">{{annotation.userName | limitTo: 25}}</div>

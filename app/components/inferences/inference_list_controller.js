@@ -433,14 +433,6 @@ angular.module('ionicApp')
                     $scope.modal_all_inferences_sort = modal
                 });
 
-                $ionicModal.fromTemplateUrl('components/partials/editor_modal.html', {
-                    scope: $scope,
-                    animation: 'slide-in-left',
-                    id: 'editor'
-                }).then(function (modal) {
-                    $scope.setModalEditor(modal);
-                });
-
                 $ionicModal.fromTemplateUrl('components/partials/add_canviewuser.html', {
                     scope: $scope,
                     //animation: 'slide-in-right',

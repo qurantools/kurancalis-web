@@ -1,5 +1,5 @@
 angular.module('ionicApp')
-    .controller('DetailedVerseCtrl', function ($scope, $timeout, Restangular, $location, authorization, $ionicModal, $ionicActionSheet, dataProvider, $ionicScrollDelegate) {
+    .controller('DetailedVerseCtrl', function ($scope, $timeout, Restangular, $location, authorization, $ionicModal, $ionicActionSheet, dataProvider, $ionicScrollDelegate, $ionicPopup) {
 
         $scope.detailedChapters = [];
         $scope.detailedVerseCircles = [];
@@ -121,7 +121,11 @@ angular.module('ionicApp')
             $scope.translationDivMap = [];
             for (var i = 0; i < data.length; i++) {
                 for (var j = 0; j < data[i].translations.length; j++) {
-                    $scope.translationDivMap[data[i].translations[j].id] = "/div[1]/div[1]/div[" + (j + 1) + "]/div[1]/div[2]/span[1]";
+                    if (!config_data.isMobile){
+                        $scope.translationDivMap[data[i].translations[j].id] = "/div[1]/div[1]/div[" + (j + 1) + "]/div[1]/div[2]/span[1]";
+                    }else {
+                        $scope.translationDivMap[data[i].translations[j].id] = "/div[1]/div[" + (j + 1) + "]/div[1]/div[2]/span[1]";
+                    }
                 }
             }
             $scope.verse = data[0];
@@ -174,16 +178,10 @@ angular.module('ionicApp')
             annotator.subscribe("adderClicked", $scope.showEditor);
             annotator.subscribe("editClicked", $scope.showEditor);
             annotator.subscribe("annotationDeleted", $scope.deleteAnnotationFromScope);
-            /*annotator.subscribe("highlightClicked", $scope.onHighlightClicked);
-             annotator.subscribe("rangeNormalizeFail",function(anno){
-             console.log("verseId:"+anno.verseId+" start:"+anno.ranges[0].start);
-             });*/
         };
 
-        var parentShowEditor = $scope.showEditor;
         $scope.showEditor = function (annotation, position) {
-            //call parent show editor
-            parentShowEditor(annotation, position, $scope.submitEditor);
+            $scope.showEditorModal(annotation, position, $scope.submitEditor);
         };
 
         $scope.editAnnotation = function (index){

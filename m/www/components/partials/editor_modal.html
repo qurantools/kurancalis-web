@@ -1,5 +1,4 @@
-<div class="modal modal-fullscreen" >
-
+<div class="modal modal-fullscreen" ng-controller="annotationEditorController">
     <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced">
         <ion-nav-title></ion-nav-title>
         <ion-nav-buttons side="left">
@@ -15,7 +14,7 @@
         </ion-nav-buttons>
     </ion-nav-bar>
 
-    <ion-content delegate-handle="editor" >
+    <ion-content delegate-handle="editor">
         <div style="height:65px"></div>
 
         <strong>{{annotationModalDataVerse}}</strong>

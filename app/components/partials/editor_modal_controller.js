@@ -1,5 +1,5 @@
 angular.module('ionicApp')
-    .controller('annotationEditorController', function ($scope, $q, $routeParams, $location, $timeout, ChapterVerses, User, Facebook, Restangular, localStorageService, $document, $filter, $rootScope, $state, $stateParams, $ionicModal, $ionicScrollDelegate, $ionicPosition, authorization) {
+    .controller('annotationEditorController', function ($scope, $q, $routeParams, $location, $timeout) {
 
         $scope.callback = function (){};
         $scope.index = -1;
@@ -16,8 +16,6 @@ angular.module('ionicApp')
                 if ($scope.ViewCircles.length == 0 && $scope.ViewUsers.length == 0 && $scope.yrmcevres.length == 0 && $scope.yrmkisis.length == 0) {
                     //all empty //share to everyone by default
                     $scope.ViewCircles.push({'id': '-1', 'name': 'Herkes'});
-                } else { //use previous values.
-
                 }
                 //do some special for mobile widget
                 $scope.setMobileAnnotationEditorCircleListForSelection($scope.ViewCircles);
@@ -68,15 +66,32 @@ angular.module('ionicApp')
                 $scope.annotationModalData.canViewUsers = tagParameters.canViewUsers;
                 $scope.annotationModalData.canCommentUsers = tagParameters.canCommentUsers;
                 $scope.annotationModalData.tags = tagParameters.tags;
-                $('#annotationModal').modal('hide');
+
                 $scope.hideProgress("submitEditor");
                 $scope.callback($scope.annotationModalData);
+                if (config_data.isMobile){
+                    $scope.closeModal('editor');
+                }else{
+                    $('#annotationModal').modal('hide');
+                }
             },350);
         };
 
         $scope.mdeleteAnnotation = function(){
             $scope.callback($scope.index);
             $("#deleteAnnotationModal").modal("hide");
+        };
+
+        $scope.openModal = function(id){
+            if (id == 'editor'){
+                $scope.getModalEditor().show();
+            }
+        };
+
+        $scope.closeModal = function(id){
+            if (id == 'editor'){
+                $scope.getModalEditor().hide();
+            }
         };
 
         $scope.init = function(){
