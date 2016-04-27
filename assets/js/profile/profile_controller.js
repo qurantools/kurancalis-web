@@ -53,6 +53,9 @@ angular.module('ionicApp')
             annotation.verseId = annotation.anno_verse_id;
             annotation.text = annotation.content;
             annotation.quote = annotation.anno_quote;
+            annotation.translationId = annotation.anno_translation_id;
+            annotation.translationVersion = 1;
+            annotation.annotationId = annotation.id;
             $scope.showEditorModal(annotation, -1, $scope.updateAnnotation);
         };
 
@@ -88,7 +91,10 @@ angular.module('ionicApp')
 
             var data = postData.join("&");
             var annotationRestangular = Restangular.one("annotations", jsonData.annotationId);
-            return annotationRestangular.customPUT(data, '', '', headers);
+            annotationRestangular.customPUT(data, '', '', headers).then(function(data){
+                annotation.content = data.text;
+                annotation.colour = data.colour;
+            });
         };
 
         $scope.deleteAnnotation = function (annotation) {
