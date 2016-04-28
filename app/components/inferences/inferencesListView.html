@@ -28,7 +28,7 @@
     <div>
         <div ng-repeat="inference in inferences" class="box">
             <div class="s_a_header">
-                <div style="float:right;">{{inference.userName | limitTo: 25}}</div>
+                <div style="float:right;"><a ng-href="#/profile/user/{{inference.userId}}/" style="color: darkblue;">{{inference.userName | limitTo: 25}}</a></div>
             </div>
             <div class="small_space">&nbsp;</div>
             <div>
