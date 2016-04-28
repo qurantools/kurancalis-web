@@ -9,67 +9,71 @@
             &nbsp;
         </div>
         <div class="col-xs-9">
-            <div ng-repeat="feed in feeds">
-                <div ng-if="feed.study_type == 'annotation'" class="well" style="padding-top: 10px !important;padding-bottom: 10px !important;">
-                    <div class="s_a_header">
-                        <a href='' ng-click="showVerseDetail(feed.anno_verse_id, usersForSearch, circlesForSearch)" data-target='#detailedVerseModal' data-dismiss='modal' data-toggle='modal'>{{feed.anno_verse_id / 1000 | number:0}}:{{feed.anno_verse_id % 1000}}</a>
-                    </div>
-                    <div class="small_space">&nbsp;</div>
-                    <div>
-                        <blockquote
-                                ng-bind-html="feed.translation_content | mark_verse_annotation:feed:1 | newLineAllowed | to_trusted"></blockquote>
-                    </div>
-                    <div class="small_space">&nbsp;</div>
-                    <div class="s_a_text">
-                        <span ng-bind-html="feed.content | newLineAllowed | to_trusted"></span>
-                    </div>
-                    <div class="small_space">&nbsp;</div>
-                    <button ng-repeat="annotationTag in feed.tags" class="btn btn-xs btn-info verse_tag"
-                            ng-click="goToVerseTag(feed.anno_author_id, feed.anno_verse_id, annotationTag, [], [])"
-                            data-target='#taggedVerseModal' data-dismiss='modal' data-toggle='modal'>
-                        {{annotationTag}}
-                    </button>
-                    <div class="small_space">&nbsp;</div>
-                    <div class="row" style="padding:0 15px">
-                        <div style="float: left">{{feed.updated | date: 'dd/MM/yyyy HH:mm:ss'}}</div>
-                        <div style="float: right">
-                            <button type="button" class="btn btn-primary btn-xs" ng-click="showEditor(feed)"
-                                    ng-if="feed.owner_id==user.id"><i
-                                    class="fa fa-pencil-square-o "></i>
-                            </button>
-                            <button type="button" class="btn btn-danger btn-xs" ng-click="deleteAnnotation(feed)"
-                                    ng-if="feed.owner_id==user.id"><i
-                                    class="fa fa-trash-o"></i></button>
+            <div infinite-scroll='loadMoreFriendsFeeds()' infinite-scroll-disabled='isLoading' infinite-scroll-distance='2' infinite-scroll-immediate-check="false">
+                <div ng-repeat="feed in feeds">
+                    <div ng-if="feed.study_type == 'annotation'" class="well" style="padding-top: 10px !important;padding-bottom: 10px !important;">
+                        <div class="s_a_header">
+                            <a href='' ng-click="showVerseDetail(feed.anno_verse_id, usersForSearch, circlesForSearch)" data-target='#detailedVerseModal' data-dismiss='modal' data-toggle='modal'>{{feed.anno_verse_id / 1000 | number:0}}:{{feed.anno_verse_id % 1000}}</a>
                         </div>
-                    </div>
-                </div>
-                <div ng-if="feed.study_type == 'inference'" class="well" style="padding-top: 10px !important;padding-bottom: 10px !important;">
-                    <div class="small_space">&nbsp;</div>
-                    <div class="row">
-                        <div class="col-sm-2" style="width:200px; height:150px">
-                            <a href="#/inference/display/{{feed.id}}/">
-                                <img style="max-width: 200px; max-height: 150px" ng-if="feed.inf_image != 'undefinedp'" ng-src="{{feed.inf_image}}">
-                            </a>
+                        <div class="small_space">&nbsp;</div>
+                        <div>
+                            <blockquote
+                                    ng-bind-html="feed.translation_content | mark_verse_annotation:feed:1 | newLineAllowed | to_trusted"></blockquote>
                         </div>
-                        <div class="col-sm-9">
-                            <div style="text-align: center;" ><a href="#/inference/display/{{feed.id}}/"><h4 style="margin-top:0;">
-                                {{feed.inf_title}}</h4>
-                            </a></div>
-                            <div style="padding-left:10px;">
-                                <span ng-bind-html="feed.brief | to_trusted"></span>
+                        <div class="small_space">&nbsp;</div>
+                        <div class="s_a_text">
+                            <span ng-bind-html="feed.content | newLineAllowed | to_trusted"></span>
+                        </div>
+                        <div class="small_space">&nbsp;</div>
+                        <button ng-repeat="annotationTag in feed.tags" class="btn btn-xs btn-info verse_tag"
+                                ng-click="goToVerseTag(feed.anno_author_id, feed.anno_verse_id, annotationTag, [], [])"
+                                data-target='#taggedVerseModal' data-dismiss='modal' data-toggle='modal'>
+                            {{annotationTag}}
+                        </button>
+                        <div class="small_space">&nbsp;</div>
+                        <div class="row" style="padding:0 15px">
+                            <div style="float: left">{{feed.updated | date: 'dd/MM/yyyy HH:mm:ss'}}</div>
+                            <div style="float: right">
+                                <button type="button" class="btn btn-primary btn-xs" ng-click="showEditor(feed)"
+                                        ng-if="feed.owner_id==user.id"><i
+                                        class="fa fa-pencil-square-o "></i>
+                                </button>
+                                <button type="button" class="btn btn-danger btn-xs" ng-click="deleteAnnotation(feed)"
+                                        ng-if="feed.owner_id==user.id"><i
+                                        class="fa fa-trash-o"></i></button>
                             </div>
                         </div>
                     </div>
-                    <div style="clear: both"></div>
-                    <div class="has-footer small_space">&nbsp;</div>
-                    <div ng-repeat="inferenceTag in feed.tags" class="tag label label-info s_a_tag">
-                        {{inferenceTag}}
+                    <div ng-if="feed.study_type == 'inference'" class="well" style="padding-top: 10px !important;padding-bottom: 10px !important;">
+                        <div class="small_space">&nbsp;</div>
+                        <div class="row">
+                            <div class="col-sm-2" style="width:200px; height:150px">
+                                <a href="#/inference/display/{{feed.id}}/">
+                                    <img style="max-width: 200px; max-height: 150px" ng-if="feed.inf_image != 'undefinedp'" ng-src="{{feed.inf_image}}">
+                                </a>
+                            </div>
+                            <div class="col-sm-9">
+                                <div style="text-align: center;" ><a href="#/inference/display/{{feed.id}}/"><h4 style="margin-top:0;">
+                                    {{feed.inf_title}}</h4>
+                                </a></div>
+                                <div style="padding-left:10px;">
+                                    <span ng-bind-html="feed.brief | to_trusted"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="clear: both"></div>
+                        <div class="has-footer small_space">&nbsp;</div>
+                        <div ng-repeat="inferenceTag in feed.tags" class="tag label label-info s_a_tag">
+                            {{inferenceTag}}
+                        </div>
+                        <div class="small_space">&nbsp;</div>
+                        <div class="row" style="padding:0 15px">
+                            <div style="float: left">{{feed.updated | date: 'dd/MM/yyyy HH:mm:ss'}}</div>
+                        </div>
                     </div>
-                    <div class="small_space">&nbsp;</div>
-                    <div class="row" style="padding:0 15px">
-                        <div style="float: left">{{feed.updated | date: 'dd/MM/yyyy HH:mm:ss'}}</div>
-                    </div>
+                    <div style='clear: both;'></div>
                 </div>
+                <div ng-show='isLoading'>Loading data...</div>
             </div>
         </div>
     </div>

@@ -5,28 +5,41 @@ angular.module('ionicApp')
         $scope.circleId = -1;
         $scope.feeds = [];
         $scope.kisiliste = [];
+        $scope.isLoading = false;
 
         $scope.fetchFriendFeeds = function(friendName, start){
+            if ($scope.isLoading)
+                return;
+            $scope.isLoading = true;
             var feedRestangular = Restangular.one("feed/user/" + friendName);
             $scope.feedParams = [];
             $scope.feedParams.start = start;
             $scope.feedParams.limit = 10;
             $scope.feedParams.orderBy = "updated";
             feedRestangular.customGET("", $scope.feedParams, {'access_token': $scope.access_token}).then(function (data) {
-                $scope.feeds = data;
+                _.forEach(data, function(item){
+                    $scope.feeds.push(item);
+                });
+                $scope.isLoading = false;
             }, function (err){
 
             });
         };
 
         $scope.fetchCircleFeeds = function(circleId, start){
+            if ($scope.isLoading)
+                return;
+            $scope.isLoading = true;
             var feedRestangular = Restangular.one("feed/circle/"+ circleId);
             $scope.feedParams = [];
             $scope.feedParams.start = start;
             $scope.feedParams.limit = 10;
             $scope.feedParams.orderBy = "updated";
             feedRestangular.customGET("", $scope.feedParams, {'access_token': $scope.access_token}).then(function (data) {
-                $scope.feeds = data;
+                _.forEach(data, function(item){
+                    $scope.feeds.push(item);
+                });
+                $scope.isLoading = false;
             }, function (err){
 
             });
@@ -139,6 +152,26 @@ angular.module('ionicApp')
 
         $scope.profileCircleChanged = function(circle){
             $location.path("/profile/circle/"+circle+"/");
+        };
+
+        $scope.loadMoreFriendsFeeds = function(){
+            if ($scope.friendName == "")
+                return;
+            var lastItemDate = Math.floor(Date.now() / 1000);
+            if ($scope.feeds.length > 0){
+                lastItemDate = $scope.feeds[$scope.feeds.length -1].updated / 1000;
+            }
+            $scope.fetchFriendFeeds($scope.friendName, lastItemDate);
+        };
+
+        $scope.loadMoreCirclesFeeds = function(){
+            if ($scope.circleId == -1)
+                return;
+            var lastItemDate = Math.floor(Date.now() / 1000);
+            if ($scope.feeds.length > 0){
+                lastItemDate = $scope.feeds[$scope.feeds.length -1].updated / 1000;
+            }
+            $scope.fetchCircleFeeds($scope.circleId, lastItemDate);
         };
 
         $scope.initializeProfileController = function () {
