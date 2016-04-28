@@ -11,8 +11,13 @@ angular.module('ionicApp')
             if ($scope.isLoading)
                 return;
             $scope.isLoading = true;
-            var feedRestangular = Restangular.one("feed/user/" + friendName);
+            var feedRestangular = Restangular.one("feed/user/");
             $scope.feedParams = [];
+            if (/^\d+$/.test(friendName)){
+                $scope.feedParams.user_id = friendName;
+            }else{
+                $scope.feedParams.user_name = friendName;
+            }
             $scope.feedParams.start = start;
             $scope.feedParams.limit = 10;
             $scope.feedParams.orderBy = "updated";

@@ -9,7 +9,7 @@
             <div ng-repeat="feed in feeds">
                 <div class="col-xs-2">
                     <div class="well col" style="text-align: center;padding-top: 11px !important;padding: 0px;margin-bottom: 0px;">
-                        <img style="max-width: 80px; max-height: 60px;" ng-if="feed.owner_photo != 'undefinedp'" ng-src="{{feed.owner_photo}}"><br/>
+                        <img style="max-width: 120px; max-height: 90px;border-radius: 50%;" ng-if="feed.owner_photo != 'undefinedp'" ng-src="{{feed.owner_photo}}"><br/>
                         <div>{{feed.owner_name | limitTo: 25}}</div>
                     </div>
                 </div>
@@ -76,6 +76,7 @@
                     </div>
                 </div>
             </div>
+            <div ng-show='isLoading' style="text-align: center"><img src="assets/img/loading.gif" width="20" height="20"></div>
         </div>
     </div>
     <!-- /row-->

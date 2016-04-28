@@ -5,8 +5,30 @@
     <div class="nav-bottom"></div>
 
     <div class="row" style="margin-top: 10px;">
-        <div class="col-xs-3">
-            &nbsp;
+        <div class="col-xs-3 well" style="text-align: center">
+            <div style="visibility: hidden;height: 10px;"></div>
+            <div style="visibility: hidden;height: 10px;"></div>
+            <div>
+                <img style="max-width: 160px; max-height: 120px;" ng-src="http://graph.facebook.com/10152385368917772/picture?type=large"><br/>
+                <div><b>Kurtuluş Öksüztepe</b></div>
+            </div>
+            <div style="visibility: hidden;height: 10px;"></div>
+            <div>
+                <div><a href="http://www.facebook.com/10152385368917772" target="_blank"><img src="assets/img/fb.png" width="80" height="80"/></a></div>
+                <div><a href="http://www.facebook.com/10152385368917772" target="_blank">Facebook Profilini Gör</a></div>
+            </div>
+            <div style="visibility: hidden;height: 10px;"></div>
+            <div>
+                <a class="btn btn-primary">Çevreme Ekle</a>
+            </div>
+            <div style="visibility: hidden;height: 10px;"></div>
+            <div style="visibility: hidden;height: 10px;"></div>
+            <div style="text-align: left">
+                <div>Üyelik : 11/11/2011</div>
+                <div>Toplam Ayet Notu : 2011</div>
+                <div>Toplam Çıkarım Notu : 2011</div>
+                <div>Çevresindeki Kişi Sayısı : 2011</div>
+            </div>
         </div>
         <div class="col-xs-9">
             <div infinite-scroll='loadMoreFriendsFeeds()' infinite-scroll-disabled='isLoading' infinite-scroll-distance='2' infinite-scroll-immediate-check="false">
@@ -73,7 +95,7 @@
                     </div>
                     <div style='clear: both;'></div>
                 </div>
-                <div ng-show='isLoading'>Loading data...</div>
+                <div ng-show='isLoading' style="text-align: center"><img src="assets/img/loading.gif" width="80" height="80"></div>
             </div>
         </div>
     </div>
