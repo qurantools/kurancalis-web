@@ -9,25 +9,25 @@
             <div style="visibility: hidden;height: 10px;"></div>
             <div style="visibility: hidden;height: 10px;"></div>
             <div>
-                <img style="max-width: 160px; max-height: 120px;" ng-src="http://graph.facebook.com/10152385368917772/picture?type=large"><br/>
-                <div><b>Kurtuluş Öksüztepe</b></div>
+                <img style="max-width: 160px; max-height: 120px;" ng-src="http://graph.facebook.com/{{profiledUser.fbId}}/picture?type=large"><br/>
+                <div><b>{{profiledUser.username}}</b></div>
             </div>
             <div style="visibility: hidden;height: 10px;"></div>
-            <div>
-                <div><a href="http://www.facebook.com/10152385368917772" target="_blank"><img src="assets/img/fb.png" width="80" height="80"/></a></div>
-                <div><a href="http://www.facebook.com/10152385368917772" target="_blank">Facebook Profilini Gör</a></div>
+            <div ng-show="profiledUser.id != user.id">
+                <div><a href="http://www.facebook.com/{{profiledUser.fbId}}" target="_blank"><img src="assets/img/fb.png" width="80" height="80"/></a></div>
+                <div><a href="http://www.facebook.com/{{profiledUser.fbId}}" target="_blank">Facebook Profilini Gör</a></div>
             </div>
             <div style="visibility: hidden;height: 10px;"></div>
-            <div>
+            <div ng-show="profiledUser.id != user.id">
                 <a class="btn btn-primary">Çevreme Ekle</a>
             </div>
             <div style="visibility: hidden;height: 10px;"></div>
             <div style="visibility: hidden;height: 10px;"></div>
             <div style="text-align: left">
-                <div>Üyelik : 11/11/2011</div>
-                <div>Toplam Ayet Notu : 2011</div>
-                <div>Toplam Çıkarım Notu : 2011</div>
-                <div>Çevresindeki Kişi Sayısı : 2011</div>
+                <div>Üyelik : {{profiledUser.created | date: 'dd/MM/yyyy'}}</div>
+                <div>Toplam Ayet Notu : {{profiledUser.annotation_count}}</div>
+                <div>Toplam Çıkarım Notu : {{profiledUser.inference_count}}</div>
+                <div>Çevresindeki Kişi Sayısı : {{profiledUser.circle_friend_count}}</div>
             </div>
         </div>
         <div class="col-xs-9">
@@ -71,7 +71,7 @@
                         <div class="row">
                             <div class="col-sm-2" style="width:200px; height:150px">
                                 <a href="#/inference/display/{{feed.id}}/">
-                                    <img style="max-width: 200px; max-height: 150px" ng-if="feed.inf_image != 'undefinedp'" ng-src="{{feed.inf_image}}">
+                                    <img style="max-width: 200px; max-height: 150px" ng-if="feed.inf_image != 'undefinedp'"  ng-src="{{feed.inf_image}}">
                                 </a>
                             </div>
                             <div class="col-sm-9">

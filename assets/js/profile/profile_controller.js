@@ -5,6 +5,7 @@ angular.module('ionicApp')
         $scope.circleId = -1;
         $scope.feeds = [];
         $scope.kisiliste = [];
+        $scope.profiledUser = {};
         $scope.isLoading = false;
 
         $scope.fetchFriendFeeds = function(friendName, start){
@@ -27,7 +28,7 @@ angular.module('ionicApp')
                 });
                 $scope.isLoading = false;
             }, function (err){
-
+                $scope.isLoading = false;
             });
         };
 
@@ -45,6 +46,21 @@ angular.module('ionicApp')
                     $scope.feeds.push(item);
                 });
                 $scope.isLoading = false;
+            }, function (err){
+                $scope.isLoading = false;
+            });
+        };
+
+        $scope.fetchUserStatistics = function(friendName){
+            var userRestangular = Restangular.one("users/statistics");
+            $scope.userParams = [];
+            if (/^\d+$/.test(friendName)){
+                $scope.userParams.user_id = friendName;
+            }else{
+                $scope.userParams.user_name = friendName;
+            }
+            userRestangular.customGET("", $scope.userParams, {'access_token': $scope.access_token}).then(function (data) {
+                $scope.profiledUser = data;
             }, function (err){
 
             });
@@ -182,6 +198,7 @@ angular.module('ionicApp')
         $scope.initializeProfileController = function () {
             if (typeof $routeParams.friendName !== 'undefined') {
                 $scope.friendName = $routeParams.friendName;
+                $scope.fetchUserStatistics($scope.friendName);
                 $scope.fetchFriendFeeds($scope.friendName, Math.floor(Date.now() / 1000));
                 return;
             }
