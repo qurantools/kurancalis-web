@@ -5,7 +5,7 @@ angular.module('ionicApp')
         $scope.circleId = -1;
         $scope.feeds = [];
         $scope.kisiliste = [];
-        $scope.profiledUser = {};
+        $scope.profiledUser = null;
         $scope.isLoading = false;
 
         $scope.fetchFriendFeeds = function(friendName, start){
