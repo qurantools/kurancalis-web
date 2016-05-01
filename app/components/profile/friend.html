@@ -18,7 +18,7 @@
                 <div><a href="http://www.facebook.com/{{profiledUser.fbId}}" target="_blank">Facebook Profilini Gör</a></div>
             </div>
             <div style="visibility: hidden;height: 10px;"></div>
-            <div ng-show="profiledUser.id != user.id">
+            <div ng-show="profiledUser.id != user.id" ng-click="showCircleSelectionModal()">
                 <a class="btn btn-primary">Çevreme Ekle</a>
             </div>
             <div style="visibility: hidden;height: 10px;"></div>
@@ -100,6 +100,21 @@
         </div>
     </div>
     <!-- /row-->
+</div>
+<div align="center">
+    <digercevremodal title="Çevreye Seçiniz" visible="select_circle">
+        <div align="left">
+            <select ng-model="circleSelection"
+                    ng-options="circle.id as circle.name for circle in cevreadlar"
+                    class="form-control">
+                <option style="display:none" value="">Çevre Seçiniz</option>
+            </select>
+        </div>
+        <div class="modal-footer">
+            <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal">Vazgeç</a>
+            <a class="btn btn-primary btn-wide" ng-click="add_to_circle(circleSelection)" data-dismiss="modal">Çevreye Ekle</a>
+        </div>
+    </digercevremodal>
 </div>
 <!-- /container-->
 </body>

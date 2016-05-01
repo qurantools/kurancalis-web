@@ -7,6 +7,7 @@ angular.module('ionicApp')
         $scope.kisiliste = [];
         $scope.profiledUser = null;
         $scope.isLoading = false;
+        $scope.select_circle = false;
 
         $scope.fetchFriendFeeds = function(friendName, start){
             if ($scope.isLoading)
@@ -193,6 +194,22 @@ angular.module('ionicApp')
                 lastItemDate = $scope.feeds[$scope.feeds.length -1].updated / 1000;
             }
             $scope.fetchCircleFeeds($scope.circleId, lastItemDate);
+        };
+
+        $scope.showCircleSelectionModal = function(){
+            $scope.select_circle = true;
+        };
+
+        $scope.add_to_circle = function (circle) {
+            var headers = {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'access_token': $scope.access_token
+            };
+            var data = encodeURIComponent("user_id") + "=" + encodeURIComponent($scope.profiledUser.id);
+            var kisiekleRestangular = Restangular.one("circles", circle).all("users");
+            kisiekleRestangular.customPOST(data, '', '', headers).then(function (eklekisi) {
+            }, function(error){
+            });
         };
 
         $scope.initializeProfileController = function () {
