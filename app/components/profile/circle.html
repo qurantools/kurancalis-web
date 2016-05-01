@@ -5,7 +5,7 @@
     <div class="nav-bottom"></div>
 
     <div class="row" style="margin-top: 10px;">
-        <div infinite-scroll='loadMoreCirclesFeeds()' infinite-scroll-disabled='isLoading' infinite-scroll-distance='2' infinite-scroll-immediate-check="false">
+        <div infinite-scroll='loadMoreCirclesFeeds()' infinite-scroll-disabled='isLoading' infinite-scroll-immediate-check="false">
             <div ng-repeat="feed in feeds">
                 <div class="col-xs-2">
                     <div class="well col" style="text-align: center;padding-top: 11px !important;padding: 0px;margin-bottom: 0px;">
@@ -52,7 +52,7 @@
                         <div class="row">
                             <div class="col-sm-2" style="width:200px; height:150px">
                                 <a href="#/inference/display/{{feed.id}}/">
-                                    <img style="max-width: 200px; max-height: 150px" ng-if="feed.inf_image != 'undefinedp'" ng-src="{{feed.inf_image}}">
+                                    <img style="max-width: 200px; max-height: 150px" ng-if="feed.inf_image != 'undefinedp' || feed.inf_image != 'undefined'" ng-src="{{feed.inf_image}}">
                                 </a>
                             </div>
                             <div class="col-sm-9">
