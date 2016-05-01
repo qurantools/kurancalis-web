@@ -1,5 +1,5 @@
 angular.module('ionicApp')
-    .controller('annotationEditorController', function ($scope, $q, $routeParams, $location, $timeout) {
+    .controller('annotationEditorController', function ($scope, $q, $routeParams, $location, $timeout, Restangular) {
 
         $scope.callback = function (){};
         $scope.index = -1;
@@ -50,6 +50,64 @@ angular.module('ionicApp')
                 $('#annotationModal').modal('show');
             } else {
                 $scope.openModal('editor');
+            }
+        };
+
+        //retrives the permissions of an annotation to scope variables
+        $scope.restoreScopeAnnotationPermissions = function (annoid) {
+            var cevregosterRestangular = Restangular.one("annotations", annoid).all("permissions");
+            cevregosterRestangular.customGET("", "", {'access_token': $scope.access_token}).then(function (cevreliste) {
+
+
+                //todo: replace locale "All circles" and "All users" for -2 and -1 circle ids
+                var clis = [];
+
+                for (var i = 0; i < cevreliste.canViewCircles.length; i++) {
+                    clis.push({'id': cevreliste.canViewCircles[i].id, 'name': cevreliste.canViewCircles[i].name});
+
+                }
+                $scope.ViewCircles = clis;
+                //do some special for mobile widget
+                $scope.setMobileAnnotationEditorCircleListForSelection($scope.ViewCircles);
+
+                var clis1 = [];
+                for (var i = 0; i < cevreliste.canViewUsers.length; i++) {
+                    clis1.push({'id': cevreliste.canViewUsers[i].id, 'name': cevreliste.canViewUsers[i].name});
+                }
+
+                $scope.ViewUsers = clis1;
+
+                var clis2 = [];
+                for (var i = 0; i < cevreliste.canCommentCircles.length; i++) {
+                    clis2.push({
+                        'id': cevreliste.canCommentCircles[i].id,
+                        'name': cevreliste.canCommentCircles[i].name
+                    });
+                }
+
+                $scope.yrmcevres = clis2;
+
+                var clis3 = [];
+                for (var i = 0; i < cevreliste.canCommentUsers.length; i++) {
+                    clis3.push({'id': cevreliste.canCommentUsers[i].id, 'name': cevreliste.canCommentUsers[i].name});
+                }
+                $scope.yrmkisis = clis3;
+            });
+        };
+
+        $scope.setMobileAnnotationEditorCircleListForSelection = function(circles){
+            //reset mobileAnnotationEditorCircleListForSelection
+            for (var checkboxIndex = 0; checkboxIndex < $scope.mobileAnnotationEditorCircleListForSelection.length; checkboxIndex++) {
+                $scope.mobileAnnotationEditorCircleListForSelection[checkboxIndex].selected=false;
+            }
+
+            //prepare circle checkbox  list
+            for( var circleIndex = 0; circleIndex < circles.length; circleIndex++){
+                for (var checkboxIndex = 0; checkboxIndex < $scope.mobileAnnotationEditorCircleListForSelection.length; checkboxIndex++) {
+                    if( circles[circleIndex].id == $scope.mobileAnnotationEditorCircleListForSelection[checkboxIndex].id ){
+                        $scope.mobileAnnotationEditorCircleListForSelection[checkboxIndex].selected=true;
+                    }
+                }
             }
         };
 
