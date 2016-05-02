@@ -96,7 +96,9 @@ angular.module('ionicApp')
                 message: "Dosdoğru yolu BİRLİKTE bulmak için Kuran Çalışalım: http://kurancalis.com"
             };
             if (config_data.isNative){
-                facebookConnectPlugin.api(options);
+                facebookConnectPlugin.showDialog(options, function(resp){
+                    console.log("sucess : " + JSON.stringify(resp));
+                });
             }else if (config_data.isMobile){
                 FB.ui(options, function(resp){
                     console.log("sucess : " + JSON.stringify(resp));
