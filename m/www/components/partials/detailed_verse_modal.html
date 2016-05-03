@@ -29,7 +29,7 @@
         <div class="row" id="detailed_verse_content">
             <div class="col-xs-12 bb">
                 <!-- translations-->
-                <div id="detailed_translations">
+                <div id="detailed_translations" style="width: 92%">
                     <div class="well translations col-xs-12" id="v_{{verse.id}}">
                         <div ng-repeat="translation in verse.translations">
                             <div class="col-xs-11" id="detail_t_{{translation.id}}">
@@ -45,7 +45,7 @@
                     </div>
                 </div>
                 <!-- Circles ans users select area-->
-                <div class="col-xs-12 col-sm-9" ng-click="openModal('tagged_verse_detailed_search');">
+                <div class="col-xs-12 col-sm-9" ng-click="openModal('tagged_verse_detailed_search');" style="width: 92%">
                     <div class="list">
                         <div class="item item-divider">
                             Not Sahipleri
@@ -81,9 +81,9 @@
                     <div>İnternet olmadığı için görüntülenemiyor.</div>
                 </div>
                 <!-- annotations-->
-                <div ng-show="detailedAnnotations.length > 0" style="margin-top: 5px;">
+                <div ng-show="detailedAnnotations.length > 0" style="margin-top: 5px;width: 92%;">
                     <div style="font-size: 20px"><i class='fa' style='font-size: 1.3em;margin-right: 10px;'></i><br><b>Ayet Notları</b></div>
-                    <div class="card" ng-repeat="annotation in detailedAnnotations" style="width:72%;margin-left: 3px;margin-right: 0px;">
+                    <div class="card" ng-repeat="annotation in detailedAnnotations" style="margin-left: 3px;margin-right: 0px;">
                         <div class="item item-divider">
                             <div style="float:right;margin-right: 30px;">{{annotation.userName | limitTo: 25}}</div>
                         </div>
@@ -120,12 +120,12 @@
                     <div>İnternet olmadığı için görüntülenemiyor.</div>
                 </div>
                 <!-- inferences-->
-                <div ng-show="inferences.length > 0" style="margin-top: 5px;">
+                <div ng-show="inferences.length > 0" style="margin-top: 5px;width: 92%">
                     <div style="font-size: 20px">
                         <b>Çıkarım Notları</b>
                     </div>
                     <ion-list style="margin-bottom:45px;">
-                        <ion-item ng-repeat="inference in inferences" style="width: 74%;">
+                        <ion-item ng-repeat="inference in inferences">
                             <div align="center" style="margin: 0 auto;">
                                 <a href ng-click="gotoInference({{inference.id}});closeModal('detailed_verse_modal');">
                                     <img image-check ng-src="{{inference.image}}"
@@ -154,7 +154,7 @@
                             </div>
                             <div class="row">
                                 <div class="col">
-                                    {{inference.updated | date: 'dd/MM/yyyy HH:mm:ss'}}
+                                    {{inference.updated | date: 'dd/MM/yyyy'}}
                                 </div>
                                 <div class="col">
                                     <div style="float: right;">

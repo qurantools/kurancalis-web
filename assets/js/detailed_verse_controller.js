@@ -178,6 +178,12 @@ angular.module('ionicApp')
             annotator.subscribe("adderClicked", $scope.showEditor);
             annotator.subscribe("editClicked", $scope.showEditor);
             annotator.subscribe("annotationDeleted", $scope.deleteAnnotationFromScope);
+
+            //unbind
+            if (config_data.isMobile) {
+                $(document).unbind('mouseup');
+                $(document).unbind('mousedown');
+            }
         };
 
         $scope.showEditor = function (annotation, position) {
