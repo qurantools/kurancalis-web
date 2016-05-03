@@ -1,5 +1,5 @@
 angular.module('ionicApp')
-    .controller('annotationEditorController', function ($scope, $q, $routeParams, $location, $timeout, Restangular) {
+    .controller('annotationEditorController', function ($scope, $q, $routeParams, $location, $timeout, Restangular, $ionicModal) {
 
         $scope.callback = function (){};
         $scope.index = -1;
@@ -143,12 +143,21 @@ angular.module('ionicApp')
         $scope.openModal = function(id){
             if (id == 'editor'){
                 $scope.getModalEditor().show();
+            } else if (id == 'viewusersearch') {
+                $scope.modal_view_user_search.show();
+            } else if (id == 'tagsearch') {
+                $scope.modal_tag_search.show();
+                focusToInput('addtagtoannotation_input');
             }
         };
 
         $scope.closeModal = function(id){
             if (id == 'editor'){
                 $scope.getModalEditor().hide();
+            } else if (id == 'tagsearch') {
+                $scope.modal_tag_search.hide();
+            } else if (id == 'viewusersearch') {
+                $scope.modal_view_user_search.hide();
             }
         };
 
@@ -163,6 +172,26 @@ angular.module('ionicApp')
                 $scope.index = args.index;
                 $scope.callback = args.postCallback;
             });
+
+            if (config_data.isMobile){
+                $ionicModal.fromTemplateUrl('components/partials/add_tag_to_annotation.html', {
+                    scope: $scope,
+                    animation: 'slide-in-up',
+                    id: 'tagsearch'
+                }).then(function (modal) {
+                    $scope.modal_tag_search = modal
+                });
+
+                $ionicModal.fromTemplateUrl('components/partials/add_canviewuser.html', {
+                    scope: $scope,
+                    //animation: 'slide-in-right',
+                    //animation: 'slide-left-right',
+                    animation: 'slide-in-up',
+                    id: 'viewusersearch'
+                }).then(function (modal) {
+                    $scope.modal_view_user_search = modal
+                });
+            }
         };
 
         $scope.init();

@@ -83,7 +83,7 @@
                 <!-- annotations-->
                 <div ng-show="detailedAnnotations.length > 0" style="margin-top: 5px;">
                     <div style="font-size: 20px"><i class='fa' style='font-size: 1.3em;margin-right: 10px;'></i><br><b>Ayet Notları</b></div>
-                    <div class="card" ng-repeat="annotation in detailedAnnotations">
+                    <div class="card" ng-repeat="annotation in detailedAnnotations" style="width:72%;margin-left: 3px;margin-right: 0px;">
                         <div class="item item-divider">
                             <div style="float:right;margin-right: 30px;">{{annotation.userName | limitTo: 25}}</div>
                         </div>
@@ -125,7 +125,7 @@
                         <b>Çıkarım Notları</b>
                     </div>
                     <ion-list style="margin-bottom:45px;">
-                        <ion-item ng-repeat="inference in inferences">
+                        <ion-item ng-repeat="inference in inferences" style="width: 74%;">
                             <div align="center" style="margin: 0 auto;">
                                 <a href ng-click="gotoInference({{inference.id}});closeModal('detailed_verse_modal');">
                                     <img image-check ng-src="{{inference.image}}"
