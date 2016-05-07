@@ -1,4 +1,4 @@
-var requiredModules = ['ionic', 'ngResource', 'ngRoute', 'facebook', 'restangular', 'LocalStorageModule', 'ngTagsInput', 'duScroll', 'directives.showVerse', 'directives.repeatCompleted', 'ui.select', 'myConfig', 'authorizationModule','djds4rce.angular-socialshare', 'ngSanitize', 'com.2fdevs.videogular','com.2fdevs.videogular.plugins.controls','com.2fdevs.videogular.plugins.overlayplay','com.2fdevs.videogular.plugins.poster', 'ngCordova','ui.tinymce', 'ui.bootstrap', 'ion-affix', 'infinite-scroll'];
+var requiredModules = ['ionic', 'ngResource', 'ngRoute', 'facebook', 'restangular', 'LocalStorageModule', 'ngTagsInput', 'duScroll', 'directives.showVerse', 'directives.repeatCompleted', 'ui.select', 'myConfig', 'authorizationModule','djds4rce.angular-socialshare', 'ngSanitize', 'com.2fdevs.videogular','com.2fdevs.videogular.plugins.controls','com.2fdevs.videogular.plugins.overlayplay','com.2fdevs.videogular.plugins.poster', 'ngCordova','ui.tinymce', 'ui.bootstrap', 'ion-affix', 'infinite-scroll', 'ngCordova.plugins.appAvailability'];
 
 if (config_data.isMobile) {
     var mobileModules = [];//'ionic'
@@ -142,6 +142,12 @@ var app = angular.module('ionicApp', requiredModules)
             }
             $rootScope.sqliteDbInit = false;
             dataProvider.initDB($rootScope);
+
+            if (config_data.isNative && typeof window.localStorage.getItem("external_load") !== 'undefined' && window.localStorage.getItem("external_load") != null){
+                $rootScope.redirectUrl = window.localStorage.getItem("external_load");
+                console.log(" 2 : redirected url : "+ $rootScope.redirectUrl + ", date : " + new Date().getTime());
+                window.localStorage.removeItem("external_load");
+            };
         });
 
         $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
@@ -571,7 +577,7 @@ app.factory('ChapterVerses', function ($resource) {
             }
         }
     );
-}).controller('MainCtrl', function ($scope, $q, $routeParams, $ionicSideMenuDelegate, $location, $timeout, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService, $document, $filter, $rootScope, $state, $stateParams, $ionicModal, $ionicScrollDelegate, $ionicPosition, $ionicLoading, authorization,$rootScope, $ionicPopup, dataProvider, $ionicPlatform) {
+}).controller('MainCtrl', function ($scope, $q, $routeParams, $ionicSideMenuDelegate, $location, $timeout, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService, $document, $filter, $rootScope, $state, $stateParams, $ionicModal, $ionicScrollDelegate, $ionicPosition, $ionicLoading, authorization,$rootScope, $ionicPopup, dataProvider) {
     console.log("MainCtrl");
 
     //all root scope parameters should be defined and documented here
@@ -1426,6 +1432,12 @@ app.factory('ChapterVerses', function ($resource) {
         if (!$scope.checkUserLoginStatus() && !$scope.isAllowUrlWithoutLogin()){
             $location.path('/login/');
         }
+
+        if (config_data.isNative && typeof $scope.redirectUrl !== 'undefined'){
+            console.log(" 3 : received url : "+ $scope.redirectUrl + ", date : " + new Date().getTime());
+            window.location.href = $scope.redirectUrl;
+            $scope.redirectUrl = null;
+        }
     };//end of init controller
 
     $scope.isAllowUrlWithoutLogin = function(){
@@ -1496,6 +1508,12 @@ app.factory('ChapterVerses', function ($resource) {
         $scope.initializeController();
     };
 });
+
+var handleOpenURL = function(url){
+    var newUrl = url.substring(url.indexOf("//") + 2);
+    window.localStorage.setItem("external_load", newUrl);
+    console.log(" 1 : received url : "+ newUrl + ", date : " + new Date().getTime());
+}
 
 function sidebarInit() {
     $('.cd-panel').on('click', function (event) {
