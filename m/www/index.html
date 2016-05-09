@@ -9,6 +9,8 @@
     <meta property="al:android:url" content="qurantools://http://kurancalis.com">
     <meta property="al:android:package" content="org.quran.qurantools">
     <meta property="al:android:app_name" content="Kuran Çalış">
+    <meta name="apple-itunes-app" content="{{apple_itunes_content}}">
+    <meta name="google-play-app" content="app-id=org.quran.qurantools">
     <title></title>
     <link rel="stylesheet" href="../../assets/css/font-awesome.min.css">
     <link rel="stylesheet" href="../../assets/css/annotator.min.css">
@@ -130,12 +132,41 @@
     <script src="../../app/components/search/search_translations_controller.js"></script>
     <script src="../../app/components/lists/verse_lists_controller.js"></script>
     <script src="../../app/components/partials/editor_modal_controller.js"></script>
-
-    <script src="../../assets/js/LaunchMyApp.js"></script>
+    <link rel="stylesheet" href="css/smart-app-banner.css">
+    <script src="js/smart-app-banner.js"/>
+    <script type="text/javascript">
+        new SmartBanner({
+            daysHidden: 7,   // days to hide banner after close button is clicked (defaults to 15)
+            daysReminder: 90, // days to hide banner after "VIEW" button is clicked (defaults to 90)
+            appStoreLanguage: 'tr', // language code for the App Store (defaults to user's browser language)
+            title: 'Kuran Çalış',
+            button: 'VIEW',
+            store: {
+                ios: 'On the App Store',
+                android: 'In Google Play',
+            },
+            price: {
+                ios: 'FREE',
+                android: 'FREE',
+                windows: 'FREE'
+            }
+        });
+    </script>
 </head>
 
 <body>
 <div id="fb-root"></div>
+<!--div style="top:0;height: 40px;">
+    <div style="float: left;margin-left: 15px">
+        <img src="../../assets/img/kurancalis_logo.png" height="35" width="35">
+    </div>
+    <div style="text-align: center;">
+        Kuran Çalış Uygulamasında Aç
+    </div>
+    <div style="float: right;margin-top: -16px;margin-right: 20px;">
+        <a ng-click="forward2NativeApp()" class="button button-assertive button-small">{{redirect_app_button_name}}</a>
+    </div>
+</div-->
 <div id="theView" ng-view>
 
 </div>
@@ -144,5 +175,4 @@
 </div>
 <div class="bottom-nav" ng-show="internet_display_show" ng-style="internet_display_style">{{internet_display_message}}</div>
 </body>
-
 </html>

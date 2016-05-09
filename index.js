@@ -185,7 +185,6 @@ if (config_data.isMobile == false) { //false
     app.config(function ($routeProvider, FacebookProvider, RestangularProvider, localStorageServiceProvider, $httpProvider) {
         RestangularProvider.setBaseUrl(config_data.webServiceUrl);
         localStorageServiceProvider.setStorageCookie(0, '/');
-
         $httpProvider.interceptors.push(function ($q, $injector, $rootScope) {
             var isConfirmPopupCalledBefore = false;
             var isDisplay = false;
@@ -350,9 +349,9 @@ if (config_data.isMobile == false) { //false
         FacebookProvider.init(config_data.FBAppID);
     });
 } else {
-    app.config(function ($routeProvider, FacebookProvider, RestangularProvider, localStorageServiceProvider, $stateProvider, $urlRouterProvider, $httpProvider) {
-            console.log("mobile version")
-
+    app.config(function ($routeProvider, FacebookProvider, RestangularProvider, localStorageServiceProvider, $stateProvider, $urlRouterProvider, $httpProvider, $compileProvider) {
+            console.log("mobile version");
+            $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|chrome-extension|qurantools):/);
             //redirect / to /m/www/
             var currentPath = window.location.pathname;
             if (currentPath == '/kurancalis-web/' || currentPath == '/') {
@@ -701,6 +700,10 @@ app.factory('ChapterVerses', function ($resource) {
     $scope.verselists = [];
 
     $scope.cevreadlar = [];
+
+    $scope.currentPageUrl = "";
+    $scope.app_id = "app-id=1032659897";
+    $scope.apple_itunes_content = "app-id=1032659897";
 
     $scope.checkAPIVersion = function(){
         var versionRestangular = Restangular.all("apiversioncompatibility");
@@ -1312,6 +1315,7 @@ app.factory('ChapterVerses', function ($resource) {
 
         $scope.$on('$routeChangeStart', function(next, current) {
             $scope.currentPage = $scope.getCurrentPage();
+            $scope.apple_itunes_content = $scope.app_id + ",app-argument=qurantools:/"+ $location.$$url;
         });
 
         $scope.$on('onlineNetworkConnection', function() {
@@ -1495,6 +1499,10 @@ app.factory('ChapterVerses', function ($resource) {
         copyFrom.select();
         document.execCommand('copy');
         body.removeChild(copyFrom);
+    };
+
+    $scope.forward2NativeApp = function(){
+
     };
 
     $scope.initRoute();
