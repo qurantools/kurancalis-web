@@ -443,7 +443,11 @@ angular.module('ionicApp')
             $scope.verse.number = $scope.goToVerseParameters.verse;
             $scope.queryVerse.keyword = ""; //reset keyword because we need the chapter.
             $scope.goToChapter();
-
+            var verseId = parseInt($scope.query_chapter_id * 1000);
+            if (typeof $scope.verse.number != 'undefined') {
+                verseId += parseInt($scope.verse.number);
+            }
+            $scope.addVerseToHistory(verseId);
         };
 
 

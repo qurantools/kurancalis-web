@@ -124,6 +124,30 @@ var app = angular.module('ionicApp', requiredModules)
                 return text.replace(re, "<div style='color: red;background-color:yellow;display: inline-block;'>$1</div>");
             };
         }])
+    .filter('time_in_string',[
+        function(){
+            return function (milis){
+                var difference = new Date().getTime() - milis;
+                if(difference < 0) {
+                    difference = 0;
+                }
+                var minutes = Math.floor(difference / (1000 * 60));
+                var hours = Math.floor(difference / (1000 * 60 * 60));
+                var days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                if(days > 364){
+                    return Math.floor(days/364 ) + " yıl";
+                }else if (days > 30){
+                    return Math.floor(days/30) + " ay";
+                }else if (days >= 1){
+                    return (days) + " gün";
+                }else if (hours >= 1){
+                    return (hours) + " sa";
+                }else {
+                    return minutes + " dk";
+                }
+            }
+        }
+    ])
     .run(function ($rootScope, $ionicPlatform, dataProvider) {
         $ionicPlatform.ready(function () {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -1295,10 +1319,9 @@ app.factory('ChapterVerses', function ($resource) {
         $location.path(url).search({});
         $scope.scopeApply();
         //$route.reload();
-    }
+    };
 
     $scope.openAddBookMarkModal = function(verseId){
-
         $scope.$broadcast('openAddBookMarkModal', {verseId:verseId});
     };
 
@@ -1308,6 +1331,14 @@ app.factory('ChapterVerses', function ($resource) {
 
     $scope.openVerseListForVerseSelection = function (callback, closeModal) {
         $scope.$broadcast("open_verse_for_verse_selection",{callback:callback, closeModal:closeModal});
+    };
+
+    $scope.openVerseHistory = function(author){
+        $scope.$broadcast("open_verse_history",{author:author});
+    };
+
+    $scope.addVerseToHistory = function(verseId){
+        $scope.$broadcast("add_verse_to_history",{verseId:verseId});
     };
 
     $scope.initializeController = function () {

@@ -24,9 +24,7 @@ angular.module('ionicApp')
             $scope.feedParams.limit = 10;
             $scope.feedParams.orderBy = "updated";
             feedRestangular.customGET("", $scope.feedParams, {'access_token': $scope.access_token}).then(function (data) {
-                _.forEach(data, function(item){
-                    $scope.feeds.push(item);
-                });
+                $scope.feeds = $scope.feeds.concat(data);
                 $scope.isLoading = false;
             }, function (err){
                 $scope.isLoading = false;
@@ -43,9 +41,7 @@ angular.module('ionicApp')
             $scope.feedParams.limit = 10;
             $scope.feedParams.orderBy = "updated";
             feedRestangular.customGET("", $scope.feedParams, {'access_token': $scope.access_token}).then(function (data) {
-                _.forEach(data, function(item){
-                    $scope.feeds.push(item);
-                });
+                $scope.feeds = $scope.feeds.concat(data);
                 $scope.isLoading = false;
             }, function (err){
                 $scope.isLoading = false;

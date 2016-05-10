@@ -91,6 +91,7 @@
                         </button>
                     </div>
                     <div ng-if="user!=null">
+                        <button class="btn btn-primary" ng-if="currentPage=='home'" data-target="#verseHistoryModal" data-toggle="modal" ng-click="openVerseHistory()"><i class="fa fa-history" style="font-size: 1.3em"></i></button>
                         <button id="openbtn" onclick="togglePanel()" class="btn btn-primary" ng-if="currentPage=='home'" ><i
                                 class="fa fa-edit" style="font-size: 1.3em"></i> Sayfadaki Notlar
                         </button>

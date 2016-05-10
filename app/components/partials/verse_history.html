@@ -1,0 +1,56 @@
+<div class="modal" id="verseHistoryModal" ng-controller="VerseHistoryCtrl">
+    <div class="modal-xl modal-dialog">
+        <div class="modal-content well">
+            <div class="modal-header" style="height: 60px;">
+                <div style="float: left;font-size: 26px;">
+                    <b>Ayet Tarihçesi</b>
+                </div>
+                <!-- right buttons-->
+                <div style="float: right;margin-top: -10px;">
+                    <button type="button" data-dismiss="modal" aria-hidden="true" class="btn">Tamam</button>
+                </div>
+            </div>
+            <div class="modal-body">
+                <!-- body-->
+                <div class="row">
+                    <!-- search header-->
+                    <div style="margin-top: -10px;position: absolute;left: 43%;">
+                        <div align="center" style="position: relative;left: -50%;">
+                            <div style="float: left;">
+                                <select ng-options="author.id as author.name for author in authors"
+                                        ng-model="authorOfHistory"
+                                        ng-change="verseHistoryAuthorUpdate(authorOfHistory)">
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="row" id="v_xx"
+                             infinite-scroll='loadMoreVerseHistory()'
+                             infinite-scroll-container="'#v_xx'"
+                             style="max-height:500px;overflow: scroll;margin-top: 30px;">
+                            <div ng-repeat="his in history">
+                                <div class="col-xs-12 well translations">
+                                    <div class="col-xs-1">
+                                        <div class="row" style="font-size:20px;">
+                                            {{his.translation.chapter}}:{{his.translation.verse}}
+                                        </div>
+                                        <div class="row" style="margin-top: 3px;">
+                                                <span ng-bind-html="his.visitDate | time_in_string | to_trusted"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-10" id="detail_t_{{his.translation.id}}">
+                                        <div id="tt_{{his.translation.id}}"
+                                             ng-class="{translation_rtl: authorMap[his.translation.authorId].language=='ar', translation_content: authorMap[his.translation.authorId].language!='ar'}"><span
+                                                ng-bind-html="his.translation.content | to_trusted"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

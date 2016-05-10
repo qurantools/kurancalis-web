@@ -49,6 +49,7 @@ angular.module('ionicApp')
             $scope.goToVerseParameters.verse = $scope.verseId%1000;
             $scope.getVerseTranslations();
             $scope.get_inferences();
+            $scope.addVerseToHistory($scope.verseId);
         };
 
         $scope.verseNumberValidation = function () {
