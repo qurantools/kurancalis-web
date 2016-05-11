@@ -82,8 +82,7 @@ angular.module('ionicApp')
                 verses: "",
                 circles: Base64.encode(JSON.stringify($scope.taggedVerseCircles)),
                 users: Base64.encode(JSON.stringify($scope.taggedVerseUsers))
-
-            }
+            };
             $location.path("/annotations/", false).search(parameters);
         };
 
