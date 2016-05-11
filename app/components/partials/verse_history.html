@@ -14,14 +14,17 @@
                 <!-- body-->
                 <div class="row">
                     <!-- search header-->
-                    <div style="margin-top: -10px;position: absolute;left: 43%;">
-                        <div align="center" style="position: relative;left: -50%;">
-                            <div style="float: left;">
-                                Çeviri/Meal :
-                                <select ng-options="author.id as author.name for author in authors"
-                                        ng-model="authorOfHistory"
-                                        ng-change="verseHistoryAuthorUpdate(authorOfHistory)">
-                                </select>
+                    <div style="margin-top: -35px;position: absolute;width: 100%;z-index: 1000;">
+                        <div align="center" style="position: relative;">
+                            <div class="form-group">
+                                <label class="col-xs-3 control-label" style="margin-top: 3px;text-align: right;">Çeviri/Meal :</label>
+                                <div class="col-xs-5" style="text-align: left;">
+                                    <select class="form-control" style="width: 50%;"
+                                            ng-options="author.id as author.name for author in authors"
+                                            ng-model="authorOfHistory"
+                                            ng-change="verseHistoryAuthorUpdate(authorOfHistory)">
+                                    </select>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -29,12 +32,14 @@
                         <div class="row" id="v_xx"
                              infinite-scroll='loadMoreVerseHistory()'
                              infinite-scroll-container="'#v_xx'"
-                             style="max-height:500px;overflow: scroll;margin-top: 30px;">
-                            <div ng-repeat="his in history">
+                             style="max-height:500px;overflow-y: scroll;overflow-x:hidden;margin-top: 30px;">
+                            <div ng-repeat="his in history" style="margin: 0px 8px;">
                                 <div class="col-xs-12 well translations">
                                     <div class="col-xs-1">
                                         <div class="row" style="font-size:20px;">
-                                            {{his.translation.chapter}}:{{his.translation.verse}}
+                                            <b>
+                                                <a href="#" ng-click='showVerseDetail(his.translation.verseId)' data-target='#detailedVerseModal' data-dismiss='modal' data-toggle='modal'>{{his.translation.chapter}}:{{his.translation.verse}}</a>
+                                            </b>
                                         </div>
                                         <div class="row" style="margin-top: 3px;">
                                                 <span ng-bind-html="his.visitDate | time_in_string | to_trusted"></span>
