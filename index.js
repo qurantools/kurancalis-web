@@ -539,6 +539,30 @@ if (config_data.isMobile == false) { //false
                         reloadOnSearch: false,
                         pageTitle: 'Ayet Listelerim'
                     })
+                    .when('/profile/user/', {
+                        controller: 'ProfileController',
+                        templateUrl: 'components/profile/friend.html',
+                        reloadOnSearch: false,
+                        pageTitle: 'Kuran Çalış - Kullanıcı Profili'
+                    })
+                    .when('/profile/user/:friendName/', {
+                        controller: 'ProfileController',
+                        templateUrl: 'components/profile/friend.html',
+                        reloadOnSearch: false,
+                        pageTitle: 'Kuran Çalış - Kullanıcı Profili'
+                    })
+                    .when('/profile/circle/', {
+                        controller: 'ProfileController',
+                        templateUrl: 'components/profile/circle.html',
+                        reloadOnSearch: false,
+                        pageTitle: 'Kuran Çalış - Çevre Zaman Tüneli'
+                    })
+                    .when('/profile/circle/:circleId/', {
+                        controller: 'ProfileController',
+                        templateUrl: 'components/profile/circle.html',
+                        reloadOnSearch: false,
+                        pageTitle: 'Kuran Çalış - Çevre Zaman Tüneli'
+                    })
                     .when('/', {
                         redirectTo: '/translations/',
                         pageTitle: 'Kuran Çalış'

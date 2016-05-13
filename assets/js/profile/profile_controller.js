@@ -1,5 +1,5 @@
 angular.module('ionicApp')
-    .controller('ProfileController', function ($scope, $routeParams, Restangular, $location) {
+    .controller('ProfileController', function ($scope, $routeParams, Restangular, $location, $ionicPopup, $ionicModal ) {
 
         $scope.friendName = "";
         $scope.circleId = -1;
@@ -8,6 +8,7 @@ angular.module('ionicApp')
         $scope.profiledUser = null;
         $scope.isLoading = false;
         $scope.select_circle = false;
+        $scope.hasMoreData = false;
 
         $scope.fetchFriendFeeds = function(friendName, start){
             if ($scope.isLoading)
@@ -24,10 +25,13 @@ angular.module('ionicApp')
             $scope.feedParams.limit = 10;
             $scope.feedParams.orderBy = "updated";
             feedRestangular.customGET("", $scope.feedParams, {'access_token': $scope.access_token}).then(function (data) {
+                $scope.hasMoreData = data.length == 0 ? false : true;
                 $scope.feeds = $scope.feeds.concat(data);
                 $scope.isLoading = false;
+                $scope.$broadcast('scroll.infiniteScrollComplete');
             }, function (err){
                 $scope.isLoading = false;
+                $scope.$broadcast('scroll.infiniteScrollComplete');
             });
         };
 
@@ -41,10 +45,13 @@ angular.module('ionicApp')
             $scope.feedParams.limit = 10;
             $scope.feedParams.orderBy = "updated";
             feedRestangular.customGET("", $scope.feedParams, {'access_token': $scope.access_token}).then(function (data) {
+                $scope.hasMoreData = data.length == 0 ? false : true;
                 $scope.feeds = $scope.feeds.concat(data);
                 $scope.isLoading = false;
+                $scope.$broadcast('scroll.infiniteScrollComplete');
             }, function (err){
                 $scope.isLoading = false;
+                $scope.$broadcast('scroll.infiniteScrollComplete');
             });
         };
 
@@ -64,7 +71,7 @@ angular.module('ionicApp')
         };
 
         $scope.kisilistele = function(search){
-            if (search == ""){
+            if (search == ""  || search.length < 3){
                 $scope.kisiliste = [];
                 return;
             }
@@ -193,7 +200,11 @@ angular.module('ionicApp')
         };
 
         $scope.showCircleSelectionModal = function(){
-            $scope.select_circle = true;
+            if (config_data.isMobile){
+                $scope.openModal("circle_selection");
+            }else{
+                $scope.select_circle = true;
+            }
         };
 
         $scope.add_to_circle = function (circle) {
@@ -208,7 +219,45 @@ angular.module('ionicApp')
             });
         };
 
+        $scope.openModal = function(id){
+            if (id == 'friendsearch'){
+                $scope.modal_friend_search.show();
+            } else if (id == 'circle_selection'){
+                $scope.$broadcast("add_user_to_circle", {callback:function(circle){
+                    $scope.closeModal("circle_selection");
+                }, users: [{'kisid': $scope.profiledUser.id, 'drm': true}]});
+                $scope.modal_circle_selection.show();
+            }
+        };
+
+        $scope.closeModal = function(id){
+            if (id == 'friendsearch'){
+                if ($scope.query_users.length > 0){
+                    $scope.navigateToProfile($scope.query_users[$scope.query_users.length-1].id);
+                }
+                $scope.modal_friend_search.hide();
+            } else if (id == 'circle_selection'){
+                $scope.modal_circle_selection.hide();
+            }
+        };
+
         $scope.initializeProfileController = function () {
+            if (config_data.isMobile){
+                $ionicModal.fromTemplateUrl('components/partials/add_friend_to_search.html', {
+                    scope: $scope,
+                    animation: 'slide-in-up',
+                    id: 'friendsearch'
+                }).then(function (modal) {
+                    $scope.modal_friend_search = modal
+                });
+                $ionicModal.fromTemplateUrl('components/partials/add_user_to_circle.html', {
+                    scope: $scope,
+                    animation: 'slide-in-up',
+                    id: 'circle_selection'
+                }).then(function (modal) {
+                    $scope.modal_circle_selection = modal
+                });
+            }
             if (typeof $routeParams.friendName !== 'undefined') {
                 $scope.friendName = $routeParams.friendName;
                 $scope.fetchUserStatistics($scope.friendName);

@@ -1,0 +1,120 @@
+<!-- start of side menu part 1-->
+<ion-side-menus>
+    <ion-side-menu-content drag-content="false">
+        <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced">
+            <ion-nav-buttons side="left">
+                <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+            </ion-nav-buttons>
+            <ion-nav-buttons side="right">
+                <a class="button button-icon icon ion-ios-people" href="#/people/home/"></a>
+            </ion-nav-buttons>
+        </ion-nav-bar>
+        <ion-nav-view name="appContent"></ion-nav-view>
+        <!-- end of side menu part 1 -->
+        <ion-nav-view>
+            <ion-content overflow-scroll="true" delegate-handle="content"  class="scroll_content"
+                         style="margin-top:66px;">
+                <div class="item item-input item-select" style="margin-top: 5px;border-width: 1px;border-style: solid;font-size: larger">
+                    <div style="visibility: hidden" class="input-label">
+                        Çevre Seçiniz
+                    </div>
+                    <select ng-model="circleListForTimeline"
+                            ng-options="circle.id as circle.name for circle in extendedCirclesForSearch"
+                            ng-change="profileCircleChanged(circleListForTimeline)"
+                            class="form-control">
+                        <option style="display:none" value="">Çevre Seçiniz</option>
+                    </select>
+                </div>
+                <div ng-repeat="feed in feeds" item="item" class="item-remove-animate" style="width: 100%;display: table;font-size: 10px;">
+                    <div ng-if="feed.study_type == 'annotation'" class="card" style="padding-top: 10px !important;padding-bottom: 10px !important;">
+                        <div class="item item-divider" style="padding: 0;">
+                            <div class="row">
+                                <a ng-href="#/profile/user/{{feed.owner_id}}/">
+                                    <img style="max-width: 60px; max-height: 45px;border-radius: 50%;" ng-if="feed.owner_photo != 'undefinedp'" ng-src="{{feed.owner_photo}}">
+                                </a>
+                                <a ng-href="#/profile/user/{{feed.owner_id}}/" style="margin-left: 19px;margin-top: 10px;">
+                                    <div>{{feed.owner_name | limitTo: 25}}</div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="item item-text-wrap card">
+                            <div class="item item-divider">
+                                <a href='' style="text-decoration: none !important;" ng-click="showVerseDetail(feed.anno_verse_id, usersForSearch, circlesForSearch)">{{feed.anno_verse_id / 1000 | number:0}}:{{feed.anno_verse_id % 1000}}</a>
+                                <!--div style="float:right;">{{feed.userName | limitTo: 25}}</div-->
+                            </div>
+                            <div class="item item-text-wrap">
+                                <blockquote
+                                        ng-bind-html="feed.translation_content | mark_verse_annotation:feed:1 | newLineAllowed | to_trusted"></blockquote>
+
+                                <span ng-bind-html="feed.content | newLineAllowed | to_trusted"></span>
+
+                                <div>
+                                    <button ng-repeat="annotationTag in feed.tags" class="tag label label-info s_a_tag btn btn-xs btn-info verse_tag"
+                                            style="border: 0;"
+                                            ng-click="goToVerseTag(feed.anno_author_id, feed.anno_verse_id, annotationTag, [], [])" >
+                                        {{annotationTag}}
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="item item-divider">
+                                <div style="float: left">{{feed.updated | date: 'dd/MM/yyyy'}}</div>
+                                <div style="float: right">
+                                    <button type="button" class="button button-balanced button-small" ng-click="showEditor(feed)"
+                                            ng-if="feed.owner_id==user.id">
+                                        <i class="fa fa-pencil-square-o "></i>
+                                    </button>
+                                    <button type="button" class="button button-assertive button-small" ng-click="deleteAnnotation(feed)"
+                                            ng-if="feed.owner_id==user.id">
+                                        <i class="fa fa-trash-o"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-if="feed.study_type == 'inference'" class="card" style="padding-top: 10px !important;padding-bottom: 10px !important;">
+                        <div class="item">
+                            <div align="center" style="margin: 0 auto;">
+                                <a href="#/inference/display/{{feed.id}}/">
+                                    <img image-check ng-src="{{feed.inf_image}}" onerror='this.style.display = "none"' style="max-width: 200px; max-height: 150px; "/>
+                                </a>
+                            </div>
+                            <div align="center" style="height: 20px">
+                                <a href="#/inference/display/{{feed.id}}/" style="text-decoration: none;">
+                                    <h4 style="margin-top:0;font-size: 18px;color: dodgerblue;">{{feed.inf_title | limitTo:80}}</h4>
+                                </a>
+                            </div>
+                            <div style="padding-left:10px;">
+                                <span ng-bind-html="feed.brief | to_trusted | limitTo:400" style="line-height: 1;white-space: pre-wrap; font-size: 10pt"></span>
+                                <a href="#/inference/display/{{feed.id}}/" style="color: blue; font-size: 10pt">devamını oku...</a>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div ng-repeat="inferenceTag in feed.tags" class="tag label label-info s_a_tag">
+                                        {{inferenceTag}}
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div style="float: right;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item item-divider">
+                            <div class="col">
+                                {{feed.updated | date: 'dd/MM/yyyy'}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <ion-infinite-scroll
+                        ng-if="hasMoreData"
+                        distance="2%"
+                        on-infinite="loadMoreCirclesFeeds()">
+                </ion-infinite-scroll>
+            </ion-content>
+        </ion-nav-view>
+        <!-- start of side menu part 2-->
+    </ion-side-menu-content>
+    <div ng-include="'components/navigation/left_menu.html'"></div>
+</ion-side-menus>
+<!-- end of side menu part 2-->

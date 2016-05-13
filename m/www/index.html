@@ -118,6 +118,7 @@
     <script src="../../app/components/help/help_controller.js"></script>
 
     <script src="../../assets/js/SQLitePlugin.js"></script>
+    <script src="../../assets/js/ng-infinite-scroll.min.js"></script>
     <script src="../../assets/js/dataProvider.js"></script>
     <script src="../../assets/js/localDataProvider.js"></script>
 
@@ -132,6 +133,8 @@
     <script src="../../app/components/search/search_translations_controller.js"></script>
     <script src="../../app/components/lists/verse_lists_controller.js"></script>
     <script src="../../app/components/partials/editor_modal_controller.js"></script>
+    <script src="../../assets/js/profile/profile_controller.js"></script>
+
     <link rel="stylesheet" href="css/smart-app-banner.css">
     <script src="js/smart-app-banner.js"/>
     <script type="text/javascript">
@@ -174,5 +177,8 @@
     <ion-nav-view></ion-nav-view>
 </div>
 <div class="bottom-nav" ng-show="internet_display_show" ng-style="internet_display_style">{{internet_display_message}}</div>
+<div ng-controller="HelpController"></div>
+<div ng-controller="TaggedVerseCtrl"></div>
+<div ng-controller="DetailedVerseCtrl"></div>
 </body>
 </html>
