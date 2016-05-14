@@ -47,7 +47,7 @@
                             </div>
                             <div class="col">
                                 <div style="float: right;">
-                                    {{inference.userName}}
+                                    <div style="float:right;"><a ng-href="#/profile/user/{{inference.userId}}/" style="color: darkblue;">{{inference.userName | limitTo: 25}}</a></div>
                                 </div>
                             </div>
                         </div>

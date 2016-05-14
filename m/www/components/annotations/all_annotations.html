@@ -62,7 +62,9 @@
                     <div class="card" ng-repeat="annotation in annotations">
                         <div class="item item-divider">
                             <a href='' style="text-decoration: none !important;" ng-click="showVerseDetail(annotation.verseId, usersForSearch, circlesForSearch)">{{annotation.verseId / 1000 | number:0}}:{{annotation.verseId % 1000}}</a>
-                            <div style="float:right;">{{annotation.userName | limitTo: 25}}</div>
+                            <div style="float:right;">
+                                <a ng-href="#/profile/user/{{annotation.userId}}/" style="color: darkblue;">{{annotation.userName | limitTo: 25}}</a>
+                            </div>
                         </div>
                         <show-verse data="showVerseData.data"
                                     ng-if="showVerseData.annotationId==annotation.annotationId"></show-verse>
