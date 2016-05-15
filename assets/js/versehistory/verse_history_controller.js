@@ -23,7 +23,7 @@ angular.module('ionicApp')
         };
 
         $scope.loadMoreVerseHistory = function(){
-            var lastItemDate = Math.floor(Date.now() / 1000);
+            var lastItemDate = 0;
             if ($scope.history.length > 0){
                 lastItemDate = $scope.history[$scope.history.length -1].visitDate / 1000;
             }
@@ -33,7 +33,7 @@ angular.module('ionicApp')
         $scope.verseHistoryAuthorUpdate = function(author){
             $scope.history = [];
             $scope.selectedAuthor = author;
-            $scope.fetchVerseHistory($scope.selectedAuthor, Math.floor(Date.now() / 1000));
+            $scope.fetchVerseHistory($scope.selectedAuthor, 0);
         };
 
         $scope.addVerseToHistory = function(verseId){
@@ -55,7 +55,7 @@ angular.module('ionicApp')
                 }
                 $scope.authorOfHistory = author;
                 $scope.history = [];
-                $scope.fetchVerseHistory(author, Math.floor(Date.now() / 1000));
+                $scope.fetchVerseHistory(author, 0);
             });
 
             $scope.$on('add_verse_to_history', function(event, args) {
