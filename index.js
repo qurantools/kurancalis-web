@@ -1469,15 +1469,16 @@ app.factory('ChapterVerses', function ($resource) {
         $scope.chapters = [];
 
         var localChaptersVersion = localStorageService.get('chaptersVersion');
+        var localChapters = localStorageService.get('chapters');
 
-        if (localChaptersVersion == null || localChaptersVersion < chaptersVersion) {
+        if (localChaptersVersion == null || localChaptersVersion < chaptersVersion || localChapters == null) {
             dataProvider.listChapters(function (data) {
                 $scope.chapters = data;
                 localStorageService.set('chapters', data);
                 localStorageService.set('chaptersVersion', chaptersVersion);
             });
         } else {
-            $scope.chapters = localStorageService.get('chapters');
+            $scope.chapters = localChapters;
         }
 
 
@@ -1519,11 +1520,11 @@ app.factory('ChapterVerses', function ($resource) {
             return true;
         }
         return false;
-    }
+    };
 
     $scope.navigateTo = function (target) {
         $location.path(target);
-    }
+    };
 
     $scope.showProgress = function(operationName) {
 
@@ -1544,6 +1545,7 @@ app.factory('ChapterVerses', function ($resource) {
             //}
         }
     };
+
     $scope.hideProgress = function(operationName){
         //hide only for started operation
         if(operationName == $scope.progressOperation) {
