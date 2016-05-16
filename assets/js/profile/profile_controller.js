@@ -1,5 +1,5 @@
 angular.module('ionicApp')
-    .controller('ProfileController', function ($scope, $routeParams, Restangular, $location, $ionicPopup, $ionicModal ) {
+    .controller('ProfileController', function ($scope, $routeParams, Restangular, $location, $ionicPopup, $ionicModal, $window ) {
 
         $scope.friendName = "";
         $scope.circleId = -1;
@@ -85,6 +85,10 @@ angular.module('ionicApp')
 
         $scope.navigateToProfile = function (id){
             $location.path("/profile/user/"+id+"/");
+        };
+
+        $scope.redirectFacebookProfile = function(){
+            $window.open('http://www.facebook.com/'+$scope.profiledUser.fbId, '_blank');
         };
 
         $scope.showEditor = function(annotation){

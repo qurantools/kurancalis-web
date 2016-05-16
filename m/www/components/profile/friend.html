@@ -4,8 +4,8 @@
         <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced">
             <ion-nav-buttons side="left">
                 <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
-                <h1 class="title" ng-if="profiledUser != null">{{profiledUser.username}}</h1>
             </ion-nav-buttons>
+            <ion-nav-title>Kullanıcı Profili</ion-nav-title>
             <ion-nav-buttons side="right">
                 <!--a class="button button-icon icon ion-ios-people" href="#/people/home/"></a-->
                 <button class="button button-icon icon ion-search" ng-click="openModal('friendsearch')" ng-if="user!=null"></button>
@@ -32,14 +32,16 @@
                     </div>
                     <div style="visibility: hidden;height: 10px;"></div>
                     <div ng-show="profiledUser.id != user.id" ng-click="showCircleSelectionModal()">
-                        <a class="button" style="padding: 10px;">Çevreme Ekle</a>
+                        <ion-button class="button" style="padding: 10px;">
+                            Çevreme Ekle
+                        </ion-button>
                     </div>
                     <div style="visibility: hidden;height: 10px;"></div>
                     <div ng-show="profiledUser.id != user.id">
-                        <a class="button" href="http://www.facebook.com/{{profiledUser.fbId}}" target="_blank" style="padding: 10px;">
+                        <ion-button class="button" style="padding: 10px;" ng-click="redirectFacebookProfile()">
                             <img src="../../assets/img/fb.png" width="40" height="40" style="vertical-align: middle;"/>
                             Facebook Profilini Aç
-                        </a>
+                        </ion-button>
                     </div>
                 </div>
                 <div ng-repeat="feed in feeds" class="item-remove-animate" style="width: 100%;display: table;font-size: 10px;">
@@ -88,7 +90,7 @@
                                     <h4 style="margin-top:0;font-size: 18px;color: dodgerblue;white-space: pre-line;">{{feed.inf_title | limitTo:80}}</h4>
                                 </a>
                             </div>
-                            <div style="padding-left:10px;white-space: pre-line;">
+                            <div style="padding-left:10px;white-space: pre-line;margin-top: 25px;">
                                 <span ng-bind-html="feed.brief | to_trusted | limitTo:400" style="line-height: 1;white-space: pre-wrap; font-size: 10pt"></span>
                                 <a href="#/inference/display/{{feed.id}}/" style="color: blue; font-size: 10pt">devamını oku...</a>
                             </div>
