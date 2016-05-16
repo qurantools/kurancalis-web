@@ -43,7 +43,7 @@
                     </div>
                 </div>
                 <div ng-repeat="feed in feeds" class="item-remove-animate" style="width: 100%;display: table;font-size: 10px;">
-                    <div ng-if="feed.study_type == 'annotation'" class="card" style="padding-top: 10px !important;padding-bottom: 10px !important;">
+                    <div ng-if="feed.study_type == 'annotation'" class="card">
                         <div class="item item-divider">
                             <a href='' style="text-decoration: none !important;" ng-click="showVerseDetail(feed.anno_verse_id, usersForSearch, circlesForSearch)">{{feed.anno_verse_id / 1000 | number:0}}:{{feed.anno_verse_id % 1000}}</a>
                             <!--div style="float:right;">{{feed.userName | limitTo: 25}}</div-->
@@ -76,7 +76,7 @@
                             </div>
                         </div>
                     </div>
-                    <div ng-if="feed.study_type == 'inference'" class="card" style="padding-top: 10px !important;padding-bottom: 10px !important;">
+                    <div ng-if="feed.study_type == 'inference'" class="card">
                         <div class="item">
                             <div align="center" style="margin: 0 auto;">
                                 <a href="#/inference/display/{{feed.id}}/">
