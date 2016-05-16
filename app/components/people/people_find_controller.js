@@ -90,6 +90,16 @@ angular.module('ionicApp')
 
         };
 
+        $scope.kisilistele = function (kisiad) {
+            var kisilisteRestangular = Restangular.all("users/search");
+            $scope.usersParams = [];
+            $scope.usersParams.search_query = kisiad;
+            kisilisteRestangular.customGET("", $scope.usersParams, {'access_token': $scope.access_token}).then(function (userliste) {
+                $scope.kisiliste = userliste;
+            });
+
+        };
+
         $scope.inviteFriends= function(){
             var options = {
                 method: "apprequests",

@@ -1,43 +1,84 @@
-
 <body>
 <div class="container">
-<input type="checkbox" style="visibility:hidden" ng-model="visible_hidden"/>
+    <input type="checkbox" style="visibility:hidden" ng-model="visible_hidden"/>
     <div ng-include="'app/components/people/people_navigation.html'"></div>
     <div></div>
-    <br />
-    <div align="left"  style="width:95%">
-        <h4>kurancalis.com ile tanışan Facebook arkadaşlarım</h4>
-    </div>
-         <div align="center"  style="width:100%">    
-    <table>
-    <tr>
-    <td style="width:100%; vertical-align: bottom;">
-    <input class="form-control" style="width:400px" placeholder="Facebook Arkadaşlarımda Ara" id="Text1" type="text" ng-model="search.$" /></td>
-    <td style="width:200px">
-    <table>
-    <tr>
-    <td style="height: 50px">
-    <button ng-click="inviteFriends()" class="btn btn-primary btn-wide" style="width:300px">
-        <img src="assets/img/fb.png" width="25" height="25"> Diğer Arkadaşlarımı Davet Et</button>
-    </td>
-    </tr>
-    <tr>
-    <td>
-     <button class="btn btn-primary btn-wide" style="width:300px" ng-click="digercevremodal()" ng-disabled="visible_hidden">
-    Seçili Arkadaşlarımı Çevreye Ekle</button>
-    </td>
-    </tr>
-    </table>
-    
-    </td>
-    </tr>
-    </table>
-        <br />
-    
-    </div>
-    
+    <br/><br/><br/>
+
     <div>
-       <table class="btn btn-primary btn-wide" ng-repeat="item in fb_friends | filter:search:strict" cellpadding="0" cellspacing="0"
+        <div align="left" style="width:95%">
+            Tüm Kullanıcılarda Arama
+        </div>
+        <table>
+            <tr>
+                <td style="width:100%; vertical-align: bottom;">
+                    <input class="form-control" style="width:400px"
+                           ng-model="kisieklead.text" placeholder="Kişi ismi"
+                           ng-change="kisilistele(kisieklead.text)"/>
+                </td>
+                <td style="width:200px">
+                    <table>
+                        <tr>
+                            <td style="height: 50px">
+                                <button ng-click="inviteFriends()" class="btn btn-primary btn-wide" style="width:300px">
+                                    <img src="assets/img/fb.png" width="25" height="25"> Diğer Arkadaşlarımı Davet Et
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <button class="btn btn-primary btn-wide" style="width:300px"
+                                        ng-click="digercevremodal()" ng-disabled="visible_hidden">
+                                    Seçili Arkadaşlarımı Çevreye Ekle
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table class="btn btn-primary btn-wide" ng-repeat="friend in kisiliste" cellpadding="0" cellspacing="0" style=" background-color:#1abc9c; width: 215px; margin: 10px 10px; padding:0px 0px">
+            <tr>
+                <td align="left" style="width: 75px; height: 75px">
+                    <img width="75px" height="75px" src={{friend.photo}}>
+                </td>
+                <td style="width: 135px; padding-left: 8px;">
+                    <table style="width: 135px">
+                        <tr>
+                            <td align="right" style="width: 140px; padding-right:20px; height: 10px;">
+                                <input id="{{friend.fbId}}" type="checkbox" ng-model="secimyap" ng-click="people_add('{{friend.fbId}}',secimyap)">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td nowrap="nowrap" align="left"
+                                style="vertical-align: top; width: 140px; height: 40px; color:White">
+                                <a ng-href="#/profile/user/{{friend.username}}/"
+                                   style="color: darkblue;">{{friend.name}}</a>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <br/><br/><br/>
+
+    <div>
+        <div align="left" style="width:95%">
+            Kuran Çalış Kullanan Facebook Arkadaşlarım
+        </div>
+        <table>
+            <tr>
+                <td style="width:100%; vertical-align: bottom;">
+                    <input class="form-control" style="width:400px" placeholder="Facebook Arkadaşlarımda Ara" id="Text1"
+                           type="text" ng-model="search.$"/>
+                </td>
+                <td style="width:200px"></td>
+            </tr>
+        </table>
+        <table class="btn btn-primary btn-wide" ng-repeat="item in fb_friends | filter:search:strict" cellpadding="0"
+               cellspacing="0"
                style=" background-color:#1abc9c; width: 215px; margin: 10px 10px; padding:0px 0px">
             <tr>
                 <td align="left" style="width: 75px; height: 75px">
@@ -54,37 +95,38 @@
                         <tr>
                             <td nowrap="nowrap" align="left"
                                 style="vertical-align: top; width: 140px; height: 40px; color:White">
-                                <a ng-href="#/profile/user/{{item.username}}/" style="color: darkblue;">{{item.name}}</a>
+                                <a ng-href="#/profile/user/{{item.username}}/"
+                                   style="color: darkblue;">{{item.name}}</a>
                             </td>
                         </tr>
                     </table>
                 </td>
             </tr>
         </table>
-        </div>
+    </div>
 </div>
 <div ng-include="'app/components/partials/off_canvas_menu.html'"></div>
 
-   <div align="center">
-        <digercevremodal title="Kişileri Başka Çevreye Ekle" visible="other_circle">
-            <div align="left">
-                <label>Seçtiğiniz kişileri aşağıdaki seçeceğiniz çevreye de ekleyebilirsiniz.</label>
-                <table>
-                    <tr ng-repeat="item in circle_name">
-                        <td style="width:30px">
-                            <input type="radio" ng-model="csecim" value="false" name="groupA"
-                                   ng-click="cevreadd('{{circle_name[$index].id}}')"/>
-                        </td>
-                        <td>
-                            {{circle_name[$index].name}}
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <div class="modal-footer">
-                <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal">Vazgeç</a>
-                <a class="btn btn-primary btn-wide" ng-click="peoples_add_circle()" data-dismiss="modal">Çevreye Ekle</a>
-            </div>
-        </digercevremodal>
-    </div>
+<div align="center">
+    <digercevremodal title="Kişileri Başka Çevreye Ekle" visible="other_circle">
+        <div align="left">
+            <label>Seçtiğiniz kişileri aşağıdaki seçeceğiniz çevreye de ekleyebilirsiniz.</label>
+            <table>
+                <tr ng-repeat="item in circle_name">
+                    <td style="width:30px">
+                        <input type="radio" ng-model="csecim" value="false" name="groupA"
+                               ng-click="cevreadd('{{circle_name[$index].id}}')"/>
+                    </td>
+                    <td>
+                        {{circle_name[$index].name}}
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="modal-footer">
+            <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal">Vazgeç</a>
+            <a class="btn btn-primary btn-wide" ng-click="peoples_add_circle()" data-dismiss="modal">Çevreye Ekle</a>
+        </div>
+    </digercevremodal>
+</div>
 </body>
