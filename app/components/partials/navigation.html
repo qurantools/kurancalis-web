@@ -95,7 +95,7 @@
                         <button id="openbtn" onclick="togglePanel()" class="btn btn-primary" ng-if="currentPage=='home'" ><i
                                 class="fa fa-edit" style="font-size: 1.3em"></i> Sayfadaki Notlar
                         </button>
-                        <img ng-src="{{user.photo}}" height="40"/>
+                        <a href="#/profile/user/{{user.id}}"><img ng-src="{{user.photo}}" height="40"/></a>
                         <!--<span style="vertical-align: bottom;">{{user.name}}</span>-->
                     </div>
                 </div>

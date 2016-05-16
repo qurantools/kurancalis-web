@@ -22,7 +22,10 @@
                         </button>
                     </div>
                     <div ng-if="user!=null">
-                        <img ng-src="{{user.photo}}" height="40"/>
+                        <a class="btn btn-primary" href="#/people/find_people/">
+                            <i class="fa fa-search"></i> Kullanıcı Ara
+                        </a>
+                        <a href="#/profile/user/{{user.id}}"><img ng-src="{{user.photo}}" height="40"/></a>
                     </div>
                 </div>
             </div>
