@@ -39,10 +39,12 @@ angular.module('ionicApp')
         var buttonAddToList = {text: 'Listeye Ekle' };
         var buttonGotoVerse = {text: 'Sure İçerisinde Gör' };
         var buttonBookmark = {text: 'Burada Kaldım' };
+        var buttonVerseHistory = {text: 'Ayet Tarihçesi' };
         $scope.footerMenuButtons.push(buttonSelectTranslation);
         $scope.footerMenuButtons.push(buttonAddToList);
         $scope.footerMenuButtons.push(buttonGotoVerse);
         $scope.footerMenuButtons.push(buttonBookmark);
+        $scope.footerMenuButtons.push(buttonVerseHistory);
 
         $scope.goToVerseDetail = function(){
             $scope.goToVerseParameters.chapter = $scope.detailedChapters[Math.floor($scope.verseId/1000) -1];
@@ -430,6 +432,9 @@ angular.module('ionicApp')
                         $scope.openModal('go_to_verse');
                     } else if (index == 3) {
                         $scope.openModal('bookmark');
+                    } else if (index == 4){
+                        $scope.openVerseHistory();
+                        $scope.closeModal('detailed_verse_modal');
                     }
                     return true;
                 }

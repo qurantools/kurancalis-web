@@ -1,0 +1,44 @@
+<div class="modal modal-fullscreen" id="verseHistoryModal">
+    <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced" align-title="center">
+        <ion-nav-title>Ayet Tarihçesi</ion-nav-title>
+        <ion-nav-buttons side="left">
+            <button class="button button-icon icon-left ion-close-circled"
+                    ng-click="closeModal('verse_history');">
+            </button>
+        </ion-nav-buttons>
+    </ion-nav-bar>
+    <ion-header-bar class="bar bar-subheader" style="height: 60px;">
+        <div class="item item-input item-select" style="width: 100%;">
+            <div class="input-label">
+                Çeviri/Yazar
+            </div>
+            <select ng-options="author.id as author.name for author in authors"
+                    ng-model="authorOfHistory"
+                    ng-change="verseHistoryAuthorUpdate(authorOfHistory)">
+            </select>
+        </div>
+    </ion-header-bar>
+    <ion-content overflow-scroll="true" delegate-handle="content"  class="scroll_content">
+        <div class="card" ng-repeat="his in history">
+            <div class="item item-divider">
+                <a href='' style="text-decoration: none !important;" ng-click="showVerseDetail(his.translation.verseId)">{{his.translation.chapter}}:{{his.translation.verse}}</a>
+                <div style="float:right;">
+                    <span ng-bind-html="his.visitDate | time_in_string | to_trusted"></span>
+                </div>
+            </div>
+            <div class="item">
+                <div class="col-xs-10" id="detail_t_{{his.translation.id}}">
+                    <div id="tt_{{his.translation.id}}"
+                         ng-class="{translation_rtl: authorMap[his.translation.authorId].language=='ar', translation_content: authorMap[his.translation.authorId].language!='ar'}">
+                        <span ng-bind-html="his.translation.content | to_trusted" style="white-space: normal;"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <ion-infinite-scroll
+                ng-if="hasMoreData"
+                distance="2%"
+                on-infinite="loadMoreVerseHistory()">
+        </ion-infinite-scroll>
+    </ion-content>
+</div>

@@ -1332,14 +1332,16 @@ angular.module('ionicApp')
             $scope.actionSheetButtons = [];
             var butonCeviri = {  text: '<i class="icon ion-person"></i> Çeviri Seç'  };
             var butonSureAyet = {text: '<i class="icon ion-arrow-right-b"></i> Sure/Ayete Git' };
-            var butonFiltre = {text: '<i class="icon icon fa fa-search"></i> Notları Filtrele' };
+            var butonFiltre = {text: '<i class="icon fa fa-search"></i> Notları Filtrele' };
             var butonAyraclar = {text: '<i class="icon ion-android-bookmark"></i> Ayraçlar' };
+            var buttonVerseHistory = {text: '<i class="icon fa fa-history"></i> Ayet Tarihçesi' };
             $scope.actionSheetButtons.push(butonCeviri);
             $scope.actionSheetButtons.push(butonSureAyet);
             if($scope.loggedIn) {
                 if($scope.user){
                     $scope.actionSheetButtons.push(butonFiltre);
                     $scope.actionSheetButtons.push(butonAyraclar);
+                    $scope.actionSheetButtons.push(buttonVerseHistory);
                 }
             }
         }
@@ -1416,6 +1418,8 @@ angular.module('ionicApp')
                         } else if (index == 3) {
                             $scope.searchBookMarkModal();
                             $scope.naviBookmarkModal.show();
+                        } else if (index == 4){
+                            $scope.openVerseHistory();
                         }
                         return true;
                     }
