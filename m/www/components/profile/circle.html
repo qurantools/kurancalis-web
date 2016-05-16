@@ -27,7 +27,7 @@
                 </div>
                 <div ng-repeat="feed in feeds" item="item" class="item-remove-animate" style="width: 100%;display: table;font-size: 10px;">
                     <div ng-if="feed.study_type == 'annotation'" class="card">
-                        <div class="item item-divider" style="padding: 0;">
+                        <div class="item item-divider">
                             <div class="row">
                                 <a ng-href="#/profile/user/{{feed.owner_id}}/">
                                     <img style="max-width: 60px; max-height: 45px;border-radius: 50%;" ng-if="feed.owner_photo != 'undefinedp'" ng-src="{{feed.owner_photo}}">
@@ -36,27 +36,24 @@
                                     <div>{{feed.owner_name | limitTo: 25}}</div>
                                 </a>
                             </div>
+                            <hr style="width: 100% !important;border-color: white !important;">
+                            <a href='' style="text-decoration: none !important;margin-left: 10px;" ng-click="showVerseDetail(feed.anno_verse_id, usersForSearch, circlesForSearch)">
+                                <b>{{feed.anno_verse_id / 1000 | number:0}}:{{feed.anno_verse_id % 1000}}</b>
+                            </a>
                         </div>
-                        <div class="item item-text-wrap card" style="padding-left: 0;padding-right: 0;">
-                            <div class="item item-divider">
-                                <a href='' style="text-decoration: none !important;" ng-click="showVerseDetail(feed.anno_verse_id, usersForSearch, circlesForSearch)">{{feed.anno_verse_id / 1000 | number:0}}:{{feed.anno_verse_id % 1000}}</a>
-                                <!--div style="float:right;">{{feed.userName | limitTo: 25}}</div-->
+                        <div class="item item-text-wrap">
+                            <blockquote
+                                    ng-bind-html="feed.translation_content | mark_verse_annotation:feed:1 | newLineAllowed | to_trusted"></blockquote>
+                            <span ng-bind-html="feed.content | newLineAllowed | to_trusted"></span>
+                            <div>
+                                <button ng-repeat="annotationTag in feed.tags" class="tag label label-info s_a_tag btn btn-xs btn-info verse_tag"
+                                        style="border: 0;"
+                                        ng-click="goToVerseTag(feed.anno_author_id, feed.anno_verse_id, annotationTag, [], [])" >
+                                    {{annotationTag}}
+                                </button>
                             </div>
-                            <div class="item item-text-wrap">
-                                <blockquote
-                                        ng-bind-html="feed.translation_content | mark_verse_annotation:feed:1 | newLineAllowed | to_trusted"></blockquote>
-
-                                <span ng-bind-html="feed.content | newLineAllowed | to_trusted"></span>
-
-                                <div>
-                                    <button ng-repeat="annotationTag in feed.tags" class="tag label label-info s_a_tag btn btn-xs btn-info verse_tag"
-                                            style="border: 0;"
-                                            ng-click="goToVerseTag(feed.anno_author_id, feed.anno_verse_id, annotationTag, [], [])" >
-                                        {{annotationTag}}
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="item item-divider" style="overflow: auto;">
+                        </div>
+                        <div class="item item-divider" style="overflow: auto;">
                                 <div style="float: left">{{feed.updated | date: 'dd/MM/yyyy'}}</div>
                                 <div style="float: right">
                                     <button type="button" class="button button-balanced button-small" ng-click="showEditor(feed)"
@@ -69,7 +66,6 @@
                                     </button>
                                 </div>
                             </div>
-                        </div>
                     </div>
                     <div ng-if="feed.study_type == 'inference'" class="card">
                         <div class="item item-divider" style="padding: 0;">
@@ -90,10 +86,10 @@
                             </div>
                             <div align="center" style="height: 20px">
                                 <a href="#/inference/display/{{feed.id}}/" style="text-decoration: none;">
-                                    <h4 style="margin-top:0;font-size: 18px;color: dodgerblue;">{{feed.inf_title | limitTo:80}}</h4>
+                                    <h4 style="margin-top:0;font-size: 18px;color: dodgerblue;white-space: pre-line;">{{feed.inf_title | limitTo:80}}</h4>
                                 </a>
                             </div>
-                            <div style="padding-left:10px;">
+                            <div style="padding-left:10px;white-space: pre-line;">
                                 <span ng-bind-html="feed.brief | to_trusted | limitTo:400" style="line-height: 1;white-space: pre-wrap; font-size: 10pt"></span>
                                 <a href="#/inference/display/{{feed.id}}/" style="color: blue; font-size: 10pt">devamını oku...</a>
                             </div>
