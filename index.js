@@ -1223,7 +1223,7 @@ app.factory('ChapterVerses', function ($resource) {
             $scope.extendedCircles.push({'id': '-1', 'name': 'Herkes'});
 
             $scope.extendedCirclesForSearch = [];
-            $scope.extendedCirclesForSearch.push({'id': '-2', 'name': 'Tüm Çevrelerim'});
+            $scope.extendedCirclesForSearch.push({'id': -2, 'name': 'Tüm Çevrelerim'});
 
 
             $scope.circleDropdownArray = [];

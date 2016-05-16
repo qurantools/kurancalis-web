@@ -271,6 +271,7 @@ angular.module('ionicApp')
 
             if (typeof $routeParams.circleId !== 'undefined') {
                 $scope.circleId = $routeParams.circleId;
+                $scope.circleListForTimeline = parseInt($scope.circleId);
                 $scope.fetchCircleFeeds($routeParams.circleId, Math.floor(Date.now() / 1000));
                 return;
             }
