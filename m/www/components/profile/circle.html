@@ -72,6 +72,16 @@
                         </div>
                     </div>
                     <div ng-if="feed.study_type == 'inference'" class="card" style="padding-top: 10px !important;padding-bottom: 10px !important;">
+                        <div class="item item-divider" style="padding: 0;">
+                            <div class="row">
+                                <a ng-href="#/profile/user/{{feed.owner_id}}/">
+                                    <img style="max-width: 60px; max-height: 45px;border-radius: 50%;" ng-if="feed.owner_photo != 'undefinedp'" ng-src="{{feed.owner_photo}}">
+                                </a>
+                                <a ng-href="#/profile/user/{{feed.owner_id}}/" style="margin-left: 19px;margin-top: 10px;">
+                                    <div>{{feed.owner_name | limitTo: 25}}</div>
+                                </a>
+                            </div>
+                        </div>
                         <div class="item">
                             <div align="center" style="margin: 0 auto;">
                                 <a href="#/inference/display/{{feed.id}}/">
