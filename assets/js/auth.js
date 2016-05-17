@@ -100,6 +100,7 @@ authorizationModule.factory("authorization", function (Facebook, User, localStor
             }
 
             localStorageService.remove('access_token');
+            //localStorageService.clear();
             responseData.loggedOut=true;
             faceBookResponseMethod(responseData);
         };

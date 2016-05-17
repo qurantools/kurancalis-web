@@ -907,7 +907,6 @@ app.factory('ChapterVerses', function ($resource) {
             },
             function(response) {
                 console.log("Could not get user info");
-                console.log("isNative:"+config_data.isNative +" conn:"+navigator.network.connection.type);
                 if( config_data.isNative){
                     if(navigator.network.connection.type == Connection.NONE) {
                         $ionicPopup.confirm({

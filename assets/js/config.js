@@ -3,6 +3,7 @@ var config_module = angular.module('myConfig', []);
 //var domain = "http://kurancalis.com";
 //var domain = "http://test.kurancalis.com";
 var domain = "http://localhost:63342/kurancalis-web";
+//var domain = "http://mekim.kurancalis.com:8888/kurancalis-web";
 
 var config_data = {
     'webServiceUrl': 'https://securewebserver.net/jetty/qttest/rest',
