@@ -10,6 +10,7 @@
             </ion-nav-buttons>
             <h1 class="title"></h1>
             <ion-nav-buttons side="right">
+                <a href ng-click="openVerseHistory()" class="button button-icon icon fa fa-history" ng-if="user!=null"></a>
                 <button class="button button-icon icon ion-search" ng-click="openModal('all_inferences_filter')" ng-if="user!=null">
                 </button>
                 <a data-tap-disabled="true" class="button button-icon icon ion-plus" href="#/inference/new/" ng-if="user!=null">
@@ -22,12 +23,12 @@
             <ion-content overflow-scroll="true" style="padding-top: 30px;">
                 <ion-list style="margin-bottom:45px;">
                     <ion-item ng-repeat="inference in inferences">
-                        <div align="center" style="margin: 0 auto;"><a href="#/inference/display/{{inference.id}}/"><img image-check ng-src="{{inference.image}}" onerror='this.style.display = "none"' style="max-width: 200px; max-height: 150px; "/></a></div>
-                        <div style="text-align: left; height: 20px" ><a href="#/inference/display/{{inference.id}}/" style="text-decoration: none;"><h4 style="margin-top:0;font-size: 18px">
+                        <div align="center" style="margin: 0 auto;"><a href="" ng-click="navigateTo('/inference/display/{{inference.id}}')" ><img image-check ng-src="{{inference.image}}" onerror='this.style.display = "none"' style="max-width: 200px; max-height: 150px; "/></a></div>
+                        <div style="text-align: left; height: 20px" ><a href="" ng-click="navigateTo('/inference/display/{{inference.id}}')" style="text-decoration: none;"><h4 style="margin-top:0;font-size: 18px">
                             {{inference.title | limitTo:80}}</h4>
                         </a></div>
                         <div style="padding-left:10px;">
-                            <span ng-bind-html="inference.brief | to_trusted | limitTo:400" style="line-height: 1;white-space: pre-wrap; font-size: 10pt"></span> <a href="#/inference/display/{{inference.id}}/" style="color: blue; font-size: 10pt">devamını oku...</a>
+                            <span ng-bind-html="inference.brief | to_trusted | limitTo:400" style="line-height: 1;white-space: pre-wrap; font-size: 10pt"></span> <a href="" ng-click="navigateTo('/inference/display/{{inference.id}}')" style="color: blue; font-size: 10pt">devamını oku...</a>
                         </div>
                         <div class="row">
                             <div class="col">
