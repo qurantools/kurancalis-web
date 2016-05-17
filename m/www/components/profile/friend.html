@@ -31,17 +31,15 @@
                         <div>Takipçi Sayısı : {{profiledUser.follower_count}}</div>
                     </div>
                     <div style="visibility: hidden;height: 10px;"></div>
-                    <div ng-show="profiledUser.id != user.id" ng-click="showCircleSelectionModal()">
-                        <ion-button class="button" style="padding: 10px;">
-                            Çevreme Ekle
-                        </ion-button>
-                    </div>
                     <div style="visibility: hidden;height: 10px;"></div>
-                    <div ng-show="profiledUser.id != user.id">
-                        <ion-button class="button" style="padding: 10px;" ng-click="redirectFacebookProfile()">
-                            <img src="../../assets/img/fb.png" width="40" height="40" style="vertical-align: middle;"/>
+                    <div ng-show="profiledUser.id != user.id" style="padding-left: 15px;padding-right: 15px;">
+                        <a class="button button-block button-positive" ng-click="showCircleSelectionModal()">
+                            Çevreme Ekle
+                        </a>
+                        <a class="button button-block button-positive" ng-click="redirectFacebookProfile()">
+                            <img src="../../assets/img/fb.png" width="40" height="40" style="vertical-align: middle; margin-right: 10px;"/>
                             Facebook Profilini Aç
-                        </ion-button>
+                        </a>
                     </div>
                 </div>
                 <div ng-repeat="feed in feeds" class="item-remove-animate" style="width: 100%;display: table;font-size: 10px;">
