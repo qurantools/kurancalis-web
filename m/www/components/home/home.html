@@ -15,9 +15,8 @@
             <h1 class="title"></h1>
             <ion-nav-buttons side="right">
                 <button class="button" ng-click="login()" ng-if="user==null">Giriş</button>
-                <a href ng-click="openModal('annotations_on_page')" class="button button-icon icon ion-clipboard"
-                   ng-if="user!=null"></a>
-
+                <a href ng-click="openVerseHistory()" class="button button-icon icon fa fa-history" ng-if="user!=null"></a>
+                <a href ng-click="openModal('annotations_on_page')" class="button button-icon icon ion-clipboard" ng-if="user!=null"></a>
             </ion-nav-buttons>
         </ion-nav-bar>
         <ion-nav-buttons side="left">
