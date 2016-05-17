@@ -21,10 +21,13 @@
                 </div>
                 <ion-list show-delete="true">
                     <ion-item ng-repeat="item in friendSearchResult" item="item item-avatar" style="padding: 5px 0px 5px 5px;">
-                        <div class="row" style="align-items: center;">
-                            <img width="50px" height="50px" src={{item.photo}} style="margin-right: 20px;">{{item.name}}
+                        <div class="row enable-pointer-events" style="align-items: center;">
+                            <div class="item-left-edit item-delete visible active">
+                                <a class="ion-plus-circled button icon button-icon" ng-click="openModal('circle_selection',item.id)" ng-controller="PeopleFindCtrl"></a>
+                            </div>
+                            <img width="50px" height="50px" src={{item.photo}} style="margin-right: 20px;margin-left: 50px;">
+                            <a ng-href="#/profile/user/{{item.username}}/" style="color: darkblue;text-decoration: none;">{{item.name}}</a>
                         </div>
-                        <ion-delete-button class="ion-plus-circled" ng-click="openModal('circle_selection',item.id)" ng-controller="PeopleFindCtrl"></ion-delete-button>
                     </ion-item>
                 </ion-list>
             </ion-content>

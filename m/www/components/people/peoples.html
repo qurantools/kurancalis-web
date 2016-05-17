@@ -19,7 +19,7 @@
                 <ion-list>
                     <ion-item ng-repeat="item in cevrekisiler" item="item item-avatar" style="padding: 5px 0px 5px 5px;">
                         <div class="row" style="align-items: center;">
-                            <div class="item-checkbox" ng-show="showAddButton" style="width: 10px;border-width: 0;padding-left: 30px;" ng-click="kisiadd(item.user_id,secimyap)">
+                            <div ng-show="showAddButton" style="width: 10px;border-width: 0;margin-right: 20px;" ng-click="kisiadd(item.user_id,secimyap)">
                                 <label class="checkbox">
                                     <input type="checkbox" ng-model="secimyap">
                                 </label>

@@ -16,7 +16,7 @@
                     <ion-list>
                         <ion-item ng-repeat="item in circle_friends | filter:search:strict" item="item item-avatar" style="padding: 5px 0px 5px 5px;">
                             <div class="row" style="align-items: center;">
-                                <div class="item-checkbox" id="{{item.user_id}}" style="width: 10px;border-width: 0;">
+                                <div id="{{item.user_id}}" style="width: 10px;border-width: 0;margin-right: 40px;">
                                     <label class="checkbox" ng-click="add_people(item.user_id,secimyap)">
                                         <input type="checkbox" ng-model="secimyap">
                                     </label>

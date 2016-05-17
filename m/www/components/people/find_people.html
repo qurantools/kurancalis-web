@@ -9,12 +9,12 @@
         <ion-nav-view name="appContent"></ion-nav-view>
         <!-- end of side menu part 1 -->
         <ion-nav-view cache-view="true">
-            <ion-content overflow-scroll="true" delegate-handle="content"  class="scroll_content"
+            <ion-content overflow-scroll="true" delegate-handle="content" class="scroll_content"
                          style="margin-top:80px;">
                 <ion-list>
                     <ion-item ng-repeat="item in fb_friends" item="item item-avatar" style="padding: 5px 0px 5px 5px;">
                         <div class="row" style="align-items: center;">
-                            <div class="item-checkbox" id="{{item.fbId}}" style="width: 10px;border-width: 0;">
+                            <div id="{{item.fbId}}" style="width: 10px;border-width: 0;margin-right: 40px;">
                                 <label class="checkbox" ng-click="people_add(item.fbId,secimyap)">
                                     <input type="checkbox" ng-model="secimyap">
                                 </label>
