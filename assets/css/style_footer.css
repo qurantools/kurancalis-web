@@ -46,3 +46,122 @@
     padding: 5px !important;
     text-align: justify;
 }
+
+.smart-app-banner {
+    zoom:1;position: fixed;
+    width: 100%;
+    top: 0;
+    height: 60px;
+    background-color: #d2d2d2;
+    z-index: 500;
+    display: none
+}
+
+.smart-app-banner:before,.smart-app-banner:after {
+    display: table;
+    content: "";
+    zoom:1
+}
+
+.smart-app-banner:after {
+    clear: both
+}
+
+.smart-app-banner.visible {
+    display: block
+}
+
+.smart-app-banner h3 {
+    line-height: 60px;
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+    padding-left: 68px
+}
+
+.smart-app-banner h3:before {
+    background-image: url('../img/kurancalis_logo_57.png');
+    background-position: -136px -112px;
+    width: 57px;
+    height: 57px;
+    content: '';
+    display: inline-block;
+    vertical-align: middle;
+    position: absolute;
+    left: 22px;
+    top: 1px;
+    border-radius: 12px;
+}
+
+@media(min--moz-device-pixel-ratio:1.5),(-o-min-device-pixel-ratio: 3/2),(-webkit-min-device-pixel-ratio:1.5),(min-resolution:1.5dppx) {
+    .smart-app-banner h3:before {
+        background-image:url('../img/kurancalis_logo_57.png');
+        background-position: -135.5px -110.5px;
+        -webkit-background-size: 286px 239px;
+        -moz-background-size: 286px 239px;
+        background-size: 286px 239px
+    }
+}
+
+.smart-app-banner h3 span {
+    color: #333;
+    font-size: 15px;
+    position: relative;
+    display: block;
+    line-height: 44px
+}
+
+.smart-app-banner h3 span i {
+    position: absolute;
+    top: 18px;
+    left: 0;
+    right: 0;
+    color: #888;
+    font-size: 11px;
+    font-style: normal;
+    width: 130px;
+}
+
+.smart-app-banner a.app-button {
+    float: right;
+    margin-right: 10px;
+    margin-top: 14px;
+    padding: 6px 10px;
+    font-size: 12px;
+    background-color: #437db9;
+    color: #fff;
+    border-radius: 5px;
+}
+
+.smart-app-banner a.app-button:hover {
+    color: #fff
+}
+
+.smart-app-banner a.close-button {
+    line-height: 50px;
+    padding: 5px;
+    border: 1px solid #AEAEAE;
+    border-radius: 30px;
+}
+
+.smart-app-banner a.close-button:before {
+    content: 'x';
+    display: inline-block;
+    vertical-align: middle
+}
+
+@media(min--moz-device-pixel-ratio:1.5),(-o-min-device-pixel-ratio: 3/2),(-webkit-min-device-pixel-ratio:1.5),(min-resolution:1.5dppx) {
+    .smart-app-banner a.close-button:before {
+        content: 'x';
+        vertical-align: middle;
+    }
+}
+
+.show-banner .view, .showBanner .modal-wrapper .modal.active{
+    top: 60px
+}
+
+.hideBanner .modal-wrapper .modal.active{
+    top : 0px;
+}
+

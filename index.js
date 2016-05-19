@@ -172,6 +172,10 @@ var app = angular.module('ionicApp', requiredModules)
                 console.log(" 2 : redirected url : "+ $rootScope.redirectUrl + ", date : " + new Date().getTime());
                 window.localStorage.removeItem("external_load");
             };
+
+            if (config_data.isMobile && !config_data.isNative){
+                $rootScope.redirect_app_button_name = "";
+            }
         });
 
         $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
@@ -624,7 +628,7 @@ app.factory('ChapterVerses', function ($resource) {
             }
         }
     );
-}).controller('MainCtrl', function ($scope, $q, $routeParams, $ionicSideMenuDelegate, $location, $timeout, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService, $document, $filter, $rootScope, $state, $stateParams, $ionicModal, $ionicScrollDelegate, $ionicPosition, $ionicLoading, authorization,$rootScope, $ionicPopup, dataProvider) {
+}).controller('MainCtrl', function ($scope, $q, $routeParams, $ionicSideMenuDelegate, $location, $timeout, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService, $document, $filter, $rootScope, $state, $stateParams, $ionicModal, $ionicScrollDelegate, $ionicPosition, $ionicLoading, authorization,$rootScope, $ionicPopup, dataProvider, $cordovaAppAvailability) {
     console.log("MainCtrl");
 
     //all root scope parameters should be defined and documented here
@@ -752,6 +756,10 @@ app.factory('ChapterVerses', function ($resource) {
     $scope.currentPageUrl = "";
     $scope.app_id = "app-id=1032659897";
     $scope.apple_itunes_content = "app-id=1032659897";
+    $scope.redirect_app_button_name = "İndir";
+    $scope.appText = "Android";
+    $scope.appStoreURL = "";
+    $scope.showBanner = false;
 
     $scope.checkAPIVersion = function(){
         var versionRestangular = Restangular.all("apiversioncompatibility");
@@ -1456,6 +1464,20 @@ app.factory('ChapterVerses', function ($resource) {
             $scope.showTutorial = 1;
         }
 
+        if (config_data.isMobile && !config_data.isNative){
+            $scope.showBanner = true;
+            if (config_data.isAndroid) {
+                $scope.appText = "Android";
+                $scope.appStoreURL = "https://play.google.com/store/apps/details?id=org.quran.qurantools";
+            } else if (config_data.isIOS) {
+                $scope.appText = "IOS";
+                $scope.appStoreURL = "https://itunes.apple.com/tr/app/kuran-cal-s/id1032659897?mt=8";
+            }
+            if (localStorageService.get("appInstalled") != null){
+                $scope.redirect_app_button_name = "Aç";
+            }
+        }
+
         //list the authors on page load
         $scope.list_authors(); //prepare map
 
@@ -1572,7 +1594,24 @@ app.factory('ChapterVerses', function ($resource) {
     };
 
     $scope.forward2NativeApp = function(){
+        localStorageService.set("appInstalled", "true");
+        if (config_data.isAndroid) {
+            document.location.href = "intent://"+$location.$$url+"/#Intent;scheme=qurantools;package=org.quran.qurantools;end";
+        } else if (config_data.isIOS) {
+            setTimeout(function () {
+                try {
+                    document.location.href = $scope.appStoreURL;
+                }catch (e){
+                    console.log(e);
+                }
+                localStorageService.remove("appInstalled");
+            }, 300);
+            document.location.href = "qurantools:/"+ $location.$$url;
+        }
+    };
 
+    $scope.hideBanner = function(){
+        $scope.showBanner = false;
     };
 
     $scope.initRoute();

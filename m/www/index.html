@@ -135,43 +135,17 @@
     <script src="../../app/components/partials/editor_modal_controller.js"></script>
     <script src="../../assets/js/profile/profile_controller.js"></script>
     <script src="../../assets/js/versehistory/verse_history_controller.js"></script>
-
-    <link rel="stylesheet" href="css/smart-app-banner.css">
-    <script src="js/smart-app-banner.js"/>
-    <script type="text/javascript">
-        new SmartBanner({
-            daysHidden: 7,   // days to hide banner after close button is clicked (defaults to 15)
-            daysReminder: 90, // days to hide banner after "VIEW" button is clicked (defaults to 90)
-            appStoreLanguage: 'tr', // language code for the App Store (defaults to user's browser language)
-            title: 'Kuran Çalış',
-            button: 'VIEW',
-            store: {
-                ios: 'On the App Store',
-                android: 'In Google Play',
-            },
-            price: {
-                ios: 'FREE',
-                android: 'FREE',
-                windows: 'FREE'
-            }
-        });
-    </script>
 </head>
 
 <body>
+
 <div id="fb-root"></div>
-<!--div style="top:0;height: 40px;">
-    <div style="float: left;margin-left: 15px">
-        <img src="../../assets/img/kurancalis_logo.png" height="35" width="35">
-    </div>
-    <div style="text-align: center;">
-        Kuran Çalış Uygulamasında Aç
-    </div>
-    <div style="float: right;margin-top: -16px;margin-right: 20px;">
-        <a ng-click="forward2NativeApp()" class="button button-assertive button-small">{{redirect_app_button_name}}</a>
-    </div>
-</div-->
-<div id="theView" ng-view>
+<div class="smart-app-banner" ng-class="{'visible': showBanner}">
+    <a ng-click="hideBanner();" class="icon close-button"></a>
+    <h3><span ng-show="appText"><i ng-bind="appText + ' Uygulaması'"></i> Kuran Çalış</span></h3>
+    <a class="btn btn-form app-button" ng-click="forward2NativeApp()">{{redirect_app_button_name}}</a>
+</div>
+<div id="theView" ng-class="{'showBanner': showBanner}" ng-view>
 
 </div>
 <div>

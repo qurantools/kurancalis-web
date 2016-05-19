@@ -639,6 +639,13 @@ angular.module('ionicApp')
                     $timeout(function () {
                         $scope.scrollDelegateTop(modal.id);
                     });
+                    if (!config_data.isNative){
+                        if ($scope.showBanner){
+                            $('.modal-backdrop').addClass('showBanner');
+                        }else{
+                            $('.modal-backdrop').addClass('hideBanner');
+                        }
+                    }
                 }
             });
 

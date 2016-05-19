@@ -16,7 +16,9 @@ var config_data = {
     'clientSecret':'e1c0f664bd3e803fce38a8d6399dba2d',
     'version':"1.5",
     'isMobile':isMobile(),
-    'isNative':isNative()
+    'isNative':isNative(),
+    'isAndroid':isAndroid(),
+    'isIOS':isIOS()
 }
 
 var MAX_AUTHOR_MASK = "2147483647"; //32 authors
@@ -46,4 +48,15 @@ function isMobile() {
 
 function isNative(){
     return (document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1);
+}
+
+function isAndroid(){
+    return (navigator.userAgent.match(/Android/i));
+}
+
+function isIOS(){
+    return (navigator.userAgent.match(/webOS/i)
+            || navigator.userAgent.match(/iPhone/i)
+            || navigator.userAgent.match(/iPad/i)
+            || navigator.userAgent.match(/iPod/i));
 }
