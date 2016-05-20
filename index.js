@@ -694,7 +694,7 @@ app.factory('ChapterVerses', function ($resource) {
     $scope.shareTitle = "";
 
     //    $scope.user = null;
-
+    $scope.isConnected= true;
     $scope.modal_editor = null;
     $scope.author_mask = 8208;
     $scope.author_hakki_yilmaz = 262144;
@@ -1424,6 +1424,7 @@ app.factory('ChapterVerses', function ($resource) {
             $scope.internet_display_show = true;
             $scope.internet_display_style = {"background-color": "green"};
             $scope.internet_display_message = "Internet bağlantınız sağlandı.";
+            $scope.isConnected= true;
             $timeout(function(){
                 $scope.checkUserLoginStatus();
                 $scope.internet_display_show = false;
@@ -1434,7 +1435,8 @@ app.factory('ChapterVerses', function ($resource) {
             $scope.user = null;
             $scope.internet_display_show = true;
             $scope.internet_display_style = {"background-color": "orange"};
-            $scope.internet_display_message = "Bağlantınız kesildi. Yapabileceğiniz işlemler kısıtlıdır.";
+            $scope.internet_display_message = "Bağlantınız yok. Yapabileceğiniz işlemler kısıtlıdır.";
+            $scope.isConnected= false;
         });
 
         if (config_data.isMobile) {
@@ -1554,7 +1556,8 @@ app.factory('ChapterVerses', function ($resource) {
 
         if (!$scope.checkUserLoginStatus() && !$scope.isAllowUrlWithoutLogin()){
             console.log("go to login path");
-            $location.path('/login/');
+            //deferred for later.
+            //$location.path('/login/');
         }
 
         if (config_data.isNative && typeof $scope.redirectUrl !== 'undefined'){
