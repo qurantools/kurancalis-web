@@ -40,11 +40,6 @@ angular.module('ionicApp')
         var buttonGotoVerse = {text: 'Sure İçerisinde Gör' };
         var buttonBookmark = {text: 'Burada Kaldım' };
         var buttonVerseHistory = {text: 'Ayet Tarihçesi' };
-        $scope.footerMenuButtons.push(buttonSelectTranslation);
-        $scope.footerMenuButtons.push(buttonAddToList);
-        $scope.footerMenuButtons.push(buttonGotoVerse);
-        $scope.footerMenuButtons.push(buttonBookmark);
-        $scope.footerMenuButtons.push(buttonVerseHistory);
 
         $scope.goToVerseDetail = function(){
             $scope.goToVerseParameters.chapter = $scope.detailedChapters[Math.floor($scope.verseId/1000) -1];
@@ -416,6 +411,14 @@ angular.module('ionicApp')
         };
 
         $scope.openFooterMenu = function (){
+            $scope.footerMenuButtons = [];
+            $scope.footerMenuButtons.push(buttonSelectTranslation);
+            $scope.footerMenuButtons.push(buttonGotoVerse);
+            if ($scope.user){
+                $scope.footerMenuButtons.push(buttonAddToList);
+                $scope.footerMenuButtons.push(buttonBookmark);
+                $scope.footerMenuButtons.push(buttonVerseHistory);
+            }
             $ionicActionSheet.show({
                 buttons: $scope.footerMenuButtons,
                 destructiveText: '',

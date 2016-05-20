@@ -1351,7 +1351,7 @@ angular.module('ionicApp')
                     $scope.actionSheetButtons.push(buttonVerseHistory);
                 }
             }
-        }
+        };
 
         $scope.selectDropdownCircle = function (item) {
 
@@ -1372,6 +1372,8 @@ angular.module('ionicApp')
         };
 
         $scope.verseActionSheet = function (chapter,verse,verseId) {
+            if ($scope.user == null)
+                return;
             $timeout(function() {
                 $ionicActionSheet.show({
                     buttons: [
@@ -1405,6 +1407,7 @@ angular.module('ionicApp')
         };
 
         $scope.openMenuModal = function () {
+            $scope.initializeActionSheetButtons();
             $timeout(function() {
                 $ionicActionSheet.show({
                     buttons: $scope.actionSheetButtons,
@@ -1417,7 +1420,6 @@ angular.module('ionicApp')
                     buttonClicked: function (index) {
                         if (index == 0) {
                             $scope.openModal('authors_list');
-
                         } else if (index == 1) {
                             $scope.openModal('chapter_selection');
                         }else if (index == 2) {
