@@ -160,6 +160,28 @@ var app = angular.module('ionicApp', requiredModules)
                 cordova.plugins.Keyboard.disableScroll(true);
                 ionic.keyboard.disable();
             }
+            if(config_data.isMobile && config_data.isNative ){
+
+                /*var type = $cordovaNetwork.getNetwork();
+
+
+                var isOnline = $cordovaNetwork.isOnline();
+
+                var isOffline = $cordovaNetwork.isOffline();
+*/
+
+                // listen for Online event
+                $rootScope.$on('$cordovaNetwork:online', function(event, networkState){
+                    $rootScope.$broadcast('onlineNetworkConnection');
+                });
+
+                // listen for Offline event
+                $rootScope.$on('$cordovaNetwork:offline', function(event, networkState){
+                    $rootScope.$broadcast('offlineNetworkConnection', networkState);
+                });
+
+            }
+
             if (window.StatusBar) {
                 // org.apache.cordova.statusbar required
                 StatusBar.styleLightContent();
@@ -176,6 +198,7 @@ var app = angular.module('ionicApp', requiredModules)
             if (config_data.isMobile && !config_data.isNative){
                 $rootScope.redirect_app_button_name = "";
             }
+
         });
 
         $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
@@ -397,7 +420,7 @@ if (config_data.isMobile == false) { //false
                 RestangularProvider.setBaseUrl(config_data.webServiceUrl);
                 localStorageServiceProvider.setStorageCookie(0, '/');
                 //route
-
+/*
                 $httpProvider.interceptors.push(function ($q, $injector, $rootScope) {
                     var isConfirmPopupCalledBefore = false;
                     var isDisplay = false;
@@ -414,6 +437,7 @@ if (config_data.isMobile == false) { //false
                         'responseError': function (rejection) {
                             var $route = $injector.get('$route');
                             var $ionicPopup = $injector.get('$ionicPopup');
+                            alert(rejection.config.url);
                             if (rejection.status == 0 && !isConfirmPopupCalledBefore) {
                                 isConfirmPopupCalledBefore = true;
                                 var confirmPop = $ionicPopup.confirm({
@@ -437,7 +461,7 @@ if (config_data.isMobile == false) { //false
                         }
                     };
                 });
-
+*/
                 //route
                 $routeProvider
                     .when('/translations/', {
@@ -670,7 +694,7 @@ app.factory('ChapterVerses', function ($resource) {
     $scope.shareTitle = "";
 
     //    $scope.user = null;
-
+    $scope.isConnected= true;
     $scope.modal_editor = null;
     $scope.author_mask = 8208;
     $scope.author_hakki_yilmaz = 262144;
@@ -895,6 +919,8 @@ app.factory('ChapterVerses', function ($resource) {
             $scope.loggedIn = false;
             //do some cleaning
         }
+
+        console.log("checkUserLoginStatus:"+status);
         return status;
     };
 
@@ -1398,15 +1424,19 @@ app.factory('ChapterVerses', function ($resource) {
             $scope.internet_display_show = true;
             $scope.internet_display_style = {"background-color": "green"};
             $scope.internet_display_message = "Internet bağlantınız sağlandı.";
+            $scope.isConnected= true;
             $timeout(function(){
+                $scope.checkUserLoginStatus();
                 $scope.internet_display_show = false;
             },2000);
         });
 
         $scope.$on('offlineNetworkConnection', function(message) {
+            $scope.user = null;
             $scope.internet_display_show = true;
             $scope.internet_display_style = {"background-color": "orange"};
-            $scope.internet_display_message = "Internet bağlantınız kesildi. Yapabileceğiniz işlemler kısıtlıdır.";
+            $scope.internet_display_message = "Bağlantınız yok. Yapabileceğiniz işlemler kısıtlıdır.";
+            $scope.isConnected= false;
         });
 
         if (config_data.isMobile) {
@@ -1525,7 +1555,9 @@ app.factory('ChapterVerses', function ($resource) {
         });
 
         if (!$scope.checkUserLoginStatus() && !$scope.isAllowUrlWithoutLogin()){
-            $location.path('/login/');
+            console.log("go to login path");
+            //deferred for later.
+            //$location.path('/login/');
         }
 
         if (config_data.isNative && typeof $scope.redirectUrl !== 'undefined'){

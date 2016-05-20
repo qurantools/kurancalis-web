@@ -118,6 +118,15 @@ angular.module('ionicApp')
         $scope.submitEditor = function () {
             $scope.showProgress("submitEditor");
             $timeout(function () {
+                if (config_data.isMobile) { //convert mobile selection to viewCircles
+                    //prepare canView circle list
+                    $scope.ViewCircles = [];
+                    for (var index = 0; index < $scope.mobileAnnotationEditorCircleListForSelection.length; ++index) {
+                        if ($scope.mobileAnnotationEditorCircleListForSelection[index].selected == true) {
+                            $scope.ViewCircles.push($scope.mobileAnnotationEditorCircleListForSelection[index]);
+                        }
+                    }
+                }
                 var tagParameters = $scope.getTagParametersForAnnotatorStore($scope.ViewCircles, $scope.yrmcevres, $scope.ViewUsers, $scope.yrmkisis, $scope.annotationModalDataTagsInput);
                 $scope.annotationModalData.canViewCircles = tagParameters.canViewCircles;
                 $scope.annotationModalData.canCommentCircles = tagParameters.canCommentCircles;
@@ -125,9 +134,14 @@ angular.module('ionicApp')
                 $scope.annotationModalData.canCommentUsers = tagParameters.canCommentUsers;
                 $scope.annotationModalData.tags = tagParameters.tags;
 
+
+
                 $scope.hideProgress("submitEditor");
                 $scope.callback($scope.annotationModalData);
                 if (config_data.isMobile){
+
+
+
                     $scope.closeModal('editor');
                 }else{
                     $('#annotationModal').modal('hide');
