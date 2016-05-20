@@ -4,7 +4,7 @@
         <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced">
             <ion-nav-buttons side="left">
                 <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
-                <button class="button button-icon icon ion-ios-gear"  ng-click="openMenuModal()"></button>
+                <button class="button button-icon icon ion-android-arrow-dropdown-circle"  ng-click="openMenuModal()"></button>
                 <input type="hidden" ng-model="chapter_id"/>
                 <input type="hidden" ng-model="author_mask"/>
                 <!--author_mask:{{author_mask}}-->
@@ -29,7 +29,7 @@
             <ion-content overflow-scroll="true" delegate-handle="content"  class="scroll_content"
                          style="margin-top:30px;">
                 <div class="row" delegate-handle="content">
-                    <div class="col-xs-12 bb" id="translations">
+                    <div class="col-xs-12 bb" id="translations" style="min-height: 1200px">
                     <h4 style="text-align: center">{{chapter_title}}</h4>
                         <div ng-repeat="verse in verses">
                             <div class="well translations col-xs-12" id="v_{{verse.id}}">

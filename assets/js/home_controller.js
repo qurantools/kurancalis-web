@@ -566,19 +566,6 @@ angular.module('ionicApp')
 
         };
 
-
-//Volkan Ekledi.
-
-
-//        function cevregoster() {
-//            var cevregosterRestangular = Restangular.all("circles");
-//            cevregosterRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (cevreliste) {
-//                $scope.cevreadlar = cevreliste;
-//            });
-//        };
-
-//
-
         $scope.setAuthorViewAccordingToDetailedSearchAuthorSelection = function(){
             //switch to singleAuthor View in case of single author
             if($scope.detailedSearchAuthorSelection.length == 1){
@@ -684,7 +671,8 @@ angular.module('ionicApp')
                         var verseId = parseInt($scope.query_chapter_id * 1000) + parseInt($scope.verse.number);
                         $timeout(function () {
                             $scope.scrollToVerse(verseId);
-                        });
+
+                        },400);
                     }
                 }
             });
