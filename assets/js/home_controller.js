@@ -1329,7 +1329,7 @@ angular.module('ionicApp')
             var butonSureAyet = {text: '<i class="icon ion-arrow-right-b"></i> Sure/Ayete Git' };
             var butonFiltre = {text: '<i class="icon fa fa-search"></i> Notları Filtrele' };
             var butonAyraclar = {text: '<i class="icon ion-android-bookmark"></i> Ayraçlar' };
-            var buttonVerseHistory = {text: '<i class="icon fa fa-history"></i> Ayet Tarihçesi' };
+            var buttonVerseHistory = {text: '<i class="icon fa fa-history"></i> Ayet Geçmişi' };
             $scope.actionSheetButtons.push(butonCeviri);
             $scope.actionSheetButtons.push(butonSureAyet);
             if($scope.loggedIn) {

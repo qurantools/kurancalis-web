@@ -39,7 +39,7 @@ angular.module('ionicApp')
         var buttonAddToList = {text: 'Listeye Ekle' };
         var buttonGotoVerse = {text: 'Sure İçerisinde Gör' };
         var buttonBookmark = {text: 'Burada Kaldım' };
-        var buttonVerseHistory = {text: 'Ayet Tarihçesi' };
+        var buttonVerseHistory = {text: 'Ayet Geçmişi' };
 
         $scope.goToVerseDetail = function(){
             $scope.goToVerseParameters.chapter = $scope.detailedChapters[Math.floor($scope.verseId/1000) -1];

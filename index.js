@@ -950,6 +950,12 @@ app.factory('ChapterVerses', function ($resource) {
 
                     }
                     else{
+                        console.log("There is connection but can not get user info");
+                        for ( var prop in response ) {
+                            //if ( response.hasOwnProperty( prop ) ) {
+                                console.log( response[prop] );
+                            //}
+                        }
                         if(response.data.code == "201"){
                             var infoPopup = $ionicPopup.alert({
                                 title: 'Var olan oturumuzun süresi dolmuştur. Çıkış yapılıyor.',
