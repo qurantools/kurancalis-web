@@ -196,7 +196,11 @@ var app = angular.module('ionicApp', requiredModules)
             };
 
             if (config_data.isMobile && !config_data.isNative){
-                $rootScope.redirect_app_button_name = "";
+                if (document.getElementById('l').style.display == 'none'){
+                    $rootScope.redirect_app_button_name = "İndir";
+                }else{
+                    $rootScope.redirect_app_button_name = "AÇ";
+                }
             }
 
         });
@@ -780,7 +784,7 @@ app.factory('ChapterVerses', function ($resource) {
     $scope.currentPageUrl = "";
     $scope.app_id = "app-id=1032659897";
     $scope.apple_itunes_content = "app-id=1032659897";
-    $scope.redirect_app_button_name = "İndir";
+    //$scope.redirect_app_button_name = "İndir";
     $scope.appText = "Android";
     $scope.appStoreURL = "";
     $scope.showBanner = false;
@@ -940,7 +944,9 @@ app.factory('ChapterVerses', function ($resource) {
                 $scope.$broadcast('userInfoReady');
             },
             function(response) {
-                console.log("Could not get user info");
+                console.error("Could not get user info");
+                //var message =JSON.stringify(response, null, 4);
+                //console.error(message);
                 if( config_data.isNative){
                     if(navigator.network.connection.type == Connection.NONE) {
                         $ionicPopup.confirm({
@@ -950,13 +956,9 @@ app.factory('ChapterVerses', function ($resource) {
 
                     }
                     else{
-                        console.log("There is connection but can not get user info");
-                        for ( var prop in response ) {
-                            //if ( response.hasOwnProperty( prop ) ) {
-                                console.log( response[prop] );
-                            //}
-                        }
-                        if(response.data.code == "201"){
+                        console.error("There is connection but could not get user info");
+
+                        if(response.status != 0 && response.data != null && response.data.code == "201"){
                             var infoPopup = $ionicPopup.alert({
                                 title: 'Var olan oturumuzun süresi dolmuştur. Çıkış yapılıyor.',
                                 template: '',
@@ -966,6 +968,12 @@ app.factory('ChapterVerses', function ($resource) {
                                 infoPopup.close();
                                 $scope.logOut();
                             }, 1700);
+                        }
+                        else{ //there is connection, it is logged in, retry every 2 secs.
+                            $timeout(function () {
+                                $scope.get_user_info();
+                            }, 2000);
+
                         }
                     }
                 }
@@ -1509,9 +1517,7 @@ app.factory('ChapterVerses', function ($resource) {
                 $scope.appText = "IOS";
                 $scope.appStoreURL = "https://itunes.apple.com/tr/app/kuran-cal-s/id1032659897?mt=8";
             }
-            if (localStorageService.get("appInstalled") != null){
-                $scope.redirect_app_button_name = "Aç";
-            }
+
         }
 
         //list the authors on page load
