@@ -81,7 +81,8 @@
 
 .smart-app-banner h3:before {
     background-image: url('../img/kurancalis_logo_57.png');
-    background-position: -136px -112px;
+    background-size: auto;
+    background-position: -116px -110px;
     width: 57px;
     height: 57px;
     content: '';
@@ -96,10 +97,10 @@
 @media(min--moz-device-pixel-ratio:1.5),(-o-min-device-pixel-ratio: 3/2),(-webkit-min-device-pixel-ratio:1.5),(min-resolution:1.5dppx) {
     .smart-app-banner h3:before {
         background-image:url('../img/kurancalis_logo_57.png');
-        background-position: -135.5px -110.5px;
-        -webkit-background-size: 286px 239px;
-        -moz-background-size: 286px 239px;
-        background-size: 286px 239px
+        background-position: -116px -110px;
+        background-size: auto;
+        -webkit-background-size: auto;
+        -moz-background-size: auto;
     }
 }
 
@@ -139,15 +140,16 @@
 
 .smart-app-banner a.close-button {
     line-height: 50px;
-    padding: 5px;
+    padding: 0px 5px;
     border: 1px solid #AEAEAE;
     border-radius: 30px;
+    margin-left: 5px;
 }
 
 .smart-app-banner a.close-button:before {
     content: 'x';
     display: inline-block;
-    vertical-align: middle
+    padding-bottom: 4px;
 }
 
 @media(min--moz-device-pixel-ratio:1.5),(-o-min-device-pixel-ratio: 3/2),(-webkit-min-device-pixel-ratio:1.5),(min-resolution:1.5dppx) {

@@ -1633,19 +1633,11 @@ app.factory('ChapterVerses', function ($resource) {
 
     $scope.forward2NativeApp = function(){
         localStorageService.set("appInstalled", "true");
-        if (config_data.isAndroid) {
-            document.location.href = "intent://"+$location.$$url+"/#Intent;scheme=qurantools;package=org.quran.qurantools;end";
-        } else if (config_data.isIOS) {
-            setTimeout(function () {
-                try {
-                    document.location.href = $scope.appStoreURL;
-                }catch (e){
-                    console.log(e);
-                }
-                localStorageService.remove("appInstalled");
-            }, 300);
-            document.location.href = "qurantools:/"+ $location.$$url;
-        }
+        setTimeout(function () {
+            document.location.href = $scope.appStoreURL;
+            localStorageService.remove("appInstalled");
+        }, 200);
+        document.location.href = "qurantools:/"+ $location.$$url;
     };
 
     $scope.hideBanner = function(){
