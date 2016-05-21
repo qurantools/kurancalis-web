@@ -1636,7 +1636,7 @@ app.factory('ChapterVerses', function ($resource) {
         setTimeout(function () {
             document.location.href = $scope.appStoreURL;
             localStorageService.remove("appInstalled");
-        }, 200);
+        }, 500);
         document.location.href = "qurantools:/"+ $location.$$url;
     };
 
