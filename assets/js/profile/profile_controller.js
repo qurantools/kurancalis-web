@@ -88,7 +88,7 @@ angular.module('ionicApp')
         };
 
         $scope.redirectFacebookProfile = function(){
-            $window.open('http://www.facebook.com/'+$scope.profiledUser.fbId, '_blank');
+            $window.open('http://www.facebook.com/'+$scope.profiledUser.fbId, '_system');
         };
 
         $scope.showEditor = function(annotation){
