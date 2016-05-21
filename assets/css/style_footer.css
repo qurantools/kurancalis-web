@@ -157,7 +157,7 @@
     }
 }
 
-.show-banner .view, .showBanner .modal-wrapper .modal.active{
+.showBanner .view, .showBanner .modal-wrapper .modal.active{
     top: 60px
 }
 

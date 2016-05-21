@@ -1401,12 +1401,10 @@
             position = this.adder.position();
             this.adder.hide();
 
-
             annotation = this.setupAnnotation(this.createAnnotation());
             $(annotation.highlights).addClass('annotator-hl-temporary');
             save = (function (_this) {
                 return function () {
-                    cleanup();
                     $(annotation.highlights).removeClass('annotator-hl-temporary');
                     return _this.publish('annotationCreated', [annotation]);
                 };
@@ -1420,17 +1418,16 @@
             })(this);
             cleanup = (function (_this) {
                 return function () {
-                    _this.unsubscribe('annotationEditorHidden', cancel);
+                    _this.unsubscribe('annotationEditorHidden', cleanup);
                     return _this.unsubscribe('annotationEditorSubmit', save);
                 };
             })(this);
-            this.subscribe('annotationEditorHidden', cancel);
+            this.unsubscribe('annotationEditorHidden');
+            this.unsubscribe('annotationEditorSubmit');
+            this.subscribe('annotationEditorHidden', cleanup);
             this.subscribe('annotationEditorSubmit', save);
 
             this.publish("adderClicked",[annotation, position]);
-
-
-
         };
 
         Annotator.prototype.onEditAnnotation = function (annotation) {
@@ -1439,7 +1436,6 @@
             offset = this.viewer.element.position();
             update = (function (_this) {
                 return function () {
-                    cleanup();
                     return _this.updateAnnotation(annotation);
                 };
             })(this);
@@ -1449,6 +1445,8 @@
                     return _this.unsubscribe('annotationEditorSubmit', update);
                 };
             })(this);
+            this.unsubscribe('annotationEditorHidden');
+            this.unsubscribe('annotationEditorSubmit');
             this.subscribe('annotationEditorHidden', cleanup);
             this.subscribe('annotationEditorSubmit', update);
             this.viewer.hide();
