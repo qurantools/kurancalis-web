@@ -150,8 +150,8 @@ angular.module('ionicApp')
         };
 
         $scope.mdeleteAnnotation = function(){
-            $scope.callback($scope.index);
             $("#deleteAnnotationModal").modal("hide");
+            $scope.callback($scope.index);
         };
 
         $scope.openModal = function(id){

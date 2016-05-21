@@ -738,7 +738,6 @@ angular.module('ionicApp')
                 index = $scope.getAnnotationIndexFromFilteredAnnotationIndex(index);
             }
             annotator.deleteAnnotation($scope.annotations[index]);
-            $scope.closeAnnotationModal();
         };
 
         //remove annotation from scope
