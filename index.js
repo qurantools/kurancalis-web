@@ -1324,6 +1324,12 @@ app.factory('ChapterVerses', function ($resource) {
             }
             $scope.$broadcast("circleLists ready");
 
+        },function(response){
+            if(response.data==null) {
+                $timeout(function () {
+                    $scope.initializeCircleLists();
+                }, 2000);
+            }
         });
     };
 
