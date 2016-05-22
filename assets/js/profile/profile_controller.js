@@ -88,7 +88,7 @@ angular.module('ionicApp')
         };
 
         $scope.redirectFacebookProfile = function(){
-            $window.open(config_data.webAddress+"/fbredirect.php/id="+$scope.profiledUser.fbId, '_system');
+            $window.open(config_data.webAddress+"/fbredirect.php?id="+$scope.profiledUser.fbId, '_system');
         };
 
         $scope.showEditor = function(annotation){

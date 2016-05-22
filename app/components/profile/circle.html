@@ -9,7 +9,7 @@
             <div ng-repeat="feed in feeds">
                 <div class="col-xs-2">
                     <div class="well col" style="text-align: center;padding-top: 11px !important;padding: 0px;margin-bottom: 0px;">
-                        <a ng-href="#/profile/user/{{feed.owner_id}}/"><img style="max-width: 120px; max-height: 90px;border-radius: 50%;" ng-if="feed.owner_photo != 'undefinedp'" ng-src="{{feed.owner_photo}}"><br/></a>
+                        <a  href="" ng-click="navigateTo('/profile/user/{{feed.owner_id}}/"><img style="max-width: 120px; max-height: 90px;border-radius: 50%;" ng-if="feed.owner_photo != 'undefinedp'')" ng-src="{{feed.owner_photo}}"><br/></a>
                         <a ng-href="#/profile/user/{{feed.owner_id}}/"><div>{{feed.owner_name | limitTo: 25}}</div></a>
                     </div>
                 </div>

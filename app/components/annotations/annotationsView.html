@@ -42,7 +42,7 @@
                 <button ng-click="showVerseData.annotationId=-1" class="btn btn-xs"
                         ng-if="showVerseData.annotationId==annotation.annotationId"><i
                         class="fa fa-cog "></i></button>
-                <div style="float:right;"><a ng-href="#/profile/user/{{annotation.userId}}/" style="color: darkblue;">{{annotation.userName | limitTo: 25}}</a></div>
+                <div style="float:right;"><a  href="" ng-click="navigateTo('/profile/user/{{annotation.userId}}/')" style="color: darkblue;">{{annotation.userName | limitTo: 25}}</a></div>
             </div>
             <show-verse data="showVerseData.data"
                         ng-if="showVerseData.annotationId==annotation.annotationId"></show-verse>

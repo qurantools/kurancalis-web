@@ -35,7 +35,7 @@
             <div class="s_a_header">
                 {{annotation.verseId / 1000 | number:0}}:{{annotation.verseId % 1000}}
                 <div style="float:right;">
-                    <a ng-href="#/profile/user/{{annotation.userId}}/" style="color: darkblue;text-decoration: none;">{{annotation.userName | limitTo: 25}}</a>
+                    <a  href="" ng-click="navigateTo('/profile/user/{{annotation.userId}}/')" style="color: darkblue;text-decoration: none;">{{annotation.userName | limitTo: 25}}</a>
                 </div>
             </div>
             <div>

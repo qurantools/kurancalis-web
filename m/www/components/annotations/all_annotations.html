@@ -63,7 +63,7 @@
                         <div class="item item-divider">
                             <a href='' style="text-decoration: none !important;" ng-click="showVerseDetail(annotation.verseId, usersForSearch, circlesForSearch)">{{annotation.verseId / 1000 | number:0}}:{{annotation.verseId % 1000}}</a>
                             <div style="float:right;">
-                                <a ng-href="#/profile/user/{{annotation.userId}}/" style="color: darkblue;text-decoration: none;">{{annotation.userName | limitTo: 25}}</a>
+                                <a  href="" ng-click="navigateTo('/profile/user/{{annotation.userId}}/')" style="color: darkblue;text-decoration: none;">{{annotation.userName | limitTo: 25}}</a>
                             </div>
                         </div>
                         <show-verse data="showVerseData.data"
