@@ -1074,9 +1074,9 @@ app.factory('ChapterVerses', function ($resource) {
         return tagParameters;
     };
 
-    $scope.showEditorModal = function (annotation, position, postCallback) {
+    $scope.showEditorModal = function (annotation, position, postCallback, cancelPostBack) {
         $timeout(function(){
-            $scope.$broadcast("show_editor",{annotation: annotation, position:position, postCallback: postCallback});
+            $scope.$broadcast("show_editor",{annotation: annotation, position:position, postCallback: postCallback, cancelPostBack : cancelPostBack});
         });
     };
 

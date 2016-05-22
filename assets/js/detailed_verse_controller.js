@@ -185,7 +185,10 @@ angular.module('ionicApp')
         };
 
         $scope.showEditor = function (annotation, position) {
-            $scope.showEditorModal(annotation, position, $scope.submitEditor);
+            $scope.showEditorModal(annotation, position, $scope.submitEditor, function(){
+                annotator.publish('annotationEditorCancel');
+                annotator.onEditorHide();
+            });
         };
 
         $scope.editAnnotation = function (index){

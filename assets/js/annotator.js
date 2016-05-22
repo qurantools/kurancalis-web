@@ -1412,7 +1412,6 @@
             })(this);
             cancel = (function (_this) {
                 return function () {
-                    cleanup();
                     return _this.deleteAnnotation(annotation);
                 };
             })(this);
@@ -1424,6 +1423,7 @@
             })(this);
             this.unsubscribe('annotationEditorHidden');
             this.unsubscribe('annotationEditorSubmit');
+            this.subscribe('annotationEditorCancel', cancel);
             this.subscribe('annotationEditorHidden', cleanup);
             this.subscribe('annotationEditorSubmit', save);
 
@@ -1447,6 +1447,7 @@
             })(this);
             this.unsubscribe('annotationEditorHidden');
             this.unsubscribe('annotationEditorSubmit');
+            this.unsubscribe('annotationEditorCancel');
             this.subscribe('annotationEditorHidden', cleanup);
             this.subscribe('annotationEditorSubmit', update);
             this.viewer.hide();

@@ -2,6 +2,7 @@ angular.module('ionicApp')
     .controller('annotationEditorController', function ($scope, $q, $routeParams, $location, $timeout, Restangular, $ionicModal) {
 
         $scope.callback = function (){};
+        $scope.cancel = function(){};
         $scope.index = -1;
 
         $scope.showEditor = function(annotation, position){
@@ -134,14 +135,9 @@ angular.module('ionicApp')
                 $scope.annotationModalData.canCommentUsers = tagParameters.canCommentUsers;
                 $scope.annotationModalData.tags = tagParameters.tags;
 
-
-
                 $scope.hideProgress("submitEditor");
                 $scope.callback($scope.annotationModalData);
                 if (config_data.isMobile){
-
-
-
                     $scope.closeModal('editor');
                 }else{
                     $('#annotationModal').modal('hide');
@@ -175,9 +171,21 @@ angular.module('ionicApp')
             }
         };
 
+        $scope.cancelNewAnnotationCreation = function(){
+            if (config_data.isMobile){
+                $scope.closeModal('editor');
+            }else{
+                $('#annotationModal').modal('hide');
+            }
+            $scope.cancel();
+        };
+
         $scope.init = function(){
             $scope.$on('show_editor', function(event, args) {
                 $scope.callback = args.postCallback;
+                if (isDefined(args.cancelPostBack)){
+                    $scope.cancel = args.cancelPostBack;
+                }
                 $scope.showEditor(args.annotation, args.position);
             });
 
