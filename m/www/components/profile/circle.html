@@ -38,7 +38,7 @@
                                 </a>
                             </div>
                             <hr style="width: 100% !important;border-color: white !important;">
-                            <a href='' style="text-decoration: none !important;margin-left: 10px;" ng-click="showVerseDetail(feed.anno_verse_id, usersForSearch, circlesForSearch)">
+                            <a href='' style="text-decoration: none !important;margin-left: 10px;" ng-click="openVerseDetail(feed.anno_verse_id, feed.owner_id, feed.owner_name)">
                                 <b>{{feed.anno_verse_id / 1000 | number:0}}:{{feed.anno_verse_id % 1000}}</b>
                             </a>
                         </div>

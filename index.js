@@ -195,13 +195,13 @@ var app = angular.module('ionicApp', requiredModules)
                 window.localStorage.removeItem("external_load");
             };
 
-            if (config_data.isMobile && !config_data.isNative){
+            /*if (config_data.isMobile && !config_data.isNative){
                 if (document.getElementById('l').style.display == 'none'){
                     $rootScope.redirect_app_button_name = "AÇ";
                 }else{
                     $rootScope.redirect_app_button_name = "AÇ";
                 }
-            }
+            }*/
 
         });
 

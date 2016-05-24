@@ -9,6 +9,8 @@ angular.module('ionicApp')
         $scope.isLoading = false;
         $scope.select_circle = false;
         $scope.hasMoreData = false;
+        $scope.selectedCircles = [];
+        $scope.selectedUsers = [];
 
         $scope.fetchFriendFeeds = function(friendName, start){
             if ($scope.isLoading)
@@ -180,6 +182,8 @@ angular.module('ionicApp')
         };
 
         $scope.profileCircleChanged = function(circle){
+            $scope.selectedCircles = [];
+            $scope.selectedCircles.push($scope.extendedCirclesForSearch[$scope.getIndexOfArrayByElement($scope.extendedCirclesForSearch, 'id', $scope.circleId)]);
             $location.path("/profile/circle/"+circle+"/");
         };
 
@@ -245,6 +249,10 @@ angular.module('ionicApp')
             }
         };
 
+        $scope.openVerseDetail = function(verseId, userId, userName){
+            $scope.showVerseDetail(verseId, [{id: userId, name : userName}], $scope.selectedCircles);
+        };
+
         $scope.initializeProfileController = function () {
             if (config_data.isMobile){
                 $ionicModal.fromTemplateUrl('components/partials/add_friend_to_search.html', {
@@ -272,6 +280,8 @@ angular.module('ionicApp')
             if (typeof $routeParams.circleId !== 'undefined') {
                 $scope.circleId = $routeParams.circleId;
                 $scope.circleListForTimeline = parseInt($scope.circleId);
+                $scope.selectedCircles = [];
+                $scope.selectedCircles.push($scope.extendedCirclesForSearch[$scope.getIndexOfArrayByElement($scope.extendedCirclesForSearch, 'id', $scope.circleId)]);
                 $scope.fetchCircleFeeds($routeParams.circleId, Math.floor(Date.now() / 1000));
                 return;
             }
