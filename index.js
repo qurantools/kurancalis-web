@@ -1656,6 +1656,36 @@ app.factory('ChapterVerses', function ($resource) {
         $scope.showBanner = false;
     };
 
+    $scope.doVote = function(votable, resource, voteType) {
+        var voteRestangular = Restangular.one(resource, votable.id).all("votes");
+        //new vote or vote changed
+        if (votable.vote == null || votable.vote.content != voteType) {
+            var headers = {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'access_token': $scope.access_token
+            };
+            var jsonData = voteType;
+            var postData = [];
+            postData.push(encodeURIComponent("content") + "=" + encodeURIComponent(jsonData));
+            var data = postData.join("&");
+            voteRestangular.customPOST(data, '', '', headers).then(function (rates) {
+                votable.vote = {'content' : voteType};
+                votable.voteRates = rates;
+            });
+        }else {
+            voteRestangular.customDELETE("", {}, {'access_token': $scope.access_token}).then(function (rates) {
+                votable.vote = null;
+                votable.voteRates = rates;
+            });
+        }
+    };
+
+    $scope.showVoteResults = function(votableObject, resource){
+        $timeout(function(){
+            $scope.$broadcast("show_vote_results", {voted:votableObject, resource:resource});
+        });
+    };
+
     $scope.initRoute();
 
     //initialization

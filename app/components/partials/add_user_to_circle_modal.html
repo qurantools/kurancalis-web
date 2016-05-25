@@ -1,0 +1,29 @@
+<div class="modal" id="addUserToCircleModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Kişileri Başka Çevreye Ekle</h4>
+            </div>
+            <div class="modal-body">
+                <div align="left">
+                    <label>Seçtiğiniz kişileri aşağıdaki seçeceğiniz çevreye de ekleyebilirsiniz.</label>
+                    <table>
+                        <tr ng-repeat="item in cevreadlar">
+                            <td style="width:30px">
+                                <input type="radio" ng-model="csecim" value="false" name="groupA"
+                                       ng-click="toggleCircle(item)"/>
+                            </td>
+                            <td>
+                                {{item.name}}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal">Vazgeç</a>
+                    <a class="btn btn-primary btn-wide" ng-click="addUser2Circle()" data-dismiss="modal">Çevreye Ekle</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

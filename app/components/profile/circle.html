@@ -37,6 +37,14 @@
                         <div class="row" style="padding:0 15px">
                             <div style="float: left">{{feed.updated | date: 'dd/MM/yyyy HH:mm:ss'}}</div>
                             <div style="float: right">
+                                <span ng-class="{ 'voted-like': (feed.vote != null && feed.vote.content == 'like'), 'unvoted' : !(feed.vote != null && feed.vote.content == 'like')}"
+                                      ng-click="doVoteInProfile(feed,'like')">
+                                    <i class="fa fa-thumbs-up"></i> {{feed.voteRates.like}}
+                                </span>
+                                <span ng-class="{'voted-dislike': (feed.vote != null && feed.vote.content == 'dislike'), 'unvoted' : !(feed.vote != null && feed.vote.content == 'dislike')}"
+                                      ng-click="doVoteInProfile(feed, 'dislike')">
+                                    <i class="fa fa-thumbs-down"></i> {{feed.voteRates.dislike}}
+                                </span>
                                 <button type="button" class="btn btn-primary btn-xs" ng-click="showEditor(feed)"
                                         ng-if="feed.owner_id==user.id"><i
                                         class="fa fa-pencil-square-o "></i>
@@ -72,6 +80,16 @@
                         <div class="small_space">&nbsp;</div>
                         <div class="row" style="padding:0 15px">
                             <div style="float: left">{{feed.updated | date: 'dd/MM/yyyy HH:mm:ss'}}</div>
+                            <div style="float: right">
+                                <span ng-class="{ 'voted-like': (feed.vote != null && feed.vote.content == 'like'), 'unvoted' : !(feed.vote != null && feed.vote.content == 'like')}"
+                                      ng-click="doVoteInProfile(feed,'like')">
+                                    <i class="fa fa-thumbs-up"></i> {{feed.voteRates.like}}
+                                </span>
+                                <span ng-class="{'voted-dislike': (feed.vote != null && feed.vote.content == 'dislike'), 'unvoted' : !(feed.vote != null && feed.vote.content == 'dislike')}"
+                                      ng-click="doVoteInProfile(feed, 'dislike')">
+                                    <i class="fa fa-thumbs-down"></i> {{feed.voteRates.dislike}}
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </div>

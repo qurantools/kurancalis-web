@@ -1,0 +1,40 @@
+<div align="center" class="modal" id="voteResultsModal" ng-controller="VoteCtrl">
+    <div style="width:750px" class="modal-dialog fixed-dialog">
+        <div class="modal-content">
+            <div align="left" class="modal-header">
+                <h4 class="modal-title">Oylama Sonuçları</h4>
+            </div>
+            <div class="modal-body" style="float: left;font-size: 26px;">
+                <span ng-click="search.vote=''">
+                    <i class="fa fa-group"></i> Tümü
+                </span>
+                <span ng-click="search.vote='like'">
+                    <i class="fa fa-thumbs-up"></i> {{votedObject.voteRates.like}}
+                </span>
+                <span ng-click="search.vote='dislike'">
+                    <i class="fa fa-thumbs-down"></i> {{votedObject.voteRates.dislike}}
+                </span>
+            </div>
+            <table ng-repeat="item in results | filter: voterFilter" cellpadding="0" cellspacing="0"
+                   style="width: 90%; margin: 10px 10px; margin-left: 40px; padding:0px 0px;-ms-overflow-y: auto; max-height: calc(100vh - 212px);">
+                <tr>
+                    <td align="left" style="width: 40%;position: relative">
+                        <img width="75px" height="75px" src={{item.user.photo}}>
+                        <i class="fa icon-over-img" ng-class="{'fa-thumbs-down' : item.vote == 'dislike', 'fa-thumbs-up' : item.vote == 'like'}"></i>
+                    </td>
+                    <td style="width: 40%; padding-left: 8px;">
+                        <a  href="" ng-click="navigateTo('/profile/user/{{item.user.username}}/')" style="color: darkblue;">{{item.user.name}}</a>
+                    </td>
+                    <td style="width: 30%;">
+                        <button class="btn btn-primary btn-wide" ng-click="addUserToCircle(item.user)" ng-if="item.user.user_id != user.id">Çevreye Ekle</button>
+                    </td>
+                </tr>
+            </table>
+
+            <div class="modal-footer">
+                <button class="btn btn-primary btn-wide" data-dismiss="modal">Tamam</button>
+            </div>
+        </div>
+    </div>
+    <div ng-include="'app/components/partials/add_user_to_circle_modal.html'"></div>
+</div>

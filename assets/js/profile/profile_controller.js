@@ -253,6 +253,14 @@ angular.module('ionicApp')
             $scope.showVerseDetail(verseId, [{id: userId, name : userName}], $scope.selectedCircles);
         };
 
+        $scope.doVoteInProfile = function (feed, content){
+            var resources = "annotations";
+            if (feed.study_type != 'annotation'){
+                resources = "inferences";
+            }
+            $scope.doVote(feed, resources, content);
+        };
+
         $scope.initializeProfileController = function () {
             if (config_data.isMobile){
                 $ionicModal.fromTemplateUrl('components/partials/add_friend_to_search.html', {

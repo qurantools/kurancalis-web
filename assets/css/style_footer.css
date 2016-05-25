@@ -167,3 +167,21 @@
     top : 0px;
 }
 
+.voted-like{
+    color : dodgerblue;
+}
+
+.voted-dislike{
+    color: black;
+}
+
+.unvoted{
+    color: #888;
+}
+
+.icon-over-img{
+    position: absolute;
+    top: 24%;
+    left: 24%;
+    transform: translate(-45%, -45%);
+}

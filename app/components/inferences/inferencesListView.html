@@ -52,19 +52,28 @@
             <div class="small_space">&nbsp;</div>
             <div class="row" style="padding:0 15px">
                 <div style="float: left">{{inference.updated | date: 'dd/MM/yyyy HH:mm:ss'}}</div>
+                <div style="float: right">
+                    <span ng-class="{ 'voted-like': (inference.vote != null && inference.vote.content == 'like'), 'unvoted' : !(inference.vote != null && inference.vote.content == 'like')}"
+                        ng-click="doVote(inference,'inferences','like')">
+                        <i class="fa fa-thumbs-up"></i> {{inference.voteRates.like}}
+                    </span>
+                    <span ng-class="{'voted-dislike': (inference.vote != null && inference.vote.content == 'dislike'), 'unvoted' : !(inference.vote != null && inference.vote.content == 'dislike')}"
+                          ng-click="doVote(inference,'inferences','dislike')">
+                        <i class="fa fa-thumbs-down"></i> {{inference.voteRates.dislike}}
+                    </span>
+                    <button type="button" class="btn btn-primary btn-xs"
+                            ng-show="(inference.voteRates.dislike + inference.voteRates.like) > 0"
+                            ng-click="showVoteResults(inference, 'inferences')">
+                        Değerlendirenler
+                    </button>
+                </div>
             </div>
-
         </div>
-
     </div>
     <div style="text-align: center; padding-top:10px;" ng-if="allInferencesOpts.hasMore==true">
         <button ng-click="get_all_inferences()" class="btn btn-info btn-hg">Daha fazla</button>
     </div>
-
     <br><br>
-
     <div class="modal" id="inferencesFilterModal" ng-include="'app/components/inferences/inferences_search.html'"></div>
-
-
 </div>
 </body>
