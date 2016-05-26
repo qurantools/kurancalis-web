@@ -61,12 +61,12 @@
         <br/>
         <div class="row">
             <div style="float: left;padding-left: 90px;">
-                <span ng-class="{ 'voted-like': (inference_info.vote != null && inference_info.vote.content == 'like'), 'unvoted' : !(inference_info.vote != null && inference_info.vote.content == 'like')}"
-                      ng-click="doVote(inference_info,'inferences','like')">
+                <span ng-class="{ 'voted-like': (inference_info.vote != null && inference_info.vote.content == 1), 'unvoted' : !(inference_info.vote != null && inference_info.vote.content == 1)}"
+                      ng-click="doVote(inference_info,'inferences',1)">
                     <i class="fa fa-thumbs-up"></i> {{inference_info.voteRates.like}}
                 </span>
-                <span ng-class="{'voted-dislike': (inference_info.vote != null && inference_info.vote.content == 'dislike'), 'unvoted' : !(inference_info.vote != null && inference_info.vote.content == 'dislike')}"
-                      ng-click="doVote(inference_info,'inferences','dislike')">
+                <span ng-class="{'voted-dislike': (inference_info.vote != null && inference_info.vote.content == 0), 'unvoted' : !(inference_info.vote != null && inference_info.vote.content == 0)}"
+                      ng-click="doVote(inference_info,'inferences',0)">
                     <i class="fa fa-thumbs-down"></i> {{inference_info.voteRates.dislike}}
                 </span>
                 <button type="button" class="btn btn-primary btn-xs"

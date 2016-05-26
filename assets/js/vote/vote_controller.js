@@ -5,7 +5,7 @@ angular.module('ionicApp')
         $scope.votedObject = null;
         $scope.resource = null;
         $scope.search = {};
-        $scope.search.vote = '';
+        $scope.search.vote = -1;
         $scope.add2Circle = false;
         $scope.voter = null;
         $scope.circle = null;
@@ -18,7 +18,7 @@ angular.module('ionicApp')
         };
 
         $scope.voterFilter = function(actual){
-            if ($scope.search.vote == '')
+            if ($scope.search.vote == -1)
                 return true;
             return actual.vote == $scope.search.vote;
         };
@@ -52,6 +52,7 @@ angular.module('ionicApp')
             $scope.$on('show_vote_results', function(event, args) {
                 $scope.votedObject = args.voted;
                 $scope.resource = args.resource;
+                $scope.search.vote = -1;
                 $scope.results = [];
                 $scope.fetchVoteResults();
                 if (!config_data.isMobile){

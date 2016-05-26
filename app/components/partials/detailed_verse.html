@@ -145,6 +145,19 @@
                                                 ng-click="goToVerseTag(annotation.author_id, annotation.verseId, annotationTag, detailedVerseUsers, detailedVerseCircles)" data-target='#taggedVerseModal' data-dismiss="modal" data-toggle='modal'>
                                             {{annotationTag}}
                                         </button>
+                                        <span ng-class="{ 'voted-like': (annotation.vote != null && annotation.vote.content == 1), 'unvoted' : !(annotation.vote != null && annotation.vote.content == 1)}"
+                                              ng-click="doVote(annotation,'annotations', 1)">
+                                            <i class="fa fa-thumbs-up"></i> {{annotation.voteRates.like}}
+                                        </span>
+                                        <span ng-class="{'voted-dislike': (annotation.vote != null && annotation.vote.content == 0), 'unvoted' : !(annotation.vote != null && annotation.vote.content == 0)}"
+                                              ng-click="doVote(annotation,'annotations', 0)">
+                                            <i class="fa fa-thumbs-down"></i> {{annotation.voteRates.dislike}}
+                                        </span>
+                                        <button type="button" class="btn btn-primary btn-xs"
+                                                ng-if="(annotation.voteRates.dislike + annotation.voteRates.like) > 0"
+                                                ng-click="showVoteResults(annotation, 'annotations')">
+                                            Değerlendirenler
+                                        </button>
                                         <button type="button" class="btn btn-primary btn-xs" ng-click="editAnnotation($index)"
                                                 ng-if="annotation.userId==user.id"><i
                                                 class="fa fa-pencil-square-o"></i>
@@ -193,6 +206,21 @@
                                 <div class="small_space">&nbsp;</div>
                                 <div class="row" style="padding:0 15px">
                                     <div style="float: left">{{inference.updated | date: 'dd/MM/yyyy HH:mm:ss'}}</div>
+                                    <div style="float: right">
+                                        <span ng-class="{ 'voted-like': (inference.vote != null && inference.vote.content == 1), 'unvoted' : !(inference.vote != null && inference.vote.content == 1)}"
+                                              ng-click="doVote(inference,'inferences', 1)">
+                                            <i class="fa fa-thumbs-up"></i> {{inference.voteRates.like}}
+                                        </span>
+                                        <span ng-class="{'voted-dislike': (inference.vote != null && inference.vote.content == 0), 'unvoted' : !(inference.vote != null && inference.vote.content == 0)}"
+                                              ng-click="doVote(inference,'inferences', 0)">
+                                            <i class="fa fa-thumbs-down"></i> {{inference.voteRates.dislike}}
+                                        </span>
+                                        <button type="button" class="btn btn-primary btn-xs"
+                                                ng-if="(inference.voteRates.dislike + inference.voteRates.like) > 0"
+                                                ng-click="showVoteResults(inference, 'inferences')">
+                                            Değerlendirenler
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                             </div>
