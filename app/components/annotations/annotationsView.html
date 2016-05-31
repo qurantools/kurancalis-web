@@ -68,6 +68,9 @@
             <div class="row" style="padding:0 15px">
                 <div style="float: left"> <span ng-bind-html="annotation.updated | time_in_string | to_trusted"></span></div>
                 <div style="float: right">
+                    <span ng-click="navigateTo('/annotation/display/{{annotation.id}}/')" style="margin-right: 10px;">
+                        <span style="color: #00f;margin-right: 10px;">Yorum Yaz</span><i class="fa fa-comment"></i> {{annotation.commentCount}}
+                    </span>
                     <span ng-class="{'voted-like': (annotation.vote != null && annotation.vote.content == 1), 'unvoted' : !(annotation.vote != null && annotation.vote.content == 1)}"
                           ng-click="doVote(annotation,'annotations', 1)">
                         <i class="fa fa-thumbs-up"></i> {{annotation.voteRates.like}}
