@@ -5,7 +5,7 @@
         <div style="margin-top: 80px;">
             <div class="box" ng-if="annotation != null">
                 <div class="s_a_header">
-                    <a href='' ng-click="showVerseDetail(annotation.verseId, usersForSearch, circlesForSearch)" data-target='#detailedVerseModal' data-dismiss='modal' data-toggle='modal'>{{annotation.verseId / 1000 | number:0}}:{{annotation.verseId % 1000}}</a>
+                    <a href='' ng-click="showVerseDetail(annotation.verseId, [], [])" data-target='#detailedVerseModal' data-dismiss='modal' data-toggle='modal'>{{annotation.verseId / 1000 | number:0}}:{{annotation.verseId % 1000}}</a>
                     <div style="float:right;"><a  href="" ng-click="navigateTo('/profile/user/{{annotation.userId}}/')" style="color: darkblue;">{{annotation.userName | limitTo: 25}}</a></div>
                 </div>
                 <div class="small_space">&nbsp;</div>
@@ -19,7 +19,7 @@
                 </div>
                 <div class="small_space">&nbsp;</div>
                 <button ng-repeat="annotationTag in annotation.tags" class="btn btn-xs btn-info verse_tag"
-                        ng-click="goToVerseTag(annotation.author_id, annotation.verseId, annotationTag, usersForSearch, circlesForSearch)" data-target='#taggedVerseModal' data-dismiss='modal'
+                        ng-click="goToVerseTag(annotation.author_id, annotation.verseId, annotationTag, [], [])" data-target='#taggedVerseModal' data-dismiss='modal'
                         data-toggle='modal'>
                     {{annotationTag}}
                 </button>
