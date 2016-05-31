@@ -154,7 +154,7 @@
                     {{annotationTag}}
                 </div>
                 <div class="row" style="padding:0 15px">
-                    <div style="float: left">{{annotation.updated | date: 'dd/MM/yyyy HH:mm:ss'}}</div>
+                    <div style="float: left"><span ng-bind-html="annotation.updated | time_in_string | to_trusted"></span></div>
                     <div style="float: right">
                         <span ng-class="{'voted-like': (annotation.vote != null && annotation.vote.content == 1), 'unvoted' : !(annotation.vote != null && annotation.vote.content == 1)}"
                               ng-click="doVote(annotation,'annotations', 1)">

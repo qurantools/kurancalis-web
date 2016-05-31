@@ -9,9 +9,16 @@ angular.module('ionicApp')
         $scope.add2Circle = false;
         $scope.voter = null;
         $scope.circle = null;
+        $scope.isComment = null;
+        $scope.resource_id = null;
 
-        $scope.fetchVoteResults = function(){
-            var voteRestangular = Restangular.one($scope.resource, $scope.votedObject.id).all("votes");
+        $scope.fetchVoteResults = function() {
+            var voteRestangular;
+            if (!isDefined($scope.isComment)) {
+                voteRestangular = Restangular.one($scope.resource, $scope.votedObject.id).all("votes");
+            } else{
+                voteRestangular = Restangular.one($scope.resource, $scope.resource_id).one('comments', $scope.votedObject.comment.id).all("votes");
+            }
             voteRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (data){
                 $scope.results = data;
             });
@@ -52,6 +59,8 @@ angular.module('ionicApp')
             $scope.$on('show_vote_results', function(event, args) {
                 $scope.votedObject = args.voted;
                 $scope.resource = args.resource;
+                $scope.isComment = args.isComment;
+                $scope.resource_id = args.resource_id;
                 $scope.search.vote = -1;
                 $scope.results = [];
                 $scope.fetchVoteResults();

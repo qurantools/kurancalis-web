@@ -61,6 +61,9 @@
         <br/>
         <div class="row">
             <div style="float: left;padding-left: 90px;">
+                <span style="margin-right: 10px;" ng-click="focusToCommentArea('comment_textarea_inference')">
+                    <span style="color: #00f;margin-right: 10px;">Yorum Yaz</span><i class="fa fa-comment"></i> {{inference_info.commentCount}}
+                </span>
                 <span ng-class="{ 'voted-like': (inference_info.vote != null && inference_info.vote.content == 1), 'unvoted' : !(inference_info.vote != null && inference_info.vote.content == 1)}"
                       ng-click="doVote(inference_info,'inferences',1)">
                     <i class="fa fa-thumbs-up"></i> {{inference_info.voteRates.like}}
@@ -128,8 +131,140 @@
                 >{{tag}}</button>
             </div>
         </div>
+        <h6 align="left" style="width: 1024px">Yorumlar</h6>
+        <div ng-repeat="comment in inference_info.comments" style="width: 90%;border-radius: 15px;padding-top: 10px !important;" align="left" class="row well">
+            <div class="col-lg-1">
+                <a href="" ng-click="navigateTo('/profile/user/{{comment.owner.user_id}}/')">
+                    <img style="max-width: 80px; max-height: 60px;border-radius: 50%;" ng-src="{{comment.owner.photo}}"><br/>
+                </a>
+            </div>
+            <div  class="col-lg-11">
+                    <span>
+                        <a href="" ng-click="navigateTo('/profile/user/{{comment.owner.user_id}}/')">
+                            {{comment.owner.name}}
+                        </a>
+                        <span style="word-wrap: break-word;" contenteditable="{{comment.comment.edit}}" ng-class="{'editable_comment' : comment.comment.edit}">
+                            {{comment.comment.content}}
+                        </span>
+                    </span>
+                    <div id="footer_area" class="row" style="margin-top: 15px;">
+                        <div class="col-xs-10" style="float: left">
+                            <span ng-class="{ 'voted-like': (comment.vote != null && comment.vote.content == 1), 'unvoted' : !(comment.vote != null && comment.vote.content == 1)}"
+                                  ng-click="doVoteForComment(comment, comment.comment.inferenceId, 'inferences',1)">
+                            <i class="fa fa-thumbs-up"></i> {{comment.voteRates.like}}
+                            </span>
+                            <span ng-class="{'voted-dislike': (comment.vote != null && comment.vote.content == 0), 'unvoted' : !(comment.vote != null && comment.vote.content == 0)}"
+                                  style="margin-top: 10px;"
+                                  ng-click="doVoteForComment(comment, comment.comment.inferenceId, 'inferences',0)">
+                                <i class="fa fa-thumbs-down"></i> {{comment.voteRates.dislike}}
+                            </span>
+                            <span ng-if="(comment.voteRates.dislike + comment.voteRates.like) > 0"
+                                  ng-click="showVoteResults(comment, 'inferences', true, comment.comment.inferenceId)">
+                                <a>Değerlendirenler</a>
+                            </span>
+                            <span ng-click="comment.showChild = !comment.showChild" ng-init="comment.showChild = false">
+                                <a>Yanıtla</a>
+                            </span>
+                            <span ng-bind-html="comment.comment.created | time_in_string | to_trusted"></span>
+                        </div>
+                        <div class="col-xs-2" align="right">
+                            <button type="button" class="btn btn-primary btn-xs" ng-click="displayCommentUpdateModal(inference_info.comments, comment.comment, $index)"
+                                    ng-if="comment.owner.user_id==user.id"><i
+                                    class="fa fa-pencil-square-o "></i>
+                            </button>
+                            <button type="button" class="btn btn-danger btn-xs" ng-click="displayCommentDeleteModal(inference_info.comments, comment.comment.id, $index)"
+                                    ng-if="comment.owner.user_id==user.id"><i
+                                    class="fa fa-trash-o"></i></button>
+                        </div>
+                    </div>
+                    <div ng-repeat="child_comment in comment.comment.childs" style="width: 100%;border-radius: 15px;padding-top: 10px !important;margin-top: 10px;" align="left" class="row well">
+                        <div class="col-lg-1">
+                            <a href="" ng-click="navigateTo('/profile/user/{{child_comment.owner.user_id}}/')">
+                                <img style="max-width: 80px; max-height: 60px;border-radius: 50%;" ng-src="{{child_comment.owner.photo}}"><br/>
+                            </a>
+                        </div>
+                        <div  class="col-lg-11">
+                            <span>
+                                <a href="" ng-click="navigateTo('/profile/user/{{child_comment.owner.user_id}}/')">
+                                    {{child_comment.owner.name}}
+                                </a>
+                                <span style="word-wrap: break-word;" contenteditable="{{child_comment.comment.edit}}" ng-class="{'editable_comment' : child_comment.comment.edit}">
+                                    {{child_comment.comment.content}}
+                                </span>
+                            </span>
+                            <div id="footer_area_child" class="row" style="margin-top: 15px;">
+                                <div class="col-xs-10" style="float: left">
+                                    <span ng-class="{ 'voted-like': (child_comment.vote != null && child_comment.vote.content == 1), 'unvoted' : !(child_comment.vote != null && child_comment.vote.content == 1)}"
+                                          ng-click="doVoteForComment(child_comment, child_comment.comment.inferenceId, 'inferences',1)">
+                                    <i class="fa fa-thumbs-up"></i> {{child_comment.voteRates.like}}
+                                    </span>
+                                    <span ng-class="{'voted-dislike': (child_comment.vote != null && child_comment.vote.content == 0), 'unvoted' : !(child_comment.vote != null && child_comment.vote.content == 0)}"
+                                          style="margin-top: 10px;"
+                                          ng-click="doVoteForComment(child_comment, child_comment.comment.inferenceId, 'inferences',0)">
+                                        <i class="fa fa-thumbs-down"></i> {{child_comment.voteRates.dislike}}
+                                    </span>
+                                    <span ng-if="(child_comment.voteRates.dislike + child_comment.voteRates.like) > 0"
+                                              ng-click="showVoteResults(child_comment, 'inferences', true, child_comment.comment.inferenceId)">
+                                        <a>Değerlendirenler</a>
+                                    </span>
+                                    <span ng-click="comment.showChild = !comment.showChild">
+                                        <a>Yanıtla</a>
+                                    </span>
+                                    <span ng-bind-html="child_comment.comment.created | time_in_string | to_trusted"></span>
+                                </div>
+                                <div class="col-xs-2" align="right">
+                                    <button type="button" class="btn btn-primary btn-xs" ng-click="displayCommentUpdateModal(comment.comment.childs, child_comment.comment, $index)"
+                                            ng-if="child_comment.owner.user_id==user.id"><i
+                                            class="fa fa-pencil-square-o "></i>
+                                    </button>
+                                    <button type="button" class="btn btn-danger btn-xs" ng-click="displayCommentDeleteModal(comment.comment.childs, child_comment.comment.id, $index)"
+                                            ng-if="child_comment.owner.user_id==user.id"><i
+                                            class="fa fa-trash-o"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="width: 100%;border-radius: 15px;padding-top: 10px !important;margin-top: 3px;" align="left" class="row well" ng-if="comment.showChild == true">
+                        <div class="col-lg-1">
+                            <a href="" ng-click="navigateTo('/profile/user/{{user.id}}/')">
+                                <img style="max-width: 80px; max-height: 60px;border-radius: 50%;" ng-src="{{user.photo}}"><br/>
+                            </a>
+                        </div>
+                        <div  class="col-lg-10">
+                            <textarea id="comment_textarea_inference_{{comment.comment.id}}" style="margin-top: 1%;width: 100%;height: 51px;border-radius: 9px;background-color: white;"/>
+                        </div>
+                        <div class="col-lg-1">
+                            <div style="margin-top: 40%">
+                                <button type="button" class="btn btn-primary btn-xs"
+                                        ng-click="createComment(inference_info, 'inferences', inference_info.id, 'comment_textarea_inference_{{comment.comment.id}}', comment.comment.id, $index)">
+                                    Tamam
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <!-- new or update comment area-->
+        <div style="width: 90%;border-radius: 15px;padding-top: 10px !important;" align="left" class="row well">
+            <div class="col-lg-1">
+                <a href="" ng-click="navigateTo('/profile/user/{{user.id}}/')">
+                    <img style="max-width: 80px; max-height: 60px;border-radius: 50%;" ng-src="{{user.photo}}"><br/>
+                </a>
+            </div>
+            <div  class="col-lg-10">
+                <textarea id="comment_textarea_inference" style="margin-top: 1%;width: 100%;height: 51px;border-radius: 9px;background-color: white;"
+                       contenteditable="true"/>
+            </div>
+            <div class="col-lg-1">
+                <div style="margin-top: 40%">
+                    <button type="button" class="btn btn-primary btn-xs"
+                            ng-click="createComment(inference_info, 'inferences', inference_info.id, 'comment_textarea_inference', null, null)">
+                        Tamam
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
-
     <div align="center" class="row" ng-if="authorizedInferenceDisplay == 2">
         <table cellpadding="0" cellspacing="0">
             <tr>
@@ -153,6 +288,26 @@
             <a class="btn btn-primary btn-wide btn-danger" ng-click="delete_inference()" data-dismiss="modal">Sil</a>
         </div>
     </digercevremodal>
+    <kisisilmodal title="Yorum Silme" visible="deleteCommentFlag">
+        <div align="left">
+            <label>Yorumunuz silinecek Onaylıyor musunuz?</label>
+        </div>
+        <div class="modal-footer">
+            <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal">Vazgeç</a>
+            <a class="btn btn-primary btn-wide btn-danger" ng-click="deleteComment(commentWillDeleteParent, 'inferences', inference_info.id, commentWillDeleteId, commentWillDeleteIndex)" data-dismiss="modal">Sil</a>
+        </div>
+    </kisisilmodal>
+    <degistirmodal title="Yorum Güncelle" visible="updateCommentFlag">
+        <div align="left">
+            <div  class="col-lg-10">
+                <textarea id="inference_comment_update_textarea" style="margin-top: 1%;width: 550px;height: 81px;border-radius: 9px;background-color: white;"/>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a class="btn btn-primary btn-wide btn-primary" ng-click="updateComment(commentWillUpdateParent, 'inferences', inference_info.id, commentWillUpdate.id, 'inference_comment_update_textarea', commentWillUpdateIndex)" data-dismiss="modal">Güncelle</a>
+            <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal">Vazgeç</a>
+        </div>
+    </degistirmodal>
 </div>
 <div ng-include="'app/components/partials/off_canvas_menu.html'"></div>
 </body>

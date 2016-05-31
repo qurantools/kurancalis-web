@@ -25,6 +25,17 @@ angular.module('ionicApp')
 
         //On Off Switch
         $scope.inlineReferenceDisplay = false;
+        $scope.new_comment='';
+
+        $scope.deleteCommentFlag = false;
+        $scope.commentWillDeleteParent = null;
+        $scope.commentWillDeleteId = null;
+        $scope.commentWillDeleteIndex = null;
+
+        $scope.updateCommentFlag = false;
+        $scope.commentWillUpdateParent = null;
+        $scope.commentWillUpdateId = null;
+        $scope.commentWillUpdateIndex = null;
 
         //Volkan
         $scope.initializeCircleLists(); //show circles
@@ -42,10 +53,7 @@ angular.module('ionicApp')
                 $location.path('inferences/');
                
             });
-
-        }
-
-
+        };
 
         //tags input auto complete
         $scope.peoplelist = function (people_name) {
@@ -88,7 +96,7 @@ angular.module('ionicApp')
         $scope.inference_info = function(inferenceId) {
             var inferenceRestangular = Restangular.one("inferences", inferenceId);
             inferenceRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (data) {
-                $scope.inference_info = data;
+
                 $scope.authorizedInferenceDisplay = 1;
 
                 $scope.edit_user = data.userId;
@@ -103,6 +111,28 @@ angular.module('ionicApp')
 
                 $scope.tags = data.tags;
 
+                var childIndexs = [];
+                for (var i = 0; i< data.comments.length; i++){
+                    data.comments[i].comment.edit=false;
+                    if (data.comments[i].comment.parentCommentId != null){
+                        var parentIndex = -1;
+                        for (var j = 0; j < data.comments.length; j++){
+                            if (data.comments[j].comment.id == data.comments[i].comment.parentCommentId){
+                                parentIndex = j;
+                                break;
+                            }
+                        }
+                        if (!isDefined(data.comments[parentIndex].comment.childs)){
+                            data.comments[parentIndex].comment.childs = [];
+                        }
+                        data.comments[parentIndex].comment.childs.unshift(data.comments[i]);
+                        childIndexs.push(i);
+                    }
+                }
+
+                for(var i = childIndexs.length; i > 0; i--){
+                    data.comments.splice(childIndexs[i-1], 1);
+                }
 
                 for (var i = 0; i < data.references.length; i++) {
                     var verseId = data.references[i];
@@ -111,7 +141,7 @@ angular.module('ionicApp')
 
                 //array of referenced verse IDs
                 $scope.referenced.verseIds = Object.keys($scope.referenced.verses);
-
+                $scope.inference_info = data;
                 if($scope.authorMap.length == 0){
                     $scope.$on("authorMap ready",function(){
                         //$scope.referenced.selectedAuthor = authorMap[$scope.referenced.selectedAuthor];
@@ -233,7 +263,7 @@ angular.module('ionicApp')
             });
 
             $scope.shareUrl =  config_data.webAddress + "/__/inference/display/" + $scope.inferenceId;
-
+            $scope.new_comment = '';
             $scope.isNative = document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1;
             $scope.shareTitle = "Çıkarım Paylaşma";
         };
@@ -383,7 +413,7 @@ angular.module('ionicApp')
 
         $scope.shareInference = function(){
             $cordovaSocialSharing.share($scope.title, $scope.shareTitle, null, $scope.shareUrl);
-        }
+        };
 
         $scope.callUrlCopied = function(){
 
@@ -396,6 +426,21 @@ angular.module('ionicApp')
             $timeout(function() {
                 infoPopup.close(); //close the popup after 3 seconds for some reason
             }, 1700);
+        };
+
+        $scope.displayCommentDeleteModal = function(source, comment_id, index){
+            $scope.deleteCommentFlag=true;
+            $scope.commentWillDeleteParent = source;
+            $scope.commentWillDeleteId = comment_id;
+            $scope.commentWillDeleteIndex = index;
+        };
+
+        $scope.displayCommentUpdateModal = function (source, comment, index){
+            $scope.updateCommentFlag=true;
+            $scope.commentWillUpdateParent = source;
+            $scope.commentWillUpdate = comment;
+            $scope.commentWillUpdateIndex = index;
+            document.getElementById('inference_comment_update_textarea').value = comment.content;
         };
 
         //definitions are finished. Now run initialization

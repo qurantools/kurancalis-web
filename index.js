@@ -294,6 +294,12 @@ if (config_data.isMobile == false) { //false
                 reloadOnSearch: false,
                 pageTitle: 'Kuran Çalış - Ayet Notları'
             })
+            .when('/annotation/display/:annotationId/', {
+                controller: 'AnnotationDisplayController',
+                templateUrl: 'app/components/annotations/annotationDisplayView.html',
+                reloadOnSearch: false,
+                pageTitle: 'Kuran Çalış - Ayet Notu'
+            })
             .when('/people/find_people/', {
                 controller: 'PeopleFindCtrl',
                 templateUrl: 'app/components/people/find_people.html',
@@ -1680,10 +1686,89 @@ app.factory('ChapterVerses', function ($resource) {
         }
     };
 
-    $scope.showVoteResults = function(votableObject, resource){
+    $scope.doVoteForComment = function(votable, typeId, resource, voteType) {
+        var voteRestangular = Restangular.one(resource, typeId).one("comments", votable.comment.id).all("votes");
+        //new vote or vote changed
+        if (votable.vote == null || votable.vote.content != voteType) {
+            var headers = {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'access_token': $scope.access_token
+            };
+            var jsonData = voteType;
+            var postData = [];
+            postData.push(encodeURIComponent("content") + "=" + encodeURIComponent(jsonData));
+            var data = postData.join("&");
+            voteRestangular.customPOST(data, '', '', headers).then(function (rates) {
+                votable.vote = {'content' : voteType};
+                votable.voteRates = rates;
+            });
+        }else {
+            voteRestangular.customDELETE("", {}, {'access_token': $scope.access_token}).then(function (rates) {
+                votable.vote = null;
+                votable.voteRates = rates;
+            });
+        }
+    };
+
+    $scope.showVoteResults = function(votableObject, resource, isComment, resource_id){
         $timeout(function(){
-            $scope.$broadcast("show_vote_results", {voted:votableObject, resource:resource});
+            $scope.$broadcast("show_vote_results", {voted:votableObject, resource:resource, isComment:isComment, resource_id:resource_id});
         });
+    };
+
+    $scope.createComment = function(resource, resource_type, resource_id, content, parent_id, parent_index){
+        var commentRestangular = Restangular.one(resource_type, resource_id).one("comments");
+        var headers = {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'access_token': $scope.access_token
+        };
+        var postData = [];
+        postData.push(encodeURIComponent("content") + "=" + encodeURIComponent(document.getElementById(content).value));
+        if (parent_id != null)
+            postData.push(encodeURIComponent("parent_id") + "=" + encodeURIComponent(parent_id));
+        var data = postData.join("&");
+        commentRestangular.customPOST(data, '', '', headers).then(function (comment) {
+            var temp = {};
+            temp.vote = null;
+            temp.voteRates = {'like':0, 'dislike':0};
+            temp.comment = comment;
+            temp.owner = $scope.user;
+            temp.owner.user_id = $scope.user.id;
+            if (parent_id != null){
+                if (!isDefined(resource.comments[parent_index].comment.childs)){
+                    resource.comments[parent_index].comment.childs = [];
+                }
+                resource.comments[parent_index].comment.childs.unshift(temp);
+            }else{
+                resource.comments.unshift(temp);
+            }
+            document.getElementById(content).value = "";
+        });
+    };
+
+    $scope.deleteComment = function(source, resource_type, resource_id, comment_id, comment_index){
+        var commentRestangular = Restangular.one(resource_type, resource_id).one("comments", comment_id);
+        commentRestangular.customDELETE("", {}, {'access_token': $scope.access_token}).then(function (comment) {
+            source.splice(comment_index,1);
+        });
+    };
+
+    $scope.updateComment = function (source, resource_type, resource_id, comment_id, content, comment_index){
+        var commentRestangular = Restangular.one(resource_type, resource_id).one("comments", comment_id);
+        var headers = {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'access_token': $scope.access_token
+        };
+        var postData = [];
+        postData.push(encodeURIComponent("content") + "=" + encodeURIComponent(document.getElementById(content).value));
+        var data = postData.join("&");
+        commentRestangular.customPUT(data, '', '', headers).then(function (record) {
+            source[comment_index].comment.content = record.content;
+        });
+    };
+
+    $scope.focusToCommentArea = function(textarea){
+        $("#"+textarea).focus();
     };
 
     $scope.initRoute();
