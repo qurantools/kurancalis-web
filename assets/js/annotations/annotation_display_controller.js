@@ -1,13 +1,19 @@
 angular.module('ionicApp')
     .controller('AnnotationDisplayController', function ($scope, $routeParams, $location, authorization, localStorageService,  Restangular) {
 
-        $scope.annotationId=0;
         $scope.annotation = null;
+
         $scope.new_comment='';
+
         $scope.deleteCommentFlag = false;
         $scope.commentWillDeleteParent = null;
         $scope.commentWillDeleteId = null;
         $scope.commentWillDeleteIndex = null;
+
+        $scope.updateCommentFlag = false;
+        $scope.commentWillUpdateParent = null;
+        $scope.commentWillUpdateId = null;
+        $scope.commentWillUpdateIndex = null;
 
         $scope.annotation_info = function(annotationId) {
             var annotationRestangular = Restangular.one("annotations", annotationId);
@@ -35,13 +41,6 @@ angular.module('ionicApp')
                     data.comments.splice(childIndexs[i-1], 1);
                 }
                 $scope.annotation = data;
-            }, function(response) {
-                if (response.status == "400"){
-                    if (config_data.isMobile && $scope.access_token != ""){
-                        $location.path('/');
-                        return;
-                    }
-                }
             });
         };
 
@@ -50,6 +49,14 @@ angular.module('ionicApp')
             $scope.commentWillDeleteParent = source;
             $scope.commentWillDeleteId = comment_id;
             $scope.commentWillDeleteIndex = index;
+        };
+
+        $scope.displayCommentUpdateModal = function (source, comment, index){
+            $scope.updateCommentFlag=true;
+            $scope.commentWillUpdateParent = source;
+            $scope.commentWillUpdate = comment;
+            $scope.commentWillUpdateIndex = index;
+            document.getElementById('inference_comment_update_textarea').value = comment.content;
         };
 
         $scope.initializeAnnotationController = function(){
