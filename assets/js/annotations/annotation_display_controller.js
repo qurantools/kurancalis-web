@@ -56,7 +56,7 @@ angular.module('ionicApp')
             $scope.commentWillUpdateParent = source;
             $scope.commentWillUpdate = comment;
             $scope.commentWillUpdateIndex = index;
-            document.getElementById('inference_comment_update_textarea').value = comment.content;
+            document.getElementById('annotation_comment_update_textarea').value = comment.content;
         };
 
         $scope.initializeAnnotationController = function(){
