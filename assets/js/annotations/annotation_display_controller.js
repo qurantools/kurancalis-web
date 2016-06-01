@@ -32,7 +32,8 @@ angular.module('ionicApp')
                         if (!isDefined(data.comments[parentIndex].comment.childs)){
                             data.comments[parentIndex].comment.childs = [];
                         }
-                        data.comments[parentIndex].comment.childs.unshift(data.comments[i]);
+                        data.comments[parentIndex].comment.childs.push(data.comments[i]);
+                        data.comments[parentIndex].showChilds = data.comments[parentIndex].comment.childs.length > 2 ? false : true;
                         childIndexs.push(i);
                     }
                 }
@@ -41,6 +42,7 @@ angular.module('ionicApp')
                     data.comments.splice(childIndexs[i-1], 1);
                 }
                 $scope.annotation = data;
+                $scope.focusToCommentArea('comment_textarea_annotation');
             });
         };
 

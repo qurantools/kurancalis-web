@@ -33,7 +33,7 @@
             <div class="small_space">&nbsp;</div>
             <div>
                 <div style="float: left; width:200px; height:150px">
-                    <a  href="#/inference/display/{{inference.id}}/"><img style="max-width: 200px; max-height: 150px" src="{{inference.image}}"></a>
+                    <a  href="#/inference/display/{{inference.id}}/"><img image-check style="max-width: 200px; max-height: 150px" src="{{inference.image}}"></a>
                 </div>
                 <div style="float: left" class="mycol2">
                     <div style="text-align: center;" ><a href="#/inference/display/{{inference.id}}/"><h4 style="margin-top:0;">
@@ -53,7 +53,7 @@
             <div class="row" style="padding:0 15px">
                 <div style="float: left"><span ng-bind-html="inference.updated | time_in_string | to_trusted"></span></div>
                 <div style="float: right">
-                    <span ng-click="navigateTo('/inference/display/{{inference.id}}/')" style="margin-right: 10px;">
+                    <span ng-click="navigateTo('/inference/display/{{inference.id}}/')" style="margin-right: 10px;" class="make_comment">
                         <span style="color: #00f;margin-right: 10px;">Yorum Yaz</span><i class="fa fa-comment"></i> {{inference.commentCount}}
                     </span>
                     <span ng-class="{ 'voted-like': (inference.vote != null && inference.vote.content == 1), 'unvoted' : !(inference.vote != null && inference.vote.content == 1)}"
@@ -67,7 +67,7 @@
                         <i class="fa fa-thumbs-down"></i> {{inference.voteRates.dislike}}
                     </span>
                     <button type="button" class="btn btn-primary btn-xs"
-                            ng-show="(inference.voteRates.dislike + inference.voteRates.like) > 0"
+                            ng-disabled="(inference.voteRates.dislike + inference.voteRates.like) == 0"
                             ng-click="showVoteResults(inference, 'inferences')">
                         Değerlendirenler
                     </button>

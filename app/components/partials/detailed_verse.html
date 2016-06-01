@@ -154,7 +154,7 @@
                                             <i class="fa fa-thumbs-down"></i> {{annotation.voteRates.dislike}}
                                         </span>
                                         <button type="button" class="btn btn-primary btn-xs"
-                                                ng-if="(annotation.voteRates.dislike + annotation.voteRates.like) > 0"
+                                                ng-disabled="(annotation.voteRates.dislike + annotation.voteRates.like) == 0"
                                                 ng-click="showVoteResults(annotation, 'annotations')">
                                             Değerlendirenler
                                         </button>
@@ -216,7 +216,7 @@
                                             <i class="fa fa-thumbs-down"></i> {{inference.voteRates.dislike}}
                                         </span>
                                         <button type="button" class="btn btn-primary btn-xs"
-                                                ng-if="(inference.voteRates.dislike + inference.voteRates.like) > 0"
+                                                ng-disabled="(inference.voteRates.dislike + inference.voteRates.like) == 0"
                                                 ng-click="showVoteResults(inference, 'inferences')">
                                             Değerlendirenler
                                         </button>

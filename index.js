@@ -233,6 +233,15 @@ var app = angular.module('ionicApp', requiredModules)
                 }
             });
         };
+    }).directive('imageCheck', function () {
+        var fallbackSrc = {
+            link: function postLink(scope, iElement, iAttrs) {
+                iElement.bind('error', function() {
+                    angular.element(this).attr("style", "display:none");
+                });
+            }
+        }
+        return fallbackSrc;
     });
 
 if (config_data.isMobile == false) { //false
@@ -1738,9 +1747,9 @@ app.factory('ChapterVerses', function ($resource) {
                 if (!isDefined(resource.comments[parent_index].comment.childs)){
                     resource.comments[parent_index].comment.childs = [];
                 }
-                resource.comments[parent_index].comment.childs.unshift(temp);
+                resource.comments[parent_index].comment.childs.push(temp);
             }else{
-                resource.comments.unshift(temp);
+                resource.comments.push(temp);
             }
             document.getElementById(content).value = "";
         });

@@ -36,8 +36,8 @@
                             <i class="fa fa-thumbs-down"></i> {{annotation.voteRates.dislike}}
                         </span>
                         <button type="button" class="btn btn-primary btn-xs"
-                                ng-if="(annotation.voteRates.dislike + annotation.voteRates.like) > 0"
-                                ng-click="showVoteResults(annotation, 'annotations')">
+                                ng-click="showVoteResults(annotation, 'annotations')"
+                                ng-disabled="(annotation.voteRates.dislike + annotation.voteRates.like) == 0">
                             Değerlendirenler
                         </button>
                         <button type="button" class="btn btn-primary btn-xs" ng-click="showEditor(annotation)"
@@ -62,7 +62,7 @@
                         <a href="" ng-click="navigateTo('/profile/user/{{comment.owner.user_id}}/')">
                             {{comment.owner.name}}
                         </a>
-                        <span style="word-wrap: break-word;" contenteditable="{{comment.comment.edit}}" ng-class="{'editable_comment' : comment.comment.edit}">
+                        <span style="word-wrap: break-word;" ng-class="{'editable_comment' : comment.comment.edit}">
                             {{comment.comment.content}}
                         </span>
                     </span>
@@ -77,14 +77,17 @@
                                   ng-click="doVoteForComment(comment, comment.comment.annotationId, 'annotations',0)">
                                 <i class="fa fa-thumbs-down"></i> {{comment.voteRates.dislike}}
                             </span>
-                            <span ng-if="(comment.voteRates.dislike + comment.voteRates.like) > 0"
-                                  ng-click="showVoteResults(comment, 'annotations', true, comment.comment.annotationId)">
-                                <a>Değerlendirenler</a>
+                            <span>
+                                <a class="make_comment" ng-class="{'disabled' : (comment.voteRates.dislike + comment.voteRates.like) == 0}"
+                                   ng-click="showVoteResults(comment, 'annotations', true, comment.comment.annotationId)">Değerlendirenler</a>
                             </span>
-                            <span ng-click="comment.showChild = !comment.showChild" ng-init="comment.showChild = false">
+                            <span class="make_comment" ng-click="comment.showChild = !comment.showChild" ng-init="comment.showChild = false">
                                 <a>Yanıtla</a>
                             </span>
                             <span ng-bind-html="comment.comment.created | time_in_string | to_trusted"></span>
+                            <span ng-if="comment.comment.childs.length > 2 && !comment.showChilds" ng-click="comment.showChilds=true">
+                                <i class="fa fa-reply"></i> <span style="color:blue">{{comment.comment.childs.length}} Yanıt</span>
+                            </span>
                         </div>
                         <div class="col-xs-2" align="right">
                             <button type="button" class="btn btn-primary btn-xs" ng-click="displayCommentUpdateModal(annotation.comments, comment.comment, $index)"
@@ -96,7 +99,7 @@
                                     class="fa fa-trash-o"></i></button>
                         </div>
                     </div>
-                    <div ng-repeat="child_comment in comment.comment.childs" style="width: 100%;border-radius: 15px;padding-top: 10px !important;margin-top: 10px;" align="left" class="row well">
+                    <div ng-repeat="child_comment in comment.comment.childs" style="width: 100%;border-radius: 15px;padding-top: 10px !important;margin-top: 10px;" align="left" class="row well" ng-if="comment.showChilds">
                         <div class="col-lg-1">
                             <a href="" ng-click="navigateTo('/profile/user/{{child_comment.owner.user_id}}/')">
                                 <img style="max-width: 80px; max-height: 60px;border-radius: 50%;" ng-src="{{child_comment.owner.photo}}"><br/>
@@ -107,7 +110,7 @@
                                 <a href="" ng-click="navigateTo('/profile/user/{{child_comment.owner.user_id}}/')">
                                     {{child_comment.owner.name}}
                                 </a>
-                                <span style="word-wrap: break-word;" contenteditable="{{child_comment.comment.edit}}" ng-class="{'editable_comment' : child_comment.comment.edit}">
+                                <span style="word-wrap: break-word;" ng-class="{'editable_comment' : child_comment.comment.edit}">
                                     {{child_comment.comment.content}}
                                 </span>
                             </span>
@@ -122,11 +125,11 @@
                                           ng-click="doVoteForComment(child_comment, child_comment.comment.annotationId, 'annotations',0)">
                                         <i class="fa fa-thumbs-down"></i> {{child_comment.voteRates.dislike}}
                                     </span>
-                                    <span ng-if="(child_comment.voteRates.dislike + child_comment.voteRates.like) > 0"
-                                          ng-click="showVoteResults(child_comment, 'annotations', true, child_comment.comment.annotationId)">
-                                        <a>Değerlendirenler</a>
+                                    <span>
+                                        <a class="make_comment" ng-class="{'disabled' : (child_comment.voteRates.dislike + child_comment.voteRates.like) == 0}"
+                                           ng-click="showVoteResults(child_comment, 'annotations', true, child_comment.comment.annotationId)">Değerlendirenler</a>
                                     </span>
-                                    <span ng-click="comment.showChild = !comment.showChild">
+                                    <span class="make_comment" ng-click="comment.showChild = !comment.showChild">
                                         <a>Yanıtla</a>
                                     </span>
                                     <span ng-bind-html="child_comment.comment.created | time_in_string | to_trusted"></span>
@@ -171,8 +174,7 @@
                     </a>
                 </div>
                 <div  class="col-lg-10">
-                <textarea id="comment_textarea_annotation" style="margin-top: 1%;width: 100%;height: 51px;border-radius: 9px;background-color: white;"
-                          contenteditable="true"/>
+                <textarea id="comment_textarea_annotation" style="margin-top: 1%;width: 100%;height: 51px;border-radius: 9px;background-color: white;"/>
                 </div>
                 <div class="col-lg-1">
                     <div style="margin-top: 40%">

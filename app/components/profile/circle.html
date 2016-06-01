@@ -37,7 +37,7 @@
                         <div class="row" style="padding:0 15px">
                             <div style="float: left"><span ng-bind-html="feed.updated | time_in_string | to_trusted"></span></div>
                             <div style="float: right">
-                                <span ng-click="navigateTo('/annotation/display/{{feed.id}}/')" style="margin-right: 10px;">
+                                <span ng-click="navigateTo('/annotation/display/{{feed.id}}/')" style="margin-right: 10px;" class="make_comment">
                                     <span style="color: #00f;margin-right: 10px;">Yorum Yaz</span><i class="fa fa-comment"></i> {{feed.commentCount}}
                                 </span>
                                 <span ng-class="{ 'voted-like': (feed.vote != null && feed.vote.content == 1), 'unvoted' : !(feed.vote != null && feed.vote.content == 1)}"
@@ -49,7 +49,7 @@
                                     <i class="fa fa-thumbs-down"></i> {{feed.voteRates.dislike}}
                                 </span>
                                 <button type="button" class="btn btn-primary btn-xs"
-                                        ng-if="(feed.voteRates.dislike + feed.voteRates.like) > 0"
+                                        ng-disabled="(feed.voteRates.dislike + feed.voteRates.like) == 0"
                                         ng-click="showVoteResults(feed, 'annotations')">
                                     Değerlendirenler
                                 </button>
@@ -68,7 +68,7 @@
                         <div class="row">
                             <div class="col-sm-2" style="width:200px; height:150px">
                                 <a href="#/inference/display/{{feed.id}}/">
-                                    <img style="max-width: 200px; max-height: 150px" ng-if="feed.inf_image != 'undefinedp' || feed.inf_image != 'undefined'" ng-src="{{feed.inf_image}}">
+                                    <img image-check onerror='this.style.display = "none"' style="max-width: 200px; max-height: 150px" ng-if="feed.inf_image != 'undefinedp' || feed.inf_image != 'undefined'" ng-src="{{feed.inf_image}}">
                                 </a>
                             </div>
                             <div class="col-sm-9">
@@ -89,7 +89,7 @@
                         <div class="row" style="padding:0 15px">
                             <div style="float: left"><span ng-bind-html="feed.updated | time_in_string | to_trusted"></span></div>
                             <div style="float: right">
-                                <span ng-click="navigateTo('/inference/display/{{feed.id}}/')" style="margin-right: 10px;">
+                                <span ng-click="navigateTo('/inference/display/{{feed.id}}/')" style="margin-right: 10px;" class="make_comment">
                                     <span style="color: #00f;margin-right: 10px;">Yorum Yaz</span><i class="fa fa-comment"></i> {{feed.commentCount}}
                                 </span>
                                 <span ng-class="{ 'voted-like': (feed.vote != null && feed.vote.content == 1), 'unvoted' : !(feed.vote != null && feed.vote.content == 1)}"
@@ -101,7 +101,7 @@
                                     <i class="fa fa-thumbs-down"></i> {{feed.voteRates.dislike}}
                                 </span>
                                 <button type="button" class="btn btn-primary btn-xs"
-                                        ng-if="(feed.voteRates.dislike + feed.voteRates.like) > 0"
+                                        ng-disabled="(feed.voteRates.dislike + feed.voteRates.like) == 0"
                                         ng-click="showVoteResults(feed, 'inferences')">
                                     Değerlendirenler
                                 </button>

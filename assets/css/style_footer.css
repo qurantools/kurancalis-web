@@ -169,14 +169,17 @@
 
 .voted-like{
     color : dodgerblue;
+    cursor: pointer;
 }
 
 .voted-dislike{
     color: black;
+    cursor: pointer;
 }
 
 .unvoted{
     color: #888;
+    cursor: pointer;
 }
 
 .icon-over-img{
@@ -205,4 +208,13 @@
 
 .editable_comment{
     border: 1px solid gray;
+}
+
+a.disabled{
+    pointer-events: none;
+    cursor: default;
+}
+
+.make_comment{
+    cursor: pointer;
 }

@@ -125,7 +125,8 @@ angular.module('ionicApp')
                         if (!isDefined(data.comments[parentIndex].comment.childs)){
                             data.comments[parentIndex].comment.childs = [];
                         }
-                        data.comments[parentIndex].comment.childs.unshift(data.comments[i]);
+                        data.comments[parentIndex].comment.childs.push(data.comments[i]);
+                        data.comments[parentIndex].showChilds = data.comments[parentIndex].comment.childs.length > 2 ? false : true;
                         childIndexs.push(i);
                     }
                 }
@@ -139,6 +140,7 @@ angular.module('ionicApp')
                     $scope.referenced.verses[verseId] = { translation:"", tags:[], verseId:verseId};
                 }
 
+                $scope.focusToCommentArea('comment_textarea_inference');
                 //array of referenced verse IDs
                 $scope.referenced.verseIds = Object.keys($scope.referenced.verses);
                 $scope.inference_info = data;
@@ -164,13 +166,10 @@ angular.module('ionicApp')
             });
         };
 
-
         $scope.changeInlineReferenceDisplay = function () {
             $scope.inlineReferenceDisplay = !$scope.inlineReferenceDisplay;
             $scope.updateReferencedTranslations();
-        }
-
-
+        };
 
         //////////////Volkan
         $scope.initializeInferenceDisplayController = function () {

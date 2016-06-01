@@ -27,7 +27,7 @@
                                 <a  href="" ng-click="navigateTo('/profile/user/{{item.user.username}}/')" style="color: darkblue;" data-dismiss="modal">{{item.user.name}}</a>
                             </td>
                             <td style="width: 30%;">
-                                <button class="btn btn-primary btn-wide" ng-click="addUserToCircle(item.user)" ng-if="item.user.user_id != user.id">Çevreye Ekle</button>
+                                <button class="btn btn-primary btn-wide" ng-click="addUserToCircle(item.user)" ng-disabled="item.user.user_id == user.id">Çevreye Ekle</button>
                             </td>
                         </tr>
                     </table>
