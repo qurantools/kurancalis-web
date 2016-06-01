@@ -83,7 +83,7 @@
                             </div>
                         </div>
                         <div class="item item-divider">
-                            <div style="float: left">{{annotation.updated | date: 'dd/MM/yyyy HH:mm:ss'}}</div>
+                            <div style="float: left"><span ng-bind-html="annotation.updated | time_in_string | to_trusted"></span></div>
                             <div style="float: right">
                                 <button type="button" class="button button-balanced button-small" ng-click="editAnnotation(annotation)">
                                     <i

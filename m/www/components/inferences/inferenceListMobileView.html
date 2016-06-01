@@ -44,7 +44,7 @@
                         </div>
                         <div class="row">
                             <div class="col">
-                                {{inference.updated | date: 'dd/MM/yyyy HH:mm:ss'}}
+                                <span ng-bind-html="inference.updated | time_in_string | to_trusted"></span>
                             </div>
                             <div class="col">
                                 <div style="float: right;">

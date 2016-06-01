@@ -55,7 +55,7 @@
                             </div>
                         </div>
                         <div class="item item-divider" style="overflow: auto;">
-                                <div style="float: left">{{feed.updated | date: 'dd/MM/yyyy'}}</div>
+                                <div style="float: left"><span ng-bind-html="feed.updated | time_in_string | to_trusted"></span></div>
                                 <div style="float: right">
                                     <button type="button" class="button button-balanced button-small" ng-click="showEditor(feed)"
                                             ng-if="feed.owner_id==user.id">
@@ -108,7 +108,7 @@
                         </div>
                         <div class="item item-divider">
                             <div class="col">
-                                {{feed.updated | date: 'dd/MM/yyyy'}}
+                                <span ng-bind-html="feed.updated | time_in_string | to_trusted"></span>
                             </div>
                         </div>
                     </div>

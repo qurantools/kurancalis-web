@@ -1530,7 +1530,7 @@ app.factory('ChapterVerses', function ($resource) {
         }
 
         if (config_data.isMobile && !config_data.isNative){
-            $scope.showBanner = true;
+            $scope.showBanner = false;
             if (config_data.isAndroid) {
                 $scope.appText = "Android";
                 $scope.appStoreURL = "https://play.google.com/store/apps/details?id=org.quran.qurantools";
