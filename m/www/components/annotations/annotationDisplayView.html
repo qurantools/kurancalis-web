@@ -87,7 +87,9 @@
                                   ng-click="showVoteResults(comment, 'annotations', true, comment.comment.annotationId)">
                                 <i class="fa fa-pie-chart"></i> {{(comment.voteRates.dislike + comment.voteRates.like)}}
                             </span>
-                            <span class="make_comment" ng-click="comment.showChild = !comment.showChild;comment.showChilds=true" ng-init="comment.showChild = false">
+                            <span class="make_comment"
+                                  ng-click="comment.showChild = !comment.showChild;comment.showChilds=true;focusToCommentArea('comment_textarea_inference_{{comment.comment.id}}')"
+                                  ng-init="comment.showChild = false">
                                 <a style="color: #00f;">Yanıtla</a>
                             </span>
                             <span ng-if="comment.comment.childs.length > 2 && !comment.showChilds"
@@ -138,7 +140,7 @@
                                               ng-click="showVoteResults(child_comment, 'annotations', true, child_comment.comment.annotationId)">
                                             <i class="fa fa-pie-chart"></i> {{child_comment.voteRates.dislike + child_comment.voteRates.like}}
                                         </span>
-                                        <span class="make_comment" ng-click="comment.showChild = !comment.showChild">
+                                        <span class="make_comment" ng-click="comment.showChild = !comment.showChild;focusToCommentArea('comment_textarea_inference_{{comment.comment.id}}')">
                                             <a style="color: blue;">Yanıtla</a>
                                         </span>
                                     </div>

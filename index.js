@@ -1791,9 +1791,11 @@ app.factory('ChapterVerses', function ($resource) {
     };
 
     $scope.focusToCommentArea = function(textarea){
-        var element = $("#"+textarea);
-        element.focus();
-        element.val('');
+        $timeout(function () {
+            var element = $("#"+textarea);
+            element.focus();
+            element.val('');
+        },0);
     };
 
     $scope.initRoute();

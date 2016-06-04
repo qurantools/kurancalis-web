@@ -161,7 +161,11 @@
                                     <a class="make_comment" ng-class="{'disabled' : (comment.voteRates.dislike + comment.voteRates.like) == 0}"
                                        ng-click="showVoteResults(comment, 'inferences', true, comment.comment.inferenceId)">Değerlendirenler</a>
                                 </span>
-                                <span class="make_comment" ng-click="comment.showChild = !comment.showChild" ng-init="comment.showChild = false">
+                                <span class="make_comment"
+                                      ng-click="comment.showChild = !comment.showChild;
+                                      comment.showChilds=true;
+                                      focusToCommentArea('comment_textarea_inference_{{comment.comment.id}}')"
+                                      ng-init="comment.showChild = false">
                                     <a>Yanıtla</a>
                                 </span>
                                 <span ng-bind-html="comment.comment.created | time_in_string | to_trusted"></span>
@@ -207,7 +211,7 @@
                                             <a class="make_comment" ng-class="{'disabled' : (child_comment.voteRates.dislike + child_comment.voteRates.like) == 0}"
                                                ng-click="showVoteResults(child_comment, 'inferences', true, child_comment.comment.inferenceId)">Değerlendirenler</a>
                                         </span>
-                                        <span class="make_comment" ng-click="comment.showChild = !comment.showChild">
+                                        <span class="make_comment" ng-click="comment.showChild = !comment.showChild;focusToCommentArea('comment_textarea_inference_{{comment.comment.id}}')">
                                             <a>Yanıtla</a>
                                         </span>
                                         <span ng-bind-html="child_comment.comment.created | time_in_string | to_trusted"></span>
