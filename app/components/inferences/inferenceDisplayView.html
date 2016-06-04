@@ -235,15 +235,13 @@
                                 </a>
                             </div>
                             <div  class="col-lg-10">
-                                <textarea id="comment_textarea_inference_{{comment.comment.id}}" style="margin-top: 1%;width: 100%;height: 51px;border-radius: 9px;background-color: white;"/>
+                                <textarea id="comment_textarea_inference_{{comment.comment.id}}" style="width: 100%;height: 51px;border-radius: 9px;background-color: white;"/>
                             </div>
                             <div class="col-lg-1">
-                                <div style="margin-top: 40%">
-                                    <button type="button" class="btn btn-primary btn-xs"
-                                            ng-click="createComment(inference_info, 'inferences', inference_info.id, 'comment_textarea_inference_{{comment.comment.id}}', comment.comment.id, $index)">
-                                        Tamam
-                                    </button>
-                                </div>
+                                <button type="button" class="btn btn-primary btn-xs"
+                                        ng-click="createComment(inference_info, 'inferences', inference_info.id, 'comment_textarea_inference_{{comment.comment.id}}', comment.comment.id, $index)">
+                                    Tamam
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -259,12 +257,10 @@
                 <textarea id="comment_textarea_inference" style="margin-top: 1%;width: 100%;height: 51px;border-radius: 9px;background-color: white;"/>
             </div>
             <div class="col-lg-1">
-                <div style="margin-top: 40%">
-                    <button type="button" class="btn btn-primary btn-xs"
+                <button type="button" class="btn btn-primary btn-xs"
                             ng-click="createComment(inference_info, 'inferences', inference_info.id, 'comment_textarea_inference', null, null)">
                         Tamam
                     </button>
-                </div>
             </div>
         </div>
         </div>
