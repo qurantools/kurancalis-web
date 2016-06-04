@@ -104,6 +104,14 @@
                         <div class="item item-divider">
                             <div style="float: left"><span ng-bind-html="annotation.updated | time_in_string | to_trusted"></span></div>
                             <div style="float: right">
+                                <span ng-class="{ 'voted-like': (annotation.vote != null && annotation.vote.content == 1), 'unvoted' : !(annotation.vote != null && annotation.vote.content == 1)}"
+                                      ng-click="doVote(annotation,'annotations', 1)">
+                                    <i class="fa fa-thumbs-up"></i> {{annotation.voteRates.like}}
+                                </span>
+                                <span ng-class="{'voted-dislike': (annotation.vote != null && annotation.vote.content == 0), 'unvoted' : !(annotation.vote != null && annotation.vote.content == 0)}"
+                                      ng-click="doVote(annotation,'annotations', 0)">
+                                    <i class="fa fa-thumbs-down"></i> {{annotation.voteRates.dislike}}
+                                </span>
                                 <button type="button" class="button button-balanced button-small"
                                         ng-click="showEditor(annotation)"
                                         ng-if="annotation.userId==user.id">
@@ -158,10 +166,16 @@
                                 <div class="col">
                                     <span ng-bind-html="inference.updated | time_in_string | to_trusted"></span>
                                 </div>
-                                <div class="col">
-                                    <div style="float: right;">
-                                        {{inference.userName}}
-                                    </div>
+                                <div class="col" style="float: right;">
+                                    {{inference.userName}}
+                                    <span ng-class="{ 'voted-like': (inference.vote != null && inference.vote.content == 1), 'unvoted' : !(inference.vote != null && inference.vote.content == 1)}"
+                                          ng-click="doVote(inference,'inferences', 1)">
+                                        <i class="fa fa-thumbs-up"></i> {{inference.voteRates.like}}
+                                    </span>
+                                    <span ng-class="{'voted-dislike': (inference.vote != null && inference.vote.content == 0), 'unvoted' : !(inference.vote != null && inference.vote.content == 0)}"
+                                          ng-click="doVote(inference,'inferences', 0)">
+                                        <i class="fa fa-thumbs-down"></i> {{inference.voteRates.dislike}}
+                                    </span>
                                 </div>
                             </div>
                         </ion-item>

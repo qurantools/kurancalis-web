@@ -34,6 +34,11 @@ angular.module('ionicApp')
             $scope.voter = user;
             if (!config_data.isMobile){
                 $("#addUserToCircleModal").modal('show');
+            }else{
+                $scope.$broadcast("add_user_to_circle", {callback:function(circle){
+                    $scope.closeModal("circle_selection");
+                }, users: [{'kisid': user.user_id, 'drm': true}]});
+                $scope.openModal('circle_selection');
             }
         };
 
@@ -55,7 +60,39 @@ angular.module('ionicApp')
             });
         };
 
+        $scope.openModal = function (id) {
+            if (id == 'vote_results'){
+                $scope.modal_vote_results.show();
+            }else if (id == 'circle_selection'){
+                $scope.modal_circle_selection.show();
+            }
+        };
+
+        $scope.closeModal = function (id) {
+            if (id == 'vote_results'){
+                $scope.modal_vote_results.hide();
+            }else if (id == 'circle_selection'){
+                $scope.modal_circle_selection.hide();
+            }
+        };
+
         $scope.initializeVoteController = function () {
+            if (config_data.isMobile){
+                $ionicModal.fromTemplateUrl('components/partials/vote_results_modal.html', {
+                    scope: $scope,
+                    animation: 'slide-in-up',
+                    id: 'vote_results'
+                }).then(function (modal) {
+                    $scope.modal_vote_results = modal
+                });
+                $ionicModal.fromTemplateUrl('components/partials/add_user_to_circle.html', {
+                    scope: $scope,
+                    animation: 'slide-in-up',
+                    id: 'circle_selection'
+                }).then(function (modal) {
+                    $scope.modal_circle_selection = modal
+                });
+            };
             $scope.$on('show_vote_results', function(event, args) {
                 $scope.votedObject = args.voted;
                 $scope.resource = args.resource;
@@ -66,6 +103,8 @@ angular.module('ionicApp')
                 $scope.fetchVoteResults();
                 if (!config_data.isMobile){
                     $('#voteResultsModal').modal('show');
+                }else{
+                    $scope.openModal('vote_results');
                 }
             });
         };

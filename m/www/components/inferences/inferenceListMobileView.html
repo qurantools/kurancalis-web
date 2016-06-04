@@ -48,6 +48,21 @@
                             </div>
                             <div class="col">
                                 <div style="float: right;">
+                                    <span ng-class="{'voted-like': (inference.vote != null && inference.vote.content == 1), 'unvoted' : !(inference.vote != null && inference.vote.content == 1)}"
+                                          ng-click="doVote(inference,'inferences', 1)">
+                                        <i class="fa fa-thumbs-up"></i> {{inference.voteRates.like}}
+                                    </span>
+                                    <span ng-class="{'voted-dislike': (inference.vote != null && inference.vote.content == 0), 'unvoted' : !(inference.vote != null && inference.vote.content == 0)}"
+                                          ng-click="doVote(inference,'inferences', 0)">
+                                        <i class="fa fa-thumbs-down"></i> {{inference.voteRates.dislike}}
+                                    </span>
+                                    <span ng-disabled="(inference.voteRates.dislike + inference.voteRates.like) == 0"
+                                          ng-click="showVoteResults(inference, 'inferences')">
+                                        <i class="fa fa-pie-chart"></i> {{(inference.voteRates.dislike + inference.voteRates.like)}}
+                                    </span>
+                                    <span ng-click="navigateTo('/inference/display/{{inference.id}}/')" style="margin-right: 10px;" class="make_comment">
+                                        <i class="fa fa-comment"></i> {{inference.commentCount}} Yorum
+                                    </span>
                                     <div style="float:right;"><a href="" ng-click="navigateTo('/profile/user/{{inference.userId}}')" style="color: darkblue;text-decoration: none;">{{inference.userName | limitTo: 25}}</a></div>
                                 </div>
                             </div>

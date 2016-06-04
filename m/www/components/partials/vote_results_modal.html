@@ -1,0 +1,30 @@
+<div class="modal modal-fullscreen">
+    <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced" align-title="center">
+        <ion-nav-title> </ion-nav-title>
+        <ion-nav-buttons side="right">
+            <button class="button button-icon icon-left ion-checkmark"
+                    ng-click="closeModal('vote_results');">
+            </button>
+        </ion-nav-buttons>
+    </ion-nav-bar>
+    <ion-header-bar class="bar bar-subheader" style="height: 60px;padding: 0;">
+        <ion-tabs class="tabs-balanced tabs-icon-left">
+            <ion-tab title="{{(votedObject.voteRates.like + votedObject.voteRates.dislike)}}" icon-on="fa fa-group" icon-off="fa fa-group" on-select="search.vote=-1"></ion-tab>
+            <ion-tab title="{{votedObject.voteRates.like}}" icon-on="fa fa-thumbs-up" icon-off="fa fa-thumbs-up" on-select="search.vote=1"></ion-tab>
+            <ion-tab title="{{votedObject.voteRates.dislike}}" icon-on="fa fa-thumbs-down" icon-off="fa fa-thumbs-down" on-select="search.vote=0"></ion-tab>
+        </ion-tabs>
+    </ion-header-bar>
+    <ion-content overflow-scroll="false" style="margin-top: 25px;">
+        <ion-list>
+            <ion-item ng-repeat="item in results | filter: voterFilter" item="item" class="item-remove-animate" style="max-height: 80px;">
+                <div class="row" style="align-items: center;">
+                    <img width="50px" height="50px" src={{item.user.photo}} style="margin-right: 20px;border-radius: 50%;">
+                    <a  href="" ng-click="navigateTo('/profile/user/{{item.user.username}}');closeModal('vote_results')" style="text-decoration: none;color: black;display: table-cell;width: inherit;">
+                        {{item.user.name}}
+                    </a>
+                    <ion-button class="ion-plus-circled" ng-click="addUserToCircle(item.user)" ng-show="item.user.user_id != user.id" style="margin: 0px 3px;color: #ef473a;font-size:x-large"></ion-button>
+                </div>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</div>

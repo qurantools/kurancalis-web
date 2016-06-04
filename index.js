@@ -495,6 +495,12 @@ if (config_data.isMobile == false) { //false
                         reloadOnSearch: false,
                         pageTitle: 'Kuran Çalış - Ayet Notları'
                     })
+                    .when('/annotation/display/:annotationId/', {
+                        controller: 'AnnotationDisplayController',
+                        templateUrl: 'components/annotations/annotationDisplayView.html',
+                        reloadOnSearch: false,
+                        pageTitle: 'Kuran Çalış - Ayet Notu'
+                    })
                     .when('/chapter/:chapter/author/:author/', {
                         redirectTo: '/translations/?chapter=:chapter&verse=1&author=:author',
                         pageTitle: 'Kuran Çalış'
@@ -1721,6 +1727,8 @@ app.factory('ChapterVerses', function ($resource) {
 
     $scope.showVoteResults = function(votableObject, resource, isComment, resource_id){
         $timeout(function(){
+            if ((votableObject.voteRates.like + votableObject.voteRates.dislike < 1))
+                return;
             $scope.$broadcast("show_vote_results", {voted:votableObject, resource:resource, isComment:isComment, resource_id:resource_id});
         });
     };
@@ -1777,7 +1785,9 @@ app.factory('ChapterVerses', function ($resource) {
     };
 
     $scope.focusToCommentArea = function(textarea){
-        $("#"+textarea).focus();
+        var element = $("#"+textarea);
+        element.focus();
+        element.val('');
     };
 
     $scope.initRoute();

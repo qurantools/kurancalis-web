@@ -387,7 +387,6 @@ angular.module('ionicApp')
         };
 
         if(config_data.isMobile){
-
             $scope.deleted = function() {
                 var confirmPopup = $ionicPopup.confirm({
                     title: 'Notu Silme',
@@ -403,8 +402,16 @@ angular.module('ionicApp')
                             $scope.delete_inference();
                         }
                     }]
-                });                              
+                });
             };
+
+            $ionicModal.fromTemplateUrl('components/partials/comment_modal.html', {
+                scope: $scope,
+                animation: 'slide-in-up',
+                id: 'comment_modal'
+            }).then(function (modal) {
+                $scope.comment_modal = modal
+            });
         }
         $scope.getChapterVerseNotation = function(verseId){
             return Math.floor(verseId/1000)+":"+ verseId%1000;
@@ -428,18 +435,73 @@ angular.module('ionicApp')
         };
 
         $scope.displayCommentDeleteModal = function(source, comment_id, index){
-            $scope.deleteCommentFlag=true;
-            $scope.commentWillDeleteParent = source;
-            $scope.commentWillDeleteId = comment_id;
-            $scope.commentWillDeleteIndex = index;
+            if (config_data.isMobile){
+                var confirmPop = $ionicPopup.confirm({
+                    title: 'Yorum Silme',
+                    template: 'Yorumunuzu silmek istiyor musunuz?',
+                    cancelText: 'Hayır',
+                    okText: 'Sil',
+                    okType : 'button-assertive'
+                });
+
+                confirmPop.then(function (res) {
+                    if (res) {
+                        $scope.deleteComment(source, 'inferences', $scope.inference_info.id, comment_id, index);
+                    }
+                });
+            }else{
+                $scope.deleteCommentFlag=true;
+                $scope.commentWillDeleteParent = source;
+                $scope.commentWillDeleteId = comment_id;
+                $scope.commentWillDeleteIndex = index;
+            }
         };
 
         $scope.displayCommentUpdateModal = function (source, comment, index){
-            $scope.updateCommentFlag=true;
-            $scope.commentWillUpdateParent = source;
-            $scope.commentWillUpdate = comment;
-            $scope.commentWillUpdateIndex = index;
-            document.getElementById('inference_comment_update_textarea').value = comment.content;
+            if (config_data.isMobile){
+                $scope.item = $.extend( true, {}, comment );
+                var promptPopup = $ionicPopup.prompt({
+                    template: '<input id="update_comment_area" type="text" ng-model="item.content">',
+                    title: 'Yorum Güncelleme',
+                    scope : $scope,
+                    inputType: 'text',
+                    inputPlaceholder: 'Yorum Yaz',
+                });
+
+                promptPopup.then(function(res) {
+                    if (isDefined(res) && $scope.item.content != comment.content){
+                        $scope.updateComment(source, 'inferences', $scope.inference_info.id,
+                            comment.id, 'update_comment_area', index);
+                    }
+                });
+            }else {
+                $scope.updateCommentFlag = true;
+                $scope.commentWillUpdateParent = source;
+                $scope.commentWillUpdate = comment;
+                $scope.commentWillUpdateIndex = index;
+                document.getElementById('inference_comment_update_textarea').value = comment.content;
+            }
+        };
+
+        $scope.openModal = function (id) {
+            if (id == 'comment_modal'){
+                $scope.comment_modal.show();
+            }
+        };
+
+        $scope.closeModal = function (id) {
+            if (id == 'comment_modal'){
+                $scope.comment_modal.hide();
+            }
+        };
+
+        $scope.displayCommentModal = function (parentId, parentIndex) {
+            $scope.resource = $scope.inference_info;
+            $scope.resource_type = 'inferences';
+            $scope.resource_id = $scope.inference_info.id;
+            $scope.parent_id = parentId;
+            $scope.parent_index = parentIndex;
+            $scope.openModal('comment_modal');
         };
 
         //definitions are finished. Now run initialization

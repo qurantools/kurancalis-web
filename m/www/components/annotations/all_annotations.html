@@ -8,7 +8,6 @@
                 <input type="hidden" ng-model="chapter_id"/>
                 <input type="hidden" ng-model="verse_number"/>
                 <input type="hidden" ng-model="author_mask"/>
-
             </ion-nav-buttons>
             <ion-nav-buttons side="right">
                 <button class="button button-icon icon ion-search"
@@ -85,9 +84,23 @@
                         <div class="item item-divider">
                             <div style="float: left"><span ng-bind-html="annotation.updated | time_in_string | to_trusted"></span></div>
                             <div style="float: right">
+                                <span ng-class="{'voted-like': (annotation.vote != null && annotation.vote.content == 1), 'unvoted' : !(annotation.vote != null && annotation.vote.content == 1)}"
+                                      ng-click="doVote(annotation,'annotations', 1)">
+                                    <i class="fa fa-thumbs-up"></i> {{annotation.voteRates.like}}
+                                </span>
+                                <span ng-class="{'voted-dislike': (annotation.vote != null && annotation.vote.content == 0), 'unvoted' : !(annotation.vote != null && annotation.vote.content == 0)}"
+                                      ng-click="doVote(annotation,'annotations', 0)">
+                                    <i class="fa fa-thumbs-down"></i> {{annotation.voteRates.dislike}}
+                                </span>
+                                <span ng-disabled="(annotation.voteRates.dislike + annotation.voteRates.like) == 0"
+                                        ng-click="showVoteResults(annotation, 'annotations')">
+                                    <i class="fa fa-pie-chart"></i> {{(annotation.voteRates.dislike + annotation.voteRates.like)}}
+                                </span>
+                                <span ng-click="navigateTo('/annotation/display/{{annotation.id}}/')" style="margin-right: 10px;" class="make_comment">
+                                    <i class="fa fa-comment"></i> {{annotation.commentCount}} Yorum
+                                </span>
                                 <button type="button" class="button button-balanced button-small" ng-click="editAnnotation(annotation)">
-                                    <i
-                                            class="fa fa-pencil-square-o "></i>
+                                    <i class="fa fa-pencil-square-o "></i>
                                 </button>
                                 <button type="button" class="button button-assertive button-small"
                                         ng-click="deleteAnnotation(annotation)"><i

@@ -1,0 +1,21 @@
+<div class="modal modal-fullscreen">
+    <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced" align-title="center">
+        <ion-nav-buttons side="left">
+            <button class="button button-icon icon-left ion-ios-arrow-back"
+                    ng-click="closeModal('comment_modal')"> Vazgeç
+            </button>
+        </ion-nav-buttons>
+        <ion-nav-title> </ion-nav-title>
+        <ion-nav-buttons side="right">
+            <button class="button button-icon icon-left ion-checkmark"
+                    ng-click="createComment(resource, resource_type, resource_id, 'comment_area_for_mobile', parent_id, parent_index);
+                    closeModal('comment_modal');">
+            </button>
+        </ion-nav-buttons>
+    </ion-nav-bar>
+    <ion-content overflow-scroll="false" style="padding: 10px;">
+        <label class="item item-input text" style="margin-top: 60px;">
+            <textarea placeholder="Yorum Yaz" id="comment_area_for_mobile" rows="1"></textarea>
+        </label>
+    </ion-content>
+</div>

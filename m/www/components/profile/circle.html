@@ -38,9 +38,14 @@
                                 </a>
                             </div>
                             <hr style="width: 100% !important;border-color: white !important;">
-                            <a href='' style="text-decoration: none !important;margin-left: 10px;" ng-click="openVerseDetail(feed.anno_verse_id, feed.owner_id, feed.owner_name)">
-                                <b>{{feed.anno_verse_id / 1000 | number:0}}:{{feed.anno_verse_id % 1000}}</b>
-                            </a>
+                            <div>
+                                <a href='' style="text-decoration: none !important;margin-left: 10px;" ng-click="openVerseDetail(feed.anno_verse_id, feed.owner_id, feed.owner_name)">
+                                    <b>{{feed.anno_verse_id / 1000 | number:0}}:{{feed.anno_verse_id % 1000}}</b>
+                                </a>
+                                <div style="float: right">
+                                    <span ng-bind-html="feed.updated | time_in_string | to_trusted"></span>
+                                </div>
+                            </div>
                         </div>
                         <div class="item item-text-wrap">
                             <blockquote
@@ -55,21 +60,35 @@
                             </div>
                         </div>
                         <div class="item item-divider" style="overflow: auto;">
-                                <div style="float: left"><span ng-bind-html="feed.updated | time_in_string | to_trusted"></span></div>
-                                <div style="float: right">
-                                    <button type="button" class="button button-balanced button-small" ng-click="showEditor(feed)"
-                                            ng-if="feed.owner_id==user.id">
-                                        <i class="fa fa-pencil-square-o "></i>
-                                    </button>
-                                    <button type="button" class="button button-assertive button-small" ng-click="deleteAnnotation(feed)"
-                                            ng-if="feed.owner_id==user.id">
-                                        <i class="fa fa-trash-o"></i>
-                                    </button>
-                                </div>
+                            <div style="float: right">
+                                <span ng-class="{ 'voted-like': (feed.vote != null && feed.vote.content == 1), 'unvoted' : !(feed.vote != null && feed.vote.content == 1)}"
+                                      ng-click="doVoteInProfile(feed,1)">
+                                    <i class="fa fa-thumbs-up"></i> {{feed.voteRates.like}}
+                                </span>
+                                <span ng-class="{'voted-dislike': (feed.vote != null && feed.vote.content == 0), 'unvoted' : !(feed.vote != null && feed.vote.content == 0)}"
+                                      ng-click="doVoteInProfile(feed,0)">
+                                    <i class="fa fa-thumbs-down"></i> {{feed.voteRates.dislike}}
+                                </span>
+                                <span ng-disabled="(feed.voteRates.dislike + feed.voteRates.like) == 0"
+                                      ng-click="showVoteResults(feed, 'annotations')">
+                                    <i class="fa fa-pie-chart"></i> {{(feed.voteRates.dislike + feed.voteRates.like)}} Oy
+                                </span>
+                                <span ng-click="navigateTo('/annotation/display/{{feed.id}}/')" style="margin-right: 10px;" class="make_comment">
+                                    <i class="fa fa-comment"></i> {{feed.commentCount}} Yorum
+                                </span>
+                                <button type="button" class="button button-balanced button-small" ng-click="showEditor(feed)"
+                                        ng-if="feed.owner_id==user.id">
+                                    <i class="fa fa-pencil-square-o "></i>
+                                </button>
+                                <button type="button" class="button button-assertive button-small" ng-click="deleteAnnotation(feed)"
+                                        ng-if="feed.owner_id==user.id">
+                                    <i class="fa fa-trash-o"></i>
+                                </button>
                             </div>
+                        </div>
                     </div>
                     <div ng-if="feed.study_type == 'inference'" class="card">
-                        <div class="item item-divider" style="padding: 0;">
+                        <div class="item item-divider row" style="padding: 0;">
                             <div class="row">
                                 <a href="" ng-click="navigateTo('/profile/user/{{feed.owner_id}}')">
                                     <img style="max-width: 60px; max-height: 45px;border-radius: 50%;" ng-if="feed.owner_photo != 'undefinedp'" ng-src="{{feed.owner_photo}}">
@@ -77,6 +96,9 @@
                                 <a href="" ng-click="navigateTo('/profile/user/{{feed.owner_id}}')" style="margin-left: 19px;margin-top: 10px;text-decoration: none;">
                                     <div>{{feed.owner_name | limitTo: 25}}</div>
                                 </a>
+                            </div>
+                            <div class="col" style="margin-top: 8px;">
+                                <span ng-bind-html="feed.updated | time_in_string | to_trusted"></span>
                             </div>
                         </div>
                         <div class="item">
@@ -108,7 +130,21 @@
                         </div>
                         <div class="item item-divider">
                             <div class="col">
-                                <span ng-bind-html="feed.updated | time_in_string | to_trusted"></span>
+                                <span ng-class="{ 'voted-like': (feed.vote != null && feed.vote.content == 1), 'unvoted' : !(feed.vote != null && feed.vote.content == 1)}"
+                                      ng-click="doVoteInProfile(feed,1)">
+                                    <i class="fa fa-thumbs-up"></i> {{feed.voteRates.like}}
+                                </span>
+                                <span ng-class="{'voted-dislike': (feed.vote != null && feed.vote.content == 0), 'unvoted' : !(feed.vote != null && feed.vote.content == 0)}"
+                                      ng-click="doVoteInProfile(feed,0)">
+                                    <i class="fa fa-thumbs-down"></i> {{feed.voteRates.dislike}}
+                                </span>
+                                <span ng-disabled="(feed.voteRates.dislike + feed.voteRates.like) == 0"
+                                        ng-click="showVoteResults(feed, 'inferences')">
+                                    <i class="fa fa-pie-chart"></i> {{(feed.voteRates.dislike + feed.voteRates.like)}} Oy
+                                </span>
+                                <span ng-click="navigateTo('/inference/display/{{feed.id}}/')" style="margin-right: 10px;" class="make_comment">
+                                    <i class="fa fa-comment"></i> {{feed.commentCount}} Yorum
+                                </span>
                             </div>
                         </div>
                     </div>
