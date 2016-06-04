@@ -144,9 +144,7 @@
                             <a href="" ng-click="navigateTo('/profile/user/{{comment.owner.user_id}}/')">
                                 {{comment.owner.name}}
                             </a>
-                            <span style="word-wrap: break-word;" ng-class="{'editable_comment' : comment.comment.edit}">
-                                {{comment.comment.content}}
-                            </span>
+                            <span ng-bind-html="comment.comment.content | display_comment | to_trusted"></span>
                         </span>
                         <div id="footer_area" class="row" style="margin-top: 15px;">
                             <div class="col-xs-10" style="float: left">
@@ -192,9 +190,7 @@
                                     <a href="" ng-click="navigateTo('/profile/user/{{child_comment.owner.user_id}}/')">
                                         {{child_comment.owner.name}}
                                     </a>
-                                    <span style="word-wrap: break-word;" ng-class="{'editable_comment' : child_comment.comment.edit}">
-                                        {{child_comment.comment.content}}
-                                    </span>
+                                    <span ng-bind-html="child_comment.comment.content | display_comment | to_trusted"></span>
                                 </span>
                                 <div id="footer_area_child" class="row" style="margin-top: 15px;">
                                     <div class="col-xs-10" style="float: left">

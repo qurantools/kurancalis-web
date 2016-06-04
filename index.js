@@ -124,6 +124,12 @@ var app = angular.module('ionicApp', requiredModules)
                 return text.replace(re, "<div style='color: red;background-color:yellow;display: inline-block;'>$1</div>");
             };
         }])
+    .filter('display_comment', [
+        function () {
+            return function (str) {
+                return str.split("\n").join("<br />");
+            };
+        }])
     .filter('time_in_string',[
         function(){
             return function (milis){
@@ -1727,7 +1733,7 @@ app.factory('ChapterVerses', function ($resource) {
 
     $scope.showVoteResults = function(votableObject, resource, isComment, resource_id){
         $timeout(function(){
-            if ((votableObject.voteRates.like + votableObject.voteRates.dislike < 1))
+            if ((votableObject.voteRates.like + votableObject.voteRates.dislike) < 1)
                 return;
             $scope.$broadcast("show_vote_results", {voted:votableObject, resource:resource, isComment:isComment, resource_id:resource_id});
         });

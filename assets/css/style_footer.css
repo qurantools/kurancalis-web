@@ -206,15 +206,10 @@
     width: 400px;
 }
 
-.editable_comment{
-    border: 1px solid gray;
-}
-
 a.disabled{
     pointer-events: none;
     cursor: default;
 }
-
 .make_comment{
     cursor: pointer;
 }
