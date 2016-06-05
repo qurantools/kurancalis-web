@@ -1797,6 +1797,12 @@ app.factory('ChapterVerses', function ($resource) {
             element.val('');
         },0);
     };
+    
+    $scope.displayTutorial = function (id){
+        $timeout(function(){
+            $scope.$broadcast("displayTutorial",{id:id})
+        },2000);  
+    };
 
     $scope.initRoute();
 
