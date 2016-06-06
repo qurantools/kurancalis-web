@@ -79,12 +79,16 @@
                                 <a class="make_comment" ng-class="{'disabled' : (comment.voteRates.dislike + comment.voteRates.like) == 0}"
                                    ng-click="showVoteResults(comment, 'annotations', true, comment.comment.annotationId)">Değerlendirenler</a>
                             </span>
-                            <span class="make_comment" ng-click="comment.showChild = !comment.showChild" ng-init="comment.showChild = false">
+                            <span class="make_comment"
+                                  ng-click="comment.showChild=true;
+                                      comment.showChilds=true;
+                                      focusToCommentArea('comment_textarea_annotation_{{comment.comment.id}}')"
+                                  ng-init="comment.showChild = false">
                                 <a>Yanıtla</a>
                             </span>
                             <span ng-bind-html="comment.comment.created | time_in_string | to_trusted"></span>
                             <span ng-if="comment.comment.childs.length > 2 && !comment.showChilds" ng-click="comment.showChilds=true">
-                                <i class="fa fa-reply"></i> <span style="color:blue">{{comment.comment.childs.length}} Yanıt</span>
+                                <i class="fa fa-mail-forward"></i> <span style="color:blue">{{comment.comment.childs.length}} Yanıt</span>
                             </span>
                         </div>
                         <div class="col-xs-2" align="right">
@@ -125,7 +129,8 @@
                                         <a class="make_comment" ng-class="{'disabled' : (child_comment.voteRates.dislike + child_comment.voteRates.like) == 0}"
                                            ng-click="showVoteResults(child_comment, 'annotations', true, child_comment.comment.annotationId)">Değerlendirenler</a>
                                     </span>
-                                    <span class="make_comment" ng-click="comment.showChild = !comment.showChild">
+                                    <span class="make_comment"
+                                          ng-click="comment.showChild = true;focusToCommentArea('comment_textarea_annotation_{{comment.comment.id}}')">
                                         <a>Yanıtla</a>
                                     </span>
                                     <span ng-bind-html="child_comment.comment.created | time_in_string | to_trusted"></span>
@@ -142,7 +147,7 @@
                             </div>
                         </div>
                     </div>
-                    <div style="width: 100%;border-radius: 15px;padding-top: 10px !important;margin-top: 3px;" align="left" class="row well" ng-if="comment.showChild == true">
+                    <div style="width: 100%;border-radius: 15px;padding-top: 10px !important;margin-top: 3px;" align="left" class="row well" ng-if="comment.showChild">
                         <div class="col-lg-1">
                             <a href="" ng-click="navigateTo('/profile/user/{{user.id}}/')">
                                 <img style="max-width: 80px; max-height: 60px;border-radius: 50%;" ng-src="{{user.photo}}"><br/>

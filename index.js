@@ -1760,6 +1760,7 @@ app.factory('ChapterVerses', function ($resource) {
             if (parent_id != null){
                 if (!isDefined(resource.comments[parent_index].comment.childs)){
                     resource.comments[parent_index].comment.childs = [];
+                    resource.comments[parent_index].showChilds = true;
                 }
                 resource.comments[parent_index].comment.childs.push(temp);
             }else{
