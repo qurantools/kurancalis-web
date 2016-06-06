@@ -42,8 +42,9 @@
                                       ng-click="doVote(annotation,'annotations', 0)">
                                     <i class="fa fa-thumbs-down"></i> {{annotation.voteRates.dislike}}
                                 </span>
-                                <span class="make_comment">
-                                    <a>Yanıtla</a>
+                                <span class="make_comment"
+                                      ng-click="displayCommentModal(null, null)">
+                                    <a>Yorum Yaz</a>
                                 </span>
                                 <button type="button" class="button button-balanced button-small"
                                         ng-if="annotation.userId==user.id"
@@ -88,7 +89,8 @@
                                 <i class="fa fa-pie-chart"></i> {{(comment.voteRates.dislike + comment.voteRates.like)}}
                             </span>
                             <span class="make_comment"
-                                  ng-click="comment.showChild = !comment.showChild;comment.showChilds=true;focusToCommentArea('comment_textarea_inference_{{comment.comment.id}}')"
+                                    ng-click="comment.showChild = true;comment.showChilds=true;
+                                    displayCommentModal(comment.comment.id, $index)"
                                   ng-init="comment.showChild = false">
                                 <a style="color: #00f;">Yanıtla</a>
                             </span>
@@ -140,7 +142,8 @@
                                               ng-click="showVoteResults(child_comment, 'annotations', true, child_comment.comment.annotationId)">
                                             <i class="fa fa-pie-chart"></i> {{child_comment.voteRates.dislike + child_comment.voteRates.like}}
                                         </span>
-                                        <span class="make_comment" ng-click="comment.showChild = !comment.showChild;focusToCommentArea('comment_textarea_inference_{{comment.comment.id}}')">
+                                        <span class="make_comment"
+                                              ng-click="comment.showChild = true;displayCommentModal(comment.comment.id, $index)">
                                             <a style="color: blue;">Yanıtla</a>
                                         </span>
                                     </div>
@@ -160,7 +163,7 @@
                         </div>
                         <div style="width: 100%;border-radius: 15px;padding-top: 10px !important;
                             margin-top: 3px;border: 1px #ccc solid;" class="row"
-                             ng-if="comment.showChild == true">
+                             ng-if="comment.showChild">
                             <a href="" ng-click="navigateTo('/profile/user/{{user.id}}/')">
                                 <img style="max-width: 80px; max-height: 60px;border-radius: 50%;" ng-src="{{user.photo}}"><br/>
                             </a>
