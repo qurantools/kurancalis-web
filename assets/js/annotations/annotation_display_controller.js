@@ -1,5 +1,5 @@
 angular.module('ionicApp')
-    .controller('AnnotationDisplayController', function ($scope, $routeParams, $location, authorization, localStorageService,  Restangular, $ionicModal) {
+    .controller('AnnotationDisplayController', function ($scope, $routeParams, $location, authorization, localStorageService,  Restangular, $ionicModal, $timeout, $ionicPopup, $ionicActionSheet) {
 
         $scope.annotation = null;
 
@@ -47,52 +47,69 @@ angular.module('ionicApp')
         };
 
         $scope.displayCommentDeleteModal = function(source, comment_id, index){
-            if (config_data.isMobile){
-                var confirmPop = $ionicPopup.confirm({
-                    title: 'Yorum Silme',
-                    template: 'Yorumunuzu silmek istiyor musunuz?',
-                    cancelText: 'Hayır',
-                    okText: 'Sil',
-                    okType : 'button-assertive'
-                });
-
-                confirmPop.then(function (res) {
-                    if (res) {
-                        $scope.deleteComment(source, 'annotations', $scope.annotation.id, comment_id, index);
-                    }
-                });
-            }else{
-                $scope.deleteCommentFlag=true;
-                $scope.commentWillDeleteParent = source;
-                $scope.commentWillDeleteId = comment_id;
-                $scope.commentWillDeleteIndex = index;
-            }
+            $scope.deleteCommentFlag=true;
+            $scope.commentWillDeleteParent = source;
+            $scope.commentWillDeleteId = comment_id;
+            $scope.commentWillDeleteIndex = index;
         };
 
         $scope.displayCommentUpdateModal = function (source, comment, index){
-            if (config_data.isMobile){
-                $scope.item = $.extend( true, {}, comment );
-                var promptPopup = $ionicPopup.prompt({
-                    template: '<input id="update_comment_area" type="text" ng-model="item.content">',
-                    title: 'Yorum Güncelleme',
-                    scope : $scope,
-                    inputType: 'text',
-                    inputPlaceholder: 'Yorum Yaz',
-                });
+            $scope.updateCommentFlag = true;
+            $scope.commentWillUpdateParent = source;
+            $scope.commentWillUpdate = comment;
+            $scope.commentWillUpdateIndex = index;
+            document.getElementById('annotation_comment_update_textarea').value = comment.content;
+        };
 
-                promptPopup.then(function(res) {
-                    if (isDefined(res) && $scope.item.content != comment.content){
-                        $scope.updateComment(source, 'annotations', $scope.annotation.id,
-                            comment.id, 'update_comment_area', index);
-                    }
-                });
-            }else {
-                $scope.updateCommentFlag = true;
-                $scope.commentWillUpdateParent = source;
-                $scope.commentWillUpdate = comment;
-                $scope.commentWillUpdateIndex = index;
-                document.getElementById('annotation_comment_update_textarea').value = comment.content;
+        $scope.openFooterMenu = function (source, comment, comment_index){
+            $scope.footerMenuButtons = [];
+            $scope.footerMenuButtons.push({text: 'Yorumu Güncelle'});
+            $scope.footerMenuButtons.push({text: 'Yorumu Sil'});
+            if ($scope.user.id != comment.userId){
+                return;
             }
+            $ionicActionSheet.show({
+                buttons: $scope.footerMenuButtons,
+                destructiveText: '',
+                titleText: '',
+                cancelText: 'Kapat',
+                cancel: function () {
+                },
+                buttonClicked: function (index) {
+                    if (index == 0) {
+                        $scope.item = $.extend( true, {}, comment );
+                        var promptPopup = $ionicPopup.prompt({
+                            template: '<input id="update_comment_area" type="text" ng-model="item.content">',
+                            title: 'Yorum Güncelleme',
+                            scope : $scope,
+                            inputType: 'text',
+                            inputPlaceholder: 'Yorum Yaz',
+                        });
+
+                        promptPopup.then(function(res) {
+                            if (isDefined(res) && $scope.item.content != comment.content){
+                                $scope.updateComment(source, 'annotations', $scope.annotation.id,
+                                    comment.id, 'update_comment_area', comment_index);
+                            }
+                        });
+                    } else if (index == 1) {
+                        var confirmPop = $ionicPopup.confirm({
+                            title: 'Yorum Silme',
+                            template: 'Yorumunuzu silmek istiyor musunuz?',
+                            cancelText: 'Hayır',
+                            okText: 'Sil',
+                            okType : 'button-assertive'
+                        });
+
+                        confirmPop.then(function (res) {
+                            if (res) {
+                                $scope.deleteComment(source, 'annotations', $scope.annotation.id, comment.id, comment_index);
+                            }
+                        });
+                    }
+                    return true;
+                }
+            });
         };
 
         $scope.openModal = function (id) {
@@ -129,6 +146,7 @@ angular.module('ionicApp')
             if (!isDefined($routeParams.annotationId))
                 return;
             $scope.annotation_info($routeParams.annotationId);
+            $scope.displayTutorial("annotation");
         };
 
         $scope.initializeAnnotationController();

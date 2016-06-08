@@ -98,14 +98,14 @@
                             <img style="max-width: 80px; max-height: 60px;border-radius: 50%;" ng-src="{{comment.owner.photo}}"><br/>
                             <span ng-bind-html="comment.comment.created | time_in_string | to_trusted" style="margin-left: 3px;margin-right: 3px;color: black"></span>
                         </a>
-                            <span>
+                            <span ng-click="openFooterMenu(inference_info.comments, comment.comment, $index)">
                                 <a href="" ng-click="navigateTo('/profile/user/{{comment.owner.user_id}}/')">
                                     {{comment.owner.name}}
                                 </a>
                                 <span ng-bind-html="comment.comment.content | display_comment | to_trusted"></span>
                             </span>
                     </div>
-                    <div class="row">
+                    <div class="row fit-content">
                         <span ng-class="{ 'voted-like': (comment.vote != null && comment.vote.content == 1), 'unvoted' : !(comment.vote != null && comment.vote.content == 1)}"
                               ng-click="doVoteForComment(comment, comment.comment.inferenceId, 'inferences',1)">
                             <i class="fa fa-thumbs-up"></i> {{comment.voteRates.like}}
@@ -131,42 +131,30 @@
                               ng-click="comment.showChilds=true">
                             <i class="fa fa-mail-forward"></i> <span style="color: #00f;">{{comment.comment.childs.length}} Yanıt</span>
                         </span>
-                        <button type="button" class="button button-balanced button-small"
-                                ng-click="displayCommentUpdateModal(inference_info.comments, comment.comment, $index)"
-                                style="margin-left: 3px;margin-right: 3px;"
-                                ng-if="comment.owner.user_id==user.id"><i
-                                class="fa fa-pencil-square-o "></i>
-                        </button>
-                        <button type="button" class="button button-assertive button-small"
-                                ng-click="displayCommentDeleteModal(inference_info.comments, comment.comment.id, $index)"
-                                style="margin-left: 3px;margin-right: 3px;"
-                                ng-if="comment.owner.user_id==user.id"><i
-                                class="fa fa-trash-o"></i></button>
                     </div>
                     <div ng-repeat="child_comment in comment.comment.childs"
-                         style="width: 100%;border-radius: 15px;padding-top: 10px !important;margin-top: 10px; border: 1px #ccc solid;"
-                         align="left" class="row" ng-if="comment.showChilds">
+                         style="width: 100%;border-radius: 15px;padding-top: 10px !important;margin-top: 10px;border: 1px blueviolet dashed;"
+                         align="left" class="row" ng-if="comment.showChilds" ng-click="showActionSheetForComment()">
                         <div class="col-lg-1">
                             <a href="" ng-click="navigateTo('/profile/user/{{child_comment.owner.user_id}}/')">
-                                <img style="max-width: 80px; max-height: 60px;border-radius: 50%;" ng-src="{{child_comment.owner.photo}}"><br/>
+                                <img style="max-width: 40px; max-height: 40px;border-radius: 50%; " ng-src="{{child_comment.owner.photo}}"><br/>
                             </a>
                             <span ng-bind-html="child_comment.comment.created | time_in_string | to_trusted"></span>
                         </div>
                         <div  class="col-lg-11">
-                            <span>
-                                <a href="" ng-click="navigateTo('/profile/user/{{child_comment.owner.user_id}}/')">
-                                    {{child_comment.owner.name}}
-                                </a>
-                                <span ng-bind-html="child_comment.comment.content | display_comment | to_trusted"></span>
-                            </span>
+                                <span ng-click="openFooterMenu(comment.comment.childs, child_comment.comment, $index)">
+                                    <a href="" ng-click="navigateTo('/profile/user/{{child_comment.owner.user_id}}/')">
+                                        {{child_comment.owner.name}}
+                                    </a>
+                                    <span ng-bind-html="child_comment.comment.content | display_comment | to_trusted"></span>
+                                </span>
                             <div id="footer_area_child" class="row" style="margin-top: 15px;">
-                                <div class="col-xs-10" style="float: left">
+                                <div class="fit-content" style="width: 100%">
                                         <span ng-class="{ 'voted-like': (child_comment.vote != null && child_comment.vote.content == 1), 'unvoted' : !(child_comment.vote != null && child_comment.vote.content == 1)}"
                                               ng-click="doVoteForComment(child_comment, child_comment.comment.inferenceId, 'inferences',1)">
                                             <i class="fa fa-thumbs-up"></i> {{child_comment.voteRates.like}}
                                         </span>
                                         <span ng-class="{'voted-dislike': (child_comment.vote != null && child_comment.vote.content == 0), 'unvoted' : !(child_comment.vote != null && child_comment.vote.content == 0)}"
-                                              style="margin-top: 10px;"
                                               ng-click="doVoteForComment(child_comment, child_comment.comment.inferenceId, 'inferences',0)">
                                             <i class="fa fa-thumbs-down"></i> {{child_comment.voteRates.dislike}}
                                         </span>
@@ -178,17 +166,6 @@
                                               ng-click="comment.showChild = true;displayCommentModal(comment.comment.id, $index)">
                                             <a style="color: blue;">Yanıtla</a>
                                         </span>
-                                </div>
-                                <div class="col-xs-2" align="right">
-                                    <button type="button" class="button button-balanced button-small"
-                                            ng-click="displayCommentUpdateModal(comment.comment.childs, child_comment.comment, $index)"
-                                            ng-if="child_comment.owner.user_id==user.id"><i
-                                            class="fa fa-pencil-square-o "></i>
-                                    </button>
-                                    <button type="button" class="button button-assertive button-small"
-                                            ng-click="displayCommentDeleteModal(comment.comment.childs, child_comment.comment.id, $index)"
-                                            ng-if="child_comment.owner.user_id==user.id"><i
-                                            class="fa fa-trash-o"></i></button>
                                 </div>
                             </div>
                         </div>

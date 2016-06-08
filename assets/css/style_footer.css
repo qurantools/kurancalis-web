@@ -213,3 +213,14 @@ a.disabled{
 .make_comment{
     cursor: pointer;
 }
+
+.fit-content{
+    display: -webkit-flex;
+    -webkit-justify-content: space-around;
+    display: flex;
+    justify-content: space-around;
+}
+
+#comment_area div.scroll{
+    height: 85%;
+}
