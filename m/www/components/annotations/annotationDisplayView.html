@@ -24,7 +24,7 @@
                             </div>
                             <hr style="width: 100% !important;border-color: white !important;">
                             <div>
-                                <a href='' style="text-decoration: none !important;margin-left: 10px;" ng-click="openVerseDetail(annotation.verseId, usersForSearch, circlesForSearch)">
+                                <a href='' style="text-decoration: none !important;margin-left: 10px;" ng-click="showVerseDetail(annotation.verseId, usersForSearch, circlesForSearch)">
                                     <b>{{annotation.verseId / 1000 | number:0}}:{{annotation.verseId % 1000}}</b>
                                 </a>
                                 <span style="float: right">
@@ -115,16 +115,17 @@
                                 <i class="fa fa-mail-forward"></i> <span style="color: #00f;">{{comment.comment.childs.length}} Yanıt</span>
                             </span>
                         </div>
+                        <hr width="100%"/>
                         <div ng-repeat="child_comment in comment.comment.childs"
-                             style="width: 100%;border-radius: 15px;padding-top: 10px !important;margin-top: 10px;border: 1px blueviolet dashed;"
+                             style="width: 100%;border-radius: 15px;padding-top: 10px !important;margin-top: 10px;"
                              class="row" ng-if="comment.showChilds">
-                            <div class="col-lg-1">
+                            <div class="col-lg-1" style="width: 80px;">
                                 <a href="" ng-click="navigateTo('/profile/user/{{child_comment.owner.user_id}}/')">
                                     <img style="max-width: 40px; max-height: 40px;border-radius: 50%; " ng-src="{{child_comment.owner.photo}}"><br/>
                                 </a>
                                 <span ng-bind-html="child_comment.comment.created | time_in_string | to_trusted"></span>
                             </div>
-                            <div  class="col-lg-11">
+                            <div  class="col-lg-11" style="width: inherit">
                                 <span ng-click="openFooterMenu(comment.comment.childs, child_comment.comment, $index)">
                                     <a href="" ng-click="navigateTo('/profile/user/{{child_comment.owner.user_id}}/')">
                                         {{child_comment.owner.name}}
@@ -151,11 +152,11 @@
                                         </span>
                                     </div>
                                 </div>
+                                <hr width="100%"/>
                             </div>
                         </div>
                     </div>
                     <!-- new or update comment area-->
-                    <hr width="100%"/>
                     <div style="width: 100%;border-radius: 15px;padding-top: 10px !important;border:1px black solid;">
                         <div class="row">
                             <a href="" ng-click="navigateTo('/profile/user/{{user.id}}/')">
