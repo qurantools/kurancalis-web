@@ -190,7 +190,7 @@ angular.module('ionicApp')
         $scope.loadMoreFriendsFeeds = function(){
             if ($scope.friendName == "")
                 return;
-            var lastItemDate = Math.floor(Date.now() / 1000);
+            var lastItemDate = 0;
             if ($scope.feeds.length > 0){
                 lastItemDate = $scope.feeds[$scope.feeds.length -1].updated / 1000;
             }
@@ -200,7 +200,7 @@ angular.module('ionicApp')
         $scope.loadMoreCirclesFeeds = function(){
             if ($scope.circleId == -1)
                 return;
-            var lastItemDate = Math.floor(Date.now() / 1000);
+            var lastItemDate = 0;
             if ($scope.feeds.length > 0){
                 lastItemDate = $scope.feeds[$scope.feeds.length -1].updated / 1000;
             }
@@ -281,7 +281,7 @@ angular.module('ionicApp')
             if (typeof $routeParams.friendName !== 'undefined') {
                 $scope.friendName = $routeParams.friendName;
                 $scope.fetchUserStatistics($scope.friendName);
-                $scope.fetchFriendFeeds($scope.friendName, Math.floor(Date.now() / 1000));
+                //$scope.fetchFriendFeeds($scope.friendName, 0);
                 return;
             }
 
@@ -290,7 +290,7 @@ angular.module('ionicApp')
                 $scope.circleListForTimeline = parseInt($scope.circleId);
                 $scope.selectedCircles = [];
                 $scope.selectedCircles.push($scope.extendedCirclesForSearch[$scope.getIndexOfArrayByElement($scope.extendedCirclesForSearch, 'id', $scope.circleId)]);
-                $scope.fetchCircleFeeds($routeParams.circleId, Math.floor(Date.now() / 1000));
+                //$scope.fetchCircleFeeds($routeParams.circleId, 0);
                 return;
             }
         };
