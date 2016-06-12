@@ -4,7 +4,6 @@
         <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced">
             <ion-nav-buttons side="left">
                 <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
-                <button class="button button-icon icon ion-android-arrow-dropdown-circle"  ng-click="openMenuModal()"></button>
                 <input type="hidden" ng-model="chapter_id"/>
                 <input type="hidden" ng-model="author_mask"/>
                 <!--author_mask:{{author_mask}}-->
@@ -17,6 +16,7 @@
                 <button class="button button-positive" ng-click="login()" ng-if="user==null && isConnected==true">Facebook ile Giriş</button>
                 <a href ng-click="openVerseHistory()" class="button button-icon icon fa fa-history" ng-if="user!=null"></a>
                 <a href ng-click="openModal('annotations_on_page')" class="button button-icon icon ion-clipboard" ng-if="user!=null"></a>
+                <button class="button button-icon icon ion-more"  ng-click="openMenuModal()"></button>
             </ion-nav-buttons>
         </ion-nav-bar>
         <ion-nav-buttons side="left">

@@ -14,6 +14,12 @@ angular.module('ionicApp')
                     {id:13, title:"Intro-3", source:[{src: $sce.trustAsResourceUrl("../../assets/img/help/mobile/karalama.mp4"), type: "video/mp4"}]},
                     {id:14, title:"Intro-4", source:[{src: $sce.trustAsResourceUrl("../../assets/img/help/mobile/suredeki_ayet_notlari.mp4"), type: "video/mp4"}]}
                 ]
+            },
+            {   id: "leftmenu",
+                name : "Genel Yetenekler",
+                submenu : [
+                    {id:21, title:"Sol Menü", source:[{src: $sce.trustAsResourceUrl("../../assets/img/help/mobile/menu_icerigi.mp4"), type: "video/mp4"}]},
+                ]
             }
             /*,
             {   id: "annotation",

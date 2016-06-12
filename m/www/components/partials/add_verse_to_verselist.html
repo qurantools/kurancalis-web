@@ -1,11 +1,11 @@
 <div class="modal modal-fullscreen" ng-controller="VerseListController">
     <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced">
         <ion-nav-buttons side="left">
-            <a class="button button-icon icon ion-arrow-left-b" ng-click="closeModal('verselist_selection')"></a>
+            <button class="button button-icon icon ion-arrow-left-b" ng-click="closeModal('verselist_selection')">Geri</button>
         </ion-nav-buttons>
         <ion-nav-title>Listeye Ekle</ion-nav-title>
         <ion-nav-buttons side="right">
-            <a class="button button-icon icon ion-checkmark" ng-click="addVerseToVerseLists(localVerseListSelection)"></a>
+            <button class="button button-icon icon ion-checkmark" ng-click="addVerseToVerseLists(localVerseListSelection)">Tamam</button>
         </ion-nav-buttons>
     </ion-nav-bar>
     <ion-content overflow-scroll="true" delegate-handle="content"  class="scroll_content" style="margin-top:30px;">
