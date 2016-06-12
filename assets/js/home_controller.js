@@ -1319,12 +1319,7 @@ angular.module('ionicApp')
             });
 
             $scope.initializeActionSheetButtons();
-
-            $timeout(function() {
-                console.log("broadcast displayTutorial");
-                $scope.$broadcast("displayTutorial",{id:"chapter"});
-
-            },2000);
+            $scope.displayTutorial("chapter");
         };
 
         $scope.initializeActionSheetButtons = function(){

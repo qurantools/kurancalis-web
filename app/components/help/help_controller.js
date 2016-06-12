@@ -106,6 +106,7 @@ angular.module('ionicApp')
         }
 
         $scope.initHelpParameters = function(){
+            console.log("help init");
             if (config_data.isMobile) {
                 $ionicModal.fromTemplateUrl('components/partials/help_modal.html', {
                     scope: $scope,
@@ -116,6 +117,7 @@ angular.module('ionicApp')
                 });
 
                 $scope.$on("displayTutorial",function(event, args) {
+                    console.log("on displayTutorial");
                     $scope.runHelpModal(args.id,false);
                 });
             }
