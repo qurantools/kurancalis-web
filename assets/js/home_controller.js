@@ -137,10 +137,11 @@ angular.module('ionicApp')
             else {
                 $scope.detailedSearchAuthorSelection.push(author_id);
             }
-            $scope.query_author_mask = 0;
+            $scope.query_author_mask = bigInt(0);
             for (var index in $scope.detailedSearchAuthorSelection) {
-                $scope.query_author_mask = $scope.query_author_mask | $scope.detailedSearchAuthorSelection[index];
+                $scope.query_author_mask = $scope.query_author_mask.or( $scope.detailedSearchAuthorSelection[index]);
             }
+            $scope.query_author_mask = $scope.query_author_mask.value;
         };
 
 
@@ -1320,7 +1321,9 @@ angular.module('ionicApp')
             $scope.initializeActionSheetButtons();
 
             $timeout(function() {
-                $scope.$broadcast("displayTutorial",{id:"chapter"})
+                console.log("broadcast displayTutorial");
+                $scope.$broadcast("displayTutorial",{id:"chapter"});
+
             },2000);
         };
 

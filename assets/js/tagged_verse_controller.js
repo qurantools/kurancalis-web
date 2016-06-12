@@ -13,6 +13,7 @@ angular.module('ionicApp')
         $scope.taggedVerseCirclesForMobileSearch = [];
         $scope.taggedVerseUsersForMobileSearch = [];
 
+        console.log("TaggedVerseCtrl init");
         //Get verses of the tag from server
         $scope.loadVerseTagContent = function (verseTagContentParams, verseId) {
             $scope.showProgress("loadVerseTagContent");

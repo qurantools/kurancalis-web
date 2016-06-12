@@ -272,10 +272,11 @@ angular.module('ionicApp')
                 $scope.localDetailedSearchAuthorSelection.push(author_id);
             }
             if (!config_data.isMobile) {
-                $scope.detailed_query_author_mask = 0;
+                $scope.detailed_query_author_mask = bigInt(0);
                 for (var index in $scope.localDetailedSearchAuthorSelection) {
-                    $scope.detailed_query_author_mask = $scope.detailed_query_author_mask | $scope.localDetailedSearchAuthorSelection[index];
+                    $scope.detailed_query_author_mask = $scope.detailed_query_author_mask.or($scope.localDetailedSearchAuthorSelection[index]);
                 }
+                $scope.detailed_query_author_mask = $scope.detailed_query_author_mask.value;
                 $scope.getVerseTranslations();
             }
         };
@@ -292,10 +293,11 @@ angular.module('ionicApp')
 
         $scope.updateAuthors = function () {
             if (config_data.isMobile) {
-                $scope.detailed_query_author_mask = 0;
+                $scope.detailed_query_author_mask = bigInt(0);
                 for (var index in $scope.localDetailedSearchAuthorSelection) {
-                    $scope.detailed_query_author_mask = $scope.detailed_query_author_mask | $scope.localDetailedSearchAuthorSelection[index];
+                    $scope.detailed_query_author_mask = $scope.detailed_query_author_mask.or( $scope.localDetailedSearchAuthorSelection[index]);
                 }
+                $scope.detailed_query_author_mask = $scope.detailed_query_author_mask.value;
                 $scope.getVerseTranslations();
                 $scope.closeModal('authors_list');
             }
@@ -433,9 +435,9 @@ angular.module('ionicApp')
                     if (index == 0) {
                         $scope.openModal('select_author');
                     } else if (index == 1) {
-                        $scope.openModal('add_to_list');
-                    } else if (index == 2) {
                         $scope.openModal('go_to_verse');
+                    } else if (index == 2) {
+                        $scope.openModal('add_to_list');
                     } else if (index == 3) {
                         $scope.openModal('bookmark');
                     } else if (index == 4){
