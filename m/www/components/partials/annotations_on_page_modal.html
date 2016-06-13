@@ -47,7 +47,7 @@
             <div ng-repeat="annotationTag in annotation.tags" class="tag label label-info s_a_tag">
                 {{annotationTag}}
             </div>
-            <div class="row" style="padding:5px 15px; display: block;">
+            <div class="row" style="padding:1px 1px; display: block;">
                 <div style="float: left"><span ng-bind-html="annotation.updated | time_in_string | to_trusted"></span></div>
                 <div>
                     <div ng-if="user.id!=annotation.userId" class="fit-content">
@@ -67,15 +67,24 @@
                             <i class="fa fa-comment"></i> {{annotation.commentCount}} Yorum
                         </span>
                     </div>
-                    <div ng-if="user.id==annotation.userId" style="float: right">
-                        <button type="button"
-                                class="button button-balanced button-small"
-                                ng-click="editAnnotation($index);circlesview();"><i
-                                class="fa fa-pencil-square-o"></i>
-                        </button>
-                        <button type="button"
-                                class="button button-assertive button-small" ng-click="deleteAnnotation($index)"><i
-                                class="fa fa-trash-o"></i></button>
+                    <div ng-if="user.id==annotation.userId" class="fit-content">
+                    <span ng-disabled="(annotation.voteRates.dislike + annotation.voteRates.like) == 0"
+                          ng-click="showVoteResults(annotation, 'annotations')">
+                            <i class="fa fa-pie-chart"></i> {{(annotation.voteRates.dislike + annotation.voteRates.like)}}
+                        </span>
+                        <span ng-click="navigateTo('/annotation/display/{{annotation.id}}/')" style="margin-right: 10px;" class="make_comment">
+                            <i class="fa fa-comment"></i> {{annotation.commentCount}} Yorum
+                        </span>
+                        <div style="float: right">
+                            <button type="button"
+                                    class="button button-balanced button-small"
+                                    ng-click="editAnnotation($index);circlesview();"><i
+                                    class="fa fa-pencil-square-o"></i>
+                            </button>
+                            <button type="button"
+                                    class="button button-assertive button-small" ng-click="deleteAnnotation($index)"><i
+                                    class="fa fa-trash-o"></i></button>
+                        </div>
                     </div>
                 </div>
             </div>

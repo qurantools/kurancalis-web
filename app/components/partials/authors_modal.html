@@ -8,7 +8,7 @@
 
             <div class="modal-body">
                 <ul class="selectable_list">
-                    <li ng-repeat="author in authors | filter:{color:'!-1'}"
+                    <li ng-repeat="author in authors"
                         ng-click="detailedSearchAuthorToggleSelection(author.id)"
                         ng-class="{ 'selected_list_item': detailedSearchAuthorSelection.indexOf(author.id) > -1}">
                         {{author.name}}

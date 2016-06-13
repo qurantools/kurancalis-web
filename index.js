@@ -1257,8 +1257,8 @@ app.factory('ChapterVerses', function ($resource) {
 
     //list authors
     $scope.list_authors = function () {
-        $scope.authorMap = new Object();
-        $scope.authors = new Object();
+        $scope.authorMap = [];
+        $scope.authors = [];
         dataProvider.listAuthors(function(data){
             $scope.authors = data;
             var arrayLength = data.length;
