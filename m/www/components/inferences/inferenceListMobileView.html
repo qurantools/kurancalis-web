@@ -3,10 +3,8 @@
         <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced">
             <ion-nav-buttons side="left">
                 <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
-                
                 <input type="hidden" ng-model="chapter_id"/>
                 <input type="hidden" ng-model="author_mask"/>
-
             </ion-nav-buttons>
             <h1 class="title"></h1>
             <ion-nav-buttons side="right">
@@ -15,20 +13,39 @@
                 </button>
                 <a data-tap-disabled="true" class="button button-icon icon ion-plus" href="#/inference/new/" ng-if="user!=null">
                 </a>
-                
             </ion-nav-buttons>
         </ion-nav-bar>
         <ion-nav-view name="appContent"></ion-nav-view>
         <ion-nav-view id="mobile_inferences_content" cache-view="true">
             <ion-content overflow-scroll="true" style="padding-top: 30px;">
-                <ion-list style="margin-bottom:45px;">
-                    <ion-item ng-repeat="inference in inferences">
-                        <div align="center" style="margin: 0 auto;"><a href="" ng-click="navigateTo('/inference/display/{{inference.id}}')" ><img image-check ng-src="{{inference.image}}" onerror='this.style.display = "none"' style="max-width: 200px; max-height: 150px; "/></a></div>
-                        <div style="text-align: left; height: 20px" ><a href="" ng-click="navigateTo('/inference/display/{{inference.id}}')" style="text-decoration: none;"><h4 style="margin-top:0;font-size: 18px">
-                            {{inference.title | limitTo:80}}</h4>
-                        </a></div>
-                        <div style="padding-left:10px;">
-                            <span ng-bind-html="inference.brief | to_trusted | limitTo:400" style="line-height: 1;white-space: pre-wrap; font-size: 10pt"></span> <a href="" ng-click="navigateTo('/inference/display/{{inference.id}}')" style="color: blue; font-size: 10pt">devamını oku...</a>
+                <div class="card" ng-repeat="inference in inferences">
+                    <div class="item item-divider row" style="padding: 0;">
+                        <div class="row">
+                            <a href="" ng-click="navigateTo('/profile/user/{{inference.owner_id}}')">
+                                <img style="max-width: 60px; max-height: 45px;border-radius: 50%;" ng-if="inference.user_photo != 'undefinedp'" ng-src="{{inference.user_photo}}">
+                            </a>
+                            <a href="" ng-click="navigateTo('/profile/user/{{inference.userId}}')" style="margin-left: 19px;margin-top: 10px;text-decoration: none;">
+                                <div>{{inference.userName | limitTo: 25}}</div>
+                            </a>
+                        </div>
+                        <div class="col" style="margin-top: 8px;">
+                            <span ng-bind-html="inference.updated | time_in_string | to_trusted"></span>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div align="center" style="margin: 0 auto;">
+                            <a href="" ng-click="navigateTo('/inference/display/{{inference.id}}')">
+                                <img image-check ng-src="{{inference.image}}" onerror='this.style.display = "none"' style="max-width: 200px; max-height: 150px;" />
+                            </a>
+                        </div>
+                        <div align="center" style="height: 20px">
+                            <a href="" ng-click="navigateTo('/inference/display/{{inference.id}}')" style="text-decoration: none;">
+                                <h4 style="margin-top:0;font-size: 18px;color: dodgerblue;white-space: pre-line;">{{inference.title | limitTo:80}}</h4>
+                            </a>
+                        </div>
+                        <div style="padding-left:10px;white-space: pre-line;margin-top: 25px;">
+                            <span ng-bind-html="inference.brief | to_trusted | limitTo:400" style="line-height: 1;white-space: pre-wrap; font-size: 10pt"></span>
+                            <a href="" ng-click="navigateTo('/inference/display/{{inference.id}}')" style="color: blue; font-size: 10pt">devamını oku...</a>
                         </div>
                         <div class="row">
                             <div class="col">
@@ -38,41 +55,33 @@
                             </div>
                             <div class="col">
                                 <div style="float: right;">
-
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col">
-                                <span ng-bind-html="inference.updated | time_in_string | to_trusted"></span>
-                            </div>
-                            <div class="col">
-                                <div style="float: right;">
-                                    <span ng-class="{'voted-like': (inference.vote != null && inference.vote.content == 1), 'unvoted' : !(inference.vote != null && inference.vote.content == 1)}"
-                                          ng-click="doVote(inference,'inferences', 1)">
-                                        <i class="fa fa-thumbs-up"></i> {{inference.voteRates.like}}
-                                    </span>
-                                    <span ng-class="{'voted-dislike': (inference.vote != null && inference.vote.content == 0), 'unvoted' : !(inference.vote != null && inference.vote.content == 0)}"
-                                          ng-click="doVote(inference,'inferences', 0)">
-                                        <i class="fa fa-thumbs-down"></i> {{inference.voteRates.dislike}}
-                                    </span>
-                                    <span ng-disabled="(inference.voteRates.dislike + inference.voteRates.like) == 0"
-                                          ng-click="showVoteResults(inference, 'inferences')">
-                                        <i class="fa fa-pie-chart"></i> {{(inference.voteRates.dislike + inference.voteRates.like)}}
-                                    </span>
-                                    <span ng-click="navigateTo('/inference/display/{{inference.id}}/')" style="margin-right: 10px;" class="make_comment">
-                                        <i class="fa fa-comment"></i> {{inference.commentCount}} Yorum
-                                    </span>
-                                    <div style="float:right;"><a href="" ng-click="navigateTo('/profile/user/{{inference.userId}}')" style="color: darkblue;text-decoration: none;">{{inference.userName | limitTo: 25}}</a></div>
-                                </div>
-                            </div>
-                        </div>
-                    </ion-item>
-                    <div style="text-align: center; padding-top:10px;" ng-if="allInferencesOpts.hasMore==true">
-                        <button ng-click="get_all_inferences()" class="btn btn-info btn-hg">Daha fazla</button>
                     </div>
-
-                </ion-list>
+                    <div class="item item-divider">
+                        <div class="fit-content">
+                            <span ng-class="{ 'voted-like': (inference.vote != null && inference.vote.content == 1), 'unvoted' : !(inference.vote != null && inference.vote.content == 1)}"
+                                  ng-click="doVote(inference, 'inferences', 1)">
+                                <i class="fa fa-thumbs-up"></i> {{inference.voteRates.like}}
+                            </span>
+                            <span ng-class="{'voted-dislike': (inference.vote != null && inference.vote.content == 0), 'unvoted' : !(inference.vote != null && inference.vote.content == 0)}"
+                                  ng-click="doVote(inference, 'inferences', 0)">
+                                <i class="fa fa-thumbs-down"></i> {{inference.voteRates.dislike}}
+                            </span>
+                            <span ng-disabled="(inference.voteRates.dislike + inference.voteRates.like) == 0"
+                                  ng-click="showVoteResults(inference, 'inferences')">
+                                <i class="fa fa-pie-chart"></i> {{(inference.voteRates.dislike + inference.voteRates.like)}} Oy
+                            </span>
+                            <span ng-click="navigateTo('/inference/display/{{inference.id}}/')" style="margin-right: 10px;" class="make_comment">
+                                <i class="fa fa-comment"></i> {{inference.commentCount}} Yorum
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div style="text-align: center; padding-top:10px;" ng-if="allInferencesOpts.hasMore==true">
+                    <button ng-click="get_all_inferences()" class="btn btn-info btn-hg">Daha fazla</button>
+                </div>
                 <div style="height: 40px"></div>
             </ion-content>
         </ion-nav-view>
