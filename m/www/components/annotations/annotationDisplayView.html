@@ -122,7 +122,7 @@
                         <div ng-repeat="child_comment in comment.comment.childs"
                              style="width: 100%;border-radius: 15px;padding-top: 10px !important;margin-top: 10px;"
                              class="row" ng-if="comment.showChilds">
-                            <div class="col-lg-1" style="width: 80px;">
+                            <div class="col-lg-1" style="width: 80px;padding-right: 4px">
                                 <a href="" ng-click="navigateTo('/profile/user/{{child_comment.owner.user_id}}/')">
                                     <img style="float:right;max-width: 40px; max-height: 40px;border-radius: 50%; " ng-src="{{child_comment.owner.photo}}"><br/>
                                 </a>
