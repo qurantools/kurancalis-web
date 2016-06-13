@@ -112,7 +112,7 @@
                                 </span>
                                 <span ng-disabled="(annotation.voteRates.dislike + annotation.voteRates.like) == 0"
                                         ng-click="showVoteResults(annotation, 'annotations')">
-                                    <i class="fa fa-pie-chart"></i> {{(annotation.voteRates.dislike + annotation.voteRates.like)}}
+                                    <i class="fa fa-pie-chart"></i> {{(annotation.voteRates.dislike + annotation.voteRates.like)}} Oy
                                 </span>
                                 <span ng-click="navigateTo('/annotation/display/{{annotation.id}}/')" style="margin-right: 10px;" class="make_comment">
                                     <i class="fa fa-comment"></i> {{annotation.commentCount}} Yorum

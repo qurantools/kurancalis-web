@@ -64,7 +64,7 @@
                                 </span>
                                 <span ng-disabled="(annotation.voteRates.dislike + annotation.voteRates.like) == 0"
                                       ng-click="showVoteResults(annotation, 'annotations')">
-                                    <i class="fa fa-pie-chart"></i> {{(annotation.voteRates.dislike + annotation.voteRates.like)}}
+                                    <i class="fa fa-pie-chart"></i> {{(annotation.voteRates.dislike + annotation.voteRates.like)}} Oy
                                 </span>
                                 <span class="make_comment"
                                       ng-click="displayCommentModal(null, null)">
@@ -79,10 +79,13 @@
                          style="width: 100%;border-radius: 15px;padding-top: 10px !important;background-color: #f5f5f5;"
                          class="list well">
                         <div class="row">
+                            <div style="width: 80px">
+
                             <a href="" ng-click="navigateTo('/profile/user/{{comment.owner.user_id}}/')" style="text-decoration: blink;">
                                 <img style="max-width: 80px; max-height: 60px;border-radius: 50%;" ng-src="{{comment.owner.photo}}"><br/>
-                                <span ng-bind-html="comment.comment.created | time_in_string | to_trusted" style="margin-left: 3px;margin-right: 3px;color: black"></span>
                             </a>
+                                <span ng-bind-html="comment.comment.created | time_in_string | to_trusted" style="margin-left: 3px;margin-right: 3px;color: black"></span>
+                            </div>
                             <span ng-click="openFooterMenu(annotation.comments, comment.comment, $index)">
                                 <a href="" ng-click="navigateTo('/profile/user/{{comment.owner.user_id}}/')">
                                     {{comment.owner.name}}
@@ -103,7 +106,7 @@
                             <span class="make_comment" ng-class="{'disabled' : (comment.voteRates.dislike + comment.voteRates.like) == 0}"
                                   style="margin-left: 3px;margin-right: 3px;"
                                   ng-click="showVoteResults(comment, 'annotations', true, comment.comment.annotationId)">
-                                <i class="fa fa-pie-chart"></i> {{(comment.voteRates.dislike + comment.voteRates.like)}}
+                                <i class="fa fa-pie-chart"></i> {{(comment.voteRates.dislike + comment.voteRates.like)}} Oy
                             </span>
                             <span class="make_comment"
                                     ng-click="displayCommentModal(comment.comment.id, $index)">
@@ -121,9 +124,9 @@
                              class="row" ng-if="comment.showChilds">
                             <div class="col-lg-1" style="width: 80px;">
                                 <a href="" ng-click="navigateTo('/profile/user/{{child_comment.owner.user_id}}/')">
-                                    <img style="max-width: 40px; max-height: 40px;border-radius: 50%; " ng-src="{{child_comment.owner.photo}}"><br/>
+                                    <img style="float:right;max-width: 40px; max-height: 40px;border-radius: 50%; " ng-src="{{child_comment.owner.photo}}"><br/>
                                 </a>
-                                <span ng-bind-html="child_comment.comment.created | time_in_string | to_trusted"></span>
+                                <span style="float: right" ng-bind-html="child_comment.comment.created | time_in_string | to_trusted"></span>
                             </div>
                             <div  class="col-lg-11" style="width: inherit">
                                 <span ng-click="openFooterMenu(comment.comment.childs, child_comment.comment, $index)">
@@ -144,7 +147,7 @@
                                         </span>
                                         <span class="make_comment" ng-class="{'disabled' : (child_comment.voteRates.dislike + child_comment.voteRates.like) == 0}"
                                               ng-click="showVoteResults(child_comment, 'annotations', true, child_comment.comment.annotationId)">
-                                            <i class="fa fa-pie-chart"></i> {{child_comment.voteRates.dislike + child_comment.voteRates.like}}
+                                            <i class="fa fa-pie-chart"></i> {{child_comment.voteRates.dislike + child_comment.voteRates.like}} Oy
                                         </span>
                                         <span class="make_comment"
                                               ng-click="displayCommentModal(comment.comment.id, $index)">

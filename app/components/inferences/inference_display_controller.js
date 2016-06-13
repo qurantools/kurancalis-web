@@ -503,6 +503,7 @@ angular.module('ionicApp')
         $scope.openModal = function (id) {
             if (id == 'comment_modal'){
                 $scope.comment_modal.show();
+                $scope.focusToCommentArea("comment_area_for_mobile");
             }
         };
 

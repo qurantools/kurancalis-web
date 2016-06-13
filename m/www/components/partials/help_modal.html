@@ -23,7 +23,7 @@
         <button class="footer-bar-item item-right button button-positive" ng-click="nextTutorial()" ng-if = "selectedIndex!=(menuList[selectedMenu].submenu.length-1)" style="font-size: 20px; !important;">
             İleri <i class="fa fa-chevron-right"></i>
         </button>
-        <button class="footer-bar-item item-right button button-positive" ng-click="closeModal()" ng-if = "selectedIndex==(menuList[selectedMenu].submenu.length-1)" style="font-size: 20px; !important;">
+        <button class="footer-bar-item item-right button button-positive" ng-click="closeModal()" ng-show="selectedIndex!=0" ng-if = "selectedIndex==(menuList[selectedMenu].submenu.length-1)" style="font-size: 20px; !important;">
             Kapat <i class="fa fa-chevron-right"></i>
         </button>
         </div>

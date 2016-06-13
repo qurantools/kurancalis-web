@@ -1796,7 +1796,7 @@ app.factory('ChapterVerses', function ($resource) {
             var element = $("#"+textarea);
             element.focus();
             element.val('');
-        },0);
+        },600);
     };
     
     $scope.displayTutorial = function (id){

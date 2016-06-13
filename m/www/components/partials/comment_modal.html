@@ -9,14 +9,15 @@
         <ion-nav-buttons side="right">
             <button class="button button-icon icon-left ion-checkmark"
                     ng-click="createComment(resource, resource_type, resource_id, 'comment_area_for_mobile', parent_id, parent_index);
-                    closeModal('comment_modal');">
+                    closeModal('comment_modal');">Tamam
             </button>
         </ion-nav-buttons>
     </ion-nav-bar>
     <ion-content style="padding: 10px;" id="comment_area" overflow-scroll="false">
         <div style="height: 60px"></div>
-        <label class="item item-input" style="height: 100%;">
-            <textarea id="comment_area_for_mobile" placeholder="Yorum Yaz" style="height:100%;font-size:16px;"></textarea>
+        <label class="item item-input">
+            <textarea id="comment_area_for_mobile" placeholder="Yorum Yaz" style="height:100px;font-size:16px;"></textarea>
         </label>
+
     </ion-content>
 </div>

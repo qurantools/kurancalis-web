@@ -47,7 +47,7 @@
             <div ng-repeat="annotationTag in annotation.tags" class="tag label label-info s_a_tag">
                 {{annotationTag}}
             </div>
-            <div class="row" style="padding:1px 1px; display: block;">
+            <div class="row" style="padding:7px 3px; display: block;">
                 <div style="float: left"><span ng-bind-html="annotation.updated | time_in_string | to_trusted"></span></div>
                 <div>
                     <div ng-if="user.id!=annotation.userId" class="fit-content">
@@ -61,7 +61,7 @@
                         </span>
                         <span ng-disabled="(annotation.voteRates.dislike + annotation.voteRates.like) == 0"
                               ng-click="showVoteResults(annotation, 'annotations')">
-                            <i class="fa fa-pie-chart"></i> {{(annotation.voteRates.dislike + annotation.voteRates.like)}}
+                            <i class="fa fa-pie-chart"></i> {{(annotation.voteRates.dislike + annotation.voteRates.like)}} Oy
                         </span>
                         <span ng-click="navigateTo('/annotation/display/{{annotation.id}}/')" style="margin-right: 10px;" class="make_comment">
                             <i class="fa fa-comment"></i> {{annotation.commentCount}} Yorum
@@ -70,7 +70,7 @@
                     <div ng-if="user.id==annotation.userId" class="fit-content">
                     <span ng-disabled="(annotation.voteRates.dislike + annotation.voteRates.like) == 0"
                           ng-click="showVoteResults(annotation, 'annotations')">
-                            <i class="fa fa-pie-chart"></i> {{(annotation.voteRates.dislike + annotation.voteRates.like)}}
+                            <i class="fa fa-pie-chart"></i> {{(annotation.voteRates.dislike + annotation.voteRates.like)}} Oy
                         </span>
                         <span ng-click="navigateTo('/annotation/display/{{annotation.id}}/')" style="margin-right: 10px;" class="make_comment">
                             <i class="fa fa-comment"></i> {{annotation.commentCount}} Yorum
