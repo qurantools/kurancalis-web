@@ -52,15 +52,15 @@
                 <div>
                     <div ng-if="user.id!=annotation.userId" class="fit-content">
                         <span ng-class="{'voted-like': (annotation.vote != null && annotation.vote.content == 1), 'unvoted' : !(annotation.vote != null && annotation.vote.content == 1)}"
-                              ng-click="doVote(annotation,'annotations', 1)">
+                              ng-click="doVote(annotation,'annotations', 1);$event.stopPropagation()">
                             <i class="fa fa-thumbs-up"></i> {{annotation.voteRates.like}}
                         </span>
                         <span ng-class="{'voted-dislike': (annotation.vote != null && annotation.vote.content == 0), 'unvoted' : !(annotation.vote != null && annotation.vote.content == 0)}"
-                              ng-click="doVote(annotation,'annotations', 0)">
+                              ng-click="doVote(annotation,'annotations', 0);$event.stopPropagation()">
                             <i class="fa fa-thumbs-down"></i> {{annotation.voteRates.dislike}}
                         </span>
                         <span ng-disabled="(annotation.voteRates.dislike + annotation.voteRates.like) == 0"
-                              ng-click="showVoteResults(annotation, 'annotations')">
+                              ng-click="showVoteResults(annotation, 'annotations');$event.stopPropagation()">
                             <i class="fa fa-pie-chart"></i> {{(annotation.voteRates.dislike + annotation.voteRates.like)}} Oy
                         </span>
                         <span ng-click="navigateTo('/annotation/display/{{annotation.id}}/')" style="margin-right: 10px;" class="make_comment">
@@ -69,7 +69,7 @@
                     </div>
                     <div ng-if="user.id==annotation.userId" class="fit-content">
                     <span ng-disabled="(annotation.voteRates.dislike + annotation.voteRates.like) == 0"
-                          ng-click="showVoteResults(annotation, 'annotations')">
+                          ng-click="showVoteResults(annotation, 'annotations');$event.stopPropagation()">
                             <i class="fa fa-pie-chart"></i> {{(annotation.voteRates.dislike + annotation.voteRates.like)}} Oy
                         </span>
                         <span ng-click="navigateTo('/annotation/display/{{annotation.id}}/')" style="margin-right: 10px;" class="make_comment">
@@ -88,7 +88,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </ion-content>
 </div>
