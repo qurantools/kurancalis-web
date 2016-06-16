@@ -6,13 +6,11 @@
                     style="float: left"> Geri
             </button>
         </ion-nav-buttons>
-
         <ion-nav-buttons side="right">
             <button class="button button-icon icon ion-android-more-vertical"
             ng-click="openModal('annotations_on_page_sort')"></button>
         </ion-nav-buttons>
     </ion-nav-bar>
-
     <ion-content overflow-scroll="true">
         <div style="height:65px"></div>
         <div style="padding-bottom:10px;" >
@@ -29,8 +27,7 @@
         </div>
         <div ng-repeat="annotation in annotations | filter:annotationFilter | filter: annotationTextSearch"
              class="card"
-             ng-click="scrollToElmnt('t_'+annotation.translationId);closeModal('annotations_on_page');">
-
+             ng-click="scrollToElmnt('v_'+annotation.verseId);closeModal('annotations_on_page');">
             <!-- s_a -->
             <div class="s_a_header">
                 {{annotation.verseId / 1000 | number:0}}:{{annotation.verseId % 1000}}
@@ -63,16 +60,16 @@
                               ng-click="showVoteResults(annotation, 'annotations');$event.stopPropagation()">
                             <i class="fa fa-pie-chart"></i> {{(annotation.voteRates.dislike + annotation.voteRates.like)}} Oy
                         </span>
-                        <span ng-click="navigateTo('/annotation/display/{{annotation.id}}/')" style="margin-right: 10px;" class="make_comment">
+                        <span ng-click="navigateTo('/annotation/display/{{annotation.id}}/');closeModal('annotations_on_page');" style="margin-right: 10px;" class="make_comment">
                             <i class="fa fa-comment"></i> {{annotation.commentCount}} Yorum
                         </span>
                     </div>
                     <div ng-if="user.id==annotation.userId" class="fit-content">
-                    <span ng-disabled="(annotation.voteRates.dislike + annotation.voteRates.like) == 0"
+                        <span ng-disabled="(annotation.voteRates.dislike + annotation.voteRates.like) == 0"
                           ng-click="showVoteResults(annotation, 'annotations');$event.stopPropagation()">
                             <i class="fa fa-pie-chart"></i> {{(annotation.voteRates.dislike + annotation.voteRates.like)}} Oy
                         </span>
-                        <span ng-click="navigateTo('/annotation/display/{{annotation.id}}/')" style="margin-right: 10px;" class="make_comment">
+                        <span ng-click="navigateTo('/annotation/display/{{annotation.id}}/');closeModal('annotations_on_page');" style="margin-right: 10px;" class="make_comment">
                             <i class="fa fa-comment"></i> {{annotation.commentCount}} Yorum
                         </span>
                         <div style="float: right">
