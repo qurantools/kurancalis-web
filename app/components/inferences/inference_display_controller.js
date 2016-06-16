@@ -157,10 +157,10 @@ angular.module('ionicApp')
                 }
             }, function(response) {
                 if (response.status == "400"){
-                    if (config_data.isMobile && $scope.access_token != ""){
+                    /*if (config_data.isMobile && $scope.access_token != ""){
                         $location.path('/');
                         return;
-                    }
+                    }*/
                     $scope.authorizedInferenceDisplay = 2;
                 }
             });
@@ -465,21 +465,14 @@ angular.module('ionicApp')
                 },
                 buttonClicked: function (index) {
                     if (index == 0) {
-                        $scope.item = $.extend( true, {}, comment );
-                        var promptPopup = $ionicPopup.prompt({
-                            template: '<input id="update_comment_area" type="text" ng-model="item.content">',
-                            title: 'Yorum Güncelleme',
-                            scope : $scope,
-                            inputType: 'text',
-                            inputPlaceholder: 'Yorum Yaz',
-                        });
-
-                        promptPopup.then(function(res) {
-                            if (isDefined(res) && $scope.item.content != comment.content){
-                                $scope.updateComment(source, 'inferences', $scope.inference_info.id,
-                                    comment.id, 'update_comment_area', comment_index);
-                            }
-                        });
+                        $scope.source = source;
+                        $scope.resource_type='inferences';
+                        $scope.resource_id=$scope.inference_info.id;
+                        $scope.comment_id=comment.id;
+                        $scope.comment_index=comment_index;
+                        $scope.isForUpdate=true;
+                        $scope.openModal('comment_modal');
+                        document.getElementById('comment_area_for_mobile').value = comment.content;
                     } else if (index == 1) {
                         var confirmPop = $ionicPopup.confirm({
                             title: 'Yorum Silme',
@@ -519,6 +512,8 @@ angular.module('ionicApp')
             $scope.resource_id = $scope.inference_info.id;
             $scope.parent_id = parentId;
             $scope.parent_index = parentIndex;
+            $scope.isForUpdate=false;
+            document.getElementById('comment_area_for_mobile') != null ? document.getElementById('comment_area_for_mobile').value = '' : console.log('');
             $scope.openModal('comment_modal');
         };
 

@@ -1795,7 +1795,7 @@ app.factory('ChapterVerses', function ($resource) {
         $timeout(function () {
             var element = $("#"+textarea);
             element.focus();
-            element.val('');
+            element.val(element.val()+'');
         },600);
     };
     
