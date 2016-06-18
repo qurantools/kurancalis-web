@@ -80,11 +80,10 @@
                          ng-init="outerIndex=$index"
                          class="list well">
                         <div class="row">
-                            <div style="width: 80px">
-
-                            <a href="" ng-click="navigateTo('/profile/user/{{comment.owner.user_id}}/')" style="text-decoration: blink;">
-                                <img style="max-width: 80px; max-height: 60px;border-radius: 50%;" ng-src="{{comment.owner.photo}}"><br/>
-                            </a>
+                            <div style="width: 60px;margin-right: 4px;">
+                                <a href="" ng-click="navigateTo('/profile/user/{{comment.owner.user_id}}/')" style="text-decoration: blink;width: 100%">
+                                    <img style="width: 60px;height: 60px;border-radius: 50%;" ng-src="{{comment.owner.photo}}">
+                                </a>
                                 <span ng-bind-html="comment.comment.created | time_in_string | to_trusted" style="margin-left: 3px;margin-right: 3px;color: black"></span>
                             </div>
                             <span ng-click="openFooterMenu(annotation.comments, comment.comment, outerIndex)"
@@ -125,9 +124,9 @@
                              style="width: 100%;border-radius: 15px;padding-top: 10px !important;margin-top: 10px;"
                              ng-init="innerIndex=$index"
                              class="row" ng-if="comment.showChilds">
-                            <div class="col-lg-1" style="width: 80px;padding-right: 4px">
-                                <a href="" ng-click="navigateTo('/profile/user/{{child_comment.owner.user_id}}/')">
-                                    <img style="float:right;max-width: 40px; max-height: 40px;border-radius: 50%; " ng-src="{{child_comment.owner.photo}}"><br/>
+                            <div class="col-lg-1" style="width: 60px;margin-right: 4px">
+                                <a href="" ng-click="navigateTo('/profile/user/{{child_comment.owner.user_id}}/')" style="width: 100%">
+                                    <img style="float:right;width: 30px; max-height: 30px;border-radius: 50%; " ng-src="{{child_comment.owner.photo}}"><br/>
                                 </a>
                                 <span style="float: right" ng-bind-html="child_comment.comment.created | time_in_string | to_trusted"></span>
                             </div>
