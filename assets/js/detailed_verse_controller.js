@@ -1,5 +1,5 @@
 angular.module('ionicApp')
-    .controller('DetailedVerseCtrl', function ($scope, $timeout, Restangular, $location, authorization, $ionicModal, $ionicActionSheet, dataProvider, $ionicScrollDelegate, $ionicPopup) {
+    .controller('DetailedVerseCtrl', function ($scope, $timeout, Restangular, $location, authorization, $ionicModal, $ionicActionSheet, dataProvider, $ionicScrollDelegate, $ionicPopup, localStorageService) {
 
         $scope.detailedChapters = [];
         $scope.detailedVerseCircles = [];
@@ -40,6 +40,23 @@ angular.module('ionicApp')
         var buttonGotoVerse = {text: 'Sure İçerisinde Gör' };
         var buttonBookmark = {text: 'Burada Kaldım' };
         var buttonVerseHistory = {text: 'Ayet Geçmişi' };
+
+
+        $scope.localStorageManager = new LocalStorageManager("detailed_verse",localStorageService,
+            [
+                {
+                    name:"detailed_query_author_mask",
+                    getter: null,
+                    setter: null,
+                    isExistInURL: false,
+                    isBase64: false,
+                    default: DEFAULT_TURKISH_AUTHOR_MASK
+
+                }
+            ]
+        );
+
+
 
         $scope.goToVerseDetail = function(){
             $scope.goToVerseParameters.chapter = $scope.detailedChapters[Math.floor($scope.verseId/1000) -1];
@@ -272,32 +289,36 @@ angular.module('ionicApp')
                 $scope.localDetailedSearchAuthorSelection.push(author_id);
             }
             if (!config_data.isMobile) {
-                $scope.detailed_query_author_mask = bigInt(0);
+                var mask = bigInt(0);
                 for (var index in $scope.localDetailedSearchAuthorSelection) {
-                    $scope.detailed_query_author_mask = $scope.detailed_query_author_mask.or($scope.localDetailedSearchAuthorSelection[index]);
+                    mask = mask.or($scope.localDetailedSearchAuthorSelection[index]);
                 }
-                $scope.detailed_query_author_mask = $scope.detailed_query_author_mask.value;
+                $scope.detailed_query_author_mask = mask.value;
+                $scope.localStorageManager.storeVariables($scope);
                 $scope.getVerseTranslations();
             }
         };
 
         $scope.setDetailedSearchAuthorSelection = function (authorMask) {
+            var mask = bigInt(authorMask);
             $scope.localDetailedSearchAuthorSelection = [];
             for (var index in $scope.authorMap) {
-                if (authorMask & $scope.authorMap[index].id) {
+                if (mask.and($scope.authorMap[index].id).value != 0) {
                     $scope.localDetailedSearchAuthorSelection.push($scope.authorMap[index].id);
                 }
             }
-            $scope.detailed_query_author_mask = authorMask;
+            $scope.detailed_query_author_mask = mask.value;
+            $scope.localStorageManager.storeVariables($scope);
         };
 
         $scope.updateAuthors = function () {
             if (config_data.isMobile) {
-                $scope.detailed_query_author_mask = bigInt(0);
+                var mask = bigInt(0);
                 for (var index in $scope.localDetailedSearchAuthorSelection) {
-                    $scope.detailed_query_author_mask = $scope.detailed_query_author_mask.or( $scope.localDetailedSearchAuthorSelection[index]);
+                    mask = mask.or( $scope.localDetailedSearchAuthorSelection[index]);
                 }
-                $scope.detailed_query_author_mask = $scope.detailed_query_author_mask.value;
+                $scope.detailed_query_author_mask = mask.value;
+                $scope.localStorageManager.storeVariables($scope);
                 $scope.getVerseTranslations();
                 $scope.closeModal('authors_list');
             }
@@ -520,6 +541,7 @@ angular.module('ionicApp')
                     $scope.modal_verse_selection = modal
                 });
             };
+
             $scope.$on('open_verse_detail', function(event, args) {
                 $scope.verseId = parseInt(args.chapterVerse);
                 $scope.detailedVerseCircles = args.circles;
@@ -527,6 +549,7 @@ angular.module('ionicApp')
                 if ($scope.detailedChapters.length == 0){
                     $scope.detailedChapters = $scope.chapters;
                 }
+
                 if (!isDefined($scope.detailedVerseCircles) || $scope.detailedVerseCircles.length == 0)
                     $scope.detailedVerseCircles = $scope.extendedCirclesForSearch;
                 if (!isDefined($scope.detailedVerseUsers) || $scope.detailedVerseUsers.length == 0)
@@ -548,14 +571,12 @@ angular.module('ionicApp')
                 }
                 $scope.query_users = $scope.taggedVerseUsersForMobileSearch;
 
-                if ($scope.localDetailedSearchAuthorSelection.length == 0){
-                    $scope.setDetailedSearchAuthorSelection(MAX_AUTHOR_MASK);
-                }
-                if ($scope.detailedVerseTagContentAuthor == MAX_AUTHOR_MASK){
-                    if (isDefined(args.author)){
-                        $scope.detailedVerseTagContentAuthor = args.author;
-                    }
-                }
+
+                //retrieve author mask from local or default
+                $scope.localStorageManager.initializeScopeVariables($scope,{});
+
+                $scope.setDetailedSearchAuthorSelection($scope.detailed_query_author_mask);
+
                 $scope.goToVerseDetail();
                 if (config_data.isMobile) {
                     $scope.detailed_verse_modal.show();

@@ -26,6 +26,30 @@ angular.module('ionicApp')
 
         $scope.annotationSearchAuthorSelection = $scope.selection;
 
+        $scope.localStorageManager = new LocalStorageManager("annotations",localStorageService,
+            [
+                {
+                    name:"allAnnotationsOrderBy",
+                    getter: null,
+                    setter: null,
+                    isExistInURL: true,
+                    isBase64: false,
+                    default: 250
+
+                },
+                {
+                    name:"annotationSearchAuthorSelection",
+                    getter: function(){ return $scope.getAnnotationSearchAuthorMask(); },
+                    setter: function(data){ return $scope.setAnnotationSearchAuthorSelection(data); },
+                    isExistInURL: true,
+                    isBase64: false,
+                    default: 16
+
+                }
+
+            ]
+        );
+
 
         $scope.restoreAnnotationsViewParameters = function (localParameterData) {
             $scope.allAnnotationsOpts.own_annotations = localParameterData.ownAnnotations;
@@ -58,6 +82,10 @@ angular.module('ionicApp')
             localParameterData.verses = $scope.ayetler;
 
             localStorageService.set('annotations_view_parameters', localParameterData);
+
+
+            $scope.localStorageManager.storeVariables($scope);
+
         };
 
 
