@@ -21,7 +21,7 @@ var config_data = {
     'isIOS':isIOS()
 }
 
-var MAX_AUTHOR_MASK = "2147483647"; //32 authors
+var MAX_AUTHOR_MASK = "1152921504606847000"; //60 authors
 var DEFAULT_TURKISH_AUTHOR_MASK = "523794";
 
 function isMobile() {
