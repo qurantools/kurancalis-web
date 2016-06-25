@@ -410,7 +410,7 @@ angular.module('ionicApp')
             var orderBy = $filter('orderBy');
             $scope.annotations = orderBy($scope.annotations, predicate);
             //filtered annotations index bug fix
-            $scope.filteredAnnotations = $scope.annotations;
+            //$scope.filteredAnnotations = $scope.annotations;
         };
 
         $scope.scrollToElmnt = function (elementId) {
