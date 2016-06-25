@@ -1,10 +1,24 @@
 angular.module('ionicApp')
-    .controller('VerseHistoryCtrl', function ($scope, Restangular, $ionicModal) {
+    .controller('VerseHistoryCtrl', function ($scope, Restangular, $ionicModal,localStorageService) {
 
         $scope.history = [];
-        $scope.selectedAuthor = "8192";
+        $scope.authorOfHistory = null;
         $scope.isLoading = false;
         $scope.hasMoreData = false;
+
+        $scope.localStorageManager = new LocalStorageManager("verse_history",localStorageService,
+            [
+                {
+                    name:"authorOfHistory",
+                    getter: null,
+                    setter: null,
+                    isExistInURL: false,
+                    isBase64: false,
+                    default: DIYANET_AUTHOR_ID
+
+                }
+            ]
+        );
 
         $scope.fetchVerseHistory = function(author, start){
             if ($scope.isLoading)
@@ -31,13 +45,13 @@ angular.module('ionicApp')
             if ($scope.history.length > 0){
                 lastItemDate = $scope.history[$scope.history.length -1].visitDate / 1000;
             }
-            $scope.fetchVerseHistory($scope.selectedAuthor, lastItemDate);
+            $scope.fetchVerseHistory($scope.authorOfHistory, lastItemDate);
         };
 
         $scope.verseHistoryAuthorUpdate = function(author){
             $scope.history = [];
-            $scope.selectedAuthor = author;
-            $scope.fetchVerseHistory($scope.selectedAuthor, 0);
+            $scope.fetchVerseHistory($scope.authorOfHistory, 0);
+            $scope.localStorageManager.storeVariables($scope);
         };
 
         $scope.addVerseToHistory = function(verseId){
@@ -74,13 +88,8 @@ angular.module('ionicApp')
                 });
             }
             $scope.$on('open_verse_history', function(event, args) {
-                var author = $scope.selectedAuthor;
-                if (isDefined(args.author)){
-                    author = args.author;
-                }
-                $scope.authorOfHistory = author;
                 $scope.history = [];
-                $scope.fetchVerseHistory(author, 0);
+                $scope.fetchVerseHistory($scope.authorOfHistory, 0);
 
                 if (config_data.isMobile){
                     $scope.openModal('verse_history');
@@ -90,6 +99,8 @@ angular.module('ionicApp')
             $scope.$on('add_verse_to_history', function(event, args) {
                 $scope.addVerseToHistory(args.verseId);
             });
+
+            $scope.localStorageManager.initializeScopeVariables($scope,{});
         };
 
         $scope.initializeVerseHistoryController();

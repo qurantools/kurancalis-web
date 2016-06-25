@@ -1,11 +1,11 @@
 /**
  * Created by mehmet.gungoren on 04.04.2016.
  */
-angular.module('ionicApp').controller('VerseListController', function ($scope, $timeout, Restangular, dataProvider, $routeParams, $ionicModal, $ionicPopup) {
+angular.module('ionicApp').controller('VerseListController', function ($scope, $timeout, Restangular, dataProvider, $routeParams, $ionicModal, $ionicPopup, localStorageService) {
 
     console.log("verse list ctrl");
     $scope.selectedVerseList = {};
-    $scope.verseListAuthor = "8192"; //Diyanet
+    $scope.verseListAuthor = null;
     $scope.localVerseListSelection = [];
     $scope.selectedVerseListsForVerseToAdd = [];
     $scope.verseForAddToLists = {};
@@ -27,6 +27,21 @@ angular.module('ionicApp').controller('VerseListController', function ($scope, $
     $scope.bulkInsertTagToVerseListFlag = false;
     $scope.tagsForBulkInsert = "";
     $scope.errorBulkInsert = false;
+
+    $scope.localStorageManager = new LocalStorageManager("verse_lists",localStorageService,
+        [
+            {
+                name:"verseListAuthor",
+                getter: null,
+                setter: null,
+                isExistInURL: false,
+                isBase64: false,
+                default: DIYANET_AUTHOR_ID
+
+            }
+        ]
+    );
+
 
     $scope.openNewVerseListModal = function(){
         $scope.newVerseListModal = true;
@@ -114,6 +129,7 @@ angular.module('ionicApp').controller('VerseListController', function ($scope, $
     $scope.verseListsAuthorChanged = function (value){
         $scope.verseListAuthor = value;
         $scope.getVerseListsVerse();
+        $scope.localStorageManager.storeVariables($scope);
     };
 
     $scope.editVerseList = function(verselist){
@@ -305,6 +321,7 @@ angular.module('ionicApp').controller('VerseListController', function ($scope, $
             angular.copy($scope.verselists, $scope.filteredVerselists);
         },200);
         $scope.localVerseListSelection = [];
+        $scope.localStorageManager.initializeScopeVariables($scope,{});
     };
 
     $scope.initVerseListController();

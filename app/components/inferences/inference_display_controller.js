@@ -14,7 +14,7 @@ angular.module('ionicApp')
         //All Display Variables
         $scope.edit_user = "";
         $scope.title = "";
-        $scope.info_author = "";
+        $scope.author_info = {};
         $scope.photo = "";
         $scope.content = "";
         $scope.contentOriginal = "";
@@ -105,7 +105,9 @@ angular.module('ionicApp')
                 $scope.setPageTitle(data.title);
                 //$rootScope.pageTitle=data.title;
 
-                $scope.info_author = data.userName;
+                $scope.author_info.name= data.userName;
+                $scope.author_info.id = data.userId;
+                $scope.author_info.photo = data.user_photo;
                 $scope.photo = data.image;
                 $scope.contentOriginal = data.content;
 
