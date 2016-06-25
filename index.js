@@ -185,7 +185,6 @@ var app = angular.module('ionicApp', requiredModules)
                 $rootScope.$on('$cordovaNetwork:offline', function(event, networkState){
                     $rootScope.$broadcast('offlineNetworkConnection', networkState);
                 });
-
             }
 
             if (window.StatusBar) {
@@ -194,21 +193,6 @@ var app = angular.module('ionicApp', requiredModules)
             }
             $rootScope.sqliteDbInit = false;
             dataProvider.initDB($rootScope);
-
-            if (config_data.isNative && typeof window.localStorage.getItem("external_load") !== 'undefined' && window.localStorage.getItem("external_load") != null){
-                $rootScope.redirectUrl = window.localStorage.getItem("external_load");
-                console.log(" 2 : redirected url : "+ $rootScope.redirectUrl + ", date : " + new Date().getTime());
-                window.localStorage.removeItem("external_load");
-            };
-
-            /*if (config_data.isMobile && !config_data.isNative){
-                if (document.getElementById('l').style.display == 'none'){
-                    $rootScope.redirect_app_button_name = "AÇ";
-                }else{
-                    $rootScope.redirect_app_button_name = "AÇ";
-                }
-            }*/
-
         });
 
         $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
@@ -809,12 +793,6 @@ app.factory('ChapterVerses', function ($resource) {
     $scope.cevreadlar = [];
 
     $scope.currentPageUrl = "";
-    $scope.app_id = "app-id=1032659897";
-    $scope.apple_itunes_content = "app-id=1032659897";
-    //$scope.redirect_app_button_name = "İndir";
-    $scope.appText = "Android";
-    $scope.appStoreURL = "";
-    $scope.showBanner = false;
 
     $scope.checkAPIVersion = function(){
         var versionRestangular = Restangular.all("apiversioncompatibility");
@@ -1464,7 +1442,6 @@ app.factory('ChapterVerses', function ($resource) {
 
         $scope.$on('$routeChangeStart', function(next, current) {
             $scope.currentPage = $scope.getCurrentPage();
-            $scope.apple_itunes_content = $scope.app_id + ",app-argument=qurantools:/"+ $location.$$url;
         });
 
         $scope.$on('onlineNetworkConnection', function() {
@@ -1541,18 +1518,6 @@ app.factory('ChapterVerses', function ($resource) {
             $scope.showTutorial = 1;
         }
 
-        if (config_data.isMobile && !config_data.isNative){
-            $scope.showBanner = false;
-            if (config_data.isAndroid) {
-                $scope.appText = "Android";
-                $scope.appStoreURL = "https://play.google.com/store/apps/details?id=org.quran.qurantools";
-            } else if (config_data.isIOS) {
-                $scope.appText = "IOS";
-                $scope.appStoreURL = "https://itunes.apple.com/tr/app/kuran-cal-s/id1032659897?mt=8";
-            }
-
-        }
-
         //list the authors on page load
         $scope.list_authors(); //prepare map
 
@@ -1603,12 +1568,6 @@ app.factory('ChapterVerses', function ($resource) {
             console.log("go to login path");
             //deferred for later.
             //$location.path('/login/');
-        }
-
-        if (config_data.isNative && typeof $scope.redirectUrl !== 'undefined'){
-            console.log(" 3 : received url : "+ $scope.redirectUrl + ", date : " + new Date().getTime());
-            window.location.href = $scope.redirectUrl;
-            $scope.redirectUrl = null;
         }
     };//end of init controller
 
@@ -1668,19 +1627,6 @@ app.factory('ChapterVerses', function ($resource) {
         copyFrom.select();
         document.execCommand('copy');
         body.removeChild(copyFrom);
-    };
-
-    $scope.forward2NativeApp = function(){
-        localStorageService.set("appInstalled", "true");
-        setTimeout(function () {
-            document.location.href = $scope.appStoreURL;
-            localStorageService.remove("appInstalled");
-        }, 500);
-        document.location.href = "qurantools:/"+ $location.$$url;
-    };
-
-    $scope.hideBanner = function(){
-        $scope.showBanner = false;
     };
 
     $scope.doVote = function(votable, resource, voteType) {
@@ -1805,6 +1751,10 @@ app.factory('ChapterVerses', function ($resource) {
         },2000);  
     };
 
+    $scope.isShownBanner = function () {
+        return $("#theView").hasClass("showBanner");
+    };
+
     $scope.initRoute();
 
     //initialization
@@ -1821,7 +1771,7 @@ var handleOpenURL = function(url){
     var newUrl = url.substring(url.indexOf("//") + 2);
     window.localStorage.setItem("external_load", newUrl);
     console.log(" 1 : received url : "+ newUrl + ", date : " + new Date().getTime());
-}
+};
 
 function sidebarInit() {
     $('.cd-panel').on('click', function (event) {

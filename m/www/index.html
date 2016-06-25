@@ -9,7 +9,14 @@
     <meta property="al:android:url" content="qurantools://http://kurancalis.com">
     <meta property="al:android:package" content="org.quran.qurantools">
     <meta property="al:android:app_name" content="Kuran Çalış">
-    <meta name="apple-itunes-app" content="{{apple_itunes_content}}">
+
+    <!-- smart app banner start-->
+    <meta name="ios-itunes-app" content="app-id=1032659897">
+    <meta name="google-play-app" content="app-id=org.quran.qurantools">
+    <link rel="stylesheet" href="css/smart-app-banner.css" type="text/css" media="screen">
+    <link rel="apple-touch-icon" href="../../assets/img/kurancalis_logo.png">
+    <link rel="android-touch-icon" href="../../assets/img/kurancalis_logo.png">
+    <!-- smart app banner end-->
 
     <meta name="misapplication-tap-highlight" content="no"/>
     <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -17,8 +24,6 @@
     <meta name="apple-touch-fullscreen" content="yes" />
 
 
-
-    <meta name="google-play-app" content="app-id=org.quran.qurantools">
     <title></title>
     <link rel="stylesheet" href="../../assets/css/font-awesome.min.css">
     <link rel="stylesheet" href="../../assets/css/annotator.min.css">
@@ -132,7 +137,6 @@
     <script src="../../assets/js/localDataProvider.js"></script>
 
     <!-- apple web app -->
-    <link rel="apple-touch-icon" href="/assets/img/kurancalis_logo.png">
     <link rel="apple-touch-startup-image" href="/assets/img/kurancalis_logo.png">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="none">
@@ -151,13 +155,6 @@
 <body>
 
 <div id="fb-root"></div>
-<!--img id="l" src="qurantools://" style="visibility: hidden;display: block" onerror="this.style.display='none'"/>
-<div class="smart-app-banner" ng-class="{'visible': showBanner}">
-    <a ng-click="hideBanner();" class="icon close-button"></a>
-    <h3><span ng-show="appText"><i ng-bind="appText + ' Uygulaması'"></i> Kuran Çalış</span></h3>
-    <a class="btn btn-form app-button" ng-click="forward2NativeApp()">{{redirect_app_button_name}}</a>
-</div>
-div id="theView" ng-class="{'showBanner': showBanner}" ng-view-->
 <div id="theView" ng-view>
 
 </div>
@@ -170,5 +167,25 @@ div id="theView" ng-class="{'showBanner': showBanner}" ng-view-->
 <div ng-controller="DetailedVerseCtrl"></div>
 <div ng-controller="VerseHistoryCtrl"></div>
 <div ng-controller="VoteCtrl"></div>
+
+<script src="js/smart-app-banner.js"></script>
+<script type="text/javascript">
+    new SmartBanner({
+        daysHidden: 15,
+        daysReminder: 90,
+        appStoreLanguage: 'tr',
+        title: 'Kuran Çalış',
+        author: 'İlerian Ltd.',
+        button: 'Aç',
+        store: {
+            ios: 'On the App Store',
+            android: 'In Google Play',
+        },
+        price: {
+            ios: 'FREE',
+            android: 'FREE',
+        }
+    });
+</script>
 </body>
 </html>
