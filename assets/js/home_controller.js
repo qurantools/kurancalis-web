@@ -1292,6 +1292,12 @@ angular.module('ionicApp')
 
             $scope.$on('userInfoReady', function handler() {
                 $scope.initializeActionSheetButtons();
+
+                if (localStorageService.getItem("external_load") !== 'undefined' && localStorageService.getItem("external_load") != null){
+                    $scope.navigateTo(localStorageService.getItem("external_load"));
+                    console.log(" 2 : redirected url : "+ localStorageService.getItem("external_load") + ", date : " + new Date().getTime());
+                    localStorageService.removeItem("external_load");
+                };
             });
 
             $scope.$on('logout', function handler() {
@@ -1309,10 +1315,10 @@ angular.module('ionicApp')
                         $scope.scrollDelegateTop(modal.id);
                     });
                     if (!config_data.isNative){
-                        if ($scope.showBanner){
+                        if ($scope.isShownBanner()){
                             $('.modal-backdrop').addClass('showBanner');
                         }else{
-                            $('.modal-backdrop').addClass('hideBanner');
+                            $('.modal-backdrop').removeClass('showBanner');
                         }
                     }
                 }
@@ -1386,7 +1392,6 @@ angular.module('ionicApp')
                     }
                 });
             },350);
-
         };
 
         $scope.closeBookmarkModal =function () {

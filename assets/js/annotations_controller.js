@@ -668,10 +668,10 @@ angular.module('ionicApp')
                         $scope.scrollDelegateTop(modal.id);
                     });
                     if (!config_data.isNative){
-                        if ($scope.showBanner){
+                        if ($scope.isShownBanner){
                             $('.modal-backdrop').addClass('showBanner');
                         }else{
-                            $('.modal-backdrop').addClass('hideBanner');
+                            $('.modal-backdrop').removeClass('showBanner');
                         }
                     }
                 }
