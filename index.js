@@ -1568,14 +1568,6 @@ app.factory('ChapterVerses', function ($resource) {
                     $ionicScrollDelegate.$getByHandle(modal.id).scrollTop();
                 });
             }
-
-            if (!config_data.isNative){
-                if ($scope.isShownBanner()){
-                    $('.modal-backdrop').addClass('showBanner');
-                }else{
-                    $('.modal-backdrop').removeClass('showBanner');
-                }
-            }
         });
 
         if (!$scope.checkUserLoginStatus() && !$scope.isAllowUrlWithoutLogin()){
@@ -1763,10 +1755,6 @@ app.factory('ChapterVerses', function ($resource) {
         $timeout(function(){
             $scope.$broadcast("displayTutorial",{id:id})
         },2000);  
-    };
-
-    $scope.isShownBanner = function () {
-        return $("#theView").hasClass("showBanner");
     };
 
     $scope.initRoute();

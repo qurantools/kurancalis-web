@@ -72,7 +72,7 @@
                 this.options.force ? this.type = this.options.force : "Windows Phone" === a.os.name || "Windows Mobile" === a.os.name ? this.type = "windows" : "iOS" === a.os.name /*&& 6 > parseInt(a.os.version)*/ ? this.type = "ios" : "Android" === a.os.name &&
                 (this.type = "android");
                 !this.type || navigator.standalone || e.get("smartbanner-closed") || e.get("smartbanner-installed") ||
-                (d(this, m[this.type]), this.parseAppId() && (this.create(), this.show())) || !(document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1)
+                (d(this, m[this.type]), this.parseAppId() && (this.create(), this.show()))
             };
             c.prototype = {
                 constructor: c, create: function () {
@@ -95,10 +95,11 @@
                     b(".smartbanner-close", c).addEventListener("click", this.close.bind(this), !1)
                 }, hide: function () {
                     g.classList.remove("smartbanner-show");
-                    document.getElementById("theView").classList.remove("showBanner");
                 }, show: function () {
+                    if (document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1){
+                        return;
+                    }
                     g.classList.add("smartbanner-show");
-                    document.getElementById("theView").classList.add("showBanner");
                 }, close: function () {
                     this.hide();
                     e.set("smartbanner-closed", "true", {

@@ -47,7 +47,7 @@
     text-align: justify;
 }
 
-.showBanner .view, .showBanner .modal-wrapper .modal.active{
+.smartbanner-show .view, .smartbanner-show .modal-wrapper .modal.active{
     top: 80px
 }
 

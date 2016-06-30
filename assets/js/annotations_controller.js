@@ -667,13 +667,6 @@ angular.module('ionicApp')
                     $timeout(function () {
                         $scope.scrollDelegateTop(modal.id);
                     });
-                    if (!config_data.isNative){
-                        if ($scope.isShownBanner){
-                            $('.modal-backdrop').addClass('showBanner');
-                        }else{
-                            $('.modal-backdrop').removeClass('showBanner');
-                        }
-                    }
                 }
             });
 
