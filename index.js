@@ -794,6 +794,7 @@ app.factory('ChapterVerses', function ($resource) {
 
     $scope.currentPageUrl = "";
 
+
     $scope.checkAPIVersion = function(){
         var versionRestangular = Restangular.all("apiversioncompatibility");
         $scope.versionParams = [];
@@ -1437,6 +1438,11 @@ app.factory('ChapterVerses', function ($resource) {
         $scope.$broadcast("add_verse_to_history",{verseId:verseId});
     };
 
+    $scope.launchFromURL = function(url){
+        $scope.navigateTo(url);
+        $scope.scopeApply();
+    };
+
     $scope.initializeController = function () {
         $scope.checkAPIVersion();
 
@@ -1561,6 +1567,14 @@ app.factory('ChapterVerses', function ($resource) {
                 $timeout(function () {
                     $ionicScrollDelegate.$getByHandle(modal.id).scrollTop();
                 });
+            }
+
+            if (!config_data.isNative){
+                if ($scope.isShownBanner()){
+                    $('.modal-backdrop').addClass('showBanner');
+                }else{
+                    $('.modal-backdrop').removeClass('showBanner');
+                }
             }
         });
 
@@ -1768,9 +1782,12 @@ app.factory('ChapterVerses', function ($resource) {
 });
 
 var handleOpenURL = function(url){
-    var newUrl = url.substring(url.indexOf("//") + 2);
-    window.localStorage.setItem("external_load", newUrl);
-    console.log(" 1 : received url : "+ newUrl + ", date : " + new Date().getTime());
+    var newUrl = url.replace("qurantools://","");
+    var html = document.getElementsByTagName("html")[0];
+    var scope = angular.element(html).scope();
+    setTimeout(function () {
+        scope.launchFromURL(url);
+    }, 0);
 };
 
 function sidebarInit() {

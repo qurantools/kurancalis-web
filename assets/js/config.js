@@ -23,6 +23,7 @@ var config_data = {
 
 var MAX_AUTHOR_MASK = "1152921504606847000"; //60 authors
 var DEFAULT_TURKISH_AUTHOR_MASK = "523794";
+var DIYANET_AUTHOR_ID = "8192";
 
 function isMobile() {
     //test for mobile

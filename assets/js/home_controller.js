@@ -1292,12 +1292,7 @@ angular.module('ionicApp')
 
             $scope.$on('userInfoReady', function handler() {
                 $scope.initializeActionSheetButtons();
-
-                if (localStorageService.get("external_load") !== 'undefined' && localStorageService.get("external_load") != null){
-                    $scope.navigateTo(localStorageService.get("external_load"));
-                    console.log(" 2 : redirected url : "+ localStorageService.get("external_load") + ", date : " + new Date().getTime());
-                    localStorageService.remove("external_load");
-                };
+                
             });
 
             $scope.$on('logout', function handler() {

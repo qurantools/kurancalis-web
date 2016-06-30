@@ -185,7 +185,7 @@ angular.module('ionicApp')
                 $scope.taggedVerseCirclesForMobileSearch = $scope.extendedCirclesForSearch;
                 for (var i =0; i< $scope.taggedVerseCirclesForMobileSearch.length; i++){
                     $scope.taggedVerseCirclesForMobileSearch[i].selected = false;
-                    for (var j = 0; j < $scope.taggedVerseCircles.length; j++){
+                    for (var j = 0; $scope.taggedVerseCircles != null && j < $scope.taggedVerseCircles.length; j++){
                         if ($scope.taggedVerseCirclesForMobileSearch[i].id == $scope.taggedVerseCircles[j].id){
                             $scope.taggedVerseCirclesForMobileSearch[i].selected = true;
                             break;

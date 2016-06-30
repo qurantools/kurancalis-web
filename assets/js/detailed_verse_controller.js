@@ -1,5 +1,5 @@
 angular.module('ionicApp')
-    .controller('DetailedVerseCtrl', function ($scope, $timeout, Restangular, $location, authorization, $ionicModal, $ionicActionSheet, dataProvider, $ionicScrollDelegate, $ionicPopup, localStorageService) {
+    .controller('DetailedVerseCtrl', function ($scope, $timeout, Restangular, $location, authorization, $ionicModal, $ionicActionSheet, dataProvider, $ionicScrollDelegate, $ionicPopup, localStorageService, navigationManager) {
 
         $scope.detailedChapters = [];
         $scope.detailedVerseCircles = [];
@@ -410,6 +410,7 @@ angular.module('ionicApp')
         $scope.closeModal = function (item){
             if (item == 'detailed_verse_modal'){
                 $scope.detailed_verse_modal.hide();
+                navigationManager.closeMe();
             }else if (item == 'tagged_verse_modal'){
                 $scope.tagged_verse_modal.hide();
             }else if (item == 'tagged_verse_detailed_search'){
@@ -574,7 +575,14 @@ angular.module('ionicApp')
 
                 //retrieve author mask from local or default
                 $scope.localStorageManager.initializeScopeVariables($scope,{});
-
+                navigationManager.storeModal({
+                    broadcastFunction : "open_verse_detail",
+                    data : {
+                        chapterVerse: $scope.verseId,
+                        circles:$scope.detailedVerseCircles,
+                        users:$scope.detailedVerseUsers
+                    }
+                });
                 $scope.setDetailedSearchAuthorSelection($scope.detailed_query_author_mask);
 
                 $scope.goToVerseDetail();

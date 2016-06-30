@@ -71,7 +71,8 @@
                 }, b || {});
                 this.options.force ? this.type = this.options.force : "Windows Phone" === a.os.name || "Windows Mobile" === a.os.name ? this.type = "windows" : "iOS" === a.os.name /*&& 6 > parseInt(a.os.version)*/ ? this.type = "ios" : "Android" === a.os.name &&
                 (this.type = "android");
-                !this.type || navigator.standalone || e.get("smartbanner-closed") || e.get("smartbanner-installed") || (d(this, m[this.type]), this.parseAppId() && (this.create(), this.show()))
+                !this.type || navigator.standalone || e.get("smartbanner-closed") || e.get("smartbanner-installed") ||
+                (d(this, m[this.type]), this.parseAppId() && (this.create(), this.show())) || !(document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1)
             };
             c.prototype = {
                 constructor: c, create: function () {
@@ -85,7 +86,7 @@
                     }
                     var c = a.createElement("div");
                     c.className = "smartbanner smartbanner-" + this.type;
-                    c.innerHTML = '<div class="smartbanner-container"><a href="javascript:void(0);" class="smartbanner-close">&times;</a><span class="smartbanner-icon" style="background-image: url(' + r + ')"></span><div class="smartbanner-info"><div class="smartbanner-title">' + this.options.title + "</div><div>" + this.options.author + "</div><!--span>" + e + '</span--></div><a href="javascript:void(0);" class="smartbanner-button"><span class="smartbanner-button-text">' + this.options.button + "</span></a></div>";
+                    c.innerHTML = '<div class="smartbanner-container"><a href="javascript:void(0);" class="smartbanner-close">&times;</a><span class="smartbanner-icon" style="background-image: url(' + r + ')"></span><div class="smartbanner-info"><div class="smartbanner-title">' + this.options.title + "</div><div class='wordwrap'>" + this.options.author + "</div><!--span>" + e + '</span--></div><a href="javascript:void(0);" class="smartbanner-button"><span class="smartbanner-button-text">' + this.options.button + "</span></a></div>";
                     a.body ? a.body.appendChild(c) : a &&
                     a.addEventListener("DOMContentLoaded", function () {
                         a.body.appendChild(c)
@@ -115,9 +116,10 @@
                     var now = new Date().valueOf();
                     setTimeout(function () {
                         if (new Date().valueOf() - now > 100) return;
-                        window.location.href = d;
-                    }, 25);
-                    window.location.href = url;
+                        window.open(d, '_self');
+                    }, 50);
+                    window.open(url, '_self');
+                    return false;
                 }, parseAppId: function () {
                     var a = b('meta[name="' + this.appMeta + '"]');
                     if (a)return this.appId = "windows" === this.type ? a.getAttribute("content") : /app-id=([^\s,]+)/.exec(a.getAttribute("content"))[1]
