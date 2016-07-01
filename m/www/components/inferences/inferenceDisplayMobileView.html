@@ -75,8 +75,9 @@
                                 Çeviri/Yazar
                             </div>
                             <select name="singleSelect"
-                                    ng-model="referenced.selectedAuthor" ng-change="updateReferencedTranslations()">
-                                <option ng-repeat="item in authorMap" value="{{item.id}}" ng-selected="item.id==referenced.selectedAuthor">{{item.name}}</option>
+                                    ng-options="author.id as author.name for author in authors"
+                                    ng-model="referenced.selectedAuthor"
+                                    ng-change="updateReferencedTranslations()">
                             </select>
                         </label>
                     </div>
