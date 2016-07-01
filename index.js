@@ -1770,11 +1770,11 @@ app.factory('ChapterVerses', function ($resource) {
 });
 
 var handleOpenURL = function(url){
-    var newUrl = url.replace("qurantools://","");
+    var newUrl = url.replace("qurantools://","/");
     var html = document.getElementsByTagName("html")[0];
     var scope = angular.element(html).scope();
     setTimeout(function () {
-        scope.launchFromURL(url);
+        scope.launchFromURL(newUrl);
     }, 0);
 };
 
