@@ -54,6 +54,17 @@
 
     <script src="../../assets/js/angular-ui-bootstrap.min.js"></script>
 
+    <script>
+        var handleOpenURL = function(url){
+            var newUrl = url.replace("qurantools://","/");
+            var html = document.getElementsByTagName("html")[0];
+            var scope = angular.element(html).scope();
+            setTimeout(function () {
+                scope.launchFromURL(newUrl);
+            }, 0);
+        };
+    </script>
+
     <script src="../../assets/js/config.js"></script>
     <script src="../../assets/js/angular-route.min.js"></script>
     <script src="../../assets/js/underscore-min.js"></script>

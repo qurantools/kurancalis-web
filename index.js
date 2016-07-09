@@ -1769,15 +1769,6 @@ app.factory('ChapterVerses', function ($resource) {
     };
 });
 
-var handleOpenURL = function(url){
-    var newUrl = url.replace("qurantools://","/");
-    var html = document.getElementsByTagName("html")[0];
-    var scope = angular.element(html).scope();
-    setTimeout(function () {
-        scope.launchFromURL(newUrl);
-    }, 0);
-};
-
 function sidebarInit() {
     $('.cd-panel').on('click', function (event) {
         if ($(event.target).is('.cd-panel') || $(event.target).is('.cd-panel-close')) {
