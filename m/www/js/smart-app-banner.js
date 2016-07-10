@@ -117,9 +117,9 @@
                     var now = new Date().valueOf();
                     setTimeout(function () {
                         if (new Date().valueOf() - now > 100) return;
-                        window.open(d, '_self');
+                        window.open(d, '_system');
                     }, 50);
-                    window.open(url, '_self');
+                    window.open(url, '_system');
                     return false;
                 }, parseAppId: function () {
                     var a = b('meta[name="' + this.appMeta + '"]');
