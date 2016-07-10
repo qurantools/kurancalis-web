@@ -1439,7 +1439,27 @@ app.factory('ChapterVerses', function ($resource) {
     };
 
     $scope.launchFromURL = function(url){
-        $scope.navigateTo(url);
+        //$scope.navigateTo(url);
+        if (url.indexOf("?") > -1){
+            var pureParam = url.substr(url.indexOf("?") + 1).split("&");
+            var query_string = {};
+            for (var i = 0; i < pureParam.length; i++){
+                var pair = pureParam[i].split("=");
+                if (typeof query_string[pair[0]] === "undefined") {
+                    query_string[pair[0]] = decodeURIComponent(pair[1]);
+                    // If second entry with this name
+                } else if (typeof query_string[pair[0]] === "string") {
+                    var arr = [ query_string[pair[0]],decodeURIComponent(pair[1]) ];
+                    query_string[pair[0]] = arr;
+                    // If third or later entry with this name
+                } else {
+                    query_string[pair[0]].push(decodeURIComponent(pair[1]));
+                }
+            }
+            $location.path(url.substr(0,url.indexOf("?"))).search(query_string);
+        }else{
+            $scope.navigateTo(url);
+        }
         $scope.scopeApply();
     };
 
