@@ -113,7 +113,7 @@
                         expires: new Date(+new Date + 864E5 * this.options.daysReminder)
                     });
                     var d = this.getStoreLink();
-                    var url = this.getSchema() + window.location.hash;
+                    var url = this.getSchema() + window.location.hash.substr(2);
                     var now = new Date().valueOf();
                     setTimeout(function () {
                         if (new Date().valueOf() - now > 100) return;
