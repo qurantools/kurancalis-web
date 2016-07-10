@@ -116,10 +116,10 @@
                     var url = this.getSchema() + window.location.hash.substr(2);
                     var now = new Date().valueOf();
                     setTimeout(function () {
-                        if (new Date().valueOf() - now > 100) return;
-                        window.open(d, '_system');
-                    }, 50);
-                    window.open(url, '_system');
+                        if (new Date().valueOf() - now > 500) return;
+                        window.open(d, '_self');
+                    }, 400);
+                    window.open(url, '_self');
                     return false;
                 }, parseAppId: function () {
                     var a = b('meta[name="' + this.appMeta + '"]');
