@@ -1,5 +1,5 @@
 angular.module('ionicApp')
-    .controller('TaggedVerseCtrl', function ($scope, $timeout, Restangular, $location, $ionicModal, $ionicScrollDelegate) {
+    .controller('TaggedVerseCtrl', function ($scope, $timeout, Restangular, $location, $ionicModal, $ionicScrollDelegate,localStorageService) {
 
         $scope.taggedVerseCircles = [];
         $scope.taggedVerseUsers = [];
@@ -12,6 +12,20 @@ angular.module('ionicApp')
         //mobile parameters
         $scope.taggedVerseCirclesForMobileSearch = [];
         $scope.taggedVerseUsersForMobileSearch = [];
+
+        $scope.localStorageManager = new LocalStorageManager("tagged_verses",localStorageService,
+            [
+                {
+                    name:"verseTagContentAuthor",
+                    getter: null,
+                    setter: null,
+                    isExistInURL: false,
+                    isBase64: false,
+                    default: DIYANET_AUTHOR_ID
+
+                }
+            ]
+        );
 
         console.log("TaggedVerseCtrl init");
         //Get verses of the tag from server
@@ -68,6 +82,7 @@ angular.module('ionicApp')
         $scope.verseTagContentAuthorUpdate = function (item) {
             $scope.verseTagContentAuthor = item;
             $scope.updateVerseTagContent();
+            $scope.localStorageManager.storeVariables($scope);
         };
 
         //reflects the scope parameters to URL
@@ -169,7 +184,10 @@ angular.module('ionicApp')
                 }).then(function (modal) {
                     $scope.modal_friend_search = modal
                 });
-            };
+            }
+
+
+            $scope.localStorageManager.initializeScopeVariables($scope,{});
 
             $scope.$on('tagged_verse_modal', function(event, args) {
                 if (isDefined(args.users) && args.users.length >= 0){
@@ -198,13 +216,12 @@ angular.module('ionicApp')
                 }
                 $scope.query_users = $scope.taggedVerseUsersForMobileSearch;
 
-                if ($scope.verseTagContentAuthor == MAX_AUTHOR_MASK){
-                    if (isDefined(args.author)){
-                        $scope.verseTagContentAuthor = args.author;
-                    }else{
-                        $scope.verseTagContentAuthor = $scope.authors[0].id;
-                    }
+                if (isDefined(args.author)){
+                    $scope.verseTagContentAuthor = args.author;
+                    $scope.localStorageManager.storeVariables($scope);
+
                 }
+
                 $scope.goToVerseTag(args.verseId, args.tag);
                 if (config_data.isMobile){
                     $scope.tagged_verse_modal.show();

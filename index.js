@@ -1423,7 +1423,11 @@ app.factory('ChapterVerses', function ($resource) {
     };
 
     $scope.goToVerseTag = function (authorId, verseId, tag, users, circles) {
-        $scope.$broadcast("tagged_verse_modal",{verseId:verseId, tag:tag, circles:circles, users:users, author:authorId+""});
+        var args= {verseId:verseId, tag:tag, circles:circles, users:users};
+        if (authorId != 0){
+            args.author = authorId+"";
+        }
+        $scope.$broadcast("tagged_verse_modal",args);
     };
 
     $scope.openVerseListForVerseSelection = function (callback, closeModal) {

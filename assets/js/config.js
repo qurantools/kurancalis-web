@@ -21,7 +21,7 @@ var config_data = {
     'isIOS':isIOS()
 }
 
-var MAX_AUTHOR_MASK = "1152921504606847000"; //60 authors
+var MAX_AUTHOR_MASK = "18446744073709551615"; //64 authors
 var DEFAULT_TURKISH_AUTHOR_MASK = "523794";
 var DIYANET_AUTHOR_ID = "8192";
 

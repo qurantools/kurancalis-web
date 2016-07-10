@@ -31,9 +31,11 @@ angular.module('ionicApp')
                 $scope.feeds = $scope.feeds.concat(data);
                 $scope.isLoading = false;
                 $scope.$broadcast('scroll.infiniteScrollComplete');
+                $scope.hideProgress("fetchFriendFeeds");
             }, function (err){
                 $scope.isLoading = false;
                 $scope.$broadcast('scroll.infiniteScrollComplete');
+                $scope.hideProgress("fetchFriendFeeds");
             });
         };
 
@@ -51,9 +53,11 @@ angular.module('ionicApp')
                 $scope.feeds = $scope.feeds.concat(data);
                 $scope.isLoading = false;
                 $scope.$broadcast('scroll.infiniteScrollComplete');
+                $scope.hideProgress("fetchCircleFeeds");
             }, function (err){
                 $scope.isLoading = false;
                 $scope.$broadcast('scroll.infiniteScrollComplete');
+                $scope.hideProgress("fetchCircleFeeds");
             });
         };
 
@@ -280,6 +284,7 @@ angular.module('ionicApp')
             }
             if (typeof $routeParams.friendName !== 'undefined') {
                 $scope.friendName = $routeParams.friendName;
+                $scope.showProgress("fetchFriendFeeds");
                 $scope.fetchUserStatistics($scope.friendName);
                 $scope.fetchFriendFeeds($scope.friendName, 0);
                 return;
@@ -290,6 +295,7 @@ angular.module('ionicApp')
                 $scope.circleListForTimeline = parseInt($scope.circleId);
                 $scope.selectedCircles = [];
                 $scope.selectedCircles.push($scope.extendedCirclesForSearch[$scope.getIndexOfArrayByElement($scope.extendedCirclesForSearch, 'id', $scope.circleId)]);
+                $scope.showProgress("fetchCircleFeeds");
                 $scope.fetchCircleFeeds($routeParams.circleId, 0);
                 return;
             }

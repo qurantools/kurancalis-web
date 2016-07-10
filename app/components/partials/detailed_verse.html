@@ -119,7 +119,7 @@
                                 <div style="font-size: 20px"><i class='fa' style='font-size: 1.3em;margin-right: 10px;'></i><b>Etiketler</b></div>
                                 <div style="text-align: right;">
                                     <button ng-repeat="verseTag in detailedTags" class="btn btn-xs btn-info verse_tag"
-                                            ng-click="goToVerseTag(verse.translations[0].authorId, verse.id,verseTag, detailedVerseUsers, detailedVerseCircles)" data-target='#taggedVerseModal' data-dismiss="modal" data-toggle='modal'>
+                                            ng-click="goToVerseTag(0, verse.id,verseTag, detailedVerseUsers, detailedVerseCircles)" data-target='#taggedVerseModal' data-dismiss="modal" data-toggle='modal'>
                                         {{verseTag}}</button>
                                 </div>
                             </div>
@@ -142,7 +142,7 @@
                                     <div class="small_space" style="height: 5px;">&nbsp;</div>
                                     <div style="float: right">
                                         <button ng-repeat="annotationTag in annotation.tags" class="btn btn-xs btn-info verse_tag"
-                                                ng-click="goToVerseTag(annotation.author_id, annotation.verseId, annotationTag, detailedVerseUsers, detailedVerseCircles)" data-target='#taggedVerseModal' data-dismiss="modal" data-toggle='modal'>
+                                                ng-click="goToVerseTag(0, annotation.verseId, annotationTag, detailedVerseUsers, detailedVerseCircles)" data-target='#taggedVerseModal' data-dismiss="modal" data-toggle='modal'>
                                             {{annotationTag}}
                                         </button>
                                         <span ng-class="{ 'voted-like': (annotation.vote != null && annotation.vote.content == 1), 'unvoted' : !(annotation.vote != null && annotation.vote.content == 1)}"
