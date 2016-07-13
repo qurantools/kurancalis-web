@@ -44,8 +44,8 @@ function makePage($data, $siteRoot) {
     <meta charset="utf-8" />
         <meta property="fb:app_id" content="295857580594128" />
         <meta property="og:url"    content="http://kurancalis.com/__/inference/display/<?php echo $data->id; ?>" />
-        <meta property="og:title" content="<?php echo $data->title; ?>" />
-        <meta property="og:description" content="<?php echo $data->brief; ?>" />
+        <meta property="og:title" content="<?php echo addslashes($data->title); ?>" />
+        <meta property="og:description" content="<?php echo addslashes($data->brief); ?>" />
         <meta property="og:image" content="<?php echo $data->image; ?>" />
         <meta property="og:type"   content="website" />
     </head>

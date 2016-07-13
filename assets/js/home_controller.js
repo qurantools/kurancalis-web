@@ -1147,6 +1147,7 @@ angular.module('ionicApp')
             var verseNumber = 1;
             var ownAnnotations = true;
             var circles = []; //id array
+            circles.push($scope.CIRCLE_ALL_CIRCLES);// All Circles by default
             var users = []; //id array
             var chapterFromRoute = false;
             var authorFromRoute = false;
@@ -1207,7 +1208,7 @@ angular.module('ionicApp')
                 localParameterData.author_mask = authorMask;
                 localParameterData.verse_number = verseNumber;
                 localParameterData.ownAnnotations = ownAnnotations;
-                localParameterData.circles = []; //process later
+                localParameterData.circles = circles; //process later
                 localParameterData.users = []; //process later
 
             }

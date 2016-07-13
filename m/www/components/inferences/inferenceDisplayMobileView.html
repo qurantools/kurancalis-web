@@ -10,6 +10,7 @@
             <ion-nav-buttons data-tap-disabled="true" side="right">
                 <button data-tap-disabled="true" class="button button-icon icon ion-ios-compose-outline" ng-if="edit_user == user.id" ng-click="edit_inference()"></button>
                 <button data-tap-disabled="true" class="button button-icon icon ion-ios-trash-outline" ng-if="edit_user == user.id" ng-click="deleted()"></button>
+                <button class="button button-positive" ng-click="login()" ng-if="user==null && isConnected==true">Facebook ile Giriş</button>
             </ion-nav-buttons>
         </ion-nav-bar>
         <ion-nav-view name="appContent"></ion-nav-view>
@@ -196,7 +197,8 @@
                     </div>
                 </div>
                 <div ng-if="authorizedInferenceDisplay == 2">
-                    <strong>Bu çıkarımı görüntüleme yetkisine sahip değilsiniz!</strong>
+                    <strong>Bu çıkarımı görüntüleme yetkisine sahip değilsiniz! <br>
+                        Henüz giriş yapmadınız ya da not sizinle paylaşılmadı</strong>
                 </div>
             </ion-content>
         </ion-nav-view>

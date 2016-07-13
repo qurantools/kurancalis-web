@@ -239,6 +239,7 @@ if (config_data.isMobile == false) { //false
     app.config(function ($routeProvider, FacebookProvider, RestangularProvider, localStorageServiceProvider, $httpProvider) {
         RestangularProvider.setBaseUrl(config_data.webServiceUrl);
         localStorageServiceProvider.setStorageCookie(0, '/');
+        /*
         $httpProvider.interceptors.push(function ($q, $injector, $rootScope) {
             var isConfirmPopupCalledBefore = false;
             var isDisplay = false;
@@ -278,7 +279,7 @@ if (config_data.isMobile == false) { //false
                 }
             }
         });
-
+*/
         //route
         $routeProvider
             .when('/translations/', {
@@ -794,6 +795,10 @@ app.factory('ChapterVerses', function ($resource) {
 
     $scope.currentPageUrl = "";
 
+    //Some Constants:
+    $scope.CIRCLE_ALL_CIRCLES = {'id': '-2', 'name': 'Tüm Çevrelerim'};
+    $scope.CIRCLE_PUBLIC={'id': '-1', 'name': 'Herkes'};
+
 
     $scope.checkAPIVersion = function(){
         var versionRestangular = Restangular.all("apiversioncompatibility");
@@ -885,6 +890,19 @@ app.factory('ChapterVerses', function ($resource) {
 
             localStorageService.remove('chapter_view_parameters');
             localStorageService.remove('annotations_view_parameters');
+            localStorageService.remove('annotations_parameters');
+            localStorageService.remove('chapters');
+            localStorageService.remove('chaptersVersion');
+            localStorageService.remove('detailed_verse_parameters');
+            localStorageService.remove('help_modal_tutorial_annotation');
+            localStorageService.remove('help_modal_tutorial_chapter');
+            localStorageService.remove('inference_display_view_parameters');
+            localStorageService.remove('inferences_view_parameters');
+            localStorageService.remove('tagged_verses_parameters');
+            localStorageService.remove('verse_history_parameters');
+            localStorageService.remove('verse_lists_parameters');
+
+
             $scope.$broadcast('logout', responseData);
             $location.path('/login');
         }
@@ -1272,15 +1290,15 @@ app.factory('ChapterVerses', function ($resource) {
 
             $scope.cevreadlar = circleList;
             $scope.extendedCircles = [];
-            $scope.extendedCircles.push({'id': '-2', 'name': 'Tüm Çevrelerim'});
-            $scope.extendedCircles.push({'id': '-1', 'name': 'Herkes'});
+            $scope.extendedCircles.push($scope.CIRCLE_ALL_CIRCLES);
+            $scope.extendedCircles.push($scope.CIRCLE_PUBLIC);
 
             $scope.extendedCirclesForSearch = [];
-            $scope.extendedCirclesForSearch.push({'id': -2, 'name': 'Tüm Çevrelerim'});
+            $scope.extendedCirclesForSearch.push($scope.CIRCLE_ALL_CIRCLES);
 
 
             $scope.circleDropdownArray = [];
-            $scope.circleDropdownArray.push({'id': '-2', 'name': 'Tüm Çevrelerim'});
+            $scope.circleDropdownArray.push($scope.CIRCLE_ALL_CIRCLES);
             $scope.circleDropdownArray.push({'id': '', 'name': 'Sadece Ben'});
 
             $scope.query_circle_dropdown = $scope.circleDropdownArray[1];
