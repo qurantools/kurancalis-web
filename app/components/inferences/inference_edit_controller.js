@@ -294,6 +294,7 @@ angular.module('ionicApp')
         $scope.initializeInferenceEditController = function () {
             var inferenceId = 0;
             var circles = []; //id array
+            circles.push($scope.CIRCLE_PUBLIC);
             var users = []; //id array
 
             var inferenceIdFromRoute = false;
@@ -349,7 +350,7 @@ angular.module('ionicApp')
             if (localParameterData == null) {
 
                 localParameterData = {};
-                localParameterData.circles = [];
+                localParameterData.circles = circles;
                 localParameterData.users = [];
                 localParameterData.inferenceId = inferenceId;
 
@@ -465,6 +466,16 @@ angular.module('ionicApp')
 
             if(config_data.isMobile){
                 $scope.ViewUsers = localParameterData.users;
+                $scope.$on("circleLists ready",function(){
+                for (var i = 0; i < $scope.mobileInferencesEditorCircleListForSelection.length; i++) {
+                    for (var x = 0; x < $scope.circlesForSearch.length; x++) {
+                        if ($scope.mobileInferencesEditorCircleListForSelection[i].name == $scope.circlesForSearch[x].name) {
+                            $scope.mobileInferencesEditorCircleListForSelection[i].selected = true;
+                            break;
+                        }
+                    }
+                }
+                });
             }
 
         };

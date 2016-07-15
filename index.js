@@ -688,7 +688,8 @@ app.factory('ChapterVerses', function ($resource) {
     $scope.selection = ["16", "32"];
     $scope.verseTagContentAuthor = $scope.selection[0];
     $scope.activeVerseTagContentAuthor = "";
-    $scope.authorMap = new Object();
+    //$scope.authorMap = new Object();
+    $scope.authorMap = [];
 
     /* facebook login */
 
@@ -1261,8 +1262,8 @@ app.factory('ChapterVerses', function ($resource) {
             var arrayLength = data.length;
             for (var i = 0; i < arrayLength; i++) {
                 $scope.authorMap[data[i].id] = data[i];
-                $scope.setAuthors($scope.author_mask);
             }
+            $scope.setAuthors($scope.author_mask);
             $scope.$broadcast("authorMap ready");
         });
     };

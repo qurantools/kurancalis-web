@@ -17,7 +17,8 @@
         <ion-nav-view id="mobile_inference_display_content" cache-view="true">
             <ion-content style="padding-top: 30px;margin-bottom: 30px;" class="padding" delegate-handle="content"  >
                 <div ng-if="authorizedInferenceDisplay == 1">
-                    <div style="height: 20px">
+                    <div style="height: 30px"></div>
+                    <div>
                         <img src="{{author_info.photo}}"/><a href="" ng-click="navigateTo('/profile/user/{{author_info.id}}/')">{{author_info.name}}</a>
                     </div>
                     <div ng-if="photo != 'undefined'" align="center" style="margin: 0 auto;">
