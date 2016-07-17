@@ -1790,11 +1790,20 @@ app.factory('ChapterVerses', function ($resource) {
         });
     };
 
+    $scope.addToStorageForFocus2Comment = function () {
+        localStorageService.set('focus2comment', true);
+    };
+
     $scope.focusToCommentArea = function(textarea){
+        var param = localStorageService.get("focus2comment");
+        if (param == null) {
+            return;
+        }
         $timeout(function () {
             var element = $("#"+textarea);
             element.focus();
             element.val(element.val()+'');
+            localStorageService.remove('focus2comment');
         },600);
     };
     

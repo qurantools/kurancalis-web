@@ -61,7 +61,7 @@
         <br/>
         <div class="row">
             <div style="float: left;padding-left: 90px;" ng-if="user!=null">
-                <span style="margin-right: 10px;" ng-click="focusToCommentArea('comment_textarea_inference')" class="make_comment">
+                <span style="margin-right: 10px;" ng-click="addToStorageForFocus2Comment();focusToCommentArea('comment_textarea_inference')" class="make_comment">
                     <span style="color: #00f;margin-right: 10px;">Yorum Yaz</span><i class="fa fa-comment"></i> {{inference_info.commentCount}}
                 </span>
                 <span ng-class="{ 'voted-like': (inference_info.vote != null && inference_info.vote.content == 1), 'unvoted' : !(inference_info.vote != null && inference_info.vote.content == 1)}"
@@ -91,8 +91,8 @@
             <tr>
                 <td align="left" style="width: 200px">
                     <select class="form-control" style="width: 200px" name="singleSelect"
-                             ng-model="referenced.selectedAuthor" ng-change="updateReferencedTranslations()">
-                        <option ng-repeat="item in authorMap" value="{{item.id}}" ng-selected="item.id==referenced.selectedAuthor">{{item.name}}</option>
+                             ng-model="referenced.selectedAuthor" ng-change="updateReferencedTranslations()"
+                             ng-options="author.id as author.name for author in authors">
                     </select>
                 </td>
                 <td align="center" style="width: 210px">

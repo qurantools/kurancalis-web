@@ -53,7 +53,7 @@
             <div class="row" style="padding:0 15px">
                 <div style="float: left"><span ng-bind-html="inference.updated | time_in_string | to_trusted"></span></div>
                 <div style="float: right">
-                    <span ng-click="navigateTo('/inference/display/{{inference.id}}/')" style="margin-right: 10px;" class="make_comment">
+                    <span ng-click="addToStorageForFocus2Comment();navigateTo('/inference/display/{{inference.id}}/')" style="margin-right: 10px;" class="make_comment">
                         <span style="color: #00f;margin-right: 10px;">Yorum Yaz</span><i class="fa fa-comment"></i> {{inference.commentCount}}
                     </span>
                     <span ng-class="{ 'voted-like': (inference.vote != null && inference.vote.content == 1), 'unvoted' : !(inference.vote != null && inference.vote.content == 1)}"
