@@ -1679,6 +1679,8 @@ app.factory('ChapterVerses', function ($resource) {
     };
 
     $scope.doVote = function(votable, resource, voteType) {
+        if ($scope.user == null)
+            return;
         var voteRestangular = Restangular.one(resource, votable.id).all("votes");
         //new vote or vote changed
         if (votable.vote == null || votable.vote.content != voteType) {
@@ -1703,6 +1705,8 @@ app.factory('ChapterVerses', function ($resource) {
     };
 
     $scope.doVoteForComment = function(votable, typeId, resource, voteType) {
+        if ($scope.user == null)
+            return;
         var voteRestangular = Restangular.one(resource, typeId).one("comments", votable.comment.id).all("votes");
         //new vote or vote changed
         if (votable.vote == null || votable.vote.content != voteType) {

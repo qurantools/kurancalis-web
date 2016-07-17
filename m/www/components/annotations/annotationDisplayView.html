@@ -10,7 +10,7 @@
         <ion-nav-view cache-view="true">
             <ion-content overflow-scroll="false">
                 <div style="height: 25px;">&nbsp;</div>
-                <div class="container">
+                <div class="container" ng-if="authorizedAnnotationDisplay == 1">
                     <div style="clear: both">&nbsp;</div>
                     <div class="card" ng-if="annotation != null">
                         <div class="item item-divider">
@@ -73,7 +73,7 @@
                             </div>
                         </div>
                     </div>
-                    <h5 align="left" style="width: 100%;margin-left:20px;">Yorumlar</h5>
+                    <h5 align="left" style="width: 100%;margin-left:20px;" ng-if="annotation.comments.length>0">Yorumlar</h5>
                     <hr width="100%" ng-if="annotation.comments.length>0"/>
                     <div ng-repeat="comment in annotation.comments"
                          style="width: 100%;border-radius: 15px;padding-top: 10px !important;background-color: #f5f5f5;"
@@ -163,7 +163,7 @@
                         </div>
                     </div>
                     <!-- new or update comment area-->
-                    <div style="width: 100%;background-color:#f4eeed; padding-top: 10px !important;  ">
+                    <div style="width: 100%;background-color:#f4eeed; padding-top: 10px !important;" ng-if="user!=null">
                         <div class="row">
                             <a href="" ng-click="navigateTo('/profile/user/{{user.id}}/')">
                                 <img style="max-width: 60px; max-height: 60px;border-radius: 50%;" ng-src="{{user.photo}}"><br/>
@@ -174,6 +174,10 @@
                                   placeholder="Yorum Yaz"></textarea>
                         </div>
                     </div>
+                </div>
+                <div ng-if="authorizedAnnotationDisplay == 2" style="margin-top: 50px;">
+                    <strong>Bu notu görüntüleme yetkisine sahip değilsiniz! <br>
+                        Henüz giriş yapmadınız ya da not sizinle paylaşılmadı</strong>
                 </div>
                 <div style="height:50px;">&nbsp;</div>
             </ion-content>

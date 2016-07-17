@@ -1,6 +1,7 @@
 RewriteEngine On
 
 RewriteRule __/inference/display/(\d*)$ /#/inference/display/$1 [NE,R]
+RewriteRule __/annotation/display/(\d*)$ /#/annotation/display/$1 [NE,R]
 RewriteRule __/translations/yazar/(\d*)/sure/(\d*) /#/translations/?author=$1&chapter=$2 [NE,R]
 RewriteRule __/translations /#/translations [NE,R]
 

@@ -14,10 +14,12 @@ angular.module('ionicApp')
         $scope.commentWillUpdateParent = null;
         $scope.commentWillUpdateId = null;
         $scope.commentWillUpdateIndex = null;
+        $scope.authorizedAnnotationDisplay = 0;
 
         $scope.annotation_info = function(annotationId) {
             var annotationRestangular = Restangular.one("annotations", annotationId);
             annotationRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (data) {
+                $scope.authorizedAnnotationDisplay = 1;
                 var childIndexs = [];
                 for (var i = 0; i< data.comments.length; i++){
                     data.comments[i].comment.edit=false;
@@ -43,6 +45,10 @@ angular.module('ionicApp')
                 }
                 $scope.annotation = data;
                 $scope.focusToCommentArea('comment_textarea_annotation');
+            }, function(response) {
+                if (response.status == "400"){
+                    $scope.authorizedAnnotationDisplay = 2;
+                }
             });
         };
 
@@ -118,6 +124,8 @@ angular.module('ionicApp')
         };
 
         $scope.displayCommentModal = function (parentId, parentIndex) {
+            if ($scope.user == null)
+                return;
             $scope.resource = $scope.annotation;
             $scope.resource_type = 'annotations';
             $scope.resource_id = $scope.annotation.id;

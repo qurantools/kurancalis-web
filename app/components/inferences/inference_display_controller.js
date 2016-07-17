@@ -509,6 +509,8 @@ angular.module('ionicApp')
         };
 
         $scope.displayCommentModal = function (parentId, parentIndex) {
+            if ($scope.user == null)
+                return;
             $scope.resource = $scope.inference_info;
             $scope.resource_type = 'inferences';
             $scope.resource_id = $scope.inference_info.id;

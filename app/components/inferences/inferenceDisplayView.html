@@ -132,7 +132,7 @@
             </div>
         </div>
         <div ng-if="user!=null">
-            <h6 align="left" style="width: 1024px">Yorumlar</h6>
+            <h6 align="left" style="width: 1024px" ng-if="inference_info.comments.length>0">Yorumlar</h6>
             <div ng-repeat="comment in inference_info.comments" style="width: 90%;border-radius: 15px;padding-top: 10px !important;" align="left" class="row well">
                 <div class="col-lg-1">
                     <a href="" ng-click="navigateTo('/profile/user/{{comment.owner.user_id}}/')">
@@ -247,22 +247,22 @@
                     </div>
             </div>
             <!-- new or update comment area-->
-            <div style="width: 90%;border-radius: 15px;padding-top: 10px !important;" align="left" class="row well">
-            <div class="col-lg-1">
-                <a href="" ng-click="navigateTo('/profile/user/{{user.id}}/')">
-                    <img style="max-width: 80px; max-height: 60px;border-radius: 50%;" ng-src="{{user.photo}}"><br/>
-                </a>
+            <div style="width: 90%;border-radius: 15px;padding-top: 10px !important;" align="left" class="row well" ng-if="user!=null">
+                <div class="col-lg-1">
+                    <a href="" ng-click="navigateTo('/profile/user/{{user.id}}/')">
+                        <img style="max-width: 80px; max-height: 60px;border-radius: 50%;" ng-src="{{user.photo}}"><br/>
+                    </a>
+                </div>
+                <div  class="col-lg-10">
+                    <textarea id="comment_textarea_inference" style="margin-top: 1%;width: 100%;height: 51px;border-radius: 9px;background-color: white;"/>
+                </div>
+                <div class="col-lg-1">
+                    <button type="button" class="btn btn-primary btn-xs"
+                                ng-click="createComment(inference_info, 'inferences', inference_info.id, 'comment_textarea_inference', null, null)">
+                            Tamam
+                        </button>
+                </div>
             </div>
-            <div  class="col-lg-10">
-                <textarea id="comment_textarea_inference" style="margin-top: 1%;width: 100%;height: 51px;border-radius: 9px;background-color: white;"/>
-            </div>
-            <div class="col-lg-1">
-                <button type="button" class="btn btn-primary btn-xs"
-                            ng-click="createComment(inference_info, 'inferences', inference_info.id, 'comment_textarea_inference', null, null)">
-                        Tamam
-                    </button>
-            </div>
-        </div>
         </div>
         <div ng-if="user==null" style="margin-top: 10px;">
             Yorum yazmak ya da notu oylamak istiyorsanız lütfen giriş yapınız.

@@ -96,7 +96,7 @@
                                     class="tag label label-info s_a_tag">{{tag}}</button>
                         </div>
                     </div>
-                    <h5 align="left" style="width: 100%;margin-left:20px;">Yorumlar</h5>
+                    <h5 align="left" style="width: 100%;margin-left:20px;" ng-if="inference_info.comments.length>0">Yorumlar</h5>
                     <hr width="100%" ng-if="inference_info.comments.length>0"/>
                     <div ng-repeat="comment in inference_info.comments"
                          ng-init="outerIndex=$index"
@@ -185,7 +185,7 @@
                         </div>
                     </div>
                     <!-- new or update comment area-->
-                    <div style="width: 100%;background-color:#f4eeed; padding-top: 10px !important;  ">
+                    <div style="width: 100%;background-color:#f4eeed; padding-top: 10px !important;" ng-if="user!=null">
                         <div class="row">
                             <a href="" ng-click="navigateTo('/profile/user/{{user.id}}/')">
                                 <img style="max-width: 60px; max-height: 60px;border-radius: 50%;" ng-src="{{user.photo}}"><br/>
