@@ -162,10 +162,10 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col">
+                                <div style="float: left">
                                     <span ng-bind-html="inference.updated | time_in_string | to_trusted"></span>
                                 </div>
-                                <div class="col" style="float: right;">
+                                <div style="float: right;margin-left: 5px;">
                                     {{inference.userName}}
                                     <span ng-class="{ 'voted-like': (inference.vote != null && inference.vote.content == 1), 'unvoted' : !(inference.vote != null && inference.vote.content == 1)}"
                                           ng-click="doVote(inference,'inferences', 1)">
