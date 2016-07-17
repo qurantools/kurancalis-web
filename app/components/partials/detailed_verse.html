@@ -118,7 +118,7 @@
                             <div id="verseTags_{{verse.id}}" style="width:100%;margin-top: 5px" ng-show="detailedTags.length > 0">
                                 <div style="font-size: 20px"><i class='fa' style='font-size: 1.3em;margin-right: 10px;'></i><b>Etiketler</b></div>
                                 <div style="text-align: right;">
-                                    <button ng-repeat="verseTag in detailedTags" class="btn btn-xs btn-info verse_tag"
+                                    <button ng-repeat="verseTag in detailedTags track by $index" class="btn btn-xs btn-info verse_tag"
                                             ng-click="goToVerseTag(0, verse.id,verseTag, detailedVerseUsers, detailedVerseCircles)" data-target='#taggedVerseModal' data-dismiss="modal" data-toggle='modal'>
                                         {{verseTag}}</button>
                                 </div>
