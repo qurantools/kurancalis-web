@@ -76,6 +76,7 @@ angular.module('ionicApp').controller('VerseListController', function ($scope, $
 
     $scope.getVerseListsVerse = function(){
         if ($scope.localVerseListSelection.length > 0 ) {
+            $scope.showProgress("showVersesInList");
             var verselist_id = $scope.localVerseListSelection[0];
             Restangular.one("verselists", verselist_id).all("verses").customGET("", {}, {'access_token': $scope.access_token}).then(function (verses) {
                 var verselist = verses.map(function (elem) {
@@ -89,6 +90,7 @@ angular.module('ionicApp').controller('VerseListController', function ($scope, $
                         token.selected = false;
                         return true;
                     });
+                    $scope.hideProgress("showVersesInList");
                 })
             });
         }

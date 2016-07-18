@@ -690,6 +690,7 @@ app.factory('ChapterVerses', function ($resource) {
     $scope.activeVerseTagContentAuthor = "";
     //$scope.authorMap = new Object();
     $scope.authorMap = [];
+    $scope.authors= [];
 
     /* facebook login */
 
@@ -1657,13 +1658,7 @@ app.factory('ChapterVerses', function ($resource) {
         if(operationName == $scope.progressOperation) {
             if (config_data.isMobile) {
                 $scope.clickBlocking = false;
-                /*    if (window.cordova && window.cordova.plugins){
-
-                 SpinnerDialog.hide();
-                 }
-                 else{*/
                 $ionicLoading.hide();
-                //}
             }
         }
     };

@@ -90,10 +90,11 @@
         <table ng-if="referenced.verses.length!=0">
             <tr>
                 <td align="left" style="width: 200px">
-                    <select class="form-control" style="width: 200px" name="singleSelect"
-                             ng-model="referenced.selectedAuthor" ng-change="updateReferencedTranslations()"
-                             ng-options="author.id as author.name for author in authors">
+                    <select ng-if="authors.length!=0 && referenced.selectedAuthor!=-1" ng-options="author.id as author.name for author in authors" class="form-control" style="width: 200px" name="singleSelect"
+                            ng-model="referenced.selectedAuthor"
+                            ng-change="updateReferencedTranslations(referenced.selectedAuthor)">
                     </select>
+
                 </td>
                 <td align="center" style="width: 210px">
                     <tags-input style="width: 200px" ng-model="circlesForSearch" placeholder="Çevre Seçiniz"

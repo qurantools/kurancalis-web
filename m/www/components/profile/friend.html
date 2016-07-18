@@ -44,7 +44,7 @@
                 <div ng-repeat="feed in feeds" class="item-remove-animate" style="width: 100%;display: table;font-size: 10px;">
                     <div ng-if="feed.study_type == 'annotation'" class="card">
                         <div class="item item-divider">
-                            <a href='' style="text-decoration: none !important;" ng-click="openVerseDetail(feed.anno_verse_id, profiledUser.id, profiledUser.username)">{{feed.anno_verse_id / 1000 | number:0}}:{{feed.anno_verse_id % 1000}}</a>
+                            <a href='' style="text-decoration: none !important;" ng-click="openVerseDetail(feed.anno_verse_id, profiledUser.id, profiledUser.username)">{{feed.anno_verse_id / 1000 | number:0}}:{{feed.anno_verse_id % 1000}}</a> <span style="font-size: small">({{authorMap[feed.anno_author_id].name}})</span>
                             <!--div style="float:right;">{{feed.userName | limitTo: 25}}</div-->
                             <div style="float: right">
                                 <span ng-bind-html="feed.updated | time_in_string | to_trusted"></span>

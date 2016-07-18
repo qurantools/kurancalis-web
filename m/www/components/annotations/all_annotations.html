@@ -72,7 +72,7 @@
                             <div>
                                 <a href='' style="text-decoration: none !important;margin-left: 10px;" ng-click="showVerseDetail(annotation.verseId, circlesForSearch,usersForSearch)">
                                     <b>{{annotation.verseId / 1000 | number:0}}:{{annotation.verseId % 1000}}</b>
-                                </a>
+                                </a> <span style="font-size: small">({{authorMap[annotation.author_id].name}})</span>
                                 <span style="float: right">
                                     <button type="button" class="button button-balanced button-small"
                                             ng-if="annotation.userId==user.id"

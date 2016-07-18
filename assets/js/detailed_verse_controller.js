@@ -59,6 +59,7 @@ angular.module('ionicApp')
 
 
         $scope.goToVerseDetail = function(){
+            $scope.showProgress("showVerseDetails");
             $scope.goToVerseParameters.chapter = $scope.detailedChapters[Math.floor($scope.verseId/1000) -1];
             $scope.goToVerseParameters.verse = $scope.verseId%1000;
             $scope.getVerseTranslations();
@@ -129,6 +130,7 @@ angular.module('ionicApp')
             dataProvider.listTranslations(translationParams, function(data){
                 $scope.prepareTranslationDivMap(data);
                 $scope.annotate_it();
+                $scope.hideProgress("showVerseDetails");
             });
         };
 

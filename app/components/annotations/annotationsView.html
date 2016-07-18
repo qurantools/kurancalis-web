@@ -36,12 +36,13 @@
         <div ng-repeat="annotation in annotations" class="box">
             <div class="s_a_header">
                 <a href='' ng-click="showVerseDetail(annotation.verseId, usersForSearch, circlesForSearch)" data-target='#detailedVerseModal' data-dismiss='modal' data-toggle='modal'>{{annotation.verseId / 1000 | number:0}}:{{annotation.verseId % 1000}}</a>
-                <button ng-click="showVerse(annotation)" class="btn btn-primary btn-xs"
+                ({{authorMap[annotation.author_id].name}})
+                <!--button ng-click="showVerse(annotation)" class="btn btn-primary btn-xs"
                         ng-if="showVerseData.annotationId!=annotation.annotationId"><i
                         class="fa fa-cog"></i></button>
                 <button ng-click="showVerseData.annotationId=-1" class="btn btn-xs"
                         ng-if="showVerseData.annotationId==annotation.annotationId"><i
-                        class="fa fa-cog "></i></button>
+                        class="fa fa-cog "></i></button-->
                 <div style="float:right;"><a  href="" ng-click="navigateTo('/profile/user/{{annotation.userId}}/')" style="color: darkblue;">{{annotation.userName | limitTo: 25}}</a></div>
             </div>
             <show-verse data="showVerseData.data"

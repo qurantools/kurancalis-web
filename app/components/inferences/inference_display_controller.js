@@ -9,7 +9,7 @@ angular.module('ionicApp')
         $scope.usersForSearch = [];
         $scope.referenced = {};
         $scope.referenced.verses = [];
-        $scope.referenced.selectedAuthor="";
+        $scope.referenced.selectedAuthor=-1;
 
         //All Display Variables
         $scope.edit_user = "";
@@ -178,7 +178,7 @@ angular.module('ionicApp')
             var inferenceId=0;
             var circles = []; //id array
             var users = []; //id array
-            var author = 1024; //default: yasar nuri
+            var author = "1024"; //default: yasar nuri
 
             var inferenceIdFromRoute = false;
             var circlesFromRoute = false;
@@ -522,7 +522,15 @@ angular.module('ionicApp')
         };
 
         //definitions are finished. Now run initialization
-        $scope.initializeInferenceDisplayController();
+        //authorMap should be initialized before start
+        if($scope.authorMap.length==0){
+            $scope.$on("authorMap ready",function(){
+                $scope.initializeInferenceDisplayController();
+            });
+        }
+        else{
+            $scope.initializeInferenceDisplayController();
+        }
 
     });
 

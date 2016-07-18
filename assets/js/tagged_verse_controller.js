@@ -36,13 +36,14 @@ angular.module('ionicApp')
                 $scope.targetVerseForTagContent = verseId;
                 $scope.verseTagContents = verseTagContent;
                 $scope.scopeApply();
-                $scope.hideProgress("loadVerseTagContent");
+
                 if (config_data.isMobile){
                     $timeout(function() {
                         var delegate = _.filter($ionicScrollDelegate._instances, function(item){
                             return item.element.innerHTML.indexOf('tagged_verse_content') > -1;
                         })[0];
                         delegate.scrollTop();
+                        $scope.hideProgress("loadVerseTagContent");
                     });
                 }
             });

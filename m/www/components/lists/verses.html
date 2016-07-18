@@ -20,9 +20,9 @@
                         <div class="input-label">
                             Çeviri/Yazar
                         </div>
-                        <select name="singleSelect"
-                                ng-model="verseListAuthor" ng-change="verseListsAuthorChanged(verseListAuthor)">
-                            <option ng-repeat="item in authorMap" value="{{item.id}}" ng-selected="item.id==verseListAuthor">{{item.name}}</option>
+                        <select ng-if="authors.length!=0 && verseListAuthor!=null" ng-options="author.id as author.name for author in authors"
+                                ng-model="verseListAuthor"
+                                ng-change="verseListsAuthorChanged(verseListAuthor)">
                         </select>
                     </label>
                 </div>

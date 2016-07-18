@@ -44,7 +44,7 @@
                             <div>
                                 <a href='' style="text-decoration: none !important;margin-left: 10px;" ng-click="openVerseDetail(feed.anno_verse_id, feed.owner_id, feed.owner_name)">
                                     <b>{{feed.anno_verse_id / 1000 | number:0}}:{{feed.anno_verse_id % 1000}}</b>
-                                </a>
+                                </a> <span style="font-size: small">({{authorMap[feed.anno_author_id].name}})</span>
                                 <span style="float: right">
                                     <button type="button" class="button button-balanced button-small" ng-click="showEditor(feed)"
                                             ng-if="feed.owner_id==user.id">

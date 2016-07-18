@@ -427,6 +427,7 @@ angular.module('ionicApp')
             var verses = "";
             var ownAnnotations = true;
             var circles = []; //id array
+            circles.push($scope.CIRCLE_ALL_CIRCLES);
             var users = []; //id array
             var verseTags = [];
 
@@ -517,7 +518,7 @@ angular.module('ionicApp')
                 localParameterData.verseKeyword = verseKeyword;
                 localParameterData.verses = verses;
                 localParameterData.ownAnnotations = ownAnnotations;
-                localParameterData.circles = [];
+                localParameterData.circles = circles;
                 localParameterData.users = [];
                 localParameterData.verseTags = verseTags;
 

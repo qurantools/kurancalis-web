@@ -37,7 +37,7 @@
                     <div ng-if="feed.study_type == 'annotation'" class="well" style="padding-top: 10px !important;padding-bottom: 10px !important;">
                         <div class="s_a_header">
                             <a href='' ng-click="openVerseDetail(feed.anno_verse_id, profiledUser.id, profiledUser.username)" data-target='#detailedVerseModal' data-dismiss='modal' data-toggle='modal'>{{feed.anno_verse_id / 1000 | number:0}}:{{feed.anno_verse_id % 1000}}</a>
-                        </div>
+                        </div> <span style="font-size: small">({{authorMap[feed.anno_author_id].name}})</span>
                         <div class="small_space">&nbsp;</div>
                         <div>
                             <blockquote

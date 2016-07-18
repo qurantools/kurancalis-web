@@ -16,7 +16,7 @@
                 <div class="col-xs-10">
                     <div ng-if="feed.study_type == 'annotation'" class="well" style="padding-top: 10px !important;padding-bottom: 10px !important;">
                         <div class="s_a_header">
-                            <a href='' ng-click="openVerseDetail(feed.anno_verse_id, feed.owner_id, feed.owner_name)" data-target='#detailedVerseModal' data-dismiss='modal' data-toggle='modal'>{{feed.anno_verse_id / 1000 | number:0}}:{{feed.anno_verse_id % 1000}}</a>
+                            <a href='' ng-click="openVerseDetail(feed.anno_verse_id, feed.owner_id, feed.owner_name)" data-target='#detailedVerseModal' data-dismiss='modal' data-toggle='modal'>{{feed.anno_verse_id / 1000 | number:0}}:{{feed.anno_verse_id % 1000}}</a> ({{authorMap[feed.anno_author_id].name}})
                         </div>
                         <div class="small_space">&nbsp;</div>
                         <div>

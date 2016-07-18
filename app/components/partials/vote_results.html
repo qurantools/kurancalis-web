@@ -21,7 +21,7 @@
                         <tr>
                             <td align="left" style="width: 20%;position: relative">
                                 <img width="75px" height="75px" src={{item.user.photo}}>
-                                <i class="fa icon-over-img" ng-class="{'fa-thumbs-down' : item.vote == 0, 'fa-thumbs-up' : item.vote == 1}"></i>
+                                <i class="fa icon-over-img" ng-class="{'fa-thumbs-down voted-dislike' : item.vote == 0, 'fa-thumbs-up voted-like' : item.vote == 1}"></i>
                             </td>
                             <td style="width: 40%; padding-left: 8px;">
                                 <a  href="" ng-click="navigateTo('/profile/user/{{item.user.username}}/')" style="color: darkblue;" data-dismiss="modal">{{item.user.name}}</a>

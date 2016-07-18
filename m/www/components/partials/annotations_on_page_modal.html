@@ -33,7 +33,7 @@
                 {{annotation.verseId / 1000 | number:0}}:{{annotation.verseId % 1000}}
                 <div style="float:right;">
                     <a  href="" ng-click="navigateTo('/profile/user/{{annotation.userId}}/')" style="color: darkblue;text-decoration: none;">{{annotation.userName | limitTo: 25}}</a>
-                </div>
+                </div><span style="font-size: small">({{authorMap[annotation.author_id].name}})</span>
             </div>
             <div>
                 <blockquote>{{annotation.quote}}</blockquote>
