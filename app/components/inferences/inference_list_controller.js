@@ -1,6 +1,6 @@
 angular.module('ionicApp')
 
-    .controller('InferenceListController', function ($scope, $routeParams, Facebook, Restangular, $location, authorization, localStorageService, $ionicModal, $timeout, $ionicScrollDelegate) {
+    .controller('InferenceListController', function ($scope, $routeParams, Facebook, Restangular, $location, authorization, localStorageService, $ionicModal, $timeout, $ionicScrollDelegate, navigationManager) {
         console.log("Inference List Controller");
         /* facebook login */
         $scope.fbLoginStatus = 'disconnected';
@@ -522,6 +522,8 @@ angular.module('ionicApp')
                     });
                 }
             });
+
+            navigationManager.reset();
 
         };
 

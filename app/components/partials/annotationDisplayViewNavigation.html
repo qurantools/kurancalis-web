@@ -7,20 +7,23 @@
                             class="fa fa-bars"></i> MENÜ
                     </button>
                 </div>
-                <div ng-show="facebookIsReady" class="facebook_area row">
+
+
+                <div ng-show="facebookIsReady" class="facebook_area">
                     <div ng-if="user==null">
                         <button type="button" id="login" ng-click="login()" class="btn btn-primary">
                             <b>Birlikte</b> dosdoğru yolu bulmak için > <img src="assets/img/fb.png" width="25" height="25"> Giriş
                         </button>
                     </div>
                     <div ng-if="user!=null">
-                        <a class="btn btn-primary" href="#/people/find_people/">
-                            <i class="fa fa-user-plus"></i> Kullanıcı Bul</a>
-                        </a>
+                        <button class="btn btn-primary" data-target="#verseHistoryModal" data-toggle="modal" ng-click="openVerseHistory()"><i class="fa fa-history" style="font-size: 1.3em"></i></button>
+
                         <a href="#/profile/user/{{user.id}}"><img ng-src="{{user.photo}}" height="40"/></a>
+                        <!--<span style="vertical-align: bottom;">{{user.name}}</span>-->
                     </div>
                 </div>
             </div>
+
         </form>
     </div>
     <!-- /.navbar-collapse -->

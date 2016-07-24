@@ -1,5 +1,5 @@
 angular.module('ionicApp')
-    .controller('HomeCtrl', function ($scope, $compile, $q, $routeParams, $location, $timeout, ChapterVerses, User, Facebook, Restangular, localStorageService, $document, $filter, $rootScope, $state, $stateParams, $ionicModal, $ionicScrollDelegate, $ionicPosition, authorization,$ionicActionSheet,$ionicPopup, $sce, dataProvider, $ionicPlatform) {
+    .controller('HomeCtrl', function ($scope, $compile, $q, $routeParams, $location, $timeout, ChapterVerses, User, Facebook, Restangular, localStorageService, $document, $filter, $rootScope, $state, $stateParams, $ionicModal, $ionicScrollDelegate, $ionicPosition, authorization,$ionicActionSheet,$ionicPopup, $sce, dataProvider, $ionicPlatform, navigationManager) {
 
 
         $scope.linkno="";
@@ -639,6 +639,7 @@ angular.module('ionicApp')
         //list translations
         $scope.list_translations = function () {
 
+            $scope.showProgress("homeInitialize");
             $scope.setAuthorViewAccordingToDetailedSearchAuthorSelection();
 
             $scope.translationDivMap = [];
@@ -667,10 +668,16 @@ angular.module('ionicApp')
             dataProvider.listTranslations(translationParams, function(data){
                 $scope.prepareTranslationDivMap(data);
                 //mark annotations
-                $scope.annotate_it();
+
+                if($scope.access_token == null){
+                    $scope.$on("userInfoReady",$scope.annotate_it);
+                }
+                else{
+                    $scope.annotate_it();
+                }
                 //scroll to verse if user is not logged in.
                 //if user is logged in, they will scroll on tag generation.
-                if ($scope.user == null) {
+                if ($scope.user == null && authorization.getAccessToken() == null) {
                     if (typeof $scope.verse.number != 'undefined') {
                         var verseId = parseInt($scope.query_chapter_id * 1000) + parseInt($scope.verse.number);
                         $timeout(function () {
@@ -692,6 +699,7 @@ angular.module('ionicApp')
             $timeout(function () {
                 $scope.scrollToElmnt(verseElement);
                 $scope.hideProgress("goToChapter");
+                $scope.hideProgress("homeInitialize");
             });
         };
 
@@ -1283,9 +1291,9 @@ angular.module('ionicApp')
 
         $scope.initializeHomeController = function () {
 
+            $scope.checkUserLoginStatus();
             $scope.initChapterViewParameters();
             $scope.list_translations();
-            $scope.checkUserLoginStatus();
 
             $scope.$on('login', function handler() {
                 $scope.list_translations();
@@ -1313,8 +1321,10 @@ angular.module('ionicApp')
                 }
             });
 
+            navigationManager.reset();
             $scope.initializeActionSheetButtons();
             $scope.displayTutorial("chapter");
+
         };
 
         $scope.initializeActionSheetButtons = function(){

@@ -162,7 +162,7 @@
                 //mobil scope değişti
                 //theView
                 //var tidBlock = angular.element(document.getElementById('theView')).scope().translationDivMap[data[_j].translationId];
-                var tidBlock = annotator.getTranslationDivMap(data[_j].translationId);
+                var tidBlock = this.annotator.getTranslationDivMap(data[_j].translationId);
 
                 if(typeof  tidBlock == 'undefined'){
                     tidBlock = "";
@@ -241,7 +241,7 @@
                     'Content-Type': 'application/json; charset=utf-8'
                 });
 
-                var queryParams = annotator.getQueryParameters();
+                var queryParams = this.annotator.getQueryParameters();
                 var _chapter = queryParams.chapter;
                 var _verses = queryParams.verses;
                 var _author = queryParams.author_mask;

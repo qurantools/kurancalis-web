@@ -45,7 +45,7 @@
                         url: config_data.webServiceUrl+"/users",
                         data: "fb_access_token="+values['access_token'],
                         processData: false,
-                        success: function(msg) {
+                        success: function(msg) { //
                             window.localStorage.setItem("ls.access_token", msg.token);
                             window.location = config_data.mobileAddress;
                         },

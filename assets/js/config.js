@@ -18,11 +18,12 @@ var config_data = {
     'isMobile':isMobile(),
     'isNative':isNative(),
     'isAndroid':isAndroid(),
-    'isIOS':isIOS()
+    'isIOS':isIOS(),
+    'translationTableCount': 132830
 }
 
 var MAX_AUTHOR_MASK = "18446744073709551615"; //64 authors
-var DEFAULT_TURKISH_AUTHOR_MASK = "523794";
+var DEFAULT_TURKISH_AUTHOR_MASK = "412317382160";
 var DIYANET_AUTHOR_ID = "8192";
 
 function isMobile() {

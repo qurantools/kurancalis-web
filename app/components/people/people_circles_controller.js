@@ -1,5 +1,5 @@
 var mymodal = angular.module('ionicApp')
-    .controller('PeopleCirclesCtrl', function ($scope, $routeParams, Facebook, Restangular, localStorageService, $window, $timeout, $ionicModal, $ionicPopup) {
+    .controller('PeopleCirclesCtrl', function ($scope, $routeParams, Facebook, Restangular, localStorageService, $window, $timeout, $ionicModal, $ionicPopup, navigationManager) {
 
         $scope.testData = "circles";
         $scope.ackapakisi = true;
@@ -461,6 +461,7 @@ var mymodal = angular.module('ionicApp')
 
         //definitions are finished. Now run initialization
         $scope.initializePeopleCircles();
+        navigationManager.reset();
 
     });
 

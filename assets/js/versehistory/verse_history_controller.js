@@ -1,5 +1,5 @@
 angular.module('ionicApp')
-    .controller('VerseHistoryCtrl', function ($scope, Restangular, $ionicModal,localStorageService) {
+    .controller('VerseHistoryCtrl', function ($scope, Restangular, $ionicModal,localStorageService,navigationManager) {
 
         $scope.history = [];
         $scope.authorOfHistory = null;
@@ -65,15 +65,10 @@ angular.module('ionicApp')
             });
         };
 
-        $scope.openModal = function(id){
-            if (id == 'verse_history'){
-                $scope.verse_history_modal.show();
-            }
-        };
 
         $scope.closeModal = function(id){
             if (id == 'verse_history'){
-                $scope.verse_history_modal.hide();
+                navigationManager.closeModal($scope.verse_history_modal);
             }
         };
 
@@ -92,7 +87,11 @@ angular.module('ionicApp')
                 $scope.fetchVerseHistory($scope.authorOfHistory, 0);
 
                 if (config_data.isMobile){
-                    $scope.openModal('verse_history');
+                    navigationManager.openModal({
+                        broadcastFunction : "open_verse_history",
+                        args : args,
+                        modal: $scope.verse_history_modal
+                    });
                 }
             });
 

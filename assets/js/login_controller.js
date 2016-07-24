@@ -12,22 +12,4 @@ angular.module('ionicApp')
             }
         }
 
-        $scope.onFacebookLoginSuccess = function(responseData){
-            if (responseData.loggedIn == false) {
-                $scope.loggedIn = false;
-                $scope.logOut();
-            } else {
-                $scope.access_token = responseData.token;
-                $scope.user = responseData.user;
-                $scope.loggedIn = true;
-
-                $scope.$broadcast('login', responseData);
-                $scope.$broadcast('userInfoReady');
-                $location.path('translations/');
-            }
-        };
-
-        $scope.facebookSignOut = function () {
-            authorization.facebookSignOut($scope.onFacebookLogOutSuccess);
-        }
     });

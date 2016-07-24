@@ -1,7 +1,7 @@
 /**
  * Created by mehmet.gungoren on 04.04.2016.
  */
-angular.module('ionicApp').controller('VerseListController', function ($scope, $timeout, Restangular, dataProvider, $routeParams, $ionicModal, $ionicPopup, localStorageService) {
+angular.module('ionicApp').controller('VerseListController', function ($scope, $timeout, Restangular, dataProvider, $routeParams, $ionicModal, $ionicPopup, localStorageService, navigationManager) {
 
     console.log("verse list ctrl");
     $scope.selectedVerseList = {};
@@ -324,6 +324,7 @@ angular.module('ionicApp').controller('VerseListController', function ($scope, $
         },200);
         $scope.localVerseListSelection = [];
         $scope.localStorageManager.initializeScopeVariables($scope,{});
+        navigationManager.reset();
     };
 
     $scope.initVerseListController();

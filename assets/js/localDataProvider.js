@@ -1,4 +1,4 @@
-angular.module('ionicApp').factory("localDataProvider", function (Restangular, $ionicPlatform, $cordovaSQLite) {
+angular.module('ionicApp').factory("localDataProvider", function (Restangular, $ionicPlatform, $cordovaSQLite,$timeout) {
 
     var factory = {};
     factory.db = null;
@@ -7,19 +7,62 @@ angular.module('ionicApp').factory("localDataProvider", function (Restangular, $
     factory.initDB = function(rt) {
         var dbName = "kurancalis.db";
         window.plugins.sqlDB.copy(dbName, 0, function () {
+            console.log("DB copied");
             factory.db = $cordovaSQLite.openDB(dbName);
             rt.$broadcast('db.init.finish');
             rt.sqliteDbInit = true;
         }, function (error) {
+            console.log("Error on copy. May be already exist");
+            //may be already exists
+            //if it is old, update it
             factory.db = $cordovaSQLite.openDB(dbName);
-            rt.$broadcast('db.init.finish');
-            rt.sqliteDbInit = true;
+            //check version
+
+            var resultSet = [];
+            //var query = "SELECT name FROM sqlite_master WHERE type='table'";
+            var query = "SELECT count(*) as c FROM translation ";
+            console.log("Executing query");
+            $cordovaSQLite.execute(factory.db, query).then(function(res) {
+                console.log("query executed: "+res.rows.length);
+                for (var i = 0; i < res.rows.length; i++){
+                    var item = res.rows.item(i);
+                    console.log(item);
+                }
+
+                if( res.rows.item(0).c != config_data.translationTableCount){
+                    //db is old
+                    console.log("DB is old trying to delete.");
+                    $cordovaSQLite.deleteDB(dbName);
+                    console.log("Deleted DB. Now retry init");
+                    factory.initDB(rt);
+                    /*
+                    window.plugins.sqlDB.remove(dbName, 0, function () {
+                    },
+                    function(error){
+                        console.log("Could not Delete DB. This is unexpected");
+                    });
+                    */
+                }
+                else{
+                    console.log("DB is already up to date");
+                    rt.$broadcast('db.init.finish');
+                    rt.sqliteDbInit = true;
+                }
+            }, function (err) {
+                console.log("can not query DB. This is unexpected. Deleting the DB");
+                console.log(err);
+                $cordovaSQLite.deleteDB(dbName);
+                console.log("Deleted DB. Now retry init");
+                factory.initDB(rt);
+            });
+
+
         });
     };
 
     factory.listAuthors = function (callback) {
         var resultSet = [];
-        var query = "SELECT * FROM author a order by a.display_order";
+        var query = "SELECT * FROM author a where a.color!= -1 order by a.display_order";
         $cordovaSQLite.execute(factory.db, query).then(function(res) {
             for (var i = 0; i < res.rows.length; i++){
                 var item = res.rows.item(i);

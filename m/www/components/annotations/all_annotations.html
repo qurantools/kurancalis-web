@@ -45,16 +45,6 @@
                                 </div>
                             </div>
 
-                            <div ng-if="annotationSearchAuthorSelection.length>0">
-                                <div style="float:left;"><strong>Yazar:</strong></div>
-                                <div ng-repeat="authorSearch in annotationSearchAuthorSelection" style="float: left">
-                    <span ng-repeat="author in authors" ng-if="author.id==authorSearch"
-                          style="float: left; padding-left:5px">
-                        {{author.name}}
-                    </span>{{$last ? '' : ', '}}
-                                </div>
-                            </div>
-
                         </div>
                     </div>
                     <div style="clear: both">&nbsp;</div>

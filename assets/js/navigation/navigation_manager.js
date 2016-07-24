@@ -16,23 +16,36 @@ angular.module('ionicApp').factory("navigationManager", function ($rootScope, $t
 
     var modalHistory = [];
 
-    factory.storeModal = function (args) {
-        modalHistory.push(args);
+    factory.openModal = function (data) {
+        var length = modalHistory.length;
+        if (length>0){
+            var currentModalData = modalHistory[length-1];
+            currentModalData.modal.hide();
+        }
+        modalHistory.push(data);
+        data.modal.show();
     };
 
-    factory.closeMe = function () {
-        /*if (modalHistory.length == 0)
-            return;
-        if (modalHistory.length == 1){
-            modalHistory.pop();
-            return;
+    factory.closeModal = function () {
+
+        var currentModalData = modalHistory.pop(); //remove current modal
+        var currentModal = currentModalData.modal;
+        if (modalHistory.length != 0){
+            var previousModalData = modalHistory.pop(); //remove previous modal
+
+            $timeout(function(){
+                $rootScope.$broadcast(previousModalData.broadcastFunction, previousModalData.args);
+            });
         }
-        modalHistory.pop(); //remove last item
-        var lastItem = modalHistory[modalHistory.length-1];
-        $timeout(function(){
-            $rootScope.$broadcast(lastItem.broadcastFunction, lastItem.data);
-        });*/
+        currentModal.hide();
     };
+
+    factory.reset = function (){
+        for (var i in modalHistory){
+            modalHistory[i].modal.hide();
+        }
+        modalHistory = [];
+    }
 
     return factory;
 });

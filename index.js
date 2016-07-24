@@ -100,6 +100,7 @@ var app = angular.module('ionicApp', requiredModules)
     .filter('mark_verse_annotation', [
         function () {
             return function (translation, annotation, markVerseAnnotations) {
+                //TODO: too much cpu consuming
                 if (markVerseAnnotations == true && annotation.ranges[0] != undefined) {
                     var startOffset = annotation.ranges[0].startOffset;
                     var endOffset = annotation.ranges[0].endOffset;
@@ -672,7 +673,7 @@ app.factory('ChapterVerses', function ($resource) {
     console.log("MainCtrl");
 
     //all root scope parameters should be defined and documented here
-    $scope.access_token = "";
+    $scope.access_token = null;
     $scope.loggedIn = false;
     $scope.verseTagsJSON = {};
     $scope.chapter_id = 1;
@@ -711,7 +712,7 @@ app.factory('ChapterVerses', function ($resource) {
     $scope.shareUrl = "";
     $scope.shareTitle = "";
 
-    //    $scope.user = null;
+    $scope.user = null;
     $scope.isConnected= true;
     $scope.modal_editor = null;
     $scope.author_mask = 8208;
@@ -874,8 +875,6 @@ app.factory('ChapterVerses', function ($resource) {
             $scope.user = responseData.user;
             $scope.loggedIn = true;
 
-            $scope.initializeCircleLists();
-
             $scope.$broadcast('login', responseData);
             $scope.$broadcast('userInfoReady');
         }
@@ -886,7 +885,7 @@ app.factory('ChapterVerses', function ($resource) {
         if (responseData.loggedOut == true) {
 
             $scope.verseTagsJSON = {};
-            $scope.access_token = "";
+            $scope.access_token = null;
             $scope.loggedIn = false;
             $scope.user = null;
 
@@ -932,26 +931,23 @@ app.factory('ChapterVerses', function ($resource) {
         }
     );
     $scope.checkUserLoginStatus = function () {
-        var status = false;
-        var access_token = authorization.getAccessToken();
+        var access_token = authorization.getAccessToken(); //check from local storage
         if (access_token != null && access_token != "") {
-            $scope.access_token = access_token;
-            $scope.get_user_info();
-            $scope.loggedIn = true;
+            if($scope.access_token  == null){ //this means already logged in but just initializing or
+                                                //mobile web facebook login with redirection.
 
-            status = true;
+            }
+            $scope.get_user_info(access_token);
 
-            //Show Circles - Kullanıcı login olduğunda çevre listesi çekilir.
-            $scope.initializeCircleLists();
-            $scope.initializeVerseLists();
+
         }
         else {
             $scope.loggedIn = false;
             //do some cleaning
         }
 
-        console.log("checkUserLoginStatus:"+status);
-        return status;
+        console.log("checkUserLoginStatus(may be pending verification):"+$scope.loggedIn);
+        return $scope.loggedIn;
     };
 
     $scope.goToVerseParameters.setSelectedChapter = function (chapter) {
@@ -961,13 +957,25 @@ app.factory('ChapterVerses', function ($resource) {
 
     //get user info
 
-    $scope.get_user_info = function () {
+    $scope.get_user_info = function (system_access_token) {
+
+        if($scope.user != null && $scope.loggedIn == true){
+            return;
+        }
         var usersRestangular = Restangular.all("users");
         //TODO: document knowhow: custom get with custom header
-        usersRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (user) {
+        usersRestangular.customGET("", {}, {'access_token': system_access_token}).then(function (user) {
                 console.log("User info retrieved");
-                $scope.user = user;
-                $scope.$broadcast('userInfoReady');
+                if($scope.access_token == null){
+                    $scope.access_token = system_access_token;
+                    console.log("scope acces_token set");
+                }
+                if($scope.user == null && $scope.loggedIn != true){
+                    $scope.user = user;
+                    $scope.loggedIn = true;
+                    $scope.$broadcast('userInfoReady');
+
+                }
             },
             function(response) {
                 console.error("Could not get user info");
@@ -997,7 +1005,7 @@ app.factory('ChapterVerses', function ($resource) {
                         }
                         else{ //there is connection, it is logged in, retry every 2 secs.
                             $timeout(function () {
-                                $scope.get_user_info();
+                                $scope.get_user_info(system_access_token);
                             }, 2000);
 
                         }
@@ -1614,11 +1622,14 @@ app.factory('ChapterVerses', function ($resource) {
             }
         });
 
-        if (!$scope.checkUserLoginStatus() && !$scope.isAllowUrlWithoutLogin()){
-            console.log("go to login path");
-            //deferred for later.
-            //$location.path('/login/');
-        }
+        $scope.$on("userInfoReady",function(){
+            //Show Circles - Kullanıcı login olduğunda çevre listesi çekilir.
+            $scope.initializeCircleLists();
+            $scope.initializeVerseLists();
+        });
+
+        $scope.checkUserLoginStatus();
+
     };//end of init controller
 
     $scope.isAllowUrlWithoutLogin = function(){
@@ -1639,17 +1650,11 @@ app.factory('ChapterVerses', function ($resource) {
         $scope.progressOperation=operationName;
         if(config_data.isMobile){
             $scope.clickBlocking = true;
-            /*    if (window.cordova && window.cordova.plugins){
-
-             SpinnerDialog.show("","",$scope.hideProgress);
-             }
-             else{*/
             $ionicLoading.show({
                 template: 'Yükleniyor...',
                 delay:100,
                 duration:1000
             });
-            //}
         }
     };
 

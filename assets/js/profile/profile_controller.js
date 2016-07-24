@@ -1,5 +1,5 @@
 angular.module('ionicApp')
-    .controller('ProfileController', function ($scope, $routeParams, Restangular, $location, $ionicPopup, $ionicModal, $window ) {
+    .controller('ProfileController', function ($scope, $routeParams, Restangular, $location, $ionicPopup, $ionicModal, $window, navigationManager ) {
 
         $scope.friendName = "";
         $scope.circleId = -1;
@@ -254,7 +254,7 @@ angular.module('ionicApp')
         };
 
         $scope.openVerseDetail = function(verseId, userId, userName){
-            $scope.showVerseDetail(verseId, [{id: userId, name : userName}], $scope.selectedCircles);
+            $scope.showVerseDetail(verseId, [], $scope.selectedCircles);
         };
 
         $scope.doVoteInProfile = function (feed, content){
@@ -294,11 +294,15 @@ angular.module('ionicApp')
                 $scope.circleId = $routeParams.circleId;
                 $scope.circleListForTimeline = parseInt($scope.circleId);
                 $scope.selectedCircles = [];
-                $scope.selectedCircles.push($scope.extendedCirclesForSearch[$scope.getIndexOfArrayByElement($scope.extendedCirclesForSearch, 'id', $scope.circleId)]);
+                $scope.$on("circleLists ready",function(){
+                    $scope.selectedCircles.push($scope.extendedCirclesForSearch[$scope.getIndexOfArrayByElement($scope.extendedCirclesForSearch, 'id', $scope.circleId)]);
+                });
                 $scope.showProgress("fetchCircleFeeds");
                 $scope.fetchCircleFeeds($routeParams.circleId, 0);
                 return;
             }
+
+            navigationManager.reset();
         };
 
         $scope.initializeProfileController();

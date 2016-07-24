@@ -1,5 +1,5 @@
 angular.module('ionicApp')
-    .controller('TaggedVerseCtrl', function ($scope, $timeout, Restangular, $location, $ionicModal, $ionicScrollDelegate,localStorageService) {
+    .controller('TaggedVerseCtrl', function ($scope, $timeout, Restangular, $location, $ionicModal, $ionicScrollDelegate,localStorageService, navigationManager) {
 
         $scope.taggedVerseCircles = [];
         $scope.taggedVerseUsers = [];
@@ -128,7 +128,7 @@ angular.module('ionicApp')
 
         $scope.closeModal = function (item){
             if (item == 'tagged_verse'){
-                $scope.tagged_verse_modal.hide();
+                navigationManager.closeModal($scope.tagged_verse_modal);
             }else if (item == 'tagged_verse_detailed_search'){
                 $scope.tagged_verse_detailed_search.hide();
             }else if (item == 'friendsearch'){
@@ -225,7 +225,13 @@ angular.module('ionicApp')
 
                 $scope.goToVerseTag(args.verseId, args.tag);
                 if (config_data.isMobile){
-                    $scope.tagged_verse_modal.show();
+                    if (config_data.isMobile) {
+                        navigationManager.openModal({
+                            broadcastFunction : "tagged_verse_modal",
+                            args : args,
+                            modal: $scope.tagged_verse_modal
+                        });
+                    }
                 }
             });
         };

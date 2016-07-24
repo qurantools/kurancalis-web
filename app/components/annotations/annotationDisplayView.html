@@ -1,7 +1,7 @@
 <body>
     <div ng-include="'app/components/partials/off_canvas_menu.html'"></div>
     <div class="container">
-        <div ng-include="'app/components/partials/navigation.html'"></div>
+        <div ng-include="'app/components/partials/annotationDisplayViewNavigation.html'"></div>
         <div ng-if="authorizedAnnotationDisplay == 1" style="margin-top: 60px">
             <div class="box" ng-if="annotation != null">
                 <div class="s_a_header">
@@ -188,7 +188,7 @@
                 <tr>
                     <td align="center" style="padding-right: 15px; padding-left: 15px; padding-bottom: 15px;
                     width: 1050px; padding-top: 15px; background-color:#fff6dc">
-                        <strong>Bu çıkarımı görüntüleme yetkisine sahip değilsiniz! <br>
+                        <strong>Bu notu görüntüleme yetkisine sahip değilsiniz! <br>
                             Henüz giriş yapmadınız ya da not sizinle paylaşılmadı</strong>
                     </td>
                 </tr>

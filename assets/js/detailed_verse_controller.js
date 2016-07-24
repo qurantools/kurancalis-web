@@ -205,9 +205,11 @@ angular.module('ionicApp')
 
         $scope.showEditor = function (annotation, position) {
             $scope.showEditorModal(annotation, position, $scope.submitEditor, function(){
+                $scope.detailed_verse_modal.show();
                 detailedAnnotator.publish('annotationEditorCancel');
                 detailedAnnotator.onEditorHide();
             });
+            $scope.detailed_verse_modal.hide();
         };
 
         $scope.editAnnotation = function (index){
@@ -389,6 +391,7 @@ angular.module('ionicApp')
                 $scope.addVerseToVerseList($scope.verseId, $scope.closeModal);
                 $scope.modal_verse_selection.show();
             } else if (item == 'go_to_verse') {
+                navigationManager.reset(); //navigation history should be cleared
                 $location.path("/translations").search(
                     {
                         chapter: $scope.goToVerseParameters.chapter.id,
@@ -396,7 +399,7 @@ angular.module('ionicApp')
                     }
                 );
                 $scope.scopeApply();
-                $scope.closeModal('detailed_verse_modal');
+
             } else if (item == 'bookmark') {
                 $scope.openAddBookMarkModal($scope.verseId);
                 $scope.bookmarkModal.show();
@@ -411,10 +414,9 @@ angular.module('ionicApp')
 
         $scope.closeModal = function (item){
             if (item == 'detailed_verse_modal'){
-                $scope.detailed_verse_modal.hide();
-                navigationManager.closeMe();
+                navigationManager.closeModal($scope.detailed_verse_modal);
             }else if (item == 'tagged_verse_modal'){
-                $scope.tagged_verse_modal.hide();
+                navigationManager.closeModal($scope.tagged_verse_modal);
             }else if (item == 'tagged_verse_detailed_search'){
                 $scope.tagged_verse_detailed_search.hide();
             }else if (item == 'friendsearch'){
@@ -475,6 +477,7 @@ angular.module('ionicApp')
 
         $scope.submitEditor = function (annotationModalData) {
             $timeout(function () {
+                $scope.detailed_verse_modal.show();
                 detailedAnnotator.publish('annotationEditorSubmit', [detailedAnnotator.editor, annotationModalData]);
                 $scope.editorSubmitted = 1;
                 detailedAnnotator.onEditorHide();
@@ -483,6 +486,7 @@ angular.module('ionicApp')
                     $scope.scopeApply();
                 },50);
             },370);
+
         };
 
         $scope.initializeDetailedVerseController = function () {
@@ -577,19 +581,17 @@ angular.module('ionicApp')
 
                 //retrieve author mask from local or default
                 $scope.localStorageManager.initializeScopeVariables($scope,{});
-                navigationManager.storeModal({
-                    broadcastFunction : "open_verse_detail",
-                    data : {
-                        chapterVerse: $scope.verseId,
-                        circles:$scope.detailedVerseCircles,
-                        users:$scope.detailedVerseUsers
-                    }
-                });
+
                 $scope.setDetailedSearchAuthorSelection($scope.detailed_query_author_mask);
 
                 $scope.goToVerseDetail();
+
                 if (config_data.isMobile) {
-                    $scope.detailed_verse_modal.show();
+                    navigationManager.openModal({
+                        broadcastFunction : "open_verse_detail",
+                        args : args,
+                        modal: $scope.detailed_verse_modal
+                    });
                 }
             });
         };

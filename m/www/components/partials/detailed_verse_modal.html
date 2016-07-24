@@ -1,13 +1,13 @@
 <div class="modal modal-fullscreen" id="detailedVerseModal">
     <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced" align-title="center">
-        <ion-nav-buttons side="left">
+        <ion-nav-buttons side="left" data-tap-disabled="true">
             <button class="button button-icon icon-left ion-close-circled"
                     ng-click="closeModal('detailed_verse_modal');"
                     style="float: left"/>
-            <button class="button button-icon icon ion-plus" onclick="annotator.checkForStartSelection({ pageX : 300, pageY: 300});annotator.checkForEndSelection({ pageX : 300, pageY: 300});"></button>
+            <button class="button button-icon icon ion-plus" onclick="detailedAnnotator.checkForStartSelection({ pageX : 300, pageY: 300});detailedAnnotator.checkForEndSelection({ pageX : 300, pageY: 300});"></button>
         </ion-nav-buttons>
         <ion-nav-title>Ayet inceleme</ion-nav-title>
-        <ion-nav-buttons side="right">
+        <ion-nav-buttons data-tap-disabled="true" side="right">
             <a href ng-click="openVerseHistory()" class="button button-icon icon fa fa-history" ng-if="user!=null"></a>
             <button class="button button-icon button-clear ion-more" ng-click="openFooterMenu()"/>
         </ion-nav-buttons>
