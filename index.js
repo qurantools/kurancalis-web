@@ -970,7 +970,7 @@ app.factory('ChapterVerses', function ($resource) {
                     $scope.access_token = system_access_token;
                     console.log("scope acces_token set");
                 }
-                if($scope.user == null && $scope.loggedIn != true){
+                if($scope.user == null){
                     $scope.user = user;
                     $scope.loggedIn = true;
                     $scope.$broadcast('userInfoReady');
@@ -1519,6 +1519,7 @@ app.factory('ChapterVerses', function ($resource) {
             $scope.internet_display_style = {"background-color": "orange"};
             $scope.internet_display_message = "Bağlantınız yok. Yapabileceğiniz işlemler kısıtlıdır.";
             $scope.isConnected= false;
+
         });
 
         if (config_data.isMobile) {

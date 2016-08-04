@@ -4,7 +4,7 @@
             <ion-nav-buttons side="left">
                 <button class="button button-icon icon ion-arrow-left-b" ng-click="navigateTo('/people/home/')">Kişiler</button>
             </ion-nav-buttons>
-            <ion-nav-title>Facebook Arkadaşlarım</ion-nav-title>
+            <ion-nav-title>Kişi Önerileri</ion-nav-title>
         </ion-nav-bar>
         <ion-nav-view name="appContent"></ion-nav-view>
         <!-- end of side menu part 1 -->
@@ -12,6 +12,24 @@
             <ion-content overflow-scroll="true" delegate-handle="content" class="scroll_content"
                          style="margin-top:80px;">
                 <ion-list>
+                    <div class="item item-divider">
+                        Çok Çalışanlar
+                    </div>
+                    <ion-item ng-repeat="item in recommendations" item="item item-avatar" class="item-icon-right" style="padding: 5px 0px 5px 5px;">
+                    <div class="row" style="align-items: center;">
+                        <div id="{{item.fbId}}" style="width: 10px;border-width: 0;margin-right: 40px;">
+                            <label class="checkbox" ng-click="people_add(item.fbId,secimyap)">
+                                <input type="checkbox" ng-model="secimyap">
+                            </label>
+                        </div>
+                        <img width="50px" height="50px" src={{item.photo}} style="margin-right: 20px;">
+                        <a  href="" ng-click="navigateTo('/profile/user/{{item.username}}/')" style="color: darkblue;text-decoration: none;">{{item.name}}</a>
+                        <i class="icon ion-close" ng-click="hideRecommendation(item.id)"></i>
+                    </div>
+                    </ion-item>
+                    <div class="item item-divider">
+                        Facebook Arkadaşlarım
+                    </div>
                     <ion-item ng-repeat="item in fb_friends" item="item item-avatar" style="padding: 5px 0px 5px 5px;">
                         <div class="row" style="align-items: center;">
                             <div id="{{item.fbId}}" style="width: 10px;border-width: 0;margin-right: 40px;">

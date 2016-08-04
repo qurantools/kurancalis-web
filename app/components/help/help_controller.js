@@ -85,6 +85,10 @@ angular.module('ionicApp')
         $scope.selectedMenu = -1;
 
         $scope.runHelpModal = function(id, isCallFromHelpMenu){
+
+           if (!config_data.isNative){
+               return;
+           }
            if (!isCallFromHelpMenu){
                var isRunBefore = localStorageService.get('help_modal_tutorial_' + id);
                if (isRunBefore === null){

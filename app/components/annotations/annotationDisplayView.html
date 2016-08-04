@@ -50,7 +50,7 @@
                     </div>
                 </div>
             </div>
-            <h6 align="left" style="width: 1024px" ng-if="annotation.comments.length>0">Yorumlar</h6>
+            <h6 align="left" style="width: 1024px">Yorumlar</h6>
             <div ng-repeat="comment in annotation.comments" style="width: 100%;border-radius: 15px;padding-top: 10px !important;" align="left" class="row well">
                 <div class="col-lg-1">
                     <a href="" ng-click="navigateTo('/profile/user/{{comment.owner.user_id}}/')">

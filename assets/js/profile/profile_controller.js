@@ -11,6 +11,7 @@ angular.module('ionicApp')
         $scope.hasMoreData = false;
         $scope.selectedCircles = [];
         $scope.selectedUsers = [];
+        $scope.recommendations = [];
 
         $scope.fetchFriendFeeds = function(friendName, start){
             if ($scope.isLoading)
@@ -71,6 +72,16 @@ angular.module('ionicApp')
             }
             userRestangular.customGET("", $scope.userParams, {'access_token': $scope.access_token}).then(function (data) {
                 $scope.profiledUser = data;
+            }, function (err){
+
+            });
+        };
+
+        $scope.fetchUserRecommendations = function(){
+            var userRestangular = Restangular.one("users/recommendations");
+            $scope.recommendations = [];
+            userRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (data) {
+                $scope.recommendations = data;
             }, function (err){
 
             });
@@ -242,6 +253,31 @@ angular.module('ionicApp')
             }
         };
 
+        $scope.addRecommendationToCircle = function(user_id){
+            $scope.$broadcast("add_user_to_circle", {callback:function(circle){
+                $scope.closeModal("circle_selection");
+                $scope.fetchUserRecommendations();
+            }, users: [{'kisid': user_id, 'drm': true}]});
+            $scope.modal_circle_selection.show();
+        };
+
+        //hide user from recommendations
+        $scope.hideRecommendation = function(user_id){
+            var recommendationRejectRestangular = Restangular.all("users/recommendations/hide");
+            if (user_id > 0) {
+                var headers = {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'access_token': $scope.access_token
+                };
+                var postData = [];
+                postData.push(encodeURIComponent("user_id") + "=" + user_id);
+                var data = postData.join("&");
+                recommendationRejectRestangular.customPOST(data, '', '', headers).then(function(response) {
+                    $scope.fetchUserRecommendations();
+                });
+            }
+        };
+
         $scope.closeModal = function(id){
             if (id == 'friendsearch'){
                 if ($scope.query_users.length > 0){
@@ -282,6 +318,8 @@ angular.module('ionicApp')
                     $scope.modal_circle_selection = modal
                 });
             }
+            navigationManager.reset();
+
             if (typeof $routeParams.friendName !== 'undefined') {
                 $scope.friendName = $routeParams.friendName;
                 $scope.showProgress("fetchFriendFeeds");
@@ -298,12 +336,18 @@ angular.module('ionicApp')
                     $scope.selectedCircles.push($scope.extendedCirclesForSearch[$scope.getIndexOfArrayByElement($scope.extendedCirclesForSearch, 'id', $scope.circleId)]);
                 });
                 $scope.showProgress("fetchCircleFeeds");
+                $scope.fetchUserRecommendations();
                 $scope.fetchCircleFeeds($routeParams.circleId, 0);
                 return;
             }
 
-            navigationManager.reset();
+
         };
 
-        $scope.initializeProfileController();
+        if($scope.access_token==null){
+            $scope.$on("userInfoReady",$scope.initializeProfileController);
+        }
+        else{
+            $scope.initializeProfileController();
+        }
     });

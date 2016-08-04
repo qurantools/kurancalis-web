@@ -1,19 +1,14 @@
 angular.module('ionicApp')
     .controller('PeopleFindCtrl', function ($scope, $routeParams, Facebook, Restangular, localStorageService, $ionicModal) {
        
-       var value = [];
-       var select_circle;
-       $scope.visible_hidden = true;
+        var value = [];
+        var select_circle;
+        $scope.visible_hidden = true;
         $scope.checkUserLoginStatus();
-       
-       //View friends
-        var peopleRestangular = Restangular.one("users").all("friends");
-            peopleRestangular.customGET("", "", {'access_token': $scope.access_token}).then(function (friends) {
+        $scope.recommendations = [];
+        $scope.fb_friends =[];
 
-                $scope.fb_friends = friends;
-            });
 
-        
         //Checkbox click
            $scope.people_add = function (people_id, status) {
 
@@ -79,7 +74,7 @@ angular.module('ionicApp')
                     var people_addRestangular = Restangular.one("circles", select_circle).all("users").all("fbfriend");
 
                     people_addRestangular.customPOST(data, '', '', headers).then(function (added) {
-                        
+                        $scope.fetchUserRecommendations();
                     });
 
                 }
@@ -142,7 +137,38 @@ angular.module('ionicApp')
             }
         };
 
+        $scope.fetchUserRecommendations = function(){
+            $scope.showProgress("fetchUserRecommendations");
+            var userRestangular = Restangular.one("users/recommendations");
+            $scope.recommendations = [];
+            userRestangular.customGET("", {start:0,limit:10}, {'access_token': $scope.access_token}).then(function (data) {
+                $scope.recommendations = data;
+                $scope.hideProgress("fetchUserRecommendations");
+            }, function (err){
+
+            });
+        };
+
+        //hide user from recommendations
+        $scope.hideRecommendation = function(user_id){
+            var recommendationRejectRestangular = Restangular.all("users/recommendations/hide");
+            if (user_id > 0) {
+                var headers = {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'access_token': $scope.access_token
+                };
+                var postData = [];
+                postData.push(encodeURIComponent("user_id") + "=" + user_id);
+                var data = postData.join("&");
+                recommendationRejectRestangular.customPOST(data, '', '', headers).then(function(response) {
+                    $scope.fetchUserRecommendations();
+                });
+            }
+        };
+
+
         $scope.init = function () {
+
             if (config_data.isMobile){
                 $ionicModal.fromTemplateUrl('components/partials/add_user_to_circle.html', {
                     scope: $scope,
@@ -152,8 +178,23 @@ angular.module('ionicApp')
                     $scope.modal_circle_selection = modal
                 });
             };
+
+            //View friends
+            var peopleRestangular = Restangular.one("users").all("friends");
+            peopleRestangular.customGET("", "", {'access_token': $scope.access_token}).then(function (friends) {
+
+                $scope.fb_friends = friends;
+            });
+
+            $scope.fetchUserRecommendations();
         };
 
-        $scope.init();
+        $scope.showProgress("fetchUserRecommendations");
+        if($scope.access_token==null){
+            $scope.$on("userInfoReady",$scope.init);
+        }
+        else{
+            $scope.init();
+        }
     });
     

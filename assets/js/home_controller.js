@@ -1335,6 +1335,7 @@ angular.module('ionicApp')
             var butonFiltre = {text: '<i class="icon fa fa-search"></i> Notları Filtrele' };
             var butonAyraclar = {text: '<i class="icon ion-android-bookmark"></i> Ayraçlar' };
             var buttonVerseHistory = {text: '<i class="icon fa fa-history"></i> Ayet Geçmişi' };
+
             $scope.actionSheetButtons.push(butonCeviri);
             $scope.actionSheetButtons.push(butonSureAyet);
             if($scope.loggedIn) {
@@ -1368,6 +1369,9 @@ angular.module('ionicApp')
             if ($scope.user == null)
                 return;
             $timeout(function() {
+                //TODO: initialize action sheet according to login status
+                //var buttonDetailedVerse = {text: '<i class="icon fa fa-history"></i> Ayet İnceleme' };
+                //var buttonVerseAnnotations = {text: '<i class="icon fa fa-history"></i> Ayete Ait Notlar' };
                 $ionicActionSheet.show({
                     buttons: [
                         {text: 'Burada Kaldım'},

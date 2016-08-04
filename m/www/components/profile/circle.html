@@ -15,9 +15,24 @@
         <ion-nav-view>
             <ion-content overflow-scroll="true" delegate-handle="content"  class="scroll_content"
                          style="margin-top:66px;">
+                <ion-list>
+                    <div class="item item-divider" style="">
+                        Öneriler - Kimleri çevreye eklemeli
+                        <button class="button button-light button-small" style="float: right" ng-click="navigateTo('/people/find_people/')" >Daha Fazla</button>
+                    </div>
+                    <ion-item ng-repeat="recommendedUser in recommendations" class="item-icon-right" style="min-height: 40px; padding-top: 2px; padding-bottom: 2px; vertical-align: middle" item-height="10" ng-style="{'height': '10px'}" >
+
+                        <img style="max-height: 30px; max-width: 30px" ng-src="{{recommendedUser.photo}}" ng-click="navigateTo('/profile/user/{{recommendedUser.id}}')">
+                        <a  href="" ng-click="navigateTo('/profile/user/{{recommendedUser.username}}/')" style="color: darkblue;text-decoration: none;">{{recommendedUser.name}}</a>
+
+                        <button class="button button-positive button-small" style="float: right" ng-click="addRecommendationToCircle(recommendedUser.id)">Çevreye Ekle</button>
+                        <i class="icon ion-close" ng-click="hideRecommendation(recommendedUser.id)"></i>
+                    </ion-item>
+                </ion-list>
+                <hr>
                 <div class="item item-input item-select" style="margin-top: 5px;border-width: 1px;border-style: solid;font-size: larger">
-                    <div style="visibility: hidden" class="input-label">
-                        Çevre Seçiniz
+                    <div class="input-label">
+                        Çalışma Sahipleri
                     </div>
                     <select ng-model="circleListForTimeline"
                             ng-options="circle.id as circle.name for circle in extendedCirclesForSearch"
