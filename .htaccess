@@ -11,5 +11,8 @@ RewriteCond %{HTTP_USER_AGENT} (facebookexternalhit/[0-9]|Twitterbot|Pinterest|G
 RewriteRule inference/display/(\d*)$ /assets/php/static_view.php?id=$1 [P]
 
 RewriteCond %{HTTP_USER_AGENT} (facebookexternalhit/[0-9]|Twitterbot|Pinterest|Googlebot)
+RewriteRule annotation/display/(\d*)$ /assets/php/static_view.php?page=annotation&id=$1 [P]
+
+RewriteCond %{HTTP_USER_AGENT} (facebookexternalhit/[0-9]|Twitterbot|Pinterest|Googlebot)
 RewriteRule translations/yazar/(\d*)/sure/(\d*)$ /assets/php/static_view.php?page=translations&author=$1&chapter=$2 [P]
 #RewriteRule translations/?author=(\d*)$ /assets/php/static_view.php?page=translations&author=$1 [P]
