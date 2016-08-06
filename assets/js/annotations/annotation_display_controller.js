@@ -152,5 +152,81 @@ angular.module('ionicApp')
             $scope.displayTutorial("annotation");
         };
 
+        $scope.showEditor = function(annotation){
+            annotation.verseId = annotation.verseId;
+            annotation.text = annotation.content;
+            annotation.quote = annotation.quote;
+            annotation.translationId = annotation.translationId;
+            annotation.translationVersion = 1;
+            annotation.annotationId = annotation.id;
+            $scope.showEditorModal(annotation, -1, $scope.updateAnnotation);
+        };
+
+        $scope.deleteAnnotation = function (annotation) {
+            if (config_data.isMobile) {
+                var confirmPopup = $ionicPopup.confirm({
+                    title: 'Ayet Notu Sil',
+                    template: 'Ayet notu silinecektir, onaylıyor musunuz?',
+                    cancelText: 'VAZGEC',
+                    okText: 'TAMAM',
+                    okType: 'button-assertive'
+                });
+                confirmPopup.then(function(res) {
+                    if(res) {
+                        var annotationRestangular = Restangular.one("annotations", annotation.id);
+                        annotationRestangular.customDELETE("", {}, {'access_token': $scope.access_token}).then(function (result) {
+                            if (result.code == '200') {
+                                var annotationIndex = $scope.getIndexOfArrayByElement($scope.feeds, 'id', annotation.id);
+                                if (annotationIndex > -1) {
+                                    $scope.feeds.splice(annotationIndex, 1);
+                                }
+                            }
+                        });
+                    } else {
+                    }
+                });
+            }else{
+                $scope.showAnnotationDeleteModal(annotation, $scope.mdeleteAnnotation);
+            }
+        };
+
+        //update  annotation fro Annotations page
+        $scope.updateAnnotation = function (annotation) {
+            var headers = {'Content-Type': 'application/x-www-form-urlencoded', 'access_token': $scope.access_token};
+            var jsonData = annotation;
+            var postData = [];
+            postData.push(encodeURIComponent("start") + "=" + encodeURIComponent(jsonData.ranges[0].start));
+            postData.push(encodeURIComponent("end") + "=" + encodeURIComponent(jsonData.ranges[0].end));
+            postData.push(encodeURIComponent("startOffset") + "=" + encodeURIComponent(jsonData.ranges[0].startOffset));
+            postData.push(encodeURIComponent("endOffset") + "=" + encodeURIComponent(jsonData.ranges[0].endOffset));
+            postData.push(encodeURIComponent("quote") + "=" + encodeURIComponent(jsonData.quote));
+            // postData.push(encodeURIComponent("content") + "=" + encodeURIComponent(jsonData.content));
+            postData.push(encodeURIComponent("content") + "=" + encodeURIComponent(jsonData.text));
+            postData.push(encodeURIComponent("colour") + "=" + encodeURIComponent(jsonData.colour));
+            postData.push(encodeURIComponent("translationVersion") + "=" + encodeURIComponent(jsonData.translationVersion));
+            postData.push(encodeURIComponent("translationId") + "=" + encodeURIComponent(jsonData.translationId));
+            postData.push(encodeURIComponent("verseId") + "=" + encodeURIComponent(jsonData.verseId));
+            var tags = jsonData.tags.join(",");
+            postData.push(encodeURIComponent("tags") + "=" + encodeURIComponent(tags));
+
+            //Volkan Ekledi
+            var canViewCircles = jsonData.canViewCircles.join(",");
+            postData.push(encodeURIComponent("canViewCircles") + "=" + encodeURIComponent(canViewCircles));
+
+            var canViewUsers = jsonData.canViewUsers.join(",");
+            postData.push(encodeURIComponent("canViewUsers") + "=" + encodeURIComponent(canViewUsers));
+
+            var canCommentCircles = jsonData.canCommentCircles.join(",");
+            postData.push(encodeURIComponent("canCommentCircles") + "=" + encodeURIComponent(canCommentCircles));
+
+            var canCommentUsers = jsonData.canCommentUsers.join(",");
+            postData.push(encodeURIComponent("canCommentUsers") + "=" + encodeURIComponent(canCommentUsers));
+
+            //
+            var data = postData.join("&");
+            var annotationRestangular = Restangular.one("annotations", jsonData.annotationId);
+            return annotationRestangular.customPUT(data, '', '', headers);
+        };
+
         $scope.initializeAnnotationController();
     });

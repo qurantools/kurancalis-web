@@ -417,7 +417,7 @@ angular.module('ionicApp')
             var data = postData.join("&");
             var annotationRestangular = Restangular.one("annotations", jsonData.annotationId);
             return annotationRestangular.customPUT(data, '', '', headers);
-        }
+        };
 
         $scope.initAnnotationsParameters = function () {
             var orderby = "verse";
