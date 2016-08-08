@@ -236,7 +236,7 @@
                                 </a>
                             </div>
                             <div  class="col-lg-10">
-                                <textarea id="comment_textarea_inference_{{comment.comment.id}}" style="width: 100%;height: 51px;border-radius: 9px;background-color: white;"/>
+                                <textarea id="comment_textarea_inference_{{comment.comment.id}}" ng-model="commentContent.value" style="width: 100%;height: 51px;border-radius: 9px;background-color: white;"/>
                             </div>
                             <div class="col-lg-1">
                                 <button type="button" class="btn btn-primary btn-xs"
@@ -255,7 +255,7 @@
                     </a>
                 </div>
                 <div  class="col-lg-10">
-                    <textarea id="comment_textarea_inference" style="margin-top: 1%;width: 100%;height: 51px;border-radius: 9px;background-color: white;"/>
+                    <textarea id="comment_textarea_inference" ng-model="commentContent.value" style="margin-top: 1%;width: 100%;height: 51px;border-radius: 9px;background-color: white;"/>
                 </div>
                 <div class="col-lg-1">
                     <button type="button" class="btn btn-primary btn-xs"
@@ -305,12 +305,12 @@
     <degistirmodal title="Yorum Güncelle" visible="updateCommentFlag">
         <div align="left">
             <div  class="col-lg-10">
-                <textarea id="inference_comment_update_textarea" style="margin-top: 1%;width: 550px;height: 81px;border-radius: 9px;background-color: white;"/>
+                <textarea id="inference_comment_update_textarea" ng-model="commentContentUpdate.value" style="margin-top: 1%;width: 550px;height: 81px;border-radius: 9px;background-color: white;"/>
             </div>
         </div>
         <div class="modal-footer">
+            <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal" >Vazgeç</a>
             <a class="btn btn-primary btn-wide btn-primary" ng-click="updateComment(commentWillUpdateParent, 'inferences', inference_info.id, commentWillUpdate.id, 'inference_comment_update_textarea', commentWillUpdateIndex)" data-dismiss="modal">Güncelle</a>
-            <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal">Vazgeç</a>
         </div>
     </degistirmodal>
 </div>

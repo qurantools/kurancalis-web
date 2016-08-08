@@ -1739,57 +1739,7 @@ app.factory('ChapterVerses', function ($resource) {
         });
     };
 
-    $scope.createComment = function(resource, resource_type, resource_id, content, parent_id, parent_index){
-        var commentRestangular = Restangular.one(resource_type, resource_id).one("comments");
-        var headers = {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'access_token': $scope.access_token
-        };
-        var postData = [];
-        postData.push(encodeURIComponent("content") + "=" + encodeURIComponent(document.getElementById(content).value));
-        if (parent_id != null)
-            postData.push(encodeURIComponent("parent_id") + "=" + encodeURIComponent(parent_id));
-        var data = postData.join("&");
-        commentRestangular.customPOST(data, '', '', headers).then(function (comment) {
-            var temp = {};
-            temp.vote = null;
-            temp.voteRates = {'like':0, 'dislike':0};
-            temp.comment = comment;
-            temp.owner = $scope.user;
-            temp.owner.user_id = $scope.user.id;
-            if (parent_id != null){
-                if (!isDefined(resource.comments[parent_index].comment.childs)){
-                    resource.comments[parent_index].comment.childs = [];
-                    resource.comments[parent_index].showChilds = true;
-                }
-                resource.comments[parent_index].comment.childs.push(temp);
-            }else{
-                resource.comments.push(temp);
-            }
-            document.getElementById(content).value = "";
-        });
-    };
 
-    $scope.deleteComment = function(source, resource_type, resource_id, comment_id, comment_index){
-        var commentRestangular = Restangular.one(resource_type, resource_id).one("comments", comment_id);
-        commentRestangular.customDELETE("", {}, {'access_token': $scope.access_token}).then(function (comment) {
-            source.splice(comment_index,1);
-        });
-    };
-
-    $scope.updateComment = function (source, resource_type, resource_id, comment_id, content, comment_index){
-        var commentRestangular = Restangular.one(resource_type, resource_id).one("comments", comment_id);
-        var headers = {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'access_token': $scope.access_token
-        };
-        var postData = [];
-        postData.push(encodeURIComponent("content") + "=" + encodeURIComponent(document.getElementById(content).value));
-        var data = postData.join("&");
-        commentRestangular.customPUT(data, '', '', headers).then(function (record) {
-            source[comment_index].comment.content = record.content;
-        });
-    };
 
     $scope.addToStorageForFocus2Comment = function () {
         localStorageService.set('focus2comment', true);

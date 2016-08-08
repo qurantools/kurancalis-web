@@ -26,11 +26,11 @@
                             <div>
                                 <a href='' style="text-decoration: none !important;margin-left: 10px;" ng-click="showVerseDetail(annotation.verseId, usersForSearch, circlesForSearch)">
                                     <b>{{annotation.verseId / 1000 | number:0}}:{{annotation.verseId % 1000}}</b>
-                                </a>
+                                </a> <span style="font-size: small">({{authorMap[annotation.author_id].name}})</span>
                                 <span style="float: right">
                                     <button type="button" class="button button-balanced button-small"
                                             ng-if="annotation.userId==user.id"
-                                            ng-click="editAnnotation(annotation)">
+                                            ng-click="showEditor(annotation)">
                                         <i class="fa fa-pencil-square-o "></i>
                                     </button>
                                     <button type="button" class="button button-assertive button-small"
@@ -79,22 +79,21 @@
                          style="width: 100%;border-radius: 15px;padding-top: 10px !important;background-color: #f5f5f5;"
                          ng-init="outerIndex=$index"
                          class="list well">
-                        <div class="row">
+                        <div class="row" style="text-align: justify">
                             <div style="width: 20%;margin-right: 4px;">
                                 <a href="" ng-click="navigateTo('/profile/user/{{comment.owner.user_id}}/')" style="text-decoration: blink;width: 100%">
                                     <img style="width: 60px;height: 60px;border-radius: 50%;" ng-src="{{comment.owner.photo}}">
                                 </a>
-                                <span ng-bind-html="comment.comment.created | time_in_string | to_trusted" style="margin-left: 3px;margin-right: 3px;color: black"></span>
+                                <span ng-bind-html="comment.comment.created | time_in_string | to_trusted" style="margin-left: 3px;margin-right: 3px;color: black;"></span>
                             </div>
-                            <span ng-click="openFooterMenu(annotation.comments, comment.comment, outerIndex)"
-                                  style="width: 80%;text-align: -webkit-left;word-break: break-all;">
+                            <span ng-click="openFooterMenu(annotation.comments, comment.comment, outerIndex)">
                                 <a href="" ng-click="navigateTo('/profile/user/{{comment.owner.user_id}}/')">
                                     {{comment.owner.name}}
                                 </a>
                                 <span ng-bind-html="comment.comment.content | display_comment | to_trusted"></span>
                             </span>
                         </div>
-                        <div class="row fit-content">
+                        <div class="row fit-content" >
                             <span ng-class="{ 'voted-like': (comment.vote != null && comment.vote.content == 1), 'unvoted' : !(comment.vote != null && comment.vote.content == 1)}"
                                   ng-click="doVoteForComment(comment, comment.comment.annotationId, 'annotations',1)">
                                 <i class="fa fa-thumbs-up"></i> {{comment.voteRates.like}}
@@ -128,11 +127,11 @@
                                 <a href="" ng-click="navigateTo('/profile/user/{{child_comment.owner.user_id}}/')" style="width: 100%">
                                     <img style="float:right;width: 30px; max-height: 30px;border-radius: 50%; " ng-src="{{child_comment.owner.photo}}"><br/>
                                 </a>
-                                <span style="float: right" ng-bind-html="child_comment.comment.created | time_in_string | to_trusted"></span>
+                                <span style="width: 150px;text-align: right;float: right" ng-bind-html="child_comment.comment.created | time_in_string | to_trusted"></span>
                             </div>
-                            <div style="width: 80%;">
+                            <div style="width: 80%">
                                 <span ng-click="openFooterMenu(comment.comment.childs, child_comment.comment, innerIndex)"
-                                      style="text-align: -webkit-left;word-break: break-all;">
+                                      >
                                     <a href="" ng-click="navigateTo('/profile/user/{{child_comment.owner.user_id}}/')">
                                         {{child_comment.owner.name}}
                                     </a>

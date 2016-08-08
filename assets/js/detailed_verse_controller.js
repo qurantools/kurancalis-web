@@ -37,6 +37,7 @@ angular.module('ionicApp')
         $scope.footerMenuButtons = [];
         var buttonSelectTranslation = {  text: 'Çeviri Seç'  };
         var buttonAddToList = {text: 'Listeye Ekle' };
+        var buttonGotoVerseInternal = {text: 'Ayete Git' };
         var buttonGotoVerse = {text: 'Sure İçerisinde Gör' };
         var buttonBookmark = {text: 'Burada Kaldım' };
         var buttonVerseHistory = {text: 'Ayet Geçmişi' };
@@ -444,6 +445,7 @@ angular.module('ionicApp')
         $scope.openFooterMenu = function (){
             $scope.footerMenuButtons = [];
             $scope.footerMenuButtons.push(buttonSelectTranslation);
+            $scope.footerMenuButtons.push(buttonGotoVerseInternal);
             $scope.footerMenuButtons.push(buttonGotoVerse);
             if ($scope.user){
                 $scope.footerMenuButtons.push(buttonAddToList);
@@ -461,12 +463,14 @@ angular.module('ionicApp')
                     if (index == 0) {
                         $scope.openModal('select_author');
                     } else if (index == 1) {
-                        $scope.openModal('go_to_verse');
+                        $scope.openModal('chapter_selection_modal');
                     } else if (index == 2) {
-                        $scope.openModal('add_to_list');
+                        $scope.openModal('go_to_verse');
                     } else if (index == 3) {
+                        $scope.openModal('add_to_list');
+                    } else if (index == 4) {
                         $scope.openModal('bookmark');
-                    } else if (index == 4){
+                    } else if (index == 5){
                         $scope.openVerseHistory();
                         $scope.closeModal('detailed_verse_modal');
                     }

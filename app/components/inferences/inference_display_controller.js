@@ -1,5 +1,7 @@
-angular.module('ionicApp')
-    .controller('InferenceDisplayController', function ($scope, $routeParams, $location, authorization, localStorageService,  Restangular, $timeout,$sce,$ionicModal,$ionicPopup, $cordovaSocialSharing, dataProvider, $ionicActionSheet ) {
+
+var angularModule=angular.module('ionicApp');
+
+    angularModule.controller('InferenceDisplayController', function ($scope, $routeParams, $location, authorization, localStorageService,  Restangular, $timeout,$sce,$ionicModal,$ionicPopup, $cordovaSocialSharing, dataProvider, $ionicActionSheet ) {
 
         //All scope variables
         $scope.inferenceId=0;
@@ -36,6 +38,10 @@ angular.module('ionicApp')
         $scope.commentWillUpdateParent = null;
         $scope.commentWillUpdateId = null;
         $scope.commentWillUpdateIndex = null;
+        $scope.commentContent = {};
+        $scope.commentContent.value = "";
+        $scope.commentContentUpdate = {};
+        $scope.commentContentUpdate.value = "";
 
         //Volkan
         $scope.initializeCircleLists(); //show circles
@@ -407,7 +413,7 @@ angular.module('ionicApp')
                 });
             };
 
-            $ionicModal.fromTemplateUrl('components/partials/comment_modal.html', {
+            $ionicModal.fromTemplateUrl('components/partials/comment_modal_inference.html', {
                 scope: $scope,
                 animation: 'slide-in-up',
                 id: 'comment_modal'
@@ -448,7 +454,7 @@ angular.module('ionicApp')
             $scope.commentWillUpdateParent = source;
             $scope.commentWillUpdate = comment;
             $scope.commentWillUpdateIndex = index;
-            document.getElementById('inference_comment_update_textarea').value = comment.content;
+            $scope.commentContentUpdate.value = comment.content;
         };
 
         $scope.openFooterMenu = function (source, comment, comment_index){
@@ -474,7 +480,7 @@ angular.module('ionicApp')
                         $scope.comment_index=comment_index;
                         $scope.isForUpdate=true;
                         $scope.openModal('comment_modal');
-                        document.getElementById('comment_area_for_mobile').value = comment.content;
+                        $scope.commentContentUpdate.value = comment.content;
                     } else if (index == 1) {
                         var confirmPop = $ionicPopup.confirm({
                             title: 'Yorum Silme',
@@ -498,7 +504,9 @@ angular.module('ionicApp')
         $scope.openModal = function (id) {
             if (id == 'comment_modal'){
                 $scope.comment_modal.show();
-                $scope.focusToCommentArea("comment_area_for_mobile");
+                $timeout(function(){
+                    $scope.focusToCommentArea("comment_area_inference_for_mobile");
+                },600);
             }
         };
 
@@ -517,9 +525,65 @@ angular.module('ionicApp')
             $scope.parent_id = parentId;
             $scope.parent_index = parentIndex;
             $scope.isForUpdate=false;
-            document.getElementById('comment_area_for_mobile') != null ? document.getElementById('comment_area_for_mobile').value = '' : console.log('');
+            $scope.commentContent.value = "";
+            //document.getElementById('comment_area_for_mobile') != null ? document.getElementById('comment_area_for_mobile').value = '' : console.log('');
             $scope.openModal('comment_modal');
         };
+
+
+        $scope.createComment = function(resource, resource_type, resource_id, content, parent_id, parent_index){
+            var commentRestangular = Restangular.one(resource_type, resource_id).one("comments");
+            var headers = {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'access_token': $scope.access_token
+            };
+            var postData = [];
+            postData.push(encodeURIComponent("content") + "=" + encodeURIComponent($scope.commentContent.value));
+            if (parent_id != null)
+                postData.push(encodeURIComponent("parent_id") + "=" + encodeURIComponent(parent_id));
+            var data = postData.join("&");
+            commentRestangular.customPOST(data, '', '', headers).then(function (comment) {
+                var temp = {};
+                temp.vote = null;
+                temp.voteRates = {'like':0, 'dislike':0};
+                temp.comment = comment;
+                temp.owner = $scope.user;
+                temp.owner.user_id = $scope.user.id;
+                if (parent_id != null){
+                    if (!isDefined(resource.comments[parent_index].comment.childs)){
+                        resource.comments[parent_index].comment.childs = [];
+                        resource.comments[parent_index].showChilds = true;
+                    }
+                    resource.comments[parent_index].comment.childs.push(temp);
+                }else{
+                    resource.comments.push(temp);
+                }
+                $scope.commentContent.value = "";
+            });
+        };
+
+        $scope.deleteComment = function(source, resource_type, resource_id, comment_id, comment_index){
+            var commentRestangular = Restangular.one(resource_type, resource_id).one("comments", comment_id);
+            commentRestangular.customDELETE("", {}, {'access_token': $scope.access_token}).then(function (comment) {
+                source.splice(comment_index,1);
+            });
+        };
+
+        $scope.updateComment = function (source, resource_type, resource_id, comment_id, content, comment_index){
+            var commentRestangular = Restangular.one(resource_type, resource_id).one("comments", comment_id);
+            var headers = {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'access_token': $scope.access_token
+            };
+            var postData = [];
+            postData.push(encodeURIComponent("content") + "=" + encodeURIComponent($scope.commentContentUpdate.value));
+            var data = postData.join("&");
+            commentRestangular.customPUT(data, '', '', headers).then(function (record) {
+                source[comment_index].comment.content = record.content;
+                $scope.commentContentUpdate.value="";
+            });
+        };
+
 
         //definitions are finished. Now run initialization
         //authorMap should be initialized before start

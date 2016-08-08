@@ -5,7 +5,7 @@
         <div ng-if="authorizedAnnotationDisplay == 1" style="margin-top: 60px">
             <div class="box" ng-if="annotation != null">
                 <div class="s_a_header">
-                    <a href='' ng-click="showVerseDetail(annotation.verseId, [], [])" data-target='#detailedVerseModal' data-dismiss='modal' data-toggle='modal'>{{annotation.verseId / 1000 | number:0}}:{{annotation.verseId % 1000}}</a>
+                    <a href='' ng-click="showVerseDetail(annotation.verseId, [], [])" data-target='#detailedVerseModal' data-dismiss='modal' data-toggle='modal'>{{annotation.verseId / 1000 | number:0}}:{{annotation.verseId % 1000}}</a> <span style="font-size: small">({{authorMap[annotation.author_id].name}})</span>
                     <div style="float:right;"><a  href="" ng-click="navigateTo('/profile/user/{{annotation.userId}}/')" style="color: darkblue;">{{annotation.userName | limitTo: 25}}</a></div>
                 </div>
                 <div class="small_space">&nbsp;</div>
@@ -154,7 +154,7 @@
                             </a>
                         </div>
                         <div  class="col-lg-10">
-                            <textarea id="comment_textarea_annotation_{{comment.comment.id}}" style="margin-top: 1%;width: 100%;height: 51px;border-radius: 9px;background-color: white;"/>
+                            <textarea id="comment_textarea_annotation_{{comment.comment.id}}"  ng-model="commentContent.value"  style="margin-top: 1%;width: 100%;height: 51px;border-radius: 9px;background-color: white;"/>
                         </div>
                         <div class="col-lg-1">
                             <button type="button" class="btn btn-primary btn-xs"
@@ -173,7 +173,7 @@
                     </a>
                 </div>
                 <div  class="col-lg-10">
-                    <textarea id="comment_textarea_annotation" style="margin-top: 1%;width: 100%;height: 51px;border-radius: 9px;background-color: white;"/>
+                    <textarea id="comment_textarea_annotation" ng-model="commentContent.value" style="margin-top: 1%;width: 100%;height: 51px;border-radius: 9px;background-color: white;"/>
                 </div>
                 <div class="col-lg-1">
                     <button type="button" class="btn btn-primary btn-xs"
@@ -207,12 +207,12 @@
     <degistirmodal title="Yorum Güncelle" visible="updateCommentFlag">
         <div align="left">
             <div  class="col-lg-10">
-                <textarea id="annotation_comment_update_textarea" style="margin-top: 1%;width: 550px;height: 81px;border-radius: 9px;background-color: white;"/>
+                <textarea id="annotation_comment_update_textarea" ng-model="commentContentUpdate.value" style="margin-top: 1%;width: 550px;height: 81px;border-radius: 9px;background-color: white;"/>
             </div>
         </div>
         <div class="modal-footer">
-            <a class="btn btn-primary btn-wide btn-primary" ng-click="updateComment(commentWillUpdateParent, 'annotations', annotation.id, commentWillUpdate.id, 'annotation_comment_update_textarea', commentWillUpdateIndex)" data-dismiss="modal">Güncelle</a>
             <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal">Vazgeç</a>
+            <a class="btn btn-primary btn-wide btn-primary" ng-click="updateComment(commentWillUpdateParent, 'annotations', annotation.id, commentWillUpdate.id, 'annotation_comment_update_textarea', commentWillUpdateIndex)" data-dismiss="modal">Güncelle</a>
         </div>
     </degistirmodal>
 </body>

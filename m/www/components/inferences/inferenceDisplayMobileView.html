@@ -109,7 +109,7 @@
                                 <span ng-bind-html="comment.comment.created | time_in_string | to_trusted" style="margin-left: 3px;margin-right: 3px;color: black"></span>
                             </div>
                             <span ng-click="openFooterMenu(inference_info.comments, comment.comment, outerIndex)"
-                                style="width: 80%;text-align: -webkit-left;word-break: break-all;">
+                                style="width: 80%;">
                                 <a href="" ng-click="navigateTo('/profile/user/{{comment.owner.user_id}}/')">
                                     {{comment.owner.name}}
                                 </a>
@@ -150,11 +150,10 @@
                                 <a href="" ng-click="navigateTo('/profile/user/{{child_comment.owner.user_id}}/')" style="width: 100%">
                                     <img style="float:right; width: 30px; height: 30px;border-radius: 50%; " ng-src="{{child_comment.owner.photo}}"><br/>
                                 </a>
-                                <span  style="float: right;font-size: 13px;" ng-bind-html="child_comment.comment.created | time_in_string | to_trusted"></span>
+                                <span  style="width: 150px;text-align: right;float: right;font-size: 13px;" ng-bind-html="child_comment.comment.created | time_in_string | to_trusted"></span>
                             </div>
                             <div style="width: 80%;">
-                                <span ng-click="openFooterMenu(comment.comment.childs, child_comment.comment, innerIndex)"
-                                      style="text-align: -webkit-left;word-break: break-all;">
+                                <span ng-click="openFooterMenu(comment.comment.childs, child_comment.comment, innerIndex)">
                                     <a href="" ng-click="navigateTo('/profile/user/{{child_comment.owner.user_id}}/')">
                                         {{child_comment.owner.name}}
                                     </a>
