@@ -1,7 +1,7 @@
 <!-- start of side menu part 1-->
 <ion-side-menus>
     <ion-side-menu-content drag-content="false">
-        <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced">
+        <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced" align-title="center">
             <ion-nav-buttons side="left">
                 <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
             </ion-nav-buttons>
@@ -62,7 +62,7 @@
                             <blockquote
                                     ng-bind-html="feed.translation_content | mark_verse_annotation:feed:1 | newLineAllowed | to_trusted"></blockquote>
 
-                            <span ng-bind-html="feed.content | newLineAllowed | to_trusted"></span>
+                            <span ng-bind-html="feed.content | newLineAllowed | to_trusted" class="s_a_text"></span>
 
                             <div>
                                 <button ng-repeat="annotationTag in feed.tags" class="tag label label-info s_a_tag btn btn-xs btn-info verse_tag"

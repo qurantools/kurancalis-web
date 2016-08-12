@@ -630,7 +630,7 @@ angular.module('ionicApp')
                         $scope.getModalEditor().show();
                     } else if (id == 'viewusersearch') {
                         $scope.modal_add_canviewuser.show();
-                        focusToInput('mobil_peoples')
+                        focusToInput('mobil_peoples');
                     } else if (id == 'addUserToAllAnnotationsSearch') {
                         $scope.modal_addUserToAllAnnotationsSearch.show();
                         focusToInput('add_view_user_toAllAnnotationsSearch_people');

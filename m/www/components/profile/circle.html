@@ -17,13 +17,13 @@
                          style="margin-top:66px;">
                 <ion-list>
                     <div class="item item-divider" style="">
-                        Öneriler - Kimleri çevreye eklemeli
+                        Öneriler - Kimleri eklemeli
                         <button class="button button-light button-small" style="float: right" ng-click="navigateTo('/people/find_people/')" >Daha Fazla</button>
                     </div>
                     <ion-item ng-repeat="recommendedUser in recommendations" class="item-icon-right" style="min-height: 40px; padding-top: 2px; padding-bottom: 2px; vertical-align: middle" item-height="10" ng-style="{'height': '10px'}" >
 
                         <img style="max-height: 30px; max-width: 30px" ng-src="{{recommendedUser.photo}}" ng-click="navigateTo('/profile/user/{{recommendedUser.id}}')">
-                        <a  href="" ng-click="navigateTo('/profile/user/{{recommendedUser.username}}/')" style="color: darkblue;text-decoration: none;">{{recommendedUser.name}}</a>
+                        <a  href="" ng-click="navigateTo('/profile/user/{{recommendedUser.username}}/')" style="color: darkblue;text-decoration: none;">{{recommendedUser.name  | limitTo: 20}}</a>
 
                         <button class="button button-positive button-small" style="float: right" ng-click="addRecommendationToCircle(recommendedUser.id)">Çevreye Ekle</button>
                         <i class="icon ion-close" ng-click="hideRecommendation(recommendedUser.id)"></i>
@@ -75,7 +75,7 @@
                         <div class="item item-text-wrap">
                             <blockquote
                                     ng-bind-html="feed.translation_content | mark_verse_annotation:feed:1 | newLineAllowed | to_trusted"></blockquote>
-                            <span ng-bind-html="feed.content | newLineAllowed | to_trusted"></span>
+                            <span ng-bind-html="feed.content | newLineAllowed | to_trusted" class="s_a_text"></span>
                             <div>
                                 <button ng-repeat="annotationTag in feed.tags" class="tag label label-info s_a_tag btn btn-xs btn-info verse_tag"
                                         style="border: 0;"

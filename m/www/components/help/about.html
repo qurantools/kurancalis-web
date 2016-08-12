@@ -1,0 +1,47 @@
+<!-- start of side menu part 1-->
+<ion-side-menus>
+    <ion-side-menu-content drag-content="false">
+        <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced" align-title="center">
+            <ion-nav-buttons side="left">
+                <button class="button button-icon icon ion-arrow-left-b" ng-click="navigateTo('/help/')">Geri</button>
+                <h1 class="title">Uygulama Hakkında</h1>
+            </ion-nav-buttons>
+            <ion-nav-buttons side="right">
+                <button class="button button-positive" ng-click="login()" ng-if="user==null && isConnected==true">Facebook ile Giriş</button>
+            </ion-nav-buttons>
+        </ion-nav-bar>
+        <ion-nav-buttons side="left">
+            <button class="button button-icon icon ion-navicon" menu-toggle="left">
+            </button>
+        </ion-nav-buttons>
+        <ion-nav-view name="appContent"></ion-nav-view>
+        <!-- end of side menu part 1 -->
+        <ion-nav-view id="chapter_translation_content" cache-view="true">
+            <ion-content overflow-scroll="true" delegate-handle="content" class="scroll_content"
+                         style="margin-top:30px;" ng-controller="HelpController">
+                <div style="height:40px"></div>
+                <div style="margin-left: 20px; margin-right: 20px;text-align: left">
+                    <div style="text-align: center">
+                    <br>
+                        <span style="font-size: large"><strong>Kuran Çalış</strong> {{appVersion}}</span><br><br>
+
+                        <a href="" style="color: inherit;padding-left: 10px"><i class="fa fa-facebook-square fa-4x"  onclick="window.open('https://fb.com/kurancalis', '_system', 'location=no')"></i></a>
+                        <a href="" style="color: inherit;padding-left: 10px"><i class="fa fa-twitter-square  fa-4x" onclick="window.open('https://twitter.com/kurancalis', '_system', 'location=no')"></i></a>
+                        <a href="" style="color: inherit;padding-left: 10px"><i class="fa fa-youtube-square  fa-4x"  onclick="window.open('https://www.youtube.com/channel/UClpkb9-B782S8QrqggezFmA', '_system', 'location=no')" ></i></a>
+                    <br>
+                    <br>
+                        </div>
+                <li>Verdiğiniz yorum ve puanlarınızla bu Kuran çalışma aracının yaygınlaşmasını sağlayabilirsiniz.</li>
+                <li>Ürünümüz bağışçı ve gönüllülerin desteğiyle; sınırlı kaynaklarla geliştirilmektedir.</li>
+                <li>Elimizden geldiğince kaliteli bir ürün sunmaya çalışıyoruz.</li>
+                    <li>Hatalarımızı bize <a href="" onclick="window.open('https://feedback.userreport.com/0ef96258-84d3-4162-ad33-4e2b55465a50/', '_system', 'location=no')"><strong>Geribildirim</strong></a> ekranından ya da Facebook sayfamızdan bildirerek kuran çalışanlara destek olabilirsiniz.</li>
+                </div>
+                <div style="height:50px;">&nbsp;</div>
+
+            </ion-content>
+        </ion-nav-view>
+        <!-- start of side menu part 2-->
+    </ion-side-menu-content>
+    <div ng-include="'components/navigation/left_menu.html'"></div>
+</ion-side-menus>
+<!-- end of side menu part 2-->

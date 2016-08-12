@@ -472,7 +472,6 @@ angular.module('ionicApp')
                         $scope.openModal('bookmark');
                     } else if (index == 5){
                         $scope.openVerseHistory();
-                        $scope.closeModal('detailed_verse_modal');
                     }
                     return true;
                 }

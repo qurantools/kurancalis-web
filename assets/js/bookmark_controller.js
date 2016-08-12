@@ -152,8 +152,12 @@
         };
 
         $scope.$on("userInfoReady", function (event) {
-
-            $scope.bookmark_search();
+            if($scope.chapters.length==0){
+                $scope.prepareChapters($scope.bookmark_search);
+            }
+            else{
+                $scope.bookmark_search();
+            }
         });
 
 

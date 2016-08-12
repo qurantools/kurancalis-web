@@ -119,7 +119,7 @@ angular.module('ionicApp')
             if (id == 'comment_modal'){
                 $scope.comment_modal.show();
                 $timeout(function(){
-                    $scope.focusToCommentArea("comment_area_annotation_for_mobile");
+                    focusToInput('comment_area_annotation_for_mobile');
                 },600);
             }
         };

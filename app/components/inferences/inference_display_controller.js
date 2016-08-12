@@ -148,7 +148,9 @@ var angularModule=angular.module('ionicApp');
                     $scope.referenced.verses[verseId] = { translation:"", tags:[], verseId:verseId};
                 }
 
-                $scope.focusToCommentArea('comment_textarea_inference');
+                if(!config_data.isMobile){
+                    $scope.focusToCommentArea('comment_textarea_inference');
+                }
                 //array of referenced verse IDs
                 $scope.referenced.verseIds = Object.keys($scope.referenced.verses);
                 $scope.inference_info = data;
@@ -505,7 +507,7 @@ var angularModule=angular.module('ionicApp');
             if (id == 'comment_modal'){
                 $scope.comment_modal.show();
                 $timeout(function(){
-                    $scope.focusToCommentArea("comment_area_inference_for_mobile");
+                    focusToInput('comment_area_inference_for_mobile');
                 },600);
             }
         };

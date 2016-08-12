@@ -16,7 +16,7 @@
         </ion-nav-buttons>
         <ion-nav-view name="appContent"></ion-nav-view>
         <!-- end of side menu part 1 -->
-        <ion-nav-view id="chapter_translation_content" cache-view="true">
+        <ion-nav-view id="help_list_content" cache-view="true">
             <ion-content overflow-scroll="true" delegate-handle="content" class="scroll_content"
                          style="margin-top:30px;" ng-controller="HelpController">
                 <div style="height:40px"></div>
@@ -27,8 +27,9 @@
                     </ion-list>
                 <div class="item item-divider" style="">
                 </div>
-                    <ion-list>
-                        <ion-item onclick="window.open('https://feedback.userreport.com/0ef96258-84d3-4162-ad33-4e2b55465a50/', '_blank', 'location=no')"><h2>Geribildirim</h2></ion-item>
+                    <i>
+                        <ion-item ng-click="navigateTo('/help/about/')" ><h2><i class="fa fa-info-circle"></i>  Uygulama Hakkında</h2></ion-item>
+                        <ion-item onclick="window.open('https://feedback.userreport.com/0ef96258-84d3-4162-ad33-4e2b55465a50/', '_system', 'location=no')"><h2><i class="fa fa-comment"></i> Geribildirim</h2></ion-item>
                     </ion-list>
                 <div style="height:50px;">&nbsp;</div>
             </ion-content>
