@@ -100,6 +100,7 @@ function makeAnnotationPage($data, $siteRoot) {
     <a href="http://kurancalis.com">kurancalis.com</a>
     </body>
     </html>
+
     <?php
 }
 
