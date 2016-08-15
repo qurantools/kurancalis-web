@@ -90,10 +90,10 @@ function makeAnnotationPage($data, $siteRoot) {
     </head>
     <body>
     <h1><?php echo addslashes($title); ?></h1>
-    <strong>Karalama: </strong> <?php echo $data->quote; ?><br>
-    <strong>Ayet: </strong> <?php echo $data->translation_content; ?><br>
     <strong>Not: </strong>
     <p><?php echo $data->content; ?></p>
+    <strong>Karalama: </strong> <?php echo $data->quote; ?><br>
+    <strong>Ayet: </strong> <?php echo $data->translation_content; ?><br>
     <?if($data->image !='undefined'){?>
         <img alt="Kuran Çalış" src="<?php echo $data->image; ?>">
     <?}?>
