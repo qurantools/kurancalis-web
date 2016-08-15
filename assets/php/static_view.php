@@ -79,7 +79,7 @@ function makeAnnotationPage($data, $siteRoot) {
     <!DOCTYPE html>
     <html>
     <head>
-        <title><?php echo $title; ?></title>
+
         <meta charset="utf-8" />
         <meta property="fb:app_id" content="295857580594128" />
         <meta property="og:url"    content="http://kurancalis.com/__/inference/display/<?php echo $data->id; ?>" />

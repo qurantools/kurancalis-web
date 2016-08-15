@@ -803,6 +803,10 @@ app.factory('ChapterVerses', function ($resource) {
 
             $scope.$broadcast('login', responseData);
             $scope.$broadcast('userInfoReady');
+            console.log("location:"+$location.path() );
+            if($location.path() == "/login/"){
+                $location.path('/');
+            }
         }
     };
 
@@ -1433,7 +1437,6 @@ app.factory('ChapterVerses', function ($resource) {
                 $scope.chapters = data;
                 localStorageService.set('chapters', data);
                 localStorageService.set('chaptersVersion', chaptersVersion);
-                console.log("retiieve chapters: "+$scope.chapters);
                 if(callbackFunction != null){
                     callbackFunction();
                 }
@@ -1709,9 +1712,11 @@ app.factory('ChapterVerses', function ($resource) {
     };
     
     $scope.displayTutorial = function (id){
+        console.log("Display tutorial called");
         $timeout(function(){
+            console.log("Display tutorial broadcaast");
             $scope.$broadcast("displayTutorial",{id:id})
-        },2000);  
+        },4000);
     };
 
     $scope.initRoute();

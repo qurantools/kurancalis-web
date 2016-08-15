@@ -19,7 +19,7 @@ var config_data = {
     'isNative':isNative(),
     'isAndroid':isAndroid(),
     'isIOS':isIOS(),
-    'translationTableCount': 132830
+    'translationTableCount': 139055
 }
 
 var MAX_AUTHOR_MASK = "18446744073709551615"; //64 authors

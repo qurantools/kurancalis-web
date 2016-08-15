@@ -16,7 +16,7 @@ angular.module('ionicApp')
                         id: 21,
                         title: "Sol Menü",
                         source: [{
-                            src: $sce.trustAsResourceUrl("../../assets/img/help/mobile/menu_icerigi.mp4"),
+                            src: "../../assets/img/help/mobile/menu_icerigi.mp4",
                             type: "video/mp4"
                         }]
                     },
@@ -40,7 +40,7 @@ angular.module('ionicApp')
                         id: 12,
                         title: "Intro-2",
                         source: [{
-                            src: $sce.trustAsResourceUrl("../../assets/img/help/mobile/sure_alt_menu.mp4"),
+                            src: "../../assets/img/help/mobile/sure_alt_menu.mp4",
                             type: "video/mp4"
                         }]
                     },
@@ -175,10 +175,12 @@ angular.module('ionicApp')
             if ($scope.selectedMenu == -1) {
                 return;
             }
-            $scope.selectedIndex = 0;
+            $scope.selectedIndex = -1;
             $scope.scopeApply();
             $scope.help_modal.show();
-
+            $timeout(function(){
+                $scope.selectedIndex++;
+            },900);
         };
 
         $scope.closeModal = function () {
@@ -228,7 +230,9 @@ angular.module('ionicApp')
         };
 
         $scope.onPlayerReady = function (API) {
+            console.log("onPlayerReady");
             $scope.helpController.API = API;
+            $scope.vgChangeSource();
         };
 
         $scope.vgChangeSource = function (source) {

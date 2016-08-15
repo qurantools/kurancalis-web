@@ -688,9 +688,6 @@ angular.module('ionicApp')
         };
 
         $scope.initAnnotationsParameters();
-        $timeout(function () {
-            $scope.$broadcast("displayTutorial", {id: "annotations"})
-
-        }, 2000);
+        $scope.displayTutorial("annotations");
 
     });

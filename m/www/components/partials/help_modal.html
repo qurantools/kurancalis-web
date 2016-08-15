@@ -3,7 +3,7 @@
         <div ng-include src="menuList[selectedMenu].submenu[selectedIndex].source[0].src" ng-if="menuList[selectedMenu].submenu[selectedIndex].source[0].type.toLowerCase().indexOf('video') != 0"></div>
         <div class="videogular-container" style="height:100%;padding:0;margin:0;" ng-if="menuList[selectedMenu].submenu[selectedIndex].source[0].type.toLowerCase().indexOf('video') == 0">
             <div style="height: 20px"></div>
-            <videogular vg-theme="config.theme"  vg-plays-inline="true" vg-auto-play="true" vg-player-ready="onPlayerReady($API)" vg-change-source="vgChangeSource($source)" class="ng-isolate-scope" >
+            <videogular vg-theme="config.theme"  vg-plays-inline="true" vg-auto-play="false" vg-player-ready="onPlayerReady($API)" vg-change-source="vgChangeSource($source)" class="ng-isolate-scope" >
                 <vg-media   vg-src="menuList[selectedMenu].submenu[selectedIndex].source" vg-type="video" class="ng-isolate-scope" style="background-color: grey;" vg-loop="true">
                 </vg-media>
             </videogular>
