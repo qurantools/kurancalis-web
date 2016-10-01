@@ -2,14 +2,14 @@
 
 $SITE_ROOT = "https://securewebserver.net/jetty/qt/rest/";
 
-
-if( $_GET['page'] == "translations" ){
+$pageExist = array_key_exists('page',$_GET);
+if( $pageExist && $_GET['page'] == "translations" ){
 	$chapter = $_GET['chapter'];
 	$author = $_GET['author'];
 	$content = getChapter($SITE_ROOT,$chapter,$author);
 	showChapter($chapter,$author, $content);
 }
-else if($_GET['page'] == "annotation"){
+else if($pageExist && $_GET['page'] == "annotation"){
     $jsonData = getAnnotation($SITE_ROOT);
     makeAnnotationPage($jsonData, $SITE_ROOT);
 }
@@ -94,7 +94,7 @@ function makeAnnotationPage($data, $siteRoot) {
     <p><?php echo $data->content; ?></p>
     <strong>Karalama: </strong> <?php echo $data->quote; ?><br>
     <strong>Ayet: </strong> <?php echo $data->translation_content; ?><br>
-    <?if($data->image !='undefined'){?>
+    <?if(isset($data->image) && $data->image !='undefined'){?>
         <img alt="Kuran Çalış" src="<?php echo $data->image; ?>">
     <?}?>
     <a href="http://kurancalis.com">kurancalis.com</a>
