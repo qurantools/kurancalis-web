@@ -28,12 +28,8 @@
         request.onreadystatechange = function() {
             if (request.readyState === 4) {
                 if (request.status === 200) {
-                    //get token value
-                    var values = {}
-                    request.response.split("&").forEach(function(item) {values[item.split("=")[0]] = item.split("=")[1]})
-
-
-
+                    //get response which contains accesstoken json
+                    var values = JSON.parse(request.response);
 
                     jQuery.ajax({
                         type:"POST",
@@ -43,7 +39,7 @@
 
                         },
                         url: config_data.webServiceUrl+"/users",
-                        data: "fb_access_token="+values['access_token'],
+                        data: "fb_access_token="+values.access_token,
                         processData: false,
                         success: function(msg) { //
                             window.localStorage.setItem("ls.access_token", msg.token);
