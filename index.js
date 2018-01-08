@@ -868,7 +868,7 @@ app.factory('ChapterVerses', function ($resource) {
 
             }
             $scope.get_user_info(access_token);
-            //console.warn("access token", access_token);
+           //console.warn("access token", access_token);
 
         }
         else {
