@@ -868,7 +868,7 @@ app.factory('ChapterVerses', function ($resource) {
 
             }
             $scope.get_user_info(access_token);
-
+            //console.warn("access token", access_token);
 
         }
         else {
@@ -1234,10 +1234,11 @@ app.factory('ChapterVerses', function ($resource) {
             $scope.extendedCircles.push($scope.CIRCLE_PUBLIC);
 
             $scope.extendedCirclesForSearch = [];
+            $scope.extendedCirclesForSearch.push($scope.CIRCLE_PUBLIC);
             $scope.extendedCirclesForSearch.push($scope.CIRCLE_ALL_CIRCLES);
 
-
             $scope.circleDropdownArray = [];
+            $scope.circleDropdownArray.push($scope.CIRCLE_PUBLIC);
             $scope.circleDropdownArray.push($scope.CIRCLE_ALL_CIRCLES);
             $scope.circleDropdownArray.push({'id': '', 'name': 'Sadece Ben'});
 
