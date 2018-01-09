@@ -1257,6 +1257,8 @@ app.factory('ChapterVerses', function ($resource) {
                 $scope.mobileAnnotationEditorCircleListForSelection[index].selected=false;
             }
 
+            $scope.mobileAnnotationEditorCircleListForSelection[1].selected=true;
+
             // initialize mobileDetailedSearchCircleListForSelection
             $scope.mobileDetailedSearchCircleListForSelection=[];
             Array.prototype.push.apply($scope.mobileDetailedSearchCircleListForSelection, $scope.extendedCirclesForSearch);
@@ -1264,6 +1266,8 @@ app.factory('ChapterVerses', function ($resource) {
             for (var index = 0; index < $scope.mobileDetailedSearchCircleListForSelection.length; ++index) {
                 $scope.mobileDetailedSearchCircleListForSelection[index].selected=false;
             }
+
+            $scope.mobileDetailedSearchCircleListForSelection[0].selected=true;
 
             // initialize mobileAllAnnotationsSearchCircleListForSelection
             $scope.mobileAllAnnotationsSearchCircleListForSelection=[];
@@ -1273,12 +1277,16 @@ app.factory('ChapterVerses', function ($resource) {
                 $scope.mobileAllAnnotationsSearchCircleListForSelection[index].selected=false;
             }
 
+            $scope.mobileAllAnnotationsSearchCircleListForSelection[0].selected=true;
+
             $scope.mobileInferencesEditorCircleListForSelection = [];
             Array.prototype.push.apply($scope.mobileInferencesEditorCircleListForSelection, $scope.extendedCircles);
             //add isSelected property for mobile.
             for (var index = 0; index < $scope.mobileInferencesEditorCircleListForSelection.length; ++index) {
                 $scope.mobileInferencesEditorCircleListForSelection[index].selected = false;
             }
+
+            $scope.mobileInferencesEditorCircleListForSelection[1].selected = true;
 
             // initialize mobileAllInferencessSearchCircleListForSelection
             $scope.mobileAllInferencesSearchCircleListForSelection = [];
@@ -1287,6 +1295,9 @@ app.factory('ChapterVerses', function ($resource) {
             for (var index = 0; index < $scope.mobileAllInferencesSearchCircleListForSelection.length; ++index) {
                 $scope.mobileAllInferencesSearchCircleListForSelection[index].selected = false;
             }
+
+            $scope.mobileAllInferencesSearchCircleListForSelection[0].selected = true;
+
             $scope.$broadcast("circleLists ready");
 
         },function(response){
