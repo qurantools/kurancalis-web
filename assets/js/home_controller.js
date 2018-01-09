@@ -498,11 +498,14 @@ angular.module('ionicApp')
                 queryParams.chapter = $scope.query_chapter_id;
                 queryParams.author_mask_on_view = $scope.query_author_mask;
                 queryParams.author_mask = MAX_AUTHOR_MASK;
-                queryParams.circles = $scope.getTagsWithCommaSeparated($scope.query_circles);
+                queryParams.circles = $scope.getTagsWithCommaSeparated($scope.query_circles) || $scope.CIRCLE_PUBLIC.id;
                 queryParams.users = $scope.getTagsWithCommaSeparated($scope.query_users);
                 queryParams.verses = $scope.query_verses;
                 queryParams.own_annotations = $scope.query_own_annotations.value;
 
+                //-----------------------------------//
+                console.warn("queryParams::",queryParams);
+                //-----------------------------------//
 
                 annotator.setQueryParameters(queryParams);
 
@@ -704,7 +707,7 @@ angular.module('ionicApp')
         };
 
         $scope.loadAnnotations = function (annotations) {
-
+            console.warn("LOAD ANNOTATIONS... ", annotations)
             $scope.annotations = annotations;
             $scope.loadVerseAnnotationData();
             $scope.scopeApply();
@@ -1155,7 +1158,8 @@ angular.module('ionicApp')
             var verseNumber = 1;
             var ownAnnotations = true;
             var circles = []; //id array
-            circles.push($scope.CIRCLE_ALL_CIRCLES);// All Circles by default
+            //circles.push($scope.CIRCLE_ALL_CIRCLES);// All Circles by default
+            circles.push($scope.CIRCLE_PUBLIC);// Public Circles by default
             var users = []; //id array
             var chapterFromRoute = false;
             var authorFromRoute = false;
