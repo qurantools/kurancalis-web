@@ -213,8 +213,6 @@ angular.module('ionicApp')
         };
 
         $scope.loadMoreCirclesFeeds = function(){
-            if ($scope.circleId == -1)
-                return;
             var lastItemDate = 0;
             if ($scope.feeds.length > 0){
                 lastItemDate = $scope.feeds[$scope.feeds.length -1].updated / 1000;
