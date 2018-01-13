@@ -10,7 +10,7 @@
             <ion-nav-buttons data-tap-disabled="true" side="right">
                 <button data-tap-disabled="true" class="button button-icon icon ion-ios-compose-outline" ng-if="edit_user == user.id" ng-click="edit_inference()"></button>
                 <button data-tap-disabled="true" class="button button-icon icon ion-ios-trash-outline" ng-if="edit_user == user.id" ng-click="deleted()"></button>
-                <button class="button button-positive" ng-click="login()" ng-if="user==null && isConnected==true">Facebook ile Giriş</button>
+                <button class="button button-positive" ng-click="login()" ng-if="user==null && isConnected==true" translate>Facebook ile Giriş</button>
             </ion-nav-buttons>
         </ion-nav-bar>
         <ion-nav-view name="appContent"></ion-nav-view>
@@ -45,12 +45,12 @@
                             </label>
 
                             <div style="padding-left: 3px; width: 50%;float: left; font-size: small; text-align: left">
-                                Referanslarin icerigini goster
+                                {{'Referanslarin icerigini goster' | translate}}
                             </div>
                         </div>
                         <div data-tap-disabled="true" align="right" style="padding-right : 3px;float: right; ">
-                            <a id="url" class="btn btn-primary btn-xs" ng-click="kopyala(shareUrl);callUrlCopied()" style="margin-bottom: 11px;" ng-if="!isNative"><i class="fa fa-link"></i> Linki Kopyala</a>
-                            <button data-tap-disabled="true" class="button button-balanced button-small  icon ion-android-share-alt" ng-click="shareInference()" style="font-size: medium; font-weight: bold" ng-if="isNative"> Paylaş</button>
+                            <a id="url" class="btn btn-primary btn-xs" ng-click="kopyala(shareUrl);callUrlCopied()" style="margin-bottom: 11px;" ng-if="!isNative"><i class="fa fa-link"></i> {{'Linki Kopyala' | translate}}</a>
+                            <button data-tap-disabled="true" class="button button-balanced button-small  icon ion-android-share-alt" ng-click="shareInference()" style="font-size: medium; font-weight: bold" ng-if="isNative" translate>Paylaş</button>
                         </div>
                     </div>
                     <div class="fit-content" style="height: 35px; padding: 3px">
@@ -64,17 +64,17 @@
                             <i class="fa fa-thumbs-down"></i> {{inference_info.voteRates.dislike}}
                         </span>
                         <span ng-click="showVoteResults(inference_info, 'inferences')">
-                            <i class="fa fa-pie-chart"></i> {{inference_info.voteRates.dislike + inference_info.voteRates.like}} Oy
+                            <i class="fa fa-pie-chart"></i> {{inference_info.voteRates.dislike + inference_info.voteRates.like}} {{'Oy' | translate}}
                         </span>
                         <span style="margin-right: 10px;" ng-click="displayCommentModal(null, null)"
                               class="make_comment">
-                            <span style="color: #00f;margin-right: 10px;">Yorum Yaz</span>
+                            <span style="color: #00f;margin-right: 10px;" translate>Yorum Yaz</span>
                         </span>
                     </div>
                     <div class="list" ng-if="referenced.verses.length!=0">
                         <label class="item item-input item-select">
                             <div class="input-label">
-                                Çeviri/Yazar
+                                {{'Çeviri/Yazar' | translate}}
                             </div>
                             <select name="singleSelect"
                                     ng-options="author.id as author.name for author in authors"
@@ -96,7 +96,7 @@
                                     class="tag label label-info s_a_tag">{{tag}}</button>
                         </div>
                     </div>
-                    <h5 align="left" style="width: 100%;margin-left:20px;" ng-if="inference_info.comments.length>0">Yorumlar</h5>
+                    <h5 align="left" style="width: 100%;margin-left:20px;" ng-if="inference_info.comments.length>0" translate>Yorumlar</h5>
                     <hr width="100%" ng-if="inference_info.comments.length>0"/>
                     <div ng-repeat="comment in inference_info.comments"
                          ng-init="outerIndex=$index"
@@ -129,16 +129,16 @@
                             <span class="make_comment" ng-class="{'disabled' : (comment.voteRates.dislike + comment.voteRates.like) == 0}"
                                   style="margin-left: 3px;margin-right: 3px;"
                                   ng-click="showVoteResults(comment, 'inferences', true, comment.comment.inferenceId)">
-                                <i class="fa fa-pie-chart"></i> {{(comment.voteRates.dislike + comment.voteRates.like)}} Oy
+                                <i class="fa fa-pie-chart"></i> {{(comment.voteRates.dislike + comment.voteRates.like)}} {{'Oy' | translate}}
                             </span>
                             <span class="make_comment"
                                   ng-click="displayCommentModal(comment.comment.id, outerIndex)">
-                                <a style="color: #00f;">Yanıtla</a>
+                                <a style="color: #00f;" translate>Yanıtla</a>
                             </span>
                             <span ng-if="comment.comment.childs.length > 2 && !comment.showChilds"
                                   style="margin-left: 3px;margin-right: 3px;"
                                   ng-click="comment.showChilds=true">
-                                <i class="fa fa-mail-forward"></i> <span style="color: #00f;">{{comment.comment.childs.length}} Yanıt</span>
+                                <i class="fa fa-mail-forward"></i> <span style="color: #00f;">{{comment.comment.childs.length}} {{'Yanıt' | translate}}</span>
                             </span>
                         </div>
                         <hr width="100%"/>
@@ -171,11 +171,11 @@
                                         </span>
                                         <span class="make_comment" ng-class="{'disabled' : (child_comment.voteRates.dislike + child_comment.voteRates.like) == 0}"
                                               ng-click="showVoteResults(child_comment, 'inferences', true, child_comment.comment.inferenceId)">
-                                            <i class="fa fa-pie-chart"></i> {{child_comment.voteRates.dislike + child_comment.voteRates.like}} Oy
+                                            <i class="fa fa-pie-chart"></i> {{child_comment.voteRates.dislike + child_comment.voteRates.like}} {{'Oy' | translate}}
                                         </span>
                                         <span class="make_comment"
                                               ng-click="displayCommentModal(comment.comment.id, outerIndex)">
-                                            <a style="color: blue;">Yanıtla</a>
+                                            <a style="color: blue;" translate>Yanıtla</a>
                                         </span>
                                     </div>
                                 </div>
@@ -192,13 +192,12 @@
                             <textarea readonly ng-click="displayCommentModal(null, null)"
                                       style="margin-left:10px;width: 100%;height: 51px;border-radius: 2px;
                                             background-color: white;border: 1px black solid;"
-                                      placeholder="Yorum Yaz"></textarea>
+                                      placeholder="{{'Yorum Yaz' | translate}}"></textarea>
                         </div>
                     </div>
                 </div>
                 <div ng-if="authorizedInferenceDisplay == 2">
-                    <strong>Bu çıkarımı görüntüleme yetkisine sahip değilsiniz! <br>
-                        Henüz giriş yapmadınız ya da not sizinle paylaşılmadı</strong>
+                    <strong translate>Bu çıkarımı görüntüleme yetkisine sahip değilsiniz! <br> Henüz giriş yapmadınız ya da not sizinle paylaşılmadı</strong>
                 </div>
             </ion-content>
         </ion-nav-view>

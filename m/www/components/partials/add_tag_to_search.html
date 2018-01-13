@@ -1,9 +1,9 @@
 <div class="modal modal-fullscreen" ng-controller="mobileAddTagController">
     <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced" align-title="center">
-        <ion-nav-title>Etiket Ekle</ion-nav-title>
+        <ion-nav-title>{{'Etiket Ekle' | translate}}</ion-nav-title>
         <ion-nav-buttons side="left">
             <button class="button button-icon icon-left ion-arrow-left-b" ng-click="closeModal('addtagtosearch')"
-                    style="float: left"> Vazgeç
+                    style="float: left"> {{'Vazgeç' | translate}}
             </button>
 
         </ion-nav-buttons>
@@ -12,7 +12,7 @@
     <ion-header-bar class="bar bar-subheader item-input-inset">
         <label class="item-input-wrapper search">
             <i class="icon ion-search placeholder-icon"></i>
-            <input id="addtagtosearch_input" ng-model="mobil_tagsearched " type="text" placeholder="Etiket ara / ekle" ng-change="tagsquery(mobil_tagsearched);scrollDelegateTop('addtagtosearch')"/>
+            <input id="addtagtosearch_input" ng-model="mobil_tagsearched " type="text" placeholder="{{'Etiket ara / ekle' | translate}}" ng-change="tagsquery(mobil_tagsearched);scrollDelegateTop('addtagtosearch')"/>
         </label>
         <button ng-click="mobil_addedtags(filterTags,mobil_tagsearched); closeModal('addtagtosearch');" style="width:40px"
                 class="button button-block button-positive">+

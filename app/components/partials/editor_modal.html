@@ -8,15 +8,15 @@
             </div>
             <div class="modal-body">
                 <textarea class="form-control" id="annotationData_text" ng-model="annotationModalData.text"
-                          placeholder="Yorum ekleyin"></textarea>
-
+                          placeholder="{{'Yorum ekleyin' | translate}}">
+                </textarea>
             </div>
             <table style="width: 700px">
                 <tr>
                     <td style="width: 300px; vertical-align: top; padding-right: 20px; margin-right: 20px; border-right: dimgray 1px solid;">
-                        Etiketler
+                        {{'Etiketler' | translate}}
                         <tags-input ng-model="annotationModalDataTagsInput" display-property="name"
-                                    placeholder="Etiket girin" replace-spaces-with-dashes="false"
+                                    placeholder="{{'Etiket girin' | translate}}" replace-spaces-with-dashes="false"
                                     min-length="2">
                             <auto-complete source="loadTags($query)" min-length="2" select-first-match="false"></auto-complete>
                         </tags-input>
@@ -27,47 +27,47 @@
                         <input type="radio" ng-model="annotationModalData.colour" value="yellow" style="float: left;">
 
                         <div class="tag_colour a_hl_yellow">&nbsp;</div>
-                        <div class="tag_colour_description">Açıklama, hatırlatıcı</div>
+                        <div class="tag_colour_description" translate>Açıklama, hatırlatıcı</div>
                         <br/>
                         <br/>
                         <input type="radio" ng-model="annotationModalData.colour" value="red" style="float: left;">
 
                         <div class="tag_colour a_hl_red">&nbsp;</div>
-                        <div class="tag_colour_description">Tam olarak anlamadım</div>
+                        <div class="tag_colour_description" translate>Tam olarak anlamadım</div>
                         <br/>
                         <br/>
                         <input type="radio" ng-model="annotationModalData.colour" value="green" style="float: left;">
 
                         <div class="tag_colour a_hl_green">&nbsp;</div>
-                        <div class="tag_colour_description">Önemli</div>
+                        <div class="tag_colour_description" translate>Önemli</div>
                         <br/>
                         <br/>
 
                     </td>
                     <td style="width: 300px; vertical-align: top; padding-left: 20px; margin-left: 20px;">
-                        Hangi Çevreler Görebilir
-                        <tags-input ng-model="ViewCircles" placeholder="Çevre Seçiniz" display-property="name"
+                        {{'Hangi Çevreler Görebilir' | translate}}
+                        <tags-input ng-model="ViewCircles" placeholder="{{'Çevre Seçiniz' | translate}}" display-property="name"
                                     replace-spaces-with-dashes="false"
                                     min-length="2" add-from-autocomplete-only="true"  add-on-blur="false">
                             <auto-complete source="cevrelistele()"  load-on-empty="true" load-on-focus="true" select-first-match="false"></auto-complete>
                         </tags-input>
 
-                        Ayrıca Kimler Görebilir
-                        <tags-input ng-model="ViewUsers" placeholder="Kişi Seçiniz" display-property="name"
+                        {{'Ayrıca Kimler Görebilir' | translate}}
+                        <tags-input ng-model="ViewUsers" placeholder="{{'Kişi Seçiniz' | translate}}" display-property="name"
                                     replace-spaces-with-dashes="false"
                                     min-length="2" add-from-autocomplete-only="true">
                             <auto-complete source="kisilistele($query)" min-length="2" ></auto-complete>
                         </tags-input>
 
-                        Hangi Çevreler Yorum Yazabilir
-                        <tags-input ng-model="yrmcevres" placeholder="Çevre Seçiniz" display-property="name"
+                        {{'Hangi Çevreler Yorum Yazabilir' | translate}}
+                        <tags-input ng-model="yrmcevres" placeholder="{{'Çevre Seçiniz' | translate}}" display-property="name"
                                     replace-spaces-with-dashes="false"
                                     min-length="2" add-from-autocomplete-only="true"  add-on-blur="false">
                             <auto-complete source="cevrelistele()" load-on-empty="true" load-on-focus="true" select-first-match="false"></auto-complete>
                         </tags-input>
 
-                        Ayrıca Kimler Yorum Yazabilir
-                        <tags-input ng-model="yrmkisis" placeholder="Kişi Seçiniz" display-property="name"
+                        {{'Ayrıca Kimler Yorum Yazabilir' | translate}}
+                        <tags-input ng-model="yrmkisis" placeholder="{{'Kişi Seçiniz' | translate}}" display-property="name"
                                     replace-spaces-with-dashes="false"
                                     min-length="2" add-from-autocomplete-only="true">
                             <auto-complete source="kisilistele($query)" min-length="2" ></auto-complete>
@@ -78,10 +78,8 @@
 
 
             <div class="modal-footer">
-                <button class="btn btn-primary btn-wide" ng-click="cancelNewAnnotationCreation()">
-                    Vazgeç
-                </button>
-                <button class="btn btn-primary btn-wide" ng-click="submitEditor()">Tamam</button>
+                <button class="btn btn-primary btn-wide" ng-click="cancelNewAnnotationCreation()" translate>Vazgeç</button>
+                <button class="btn btn-primary btn-wide" ng-click="submitEditor()" translate>Tamam</button>
             </div>
         </div>
     </div>

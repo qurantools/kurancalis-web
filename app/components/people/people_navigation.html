@@ -2,17 +2,14 @@
     <div class="row" style="padding-left: 15px;">
         <div style="float: left;">
             <button onclick="toggleLeftPanel()" class="btn btn-primary"><i
-                    class="fa fa-bars"></i> MENÜ
+                    class="fa fa-bars"></i> {{'MENÜ' | translate}}
             </button>
 
-            <a href="#/people/find_people/" id="fp" ng-class="{back_orange: currentPage == 'people_find'}" class="btn btn-primary">Kullanıcı Bul
-            </a>
+            <a href="#/people/find_people/" id="fp" ng-class="{back_orange: currentPage == 'people_find'}" class="btn btn-primary" translate>Kullanıcı Bul</a>
 
-            <a href="#/people/people_have_you/" id="phy" ng-class="{back_orange: currentPage == 'people_have_you'}" class="btn btn-primary">Takipçilerim
-            </a>
+            <a href="#/people/people_have_you/" id="phy" ng-class="{back_orange: currentPage == 'people_have_you'}" class="btn btn-primary" translate>Takipçilerim</a>
 
-            <a href="#/people/circles/" id="crcl" ng-class="{back_orange: currentPage == 'people_circle'}" class="btn btn-primary">Çevrelerim
-            </a>
+            <a href="#/people/circles/" id="crcl" ng-class="{back_orange: currentPage == 'people_circle'}" class="btn btn-primary" translate>Çevrelerim</a>
 <!--
             <a href="#/people/explore/" id="exp" class="btn btn-primary">Keşfet
             </a>
@@ -21,9 +18,7 @@
 
         <div ng-show="facebookIsReady" class="facebook_area">
             <div ng-if="user==null">
-                <button type="button" id="login" ng-click="login()" class="btn btn-primary">
-                    Giriş
-                </button>
+                <button type="button" id="login" ng-click="login()" class="btn btn-primary" translate>Giriş</button>
             </div>
             <div ng-if="user!=null">
                 <img ng-src="{{user.photo}}" height="30"/>

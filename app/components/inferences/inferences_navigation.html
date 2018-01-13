@@ -2,22 +2,18 @@
     <div class="row" style="padding-left: 15px;">
         <div style="float: left;">
             <button onclick="toggleLeftPanel()" class="btn btn-primary"><i
-                    class="fa fa-bars"></i> MENÜ
+                    class="fa fa-bars"></i> {{'MENÜ' | translate}}
             </button>
 
-            <a href="#/inferences/" id="fp" class="btn btn-primary" data-target="#inferencesFilterModal" data-toggle="modal"><i class="fa fa-search"
-                                                                                                                                 style="font-size: 1.3em"></i> Ara</a>
+            <a href="#/inferences/" id="fp" class="btn btn-primary" data-target="#inferencesFilterModal" data-toggle="modal"><i class="fa fa-search" style="font-size: 1.3em"></i> {{'Ara' | translate}}</a>
 
-            <a href="#/inference/new/" id="phy" ng-class="{back_orange: currentPage == 'people_have_you'}" class="btn btn-primary">Yeni Çıkarım Notu
-            </a>
+            <a href="#/inference/new/" id="phy" ng-class="{back_orange: currentPage == 'people_have_you'}" class="btn btn-primary" translate>Yeni Çıkarım Notu</a>
 
         </div>
 
         <div ng-show="facebookIsReady" class="facebook_area">
             <div ng-if="user==null">
-                <button type="button" id="login" ng-click="login()" class="btn btn-primary">
-                    Giriş
-                </button>
+                <button type="button" id="login" ng-click="login()" class="btn btn-primary" translate>Giriş</button>
             </div>
             <div ng-if="user!=null">
                 <img ng-src="{{user.photo}}" height="30"/>

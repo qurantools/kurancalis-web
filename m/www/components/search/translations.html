@@ -5,7 +5,7 @@
             <ion-nav-buttons side="left">
                 <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
             </ion-nav-buttons>
-            <ion-nav-title>Kelime ile Ayet Arama</ion-nav-title>
+            <ion-nav-title>{{'Kelime ile Ayet Arama' | translate}}</ion-nav-title>
         </ion-nav-bar>
         <!-- end of side menu part 1 -->
         <ion-nav-view id="content" cache-view="true">
@@ -13,25 +13,23 @@
                 <div class="row" scroll-event-interval="5">
                     <div class="col-xs-12 bb" id="translations" style="display: block;width: 100%;">
                         <div class="item item-input button-block" style="margin-top: 20px;border-width: 1px;border-style: solid;font-size: large">
-                            <input style="font-size: medium" type="text" placeholder="Meallerde ara"
+                            <input style="font-size: medium" type="text" placeholder="{{'Meallerde ara' | translate}}"
                                    ng-model="verseSearchText" ng-enter="searchTranslations()"
                                    ng-change="searchTextChange(verseSearchText)"
                                    min-length="3">
                         </div>
                         <div class="item item-input item-select" style="margin-top: 5px;border-width: 1px;border-style: solid;font-size: larger">
-                            <div class="input-label">
-                                Dil
-                            </div>
+                            <div class="input-label" translate>Dil</div>
                             <select ng-model="searchTranslationsAuthor"
                                     ng-options="author.value as author.text for author in searchAuthorMap"
                                     ng-change="searchTranslationsAuthorChanged(searchTranslationsAuthor)"
                                     class="form-control">
-                                <option style="display:none" value="">Meal Seç</option>
+                                <option style="display:none" value="" translate>Meal Seç</option>
                             </select>
                         </div>
                         <button style="font-size: large" class="button button-block button-positive" ng-click="searchTranslations()">
                             <i class="icon ion-search"></i>
-                            Ara
+                            {{'Ara' | translate}}
                         </button>
                         <div ng-repeat="verse in verses">
                             <div class="list" id="v_{{verse.id}}">
@@ -56,7 +54,7 @@
                                         <div class="col-xs-1" ng-show="verse.selectedSingleAuthor==translation.authorId && verse.translations.length>1" ng-click="multipleAuthorsView($parent.$index)"
                                             style="text-align: center;background-color:#F4E288;border-color: black;border-width: 1px;border-style: solid;margin:5px 12px 0 12px;">
                                             <img src="../../assets/img/expand.png" width="18" height="18" style="vertical-align: middle;">
-                                            Diğer mealleri göster
+                                            {{'Diğer mealleri göster' | translate}}
                                         </div>
                                     </div>
                                 </div>

@@ -1,6 +1,6 @@
 <div class="modal modal-fullscreen">
     <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced">
-        <ion-nav-title>Etiket Sahibi Seçimi</ion-nav-title>
+        <ion-nav-title>{{'Etiket Sahibi Seçimi' | translate}}</ion-nav-title>
         <ion-nav-buttons side="left">
             <button class="button button-icon icon-left ion-arrow-left-b" ng-click="closeModal('tagged_verse_detailed_search')"
                     style="float: left">
@@ -15,9 +15,7 @@
     </ion-nav-bar>
     <ion-content overflow-scroll="true">
         <div style="height: 65px;">&nbsp;</div>
-        <div class="item item-divider">
-            Çevrelerin Notları
-        </div>
+        <div class="item item-divider" translate>Çevrelerin Notları</div>
         <div class="list">
             <ion-checkbox  ng-repeat="item in taggedVerseCirclesForMobileSearch"
                            ng-model="taggedVerseCirclesForMobileSearch[$index].selected"
@@ -25,9 +23,7 @@
                 {{item.name}}
             </ion-checkbox>
         </div>
-        <div class="item item-divider">
-            Kişilerin Notları
-        </div>
+        <div class="item item-divider" translate>Kişilerin Notları</div>
         <ion-list show-delete=true>
             <ion-item ng-repeat="item in taggedVerseUsersForMobileSearch">
                 <ion-delete-button class="ion-minus-circled"
@@ -36,9 +32,7 @@
                 {{item.name}}
             </ion-item>
         </ion-list>
-        <button class="button button-block button-positive" ng-click="openModal('friendsearch');">
-            Kişi Ekle
-        </button>
+        <button class="button button-block button-positive" ng-click="openModal('friendsearch');" translate>Kişi Ekle</button>
         <div style="height: 20px"></div>
     </ion-content>
 </div>

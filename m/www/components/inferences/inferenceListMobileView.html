@@ -45,7 +45,7 @@
                         </div>
                         <div style="padding-left:10px;white-space: pre-line;margin-top: 25px;">
                             <span ng-bind-html="inference.brief | to_trusted | limitTo:400" style="line-height: 1;white-space: pre-wrap; font-size: 10pt"></span>
-                            <a href="" ng-click="navigateTo('/inference/display/{{inference.id}}')" style="color: blue; font-size: 10pt">devamını oku...</a>
+                            <a href="" ng-click="navigateTo('/inference/display/{{inference.id}}')" style="color: blue; font-size: 10pt" translate>devamını oku...</a>
                         </div>
                         <div class="row">
                             <div class="col">
@@ -71,16 +71,16 @@
                             </span>
                             <span ng-disabled="(inference.voteRates.dislike + inference.voteRates.like) == 0"
                                   ng-click="showVoteResults(inference, 'inferences')">
-                                <i class="fa fa-pie-chart"></i> {{(inference.voteRates.dislike + inference.voteRates.like)}} Oy
+                                <i class="fa fa-pie-chart"></i> {{(inference.voteRates.dislike + inference.voteRates.like)}} {{'Oy' | translate}}
                             </span>
                             <span ng-click="navigateTo('/inference/display/{{inference.id}}/')" style="margin-right: 10px;" class="make_comment">
-                                <i class="fa fa-comment"></i> {{inference.commentCount}} Yorum
+                                <i class="fa fa-comment"></i> {{inference.commentCount}} {{'Yorum' | translate}}
                             </span>
                         </div>
                     </div>
                 </div>
                 <div style="text-align: center; padding-top:10px;" ng-if="allInferencesOpts.hasMore==true">
-                    <button ng-click="get_all_inferences()" class="btn btn-info btn-hg">Daha fazla</button>
+                    <button ng-click="get_all_inferences()" class="btn btn-info btn-hg" translate>Daha fazla</button>
                 </div>
                 <div style="height: 40px"></div>
             </ion-content>

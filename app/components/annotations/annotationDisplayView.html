@@ -38,7 +38,7 @@
                         <button type="button" class="btn btn-primary btn-xs"
                                 ng-click="showVoteResults(annotation, 'annotations')"
                                 ng-disabled="(annotation.voteRates.dislike + annotation.voteRates.like) == 0">
-                            Değerlendirenler
+                            {{'Değerlendirenler' | translate}}
                         </button>
                         <button type="button" class="btn btn-primary btn-xs" ng-click="showEditor(annotation)"
                                 ng-if="annotation.userId==user.id"><i
@@ -50,7 +50,7 @@
                     </div>
                 </div>
             </div>
-            <h6 align="left" style="width: 1024px">Yorumlar</h6>
+            <h6 align="left" style="width: 1024px" translate>Yorumlar</h6>
             <div ng-repeat="comment in annotation.comments" style="width: 100%;border-radius: 15px;padding-top: 10px !important;" align="left" class="row well">
                 <div class="col-lg-1">
                     <a href="" ng-click="navigateTo('/profile/user/{{comment.owner.user_id}}/')">
@@ -77,18 +77,18 @@
                             </span>
                             <span>
                                 <a class="make_comment" ng-class="{'disabled' : (comment.voteRates.dislike + comment.voteRates.like) == 0}"
-                                   ng-click="showVoteResults(comment, 'annotations', true, comment.comment.annotationId)">Değerlendirenler</a>
+                                   ng-click="showVoteResults(comment, 'annotations', true, comment.comment.annotationId)" translate>Değerlendirenler</a>
                             </span>
                             <span class="make_comment"
                                   ng-click="comment.showChild=true;
                                       comment.showChilds=true;
                                       focusToCommentArea('comment_textarea_annotation_{{comment.comment.id}}')"
                                   ng-init="comment.showChild = false">
-                                <a>Yanıtla</a>
+                                <a translate>Yanıtla</a>
                             </span>
                             <span ng-bind-html="comment.comment.created | time_in_string | to_trusted"></span>
                             <span ng-if="comment.comment.childs.length > 2 && !comment.showChilds" ng-click="comment.showChilds=true">
-                                <i class="fa fa-mail-forward"></i> <span style="color:blue">{{comment.comment.childs.length}} Yanıt</span>
+                                <i class="fa fa-mail-forward"></i> <span style="color:blue">{{comment.comment.childs.length}} {{'Yanıt' | translate}}</span>
                             </span>
                         </div>
                         <div class="col-xs-2" align="right">
@@ -127,11 +127,11 @@
                                     </span>
                                     <span>
                                         <a class="make_comment" ng-class="{'disabled' : (child_comment.voteRates.dislike + child_comment.voteRates.like) == 0}"
-                                           ng-click="showVoteResults(child_comment, 'annotations', true, child_comment.comment.annotationId)">Değerlendirenler</a>
+                                           ng-click="showVoteResults(child_comment, 'annotations', true, child_comment.comment.annotationId)" translate>Değerlendirenler</a>
                                     </span>
                                     <span class="make_comment"
                                           ng-click="comment.showChild = true;focusToCommentArea('comment_textarea_annotation_{{comment.comment.id}}')">
-                                        <a>Yanıtla</a>
+                                        <a translate>Yanıtla</a>
                                     </span>
                                     <span ng-bind-html="child_comment.comment.created | time_in_string | to_trusted"></span>
                                 </div>
@@ -159,7 +159,7 @@
                         <div class="col-lg-1">
                             <button type="button" class="btn btn-primary btn-xs"
                                     ng-click="createComment(annotation, 'annotations', annotation.id, 'comment_textarea_annotation_{{comment.comment.id}}', comment.comment.id, $index)">
-                                Tamam
+                                {{'Tamam' | translate}}
                             </button>
                         </div>
                     </div>
@@ -178,7 +178,7 @@
                 <div class="col-lg-1">
                     <button type="button" class="btn btn-primary btn-xs"
                             ng-click="createComment(annotation, 'annotations', annotation.id, 'comment_textarea_annotation', null, null)">
-                        Tamam
+                        {{'Tamam' | translate}}
                     </button>
                 </div>
             </div>
@@ -188,31 +188,30 @@
                 <tr>
                     <td align="center" style="padding-right: 15px; padding-left: 15px; padding-bottom: 15px;
                     width: 1050px; padding-top: 15px; background-color:#fff6dc">
-                        <strong>Bu notu görüntüleme yetkisine sahip değilsiniz! <br>
-                            Henüz giriş yapmadınız ya da not sizinle paylaşılmadı</strong>
+                        <strong translate>Bu notu görüntüleme yetkisine sahip değilsiniz! <br> Henüz giriş yapmadınız ya da not sizinle paylaşılmadı</strong>
                     </td>
                 </tr>
             </table>
         </div>
     </div>
-    <kisisilmodal title="Yorum Silme" visible="deleteCommentFlag">
+    <kisisilmodal title="{{'Yorum Silme' | translate}}" visible="deleteCommentFlag">
         <div align="left">
-            <label>Yorumunuz silinecek Onaylıyor musunuz?</label>
+            <label>{{'Yorumunuz silinecek Onaylıyor musunuz?' | translate}}</label>
         </div>
         <div class="modal-footer">
-            <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal">Vazgeç</a>
-            <a class="btn btn-primary btn-wide btn-danger" ng-click="deleteComment(commentWillDeleteParent, 'annotations', annotation.id, commentWillDeleteId, commentWillDeleteIndex)" data-dismiss="modal">Sil</a>
+            <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal" translate>Vazgeç</a>
+            <a class="btn btn-primary btn-wide btn-danger" ng-click="deleteComment(commentWillDeleteParent, 'annotations', annotation.id, commentWillDeleteId, commentWillDeleteIndex)" data-dismiss="modal" translate>Sil</a>
         </div>
     </kisisilmodal>
-    <degistirmodal title="Yorum Güncelle" visible="updateCommentFlag">
+    <degistirmodal title="{{'Yorum Güncelle' | translate}}" visible="updateCommentFlag">
         <div align="left">
             <div  class="col-lg-10">
                 <textarea id="annotation_comment_update_textarea" ng-model="commentContentUpdate.value" style="margin-top: 1%;width: 550px;height: 81px;border-radius: 9px;background-color: white;"/>
             </div>
         </div>
         <div class="modal-footer">
-            <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal">Vazgeç</a>
-            <a class="btn btn-primary btn-wide btn-primary" ng-click="updateComment(commentWillUpdateParent, 'annotations', annotation.id, commentWillUpdate.id, 'annotation_comment_update_textarea', commentWillUpdateIndex)" data-dismiss="modal">Güncelle</a>
+            <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal" translate>Vazgeç</a>
+            <a class="btn btn-primary btn-wide btn-primary" ng-click="updateComment(commentWillUpdateParent, 'annotations', annotation.id, commentWillUpdate.id, 'annotation_comment_update_textarea', commentWillUpdateIndex)" data-dismiss="modal" translate>Güncelle</a>
         </div>
     </degistirmodal>
 </body>

@@ -4,7 +4,7 @@
         <ion-nav-buttons side="left">
             <button class="button button-icon icon-left ion-arrow-left-b"
                     ng-click="closeModal('all_inferences_sort')"
-                    style="float: left"> Geri
+                    style="float: left"> {{'Geri' | translate}}
             </button>
         </ion-nav-buttons>
     </ion-nav-bar>
@@ -15,11 +15,11 @@
         <ion-list>
 
             <ion-item ng-click="allInferencesOrderByChanged('verse');closeModal('all_inferences_sort')">
-                Ayet
+                {{'Ayet' | translate}}
                 <i class="radio-icon ion-checkmark" ng-if="allInferencesOrderBy=='verse'"></i>
             </ion-item>
             <ion-item ng-click="allInferencesOrderByChanged('time');closeModal('all_inferences_sort')">
-                Zaman
+                {{'Zaman' | translate}}
                 <i class="radio-icon ion-checkmark" ng-if="allInferencesOrderBy=='time'"></i>
             </ion-item>
         </ion-list>

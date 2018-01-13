@@ -4,7 +4,7 @@
             <ion-nav-buttons side="left">
                 <a class="button button-icon icon ion-arrow-left-b" href="#/people/home/"></a>
             </ion-nav-buttons>
-            <ion-nav-title>Kişi Bul</ion-nav-title>
+            <ion-nav-title>{{'Kişi Bul' | translate}}</ion-nav-title>
         </ion-nav-bar>
         <ion-nav-view name="appContent"></ion-nav-view>
         <!-- end of side menu part 1 -->
@@ -14,7 +14,7 @@
                 <div class="bar bar-header item-input-inset">
                     <label class="item-input-wrapper">
                         <i class="icon ion-ios-search placeholder-icon"></i>
-                        <input id="mobil_peoples" ng-model="peoplesearch" type="search" placeholder="Kişi Arama"
+                        <input id="mobil_peoples" ng-model="peoplesearch" type="search" placeholder="{{'Kişi Arama' | translate}}"
                                ng-change="peoplelist(peoplesearch);scrollToTop()"/>
                     </label>
                     <button ng-click="clearfriendsearch()" class="button button-clear">X</button>

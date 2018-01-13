@@ -1,10 +1,10 @@
 <div class="modal modal-fullscreen">
     <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced">
-        <ion-nav-title>Sıralama</ion-nav-title>
+        <ion-nav-title>{{'Sıralama' | translate}}</ion-nav-title>
         <ion-nav-buttons side="left">
             <button class="button button-icon icon-left ion-arrow-left-b"
                     ng-click="closeModal('all_annotations_sort')"
-                    style="float: left"> Geri
+                    style="float: left"> {{'Geri' | translate}}
             </button>
         </ion-nav-buttons>
     </ion-nav-bar>
@@ -14,11 +14,11 @@
         <div style="height:65px"></div>
         <ion-list>
             <ion-item ng-click="allAnnotationsOrderByChanged('verse');closeModal('all_annotations_sort')">
-                Ayet
+                {{'Ayet' | translate}}
                 <i class="radio-icon ion-checkmark" ng-if="allAnnotationsOrderBy=='verse'"></i>
             </ion-item>
             <ion-item ng-click="allAnnotationsOrderByChanged('time');closeModal('all_annotations_sort')">
-                Zaman
+                {{'Zaman' | translate}}
                 <i class="radio-icon ion-checkmark" ng-if="allAnnotationsOrderBy=='time'"></i>
             </ion-item>
         </ion-list>

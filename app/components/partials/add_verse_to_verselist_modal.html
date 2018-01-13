@@ -2,17 +2,17 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Ayeti Listeye Ekle</h4>
+                <h4 class="modal-title" translate>Ayeti Listeye Ekle</h4>
             </div>
             <div class="modal-body">
                 <div class="form-group">
                     <div style="width: 100%">
                         <table>
                             <td class="col-sm-10">
-                                <input type="text" class="form-control" ng-model="newVerseList.name" ng-change="filterVerseLists(newVerseList.name)" placeholder="Ara / Yeni Liste"/>
+                                <input type="text" class="form-control" ng-model="newVerseList.name" ng-change="filterVerseLists(newVerseList.name)" placeholder="{{'Ara' | translate}}/{{'Yeni Liste' | translate}}"/>
                             </td>
                             <td  class="col-sm-2" style="width:100%; padding-left: 15px;">
-                                <a class="btn btn-primary btn-wide" ng-click="addVerseList(newVerseList.name)"><i class="fa fa-plus"></i>Yeni Liste Oluştur</a>
+                                <a class="btn btn-primary btn-wide" ng-click="addVerseList(newVerseList.name)"><i class="fa fa-plus"></i>{{'Yeni Liste Oluştur' | translate}}</a>
                             </td>
                         </table>
                     </div>
@@ -26,8 +26,8 @@
                     </ul>
                 </div>
                 <div class="modal-footer">
-                    <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal">İptal</a>
-                    <a class="btn btn-primary btn-wide" ng-click="addVerseToVerseLists(localVerseListSelection)" data-dismiss="modal" ng-class="{ 'disabled': localVerseListSelection.length < 1}">Tamam</a>
+                    <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal" translate>İptal</a>
+                    <a class="btn btn-primary btn-wide" ng-click="addVerseToVerseLists(localVerseListSelection)" data-dismiss="modal" ng-class="{ 'disabled': localVerseListSelection.length < 1}" translate>Tamam</a>
                 </div>
             </div>
         </div>

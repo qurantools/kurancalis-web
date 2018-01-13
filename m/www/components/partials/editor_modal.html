@@ -1,15 +1,15 @@
 <div class="modal modal-fullscreen" ng-controller="annotationEditorController">
     <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced">
-        <ion-nav-title>Ayet Notu</ion-nav-title>
+        <ion-nav-title>{{'Ayet Notu' | translate}}</ion-nav-title>
         <ion-nav-buttons side="left">
             <button class="button button-icon icon-left ion-arrow-left-b" ng-click="cancelNewAnnotationCreation()"
-                    style="float: left">&nbsp;Vazgeç
+                    style="float: left">&nbsp;{{'Vazgeç' | translate}}
             </button>
         </ion-nav-buttons>
 
         <ion-nav-buttons side="right">
             <button class="button button-icon icon-left ion-checkmark" ng-click="submitEditor()"
-                    style="float: right">Tamam
+                    style="float: right">{{'Tamam' | translate}}
             </button>
         </ion-nav-buttons>
     </ion-nav-bar>
@@ -23,12 +23,10 @@
 
         <label class="item item-input">
             <textarea id="annotationData_text" ng-model="annotationModalData.text"
-                      placeholder="Yorum ekleyin" style="height:80px; font-size:16px;" ></textarea>
+                      placeholder="{{'Yorum ekleyin' | translate}}" style="height:80px; font-size:16px;" ></textarea>
         </label>
 
-        <div class="item item-divider">
-            Etiketler
-        </div>
+        <div class="item item-divider" translate>Etiketler</div>
 
         <ion-list show-delete=true>
             <ion-item ng-repeat="item in annotationModalDataTagsInput">
@@ -41,27 +39,21 @@
         </ion-list>
 
 
-        <button class="button button-block button-positive" ng-click="openModal('tagsearch');">
-            Etiket Ekle
-        </button>
+        <button class="button button-block button-positive" ng-click="openModal('tagsearch');" translate>Etiket Ekle</button>
 
         <br/>
 
-        <div class="item item-divider">
-            Kategori
-        </div>
+        <div class="item item-divider" translate>Kategori</div>
         <ion-radio ng-value="'yellow'" ng-model="annotationModalData.colour" >
-            <div class="tag_colour a_hl_yellow"></div>Açıklama, hatırlatıcı
+            <div class="tag_colour a_hl_yellow"></div>{{'Açıklama, hatırlatıcı' | translate}}
         </ion-radio>
         <ion-radio  ng-value="'red'" ng-model="annotationModalData.colour" >
-            <div class="tag_colour a_hl_red"></div>Tam olarak anlamadım
+            <div class="tag_colour a_hl_red"></div>{{'Tam olarak anlamadım' | translate}}
         </ion-radio>
         <ion-radio ng-value="'green'" ng-model="annotationModalData.colour" >
-            <div class="tag_colour a_hl_green"></div>Önemli
+            <div class="tag_colour a_hl_green"></div>{{'Önemli' | translate}}
         </ion-radio>
-        <div class="item item-divider">
-            Paylaşılan Çevreler
-        </div>
+        <div class="item item-divider" translate>Paylaşılan Çevreler</div>
 
         <div class="list">
             <ion-checkbox  ng-repeat="item in mobileAnnotationEditorCircleListForSelection"
@@ -72,9 +64,7 @@
             </ion-checkbox>
         </div>
 
-        <div class="item item-divider">
-            Paylaşılan Kişiler
-        </div>
+        <div class="item item-divider" translate>Paylaşılan Kişiler</div>
 
         <ion-list show-delete=true>
             <ion-item ng-repeat="item in ViewUsers">
@@ -87,9 +77,7 @@
         </ion-list>
 
 
-        <button class="button button-block button-positive" ng-click="openModal('viewusersearch');">
-            Kişi Ekle
-        </button>
+        <button class="button button-block button-positive" ng-click="openModal('viewusersearch');" translate>Kişi Ekle</button>
         <div style="height: 20px"></div>
     </ion-content>
 </div>

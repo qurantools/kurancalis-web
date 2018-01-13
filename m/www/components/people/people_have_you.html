@@ -2,16 +2,16 @@
     <ion-side-menu-content drag-content="false">
         <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced" align-title="center">
             <ion-nav-buttons side="left">
-                <button class="button button-icon icon ion-arrow-left-b" ng-click="navigateTo('/people/home/')">Kişiler</button>
+                <button class="button button-icon icon ion-arrow-left-b" ng-click="navigateTo('/people/home/')" translate>Kişiler</button>
             </ion-nav-buttons>
-            <ion-nav-title>Takipçilerim</ion-nav-title>
+            <ion-nav-title>{{'Takipçilerim' | translate}}</ion-nav-title>
         </ion-nav-bar>
         <ion-nav-view name="appContent"></ion-nav-view>
         <ion-nav-view cache-view="true">
             <ion-content overflow-scroll="true" delegate-handle="content"  class="scroll_content"
                          style="margin-top:80px;">
                     <label class="item item-input" style="margin: 10px;">
-                        <input ng-model="search.$" type="text" placeholder="Ara" style="width:100%"/>
+                        <input ng-model="search.$" type="text" placeholder="{{'Ara' | translate}}" style="width:100%"/>
                     </label>
                     <ion-list>
                         <ion-item ng-repeat="item in circle_friends | filter:search:strict" item="item item-avatar" style="padding: 5px 0px 5px 5px;">
@@ -32,7 +32,7 @@
             <div class="button-bar">
                 <button class="footer-bar-item item-left button button-positive" ng-click="openModal('circle_selection');"
                         style="font-size: 20px; !important;white-space: normal;" ng-disabled="hidden_visible">
-                    Çevreye Ekle
+                    {{'Çevreye Ekle' | translate}}
                 </button>
             </div>
         </ion-footer-bar>

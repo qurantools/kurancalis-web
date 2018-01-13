@@ -10,12 +10,12 @@
             asdfasfd
         </div>
         <div class="col-xs-9 pull-right">
-            <h3 style="text-align: center">Liste : {{selectedVerseList.name}}</h3>
+            <h3 style="text-align: center">{{'Liste' | translate}} : {{selectedVerseList.name}}</h3>
             <select ng-model="verseListAuthor"
                     ng-options="author.id as author.name for author in authors"
                     ng-change="verseListsAuthorChanged(verseListAuthor)"
                     class="form-control">
-                <option style="display:none" value="">Yazar Seçiniz</option>
+                <option style="display:none" value="" translate>Yazar Seçiniz</option>
             </select>
         </div>
     </div>
@@ -61,27 +61,27 @@
 <!-- /container-->
 
 <div>
-    <modal title="Yeni Ayet Listesi Ekleme" visible="newVerseListModal">
+    <modal title="{{'Yeni Ayet Listesi Ekleme' | translate}}" visible="newVerseListModal">
         <div class="form-group">
-            <input type="text" class="form-control" ng-model="newVerseList.name" placeholder="Ayet Listesi Tanımı"/>
+            <input type="text" class="form-control" ng-model="newVerseList.name" placeholder="{{'Ayet Listesi Tanımı' | translate}}"/>
         </div>
         <div class="modal-footer">
-            <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal">İptal</a>
-            <a class="btn btn-primary btn-wide" ng-click="addVerseList(newVerseList.name)" data-dismiss="modal">Tamam</a>
+            <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal" translate>İptal</a>
+            <a class="btn btn-primary btn-wide" ng-click="addVerseList(newVerseList.name)" data-dismiss="modal" translate>Tamam</a>
         </div>
     </modal>
 </div>
 
 <div>
-    <modal title="Liste Düzenle" visible="editVerseListModal">
+    <modal title="{{'Liste Düzenle' | translate}}" visible="editVerseListModal">
         <div class="form-group">
-            <input type="text" class="form-control" ng-model="editedVerseList.name" placeholder="Ayet Listesi Tanımı"/>
+            <input type="text" class="form-control" ng-model="editedVerseList.name" placeholder="{{'Ayet Listesi Tanımı' | translate}}"/>
             <a class="btn btn-danger btn-wide" ng-click="deleteVerseList(editedVerseList)" data-dismiss="modal"
-               style="margin: 12px 5px;width: 51%;float: right;">Listeyi Sil</a>
+               style="margin: 12px 5px;width: 51%;float: right;" translate>Listeyi Sil</a>
         </div>
         <div class="modal-footer">
-            <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal">İptal</a>
-            <a class="btn btn-primary btn-wide" ng-click="updateVerseList(editedVerseList)" data-dismiss="modal">Tamam</a>
+            <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal" translate>İptal</a>
+            <a class="btn btn-primary btn-wide" ng-click="updateVerseList(editedVerseList)" data-dismiss="modal" translate>Tamam</a>
         </div>
     </modal>
 </div>
@@ -89,40 +89,40 @@
 <div>
     <modal title="Toplu Ayet Ekleme" visible="bulkInsertVerseToVerseListFlag">
         <div class="form-group">
-            <div><b>{{selectedVerseList.name}}</b> listesine eklemek istediğiniz ayetleri "34:5 23:10 19:78" şeklinde arada boşluklar olacak şekilde giriniz.</div>
+            <div translate><b>{{selectedVerseList.name}}</b> listesine eklemek istediğiniz ayetleri "34:5 23:10 19:78" şeklinde arada boşluklar olacak şekilde giriniz.</div>
             <input type="text" class="form-control" ng-model="versesForBulkInsert"/>
         </div>
         <div class="modal-footer">
-            <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal">İptal</a>
-            <a class="btn btn-primary btn-wide" ng-click="bulkInsertVerse(selectedVerseList,versesForBulkInsert)" data-dismiss="modal">Tamam</a>
+            <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal" translate>İptal</a>
+            <a class="btn btn-primary btn-wide" ng-click="bulkInsertVerse(selectedVerseList,versesForBulkInsert)" data-dismiss="modal" translate>Tamam</a>
         </div>
     </modal>
 </div>
 
 <div>
-    <modal title="Listedeki Ayetleri Etiketleme" visible="bulkInsertTagToVerseListFlag">
+    <modal title="{{'Listedeki Ayetleri Etiketleme' | translate}}" visible="bulkInsertTagToVerseListFlag">
         <div class="form-group">
             <div><b>{{selectedVerseList.name}}</b> listesindeki tüm ayetler aşağıda belirtiğiniz şekilde etiketlenecektir.</div>
-            <div>Her etiketleme işlemi ayrı bir ayet notu olacağından verceğiniz tüm etiketleri bir seferde burada belirtmeniz faydalı olacaktır.</div>
-            <div>Burada verdiğiniz etiketleri silmek için ilgili ayet notlarını silmelisiniz.</div>
+            <div translate>Her etiketleme işlemi ayrı bir ayet notu olacağından verceğiniz tüm etiketleri bir seferde burada belirtmeniz faydalı olacaktır.</div>
+            <div translate>Burada verdiğiniz etiketleri silmek için ilgili ayet notlarını silmelisiniz.</div>
             <tags-input ng-model="tagsForBulkInsert" display-property="name"
-                        placeholder="Etiket girin" replace-spaces-with-dashes="false"
+                        placeholder="{{'Etiket girin' | translate}}" replace-spaces-with-dashes="false"
                         min-length="2">
             </tags-input>
         </div>
         <div class="modal-footer">
             <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal">İptal</a>
-            <a class="btn btn-primary btn-wide" ng-click="bulkInsertTag(verses,tagsForBulkInsert)" data-dismiss="modal">Tamam</a>
+            <a class="btn btn-primary btn-wide" ng-click="bulkInsertTag(verses,tagsForBulkInsert)" data-dismiss="modal" translate>Tamam</a>
         </div>
     </modal>
 </div>
 <div>
-    <modal title="Toplu Ayet Eklemede Hata!" visible="errorBulkInsert">
+    <modal title="{{'Toplu Ayet Eklemede Hata!' | translate}}" visible="errorBulkInsert">
         <div class="form-group">
-            <p>Girmiş olduğunuz ayetlerin en az bir tanesinde hata olduğundan ayetler listeye eklenememiştir.</p>
+            <p translate>Girmiş olduğunuz ayetlerin en az bir tanesinde hata olduğundan ayetler listeye eklenememiştir.</p>
         </div>
         <div class="modal-footer">
-            <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal">Kapat</a>
+            <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal" translate>Kapat</a>
         </div>
     </modal>
 </div>

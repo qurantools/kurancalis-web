@@ -7,30 +7,30 @@
         <h2>controller/scope test: {{testData}}</h2> -->
 
         <div>
-            <modal title="Yeni Çevre Ekleme" visible="showModal">
+            <modal title="{{'Yeni Çevre Ekleme' | translate}}" visible="showModal">
                 <div class="form-group">
 
-                    <input type="text" class="form-control" ng-model="cevread.text" placeholder="Çevre Tanımı"/>
+                    <input type="text" class="form-control" ng-model="cevread.text" placeholder="{{'Çevre Tanımı' | translate}}"/>
                 </div>
                 <div class="modal-footer">
-                    <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal">İptal</a>
-                    <a class="btn btn-primary btn-wide" ng-click="cevrekle(cevread.text)" data-dismiss="modal">Tamam</a>
+                    <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal" translate>İptal</a>
+                    <a class="btn btn-primary btn-wide" ng-click="cevrekle(cevread.text)" data-dismiss="modal" translate>Tamam</a>
                 </div>
             </modal>
         </div>
 
         <button style="width:135px; height:150px; margin: 10px 15px; background-color:#3498db" ng-click="toggleModal()" class="btn btn-primary">
-            <font size="7">+</font><br/>Yeni Çevre
+            <font size="7">+</font><br/>{{'Yeni Çevre' | translate}}
         </button>
 
         <table id='{{cevreadlar[$index].name}}' class="btn btn-primary" ng-repeat="item in cevreadlar"
                ng-click="kisigoruntule('{{cevreadlar[$index].id}}','{{cevreadlar[$index].name}}');renksec('{{cevreadlar[$index].name}}')"
                style="width:135px; height:150px; margin: 10px 15px;">
             <td align="center" style="width:135px">
-                <label style="height:10px" id='ad{{cevreadlar[$index].id}}' ng-model="cevrenm" style="color:White">{{cevreadlar[$index].name}}</label>
+                <label style="height:10px" id='ad{{cevreadlar[$index].id}}' ng-model="cevrenm" style="color:White">{{ cevreadlar[$index].name }}</label>
                 <hr/>
                 <label id='lb{{cevreadlar[$index].id}}' ng-model="kisicnt" style="color:White">{{cevreadlar[$index].user_count}} </label>
-                Kişi
+                {{'Kişi' | translate}}
                 <BR/>
                 <button id='bt1{{cevreadlar[$index].name}}' class="btn btn-primary"
                         ng-click="cdegistirModal('{{cevreadlar[$index].name}}','{{cevreadlar[$index].id}}')">
@@ -44,47 +44,47 @@
         </table>
 
         <div>
-            <silmodal title="Çevre Sil" visible="csil">
+            <silmodal title="{{'Çevre Sil' | translate}}" visible="csil">
                 <div>
-                    <label>{{cevreadi}} </BR>  Çevresi silinecektir. Onaylıyor musunuz?</label>
+                    <label>{{cevreadi}} </BR>  {{'Çevresi silinecektir. Onaylıyor musunuz?' | translate}}</label>
                 </div>
                 <div class="modal-footer">
-                    <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal">İptal</a>
-                    <a class="btn btn-primary btn-wide" ng-click="cevresil(cid)" data-dismiss="modal">Tamam</a>
+                    <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal" translate>İptal</a>
+                    <a class="btn btn-primary btn-wide" ng-click="cevresil(cid)" data-dismiss="modal" translate>Tamam</a>
                 </div>
             </silmodal>
         </div>
 
         <div>
-            <kisisilmodal title="Kişi(ler) Sil" visible="kisisil">
+            <kisisilmodal title="{{'Kişi(leri) Sil' | translate}}" visible="kisisil">
                 <div>
-                    <label>{{cevretanim}} </BR>  çevresinden seçili kişi(ler) silinecektir. Onaylıyor musunuz?</label>
+                    <label>{{cevretanim}} </BR>  {{'çevresinden seçili kişi(ler) silinecektir. Onaylıyor musunuz?' | translate}}</label>
                 </div>
                 <div class="modal-footer">
-                    <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal">İptal</a>
-                    <a class="btn btn-primary btn-wide" ng-click="kisisilme(cvrid);" data-dismiss="modal">Tamam</a>
+                    <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal" translate>İptal</a>
+                    <a class="btn btn-primary btn-wide" ng-click="kisisilme(cvrid);" data-dismiss="modal" translate>Tamam</a>
                 </div>
             </kisisilmodal>
         </div>
 
         <div>
-            <degistirmodal title="Çevre Bilgileri" visible="cdegistir">
+            <degistirmodal title="{{'Çevre Bilgileri' | translate}}" visible="cdegistir">
                 <div>
                     <input type="text" class="form-control" ng-model="cevredgsad.text"/>
                 </div>
                 <div class="modal-footer">
-                    <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal">İptal</a>
+                    <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal" translate>İptal</a>
                     <a class="btn btn-primary btn-wide" ng-click="cevredegistir(cvrid,cevredgsad.text)"
-                       data-dismiss="modal">Tamam</a>
+                       data-dismiss="modal" translate>Tamam</a>
                 </div>
             </degistirmodal>
         </div>
 
         <div>
-            <kisieklemodal title="Yeni Kişi Ekle" visible="kisieskle">
+            <kisieklemodal title="{{'Yeni Kişi Ekle' | translate}}" visible="kisieskle">
 
                 <div>
-                    <input type="text" class="form-control" ng-model="kisieklead.text" placeholder="Kişi ismi"
+                    <input type="text" class="form-control" ng-model="kisieklead.text" placeholder="{{'Kişi ismi' | translate}}"
                            ng-change="kisilistele(kisieklead.text)"/>
                 </div>
                 <div>
@@ -99,7 +99,7 @@
                             </td>
                             <td style="padding-right: 5px; padding-left: 5px; padding-top: 5px; padding-bottom: 5px">
                                 <a class="btn btn-primary btn-wide"
-                                   ng-click="kisiekle('{{kisiliste[$index].id}}',cvrid)" data-dismiss="modal">Ekle</a>
+                                   ng-click="kisiekle('{{kisiliste[$index].id}}',cvrid)" data-dismiss="modal" translate>Ekle</a>
                             </td>
                         </tr>
                     </table>
@@ -128,12 +128,8 @@
                     <h6>{{circlead}}</h6>
                 </td>
                 <td align="right" style="width:60%">
-                    <button class="btn btn-primary btn-wide" ng-disabled="ackapa" ng-click="kisisilModal()">Çevreden
-                        çıkart
-                    </button>
-                    <button class="btn btn-primary btn-wide" ng-disabled="ackapa" ng-click="digercevremodal()">Başka
-                        çevreye Ekle
-                    </button>
+                    <button class="btn btn-primary btn-wide" ng-disabled="ackapa" ng-click="kisisilModal()" translate>Çevreden çıkart</button>
+                    <button class="btn btn-primary btn-wide" ng-disabled="ackapa" ng-click="digercevremodal()" translate>Başka çevreye Ekle</button>
                 </td>
             </tr>
         </table>
@@ -144,7 +140,7 @@
     <div align="left" style="width:87%">
 
         <button style="width:213px; height:80px;margin: 10px 10px; padding:0px 0px; background-color: #3498db;" class="btn btn-primary btn-wide" ng-click="kisieskleModal()" ng-disabled="ackapakisi">
-            <font size="5">+</font>&nbsp;&nbsp;Yeni Kişi Ekle
+            <font size="5">+</font>&nbsp;&nbsp;{{'Yeni Kişi Ekle' | translate}}
         </button>
 
 
@@ -175,9 +171,9 @@
     </div>
 
     <div align="center">
-        <digercevremodal title="Kişileri Başka Çevreye Ekle" visible="digercevre">
+        <digercevremodal title="{{'Kişileri Başka Çevreye Ekle' | translate}}" visible="digercevre">
             <div align="left">
-                <label>Seçtiğiniz kişileri ayrıca aşağıdaki çevreye de ekleyebilirsiniz.</label>
+                <label>{{'Seçtiğiniz kişileri ayrıca aşağıdaki çevreye de ekleyebilirsiniz.' | translate}}</label>
                 <table>
                     <tr ng-repeat="item in dcevreadlar">
                         <td style="width:30px">
@@ -191,8 +187,8 @@
                 </table>
             </div>
             <div class="modal-footer">
-                <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal">Vazgeç</a>
-                <a class="btn btn-primary btn-wide btn-info" ng-click="kisiekcevre()" data-dismiss="modal">Çevreye Ekle</a>
+                <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal" translate>Vazgeç</a>
+                <a class="btn btn-primary btn-wide btn-info" ng-click="kisiekcevre()" data-dismiss="modal" translate>Çevreye Ekle</a>
             </div>
         </digercevremodal>
     </div>

@@ -1,6 +1,6 @@
 <div class="modal modal-fullscreen"  id="taggedVerseModal">
     <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced" align-title="center">
-        <ion-nav-title>Etiketli Ayetler</ion-nav-title>
+        <ion-nav-title>{{'Etiketli Ayetler' | translate}}</ion-nav-title>
         <ion-nav-buttons side="left">
             <button class="button button-icon icon-left ion-close-circled"
                     ng-click="closeModal('tagged_verse');"
@@ -18,9 +18,7 @@
     <ion-content delegate-handle="content">
         <div class="col-xs-12 col-sm-9" ng-click="openModal('tagged_verse_detailed_search');" id="tagged_verse_content">
             <div class="list">
-                <div class="item item-divider">
-                    Etiket Sahipleri
-                </div>
+                <div class="item item-divider" translate>Etiket Sahipleri</div>
                 <div class="item">
                     <div class="row">
                         <div class="col-sm-9" style="width: 100%;">
@@ -28,16 +26,14 @@
                             <div class="wordwrap" style="color: #28a54c;" align="left">{{taggedValues(taggedVerseUsers)}}</div>
                         </div>
                         <div class="col-sm-3">
-                            <button class="button button-positive" style="float: right">Değiştir<i class="fa fa-chevron-right"></i></button>
+                            <button class="button button-positive" style="float: right">{{'Değiştir' | translate}}<i class="fa fa-chevron-right"></i></button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="item item-input item-select">
-            <div class="input-label">
-                Çeviri/Yazar
-            </div>
+            <div class="input-label" translate>Çeviri/Yazar</div>
             <select class="verseTagContentAuthor"
                     ng-options="author.id as author.name for author in authors"
                     ng-model="verseTagContentAuthor"
@@ -60,7 +56,7 @@
     <ion-footer-bar align-title="center" class="bar-stable" style="height:50px">
         <div class="button-bar">
             <button class="footer-bar-item item-right button button-positive" style="font-size: 20px; !important;" ng-click="displayAnnotationsWithTag();closeModal('tagged_verse')">
-                <div style="float: left">Etiketli Notlar</div>
+                <div style="float: left" translate>Etiketli Notlar</div>
                 <div style="float: right"><i class="fa fa-chevron-right"></i></div>
             </button>
         </div>

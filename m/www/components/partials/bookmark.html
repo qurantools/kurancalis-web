@@ -1,11 +1,11 @@
 <div class="modal modal-fullscreen" id="bookmark" ng-controller="bookmarkController" align-title="center">
     <ion-content overflow-scroll="true">
         <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced" align-title="center">
-            <ion-nav-title>Burada Kaldım</ion-nav-title>
+            <ion-nav-title>{{'Burada Kaldım' | translate}}</ion-nav-title>
             <ion-nav-buttons side="left">
                 <button class="button button-icon icon-left ion-arrow-left-b"
                         ng-click="closeBookmarkModal()"
-                        style="float: right"> Kapat
+                        style="float: right"> {{'Kapat' | translate}}
                 </button>
             </ion-nav-buttons>
         </ion-nav-bar>
@@ -16,8 +16,7 @@
                     <div align="center" style="width:100%; font-weight:bold"><h4>{{bookmarkParameters.bookchaptername}}
                         {{bookmarkParameters.verseinfo}}
                         ({{bookmarkParameters.chapterinfo}}:{{bookmarkParameters.verseinfo}})</h4></div>
-                    3 farklı renkte ayraç bulunmaktadır. Kaldığınız yeri göstermesi için kullanmak istediğiniz ayracı
-                    seçiniz.
+                    {{'3 farklı renkte ayraç bulunmaktadır. Kaldığınız yeri göstermesi için kullanmak istediğiniz ayracı seçiniz.' | translate}}
                     <br/><br/>
                     <div style="width:100%; height: 275px" align="center">
                         <div style="background-color:Yellow; width:100%; height:80px; font-size:14px; font-weight:bold; vertical-align:middle; color:Black; margin-right: 10px;margin-top: 15px;"
@@ -28,7 +27,7 @@
                             <div class="col-m-sm-3"><h6 style="font-size:17px;padding-top: 10%;"
                                                         ng-if="bookmarksyellowchapter!=''">
                                 {{bookmarksyellowchapter}}<br/>{{bookmarksyellowchapterid}}:{{bookmarksyellowverseID}}
-                            </h6><h4 ng-if="bookmarksyellowchapter==''" style="text-align:center;">BOŞ</h4></div>
+                            </h6><h4 ng-if="bookmarksyellowchapter==''" style="text-align:center;" translate>BOŞ</h4></div>
                         </div>
                         <div style="clear:both;"></div>
                         <div style="background-color:Green; width:100%; height:80px; font-size:14px; font-weight:bold; vertical-align:middle; color:White; margin-right: 10px;margin-top: 15px;"
@@ -38,7 +37,7 @@
                                                        style='font-size: 5.0em;margin-left:-10px;'></i></div>
                             <div class="col-m-sm-3"><h6 style="font-size:17px;padding-top: 10%;"
                                                         ng-if="bookmarksgreenchapter!=''">{{bookmarksgreenchapter}}<br/>{{bookmarksgreenchapterid}}:{{bookmarksgreenverseID}}
-                            </h6><h4 ng-if="bookmarksgreenchapter==''" style="text-align: center;">BOŞ</h4></div>
+                            </h6><h4 ng-if="bookmarksgreenchapter==''" style="text-align: center;" translate>BOŞ</h4></div>
                         </div>
                         <div style="clear:both;"></div>
                         <div style="background-color:Orange; width:100%; height:80px; font-size:14px; font-weight:bold; vertical-align:middle; color:Black; margin-right: 10px;margin-top: 15px;"
@@ -49,7 +48,7 @@
                             <div class="col-m-sm-3"><h6 style="font-size:17px;padding-top: 10%;"
                                                         ng-if="bookmarksorangechapter!=''">
                                 {{bookmarksorangechapter}}<br/>{{bookmarksorangechapterid}}:{{bookmarksorangeverseID}}
-                            </h6><h4 ng-if="bookmarksorangechapter==''" style="text-align: center;">BOŞ</h4></div>
+                            </h6><h4 ng-if="bookmarksorangechapter==''" style="text-align: center;" translate>BOŞ</h4></div>
                         </div>
                         <div style="clear:both;"></div>
                     </div>

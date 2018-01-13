@@ -2,8 +2,8 @@
     <ion-side-menu-content>
         <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced" align-title="center">
             <ion-nav-buttons side="left">
-                <button ng-if="pagePurpose!='edit'" class="button button-icon icon ion-arrow-left-b" ng-click="navigateTo('/inferences')">Vazgeç</button>
-                <button ng-if="pagePurpose=='edit'" class="button button-icon icon ion-arrow-left-b" ng-click="navigateTo('/inference/display/{{inferenceId}}')">Vazgeç</button>
+                <button ng-if="pagePurpose!='edit'" class="button button-icon icon ion-arrow-left-b" ng-click="navigateTo('/inferences')" translate>Vazgeç</button>
+                <button ng-if="pagePurpose=='edit'" class="button button-icon icon ion-arrow-left-b" ng-click="navigateTo('/inference/display/{{inferenceId}}')" translate>Vazgeç</button>
 
             </ion-nav-buttons>
             <h1 class="title"></h1>
@@ -22,7 +22,7 @@
                 <div style="height: 30px"></div>
                 <div class="list">
                     <label class="item item-input">                        
-                        <input type="text" id="title" ng-model="inferenceData.title" placeholder="Başlık">
+                        <input type="text" id="title" ng-model="inferenceData.title" placeholder="{{'Başlık' | translate}}">
                     </label>
                     <label class="item item-input" ng-show="imageDefined" >
                         <input type="text" class="form-control" id="inferenceImage" style="width: 95%;display: none" placeholder="Image URL" ng-model="inferenceData.image">
@@ -36,11 +36,9 @@
                 </div>
                 <!--textarea id="froala-sample-2" froala ng-model="content"></textarea-->
                 <div style="padding: 10px 0;">
-                    <button class="button button-positive" style="width: 100%" ng-click="openModal('add_verse_to_inference_from_verselist')">Referans Ayet Ekle</button>
+                    <button class="button button-positive" style="width: 100%" ng-click="openModal('add_verse_to_inference_from_verselist')" translate>Referans Ayet Ekle</button>
                 </div>
-                <div class="item item-divider">
-                    Etiketler
-                </div>
+                <div class="item item-divider" translate>Etiketler</div>
                 <ion-list show-delete=true>
                     <ion-item ng-repeat="tags in tagListInference">
                         <ion-delete-button class="ion-minus-circled"
@@ -50,9 +48,9 @@
                     </ion-item>
                 </ion-list>
                 <div style="padding: 10px 0;">
-                    <button class="button button-positive" style="width: 100%" ng-click="openModal('inferenceTagsearch')">Etiket Ekle</button>
+                    <button class="button button-positive" style="width: 100%" ng-click="openModal('inferenceTagsearch')" translate>Etiket Ekle</button>
                 </div>
-                <div class="item item-divider"> Paylaşılan Çevreler </div>
+                <div class="item item-divider" translate>Paylaşılan Çevreler</div>
                 <div class="list">
                     <ion-checkbox  ng-repeat="item in mobileInferencesEditorCircleListForSelection"
                                    ng-model="mobileInferencesEditorCircleListForSelection[$index].selected"
@@ -61,9 +59,7 @@
                         {{item.name}}
                     </ion-checkbox>
                 </div>
-                <div class="item item-divider">
-                    Paylaşılan Kişiler
-                </div>
+                <div class="item item-divider" translate>Paylaşılan Kişiler</div>
                 <ion-list show-delete="true">
                     <ion-item ng-repeat="item in ViewUsers">
                         <ion-delete-button class="ion-minus-circled"
@@ -73,7 +69,7 @@
                     </ion-item>
                 </ion-list>
                 <div style="padding: 10px 0;">
-                    <button class="button button-positive" style="width: 100%" ng-click="openModal('viewusersearch')">Kisi Ekle</button>
+                    <button class="button button-positive" style="width: 100%" ng-click="openModal('viewusersearch')" translate>Kisi Ekle</button>
                 </div>
 
             </ion-content>

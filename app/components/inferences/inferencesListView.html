@@ -6,18 +6,18 @@
     <div class="dialog dialog-warning" style="padding:0 20px 10px 20px"
          ng-if="allInferencesOpts.keyword ||filterTags.length >0 ">
         <div class="container" style="text-align: left;">
-            <div ng-if="allInferencesOpts.keyword"><strong>Kelime:</strong> {{allInferencesOpts.keyword}}</div>
-            <div ng-if="filterTags.length>0"><strong>Etiket:</strong>
+            <div ng-if="allInferencesOpts.keyword"><strong translate>Kelime:</strong> {{allInferencesOpts.keyword}}</div>
+            <div ng-if="filterTags.length>0"><strong translate>Etiket:</strong>
 
                 <div ng-repeat="filterTag in filterTags" class="tag label label-info s_a_tag">{{filterTag.name}}</div>
             </div>
 
-            <div ng-if="usersForSearch.length>0"><strong>Kişiler:</strong>
+            <div ng-if="usersForSearch.length>0"><strong translate>Kişiler:</strong>
 
                 <div ng-repeat="kisi in usersForSearch" class="tag label label-info s_a_tag">{{kisi.name}}</div>
             </div>
 
-            <div ng-if="circlesForSearch.length>0"><strong>Çevreler:</strong>
+            <div ng-if="circlesForSearch.length>0"><strong translate>Çevreler:</strong>
 
                 <div ng-repeat="cevre in circlesForSearch" class="tag label label-info s_a_tag">{{cevre.name}}</div>
             </div>
@@ -54,7 +54,7 @@
                 <div style="float: left"><span ng-bind-html="inference.updated | time_in_string | to_trusted"></span></div>
                 <div style="float: right">
                     <span ng-click="addToStorageForFocus2Comment();navigateTo('/inference/display/{{inference.id}}/')" style="margin-right: 10px;" class="make_comment">
-                        <span style="color: #00f;margin-right: 10px;">Yorum Yaz</span><i class="fa fa-comment"></i> {{inference.commentCount}}
+                        <span style="color: #00f;margin-right: 10px;" translate>Yorum Yaz</span><i class="fa fa-comment"></i> {{inference.commentCount}}
                     </span>
                     <span ng-class="{ 'voted-like': (inference.vote != null && inference.vote.content == 1), 'unvoted' : !(inference.vote != null && inference.vote.content == 1)}"
                           style="margin-right: 10px;"
@@ -69,14 +69,14 @@
                     <button type="button" class="btn btn-primary btn-xs"
                             ng-disabled="(inference.voteRates.dislike + inference.voteRates.like) == 0"
                             ng-click="showVoteResults(inference, 'inferences')">
-                        Değerlendirenler
+                        {{'Değerlendirenler' | translate}}
                     </button>
                 </div>
             </div>
         </div>
     </div>
     <div style="text-align: center; padding-top:10px;" ng-if="allInferencesOpts.hasMore==true">
-        <button ng-click="get_all_inferences()" class="btn btn-info btn-hg">Daha fazla</button>
+        <button ng-click="get_all_inferences()" class="btn btn-info btn-hg" translate>Daha fazla</button>
     </div>
     <br><br>
     <div class="modal" id="inferencesFilterModal" ng-include="'app/components/inferences/inferences_search.html'"></div>

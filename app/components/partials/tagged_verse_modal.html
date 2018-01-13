@@ -3,7 +3,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">{{verseTagContentParams.verse_tags}}</h4>
-                <button type="button" data-dismiss="modal" aria-hidden="true" class="btn" style="float: right;margin-top: -35px;">Tamam</button>
+                <button type="button" data-dismiss="modal" aria-hidden="true" class="btn" style="float: right;margin-top: -35px;" translate>Tamam</button>
             </div>
             <div class="modal-body">
                 <table style="width: 100%;margin-top: -20px;">
@@ -12,13 +12,13 @@
                     <col width="10%">
                     <tr>
                         <td style="padding: 4px;">
-                            <tags-input ng-model="taggedVerseUsers" placeholder="Kişi Seçiniz" display-property="name"
+                            <tags-input ng-model="taggedVerseUsers" placeholder="{{'Kişi Seçiniz' | translate}}" display-property="name"
                                         replace-spaces-with-dashes="false" min-length="2">
                                 <auto-complete source="kisilistele($query)" min-length="2"></auto-complete>
                             </tags-input>
                         </td>
                         <td style="padding: 4px;">
-                            <tags-input ng-model="taggedVerseCircles" placeholder="Çevre Seçiniz"
+                            <tags-input ng-model="taggedVerseCircles" placeholder="{{'Çevre Seçiniz' | translate}}"
                                         display-property="name" replace-spaces-with-dashes="false" min-length="1"
                                         add-from-autocomplete-only="true" add-on-blur="false">
                                 <auto-complete source="cevrelisteleForSearch()" load-on-empty="true"
@@ -35,7 +35,7 @@
                 </table>
                 <div style="height: 5px"></div>
                 <div class="verse_tag_content" style="max-height: calc(100vh - 212px);overflow-y: auto;">
-                    <a style="float: right;" href ng-click="displayAnnotationsWithTag()">Etiketli Notları Göster>></a>
+                    <a style="float: right;" href ng-click="displayAnnotationsWithTag()" translate>Etiketli Notları Göster>></a>
                     <select class="verseTagContentAuthor"
                             ng-options="author.id as author.name for author in authors"
                             ng-model="verseTagContentAuthor"

@@ -5,7 +5,7 @@
             <ion-nav-buttons side="left">
                 <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
             </ion-nav-buttons>
-            <ion-nav-title>Kullanıcı Profili</ion-nav-title>
+            <ion-nav-title>{{'Kullanıcı Profili' | translate}}</ion-nav-title>
             <ion-nav-buttons side="right">
                 <a class="button button-icon icon ion-search" href="#/people/search_people/" ng-if="user!=null"></a>
             </ion-nav-buttons>
@@ -23,21 +23,19 @@
                     <div style="visibility: hidden;height: 10px;"></div>
                     <div style="visibility: hidden;height: 10px;"></div>
                     <div style="text-align: left;margin-left: 10%;">
-                        <div>Üyelik : {{profiledUser.created | date: 'dd/MM/yyyy'}}</div>
-                        <div>Toplam Ayet Notu : {{profiledUser.annotation_count}}</div>
-                        <div>Toplam Çıkarım Notu : {{profiledUser.inference_count}}</div>
-                        <div>Çevresindeki Kişi Sayısı : {{profiledUser.circle_friend_count}}</div>
-                        <div>Takipçi Sayısı : {{profiledUser.follower_count}}</div>
+                        <div>{{'Üyelik' | translate}} : {{profiledUser.created | date: 'dd/MM/yyyy'}}</div>
+                        <div>{{'Toplam Ayet Notu' | translate}} : {{profiledUser.annotation_count}}</div>
+                        <div>{{'Toplam Çıkarım Notu' | translate}} : {{profiledUser.inference_count}}</div>
+                        <div>{{'Çevresindeki Kişi Sayısı' | translate}} : {{profiledUser.circle_friend_count}}</div>
+                        <div>{{'Takipçi Sayısı' | translate}} : {{profiledUser.follower_count}}</div>
                     </div>
                     <div style="visibility: hidden;height: 10px;"></div>
                     <div style="visibility: hidden;height: 10px;"></div>
                     <div ng-show="profiledUser.id != user.id" style="padding-left: 15px;padding-right: 15px;">
-                        <a class="button button-block button-positive" ng-click="showCircleSelectionModal()">
-                            Çevreme Ekle
-                        </a>
+                        <a class="button button-block button-positive" ng-click="showCircleSelectionModal()" translate>Çevreme Ekle</a>
                         <a class="button button-block button-positive" ng-click="redirectFacebookProfile()">
                             <img src="../../assets/img/fb.png" width="40" height="40" style="vertical-align: middle; margin-right: 10px;"/>
-                            Facebook Profilini Aç
+                            {{'Facebook Profilini Aç' | translate}}
                         </a>
                     </div>
                 </div>
@@ -87,7 +85,7 @@
                                     <i class="fa fa-pie-chart"></i> {{(feed.voteRates.dislike + feed.voteRates.like)}} Oy
                                 </span>
                                 <span ng-click="navigateTo('/annotation/display/{{feed.id}}/')" style="margin-right: 10px;" class="make_comment">
-                                    <i class="fa fa-comment"></i> {{feed.commentCount}} Yorum
+                                    <i class="fa fa-comment"></i> {{feed.commentCount}} {{'Yorum' | translate}}
                                 </span>
                             </div>
                         </div>
@@ -111,7 +109,7 @@
                             </div>
                             <div style="padding-left:10px;white-space: pre-line;margin-top: 25px;">
                                 <span ng-bind-html="feed.brief | to_trusted | limitTo:400" style="line-height: 1;white-space: pre-wrap; font-size: 10pt"></span>
-                                <a href="" ng-click="navigateTo('/inference/display/{{feed.id}}')" style="color: blue; font-size: 10pt">devamını oku...</a>
+                                <a href="" ng-click="navigateTo('/inference/display/{{feed.id}}')" style="color: blue; font-size: 10pt" translate>devamını oku...</a>
                             </div>
                             <div class="row">
                                 <div class="col">
@@ -137,10 +135,10 @@
                                 </span>
                                 <span ng-disabled="(feed.voteRates.dislike + feed.voteRates.like) == 0"
                                       ng-click="showVoteResults(feed, 'inferences')">
-                                    <i class="fa fa-pie-chart"></i> {{(feed.voteRates.dislike + feed.voteRates.like)}} Oy
+                                    <i class="fa fa-pie-chart"></i> {{(feed.voteRates.dislike + feed.voteRates.like)}} {{'Oy' | translate}}
                                 </span>
                                 <span ng-click="navigateTo('/inference/display/{{feed.id}}/')" style="margin-right: 10px;" class="make_comment">
-                                    <i class="fa fa-comment"></i> {{feed.commentCount}} Yorum
+                                    <i class="fa fa-comment"></i> {{feed.commentCount}} {{'Yorum' | translate}}
                                 </span>
                             </div>
                         </div>

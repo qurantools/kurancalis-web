@@ -4,7 +4,7 @@
             <div class="modal-header" style="height: 60px;">
                 <!-- navigation-->
                 <div style="float: left;font-size: 26px;">
-                    <b>Ayet İnceleme</b>
+                    <b translate>Ayet İnceleme</b>
                 </div>
                 <!-- search header-->
                 <div style="margin-top: -10px;position: absolute;left: 43%;">
@@ -15,14 +15,14 @@
                                        reset-search-input="false"
                                        style="width: 150px;"
                                        ng-enter="">
-                                <ui-select-match placeholder="Sure">{{$select.selected.nameTr}} - {{$select.selected.id}}</ui-select-match>
+                                <ui-select-match placeholder="{{'Sure' | translate}}">{{$select.selected.nameTr}} - {{$select.selected.id}}</ui-select-match>
                                 <ui-select-choices repeat="chapter in detailedChapters | selectionFilter: {id: $select.search,nameTr: $select.search,nameTr2: $select.search}">
                                     {{chapter.id}}: {{chapter.nameTr}} / {{chapter.nameTr2}}
                                 </ui-select-choices>
                             </ui-select>
                         </div>
                         <div style="float: left" data-placement="bottom">
-                            <input type="text" ng-model="goToVerseParameters.verse" size="3" ng-enter="verseNumberValidation()" placeholder="Ayet" class="form-control"/>
+                            <input type="text" ng-model="goToVerseParameters.verse" size="3" ng-enter="verseNumberValidation()" placeholder="{{'Ayet' | translate}}" class="form-control"/>
                         </div>
                         <div style="float: left">
                             <input type="hidden" ng-model="goToVerseParameters.chapter"/>
@@ -47,7 +47,7 @@
                 <!-- right buttons-->
                 <div style="float: right;margin-top: -10px;">
                     <button class="btn btn-primary" data-target="#verseHistoryModal" data-toggle="modal" ng-click="openVerseHistory()"><i class="fa fa-history" style="font-size: 1.3em"></i></button>
-                    <button type="button" data-dismiss="modal" aria-hidden="true" class="btn">Tamam</button>
+                    <button type="button" data-dismiss="modal" aria-hidden="true" class="btn" translate>Tamam</button>
                 </div>
             </div>
             <div class="modal-body">
@@ -55,8 +55,8 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="col-sm-3">
-                            <a ng-if='user!=null' href><div style='width:100%; height: 40px; padding-left: 40px;' data-target='#bookmark' data-dismiss="modal" data-toggle='modal' ng-click="openAddBookMarkModal(verse.id)"><i class='fa fa-bookmark' style='font-size: 1.3em'></i>&nbsp;&nbsp;&nbsp;&nbsp;Burada Kaldım</div></a>
-                            <a ng-if='user!=null' href><div style='width:100%; height: 40px; padding-left: 40px;' data-target='#addVerseToVerseListModal' data-toggle='modal' ng-click='addVerseToVerseList(verse.id)'><i class='fa fa-plus-circle' style='font-size: 1.3em'></i>&nbsp;&nbsp;&nbsp;&nbsp;Ayeti Listeye Ekle</div></a>
+                            <a ng-if='user!=null' href><div style='width:100%; height: 40px; padding-left: 40px;' data-target='#bookmark' data-dismiss="modal" data-toggle='modal' ng-click="openAddBookMarkModal(verse.id)"><i class='fa fa-bookmark' style='font-size: 1.3em'></i>&nbsp;&nbsp;&nbsp;&nbsp;{{'Burada Kaldım' | translate}}</div></a>
+                            <a ng-if='user!=null' href><div style='width:100%; height: 40px; padding-left: 40px;' data-target='#addVerseToVerseListModal' data-toggle='modal' ng-click='addVerseToVerseList(verse.id)'><i class='fa fa-plus-circle' style='font-size: 1.3em'></i>&nbsp;&nbsp;&nbsp;&nbsp;{{'Ayeti Listeye Ekle' | translate}}</div></a>
                             <ul class="selectable_list">
                                 <li ng-repeat="author in authors"
                                     ng-click="detailedSearchAuthorToggleSelection(author.id)"
@@ -92,13 +92,13 @@
                                     <col width="10%">
                                     <tr>
                                         <td style="padding: 4px;">
-                                            <tags-input ng-model="detailedVerseUsers" placeholder="Kişi Seçiniz" display-property="name"
+                                            <tags-input ng-model="detailedVerseUsers" placeholder="{{'Kişi Seçiniz' | translate}}" display-property="name"
                                                         replace-spaces-with-dashes="false" min-length="2">
                                                 <auto-complete source="kisilistele($query)" min-length="2"></auto-complete>
                                             </tags-input>
                                         </td>
                                         <td style="padding: 4px;">
-                                            <tags-input ng-model="detailedVerseCircles" placeholder="Çevre Seçiniz"
+                                            <tags-input ng-model="detailedVerseCircles" placeholder="{{'Çevre Seçiniz' | translate}}"
                                                         display-property="name" replace-spaces-with-dashes="false" min-length="1"
                                                         add-from-autocomplete-only="true" add-on-blur="false">
                                                 <auto-complete source="cevrelisteleForSearch()" load-on-empty="true"
@@ -116,7 +116,7 @@
                             </div>
                             <!-- tags-->
                             <div id="verseTags_{{verse.id}}" style="width:100%;margin-top: 5px" ng-show="detailedTags.length > 0">
-                                <div style="font-size: 20px"><i class='fa' style='font-size: 1.3em;margin-right: 10px;'></i><b>Etiketler</b></div>
+                                <div style="font-size: 20px"><i class='fa' style='font-size: 1.3em;margin-right: 10px;'></i><b translate>Etiketler</b></div>
                                 <div style="text-align: right;">
                                     <button ng-repeat="verseTag in detailedTags track by $index" class="btn btn-xs btn-info verse_tag"
                                             ng-click="goToVerseTag(0, verse.id,verseTag, detailedVerseUsers, detailedVerseCircles)" data-target='#taggedVerseModal' data-dismiss="modal" data-toggle='modal'>
@@ -125,7 +125,7 @@
                             </div>
                             <!-- annotations-->
                             <div ng-show="detailedAnnotations.length > 0" style="margin-top: 5px;">
-                                <div style="font-size: 20px"><i class='fa' style='font-size: 1.3em;margin-right: 10px;'></i><br><b>Ayet Notları</b></div>
+                                <div style="font-size: 20px"><i class='fa' style='font-size: 1.3em;margin-right: 10px;'></i><br><b translate>Ayet Notları</b></div>
                                 <div ng-repeat="annotation in detailedAnnotations | filter:{annotationId:'!!'}" class="box">
                                     <div class="s_a_header">
                                         <div style="float:left"><span ng-bind-html="annotation.updated | time_in_string | to_trusted"></span></div>
@@ -156,7 +156,7 @@
                                         <button type="button" class="btn btn-primary btn-xs"
                                                 ng-disabled="(annotation.voteRates.dislike + annotation.voteRates.like) == 0"
                                                 ng-click="showVoteResults(annotation, 'annotations')">
-                                            Değerlendirenler
+                                            {{'Değerlendirenler' | translate}}
                                         </button>
                                         <button type="button" class="btn btn-primary btn-xs" ng-click="editAnnotation($index)"
                                                 ng-if="annotation.userId==user.id"><i
@@ -171,7 +171,7 @@
                             </div>
                             <!-- inferences-->
                             <div ng-show="inferences.length > 0" style="margin-top: 5px;">
-                                <div style="font-size: 20px"><i class='fa' style='font-size: 1.3em;margin-right: 10px;'></i><br><b>Referanslar Veren Çıkarım Notları</b></div>
+                                <div style="font-size: 20px"><i class='fa' style='font-size: 1.3em;margin-right: 10px;'></i><br><b translate>Referanslar Veren Çıkarım Notları</b></div>
                                 <div ng-repeat="inference in inferences" class="well box">
                                 <div class="s_a_header">
                                     <div style="float:right;">{{inference.userName | limitTo: 25}}</div>
@@ -218,7 +218,7 @@
                                         <button type="button" class="btn btn-primary btn-xs"
                                                 ng-disabled="(inference.voteRates.dislike + inference.voteRates.like) == 0"
                                                 ng-click="showVoteResults(inference, 'inferences')">
-                                            Değerlendirenler
+                                            {{'Değerlendirenler' | translate}}
                                         </button>
                                     </div>
                                 </div>

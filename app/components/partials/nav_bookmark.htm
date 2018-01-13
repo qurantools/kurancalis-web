@@ -4,20 +4,17 @@
             <div class="modal-header">
                 <button type="button" data-dismiss="modal" aria-hidden="true" style="float:right;"><i
                         class="fa fa-close"></i></button>
-                <h4 class="modal-title">Ayraçlar (Kaldığım Yer)</h4>
+                <h4 class="modal-title" translate>Ayraçlar (Kaldığım Yer)</h4>
             </div>
-             <div class="modal-body" style="width:100%">
-            Gitmek istediğiniz Ayracı Seçiniz.
-               </div>
-                <div style="width:100%; height:110px" align="center" >
-               <div data-dismiss="modal" aria-hidden="true" style="background-color:Yellow; width:30%; height:100px; font-size:14px; font-weight:bold; vertical-align:middle; color:Black;margin-right: 10px" class="btn btn-primary btn-wide" ng-click="gotoYellowBookmark()"><div class="col-sm-1"><i class="fa fa-bookmark" style='font-size: 5.0em;margin-left:-10px;'></i> </div><div align="center" class="col-sm-3" style="margin-left:40px; margin-top: 0px;"><h6 ng-if="bookmarksyellowchapter!=''">{{bookmarksyellowchapter}}<br />{{bookmarksyellowchapterid}}:{{bookmarksyellowverseID}}</h6><h4 ng-if="bookmarksyellowchapter==''">BOŞ</h4></div></div>
-                <div data-dismiss="modal" aria-hidden="true" style="background-color:Green; width:30%; height:100px; font-size:14px; font-weight:bold; vertical-align:middle; color:White;margin-right: 10px" class="btn btn-primary btn-wide" ng-click="gotoGreenBookmark()"><div class="col-sm-1"><i class="fa fa-bookmark" style='font-size: 5.0em;margin-left:-10px;'></i> </div><div align="center" class="col-sm-3" style="margin-left:40px; margin-top: 0px;"><h6 ng-if="bookmarksgreenchapter!=''">{{bookmarksgreenchapter}}<br />{{bookmarksgreenchapterid}}:{{bookmarksgreenverseID}}</h6><h4 ng-if="bookmarksgreenchapter==''">BOŞ</h4></div></div>
-                <div data-dismiss="modal" aria-hidden="true" style="background-color:Orange; width:30%; height:100px; font-size:14px; font-weight:bold; vertical-align:middle; color:Black;margin-right: 10px" class="btn btn-primary btn-wide" ng-click="gotoOrangeBookmark()"><div class="col-sm-1"><i class="fa fa-bookmark" style='font-size: 5.0em;margin-left:-10px;'></i> </div><div align="center" class="col-sm-3" style="margin-left:40px; margin-top: 0px;"><h6 ng-if="bookmarksorangechapter!=''">{{bookmarksorangechapter}}<br />{{bookmarksorangechapterid}}:{{bookmarksorangeverseID}}</h6><h4 ng-if="bookmarksorangechapter==''">BOŞ</h4></div></div>
-                </div>
+            <div class="modal-body" style="width:100%" translate>Gitmek istediğiniz Ayracı Seçiniz.</div>
+            <div style="width:100%; height:110px" align="center" >
+                <div data-dismiss="modal" aria-hidden="true" style="background-color:Yellow; width:30%; height:100px; font-size:14px; font-weight:bold; vertical-align:middle; color:Black;margin-right: 10px" class="btn btn-primary btn-wide" ng-click="gotoYellowBookmark()"><div class="col-sm-1"><i class="fa fa-bookmark" style='font-size: 5.0em;margin-left:-10px;'></i> </div><div align="center" class="col-sm-3" style="margin-left:40px; margin-top: 0px;"><h6 ng-if="bookmarksyellowchapter!=''">{{bookmarksyellowchapter}}<br />{{bookmarksyellowchapterid}}:{{bookmarksyellowverseID}}</h6><h4 ng-if="bookmarksyellowchapter==''" translate>BOŞ</h4></div></div>
+                <div data-dismiss="modal" aria-hidden="true" style="background-color:Green; width:30%; height:100px; font-size:14px; font-weight:bold; vertical-align:middle; color:White;margin-right: 10px" class="btn btn-primary btn-wide" ng-click="gotoGreenBookmark()"><div class="col-sm-1"><i class="fa fa-bookmark" style='font-size: 5.0em;margin-left:-10px;'></i> </div><div align="center" class="col-sm-3" style="margin-left:40px; margin-top: 0px;"><h6 ng-if="bookmarksgreenchapter!=''">{{bookmarksgreenchapter}}<br />{{bookmarksgreenchapterid}}:{{bookmarksgreenverseID}}</h6><h4 ng-if="bookmarksgreenchapter==''" translate>BOŞ</h4></div></div>
+                <div data-dismiss="modal" aria-hidden="true" style="background-color:Orange; width:30%; height:100px; font-size:14px; font-weight:bold; vertical-align:middle; color:Black;margin-right: 10px" class="btn btn-primary btn-wide" ng-click="gotoOrangeBookmark()"><div class="col-sm-1"><i class="fa fa-bookmark" style='font-size: 5.0em;margin-left:-10px;'></i> </div><div align="center" class="col-sm-3" style="margin-left:40px; margin-top: 0px;"><h6 ng-if="bookmarksorangechapter!=''">{{bookmarksorangechapter}}<br />{{bookmarksorangechapterid}}:{{bookmarksorangeverseID}}</h6><h4 ng-if="bookmarksorangechapter==''" translate>BOŞ</h4></div></div>
+            </div>
               
-              <div class="modal-footer">
-                <button type="button" class="btn btn-primary btn-wide" data-dismiss="modal" aria-hidden="true" class="btn">Kapat</button>
-              
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-wide" data-dismiss="modal" aria-hidden="true" class="btn" translate>Kapat</button>
             </div>
         </div>
     </div>

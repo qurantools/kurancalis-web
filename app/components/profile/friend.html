@@ -15,20 +15,20 @@
             <div style="visibility: hidden;height: 10px;"></div>
             <div ng-show="profiledUser.id != user.id">
                 <div><a href="http://www.facebook.com/{{profiledUser.fbId}}" target="_blank"><img src="assets/img/fb.png" width="40" height="40"/></a></div>
-                <div><a href="http://www.facebook.com/{{profiledUser.fbId}}" target="_blank">Facebook Profilini Gör</a></div>
+                <div><a href="http://www.facebook.com/{{profiledUser.fbId}}" target="_blank" translate>Facebook Profilini Gör</a></div>
             </div>
             <div style="visibility: hidden;height: 10px;"></div>
             <div ng-show="profiledUser.id != user.id" ng-click="showCircleSelectionModal()">
-                <a class="btn btn-primary">Çevreme Ekle</a>
+                <a class="btn btn-primary" translate>Çevreme Ekle</a>
             </div>
             <div style="visibility: hidden;height: 10px;"></div>
             <div style="visibility: hidden;height: 10px;"></div>
             <div style="text-align: left">
-                <div>Üyelik : {{profiledUser.created | date: 'dd/MM/yyyy'}}</div>
-                <div>Toplam Ayet Notu : {{profiledUser.annotation_count}}</div>
-                <div>Toplam Çıkarım Notu : {{profiledUser.inference_count}}</div>
-                <div>Çevresindeki Kişi Sayısı : {{profiledUser.circle_friend_count}}</div>
-                <div>Takipçi Sayısı : {{profiledUser.follower_count}}</div>
+                <div>{{'Üyelik' | translate}} : {{profiledUser.created | date: 'dd/MM/yyyy'}}</div>
+                <div>{{'Toplam Ayet Notu' | translate}} : {{profiledUser.annotation_count}}</div>
+                <div>{{'Toplam Çıkarım Notu' | translate}} : {{profiledUser.inference_count}}</div>
+                <div>{{'Çevresindeki Kişi Sayısı' | translate}} : {{profiledUser.circle_friend_count}}</div>
+                <div>{{'Takipçi Sayısı' | translate}} : {{profiledUser.follower_count}}</div>
             </div>
         </div>
         <div class="col-xs-9">
@@ -58,7 +58,7 @@
                             <div style="float: left"><span ng-bind-html="feed.updated | time_in_string | to_trusted"></span></div>
                             <div style="float: right">
                                 <span ng-click="addToStorageForFocus2Comment();navigateTo('/annotation/display/{{feed.id}}/')" style="margin-right: 10px;" class="make_comment">
-                                    <span style="color: #00f;margin-right: 10px;">Yorum Yaz</span><i class="fa fa-comment"></i> {{feed.commentCount}}
+                                    <span style="color: #00f;margin-right: 10px;" translate>Yorum Yaz</span><i class="fa fa-comment"></i> {{feed.commentCount}}
                                 </span>
                                 <span ng-class="{ 'voted-like': (feed.vote != null && feed.vote.content == 1), 'unvoted' : !(feed.vote != null && feed.vote.content == 1)}"
                                       ng-click="doVoteInProfile(feed,1)">
@@ -71,7 +71,7 @@
                                 <button type="button" class="btn btn-primary btn-xs"
                                         ng-disabled="(feed.voteRates.dislike + feed.voteRates.like) == 0"
                                         ng-click="showVoteResults(feed, 'annotations')">
-                                    Değerlendirenler
+                                    {{'Değerlendirenler' | translate}}
                                 </button>
                                 <button type="button" class="btn btn-primary btn-xs" ng-click="showEditor(feed)"
                                         ng-if="feed.owner_id==user.id"><i
@@ -123,7 +123,7 @@
                                 <button type="button" class="btn btn-primary btn-xs"
                                         ng-disabled="(feed.voteRates.dislike + feed.voteRates.like) == 0"
                                         ng-click="showVoteResults(feed, 'inferences')">
-                                    Değerlendirenler
+                                    {{'Değerlendirenler' | translate}}
                                 </button>
                             </div>
                         </div>
@@ -138,17 +138,17 @@
     <!-- /row-->
 </div>
 <div align="center">
-    <digercevremodal title="Çevreye Seçiniz" visible="select_circle">
+    <digercevremodal title="{{'Çevreye Seçiniz' | translate}}" visible="select_circle">
         <div align="left">
             <select ng-model="circleSelection"
                     ng-options="circle.id as circle.name for circle in cevreadlar"
                     class="form-control">
-                <option style="display:none" value="">Çevre Seçiniz</option>
+                <option style="display:none" value="" translate>Çevre Seçiniz</option>
             </select>
         </div>
         <div class="modal-footer">
-            <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal">Vazgeç</a>
-            <a class="btn btn-primary btn-wide" ng-click="add_to_circle(circleSelection)" data-dismiss="modal">Çevreye Ekle</a>
+            <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal" translate>Vazgeç</a>
+            <a class="btn btn-primary btn-wide" ng-click="add_to_circle(circleSelection)" data-dismiss="modal" translate>Çevreye Ekle</a>
         </div>
     </digercevremodal>
 </div>

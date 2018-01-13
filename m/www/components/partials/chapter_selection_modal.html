@@ -1,23 +1,23 @@
 <div class="modal modal-fullscreen">
     <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced" >
-        <ion-nav-title>Ayete Git</ion-nav-title>
+        <ion-nav-title>{{'Ayete Git' | translate}}</ion-nav-title>
         <ion-nav-buttons side="left">
             <button class="button button-icon icon-left ion-arrow-left-b" ng-click="closeModal('chapter_selection')"
-                    style="float: left"> Geri
+                    style="float: left"> {{'Geri' | translate}}
             </button>
         </ion-nav-buttons>
 
         <ion-nav-buttons side="right">
             <button class="button button-icon icon-left ion-checkmark"
                     ng-click="goToVerse();closeModal('chapter_selection');"
-                    style="float: right">Tamam
+                    style="float: right">{{'Tamam' | translate}}
             </button>
         </ion-nav-buttons>
     </ion-nav-bar>
     <ion-header-bar class="bar bar-subheader item-input-inset">
         <label class="item-input-wrapper">
             <i class="icon ion-ios-search placeholder-icon field-icon"></i>
-            <input id="chapterSelection_chapter" type="text" placeholder="Sure" ng-model="goToVerseParameters.chapterFilter"  value="" ng-init="goToVerseParameters.chapterFilter=''"
+            <input id="chapterSelection_chapter" type="text" placeholder="{{'Sure' | translate}}" ng-model="goToVerseParameters.chapterFilter"  value="" ng-init="goToVerseParameters.chapterFilter=''"
                     ng-change="scrollDelegateTop('chapter_selection')"/>
             <a ng-if="goToVerseParameters.chapterFilter != ''"
                on-tap="goToVerseParameters.chapterFilter='';focusToChapterInput()">
@@ -25,7 +25,7 @@
             </a>
         </label>
         <label class="item-input-wrapper">
-            <input type="tel" id="chapterSelection_verse" ng-init="goToVerseParameters.verse=''" ng-model="goToVerseParameters.verse" maxlength="3" placeholder="Ayet"/>
+            <input type="tel" id="chapterSelection_verse" ng-init="goToVerseParameters.verse=''" ng-model="goToVerseParameters.verse" maxlength="3" placeholder="{{'Ayet' | translate}}"/>
             <a ng-if="goToVerseParameters.verse != ''"
                on-tap="goToVerseParameters.verse='';focusToVerseInput()">
                 <i class="icon ion-ios-close placeholder-icon"></i>

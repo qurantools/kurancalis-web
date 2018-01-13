@@ -2,11 +2,11 @@
     <div style="width:750px" class="modal-dialog fixed-dialog">
         <div class="modal-content">
             <div align="left" class="modal-header">
-                <h4 class="modal-title">Oylama Sonuçları</h4>
+                <h4 class="modal-title" translate>Oylama Sonuçları</h4>
             </div>
             <div class="modal-body" style="float: left;font-size: 26px;">
                 <span ng-click="search.vote=-1" ng-class="{'selected-vote-group' : search.vote==-1}" style="margin-right: 10px;">
-                    <i class="fa fa-group"></i> Tümü
+                    <i class="fa fa-group"></i> {{'Tümü' | translate}}
                 </span>
                 <span ng-click="search.vote=1" ng-class="{'selected-vote-group' : search.vote==1}" style="margin-right: 10px;">
                     <i class="fa fa-thumbs-up"></i> {{votedObject.voteRates.like}}
@@ -27,14 +27,14 @@
                                 <a  href="" ng-click="navigateTo('/profile/user/{{item.user.username}}/')" style="color: darkblue;" data-dismiss="modal">{{item.user.name}}</a>
                             </td>
                             <td style="width: 30%;">
-                                <button class="btn btn-primary btn-wide" ng-click="addUserToCircle(item.user)" ng-disabled="item.user.user_id == user.id">Çevreye Ekle</button>
+                                <button class="btn btn-primary btn-wide" ng-click="addUserToCircle(item.user)" ng-disabled="item.user.user_id == user.id" translate>Çevreye Ekle</button>
                             </td>
                         </tr>
                     </table>
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-primary btn-wide" data-dismiss="modal">Tamam</button>
+                <button class="btn btn-primary btn-wide" data-dismiss="modal" translate>Tamam</button>
             </div>
         </div>
     </div>

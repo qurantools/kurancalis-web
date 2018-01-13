@@ -31,7 +31,7 @@
             </div>
 
             <div style="float: right">
-                <button class="button button-balanced">Giriş</button>
+                <button class="button button-balanced" translate>Giriş</button>
             </div>
             <div style="float: right">
                 <button class="button icon ion-navicon"></button>
@@ -43,19 +43,19 @@
 
     <ion-side-menu side="left">
         <ion-header-bar class="bar-stable">
-            <h1 class="title">Left</h1>
+            <h1 class="title" translate>Left</h1>
         </ion-header-bar>
         <ion-content>
             <ion-list>
 
                 <ion-item nav-clear menu-close href="#/app/search">
-                    Sureler
+                    {{'Sureler' | translate}}
                 </ion-item>
                 <ion-item nav-clear menu-close href="#/app/browse">
-                    Tüm Notlar
+                    {{'Tüm Notlar' | translate}}
                 </ion-item>
                 <ion-item nav-clear menu-close ng-click="login()">
-                    Login
+                    {{'Login' | translate}}
                 </ion-item>
             </ion-list>
         </ion-content>
