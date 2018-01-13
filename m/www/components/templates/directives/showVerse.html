@@ -10,11 +10,11 @@
         </label>
         &nbsp;
         <label class="item-input-wrapper">
-            <input type="text"  placeholder="Ayet" ng-model="$parent.showVerseData.data.verse" size="3">
+            <input type="text"  placeholder="{{'Ayet' | translate}}" ng-model="$parent.showVerseData.data.verse" size="3">
         </label>
         &nbsp;
         <input type="hidden" ng-model="$parent.showVerseData.data.authorId"/>
-        <button class="btn btn-primary" ng-click="$parent.showVerseByParameters('go')">Git</button>
+        <button class="btn btn-primary" ng-click="$parent.showVerseByParameters('go')" translate>Git</button>
         <button class="btn" ng-click="$parent.showVerseByParameters('previous')" ng-disabled="$parent.showVerseData.data.chapter==1 && $parent.showVerseData.data.verse==1"><i class="fa fa-arrow-circle-o-left large_icon"></i>
         </button>
         <button class="btn" ng-click="$parent.showVerseByParameters('next')" $parent.showVerseData.data.chapter==114 && $parent.showVerseData.data.verse==6><i class="fa fa-arrow-circle-o-right large_icon"></i>

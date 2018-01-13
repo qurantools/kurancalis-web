@@ -7,13 +7,13 @@
 
     <div>
         <div align="left" style="width:95%">
-            Tüm Kullanıcılarda Arama
+            {{'Tüm Kullanıcılarda Arama' | translate}}
         </div>
         <table>
             <tr>
                 <td style="width:100%; vertical-align: bottom;">
                     <input class="form-control" style="width:400px"
-                           ng-model="kisieklead.text" placeholder="Kişi ismi"
+                           ng-model="kisieklead.text" placeholder="{{'Kişi ismi' | translate}}"
                            ng-change="kisilistele(kisieklead.text)"/>
                 </td>
                 <td style="width:200px">
@@ -21,7 +21,7 @@
                         <tr>
                             <td style="height: 50px">
                                 <button ng-click="inviteFriends()" class="btn btn-primary btn-wide" style="width:300px">
-                                    <img src="assets/img/fb.png" width="25" height="25"> Diğer Arkadaşlarımı Davet Et
+                                    <img src="assets/img/fb.png" width="25" height="25"> {{'Diğer Arkadaşlarımı Davet Et' | translate}}
                                 </button>
                             </td>
                         </tr>
@@ -29,7 +29,7 @@
                             <td>
                                 <button class="btn btn-primary btn-wide" style="width:300px"
                                         ng-click="digercevremodal()" ng-disabled="visible_hidden">
-                                    Seçili Arkadaşlarımı Çevreye Ekle
+                                    {{'Seçili Arkadaşlarımı Çevreye Ekle' | translate}}
                                 </button>
                             </td>
                         </tr>
@@ -66,12 +66,12 @@
 
     <div>
         <div align="left" style="width:95%">
-            Kuran Çalış Kullanan Facebook Arkadaşlarım
+            {{'Kuran Çalış Kullanan Facebook Arkadaşlarım' | translate}}
         </div>
         <table>
             <tr>
                 <td style="width:100%; vertical-align: bottom;">
-                    <input class="form-control" style="width:400px" placeholder="Facebook Arkadaşlarımda Ara" id="Text1"
+                    <input class="form-control" style="width:400px" placeholder="{{'Facebook Arkadaşlarımda Ara' | translate}}" id="Text1"
                            type="text" ng-model="search.$"/>
                 </td>
                 <td style="width:200px"></td>
@@ -108,9 +108,9 @@
 <div ng-include="'app/components/partials/off_canvas_menu.html'"></div>
 
 <div align="center">
-    <digercevremodal title="Kişileri Başka Çevreye Ekle" visible="other_circle">
+    <digercevremodal title="{{'Kişileri Başka Çevreye Ekle' | translate}}" visible="other_circle">
         <div align="left">
-            <label>Seçtiğiniz kişileri aşağıdaki seçeceğiniz çevreye de ekleyebilirsiniz.</label>
+            <label translate>Seçtiğiniz kişileri aşağıdaki seçeceğiniz çevreye de ekleyebilirsiniz.</label>
             <table>
                 <tr ng-repeat="item in circle_name">
                     <td style="width:30px">
@@ -124,8 +124,8 @@
             </table>
         </div>
         <div class="modal-footer">
-            <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal">Vazgeç</a>
-            <a class="btn btn-primary btn-wide" ng-click="peoples_add_circle()" data-dismiss="modal">Çevreye Ekle</a>
+            <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal" translate>Vazgeç</a>
+            <a class="btn btn-primary btn-wide" ng-click="peoples_add_circle()" data-dismiss="modal" translate>Çevreye Ekle</a>
         </div>
     </digercevremodal>
 </div>

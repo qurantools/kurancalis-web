@@ -6,8 +6,8 @@
                 <a class="button button-icon icon ion-arrow-left-b" href="#/people/circles/"></a>
             </ion-nav-buttons>
             <ion-nav-buttons side="right">
-                <a class="button button-icon icon ion-android-checkbox-outline" ng-click="toggleButton()">Seç</a>
-                <a class="button button-icon icon ion-plus" ng-click="openModal('add_people')">Kişi Ekle</a>
+                <a class="button button-icon icon ion-android-checkbox-outline" ng-click="toggleButton()" translate>Seç</a>
+                <a class="button button-icon icon ion-plus" ng-click="openModal('add_people')" translate>Kişi Ekle</a>
             </ion-nav-buttons>
         </ion-nav-bar>
         <ion-nav-view name="appContent"></ion-nav-view>
@@ -34,10 +34,10 @@
         <ion-footer-bar align-title="center" class="bar-stable" style="height: initial;" ng-show="showAddButton">
             <div class="button-bar">
                 <button class="footer-bar-item item-left button button-assertive" ng-click="kisisilme(cvrid);" style="font-size: 20px; !important;white-space: normal;">
-                    Çevreden Çıkar
+                    {{'Çevreden Çıkar' | translate}}
                 </button>
                 <button class="footer-bar-item item-right button" ng-click="openModal('circle_selection')" style="font-size: 20px; !important;white-space: normal;">
-                    Başka Çevreye Ekle
+                    {{'Başka Çevreye Ekle' | translate}}
                 </button>
             </div>
         </ion-footer-bar>

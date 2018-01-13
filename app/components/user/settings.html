@@ -1,0 +1,12 @@
+<body>
+<div class="container">
+    <div ng-include="'app/components/people/people_navigation.html'"></div>
+    <div class="nav-bottom"></div>
+    <div class="row">
+        <h1 translate>Dil Seçimi</h1>
+        <button ng-click="changeLanguage('tr')" translate>Türkçe</button>
+        <button ng-click="changeLanguage('en')" translate>İngilizce</button>
+    </div>
+</div>
+<div ng-include="'app/components/partials/off_canvas_menu.html'"></div>
+</body>

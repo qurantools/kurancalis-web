@@ -4,7 +4,7 @@
             <div class="modal-header">
                 <button type="button" data-dismiss="modal" aria-hidden="true" style="float:right;"><i
                         class="fa fa-close"></i></button>
-                <h4 class="modal-title">Filtre seçenekleri</h4>
+                <h4 class="modal-title" translate>Filtre seçenekleri</h4>
             </div>
 
             <div class="modal-body">
@@ -14,8 +14,7 @@
                         <!-- yazar secimi kaldirildi
                         <td style="width: 260px">
 
-                            <strong>
-                                Yazarlar</strong>
+                            <strong translate>Yazarlar</strong>
                             <br />
                             <br />
                             <div>
@@ -33,8 +32,8 @@
                         <td style="width: 440px; height: 21px; border-left: dimgray 0px solid; padding-left: 10px; vertical-align: top;">
                             <!-- çeviri içinde arama kaldirildi
                             <div class="well">
-                                Çeviri içeriğinde kelime
-                                <input type="text" ng-model="queryVerse.keyword" size="12" class="form-control" placeholder="Kelime  girin"/>
+                                {{'Çeviri içeriğinde kelime' | translate}}
+                                <input type="text" ng-model="queryVerse.keyword" size="12" class="form-control" placeholder="{{'Kelime  girin' | translate}}"/>
                             </div>
                             <hr>-->
                             <div class="well" ng-init="init()">
@@ -43,20 +42,20 @@
                                         <i class="fa fa-toggle-on aktif" ng-if="query_own_annotations.value == true || query_own_annotations.value == 'true'" ng-click="toggleDetailedSearchOwnAnnotations();"></i>
                                         <i class="fa fa-toggle-on fa-rotate-180 inactive" ng-if="query_own_annotations.value == false || query_own_annotations.value == 'false'" ng-click="toggleDetailedSearchOwnAnnotations();"></i>
                                     </td>
-                                    <td align="left" style="width:100%; padding-left: 15px;">      Benim notlarımı göster</td>
+                                    <td align="left" style="width:100%; padding-left: 15px;" translate>Benim notlarımı göster</td>
                                 </table>
                             </div>
 
                             <div class="well">
-                                Çevremdeki kişilere ait olan notlar
-                                <tags-input ng-model="query_circles" placeholder="Çevre Seçiniz" display-property="name" replace-spaces-with-dashes="false" min-length="1" add-from-autocomplete-only="true"  add-on-blur="false">
+                               {{'Çevremdeki kişilere ait olan notlar' | translate}}
+                                <tags-input ng-model="query_circles" placeholder="{{'Çevre Seçiniz' | translate}}" display-property="name" replace-spaces-with-dashes="false" min-length="1" add-from-autocomplete-only="true"  add-on-blur="false">
                                     <auto-complete source="cevrelisteleForSearch()" load-on-empty="true" load-on-focus="true" select-first-match="false"></auto-complete>
                                 </tags-input>
                             </div>
 
                             <div class="well">
-                                Kişilere ait olan notlar
-                                <tags-input ng-model="query_users" placeholder="Kişi Seçiniz" display-property="name" replace-spaces-with-dashes="false" min-length="2">
+                                {{'Kişilere ait olan notlar' | translate}}
+                                <tags-input ng-model="query_users" placeholder="{{'Kişi Seçiniz' | translate}}" display-property="name" replace-spaces-with-dashes="false" min-length="2">
                                     <auto-complete source="kisilistele($query)" min-length="2"></auto-complete>
                                 </tags-input>
                             </div>
@@ -68,7 +67,7 @@
 
             <div class="modal-footer">
                 <a href="#" class="btn btn-primary btn-wide" data-dismiss="modal"
-                   ng-click="detailedSearch()">Tamam</a>
+                   ng-click="detailedSearch()" translate>Tamam</a>
             </div>
         </div>
     </div>

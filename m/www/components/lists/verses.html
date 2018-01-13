@@ -2,7 +2,7 @@
 <ion-side-menus>
     <ion-side-menu-content drag-content="false">
         <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced" align-title="center">
-            <ion-nav-title>Listedeki Ayetler</ion-nav-title>
+            <ion-nav-title>{{'Listedeki Ayetler' | translate}}</ion-nav-title>
             <ion-nav-buttons side="left">
                 <a class="button button-icon icon ion-arrow-left-b" href="" ng-click="navigateTo('/lists/verse/')"></a>
             </ion-nav-buttons>
@@ -18,7 +18,7 @@
                 <div class="list">
                     <label class="item item-input item-select">
                         <div class="input-label">
-                            Çeviri/Yazar
+                            {{'Çeviri/Yazar' | translate}}
                         </div>
                         <select ng-if="authors.length!=0 && verseListAuthor!=null" ng-options="author.id as author.name for author in authors"
                                 ng-model="verseListAuthor"

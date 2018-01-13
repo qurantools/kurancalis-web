@@ -3,7 +3,7 @@
         <ion-nav-buttons side="left">
             <a class="button button-icon icon ion-arrow-left-b" ng-click="closeModal('add_verse_to_inference_from_verselist')"></a>
         </ion-nav-buttons>
-        <ion-nav-title>Ayete Referans Ver</ion-nav-title>
+        <ion-nav-title>{{'Ayete Referans Ver' | translate}}</ion-nav-title>
         <ion-nav-buttons side="right">
             <a class="button button-icon icon ion-checkmark" ng-click="selectSelectedVerses()"></a>
         </ion-nav-buttons>
@@ -13,17 +13,13 @@
         <div align="left">
             <div class="list">
                 <label class="item item-input item-select">
-                    <div class="input-label">
-                        Ayet Listelerim
-                    </div>
+                    <div class="input-label" translate>Ayet Listelerim</div>
                     <select ng-model="verselistItem" ng-change="verseListsToggleSelection(verselistItem)">
                         <option ng-repeat="item in verselists" value="{{item.id}}" ng-selected="item.id==localVerseListSelection[0]">{{item.name}}</option>
                     </select>
                 </label>
                 <label class="item item-input item-select">
-                    <div class="input-label">
-                        Çeviri/Yazar
-                    </div>
+                    <div class="input-label" translate>Çeviri/Yazar</div>
                     <select ng-options="author.id as author.name for author in authors"
                             ng-model="verseListAuthor"
                             ng-change="verseListsAuthorChanged(verseListAuthor)">

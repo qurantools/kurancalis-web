@@ -4,7 +4,7 @@
             <div class="modal-header">
                 <button type="button" data-dismiss="modal" aria-hidden="true" style="float:right;"><i
                         class="fa fa-close"></i></button>
-                <h4 class="modal-title">Çıkarım Notlarında Arama</h4>
+                <h4 class="modal-title" translate>Çıkarım Notlarında Arama</h4>
             </div>
 
             <div class="modal-body">
@@ -23,20 +23,18 @@
                                            ng-if="allInferencesOpts.own_inferences == false || allInferencesOpts.own_inferences == 'false'"
                                            ng-click="toggleInferenceSearchOwnInferences();"></i>
                                     </td>
-                                    <td align="left" style="width:100%; padding-left: 15px;"> Benim notlarımı
-                                        göster
-                                    </td>
+                                    <td align="left" style="width:100%; padding-left: 15px;" translate>Benim notlarımı göster</td>
                                 </table>
                             </div>
                             <div>
                                 <input type="text" ng-model="allInferencesOpts.keyword" size="12"
-                                       class="form-control" placeholder="Aranacak kelime"/>
+                                       class="form-control" placeholder="{{'Aranacak kelime' | translate}}"/>
                             </div>
                             <br/>
 
                             <div>
-                                Etikete sahip olan notlar
-                                <tags-input ng-model="filterTags" display-property="name" placeholder="Etiket girin"
+                                {{'Etikete sahip olan notlar' | translate}}
+                                <tags-input ng-model="filterTags" display-property="name" placeholder="{{'Etiket girin' | translate}}"
                                             replace-spaces-with-dashes="false"
                                             min-length="2">
                                     <auto-complete source="loadTags($query)" min-length="2"
@@ -45,15 +43,15 @@
                             </div>
 
                             <br/>
-                            Kişilere ait olan notlar
-                            <tags-input ng-model="usersForSearch" placeholder="Kişi Seçiniz" display-property="name"
+                            {{'Kişilere ait olan notlar' | translate}}
+                            <tags-input ng-model="usersForSearch" placeholder="{{'Kişi Seçiniz' | translate}}" display-property="name"
                                         replace-spaces-with-dashes="false" min-length="2">
                                 <auto-complete source="kisilistele($query)" min-length="2"></auto-complete>
                             </tags-input>
 
                             <br/>
-                            Çevremdeki kişilere ait olan notlar
-                            <tags-input ng-model="circlesForSearch" placeholder="Çevre Seçiniz"
+                            {{'Çevremdeki kişilere ait olan notlar' | translate}}
+                            <tags-input ng-model="circlesForSearch" placeholder="{{'Çevre Seçiniz' | translate}}"
                                         display-property="name" replace-spaces-with-dashes="false" min-length="1"
                                         add-from-autocomplete-only="true" add-on-blur="false">
                                 <auto-complete source="cevrelisteleForSearch()" load-on-empty="true"
@@ -67,7 +65,7 @@
 
             <div class="modal-footer">
                 <a href="#" class="btn btn-primary btn-wide" data-dismiss="modal"
-                   ng-click="search_all_inferences()">Tamam</a>
+                   ng-click="search_all_inferences()" translate>Tamam</a>
             </div>
         </div>
     </div>

@@ -15,10 +15,9 @@
                             <td align="center" style="width:200px">
                                 <div ng-show="open_edit" style="width:200px">
                                     <button ng-if="edit_user == user.id" style="width:90px" ng-click="edit_inference()"
-                                            class="btn verse_tag ng-binding btn-primary btn-xs">Düzenle</button>&nbsp;
-                                        <button ng-if="edit_user == user.id" style="width:90px" ng-click="digercevremodal()"
-                                                class="btn verse_tag ng-binding btn-danger btn-xs">Sil
-                                        </button>
+                                            class="btn verse_tag ng-binding btn-primary btn-xs" translate>Düzenle</button>&nbsp;
+                                    <button ng-if="edit_user == user.id" style="width:90px" ng-click="digercevremodal()"
+                                            class="btn verse_tag ng-binding btn-danger btn-xs" translate>Sil</button>
                                 </div>
                             </td>
                         </tr>
@@ -40,8 +39,7 @@
                     style="vertical-align: top; width: 1050px; height: 45px; padding-top:15px; padding-bottom:15px">
                     <i class="fa fa-toggle-on aktif" ng-if="inlineReferenceDisplay == true" ng-click="changeInlineReferenceDisplay();"></i>
                     <i class="fa fa-toggle-on fa-rotate-180 inactive" ng-if="inlineReferenceDisplay == false"
-                       ng-click="changeInlineReferenceDisplay();"></i>Referansların
-                    İçeriğini Göster
+                       ng-click="changeInlineReferenceDisplay();"></i>{{'Referansların İçeriğini Göster' | translate}}
                 </td>
             </tr>
             <tr>
@@ -54,7 +52,7 @@
             <tr>
                 <td align="right" style="padding-right: 15px; padding-left: 15px; padding-bottom: 15px;
                     width: 1050px; padding-top: 15px; background-color:#fff6dc">
-                    <strong>Çıkarım Etiketleri:</strong></strong><button ng-repeat="item in tags" class="btn verse_tag ng-binding btn-info btn-xs">{{item}}</button>
+                    <strong translate>Çıkarım Etiketleri:</strong></strong><button ng-repeat="item in tags" class="btn verse_tag ng-binding btn-info btn-xs">{{item}}</button>
                 </td>
             </tr>
         </table>
@@ -62,7 +60,7 @@
         <div class="row">
             <div style="float: left;padding-left: 90px;" ng-if="user!=null">
                 <span style="margin-right: 10px;" ng-click="addToStorageForFocus2Comment();focusToCommentArea('comment_textarea_inference')" class="make_comment">
-                    <span style="color: #00f;margin-right: 10px;">Yorum Yaz</span><i class="fa fa-comment"></i> {{inference_info.commentCount}}
+                    <span style="color: #00f;margin-right: 10px;" translate>Yorum Yaz</span><i class="fa fa-comment"></i> {{inference_info.commentCount}}
                 </span>
                 <span ng-class="{ 'voted-like': (inference_info.vote != null && inference_info.vote.content == 1), 'unvoted' : !(inference_info.vote != null && inference_info.vote.content == 1)}"
                       ng-click="doVote(inference_info,'inferences',1)">
@@ -75,18 +73,18 @@
                 <button type="button" class="btn btn-primary btn-xs"
                         ng-disabled="(inference_info.voteRates.dislike + inference_info.voteRates.like) == 0"
                         ng-click="showVoteResults(inference_info, 'inferences')">
-                    Değerlendirenler
+                    {{'Değerlendirenler' | translate}}
                 </button>
             </div>
             <div align="right" style="padding-right : 75px;">
-                <a id="url" class="btn btn-primary btn-xs" ng-click="kopyala(shareUrl)" style="margin-bottom: 11px;"><i class="fa fa-link"></i> Linki Kopyala</a>
+                <a id="url" class="btn btn-primary btn-xs" ng-click="kopyala(shareUrl)" style="margin-bottom: 11px;"><i class="fa fa-link"></i> {{'Linki Kopyala' | translate}}</a>
                 <a facebook class="facebookShare" data-url='{{shareUrl}}' data-size="tall"></a>
                 <a twitter  data-lang="tr" data-count='horizontal' data-url='{{shareUrl}}' data-via='kurancalis' data-size="tall" data-text="Kuran Çalış - {{title}}" ></a>
                 <div gplus class="g-plus" data-height="24" data-annotation="none" data-href='{{shareUrl}}' data-action='share' style="margin-top:2px;"></div>
             </div>
         </div>
         <br/>
-        <h6 align="left" style="width: 1024px">Referans Verilen Ayetler</h6>
+        <h6 align="left" style="width: 1024px" translate>Referans Verilen Ayetler</h6>
         <table ng-if="referenced.verses.length!=0">
             <tr>
                 <td align="left" style="width: 200px">
@@ -97,7 +95,7 @@
 
                 </td>
                 <td align="center" style="width: 210px">
-                    <tags-input style="width: 200px" ng-model="circlesForSearch" placeholder="Çevre Seçiniz"
+                    <tags-input style="width: 200px" ng-model="circlesForSearch" placeholder="{{'Çevre Seçiniz' | translate}}"
                                 display-property="name"
                                 replace-spaces-with-dashes="false" min-length="1" add-from-autocomplete-only="true"
                                 add-on-blur="false">
@@ -106,7 +104,7 @@
                     </tags-input>
                 </td>
                 <td align="center" style="width: 310px">
-                    <tags-input style="width: 300px" ng-model="usersForSearch" placeholder="Kişi Seçiniz"
+                    <tags-input style="width: 300px" ng-model="usersForSearch" placeholder="{{'Kişi Seçiniz' | translate}}"
                                 display-property="name"
                                 replace-spaces-with-dashes="false" min-length="2">
                         <auto-complete source="peoplelist($query)" min-length="2"></auto-complete>
@@ -114,8 +112,7 @@
                 </td>
                 <td align="right" style="width: 260px">
                     <button style="width:260px; height: 35px" ng-click="updateTags()"
-                            class="btn btn-primary btn-wide-">Çevreye / Kişiye ait etiketleri göster
-                    </button>
+                            class="btn btn-primary btn-wide-" translate>Çevreye / Kişiye ait etiketleri göster</button>
                 </td>
             </tr>
         </table>
@@ -133,7 +130,7 @@
             </div>
         </div>
         <div ng-if="user!=null">
-            <h6 align="left" style="width: 1024px" ng-if="inference_info.comments.length>0">Yorumlar</h6>
+            <h6 align="left" style="width: 1024px" ng-if="inference_info.comments.length>0" translate>Yorumlar</h6>
             <div ng-repeat="comment in inference_info.comments" style="width: 90%;border-radius: 15px;padding-top: 10px !important;" align="left" class="row well">
                 <div class="col-lg-1">
                     <a href="" ng-click="navigateTo('/profile/user/{{comment.owner.user_id}}/')">
@@ -160,18 +157,18 @@
                                 </span>
                                 <span>
                                     <a class="make_comment" ng-class="{'disabled' : (comment.voteRates.dislike + comment.voteRates.like) == 0}"
-                                       ng-click="showVoteResults(comment, 'inferences', true, comment.comment.inferenceId)">Değerlendirenler</a>
+                                       ng-click="showVoteResults(comment, 'inferences', true, comment.comment.inferenceId)" translate>Değerlendirenler</a>
                                 </span>
                                 <span class="make_comment"
                                       ng-click="comment.showChild=true;
                                       comment.showChilds=true;
                                       focusToCommentArea('comment_textarea_inference_{{comment.comment.id}}')"
                                       ng-init="comment.showChild = false">
-                                    <a>Yanıtla</a>
+                                    <a translate>Yanıtla</a>
                                 </span>
                                 <span ng-bind-html="comment.comment.created | time_in_string | to_trusted"></span>
                                 <span ng-if="comment.comment.childs.length > 2 && !comment.showChilds" ng-click="comment.showChilds=true">
-                                    <i class="fa fa-mail-forward"></i> <span style="color:blue">{{comment.comment.childs.length}} Yanıt</span>
+                                    <i class="fa fa-mail-forward"></i> <span style="color:blue">{{comment.comment.childs.length}} {{'Yanıt' | translate}}</span>
                                 </span>
                             </div>
                             <div class="col-xs-2" align="right">
@@ -210,10 +207,10 @@
                                         </span>
                                         <span>
                                             <a class="make_comment" ng-class="{'disabled' : (child_comment.voteRates.dislike + child_comment.voteRates.like) == 0}"
-                                               ng-click="showVoteResults(child_comment, 'inferences', true, child_comment.comment.inferenceId)">Değerlendirenler</a>
+                                               ng-click="showVoteResults(child_comment, 'inferences', true, child_comment.comment.inferenceId)" translate>Değerlendirenler</a>
                                         </span>
                                         <span class="make_comment" ng-click="comment.showChild = true;focusToCommentArea('comment_textarea_inference_{{comment.comment.id}}')">
-                                            <a>Yanıtla</a>
+                                            <a translate>Yanıtla</a>
                                         </span>
                                         <span ng-bind-html="child_comment.comment.created | time_in_string | to_trusted"></span>
                                     </div>
@@ -241,7 +238,7 @@
                             <div class="col-lg-1">
                                 <button type="button" class="btn btn-primary btn-xs"
                                         ng-click="createComment(inference_info, 'inferences', inference_info.id, 'comment_textarea_inference_{{comment.comment.id}}', comment.comment.id, $index)">
-                                    Tamam
+                                    {{'Tamam' | translate}}
                                 </button>
                             </div>
                         </div>
@@ -259,23 +256,20 @@
                 </div>
                 <div class="col-lg-1">
                     <button type="button" class="btn btn-primary btn-xs"
-                                ng-click="createComment(inference_info, 'inferences', inference_info.id, 'comment_textarea_inference', null, null)">
-                            Tamam
-                        </button>
+                            ng-click="createComment(inference_info, 'inferences', inference_info.id, 'comment_textarea_inference', null, null)">
+                        {{'Tamam' | translate}}
+                    </button>
                 </div>
             </div>
         </div>
-        <div ng-if="user==null" style="margin-top: 10px;">
-            Yorum yazmak ya da notu oylamak istiyorsanız lütfen giriş yapınız.
-        </div>
+        <div ng-if="user==null" style="margin-top: 10px;" translate>Yorum yazmak ya da notu oylamak istiyorsanız lütfen giriş yapınız.</div>
     </div>
     <div align="center" class="row" ng-if="authorizedInferenceDisplay == 2">
         <table cellpadding="0" cellspacing="0">
             <tr>
                 <td align="center" style="padding-right: 15px; padding-left: 15px; padding-bottom: 15px;
                     width: 1050px; padding-top: 15px; background-color:#fff6dc">
-                    <strong>Bu çıkarımı görüntüleme yetkisine sahip değilsiniz! <br>
-                        Henüz giriş yapmadınız ya da not sizinle paylaşılmadı</strong>
+                    <strong translate>Bu çıkarımı görüntüleme yetkisine sahip değilsiniz! <br> Henüz giriş yapmadınız ya da not sizinle paylaşılmadı</strong>
                 </td>
             </tr>
         </table>
@@ -283,34 +277,34 @@
 <br><br>
 </div>
 <div align="center">
-    <digercevremodal title="Not Silme" visible="digercevre">
+    <digercevremodal title="{{'Not Silme' | translate}}" visible="digercevre">
         <div align="left">
-            <label>Çıkarım notu silinecek Onaylıyor musunuz?</label>
+            <label translate>Çıkarım notu silinecek Onaylıyor musunuz?</label>
 
         </div>
         <div class="modal-footer">
-            <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal">Vazgeç</a>
-            <a class="btn btn-primary btn-wide btn-danger" ng-click="delete_inference()" data-dismiss="modal">Sil</a>
+            <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal" translate>Vazgeç</a>
+            <a class="btn btn-primary btn-wide btn-danger" ng-click="delete_inference()" data-dismiss="modal" translate>Sil</a>
         </div>
     </digercevremodal>
-    <kisisilmodal title="Yorum Silme" visible="deleteCommentFlag">
+    <kisisilmodal title="{{'Yorum Silme' | translate}}" visible="deleteCommentFlag">
         <div align="left">
-            <label>Yorumunuz silinecek Onaylıyor musunuz?</label>
+            <label translate>Yorumunuz silinecek Onaylıyor musunuz?</label>
         </div>
         <div class="modal-footer">
-            <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal">Vazgeç</a>
-            <a class="btn btn-primary btn-wide btn-danger" ng-click="deleteComment(commentWillDeleteParent, 'inferences', inference_info.id, commentWillDeleteId, commentWillDeleteIndex)" data-dismiss="modal">Sil</a>
+            <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal" translate>Vazgeç</a>
+            <a class="btn btn-primary btn-wide btn-danger" ng-click="deleteComment(commentWillDeleteParent, 'inferences', inference_info.id, commentWillDeleteId, commentWillDeleteIndex)" data-dismiss="modal" translate>Sil</a>
         </div>
     </kisisilmodal>
-    <degistirmodal title="Yorum Güncelle" visible="updateCommentFlag">
+    <degistirmodal title="{{'Yorum Güncelle' | translate}}" visible="updateCommentFlag">
         <div align="left">
             <div  class="col-lg-10">
                 <textarea id="inference_comment_update_textarea" ng-model="commentContentUpdate.value" style="margin-top: 1%;width: 550px;height: 81px;border-radius: 9px;background-color: white;"/>
             </div>
         </div>
         <div class="modal-footer">
-            <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal" >Vazgeç</a>
-            <a class="btn btn-primary btn-wide btn-primary" ng-click="updateComment(commentWillUpdateParent, 'inferences', inference_info.id, commentWillUpdate.id, 'inference_comment_update_textarea', commentWillUpdateIndex)" data-dismiss="modal">Güncelle</a>
+            <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal" translate>Vazgeç</a>
+            <a class="btn btn-primary btn-wide btn-primary" ng-click="updateComment(commentWillUpdateParent, 'inferences', inference_info.id, commentWillUpdate.id, 'inference_comment_update_textarea', commentWillUpdateIndex)" data-dismiss="modal" translate>Güncelle</a>
         </div>
     </degistirmodal>
 </div>

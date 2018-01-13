@@ -1,19 +1,19 @@
 <ion-side-menu side="left">
     <ion-header-bar class="bar-assertive">
-        <h1 class="title">MENÜ</h1>
+        <h1 class="title" translate>MENÜ</h1>
     </ion-header-bar>
     <ion-content>
         <ul class="list">
-            <a ng-if="user!=null" href="#/profile/circle/-2/" class="item" menu-close="">Haber Kaynağı</a>
-            <a href="#/translations/" class="item" menu-close="">Sureler</a>
-            <a href="#/search_translations/" class="item" menu-close="">Meallerde Arama</a>
-            <a ng-if="user!=null" href="#/annotations/" class="item" menu-close="">Ayet Notları</a>
-            <a ng-if="user!=null" href="#/inferences/" class="item" menu-close="">Çıkarım Notları</a>
-            <a ng-if="user!=null" href="#/lists/verse/" class="item" menu-close="">Ayet Listelerim</a>
-            <a ng-if="user!=null" href="#/people/home/" class="item" menu-close="">Kişiler</a>
-            <a href="#/help/" class="item" menu-close="">Yardım</a>
-            <div style="vertical-align: middle !important;"><a ng-if="user!=null" href ng-click="logOut()" class="item"><img ng-src="{{user.photo}}" height="34"/> Çıkış</a></div>
-            <a ng-if="user==null && isConnected==true" href ng-click="login()" class="item" menu-close>Giriş</a>
+            <a ng-if="user!=null" href="#/profile/circle/-2/" class="item" menu-close="" translate>Haber Kaynağı</a>
+            <a href="#/translations/" class="item" menu-close="" translate>Sureler</a>
+            <a href="#/search_translations/" class="item" menu-close="" translate>Meallerde Arama</a>
+            <a ng-if="user!=null" href="#/annotations/" class="item" menu-close="" translate>Ayet Notları</a>
+            <a ng-if="user!=null" href="#/inferences/" class="item" menu-close="" translate>Çıkarım Notları</a>
+            <a ng-if="user!=null" href="#/lists/verse/" class="item" menu-close="" translate>Ayet Listelerim</a>
+            <a ng-if="user!=null" href="#/people/home/" class="item" menu-close="" translate>Kişiler</a>
+            <a href="#/help/" class="item" menu-close="" translate>Yardım</a>
+            <div style="vertical-align: middle !important;"><a ng-if="user!=null" href ng-click="logOut()" class="item"><img ng-src="{{user.photo}}" height="34"/> {{'Çıkış' | translate}}</a></div>
+            <a ng-if="user==null && isConnected==true" href ng-click="login()" class="item" menu-close translate>Giriş</a>
         </ul>
     </ion-content>
 </ion-side-menu>

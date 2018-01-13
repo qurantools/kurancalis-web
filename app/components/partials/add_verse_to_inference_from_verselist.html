@@ -3,7 +3,7 @@
         <div class="modal-content well">
             <div class="modal-header" style="height: 60px;">
                 <div style="float: left;font-size: 26px;">
-                    <b>Ayet seçiniz</b>
+                    <b translate>Ayet seçiniz</b>
                 </div>
             </div>
             <div class="modal-body">
@@ -12,7 +12,7 @@
                             ng-options="author.id as author.name for author in authors"
                             ng-change="verseListsAuthorChanged(verseListAuthor)"
                             class="form-control">
-                        <option style="display:none" value="">Yazar Seçiniz</option>
+                        <option style="display:none" value="" translate>Yazar Seçiniz</option>
                     </select>
                 </div>
                 <!-- body-->
@@ -53,8 +53,8 @@
                 </div>
 
                 <div class="modal-footer">
-                    <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal">Vazgeç</a>
-                    <a class="btn btn-primary btn-wide" ng-click="selectSelectedVerses()" data-dismiss="modal">Seç</a>
+                    <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal" translate>Vazgeç</a>
+                    <a class="btn btn-primary btn-wide" ng-click="selectSelectedVerses()" data-dismiss="modal" translate>Seç</a>
                 </div>
             </div>
         </div>

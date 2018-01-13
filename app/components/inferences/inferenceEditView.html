@@ -11,7 +11,7 @@
     <table>
         <tr>
             <td style="vertical-align: top; width: 600px" align="left">
-                            <input id="title" ng-model="inferenceData.title" class="form-control" placeholder="Başlık" style="width: 580px" type="text" /><br />
+                            <input id="title" ng-model="inferenceData.title" class="form-control" placeholder="{{'Başlık' | translate}}" style="width: 580px" type="text" /><br />
                 <br />
                 <br />
                 </td>
@@ -35,9 +35,9 @@
         <br />
 
         <div align="left" style="width:760px">
-        Etiketler
-            <tags-input ng-model="tags_entry" display-property="name" placeholder="Etiket girin" replace-spaces-with-dashes="false" min-length="2">
-            <auto-complete source="loadTags($query)" min-length="2" select-first-match="false"></auto-complete>
+        {{'Etiketler' | translate}}
+            <tags-input ng-model="tags_entry" display-property="name" placeholder="{{'Etiket girin' | translate}}" replace-spaces-with-dashes="false" min-length="2">
+                <auto-complete source="loadTags($query)" min-length="2" select-first-match="false"></auto-complete>
             </tags-input>
         </div>
         
@@ -47,19 +47,19 @@
             <tr>
                 <td align="left" style="width: 380px">
                     <div style="width:360px">
-                        Hangi Çevreler Görebilir
-                        <tags-input ng-model="circlesForSearch" placeholder="Çevre Seçiniz" display-property="name"
+                        {{'Hangi Çevreler Görebilir' | translate}}
+                        <tags-input ng-model="circlesForSearch" placeholder="{{'Çevre Seçiniz' | translate}}" display-property="name"
                                     replace-spaces-with-dashes="false" min-length="1" add-from-autocomplete-only="true"
                                     add-on-blur="false">
                             <auto-complete source="extendedCircles" load-on-empty="true"
                                            load-on-focus="true"></auto-complete>
                         </tags-input>
                     </div>
-</td>
-<td>
+                </td>
+                <td>
                     <div style="width:360px; margin-left:20px">
                         Ayrıca Kimler Görebilir
-                        <tags-input ng-model="usersForSearch" placeholder="Kişi Seçiniz" display-property="name"
+                        <tags-input ng-model="usersForSearch" placeholder="{{'Kişi Seçiniz' | translate}}" display-property="name"
                                     replace-spaces-with-dashes="false" min-length="2">
                             <auto-complete source="peoplelist($query)" min-length="2"></auto-complete>
                         </tags-input>
@@ -71,24 +71,23 @@
         <br />
     <br />
     <div align="left" style="width:760px">
-        <input id="Checkbox1" ng-model="show_entry" type="checkbox" checked="CHECKED"/>&nbsp; Görebilen herkes yorum da
-        yazabilir.<br/>
+        <input id="Checkbox1" ng-model="show_entry" type="checkbox" checked="CHECKED"/>&nbsp; {{'Görebilen herkes yorum da yazabilir.' | translate}}<br/>
         <div ng-show="!show_entry" >
         <table style="width: 760px">
             <tr>
                 <td align="left" style="width: 380px; height: 97px;">
                     <div style="width:360px">
-                        Hangi Çevreler Yorum Yazabilir
-                        <tags-input ng-model="circlesForSearch1" placeholder="Çevre Seçiniz" display-property="name" replace-spaces-with-dashes="false" min-length="1" add-from-autocomplete-only="true" add-on-blur="false">
-                        <AUTO-COMPLETE source="extendedCircles" load-on-focus="true" load-on-empty="true"/>
+                        {{'Hangi Çevreler Yorum Yazabilir' | translate}}
+                        <tags-input ng-model="circlesForSearch1" placeholder="{{'Çevre Seçiniz' | translate}}" display-property="name" replace-spaces-with-dashes="false" min-length="1" add-from-autocomplete-only="true" add-on-blur="false">
+                            <AUTO-COMPLETE source="extendedCircles" load-on-focus="true" load-on-empty="true"/>
                         </tags-input>
                     </div>
                 </td>
                 <td align="left" style="width: 380px; height: 97px;">
                     <div style="width:360px; margin-left:20px">
-                        Ayrıca Kimler Yorum Yazabilir
-                        <tags-input ng-model="usersForSearch1" placeholder="Kişi Seçiniz" display-property="name" replace-spaces-with-dashes="false" min-length="2">
-                        <AUTO-COMPLETE min-length="2" source="peoplelist($query)" />
+                        {{'Ayrıca Kimler Yorum Yazabilir' | translate}}
+                        <tags-input ng-model="usersForSearch1" placeholder="{{'Kişi Seçiniz' | translate}}" display-property="name" replace-spaces-with-dashes="false" min-length="2">
+                            <AUTO-COMPLETE min-length="2" source="peoplelist($query)" />
                         </tags-input>
                     </div>
                 </td>
@@ -104,13 +103,14 @@
                     <tr>
                         <td align="right" style="width: 620px">
                             <a ng-if="pagePurpose!='edit'" href="#/inferences"><input id="Button1" class="form-control btn-warning" style="width:120px"
-                                                                                 type="button" value="Vazgeç"/></a>
+                                   type="button" value="{{'Vazgeç' | translate}}"/></a>
                             <a ng-if="pagePurpose=='edit'" href="#/inference/display/{{inferenceId}}"><input id="Button1" class="form-control btn-warning" style="width:120px"
-                                   type="button" value="Vazgeç"/></a>
+                                   type="button" value="{{'Vazgeç' | translate}}"/></a>
                         </td>
                         <td align="right" style="width: 140px">
                             <input id="save" class="form-control btn-primary" style="width:120px" ng-click="do_array()"
-                                   type="button" value="Kaydet"/></td>
+                                   type="button" value="{{'Kaydet' | translate}}"/>
+                        </td>
                     </tr>
                 </table>
             </div>

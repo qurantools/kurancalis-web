@@ -1,4 +1,4 @@
-var requiredModules = ['ionic', 'ngResource', 'ngRoute', 'facebook', 'restangular', 'LocalStorageModule', 'ngTagsInput', 'duScroll', 'directives.showVerse', 'directives.repeatCompleted', 'ui.select', 'myConfig', 'authorizationModule','djds4rce.angular-socialshare', 'ngSanitize', 'com.2fdevs.videogular','com.2fdevs.videogular.plugins.controls','com.2fdevs.videogular.plugins.overlayplay','com.2fdevs.videogular.plugins.poster', 'ngCordova','ui.tinymce', 'ui.bootstrap', 'ion-affix', 'infinite-scroll', 'ngCordova.plugins.appAvailability'];
+var requiredModules = ['ionic', 'ngResource', 'ngRoute', 'facebook', 'restangular', 'LocalStorageModule', 'ngTagsInput', 'duScroll', 'directives.showVerse', 'directives.repeatCompleted', 'ui.select', 'myConfig', 'authorizationModule','djds4rce.angular-socialshare', 'ngSanitize', 'com.2fdevs.videogular','com.2fdevs.videogular.plugins.controls','com.2fdevs.videogular.plugins.overlayplay','com.2fdevs.videogular.plugins.poster', 'ngCordova','ui.tinymce', 'ui.bootstrap', 'ion-affix', 'infinite-scroll', 'ngCordova.plugins.appAvailability', 'pascalprecht.translate', 'ngCookies'];
 
 if (config_data.isMobile) {
     var mobileModules = [];//'ionic'
@@ -233,7 +233,7 @@ var app = angular.module('ionicApp', requiredModules)
 
 if (config_data.isMobile == false) { //false
     //desktop version
-    app.config(function ($routeProvider, FacebookProvider, RestangularProvider, localStorageServiceProvider, $httpProvider) {
+    app.config(function ($routeProvider, FacebookProvider, RestangularProvider, localStorageServiceProvider, $httpProvider, $translateProvider) {
         RestangularProvider.setBaseUrl(config_data.webServiceUrl);
         localStorageServiceProvider.setStorageCookie(0, '/');
 
@@ -341,6 +341,12 @@ if (config_data.isMobile == false) { //false
                 reloadOnSearch: false,
                 pageTitle: 'Kuran Çalış - Çevre Zaman Tüneli'
             })
+            /*.when('/user/settings/', {
+                controller: 'UserSettingsController',
+                templateUrl: 'components/user/settings.html',
+                reloadOnSearch: false,
+                pageTitle: 'Kuran Çalış - Çevre Zaman Tüneli'
+            })*/
             .when('/', {
                 redirectTo: '/translations/'
             })
@@ -371,9 +377,35 @@ if (config_data.isMobile == false) { //false
 
         //facebook
         FacebookProvider.init(config_data.FBAppID);
+
+        // TRANSLATION
+        // Get browser language
+        var language = window.navigator.language.split('-')[0]; // use navigator lang if available
+        console.warn("Selected language for Desktop:: ",language);
+
+        if (language == null || language === undefined || language == "") {
+            language = "tr";  // as default language assignment
+        } else {
+            language = /(tr|en)/gi.test(language) ? language : 'tr'; // add new language as |de|fr|...
+        }
+
+        //Translate
+        $translateProvider
+            .useStaticFilesLoader({
+                prefix: 'assets/translations/',
+                suffix: '.json'
+            })
+            .preferredLanguage('en')
+            //.preferredLanguage(language)
+            .useMissingTranslationHandlerLog()
+            .useSanitizeValueStrategy('escapeParameters')
+            .useLocalStorage()
+            //.useCookieStorage()
+            .fallbackLanguage('tr');
+
     });
 } else {
-    app.config(function ($routeProvider, FacebookProvider, RestangularProvider, localStorageServiceProvider, $stateProvider, $urlRouterProvider, $httpProvider, $compileProvider) {
+    app.config(function ($routeProvider, FacebookProvider, RestangularProvider, localStorageServiceProvider, $stateProvider, $urlRouterProvider, $httpProvider, $compileProvider, $translateProvider) {
             console.log("mobile version");
             $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|chrome-extension|qurantools):/);
             //redirect / to /m/www/
@@ -534,6 +566,12 @@ if (config_data.isMobile == false) { //false
                         reloadOnSearch: false,
                         pageTitle: 'Kuran Çalış - Çevre Zaman Tüneli'
                     })
+                    /*.when('/user/settings/', {
+                        controller: 'UserSettingsController',
+                        templateUrl: 'components/user/settings.html',
+                        reloadOnSearch: false,
+                        pageTitle: 'Kuran Çalış - Çevre Zaman Tüneli'
+                    })*/
                     .when('/', {
                         redirectTo: '/translations/',
                         pageTitle: 'Kuran Çalış'
@@ -554,6 +592,32 @@ if (config_data.isMobile == false) { //false
              });
              */
             FacebookProvider.init(config_data.FBAppID);
+
+        // TRANSLATION
+        // Get browser language
+        var language = window.navigator.language.split('-')[0]; // use navigator lang if available
+        console.warn("Selected language for Mobil:: ",language);
+
+        if (language == null || language === undefined || language == "") {
+            language = "tr";  // as default language assignment
+        } else {
+            language = /(tr|en)/gi.test(language) ? language : 'tr'; // add new language as |de|fr|...
+        }
+
+        //Translate
+        $translateProvider
+            .useStaticFilesLoader({
+                prefix: '../../assets/translations/',
+                suffix: '.json'
+            })
+            .preferredLanguage('en')
+            //.preferredLanguage(language)
+            .useMissingTranslationHandlerLog()
+            .useSanitizeValueStrategy('sanitize')
+            .useLocalStorage()
+            //.useCookieStorage()
+            .fallbackLanguage('tr');
+
         }
     );
 }
@@ -595,7 +659,7 @@ app.factory('ChapterVerses', function ($resource) {
             }
         }
     );
-}).controller('MainCtrl', function ($scope, $q, $routeParams, $ionicSideMenuDelegate, $location, $timeout, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService, $document, $filter, $rootScope, $state, $stateParams, $ionicModal, $ionicScrollDelegate, $ionicPosition, $ionicLoading, authorization,$rootScope, $ionicPopup, dataProvider, $cordovaAppAvailability) {
+}).controller('MainCtrl', function ($scope, $q, $routeParams, $ionicSideMenuDelegate, $location, $timeout, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService, $document, $filter, $rootScope, $state, $stateParams, $ionicModal, $ionicScrollDelegate, $ionicPosition, $ionicLoading, authorization,$rootScope, $ionicPopup, dataProvider, $cordovaAppAvailability, $translate, $sce) {
     console.log("MainCtrl");
 
     //all root scope parameters should be defined and documented here
@@ -728,6 +792,10 @@ app.factory('ChapterVerses', function ($resource) {
     $scope.CIRCLE_ALL_CIRCLES = {'id': '-2', 'name': 'Tüm Çevrelerim'};
     $scope.CIRCLE_PUBLIC={'id': '-1', 'name': 'Herkes'};
 
+    //select language from user ınterface
+    $scope.changeLanguage = function (langKey) {
+        $translate.use(langKey);
+    };
 
     $scope.checkAPIVersion = function(){
         var versionRestangular = Restangular.all("apiversioncompatibility");
@@ -764,6 +832,7 @@ app.factory('ChapterVerses', function ($resource) {
         var retcp = "";
 
         url = $location.path();
+        console.warn("URL: ",url)
         if ( url == '/annotations/') {
             retcp = 'annotations';
         } else if ( url == "/people/circles/"){
@@ -772,15 +841,20 @@ app.factory('ChapterVerses', function ($resource) {
             retcp = "people_have_you";
         } else if ( url == "/people/find_people/"){
             retcp = "people_find";
-        } else if ( url == "/people/explore/"){
+        } else if ( url == "/people/explore/") {
             retcp = "people_explore";
         } else if ( url == "/search_translations/"){
             retcp = "search_translations";
         } else if ( url == "/lists/verse"){
             retcp = "verse_lists";
-        } else if ( url.indexOf("/profile/user/") > -1){
+        }
+        /*else if ( url == "/user/settings/"){
+            retcp = "user_settings";
+        }*/
+        else if ( url.indexOf("/profile/user/") > -1){
             retcp = "profile_user";
-        } else if ( url.indexOf("/profile/circle/") > -1){
+        }
+        else if ( url.indexOf("/profile/circle/") > -1){
             retcp = "profile_circle";
         } else {
             retcp = 'home';
@@ -800,6 +874,8 @@ app.factory('ChapterVerses', function ($resource) {
             $scope.access_token = responseData.token;
             $scope.user = responseData.user;
             $scope.loggedIn = true;
+
+            console.log("access_token::", $scope.access_token);
 
             $scope.$broadcast('login', responseData);
             $scope.$broadcast('userInfoReady');

@@ -1,11 +1,11 @@
 <div class="modal modal-fullscreen" ng-controller="VerseListController">
     <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced">
         <ion-nav-buttons side="left">
-            <button class="button button-icon icon ion-arrow-left-b" ng-click="closeModal('verselist_selection')">Geri</button>
+            <button class="button button-icon icon ion-arrow-left-b" ng-click="closeModal('verselist_selection')" translate>Geri</button>
         </ion-nav-buttons>
-        <ion-nav-title>Listeye Ekle</ion-nav-title>
+        <ion-nav-title>{{'Listeye Ekle' | translate}}</ion-nav-title>
         <ion-nav-buttons side="right">
-            <button class="button button-icon icon ion-checkmark" ng-click="addVerseToVerseLists(localVerseListSelection)">Tamam</button>
+            <button class="button button-icon icon ion-checkmark" ng-click="addVerseToVerseLists(localVerseListSelection)" translate>Tamam</button>
         </ion-nav-buttons>
     </ion-nav-bar>
     <ion-content overflow-scroll="true" delegate-handle="content"  class="scroll_content" style="margin-top:30px;">
@@ -15,7 +15,7 @@
             <div class="bar bar-header item-input-inset">
                 <label class="item-input-wrapper">
                     <i class="icon ion-ios-search placeholder-icon"></i>
-                    <input ng-model="newVerseList.name" type="search" placeholder="Ara / Yeni Liste"
+                    <input ng-model="newVerseList.name" type="search" placeholder="{{'Ara / Yeni Liste' | translate}}"
                            ng-change="filterVerseLists(newVerseList.name);"/>
                 </label>
                 <button ng-click="addVerseList(newVerseList.name)" class="button ion-plus"></button>

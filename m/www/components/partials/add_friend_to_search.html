@@ -1,9 +1,9 @@
 <div class="modal modal-fullscreen">
     <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced" align-title="center">
-        <ion-nav-title>Kişi Ara</ion-nav-title>
+        <ion-nav-title>{{'Kişi Ara' | translate}}</ion-nav-title>
         <ion-nav-buttons side="left">
             <button class="button button-icon icon-left ion-arrow-left-b" ng-click="closeModal('friendsearch')"
-                    style="float: left"> Vazgeç
+                    style="float: left"> {{'Vazgeç' | translate}}
             </button>
 
         </ion-nav-buttons>
@@ -18,7 +18,7 @@
         <div class="bar bar-header item-input-inset">
             <label class="item-input-wrapper">
                 <i class="icon ion-ios-search placeholder-icon"></i>
-                <input id="mobil_peoples" ng-model="peoplesearch" type="search" placeholder="Kişi Arama"
+                <input id="mobil_peoples" ng-model="peoplesearch" type="search" placeholder="{{'Kişi Arama' | translate}}"
                        ng-change="peoplelist(peoplesearch);scrollToTop()"/>
             </label>
             <button ng-click="clearfriendsearch()" class="button button-clear">X</button>

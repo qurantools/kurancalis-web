@@ -5,7 +5,7 @@
             <ion-nav-buttons side="left">
                 <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
             </ion-nav-buttons>
-            <ion-nav-title>Haber Kaynağı</ion-nav-title>
+            <ion-nav-title>{{'Haber Kaynağı' | translate}}</ion-nav-title>
             <ion-nav-buttons side="right">
                 <a href ng-click="openVerseHistory()" class="button button-icon icon fa fa-history" ng-if="user!=null"></a>
                 <a class="button button-icon icon ion-ios-people" href="#/people/home/"></a>
@@ -18,28 +18,26 @@
                          style="margin-top:66px;">
                 <ion-list>
                     <div class="item item-divider" style="">
-                        Öneriler - Kimleri eklemeli
-                        <button class="button button-light button-small" style="float: right" ng-click="navigateTo('/people/find_people/')" >Daha Fazla</button>
+                        {{'Öneriler - Kimleri eklemeli' | translate}}
+                        <button class="button button-light button-small" style="float: right" ng-click="navigateTo('/people/find_people/')" translate>Daha Fazla</button>
                     </div>
                     <ion-item ng-repeat="recommendedUser in recommendations" class="item-icon-right" style="min-height: 40px; padding-top: 2px; padding-bottom: 2px; vertical-align: middle" item-height="10" ng-style="{'height': '10px'}" >
 
                         <img style="max-height: 30px; max-width: 30px" ng-src="{{recommendedUser.photo}}" ng-click="navigateTo('/profile/user/{{recommendedUser.id}}')">
                         <a  href="" ng-click="navigateTo('/profile/user/{{recommendedUser.username}}/')" style="color: darkblue;text-decoration: none;">{{recommendedUser.name  | limitTo: 20}}</a>
 
-                        <button class="button button-positive button-small" style="float: right" ng-click="addRecommendationToCircle(recommendedUser.id)">Çevreye Ekle</button>
+                        <button class="button button-positive button-small" style="float: right" ng-click="addRecommendationToCircle(recommendedUser.id)" translate>Çevreye Ekle</button>
                         <i class="icon ion-close" ng-click="hideRecommendation(recommendedUser.id)"></i>
                     </ion-item>
                 </ion-list>
                 <hr>
                 <div class="item item-input item-select" style="margin-top: 5px;border-width: 1px;border-style: solid;font-size: larger">
-                    <div class="input-label">
-                        Çalışma Sahipleri
-                    </div>
+                    <div class="input-label" translate>Çalışma Sahipleri</div>
                     <select ng-model="circleListForTimeline"
                             ng-options="circle.id as circle.name for circle in extendedCirclesForSearch"
                             ng-change="profileCircleChanged(circleListForTimeline)"
                             class="form-control">
-                        <option style="display:none" value="">Çevre Seçiniz</option>
+                        <option style="display:none" value="" translate>Çevre Seçiniz</option>
                     </select>
                 </div>
                 <div ng-repeat="feed in feeds" item="item" class="item-remove-animate" style="width: 100%;display: table;font-size: 10px;">
@@ -100,7 +98,7 @@
                                     <i class="fa fa-pie-chart"></i> {{(feed.voteRates.dislike + feed.voteRates.like)}} Oy
                                 </span>
                                 <span ng-click="navigateTo('/annotation/display/{{feed.id}}/')" style="margin-right: 10px;" class="make_comment">
-                                    <i class="fa fa-comment"></i> {{feed.commentCount}} Yorum
+                                    <i class="fa fa-comment"></i> {{feed.commentCount}} {{'Yorum' | translate}}
                                 </span>
                             </div>
                         </div>
@@ -132,7 +130,7 @@
                             </div>
                             <div style="padding-left:10px;white-space: pre-line;margin-top: 25px;">
                                 <span ng-bind-html="feed.brief | to_trusted | limitTo:400" style="line-height: 1;white-space: pre-wrap; font-size: 10pt"></span>
-                                <a href="" ng-click="navigateTo('/inference/display/{{feed.id}}')" style="color: blue; font-size: 10pt">devamını oku...</a>
+                                <a href="" ng-click="navigateTo('/inference/display/{{feed.id}}')" style="color: blue; font-size: 10pt" translate>devamını oku...</a>
                             </div>
                             <div class="row">
                                 <div class="col">
@@ -161,7 +159,7 @@
                                     <i class="fa fa-pie-chart"></i> {{(feed.voteRates.dislike + feed.voteRates.like)}} Oy
                                 </span>
                                 <span ng-click="navigateTo('/inference/display/{{feed.id}}/')" style="margin-right: 10px;" class="make_comment">
-                                    <i class="fa fa-comment"></i> {{feed.commentCount}} Yorum
+                                    <i class="fa fa-comment"></i> {{feed.commentCount}} {{'Yorum' | translate}}
                                 </span>
                             </div>
                         </div>

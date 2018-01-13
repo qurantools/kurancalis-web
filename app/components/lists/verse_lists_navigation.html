@@ -4,15 +4,15 @@
             <div class="row" style="padding-left: 15px;">
                 <div style="float: left;">
                     <button onclick="toggleLeftPanel()" class="btn btn-primary"><i
-                            class="fa fa-bars"></i> MENÜ
+                            class="fa fa-bars"></i> {{'MENÜ' | translate}}
                     </button>
                 </div>
 
                 <div style="float: right;margin-right: 20px;">
-                        <a class="btn btn-primary" ng-click="openBulkInsertVerseModal()" ng-disabled="localVerseListSelection.length == 0"><i class="fa fa-plus-square-o" aria-hidden="true"></i><i class="fa fa-plus-square-o" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Listeye Toplu Ayet Ekle</a>
+                        <a class="btn btn-primary" ng-click="openBulkInsertVerseModal()" ng-disabled="localVerseListSelection.length == 0"><i class="fa fa-plus-square-o" aria-hidden="true"></i><i class="fa fa-plus-square-o" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;{{'Listeye Toplu Ayet Ekle' | translate}}</a>
                         <!--a class="btn btn-primary fa fa-bookmark" ng-click="openBulkInsertTagsModal()" ng-disabled="localVerseListSelection.length == 0">&nbsp;&nbsp;&nbsp;Listedeki Ayetleri Etiketle</a-->
-                        <a href class="btn btn-primary" ng-click='showVerseDetail(1001)' data-target='#detailedVerseModal' data-toggle='modal'><i class="fa fa-eye"></i> Ayet İnceleme</a>
-                        <a href class="btn btn-primary" ng-click="openNewVerseListModal()"><i class="fa fa-plus"> </i>  Yeni Liste</a>
+                        <a href class="btn btn-primary" ng-click='showVerseDetail(1001)' data-target='#detailedVerseModal' data-toggle='modal'><i class="fa fa-eye"></i> {{'Ayet İnceleme' | translate}}</a>
+                        <a href class="btn btn-primary" ng-click="openNewVerseListModal()"><i class="fa fa-plus"> </i>  {{'Yeni Liste' | translate}}</a>
                 </div>
             </div>
         </form>

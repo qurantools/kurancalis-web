@@ -2,7 +2,7 @@
     <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced" align-title="center">
         <ion-nav-buttons side="left">
             <button class="button button-icon icon-left ion-ios-arrow-back"
-                    ng-click="closeModal('comment_modal')"> Vazgeç
+                    ng-click="closeModal('comment_modal')"> {{'Vazgeç' | translate}}
             </button>
         </ion-nav-buttons>
         <ion-nav-title> </ion-nav-title>
@@ -10,22 +10,22 @@
             <button class="button button-icon icon-left ion-checkmark"
                     ng-if="!isForUpdate"
                     ng-click="createComment(resource, resource_type, resource_id, 'comment_area_annotation_for_mobile', parent_id, parent_index);
-                    closeModal('comment_modal');">Tamam
+                    closeModal('comment_modal');">{{'Tamam' | translate}}
             </button>
             <button class="button button-icon icon-left ion-checkmark"
                     ng-if="isForUpdate"
                     ng-click="updateComment(source, resource_type, resource_id, comment_id, 'comment_area_annotation_for_mobile', comment_index);
-                    closeModal('comment_modal');">Tamam
+                    closeModal('comment_modal');">{{'Tamam' | translate}}
             </button>
         </ion-nav-buttons>
     </ion-nav-bar>
     <ion-content style="padding: 10px;" id="comment_area_annotation" overflow-scroll="false">
         <div style="height: 60px"></div>
         <label ng-if="isForUpdate" class="item item-input">
-            <textarea id="comment_area_annotation_for_mobile_update" ng-model="commentContentUpdate.value" placeholder="Yorum Yaz" style="height:100px;font-size:16px;"></textarea>
+            <textarea id="comment_area_annotation_for_mobile_update" ng-model="commentContentUpdate.value" placeholder="{{'Yorum Yaz' | translate}}" style="height:100px;font-size:16px;"></textarea>
         </label>
         <label ng-if="!isForUpdate" class="item item-input">
-            <textarea id="comment_area_annotation_for_mobile" ng-model="commentContent.value" placeholder="Yorum Yaz" style="height:100px;font-size:16px;"></textarea>
+            <textarea id="comment_area_annotation_for_mobile" ng-model="commentContent.value" placeholder="{{'Yorum Yaz' | translate}}" style="height:100px;font-size:16px;"></textarea>
         </label>
 
     </ion-content>

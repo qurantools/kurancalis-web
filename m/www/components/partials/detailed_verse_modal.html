@@ -6,7 +6,7 @@
                     style="float: left"/>
             <button class="button button-icon icon ion-plus" onclick="detailedAnnotator.checkForStartSelection({ pageX : 300, pageY: 300});detailedAnnotator.checkForEndSelection({ pageX : 300, pageY: 300});"></button>
         </ion-nav-buttons>
-        <ion-nav-title>Ayet inceleme</ion-nav-title>
+        <ion-nav-title>{{'Ayet inceleme' | translate}}</ion-nav-title>
         <ion-nav-buttons data-tap-disabled="true" side="right">
             <a href ng-click="openVerseHistory()" class="button button-icon icon fa fa-history" ng-if="user!=null"></a>
             <button data-tap-disabled="true" class="button button-icon button-clear ion-more" ng-click="openFooterMenu()"/>
@@ -50,7 +50,7 @@
                 <div class="col-xs-12 col-sm-9" ng-click="openModal('tagged_verse_detailed_search');">
                     <div class="list">
                         <div class="item item-divider">
-                            Not Sahipleri
+                            {{'Not Sahipleri' | translate}}
                         </div>
                         <div class="item">
                             <div class="row">
@@ -59,7 +59,7 @@
                                     <div class="wordwrap" style="color: #28a54c;" align="left">{{taggedValues(detailedVerseUsers)}}</div>
                                 </div>
                                 <div class="col-sm-3">
-                                    <button class="button button-positive" style="float: right">Düzenle</button>
+                                    <button class="button button-positive" style="float: right" translate>Düzenle</button>
                                 </div>
                             </div>
                         </div>
@@ -67,7 +67,7 @@
                 </div>
                 <!-- tags-->
                 <div class="well translations col-xs-12" id="verseTags_{{verse.id}}" ng-show="detailedTags.length > 0">
-                    <div style="font-size: 20px"><b>Etiketler</b></div>
+                    <div style="font-size: 20px"><b translate>Etiketler</b></div>
                     <div class="list" style="margin-top: 10px; ">
                         <a class="item item-icon-right" style="font-weight: bold" href=""
                            ng-click="goToVerseTag(0, verse.id,verseTag, detailedVerseUsers, detailedVerseCircles)"
@@ -78,12 +78,12 @@
                     </div>
                 </div>
                 <div ng-show="internet_display_show && internet_display_style['background-color'] == 'orange'">
-                    <div style="font-size: 20px"><b>Etiketler</b></div>
-                    <div>İnternet olmadığı için görüntülenemiyor.</div>
+                    <div style="font-size: 20px"><b translate>Etiketler</b></div>
+                    <div translate>İnternet olmadığı için görüntülenemiyor.</div>
                 </div>
                 <!-- annotations-->
                 <div ng-show="detailedAnnotations.length > 0" style="margin-top: 5px;">
-                    <div style="font-size: 20px"><i class='fa' style='font-size: 1.3em;margin-right: 10px;'></i><br><b>Ayet Notları</b></div>
+                    <div style="font-size: 20px"><i class='fa' style='font-size: 1.3em;margin-right: 10px;'></i><br><b translate>Ayet Notları</b></div>
                     <div class="card" ng-repeat="annotation in detailedAnnotations" style="margin-left: 3px;margin-right: 0px;">
                         <div class="item item-divider">
                             <div style="float:right;margin-right: 30px;">{{annotation.userName | limitTo: 25}}</div>
@@ -125,13 +125,13 @@
                     </div>
                 </div>
                 <div ng-show="internet_display_show && internet_display_style['background-color'] == 'orange'" style="margin-top: 5px;">
-                    <div style="font-size: 20px"><i class='fa' style='font-size: 1.3em;margin-right: 10px;'></i><br><b>Ayet Notları</b></div>
-                    <div>İnternet olmadığı için görüntülenemiyor.</div>
+                    <div style="font-size: 20px"><i class='fa' style='font-size: 1.3em;margin-right: 10px;'></i><br><b translate>Ayet Notları</b></div>
+                    <div translate>İnternet olmadığı için görüntülenemiyor.</div>
                 </div>
                 <!-- inferences-->
                 <div ng-show="inferences.length > 0" style="margin-top: 5px;">
                     <div style="font-size: 20px">
-                        <b>Çıkarım Notları</b>
+                        <b translate>Çıkarım Notları</b>
                     </div>
                     <ion-list style="margin-bottom:45px;">
                         <ion-item ng-repeat="inference in inferences">
@@ -151,7 +151,7 @@
                             </div>
                             <div style="padding-left:10px;">
                                 <span ng-bind-html="inference.brief | to_trusted | limitTo:400" style="line-height: 1;white-space: pre-wrap; font-size: 10pt"></span>
-                                <a href ng-click="gotoInference({{inference.id}});closeModal('detailed_verse_modal');">devamını oku...</a>
+                                <a href ng-click="gotoInference({{inference.id}});closeModal('detailed_verse_modal');" translate>devamını oku...</a>
                             </div>
                             <div class="row">
                                 <div class="col">
@@ -182,9 +182,9 @@
                 </div>
                 <div ng-show="internet_display_show && internet_display_style['background-color'] == 'orange'" style="margin-top: 5px;">
                     <div style="font-size: 20px">
-                        <b>Çıkarım Notları</b>
+                        <b translate>Çıkarım Notları</b>
                     </div>
-                    <div>İnternet olmadığı için görüntülenemiyor.</div>
+                    <div translate>İnternet olmadığı için görüntülenemiyor.</div>
                 </div>
             </div>
         </div>

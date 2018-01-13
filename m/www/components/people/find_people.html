@@ -2,9 +2,9 @@
     <ion-side-menu-content drag-content="false">
         <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced" align-title="center">
             <ion-nav-buttons side="left">
-                <button class="button button-icon icon ion-arrow-left-b" ng-click="navigateTo('/people/home/')">Kişiler</button>
+                <button class="button button-icon icon ion-arrow-left-b" ng-click="navigateTo('/people/home/')" translate>Kişiler</button>
             </ion-nav-buttons>
-            <ion-nav-title>Kişi Önerileri</ion-nav-title>
+            <ion-nav-title>{{'Kişi Önerileri' | translate}}</ion-nav-title>
         </ion-nav-bar>
         <ion-nav-view name="appContent"></ion-nav-view>
         <!-- end of side menu part 1 -->
@@ -12,9 +12,7 @@
             <ion-content overflow-scroll="true" delegate-handle="content" class="scroll_content"
                          style="margin-top:80px;">
                 <ion-list>
-                    <div class="item item-divider">
-                        Çok Çalışanlar
-                    </div>
+                    <div class="item item-divider" translate>Çok Çalışanlar</div>
                     <ion-item ng-repeat="item in recommendations" item="item item-avatar" class="item-icon-right" style="padding: 5px 0px 5px 5px;">
                     <div class="row" style="align-items: center;">
                         <div id="{{item.fbId}}" style="width: 10px;border-width: 0;margin-right: 40px;">
@@ -27,9 +25,7 @@
                         <i class="icon ion-close" ng-click="hideRecommendation(item.id)"></i>
                     </div>
                     </ion-item>
-                    <div class="item item-divider">
-                        Facebook Arkadaşlarım
-                    </div>
+                    <div class="item item-divider" translate>Facebook Arkadaşlarım</div>
                     <ion-item ng-repeat="item in fb_friends" item="item item-avatar" style="padding: 5px 0px 5px 5px;">
                         <div class="row" style="align-items: center;">
                             <div id="{{item.fbId}}" style="width: 10px;border-width: 0;margin-right: 40px;">
@@ -48,7 +44,7 @@
             <div class="button-bar">
                 <button class="footer-bar-item item-left button button-positive" ng-click="openModal('circle_selection')"
                         style="font-size: 20px; !important;white-space: normal;" ng-disabled="visible_hidden">
-                    Çevreye Ekle
+                    {{'Çevreye Ekle' | translate}}
                 </button>
             </div>
         </ion-footer-bar>

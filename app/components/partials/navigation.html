@@ -4,7 +4,7 @@
             <div class="row" style="padding-left: 15px;">
                 <div style="float: left;">
                     <button onclick="toggleLeftPanel()" class="btn btn-primary"><i
-                            class="fa fa-bars"></i> MENÜ
+                            class="fa fa-bars"></i> {{'MENÜ' | translate}}
                     </button>
                 </div>
                 <div style="float: left">
@@ -14,17 +14,17 @@
                                style="width: 150px;"
                                ng-enter=""
                             >
-                        <ui-select-match placeholder="Sure">{{$select.selected.id}}: {{$select.selected.nameTr}}
+                        <ui-select-match placeholder="{{'Sure' | translate}}">{{$select.selected.id}}: {{$select.selected.nameTr}}
                         </ui-select-match>
                         <ui-select-choices
                                 repeat="chapter in chapters | selectionFilter: {id: $select.search,nameTr: $select.search,nameTr2: $select.search}">
-                            {{chapter.id}}: {{chapter.nameTr}} / {{chapter.nameTr2}}
+                            {{chapter.id}}: {{chapter.nameTr}} / {{chapter.nameTr2 | translate}}
                         </ui-select-choices>
                     </ui-select>
                 </div>
                 <div style="float: left" data-placement="bottom">
                     <input type="text" ng-model="goToVerseParameters.verse" size="3" ng-enter="verseNumberValidation()"
-                           placeholder="Ayet" class="form-control"/>
+                           placeholder="{{'Ayet' | translate}}" class="form-control"/>
                 </div>
                 <div style="float: left">
                     <input type="hidden" ng-model="goToVerseParameters.chapter"/>
@@ -46,26 +46,26 @@
                         <hr style='padding: 0; margin-top:0 !important; margin-bottom:0 !important; height:1px; width:100%' />
                         <a href><div style='width:100%; height: 40px; padding-top:8px;' ng-click='searchBookMarkModal()' data-target='#navbookmark' data-toggle='modal'><i class='fa fa-bookmark' style='font-size: 1.3em'></i>&nbsp;&nbsp;Ayraçlar (Kaldığım Yer)</div></a>
                         </div>"
-                       data-html="true">Araçlar</a>
+                       data-html="true" translate>Araçlar</a>
                     
-                    <a ng-if="user==null && currentPage!='annotations'" class="btn btn-primary" style='height:40px; padding-top:8px' data-target='#myModal' data-toggle='modal' type='button'> <i class='fa fa-user' style='font-size: 1.3em'></i>&nbsp;&nbsp;Meal Seçimi </a>
+                    <a ng-if="user==null && currentPage!='annotations'" class="btn btn-primary" style='height:40px; padding-top:8px' data-target='#myModal' data-toggle='modal' type='button'> <i class='fa fa-user' style='font-size: 1.3em'></i>&nbsp;&nbsp;{{'Meal Seçimi' | translate}} </a>
                     
 
                     <!--Volkan Ekledi-->
 
                     <div class="btn-group" ng-class='{open: open}' ng-if="user!=null && currentPage=='home'">
                         <button style="background-color:#1abc9c; color:White; height:42px" class="btn"
-                                ng-click='open=!open'>{{query_circle_dropdown.name}}
+                                ng-click='open=!open'>{{query_circle_dropdown.name | translate}}
                         </button>
                         <button style="background-color:#1abc9c; height:42px" class="btn dropdown-toggle"
                                 data-toggle="dropdown" ng-click='open=!open'><span class="caret"></span></button>
                         <ul class="dropdown-menu">
                             <li style="color:White" ng-repeat="item in circleDropdownArray" ><a
                                     style="color:White;" class="btn btn-primary"
-                                    ng-click='selectDropdownCircle({{circleDropdownArray[$index]}})'>{{circleDropdownArray[$index].name}}</a>
+                                    ng-click='selectDropdownCircle({{circleDropdownArray[$index]}})'>{{circleDropdownArray[$index].name | translate}}</a>
                             </li>
                             <li><a style="color:White;" class="btn btn-primary" data-target="#homearama"
-                                   data-toggle="modal">DETAYLI ARAMA</a></li>
+                                   data-toggle="modal" translate>DETAYLI ARAMA</a></li>
                         </ul>
                     </div>
 
@@ -79,21 +79,19 @@
                             ng-if="currentPage=='annotations'"
                             ng-change="allAnnotationsOrderByChanged(allAnnotationsOrderBy)"
                             >
-                        <option value="verse">Ayet</option>
-                        <option value="time">Zaman</option>
+                        <option value="verse" translate>Ayet</option>
+                        <option value="time" translate>Zaman</option>
                     </select>
                 </div>
 
                 <div ng-show="facebookIsReady" class="facebook_area">
                     <div ng-if="user==null">
-                        <button type="button" id="login" ng-click="login()" class="btn btn-primary">
-                            <b>Birlikte</b> dosdoğru yolu bulmak için > <img src="assets/img/fb.png" width="25" height="25"> Giriş
-                        </button>
+                        <button type="button" id="login" ng-click="login()" class="btn btn-primary" translate="DOGRU_YOL_MESAJI"></button>
                     </div>
                     <div ng-if="user!=null">
                         <button class="btn btn-primary" ng-if="currentPage=='home'" data-target="#verseHistoryModal" data-toggle="modal" ng-click="openVerseHistory()"><i class="fa fa-history" style="font-size: 1.3em"></i></button>
                         <button id="openbtn" onclick="togglePanel()" class="btn btn-primary" ng-if="currentPage=='home'" ><i
-                                class="fa fa-edit" style="font-size: 1.3em"></i> Sayfadaki Notlar
+                                class="fa fa-edit" style="font-size: 1.3em"></i> {{'Sayfadaki Notlar' | translate}}
                         </button>
                         <a href="#/profile/user/{{user.id}}"><img ng-src="{{user.photo}}" height="40"/></a>
                         <!--<span style="vertical-align: bottom;">{{user.name}}</span>-->

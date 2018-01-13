@@ -1,11 +1,11 @@
 ﻿<div class="modal modal-fullscreen">
     <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced">
-        <ion-nav-title>Filtre Seçenekleri</ion-nav-title>
+        <ion-nav-title>{{'Filtre Seçenekleri' | translate}}</ion-nav-title>
         <ion-nav-buttons side="left">
             <button class="button button-icon icon-left ion-arrow-left-b"
                     ng-click="closeModal('all_inferences_filter')"
                     style="float: left">
-                Geri
+                {{'Geri' | translate}}
             </button>
         </ion-nav-buttons>
         <ion-nav-buttons side="right">
@@ -20,13 +20,11 @@
         <div>
             <label class="item item-input">
                 <input type="text" ng-model="allInferencesOpts.keyword" size="15"
-                       placeholder="Not içeriğinde aranacak kelime" />
+                       placeholder="{{'Not içeriğinde aranacak kelime' | translate}}" />
             </label>
         </div>
-        <ion-toggle ng-model="allInferencesOpts.own_inferences" ng-checked="allInferencesOpts.own_inferences">Benim notlarımı göster</ion-toggle>
-        <div class="item item-divider">
-            Etiketler
-        </div>
+        <ion-toggle ng-model="allInferencesOpts.own_inferences" ng-checked="allInferencesOpts.own_inferences">{{'Benim notlarımı göster' | translate}}</ion-toggle>
+        <div class="item item-divider" translate>Etiketler</div>
         <div>
             <ion-list show-delete=true>
                 <ion-item ng-repeat="item in filterTags">
@@ -37,12 +35,8 @@
                 </ion-item>
             </ion-list>
         </div>
-        <button class="button button-block button-positive" ng-click="openModal('addtagtosearch');">
-            Etiket Ekle
-        </button>
-        <div class="item item-divider">
-            Çevrelerin Notları
-        </div>
+        <button class="button button-block button-positive" ng-click="openModal('addtagtosearch');" translate>Etiket Ekle</button>
+        <div class="item item-divider" translate>Çevrelerin Notları</div>
         <div class="list">
             <ion-checkbox ng-repeat="item in mobileAllInferencesSearchCircleListForSelection"
                           ng-model="mobileAllInferencesSearchCircleListForSelection[$index].selected"
@@ -50,9 +44,7 @@
                 {{item.name}}
             </ion-checkbox>
         </div>
-        <div class="item item-divider">
-            Kişilerin Notları
-        </div>
+        <div class="item item-divider" translate>Kişilerin Notları</div>
         <ion-list show-delete=true>
             <ion-item ng-repeat="item in usersForSearch">
                 <ion-delete-button class="ion-minus-circled"
@@ -62,9 +54,7 @@
             </ion-item>
         </ion-list>
 
-        <button class="button button-block button-positive" ng-click="openModal('addUserToAllInferencesSearch');">
-            Kişi Ekle
-        </button>
+        <button class="button button-block button-positive" ng-click="openModal('addUserToAllInferencesSearch');" translate>Kişi Ekle</button>
         <!-- yazar seçimi iptal
                 <ul class="list">
                     <li class="item item-checkbox" ng-repeat="author in authors">

@@ -7,21 +7,21 @@
     <div class="dialog dialog-warning" style="padding:0 20px 10px 20px"
          ng-if="allAnnotationsOpts.keyword ||filterTags.length >0|| annotationSearchAuthorSelection.length>0 ">
         <div class="container" style="text-align: left;">
-            <div ng-if="allAnnotationsOpts.keyword"><strong>Kelime:</strong> {{allAnnotationsOpts.keyword}}</div>
-            <div ng-if="filterTags.length>0"><strong>Etiket:</strong>
+            <div ng-if="allAnnotationsOpts.keyword"><strong translate>Kelime:</strong> {{allAnnotationsOpts.keyword}}</div>
+            <div ng-if="filterTags.length>0"><strong translate>Etiket:</strong>
                 <div ng-repeat="filterTag in filterTags" class="tag label label-info s_a_tag">{{filterTag.name}}</div>
             </div>
 
-            <div ng-if="usersForSearch.length>0"><strong>Kişiler:</strong>
+            <div ng-if="usersForSearch.length>0"><strong translate>Kişiler:</strong>
                 <div ng-repeat="kisi in usersForSearch" class="tag label label-info s_a_tag">{{kisi.name}}</div>
             </div>
 
-            <div ng-if="circlesForSearch.length>0"><strong>Çevreler:</strong>
+            <div ng-if="circlesForSearch.length>0"><strong translate>Çevreler:</strong>
                 <div ng-repeat="cevre in circlesForSearch" class="tag label label-info s_a_tag">{{cevre.name}}</div>
             </div>
 
             <div ng-if="annotationSearchAuthorSelection.length>0">
-                <div style="float:left;"><strong>Yazar:</strong></div>
+                <div style="float:left;"><strong translate>Yazar:</strong></div>
                 <div ng-repeat="authorSearch in annotationSearchAuthorSelection" style="float: left">
                     <span ng-repeat="author in authors" ng-if="author.id==authorSearch"
                           style="float: left; padding-left:5px">
@@ -70,7 +70,7 @@
                 <div style="float: left"> <span ng-bind-html="annotation.updated | time_in_string | to_trusted"></span></div>
                 <div style="float: right">
                     <span ng-click="addToStorageForFocus2Comment();navigateTo('/annotation/display/{{annotation.id}}/')" style="margin-right: 10px;" class="make_comment">
-                        <span style="color: #00f;margin-right: 10px;">Yorum Yaz</span><i class="fa fa-comment"></i> {{annotation.commentCount}}
+                        <span style="color: #00f;margin-right: 10px;" translate>Yorum Yaz</span><i class="fa fa-comment"></i> {{annotation.commentCount}}
                     </span>
                     <span ng-class="{'voted-like': (annotation.vote != null && annotation.vote.content == 1), 'unvoted' : !(annotation.vote != null && annotation.vote.content == 1)}"
                           ng-click="doVote(annotation,'annotations', 1)">
@@ -83,7 +83,7 @@
                     <button type="button" class="btn btn-primary btn-xs"
                             ng-disabled="(annotation.voteRates.dislike + annotation.voteRates.like) == 0"
                             ng-click="showVoteResults(annotation, 'annotations')">
-                        Değerlendirenler
+                        {{'Değerlendirenler' | translate}}
                     </button>
                     <button type="button" class="btn btn-primary btn-xs" ng-click="showEditor(annotation)"
                             ng-if="annotation.userId==user.id"><i
@@ -99,7 +99,7 @@
 
     </div>
     <div style="text-align: center; padding-top:10px;" ng-if="allAnnotationsOpts.hasMore==true">
-        <button ng-click="get_all_annotations()" class="btn btn-info btn-hg">Daha fazla</button>
+        <button ng-click="get_all_annotations()" class="btn btn-info btn-hg" translate>Daha fazla</button>
     </div>
 
     <div ng-include="'app/components/partials/authors_modal.html'"></div>
@@ -111,15 +111,14 @@
                 <div class="modal-header">
                     <button type="button" data-dismiss="modal" aria-hidden="true" style="float:right;"><i
                             class="fa fa-close"></i></button>
-                    <h4 class="modal-title">Filtre seçenekleri</h4>
+                    <h4 class="modal-title" translate>Filtre seçenekleri</h4>
                 </div>
 
                 <div class="modal-body">
                     <table style="width: 700px">
                         <tr>
                             <td style="width: 260px;">
-                                <strong>
-                                    Yazarlar</strong><br/> <br/>
+                                <strong translate>Yazarlar</strong><br/> <br/>
 
                                 <div>
                                     <ul class="selectable_list">
@@ -144,28 +143,22 @@
                                                ng-if="allAnnotationsOpts.own_annotations == false || allAnnotationsOpts.own_annotations == 'false'"
                                                ng-click="toggleAnnotationSearchOwnAnnotations();"></i>
                                         </td>
-                                        <td align="left" style="width:100%; padding-left: 15px;"> Benim notlarımı
-                                            göster
-                                        </td>
+                                        <td align="left" style="width:100%; padding-left: 15px;" translate>Benim notlarımı göster</td>
                                     </table>
                                 </div>
                                 <div>
                                     <input type="text" ng-model="allAnnotationsOpts.keyword" size="12"
-                                           class="form-control" placeholder="Aranacak kelime"/>
+                                           class="form-control" placeholder="{{'Aranacak kelime' | translate}}"/>
                                 </div>
                                 <br/>
                                 <table style="width: 100%">
                                     <tr>
-                                        <td align="left" style="width: 30px">
-                                            Sure
-                                        </td>
+                                        <td align="left" style="width: 30px" translate>Sure</td>
                                         <td align="left" style="width: 120px">
                                             <input style="width:60px" type="text" ng-model="sureler" size="12"
                                                    class="form-control"/>
                                         </td>
-                                        <td align="left" style="width: 30px">
-                                            Ayet
-                                        </td>
+                                        <td align="left" style="width: 30px" translate>Ayet</td>
                                         <td align="left" style="width: 120px">
                                             <input style="width:60px" type="text" ng-model="ayetler" size="12"
                                                    class="form-control"/>
@@ -174,8 +167,8 @@
                                 </table>
                                 <br/>
                                 <div>
-                                    Etikete sahip olan notlar
-                                    <tags-input ng-model="filterTags" display-property="name" placeholder="Etiket girin"
+                                    {{'Etikete sahip olan notlar' | translate}}
+                                    <tags-input ng-model="filterTags" display-property="name" placeholder="{{'Etiket girin' | translate}}"
                                                 replace-spaces-with-dashes="false"
                                                 min-length="2">
                                         <auto-complete source="loadTags($query)" min-length="2"
@@ -184,15 +177,15 @@
                                 </div>
 
                                 <br/>
-                                Kişilere ait olan notlar
-                                <tags-input ng-model="usersForSearch" placeholder="Kişi Seçiniz" display-property="name"
+                                {{'Kişilere ait olan notlar' | translate}}
+                                <tags-input ng-model="usersForSearch" placeholder="{{'Kişi Seçiniz' | translate}}" display-property="name"
                                             replace-spaces-with-dashes="false" min-length="2">
                                     <auto-complete source="kisilistele($query)" min-length="2"></auto-complete>
                                 </tags-input>
 
                                 <br/>
-                                Çevremdeki kişilere ait olan notlar
-                                <tags-input ng-model="circlesForSearch" placeholder="Çevre Seçiniz"
+                                {{'Çevremdeki kişilere ait olan notlar' | translate}}
+                                <tags-input ng-model="circlesForSearch" placeholder="{{'Çevre Seçiniz' | translate}}"
                                             display-property="name" replace-spaces-with-dashes="false" min-length="1"
                                             add-from-autocomplete-only="true" add-on-blur="false">
                                     <auto-complete source="cevrelisteleForSearch()" load-on-empty="true"
@@ -205,7 +198,7 @@
                 </div>
                 <div class="modal-footer">
                     <a href="#" class="btn btn-primary btn-wide" data-dismiss="modal"
-                       ng-click="search_all_annotations()">Tamam</a>
+                       ng-click="search_all_annotations()" translate>Tamam</a>
                 </div>
             </div>
         </div>

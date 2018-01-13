@@ -19,17 +19,17 @@
                 </div>
                 <div class="row">
                     <button class="btn btn-info" href ng-click="tutorial('previous')" style="float:left;"><i
-                            class="fa fa-chevron-left"></i> Geri
+                            class="fa fa-chevron-left"></i> {{'Geri' | translate}}
                     </button>
                     <ol class="carousel-indicators">
                         <li ng-repeat="n in [0, 1, 2] track by $index" data-target="#tutorialCarousel"
                             ng-class="($index==tutorialCarouselActive) ? 'active' : ''"></li>
                     </ol>
                     <button class="btn btn-info" ng-click="tutorial('next')" ng-if="tutorialCarouselActive<2"
-                            style="float:right;">İleri <i
+                            style="float:right;">{{'İleri' | translate}} <i
                             class="fa fa-chevron-right"></i></button>
                     <button class="btn" ng-click="tutorial('close')" ng-if="tutorialCarouselActive==2"
-                            data-dismiss="modal" style="float: right">Kapat <i class="fa fa-close"></i></button>
+                            data-dismiss="modal" style="float: right">{{'Kapat' | translate}} <i class="fa fa-close"></i></button>
                 </div>
             </div>
         </div>

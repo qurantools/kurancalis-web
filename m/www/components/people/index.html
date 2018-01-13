@@ -5,7 +5,7 @@
             <ion-nav-buttons side="left">
                 <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
             </ion-nav-buttons>
-            <ion-nav-title>Kişiler</ion-nav-title>
+            <ion-nav-title>{{'Kişiler' | translate}}</ion-nav-title>
         </ion-nav-bar>
         <ion-nav-buttons side="left">
             <button class="button button-icon icon ion-navicon" menu-toggle="left"></button>
@@ -16,25 +16,15 @@
             <ion-content overflow-scroll="true" delegate-handle="content"  class="scroll_content"
                          style="margin-top:30px; padding-left: 15px; padding-right: 15px">
                 <div style="height: 60px;">&nbsp;</div>
-                <a class="button button-block button-positive" href="#/people/circles/">
-                    Çevrelerim
-                </a>
-                <a class="button button-block button-positive" href="#/people/people_have_you/">
-                    Takipçilerim
-                </a>
+                <a class="button button-block button-positive" href="#/people/circles/" translate>Çevrelerim</a>
+                <a class="button button-block button-positive" href="#/people/people_have_you/" translate>Takipçilerim</a>
                     <div class="well col-xs-12" style="margin-top: 10px;background-color: #eee;padding-left: 10px; padding-right: 10px" >
                         <div class="item" style="text-align: center;border-color: #eee;background-color: #eee">
-                            <h2>Keşfet</h2>
+                            <h2 translate>Keşfet</h2>
                         </div>
-                            <a class="button button-block button-positive"  href="#/people/find_people/">
-                                Kişi Önerileri (Çalışkanlar/Arkadaşlarım)
-                            </a>
-                            <a class="button button-block button-positive"   href="" ng-click="inviteFriends()">
-                                Arkadaşlarımı Davet Et
-                            </a>
-                            <a class="button button-block button-positive"  href="#/people/search_people/">
-                                Kişi Ara
-                            </a>
+                            <a class="button button-block button-positive" href="#/people/find_people/" translate>Kişi Önerileri (Çalışkanlar/Arkadaşlarım)</a>
+                            <a class="button button-block button-positive" href="" ng-click="inviteFriends()" translate>Arkadaşlarımı Davet Et</a>
+                            <a class="button button-block button-positive" href="#/people/search_people/" translate>Kişi Ara</a>
                     </div>
                 <div style="height:50px;">&nbsp;</div>
             </ion-content>
