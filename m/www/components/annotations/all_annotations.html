@@ -8,7 +8,7 @@
                 <input type="hidden" ng-model="verse_number"/>
                 <input type="hidden" ng-model="author_mask"/>
             </ion-nav-buttons>
-            <ion-nav-title>Ayet Notları</ion-nav-title>
+            <ion-nav-title>{{'Ayet Notları' | translate}}</ion-nav-title>
             <ion-nav-buttons side="right">
                 <button class="button button-icon icon ion-search"
                         ng-click="openModal('all_annotations_filter')"></button>
@@ -35,10 +35,10 @@
                     <div class="dialog dialog-warning" style="padding:0 20px 10px 20px"
                          ng-if="allAnnotationsOpts.keyword ||filterTags.length >0|| annotationSearchAuthorSelection.length>0 ">
                         <div class="container" style="text-align: left;">
-                            <div ng-if="allAnnotationsOpts.keyword"><strong>Kelime:</strong>
+                            <div ng-if="allAnnotationsOpts.keyword"><strong translate>Kelime:</strong>
                                 {{allAnnotationsOpts.keyword}}
                             </div>
-                            <div ng-if="filterTags.length>0"><strong>Etiket:</strong>
+                            <div ng-if="filterTags.length>0"><strong translate>Etiket:</strong>
 
                                 <div ng-repeat="filterTag in filterTags" class="tag label label-info s_a_tag">
                                     {{filterTag.name}}
@@ -105,13 +105,13 @@
                                     <i class="fa fa-pie-chart"></i> {{(annotation.voteRates.dislike + annotation.voteRates.like)}} Oy
                                 </span>
                                 <span ng-click="navigateTo('/annotation/display/{{annotation.id}}/')" style="margin-right: 10px;" class="make_comment">
-                                    <i class="fa fa-comment"></i> {{annotation.commentCount}} Yorum
+                                    <i class="fa fa-comment"></i> {{annotation.commentCount}} {{'Yorum' | translate}}
                                 </span>
                             </div>
                         </div>
                     </div>
                     <div style="text-align: center; padding-top:10px;" ng-if="allAnnotationsOpts.hasMore==true">
-                        <button ng-click="get_all_annotations()" class="btn btn-info btn-hg">Daha fazla</button>
+                        <button ng-click="get_all_annotations()" class="btn btn-info btn-hg" translate>Daha fazla</button>
                     </div>
                 </div>
                 <span ng-init="get_all_annotations()"></span>
