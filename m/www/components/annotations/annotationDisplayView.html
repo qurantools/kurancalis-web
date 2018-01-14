@@ -4,7 +4,7 @@
             <ion-nav-buttons side="left">
                 <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
             </ion-nav-buttons>
-            <ion-nav-title>Ayet Notu</ion-nav-title>
+            <ion-nav-title>{{'Ayet Notu' | translate}}</ion-nav-title>
         </ion-nav-bar>
         <ion-nav-view name="appContent"></ion-nav-view>
         <ion-nav-view cache-view="true">
@@ -64,16 +64,16 @@
                                 </span>
                                 <span ng-disabled="(annotation.voteRates.dislike + annotation.voteRates.like) == 0"
                                       ng-click="showVoteResults(annotation, 'annotations')">
-                                    <i class="fa fa-pie-chart"></i> {{(annotation.voteRates.dislike + annotation.voteRates.like)}} Oy
+                                    <i class="fa fa-pie-chart"></i> {{(annotation.voteRates.dislike + annotation.voteRates.like)}} {{'Oy' | translate}}
                                 </span>
                                 <span class="make_comment"
                                       ng-click="displayCommentModal(null, null)">
-                                    <a>Yorum Yaz</a>
+                                    <a translate>Yorum Yaz</a>
                                 </span>
                             </div>
                         </div>
                     </div>
-                    <h5 align="left" style="width: 100%;margin-left:20px;" ng-if="annotation.comments.length>0">Yorumlar</h5>
+                    <h5 align="left" style="width: 100%;margin-left:20px;" ng-if="annotation.comments.length>0" translate>Yorumlar</h5>
                     <hr width="100%" ng-if="annotation.comments.length>0"/>
                     <div ng-repeat="comment in annotation.comments"
                          style="width: 100%;border-radius: 15px;padding-top: 10px !important;background-color: #f5f5f5;"
@@ -106,16 +106,16 @@
                             <span class="make_comment" ng-class="{'disabled' : (comment.voteRates.dislike + comment.voteRates.like) == 0}"
                                   style="margin-left: 3px;margin-right: 3px;"
                                   ng-click="showVoteResults(comment, 'annotations', true, comment.comment.annotationId)">
-                                <i class="fa fa-pie-chart"></i> {{(comment.voteRates.dislike + comment.voteRates.like)}} Oy
+                                <i class="fa fa-pie-chart"></i> {{(comment.voteRates.dislike + comment.voteRates.like)}} {{'Oy' | translate}}
                             </span>
                             <span class="make_comment"
                                     ng-click="displayCommentModal(comment.comment.id, outerIndex)">
-                                <a style="color: #00f;">Yanıtla</a>
+                                <a style="color: #00f;" translate>Yanıtla</a>
                             </span>
                             <span ng-if="comment.comment.childs.length > 2 && !comment.showChilds"
                                   style="margin-left: 3px;margin-right: 3px;"
                                   ng-click="comment.showChilds=true">
-                                <i class="fa fa-mail-forward"></i> <span style="color: #00f;">{{comment.comment.childs.length}} Yanıt</span>
+                                <i class="fa fa-mail-forward"></i> <span style="color: #00f;">{{comment.comment.childs.length}} {{'Yanıt' | translate}}</span>
                             </span>
                         </div>
                         <hr width="100%"/>
@@ -149,11 +149,11 @@
                                         </span>
                                         <span class="make_comment" ng-class="{'disabled' : (child_comment.voteRates.dislike + child_comment.voteRates.like) == 0}"
                                               ng-click="showVoteResults(child_comment, 'annotations', true, child_comment.comment.annotationId)">
-                                            <i class="fa fa-pie-chart"></i> {{child_comment.voteRates.dislike + child_comment.voteRates.like}} Oy
+                                            <i class="fa fa-pie-chart"></i> {{child_comment.voteRates.dislike + child_comment.voteRates.like}} {{'Oy' | translate}}
                                         </span>
                                         <span class="make_comment"
                                               ng-click="displayCommentModal(comment.comment.id, outerIndex)">
-                                            <a style="color: blue;">Yanıtla</a>
+                                            <a style="color: blue;" translate>Yanıtla</a>
                                         </span>
                                     </div>
                                 </div>
@@ -170,13 +170,12 @@
                         <textarea readonly ng-click="displayCommentModal(null, null)"
                                   style="margin-left:10px;width: 100%;height: 51px;border-radius: 2px;
                                         background-color: white;border: 1px black solid;"
-                                  placeholder="Yorum Yaz"></textarea>
+                                  placeholder="{{'Yorum Yaz' | translate}}"></textarea>
                         </div>
                     </div>
                 </div>
                 <div ng-if="authorizedAnnotationDisplay == 2" style="margin-top: 50px;">
-                    <strong>Bu notu görüntüleme yetkisine sahip değilsiniz! <br>
-                        Henüz giriş yapmadınız ya da not sizinle paylaşılmadı</strong>
+                    <strong translate>Bu notu görüntüleme yetkisine sahip değilsiniz! <br> Henüz giriş yapmadınız ya da not sizinle paylaşılmadı</strong>
                 </div>
                 <div style="height:50px;">&nbsp;</div>
             </ion-content>
