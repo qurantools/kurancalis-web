@@ -141,7 +141,7 @@
     <digercevremodal title="{{'Çevreye Seçiniz' | translate}}" visible="select_circle">
         <div align="left">
             <select ng-model="circleSelection"
-                    ng-options="circle.id as circle.name for circle in cevreadlar"
+                    ng-options="circle.id as circle.name | translate for circle in cevreadlar"
                     class="form-control">
                 <option style="display:none" value="" translate>Çevre Seçiniz</option>
             </select>

@@ -21,7 +21,7 @@
                         <div class="item item-input item-select" style="margin-top: 5px;border-width: 1px;border-style: solid;font-size: larger">
                             <div class="input-label" translate>Dil</div>
                             <select ng-model="searchTranslationsAuthor"
-                                    ng-options="author.value as author.text for author in searchAuthorMap"
+                                    ng-options="author.value as author.text | translate for author in searchAuthorMap"
                                     ng-change="searchTranslationsAuthorChanged(searchTranslationsAuthor)"
                                     class="form-control">
                                 <option style="display:none" value="" translate>Meal Seç</option>

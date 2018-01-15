@@ -15,7 +15,7 @@
 
     <div style="float: left;margin-left: 20px;">
         <select ng-model="searchTranslationsAuthor"
-                ng-options="author.value as author.text for author in searchAuthorMap"
+                ng-options="author.value as author.text | translate for author in searchAuthorMap"
                 ng-change="searchTranslationsAuthorChanged(searchTranslationsAuthor)"
                 class="form-control">
             <option style="display:none" value="" translate>Meal Seç</option>

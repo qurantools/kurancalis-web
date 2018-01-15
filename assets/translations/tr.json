@@ -73,6 +73,7 @@
 "Her etiketleme işlemi ayrı bir ayet notu olacağından verceğiniz tüm etiketleri bir seferde burada belirtmeniz faydalı olacaktır."        : "Her etiketleme işlemi ayrı bir ayet notu olacağından verceğiniz tüm etiketleri bir seferde burada belirtmeniz faydalı olacaktır."        ,
 "Burada verdiğiniz etiketleri silmek için ilgili ayet notlarını silmelisiniz.": "Burada verdiğiniz etiketleri silmek için ilgili ayet notlarını silmelisiniz.",
 "Toplu Ayet Eklemede Hata!": "Toplu Ayet Eklemede Hata!",
+"Toplu Ayet Ekleme":"Toplu Ayet Ekleme",
 "Girmiş olduğunuz ayetlerin en az bir tanesinde hata olduğundan ayetler listeye eklenememiştir.": "Girmiş olduğunuz ayetlerin en az bir tanesinde hata olduğundan ayetler listeye eklenememiştir.",
 "Kapat": "Kapat",
 "Listeye Toplu Ayet Ekle": "Listeye Toplu Ayet Ekle",
@@ -94,6 +95,7 @@
 "Haber Kaynağı": "Haber Kaynağı",
 "Sureler": "Sureler",
 "Meallerde Ara": "Meallerde Ara",
+"Meallerde ara": "Meallerde ara",
 "Yardım": "Yardım",
 "Ayet notları": "Ayet notları",
 "Ayet Notları": "Ayet Notları",
@@ -115,7 +117,7 @@
 "Çevre Sil": "Çevre Sil",
 "Çevresi silinecektir. Onaylıyor musunuz?": "Çevresi silinecektir. Onaylıyor musunuz?",
 "Kişi(leri) Sil": "Kişi(leri) Sil",
-"çevresinden seçili kişi(ler) silinecektir. Onaylıyor musunuz?": "çevresinden seçili kişi(ler) silinecektir. Onaylıyor musunuz?",
+"DELETE_PERSON": "{{cevretanim}} </BR> çevresinden seçili kişi(ler) silinecektir. Onaylıyor musunuz?",
 "Çevre Bilgileri": "Çevre Bilgileri",
 "Yeni Kişi Ekle": "Yeni Kişi Ekle",
 "Kişi ismi": "Kişi ismi",
@@ -434,5 +436,11 @@
 	"Şafak":"Şafak",
 	"Halk":"Halk"
 },
-"DOGRU_YOL_MESAJI": "<b>Birlikte</b> dosdoğru yolu bulmak için > <img src='assets/img/fb.png' width='25' height='25'> Giriş"
+"DOGRU_YOL_MESAJI": "<b>Birlikte</b> dosdoğru yolu bulmak için > <img src='assets/img/fb.png' width='25' height='25'> Giriş",
+"Not Arama / Filtreleme": "Not Arama / Filtreleme",
+"ENTER_VERSES_AS": "<b>{{selectedVerseList.name}}</b> listesine eklemek istediğiniz ayetleri '34:5 23:10 19:78' şeklinde arada boşluklar olacak şekilde giriniz.",
+"Türkçe": "Türkçe",
+"İngilizce": "İngilizce",
+"Arapça": "Arapça",
+"Sûresi": "Sûresi"
 }

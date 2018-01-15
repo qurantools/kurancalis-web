@@ -395,8 +395,7 @@ if (config_data.isMobile == false) { //false
                 prefix: 'assets/translations/',
                 suffix: '.json'
             })
-            .preferredLanguage('en')
-            //.preferredLanguage(language)
+            .preferredLanguage(language)
             .useMissingTranslationHandlerLog()
             .useSanitizeValueStrategy('escapeParameters')
             .useLocalStorage()
@@ -607,13 +606,12 @@ if (config_data.isMobile == false) { //false
         //Translate
         $translateProvider
             .useStaticFilesLoader({
-                prefix: '../../assets/translations/',
+                prefix: 'assets/translations/',
                 suffix: '.json'
             })
-            .preferredLanguage('en')
-            //.preferredLanguage(language)
+            .preferredLanguage(language)
             .useMissingTranslationHandlerLog()
-            .useSanitizeValueStrategy('sanitize')
+            .useSanitizeValueStrategy('escapeParameters')
             .useLocalStorage()
             //.useCookieStorage()
             .fallbackLanguage('tr');
@@ -659,7 +657,7 @@ app.factory('ChapterVerses', function ($resource) {
             }
         }
     );
-}).controller('MainCtrl', function ($scope, $q, $routeParams, $ionicSideMenuDelegate, $location, $timeout, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService, $document, $filter, $rootScope, $state, $stateParams, $ionicModal, $ionicScrollDelegate, $ionicPosition, $ionicLoading, authorization,$rootScope, $ionicPopup, dataProvider, $cordovaAppAvailability, $translate, $sce) {
+}).controller('MainCtrl', function ($scope, $q, $routeParams, $ionicSideMenuDelegate, $location, $timeout, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService, $document, $filter, $rootScope, $state, $stateParams, $ionicModal, $ionicScrollDelegate, $ionicPosition, $ionicLoading, authorization,$rootScope, $ionicPopup, dataProvider, $cordovaAppAvailability, $translate) {
     console.log("MainCtrl");
 
     //all root scope parameters should be defined and documented here
@@ -791,6 +789,23 @@ app.factory('ChapterVerses', function ($resource) {
     //Some Constants:
     $scope.CIRCLE_ALL_CIRCLES = {'id': '-2', 'name': 'Tüm Çevrelerim'};
     $scope.CIRCLE_PUBLIC={'id': '-1', 'name': 'Herkes'};
+
+    // GET LANGUAGE FROM IP ADDRESS-GEO LOCATION
+    var language = "";
+    $.get("https://ipinfo.io", function(response) {
+        console.warn("Visitor Location :: ",response.city, response.country);
+        if(response.country.toString().toUpperCase() == "TR" || response.country.toString().toUpperCase() == "TR-TR")
+        {
+            language = "tr";
+        } else {
+            language = "en";
+        }
+
+        // set current language using ip adress-geo location datas
+        if($translate.use() != language){
+            $translate.use(language);
+        }
+    }, "jsonp");
 
     //select language from user ınterface
     $scope.changeLanguage = function (langKey) {
@@ -1296,7 +1311,7 @@ app.factory('ChapterVerses', function ($resource) {
 
     //tags input auto complete
     $scope.cevrelisteleForSearch = function () {
-
+console.warn($scope.extendedCirclesForSearch)
         return $scope.extendedCirclesForSearch;
     };
 
@@ -1324,6 +1339,16 @@ app.factory('ChapterVerses', function ($resource) {
             //also initialize extended circles
             Array.prototype.push.apply($scope.extendedCircles, circleList);
             Array.prototype.push.apply($scope.extendedCirclesForSearch, circleList);
+
+            //Translate instantly auto filled items
+            for(var i=0; i< $scope.extendedCirclesForSearch.length; i++){
+                if($scope.extendedCirclesForSearch[i].name == "Tüm Çevrelerim" ||
+                   $scope.extendedCirclesForSearch[i].name == "Herkes" ||
+                   $scope.extendedCirclesForSearch[i].name == "Referans"
+                ) {
+                    $scope.extendedCirclesForSearch[i].name = $translate.instant($scope.extendedCirclesForSearch[i].name);
+                }
+            }
 
             // initialize mobileAnnotationEditorCircleListForSelection
             $scope.mobileAnnotationEditorCircleListForSelection=[];

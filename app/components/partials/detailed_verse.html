@@ -15,9 +15,9 @@
                                        reset-search-input="false"
                                        style="width: 150px;"
                                        ng-enter="">
-                                <ui-select-match placeholder="{{'Sure' | translate}}">{{$select.selected.nameTr}} - {{$select.selected.id}}</ui-select-match>
+                                <ui-select-match placeholder="{{'Sure' | translate}}">{{'VERSE_NAME.' + $select.selected.nameTr | translate}} - {{$select.selected.id}}</ui-select-match>
                                 <ui-select-choices repeat="chapter in detailedChapters | selectionFilter: {id: $select.search,nameTr: $select.search,nameTr2: $select.search}">
-                                    {{chapter.id}}: {{chapter.nameTr}} / {{chapter.nameTr2}}
+                                    {{chapter.id}}: {{'VERSE_NAME.' + chapter.nameTr | translate}} / {{'VERSE_DESCRIPTION.' + chapter.nameTr2 | translate}}
                                 </ui-select-choices>
                             </ui-select>
                         </div>
