@@ -1,5 +1,5 @@
 angular.module('ionicApp')
-    .controller('HomeCtrl', function ($scope, $compile, $q, $routeParams, $location, $timeout, ChapterVerses, User, Facebook, Restangular, localStorageService, $document, $filter, $rootScope, $state, $stateParams, $ionicModal, $ionicScrollDelegate, $ionicPosition, authorization,$ionicActionSheet,$ionicPopup, $sce, dataProvider, $ionicPlatform, navigationManager) {
+    .controller('HomeCtrl', function ($scope, $compile, $q, $routeParams, $location, $timeout, ChapterVerses, User, Facebook, Restangular, localStorageService, $document, $filter, $rootScope, $state, $stateParams, $ionicModal, $ionicScrollDelegate, $ionicPosition, authorization,$ionicActionSheet,$ionicPopup, $sce, dataProvider, $ionicPlatform, navigationManager, $translate) {
 
 
         $scope.linkno="";
@@ -504,7 +504,7 @@ angular.module('ionicApp')
                 queryParams.own_annotations = $scope.query_own_annotations.value;
 
                 //-----------------------------------//
-                console.warn("queryParams::",queryParams);
+                console.warn("queryParams::",$scope.getTagsWithCommaSeparated($scope.query_circles),queryParams);
                 //-----------------------------------//
 
                 annotator.setQueryParameters(queryParams);
@@ -659,7 +659,15 @@ angular.module('ionicApp')
                 $timeout(function(){
                     try{
                         if (typeof translationParams.chapter != 'undefined' && typeof $scope.chapters[translationParams.chapter - 1] !== 'undefined') {
-                            $scope.chapter_title = $scope.chapters[translationParams.chapter - 1].nameTr + " - " + $scope.chapters[translationParams.chapter - 1].nameTr2 + " Sûresi";
+                            var verseName = $translate.instant('VERSE_NAME.' + $scope.chapters[translationParams.chapter - 1].nameTr);
+                            var verseDescription = $translate.instant('VERSE_DESCRIPTION.' + $scope.chapters[translationParams.chapter - 1].nameTr2);
+
+                            var suffix = "";
+                            if($translate.use() == "tr"){
+                                suffix = "Sûresi";
+                            }
+
+                            $scope.chapter_title = verseName + ' - ' + verseDescription + ' ' + suffix;
                         }
                     }
                     catch (err){
