@@ -17,7 +17,7 @@
             </div>
 
             <div ng-if="circlesForSearch.length>0"><strong translate>Çevreler:</strong>
-                <div ng-repeat="cevre in circlesForSearch" class="tag label label-info s_a_tag">{{cevre.name}}</div>
+                <div ng-repeat="cevre in circlesForSearch" class="tag label label-info s_a_tag">{{cevre.name | translate}}</div>
             </div>
 
             <div ng-if="annotationSearchAuthorSelection.length>0">

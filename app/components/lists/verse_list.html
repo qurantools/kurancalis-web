@@ -87,9 +87,9 @@
 </div>
 
 <div>
-    <modal title="Toplu Ayet Ekleme" visible="bulkInsertVerseToVerseListFlag">
+    <modal title="{{'Toplu Ayet Ekleme' | translate}}" visible="bulkInsertVerseToVerseListFlag">
         <div class="form-group">
-            <div translate><b>{{selectedVerseList.name}}</b> listesine eklemek istediğiniz ayetleri "34:5 23:10 19:78" şeklinde arada boşluklar olacak şekilde giriniz.</div>
+            <div translate="ENTER_VERSES_AS"><b>{{selectedVerseList.name}}</b> listesine eklemek istediğiniz ayetleri "34:5 23:10 19:78" şeklinde arada boşluklar olacak şekilde giriniz.</div>
             <input type="text" class="form-control" ng-model="versesForBulkInsert"/>
         </div>
         <div class="modal-footer">

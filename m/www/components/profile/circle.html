@@ -34,7 +34,7 @@
                 <div class="item item-input item-select" style="margin-top: 5px;border-width: 1px;border-style: solid;font-size: larger">
                     <div class="input-label" translate>Çalışma Sahipleri</div>
                     <select ng-model="circleListForTimeline"
-                            ng-options="circle.id as circle.name for circle in extendedCirclesForSearch"
+                            ng-options="circle.id as circle.name | translate for circle in extendedCirclesForSearch"
                             ng-change="profileCircleChanged(circleListForTimeline)"
                             class="form-control">
                         <option style="display:none" value="" translate>Çevre Seçiniz</option>

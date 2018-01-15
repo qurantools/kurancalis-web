@@ -9,7 +9,7 @@
                 </div>
                 <div style="float: left; padding-left: 20px;">
                     <select ng-model="circleListForTimeline"
-                            ng-options="circle.id as circle.name for circle in extendedCirclesForSearch"
+                            ng-options="circle.id as circle.name | translate for circle in extendedCirclesForSearch"
                             ng-change="profileCircleChanged(circleListForTimeline)"
                             class="form-control">
                         <option style="display:none" value="" translate>Çevre Seçiniz</option>
