@@ -439,7 +439,7 @@ angular.module('ionicApp')
             for (var i = 0; tagList && i < tagList.length; i++) {
                 tagParameter[i] = tagList[i].name;
             }
-            return tagParameter.join(',');
+            return tagParameter.join(', ');
         };
 
         $scope.openFooterMenu = function (){

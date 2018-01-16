@@ -144,11 +144,12 @@
                             </div>
                             <div style="text-align: left; height: 20px">
                                 <a href ng-click="gotoInference({{inference.id}});closeModal('detailed_verse_modal');">
-                                    <h4 style="margin-top:0;font-size: 18px">
+                                    <h4 style="margin-top:0;font-size: 18px; white-space:normal">
                                         {{inference.title | limitTo:80}}
                                     </h4>
                                 </a>
                             </div>
+                            </br>
                             <div style="padding-left:10px;">
                                 <span ng-bind-html="inference.brief | to_trusted | limitTo:400" style="line-height: 1;white-space: pre-wrap; font-size: 10pt"></span>
                                 <a href ng-click="gotoInference({{inference.id}});closeModal('detailed_verse_modal');" translate>devamını oku...</a>
