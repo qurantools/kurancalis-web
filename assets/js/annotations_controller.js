@@ -26,7 +26,8 @@ angular.module('ionicApp')
 
         $scope.annotationSearchAuthorSelection = $scope.selection;
 
-        $scope.language = "";
+        //Get current language
+        $scope.language = $translate.use().toUpperCase();
 
         $scope.localStorageManager = new LocalStorageManager("annotations", localStorageService,
             [
