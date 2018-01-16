@@ -50,16 +50,14 @@
                 <div class="col-xs-12 col-sm-9" ng-click="openModal('tagged_verse_detailed_search');">
                     <div class="list">
                         <div class="item item-divider">
-                            {{'Not Sahipleri' | translate}}
+                            <span translate>Not Sahipleri</span>
+                            <button class="button button-small button-positive pull-right" style="float: right" translate>Düzenle</button>
                         </div>
                         <div class="item">
                             <div class="row">
-                                <div class="col-sm-9" style="width: 100%;">
+                                <div class="col-sm-12" style="width: 100%;">
                                     <div class="wordwrap" style="color: #3498db;" align="left">{{taggedValues(detailedVerseCircles)}}</div>
                                     <div class="wordwrap" style="color: #28a54c;" align="left">{{taggedValues(detailedVerseUsers)}}</div>
-                                </div>
-                                <div class="col-sm-3">
-                                    <button class="button button-positive" style="float: right" translate>Düzenle</button>
                                 </div>
                             </div>
                         </div>
