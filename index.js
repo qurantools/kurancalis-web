@@ -823,6 +823,7 @@ app.factory('ChapterVerses', function ($resource) {
     $scope.changeLanguage = function (langKey) {
         $translate.use(langKey);
         console.warn("Selected Language :: ", langKey);
+        $rootScope.$broadcast('languageChanged', langKey);
     };
 
 
