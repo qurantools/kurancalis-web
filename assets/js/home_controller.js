@@ -656,24 +656,7 @@ angular.module('ionicApp')
                 translationParams.chapter="";
                 $scope.chapter_title = "";
             }else{
-                $timeout(function(){
-                    try{
-                        if (typeof translationParams.chapter != 'undefined' && typeof $scope.chapters[translationParams.chapter - 1] !== 'undefined') {
-                            var verseName = $translate.instant('VERSE_NAME.' + $scope.chapters[translationParams.chapter - 1].nameTr);
-                            var verseDescription = $translate.instant('VERSE_DESCRIPTION.' + $scope.chapters[translationParams.chapter - 1].nameTr2);
-
-                            var suffix = "";
-                            if($translate.use() == "tr"){
-                                suffix = "Sûresi";
-                            }
-
-                            $scope.chapter_title = verseName + ' - ' + verseDescription + ' ' + suffix;
-                        }
-                    }
-                    catch (err){
-
-                    }
-                },200);
+                 $scope.setTitle();
             }
 
             dataProvider.listTranslations(translationParams, function(data){
@@ -698,6 +681,35 @@ angular.module('ionicApp')
                     }
                 }
             });
+        };
+
+        $rootScope.$on('languageChanged', function(){
+            $scope.setTitle();
+        });
+
+        $scope.setTitle = function () {
+            var chapter = $scope.query_chapter_id;
+
+            $timeout(function(){
+
+                try{
+                    if (typeof chapter != 'undefined' && typeof $scope.chapters[chapter - 1] !== 'undefined') {
+                        var verseName = $translate.instant('VERSE_NAME.' + $scope.chapters[chapter - 1].nameTr);
+                        var verseDescription = $translate.instant('VERSE_DESCRIPTION.' + $scope.chapters[chapter - 1].nameTr2);
+
+                        var suffix = "";
+                        if($translate.use() == "tr"){
+                            suffix = "Sûresi";
+                        }
+
+                        $scope.chapter_title = verseName + ' - ' + verseDescription + ' ' + suffix;
+                    }
+                }
+                catch (err){
+
+                }
+
+            },200);
         };
 
 
