@@ -103,6 +103,14 @@
                         </button>
                         <a href="#/profile/user/{{user.id}}"><img ng-src="{{user.photo}}" height="40"/></a>
                         <!--<span style="vertical-align: bottom;">{{user.name}}</span>-->
+
+                        <select name="language"
+                                ng-model="language"
+                                ng-change="changeLanguage(language)"
+                        >
+                            <option value="tr">TR</option>
+                            <option value="en">EN</option>
+                        </select>
                     </div>
                 </div>
             </div>
