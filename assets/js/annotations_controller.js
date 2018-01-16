@@ -26,9 +26,6 @@ angular.module('ionicApp')
 
         $scope.annotationSearchAuthorSelection = $scope.selection;
 
-        //Get current language
-        $scope.language = $translate.use().toUpperCase();
-
         $scope.localStorageManager = new LocalStorageManager("annotations", localStorageService,
             [
                 {
@@ -311,11 +308,6 @@ angular.module('ionicApp')
             $scope.allAnnotationsOrderBy = selectedOrderOption;
             $scope.allAnnotationsOpts.start = 0;
             $scope.get_all_annotations();
-        };
-
-        //select language from user ınterface
-        $scope.changeLanguage = function (langKey) {
-            $translate.use(langKey);
         };
 
         //delete operation for annotations page

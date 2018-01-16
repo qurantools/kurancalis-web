@@ -790,16 +790,28 @@ app.factory('ChapterVerses', function ($resource) {
     $scope.CIRCLE_ALL_CIRCLES = {'id': '-2', 'name': 'Tüm Çevrelerim'};
     $scope.CIRCLE_PUBLIC={'id': '-1', 'name': 'Herkes'};
 
+    //DEFAULT LANNGUAGE SETTINGS
+    $scope.selectedLanguage = "";
+    $scope.languages = [{
+        name: "tr",
+        label: "TR"
+    }, {
+        name: "en",
+        label: "EN"
+    }];
+
     // GET LANGUAGE FROM IP ADDRESS-GEO LOCATION
     var language = "";
-    $.get("https://ipinfo.io", function(response) {
-        console.warn("Visitor Location :: ",response.city, response.country);
-        if(response.country.toString().toUpperCase() == "TR" || response.country.toString().toUpperCase() == "TR-TR")
+    $.get("http://ipinfo.io/json", function(response) {
+        console.warn("Visitor Location :: ", response.city, response.country);
+        if(response.country == "TR" || response.country == "Turkey")
         {
             language = "tr";
         } else {
             language = "en";
         }
+
+        $scope.selectedLanguage = language;
 
         // set current language using ip adress-geo location datas
         if($translate.use() != language){
@@ -810,7 +822,9 @@ app.factory('ChapterVerses', function ($resource) {
     //select language from user ınterface
     $scope.changeLanguage = function (langKey) {
         $translate.use(langKey);
+        console.warn("Selected Language :: ", langKey);
     };
+
 
     $scope.checkAPIVersion = function(){
         var versionRestangular = Restangular.all("apiversioncompatibility");

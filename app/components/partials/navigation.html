@@ -88,12 +88,11 @@
                     <div ng-if="user==null">
                         <button type="button" id="login" ng-click="login()" class="btn btn-primary" translate="DOGRU_YOL_MESAJI"></button>
 
-                        <select name="language"
-                                ng-model="language"
-                                ng-change="changeLanguage(language)"
-                        >
-                            <option value="tr" ng-selected="true">TR</option>
-                            <option value="en">EN</option>
+                        <select name="language-selection"
+                                ng-model="selectedLanguage"
+                                ng-options="language.name as language.label for language in languages"
+                                ng-selected="selectedLanguage==language.name"
+                                ng-change="changeLanguage(selectedLanguage)">
                         </select>
                     </div>
                     <div ng-if="user!=null">
@@ -104,12 +103,11 @@
                         <a href="#/profile/user/{{user.id}}"><img ng-src="{{user.photo}}" height="40"/></a>
                         <!--<span style="vertical-align: bottom;">{{user.name}}</span>-->
 
-                        <select name="language"
-                                ng-model="language"
-                                ng-change="changeLanguage(language)"
-                        >
-                            <option value="tr" ng-selected="true">TR</option>
-                            <option value="en">EN</option>
+                        <select name="language-selection"
+                                ng-model="selectedLanguage"
+                                ng-options="language.name as language.label for language in languages"
+                                ng-selected="selectedLanguage==language.name"
+                                ng-change="changeLanguage(selectedLanguage)">
                         </select>
                     </div>
                 </div>
