@@ -1,5 +1,5 @@
 angular.module('ionicApp')
-    .controller('PeopleFindCtrl', function ($scope, $routeParams, Facebook, Restangular, localStorageService, $ionicModal) {
+    .controller('PeopleFindCtrl', function ($scope, $routeParams, Facebook, Restangular, localStorageService, $ionicModal, $translate) {
        
         var value = [];
         var select_circle;
@@ -98,7 +98,7 @@ angular.module('ionicApp')
         $scope.inviteFriends= function(){
             var options = {
                 method: "apprequests",
-                message: "Dosdoğru yolu BİRLİKTE bulmak için Kuran Çalışalım: http://kurancalis.com"
+                message: $translate.instant("Dosdoğru yolu BİRLİKTE bulmak için Kuran Çalışalım: http://kurancalis.com")
             };
             if (config_data.isNative){
                 facebookConnectPlugin.showDialog(options, function(resp){

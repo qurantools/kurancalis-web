@@ -110,7 +110,7 @@
                             <div style="float: left"><span ng-bind-html="feed.updated | time_in_string | to_trusted"></span></div>
                             <div style="float: right">
                                 <span ng-click="addToStorageForFocus2Comment();navigateTo('/inference/display/{{feed.id}}/')" style="margin-right: 10px;" class="make_comment">
-                                    <span style="color: #00f;margin-right: 10px;">Yorum Yaz</span><i class="fa fa-comment"></i> {{feed.commentCount}}
+                                    <span style="color: #00f;margin-right: 10px;">{{'Yorum Yaz' | translate}}</span><i class="fa fa-comment"></i> {{feed.commentCount}}
                                 </span>
                                 <span ng-class="{ 'voted-like': (feed.vote != null && feed.vote.content == 1), 'unvoted' : !(feed.vote != null && feed.vote.content == 1)}"
                                       ng-click="doVoteInProfile(feed,1)">

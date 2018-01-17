@@ -1,6 +1,6 @@
 angular.module('ionicApp')
     .controller('HelpController', function ($scope, $routeParams, $location, $timeout, authorization,
-                                            localStorageService, Restangular, $ionicModal, $sce) {
+                                            localStorageService, Restangular, $ionicModal, $sce, $translate) {
         $scope.title = "Yardım";
         $scope.helpController = this;
         $scope.helpController.API = null;
@@ -10,11 +10,11 @@ angular.module('ionicApp')
         $scope.menuList = [
             {
                 id: "leftmenu",
-                name: "Genel Yetenekler",
+                name: $translate.instant("Genel Yetenekler"),
                 submenu: [
                     {
                         id: 21,
-                        title: "Sol Menü",
+                        title: $translate.instant("Sol Menü"),
                         source: [{
                             src: "../../assets/img/help/mobile/menu_icerigi.mp4",
                             type: "video/mp4"
@@ -33,7 +33,7 @@ angular.module('ionicApp')
             },
             {
                 id: "chapter",
-                name: "Sure Okuma Tanıtım",
+                name: $translate.instant("Sure Okuma Tanıtım"),
                 submenu: [
 
                     {

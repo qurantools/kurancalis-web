@@ -908,7 +908,7 @@ angular.module('ionicApp')
             var verse_number = $scope.goToVerseParameters.verse;
 
             //search array with id
-            var validationErrorMessage = "Geçerli ayet ve sure numarası giriniz";
+            var validationErrorMessage = $translate.instant("Geçerli ayet ve sure numarası giriniz");
             var index = chapters.map(function (el) {
                 return el.id;
             }).indexOf(chapter_id);
@@ -1354,11 +1354,12 @@ angular.module('ionicApp')
         $scope.initializeActionSheetButtons = function(){
             //initialize action sheets
             $scope.actionSheetButtons = [];
-            var butonCeviri = {  text: '<i class="icon ion-person"></i> Çeviri Seç'  };
-            var butonSureAyet = {text: '<i class="icon ion-arrow-right-b"></i> Sure/Ayete Git' };
-            var butonFiltre = {text: '<i class="icon fa fa-search"></i> Notları Filtrele' };
-            var butonAyraclar = {text: '<i class="icon ion-android-bookmark"></i> Ayraçlar' };
-            var buttonVerseHistory = {text: '<i class="icon fa fa-history"></i> Ayet Geçmişi' };
+            var butonCeviri = {  text: '<i class="icon ion-person"></i> ' + $translate.instant('Çeviri Seç')  };
+            var butonSureAyet = {text: '<i class="icon ion-arrow-right-b"></i> ' + $translate.instant('Sure/Ayete Git') };
+            var butonFiltre = {text: '<i class="icon fa fa-search"></i> ' + $translate.instant('Notları Filtrele') };
+            var butonAyraclar = {text: '<i class="icon ion-android-bookmark"></i> ' + $translate.instant('Ayraçlar') };
+            var buttonVerseHistory = {text: '<i class="icon fa fa-history"></i> ' + $translate.instant('Ayet Geçmişi') };
+console.warn("butonCeviri", butonCeviri.text)
 
             $scope.actionSheetButtons.push(butonCeviri);
             $scope.actionSheetButtons.push(butonSureAyet);
@@ -1398,12 +1399,12 @@ angular.module('ionicApp')
                 //var buttonVerseAnnotations = {text: '<i class="icon fa fa-history"></i> Ayete Ait Notlar' };
                 $ionicActionSheet.show({
                     buttons: [
-                        {text: 'Burada Kaldım'},
-                        {text: 'Ayeti Listeye Ekle'}
+                        {text: $translate.instant('Burada Kaldım')},
+                        {text: $translate.instant('Ayeti Listeye Ekle')}
                     ],
                     destructiveText: '',
                     titleText: '',
-                    cancelText: 'Kapat',
+                    cancelText: $translate.instant('Kapat'),
                     cancel: function () {
                         // add cancel code..
                     },
@@ -1433,7 +1434,7 @@ angular.module('ionicApp')
                     buttons: $scope.actionSheetButtons,
                     destructiveText: '',
                     titleText: '',
-                    cancelText: 'Kapat',
+                    cancelText: $translate.instant('Kapat'),
                     cancel: function () {
                         // add cancel code..home_controller
                     },

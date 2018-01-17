@@ -19,7 +19,7 @@
             </button>
         </div>
         <div data-tap-disabled="true" class="col-xs-12 col-sm-6" style="font-weight:bold; width: 100%;height: 100%;background: #eee;margin-left: 15px; margin-right: 10px;" align="center" ng-click="openModal('chapter_selection_modal')">
-            {{goToVerseParameters.chapter.id}} : ({{detailedChapters[goToVerseParameters.chapter.id-1].nameTr}}) {{goToVerseParameters.verse}}
+            {{goToVerseParameters.chapter.id}} : ({{'VERSE_NAME.' + detailedChapters[goToVerseParameters.chapter.id-1].nameTr | translate}}) {{goToVerseParameters.verse}}
         </div>
         <div style="float: right" class="col-xs-12 col-sm-3">
             <button class="btn" ng-click="gotoNext()">

@@ -1,5 +1,5 @@
 angular.module('ionicApp')
-    .controller('InferenceEditController', function ($rootScope,$scope,$q, $routeParams, $location, $timeout,$ionicModal, authorization, localStorageService, Restangular) {
+    .controller('InferenceEditController', function ($rootScope,$scope,$q, $routeParams, $location, $timeout,$ionicModal, authorization, localStorageService, Restangular, $translate) {
 
         $scope.inferenceId = 0;
         $scope.circles = []; //id array
@@ -396,26 +396,28 @@ angular.module('ionicApp')
              });
              */
 
-            if(!config_data.isMobile){
-            $scope.tinymceOptions = {
-                language: "tr_TR",
-                plugins: [
-                    "textcolor advlist autolink link image lists preview"
-                ],
-                setup: function (editor) {
-                    editor.on('Change', function (e) {
-                        $scope.inferenceData.content = editor.getContent();
-                    }),
-                        editor.on('keyup', function (e) {
-                            $scope.inferenceData.content = editor.getContent();
-                        })
-                },
-                toolbar: "undo redo | formatselect fontsizeselect | bold italic underline | alignleft aligncenter alignright | bullist numlist outdent indent | forecolor | link image preview"
 
-            };
-            }else{
+            var language = $translate.use() == "tr" ? "tr_TR" : "en_GB";
+            if (!config_data.isMobile) {
                 $scope.tinymceOptions = {
-                    language: "tr_TR",
+                    language: language,
+                    plugins: [
+                        "textcolor advlist autolink link image lists preview"
+                    ],
+                    setup: function (editor) {
+                        editor.on('Change', function (e) {
+                            $scope.inferenceData.content = editor.getContent();
+                        }),
+                            editor.on('keyup', function (e) {
+                                $scope.inferenceData.content = editor.getContent();
+                            })
+                    },
+                    toolbar: "undo redo | formatselect fontsizeselect | bold italic underline | alignleft aligncenter alignright | bullist numlist outdent indent | forecolor | link image preview"
+
+                };
+            } else {
+                $scope.tinymceOptions = {
+                    language: language,
                     plugins: [
                         ""
                     ],
@@ -432,7 +434,7 @@ angular.module('ionicApp')
                     selector: "textarea#editable",
                     toolbar: " bold italic underline | alignleft aligncenter  |  bullist ",
                     inline: false,
-                    theme : 'modern',
+                    theme: 'modern',
                     menu: {}
 
                 };
@@ -443,6 +445,7 @@ angular.module('ionicApp')
                 };
 
             }
+
 
             if(!config_data.isMobile) {
                 $scope.$on('userInfoReady', function handler() {
