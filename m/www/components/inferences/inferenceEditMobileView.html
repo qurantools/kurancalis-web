@@ -25,7 +25,7 @@
                         <input type="text" id="title" ng-model="inferenceData.title" placeholder="{{'Başlık' | translate}}">
                     </label>
                     <label class="item item-input" ng-show="imageDefined" >
-                        <input type="text" class="form-control" id="inferenceImage" style="width: 95%;display: none" placeholder="Image URL" ng-model="inferenceData.image">
+                        <input type="text" class="form-control" id="inferenceImage" style="width: 95%;display: none" placeholder="{{'Image URL' | translate}}" ng-model="inferenceData.image">
                         <img style="background-image: url('../../assets/img/resim_ekle_tikla.png');max-height: 150px;max-width: 250px;"  src="{{inferenceData.image}}"  class="file-manager-linked" data-input-id="inferenceImage"/>
                     </label>
                 </div>

@@ -1265,6 +1265,15 @@
         };
 
         Annotator.prototype.checkForEndSelection = function (event) {
+            var currentLanguage = "";
+            if (localStorage.getItem("NG_TRANSLATE_LANG_KEY") === null ||
+                localStorage.getItem("NG_TRANSLATE_LANG_KEY") === undefined)
+            {
+                currentLanguage = "tr"; // default language
+            } else {
+                currentLanguage = localStorage.getItem("NG_TRANSLATE_LANG_KEY");
+            }
+
             var container, range, _k, _len2, _ref1;
             this.mouseIsDown = false;
             if (this.ignoreMouseup) {
@@ -1303,13 +1312,15 @@
 
                     }
                     else {
-                        Annotator.showNotification("Sadece meal içerisini karalamalısınız", Annotator.Notification.ERROR);
+                        var message = currentLanguage == "tr" ? "Sadece meal içerisini karalamalısınız" : "You just have to draw inside translation";
+                        Annotator.showNotification(message, Annotator.Notification.ERROR);
                         this.adder.hide();
                         return;
                     }
 
                 }
                 else {
+                    var message = currentLanguage == "tr" ? "Sadece meal içerisini karalamalısınız" : "You just have to draw inside translation";
                     Annotator.showNotification("Sadece meal içerisini karalamalısınız", Annotator.Notification.ERROR);
                     this.adder.hide();
                     return;
@@ -1318,7 +1329,8 @@
             }
             else {
                 if(config_data.isMobile) {
-                    Annotator.showNotification("Önce not eklenecek metni seçiniz", Annotator.Notification.ERROR);
+                    var message = currentLanguage == "tr" ? "Önce not eklenecek metni seçiniz" : "First select the text to include notes";
+                    Annotator.showNotification(message, Annotator.Notification.ERROR);
                 }
                 return this.adder.hide();
             }

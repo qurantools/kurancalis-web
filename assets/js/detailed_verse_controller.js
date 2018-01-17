@@ -1,5 +1,5 @@
 angular.module('ionicApp')
-    .controller('DetailedVerseCtrl', function ($scope, $timeout, Restangular, $location, authorization, $ionicModal, $ionicActionSheet, dataProvider, $ionicScrollDelegate, $ionicPopup, localStorageService, navigationManager) {
+    .controller('DetailedVerseCtrl', function ($scope, $timeout, Restangular, $location, authorization, $ionicModal, $ionicActionSheet, dataProvider, $ionicScrollDelegate, $ionicPopup, localStorageService, navigationManager, $translate) {
 
         $scope.detailedChapters = [];
         $scope.detailedVerseCircles = [];
@@ -35,14 +35,14 @@ angular.module('ionicApp')
         $scope.taggedVerseUsersForMobileSearch = [];
 
         $scope.footerMenuButtons = [];
-        var buttonSelectTranslation = {  text: 'Çeviri Seç'  };
-        var buttonAddToList = {text: 'Listeye Ekle' };
-        var buttonGotoVerseInternal = {text: 'Ayete Git' };
-        var buttonGotoVerse = {text: 'Sure İçerisinde Gör' };
-        var buttonBookmark = {text: 'Burada Kaldım' };
-        var buttonVerseHistory = {text: 'Ayet Geçmişi' };
+        var buttonSelectTranslation = {  text: $translate.instant('Çeviri Seç')  };
+        var buttonAddToList = {text: $translate.instant('Listeye Ekle') };
+        var buttonGotoVerseInternal = {text: $translate.instant('Ayete Git') };
+        var buttonGotoVerse = {text: $translate.instant('Sure İçerisinde Gör') };
+        var buttonBookmark = {text: $translate.instant('Burada Kaldım') };
+        var buttonVerseHistory = {text: $translate.instant('Ayet Geçmişi') };
 
-
+        console.warn("butonCeviri", buttonSelectTranslation.text)
         $scope.localStorageManager = new LocalStorageManager("detailed_verse",localStorageService,
             [
                 {
@@ -74,7 +74,7 @@ angular.module('ionicApp')
             var verse_number = parseInt($scope.goToVerseParameters.verse);
 
             //search array with id
-            var validationErrorMessage = "Geçerli ayet ve sure numarası giriniz";
+            var validationErrorMessage = $translate.instant("Geçerli ayet ve sure numarası giriniz");
             var index = chapters.map(function (el) {
                 return el.id;
             }).indexOf(chapter_id);
@@ -222,10 +222,10 @@ angular.module('ionicApp')
             //console.log("$scope.filteredAnnotations: "+JSON.stringify($scope.filteredAnnotations));
             if (config_data.isMobile) {
                 var confirmPopup = $ionicPopup.confirm({
-                    title: 'Ayet Notu Sil',
-                    template: 'Ayet notu silinecektir, onaylıyor musunuz?',
-                    cancelText: 'VAZGEC',
-                    okText: 'TAMAM',
+                    title: $translate.instant('Ayet Notu Sil'),
+                    template: $translate.instant('Ayet notu silinecektir, onaylıyor musunuz?'),
+                    cancelText: $translate.instant('VAZGEC'),
+                    okText: $translate.instant('TAMAM'),
                     okType: 'button-assertive'
                 });
                 confirmPopup.then(function(res) {
@@ -456,7 +456,7 @@ angular.module('ionicApp')
                 buttons: $scope.footerMenuButtons,
                 destructiveText: '',
                 titleText: '',
-                cancelText: 'Kapat',
+                cancelText: $translate.instant('Kapat'),
                 cancel: function () {
                 },
                 buttonClicked: function (index) {

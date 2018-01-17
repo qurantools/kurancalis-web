@@ -16,7 +16,7 @@
                 <br />
                 </td>
             <td align="center" style="vertical-align: top; width: 180px">
-            <input type="text" class="form-control" id="inferenceImage" style="width: 165px" placeholder="Image URL" ng-model="inferenceData.image">
+            <input type="text" class="form-control" id="inferenceImage" style="width: 165px" placeholder="{{'Image URL' | translate}}" ng-model="inferenceData.image">
             <img style="background-image: url('assets/img/resim_ekle_tikla.png')" height="100" src="{{inferenceData.image}}" width="165" class="file-manager-linked" data-input-id="inferenceImage"/></td>
         </tr>
     </table>
@@ -30,7 +30,7 @@
         <br /><br />
 
         <div align="left" style="width:760px">
-            <input class="form-control btn-primary" style="width:initial" type="button" value="Referans Ayet Ekle" data-target='#addVerseToInferenceFromVerseList' data-toggle='modal' ng-click="openVerseListForVerseSelection(copyValueFromSelectedList)"/>
+            <input class="form-control btn-primary" style="width:initial" type="button" value="{{'Referans Ayet Ekle' | translate}}" data-target='#addVerseToInferenceFromVerseList' data-toggle='modal' ng-click="openVerseListForVerseSelection(copyValueFromSelectedList)"/>
         </div>
         <br />
 

@@ -40,7 +40,7 @@
                    onclick="focusToVerseInput()"
 
                    >
-            {{chapter.id}}: {{chapter.nameTr}}-{{chapter.nameTr2}}
+            {{chapter.id}}: {{'VERSE_NAME.' + chapter.nameTr | translate}}-{{'VERSE_DESCRIPTION.' + chapter.nameTr2 | translate}}
         </ion-radio>
 
         <div style="height:20px"></div>

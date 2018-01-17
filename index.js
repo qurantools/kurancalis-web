@@ -378,16 +378,30 @@ if (config_data.isMobile == false) { //false
         //facebook
         FacebookProvider.init(config_data.FBAppID);
 
-        // TRANSLATION
+
+
+       // TRANSLATION ISSUES
+
+        var language = "";
+
         // Get browser language
         var language = window.navigator.language.split('-')[0]; // use navigator lang if available
-        console.warn("Selected language for Desktop:: ",language);
 
         if (language == null || language === undefined || language == "") {
             language = "tr";  // as default language assignment
         } else {
             language = /(tr|en)/gi.test(language) ? language : 'tr'; // add new language as |de|fr|...
         }
+
+        //if first load, we check language also with ip adress at below
+        if (localStorage.getItem("NG_TRANSLATE_LANG_KEY") === null ||
+            localStorage.getItem("NG_TRANSLATE_LANG_KEY") === undefined) {
+            localStorage.setItem("FIRST_LOAD", "true");
+        } else {
+            language = localStorage.getItem("NG_TRANSLATE_LANG_KEY");
+        }
+
+        console.warn("Selected language for Desktop:: ",language);
 
         //Translate
         $translateProvider
@@ -396,10 +410,11 @@ if (config_data.isMobile == false) { //false
                 suffix: '.json'
             })
             .preferredLanguage(language)
-            .useMissingTranslationHandlerLog()
+            //.useMissingTranslationHandlerLog()
             .useSanitizeValueStrategy('escapeParameters')
             .useLocalStorage()
             //.useCookieStorage()
+            //.useLoaderCache(true) // default is false which means disable
             .fallbackLanguage('tr');
 
     });
@@ -592,10 +607,12 @@ if (config_data.isMobile == false) { //false
              */
             FacebookProvider.init(config_data.FBAppID);
 
-        // TRANSLATION
+        // TRANSLATION ISSUES
+
+        var language = "";
+
         // Get browser language
         var language = window.navigator.language.split('-')[0]; // use navigator lang if available
-        console.warn("Selected language for Mobil:: ",language);
 
         if (language == null || language === undefined || language == "") {
             language = "tr";  // as default language assignment
@@ -603,17 +620,29 @@ if (config_data.isMobile == false) { //false
             language = /(tr|en)/gi.test(language) ? language : 'tr'; // add new language as |de|fr|...
         }
 
+
+        //if first load, we check language also with ip adress at below
+        if (localStorage.getItem("NG_TRANSLATE_LANG_KEY") === null ||
+            localStorage.getItem("NG_TRANSLATE_LANG_KEY") === undefined) {
+            localStorage.setItem("FIRST_LOAD", "true");
+        } else {
+            language = localStorage.getItem("NG_TRANSLATE_LANG_KEY");
+        }
+
+        console.warn("Selected language for Mobil:: ",language);
+
         //Translate
         $translateProvider
             .useStaticFilesLoader({
-                prefix: 'assets/translations/',
+                prefix: '../../assets/translations/',
                 suffix: '.json'
             })
             .preferredLanguage(language)
-            .useMissingTranslationHandlerLog()
+            //.useMissingTranslationHandlerLog()
             .useSanitizeValueStrategy('escapeParameters')
             .useLocalStorage()
             //.useCookieStorage()
+            //.useLoaderCache(true) // default is false which means disable
             .fallbackLanguage('tr');
 
         }
@@ -791,7 +820,13 @@ app.factory('ChapterVerses', function ($resource) {
     $scope.CIRCLE_PUBLIC={'id': '-1', 'name': 'Herkes'};
 
     //DEFAULT LANNGUAGE SETTINGS
-    $scope.selectedLanguage = "";
+    var activeLanguage = $translate.use() ||
+        $translate.storage().get($translate.storageKey()) ||
+        $translate.preferredLanguage();
+
+    console.warn("activeLanguage ", activeLanguage);
+
+    $scope.selectedLanguage = activeLanguage;
     $scope.languages = [{
         name: "tr",
         label: "TR"
@@ -800,32 +835,40 @@ app.factory('ChapterVerses', function ($resource) {
         label: "EN"
     }];
 
-    // GET LANGUAGE FROM IP ADDRESS-GEO LOCATION
-    var language = "";
-    $.get("http://ipinfo.io/json", function(response) {
-        console.warn("Visitor Location :: ", response.city, response.country);
-        if(response.country == "TR" || response.country == "Turkey")
-        {
-            language = "tr";
-        } else {
-            language = "en";
-        }
 
-        $scope.selectedLanguage = language;
+    if (localStorage.getItem("FIRST_LOAD") !== null && localStorage.getItem("FIRST_LOAD") === "true"){
+        //GET IP BASED LANGUAGE AND CHECK INITIAL ONE
+        //use http://freegeoip.net/json/ as more free service
 
-        // set current language using ip adress-geo location datas
-        if($translate.use() != language){
-            $translate.use(language);
-        }
-    }, "jsonp");
+        $.get("http://ipinfo.io/json", function (response) {
+            console.warn("Select Language from Visitor IP Location :: ", response.country_code, response.country_name);
 
-    //select language from user ınterface
+            if(response.country_code == "TR" || response.country_name == "Turkey")
+            {
+                language = "tr";
+            } else {
+                language = "en";
+            }
+
+            //Set new language if different current one
+            if($translate.use() != language) {
+                $translate.use(language);
+                $scope.selectedLanguage = language;
+            }
+
+            //remove unnecessary localstorage item
+            localStorage.removeItem("FIRST_LOAD");
+        }, "jsonp");
+
+    }
+
+    //select language from user interface
     $scope.changeLanguage = function (langKey) {
         $translate.use(langKey);
         console.warn("Selected Language :: ", langKey);
         $rootScope.$broadcast('languageChanged', langKey);
+        window.location.reload();
     };
-
 
     $scope.checkAPIVersion = function(){
         var versionRestangular = Restangular.all("apiversioncompatibility");
@@ -1326,7 +1369,6 @@ app.factory('ChapterVerses', function ($resource) {
 
     //tags input auto complete
     $scope.cevrelisteleForSearch = function () {
-console.warn($scope.extendedCirclesForSearch)
         return $scope.extendedCirclesForSearch;
     };
 
@@ -1355,15 +1397,7 @@ console.warn($scope.extendedCirclesForSearch)
             Array.prototype.push.apply($scope.extendedCircles, circleList);
             Array.prototype.push.apply($scope.extendedCirclesForSearch, circleList);
 
-            //Translate instantly auto filled items
-            for(var i=0; i< $scope.extendedCirclesForSearch.length; i++){
-                if($scope.extendedCirclesForSearch[i].name == "Tüm Çevrelerim" ||
-                   $scope.extendedCirclesForSearch[i].name == "Herkes" ||
-                   $scope.extendedCirclesForSearch[i].name == "Referans"
-                ) {
-                    $scope.extendedCirclesForSearch[i].name = $translate.instant($scope.extendedCirclesForSearch[i].name);
-                }
-            }
+            $scope.translateExtendedCircles();
 
             // initialize mobileAnnotationEditorCircleListForSelection
             $scope.mobileAnnotationEditorCircleListForSelection=[];
@@ -1424,6 +1458,22 @@ console.warn($scope.extendedCirclesForSearch)
             }
         });
     };
+
+    $scope.translateExtendedCircles = function () {
+        //Translate instantly auto filled items
+        for(var i=0; i< $scope.extendedCirclesForSearch.length; i++){
+            if($scope.extendedCirclesForSearch[i].name == "Tüm Çevrelerim" ||
+                $scope.extendedCirclesForSearch[i].name == "Herkes" ||
+                $scope.extendedCirclesForSearch[i].name == "Referans"
+            ) {
+                $scope.extendedCirclesForSearch[i].name = $translate.instant($scope.extendedCirclesForSearch[i].name);
+            }
+        }
+    };
+
+    $rootScope.$on('languageChanged', function(){
+        $scope.translateExtendedCircles();
+    });
 
     $scope.initializeVerseLists = function(){
         Restangular.all("verselists").customGET("", {}, {'access_token': $scope.access_token}).then(function (verselists) {

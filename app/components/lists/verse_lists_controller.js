@@ -1,7 +1,7 @@
 /**
  * Created by mehmet.gungoren on 04.04.2016.
  */
-angular.module('ionicApp').controller('VerseListController', function ($scope, $timeout, Restangular, dataProvider, $routeParams, $ionicModal, $ionicPopup, localStorageService, navigationManager) {
+angular.module('ionicApp').controller('VerseListController', function ($scope, $timeout, Restangular, dataProvider, $routeParams, $ionicModal, $ionicPopup, localStorageService, navigationManager, $translate) {
 
     console.log("verse list ctrl");
     $scope.selectedVerseList = {};
@@ -231,10 +231,10 @@ angular.module('ionicApp').controller('VerseListController', function ($scope, $
 
     $scope.deleteVerseListWithConfirm = function(verselist){
         var confirmPop = $ionicPopup.confirm({
-            title: 'Liste Silme',
-            template: '<b>'+ verselist.name + "</b> listesini silmek istiyor musunuz?",
-            cancelText: 'Hayır',
-            okText: 'Sil',
+            title: $translate.instant('Liste Silme'),
+            template: '<b>'+ verselist.name + '</b> ' + $translate.instant("listesini silmek istiyor musunuz?"),
+            cancelText: $translate.instant('Hayır'),
+            okText: $translate.instant('Sil'),
             okType : 'button-assertive'
         });
 
@@ -249,10 +249,10 @@ angular.module('ionicApp').controller('VerseListController', function ($scope, $
         $scope.item = $.extend( true, {}, verselist );
         var promptPopup = $ionicPopup.prompt({
             template: '<input type="text" ng-model="item.name">',
-            title: 'İsim Değiştirme',
+            title: $translate.instant('İsim Değiştirme'),
             scope : $scope,
             inputType: 'text',
-            inputPlaceholder: 'Liste Tanımı',
+            inputPlaceholder: $translate.instant('Liste Tanımı'),
         });
 
         promptPopup.then(function(res) {
@@ -267,10 +267,10 @@ angular.module('ionicApp').controller('VerseListController', function ($scope, $
         $scope.item.name = "";
         var promptPopup = $ionicPopup.prompt({
             template: '<input type="text" ng-model="item.name">',
-            title: 'Yeni Liste Oluştur',
+            title: $translate.instant('Yeni Liste Oluştur'),
             scope : $scope,
             inputType: 'text',
-            inputPlaceholder: 'Liste Tanımı',
+            inputPlaceholder: $translate.instant('Liste Tanımı'),
         });
 
         promptPopup.then(function(res) {
@@ -297,7 +297,7 @@ angular.module('ionicApp').controller('VerseListController', function ($scope, $
             $scope.newVerseList.name = "";
             $scope.filterVerseLists("");
             var chapterNotation = Math.floor($scope.verseForAddToLists/1000)+":"+ $scope.verseForAddToLists%1000;
-            var chpaterText = "("+ $scope.chapters[Math.floor($scope.verseForAddToLists/1000) -1 ].nameTr +":"+($scope.verseForAddToLists%1000) +")";
+            var chpaterText = "("+ $translate.instant('VERSE_NAME.' + $scope.chapters[Math.floor($scope.verseForAddToLists/1000) -1 ].nameTr) +":"+($scope.verseForAddToLists%1000) +")";
             $scope.versesInfo = chapterNotation +  chpaterText;
         });
 
