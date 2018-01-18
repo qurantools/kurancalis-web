@@ -462,7 +462,7 @@
 "Sure Okuma Tanıtım": "Sure Okuma Tanıtım",
 "Geribildirim": "Geribildirim",
 "Kelime ile Ayet Arama": "Kelime ile Ayet Arama",
-"VERSE_TAGGING": "<b>{{selectedVerseList.name}}</b> listesindeki tüm ayetler aşağıda belirtiğiniz şekilde etiketlenecektir."
+"VERSE_TAGGING": "<b>{{selectedVerseList.name}}</b> listesindeki tüm ayetler aşağıda belirtiğiniz şekilde etiketlenecektir.",
 "Dil": "Dil",
 "Verdiğiniz yorum ve puanlarınızla bu Kuran çalışma aracının yaygınlaşmasını sağlayabilirsiniz.": "Verdiğiniz yorum ve puanlarınızla bu Kuran çalışma aracının yaygınlaşmasını sağlayabilirsiniz.",
 "Ürünümüz bağışçı ve gönüllülerin desteğiyle; sınırlı kaynaklarla geliştirilmektedir.": "Ürünümüz bağışçı ve gönüllülerin desteğiyle; sınırlı kaynaklarla geliştirilmektedir.",
