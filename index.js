@@ -26,13 +26,31 @@ var app = angular.module('ionicApp', requiredModules)
     .filter('with_footnote_link', [
         function () {
             return function (text, translation_id, author_id) {
-                return text.replace(/\*+/g, "<button style='border:0;' class='label label-dipnot btn  btn-xs' onclick='angular.element(document.getElementById(\"theView\")).scope().list_footnotes(" + translation_id + "," + author_id + ")'>dipnot</button>");
+                var phase = "";
+                if (localStorage.getItem("NG_TRANSLATE_LANG_KEY") === null ||
+                    localStorage.getItem("NG_TRANSLATE_LANG_KEY") === undefined ||
+                    localStorage.getItem("NG_TRANSLATE_LANG_KEY") === "tr") {
+                    phase = "dipnot";
+                } else {
+                    phase = "footnote";
+                }
+
+                return text.replace(/\*+/g, "<button style='border:0;' class='label label-dipnot btn  btn-xs' onclick='angular.element(document.getElementById(\"theView\")).scope().list_footnotes(" + translation_id + "," + author_id + ")'>" + phase + "</button>");
             };
         }])
     .filter('with_detailed_footnote_link', [  //filter for footnotes on detailed verse page
         function () {
             return function (text, translation_id, author_id) {
-                return text.replace(/\*+/g, "<button style='border:0;' class='label label-dipnot btn  btn-xs' onclick='angular.element(document.getElementById(\"detailedVerseModal\")).scope().list_detailed_footnotes(" + translation_id + "," + author_id + ")'>dipnot</button>");
+                var phase = "";
+                if (localStorage.getItem("NG_TRANSLATE_LANG_KEY") === null ||
+                    localStorage.getItem("NG_TRANSLATE_LANG_KEY") === undefined ||
+                    localStorage.getItem("NG_TRANSLATE_LANG_KEY") === "tr") {
+                    phase = "dipnot";
+                } else {
+                    phase = "footnote";
+                }
+
+                return text.replace(/\*+/g, "<button style='border:0;' class='label label-dipnot btn  btn-xs' onclick='angular.element(document.getElementById(\"detailedVerseModal\")).scope().list_detailed_footnotes(" + translation_id + "," + author_id + ")'>" + phase + "</button>");
             };
         }])
     .filter('with_next_link', [
@@ -41,7 +59,16 @@ var app = angular.module('ionicApp', requiredModules)
                 if(author_id!=262144){// if author isn't Hakkı Yılmaz
                     return text;
                 }else { // Hakkı Yılmaz
-                    var searchText='(Sonraki ';
+                    var phase = "";
+                    if (localStorage.getItem("NG_TRANSLATE_LANG_KEY") === null ||
+                        localStorage.getItem("NG_TRANSLATE_LANG_KEY") === undefined ||
+                        localStorage.getItem("NG_TRANSLATE_LANG_KEY") === "tr") {
+                        phase = '(Sonraki ';
+                    } else {
+                        phase = '(Next ';
+                    }
+
+                    var searchText=phase;
                     var nextLinkPosition = text.indexOf(searchText);
                     if (nextLinkPosition == -1) {// translation doesn't have next link
                         return text;
@@ -58,7 +85,7 @@ var app = angular.module('ionicApp', requiredModules)
                         }else{
                             linkHref='javascript: angular.element(document.getElementById(\'theView\')).scope().showVerseFromFootnote(\''+chapterVerse+'\','+author_id+','+translation_id+');';
                         }
-                        return text.substring(0,nextLinkPosition)+ ' (Sonraki ' + '<a href="'+linkHref+'">'+chapterVerse+'</a>)';
+                        return text.substring(0,nextLinkPosition)+ phase + '<a href="'+linkHref+'">'+chapterVerse+'</a>)';
                     }
                 }
             };
@@ -134,6 +161,14 @@ var app = angular.module('ionicApp', requiredModules)
     .filter('time_in_string',[
         function(){
             return function (milis){
+                var currentLanguage = "";
+                if (localStorage.getItem("NG_TRANSLATE_LANG_KEY") === null ||
+                    localStorage.getItem("NG_TRANSLATE_LANG_KEY") === undefined) {
+                    currentLanguage = "tr";
+                } else {
+                    currentLanguage = localStorage.getItem("NG_TRANSLATE_LANG_KEY");
+                }
+
                 var difference = new Date().getTime() - milis;
                 if(difference < 0) {
                     difference = 0;
@@ -141,16 +176,22 @@ var app = angular.module('ionicApp', requiredModules)
                 var minutes = Math.floor(difference / (1000 * 60));
                 var hours = Math.floor(difference / (1000 * 60 * 60));
                 var days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                var yearText = currentLanguage == "tr" ? " yıl" : " year";
+                var monthText = currentLanguage == "tr" ? " ay" : " mo";
+                var dayText = currentLanguage == "tr" ? " gün" : " day";
+                var hourText = currentLanguage == "tr" ? " sa" : " ho";
+                var minuteText = currentLanguage == "tr" ? " dk" : " min";
+
                 if(days > 364){
-                    return Math.floor(days/364 ) + " yıl";
+                    return Math.floor(days/364 ) + yearText;
                 }else if (days > 30){
-                    return Math.floor(days/30) + " ay";
+                    return Math.floor(days/30) + monthText;
                 }else if (days >= 1){
-                    return (days) + " gün";
+                    return (days) + dayText;
                 }else if (hours >= 1){
-                    return (hours) + " sa";
+                    return (hours) + hourText;
                 }else {
-                    return minutes + " dk";
+                    return minutes + minuteText;
                 }
             }
         }
@@ -836,7 +877,8 @@ app.factory('ChapterVerses', function ($resource) {
     }];
 
 
-    if (localStorage.getItem("FIRST_LOAD") !== null && localStorage.getItem("FIRST_LOAD") === "true"){
+    if (localStorage.getItem("FIRST_LOAD") !== null &&
+        localStorage.getItem("FIRST_LOAD") === "true"){
         //GET IP BASED LANGUAGE AND CHECK INITIAL ONE
         //use http://freegeoip.net/json/ as more free service
 
@@ -867,7 +909,10 @@ app.factory('ChapterVerses', function ($resource) {
         $translate.use(langKey);
         console.warn("Selected Language :: ", langKey);
         $rootScope.$broadcast('languageChanged', langKey);
-        window.location.reload();
+
+        setTimeout(function () {
+            window.location.reload();
+        }, 100)
     };
 
     $scope.checkAPIVersion = function(){
@@ -1063,8 +1108,8 @@ app.factory('ChapterVerses', function ($resource) {
                 if( config_data.isNative){
                     if(navigator.network.connection.type == Connection.NONE) {
                         $ionicPopup.confirm({
-                            title: "Internet Bağlantısı Yok",
-                            content: "Internet baglantısı olmadığı için kullanıcı işlemleri yapılamayacaktır"
+                            title: $translate.instant("Internet Bağlantısı Yok"),
+                            content: $translate.instant("Internet baglantısı olmadığı için kullanıcı işlemleri yapılamayacaktır")
                         });
 
                     }
@@ -1073,7 +1118,7 @@ app.factory('ChapterVerses', function ($resource) {
 
                         if(response.status != 0 && response.data != null && response.data.code == "201"){
                             var infoPopup = $ionicPopup.alert({
-                                title: 'Var olan oturumuzun süresi dolmuştur. Çıkış yapılıyor.',
+                                title: $translate.instant('Var olan oturumuzun süresi dolmuştur. Çıkış yapılıyor.'),
                                 template: '',
                                 buttons: []
                             });
@@ -1093,7 +1138,7 @@ app.factory('ChapterVerses', function ($resource) {
                 else {
                     console.log("Error occured while validating user login with status code", response.status);
                     var infoPopup = $ionicPopup.alert({
-                        title: 'Var olan oturumuzun süresi dolmuştur. Çıkış yapılıyor.',
+                        title: $translate.instant('Var olan oturumuzun süresi dolmuştur. Çıkış yapılıyor.'),
                         template: '',
                         buttons: []
                     });
@@ -1188,6 +1233,7 @@ app.factory('ChapterVerses', function ($resource) {
     };
 
     $scope.showEditorModal = function (annotation, position, postCallback, cancelPostBack) {
+        console.warn("index showEditorModal");
         $timeout(function(){
             $scope.$broadcast("show_editor",{annotation: annotation, position:position, postCallback: postCallback, cancelPostBack : cancelPostBack});
         });
@@ -1533,7 +1579,7 @@ app.factory('ChapterVerses', function ($resource) {
         var verse_number = $scope.goToVerseParameters.verse;
 
         //search array with id
-        var validationErrorMessage = "Geçerli ayet ve sure numarası giriniz";
+        var validationErrorMessage = $translate.instant("Geçerli ayet ve sure numarası giriniz");
         var index = chapters.map(function (el) {
             return el.id;
         }).indexOf(chapter_id);

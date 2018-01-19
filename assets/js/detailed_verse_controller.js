@@ -42,7 +42,6 @@ angular.module('ionicApp')
         var buttonBookmark = {text: $translate.instant('Burada Kaldım') };
         var buttonVerseHistory = {text: $translate.instant('Ayet Geçmişi') };
 
-        console.warn("butonCeviri", buttonSelectTranslation.text)
         $scope.localStorageManager = new LocalStorageManager("detailed_verse",localStorageService,
             [
                 {

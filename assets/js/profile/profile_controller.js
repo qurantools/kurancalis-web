@@ -1,5 +1,5 @@
 angular.module('ionicApp')
-    .controller('ProfileController', function ($scope, $routeParams, Restangular, $location, $ionicPopup, $ionicModal, $window, navigationManager ) {
+    .controller('ProfileController', function ($scope, $routeParams, Restangular, $location, $ionicPopup, $ionicModal, $window, navigationManager, $translate) {
 
         $scope.friendName = "";
         $scope.circleId = -1;
@@ -159,10 +159,10 @@ angular.module('ionicApp')
         $scope.deleteAnnotation = function (annotation) {
             if (config_data.isMobile) {
                 var confirmPopup = $ionicPopup.confirm({
-                    title: 'Ayet Notu Sil',
-                    template: 'Ayet notu silinecektir, onaylıyor musunuz?',
-                    cancelText: 'VAZGEC',
-                    okText: 'TAMAM',
+                    title: $translate.instant('Ayet Notu Sil'),
+                    template: $translate.instant('Ayet notu silinecektir, onaylıyor musunuz?'),
+                    cancelText: $translate.instant('VAZGEC'),
+                    okText: $translate.instant('TAMAM'),
                     okType: 'button-assertive'
                 });
                 confirmPopup.then(function(res) {

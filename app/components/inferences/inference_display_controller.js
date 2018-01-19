@@ -1,7 +1,7 @@
 
 var angularModule=angular.module('ionicApp');
 
-    angularModule.controller('InferenceDisplayController', function ($scope, $routeParams, $location, authorization, localStorageService,  Restangular, $timeout,$sce,$ionicModal,$ionicPopup, $cordovaSocialSharing, dataProvider, $ionicActionSheet ) {
+    angularModule.controller('InferenceDisplayController', function ($scope, $routeParams, $location, authorization, localStorageService,  Restangular, $timeout,$sce,$ionicModal,$ionicPopup, $cordovaSocialSharing, dataProvider, $ionicActionSheet, $translate ) {
 
         //All scope variables
         $scope.inferenceId=0;
@@ -399,14 +399,14 @@ var angularModule=angular.module('ionicApp');
         if(config_data.isMobile){
             $scope.deleted = function() {
                 var confirmPopup = $ionicPopup.confirm({
-                    title: 'Notu Silme',
-                    template: 'Çıkarım notu silinecek Onaylıyor musunuz?',
+                    title: $translate.instant('Notu Silme'),
+                    template: $translate.instant('Çıkarım notu silinecek Onaylıyor musunuz?'),
                     buttons: [{
-                        text : 'Vazgeç',
-                        type: 'button-balanced',
+                        text : $translate.instant('Vazgeç'),
+                        type: 'button-balanced'
                     },
                     {
-                        text : 'Sil',
+                        text : $translate.instant('Sil'),
                         type: 'button-assertive',
                         onTap: function (e) {
                             $scope.delete_inference();
@@ -485,10 +485,10 @@ var angularModule=angular.module('ionicApp');
                         $scope.commentContentUpdate.value = comment.content;
                     } else if (index == 1) {
                         var confirmPop = $ionicPopup.confirm({
-                            title: 'Yorum Silme',
-                            template: 'Yorumunuzu silmek istiyor musunuz?',
-                            cancelText: 'Hayır',
-                            okText: 'Sil',
+                            title: $translate.instant('Yorum Silme'),
+                            template: $translate.instant('Yorumunuzu silmek istiyor musunuz?'),
+                            cancelText: $translate.instant('Hayır'),
+                            okText: $translate.instant('Sil'),
                             okType : 'button-assertive'
                         });
 

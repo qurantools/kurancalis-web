@@ -1,5 +1,5 @@
 ﻿angular.module('ionicApp')
-    .controller('bookmarkController', function ($scope, Restangular, $sce, $compile) {
+    .controller('bookmarkController', function ($scope, Restangular, $sce, $compile, $translate) {
 
         console.log('bookmark ctrl');
 
@@ -29,7 +29,7 @@
             $scope.bookmarkParameters.verseinfo = verseId % 1000;
             $scope.bookmarkParameters.bookmarkverseid = verseId;
             $scope.bookmarkverseid = verseId;
-            $scope.bookmarkParameters.bookchaptername = $scope.chapters[$scope.bookmarkParameters.chapterinfo - 1].nameTr;
+            $scope.bookmarkParameters.bookchaptername = $translate.instant('VERSE_NAME.' + $scope.chapters[$scope.bookmarkParameters.chapterinfo - 1].nameTr);
         });
 
         $scope.$on("searchBookMarkModal", function (event) {
@@ -49,7 +49,7 @@
                 for (var i = 0; i < data.length; i++) {
                     if (data[i].color == "yellow") {
                         $scope.bookmarksyellowverseID = data[i].verseId;
-                        $scope.bookmarksyellowchapter = $scope.chapters[(data[i].verseId / 1000 | 0) - 1].nameTr;
+                        $scope.bookmarksyellowchapter = $translate.instant('VERSE_NAME.' + $scope.chapters[(data[i].verseId / 1000 | 0) - 1].nameTr);
 
                         if ($scope.bookmarksyellowchapter != "") {
                             $scope.bookmarksyellowchapterid = Math.floor(data[i].verseId / 1000);
@@ -61,7 +61,7 @@
                     }
                     else if (data[i].color == "green") {
                         $scope.bookmarksgreenverseID = data[i].verseId;
-                        $scope.bookmarksgreenchapter = $scope.chapters[(data[i].verseId / 1000 | 0) - 1].nameTr;
+                        $scope.bookmarksgreenchapter = $translate.instant('VERSE_NAME.' + $scope.chapters[(data[i].verseId / 1000 | 0) - 1].nameTr);
 
                         if ($scope.bookmarksgreenchapter != "") {
                             $scope.bookmarksgreenchapterid = Math.floor(data[i].verseId / 1000);
@@ -73,7 +73,7 @@
                     }
                     else if (data[i].color == "orange") {
                         $scope.bookmarksorangeverseID = data[i].verseId;
-                        $scope.bookmarksorangechapter = $scope.chapters[(data[i].verseId / 1000 | 0) - 1].nameTr;
+                        $scope.bookmarksorangechapter = $translate.instant('VERSE_NAME.' + $scope.chapters[(data[i].verseId / 1000 | 0) - 1].nameTr);
 
                         if ($scope.bookmarksorangechapter != "") {
                             $scope.bookmarksorangechapterid = Math.floor(data[i].verseId / 1000);
