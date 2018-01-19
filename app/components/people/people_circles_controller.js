@@ -391,7 +391,7 @@ var mymodal = angular.module('ionicApp')
                 title: $translate.instant('Yeni Çevre Oluştur'),
                 scope : $scope,
                 inputType: 'text',
-                inputPlaceholder: $translate.instant('Çevre Tanımı'),
+                inputPlaceholder: $translate.instant('Çevre Tanımı')
             });
 
             promptPopup.then(function(res) {
@@ -403,10 +403,10 @@ var mymodal = angular.module('ionicApp')
 
         $scope.deleteCircle = function(item){
             var confirmPop = $ionicPopup.confirm({
-                title: 'Çevre Silme',
-                template: '<b>'+ item.name + "</b> çevresini silmek istiyor musunuz?",
-                cancelText: 'Hayır',
-                okText: 'Sil',
+                title: $translate.instant('Çevre Silme'),
+                template: '<b>'+ item.name + '</b>' +  $translate.instant("çevresini silmek istiyor musunuz?"),
+                cancelText: $translate.instant('Hayır'),
+                okText: $translate.instant('Sil'),
                 okType : 'button-assertive'
             });
 
@@ -421,10 +421,10 @@ var mymodal = angular.module('ionicApp')
             $scope.item = $.extend( true, {}, item );
             var promptPopup = $ionicPopup.prompt({
                 template: '<input type="text" ng-model="item.name">',
-                title: 'İsim Değiştirme',
+                title: $translate.instant('İsim Değiştirme'),
                 scope : $scope,
                 inputType: 'text',
-                inputPlaceholder: 'Çevre Tanımı',
+                inputPlaceholder: $translate.instant('Çevre Tanımı')
             });
 
             promptPopup.then(function(res) {

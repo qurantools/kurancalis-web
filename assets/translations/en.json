@@ -484,5 +484,13 @@
 "Liste Silme": "Delete List",
 "Hayır": "No",
 "İsim Değiştirme": "Change Name",
-"Liste Tanımı": "List Definition"
+"Liste Tanımı": "List Definition",
+"Yorumu Güncelle": "Update Comment",
+"Yorumu Sil": "Delete comment",
+"Yorumunuzu silmek istiyor musunuz?": "Do you want to delete your comment?",
+"Not Ekle": "Add Note",
+"Internet Bağlantısı Yok": "No Internet connection",
+"Internet baglantısı olmadığı için kullanıcı işlemleri yapılamayacaktır": "User operations will not be done because there is no Internet connection",
+"Var olan oturumuzun süresi dolmuştur. Çıkış yapılıyor.": "Your current session has expired. Signing out.",
+"Notu Silme": "Delete Note"
 }

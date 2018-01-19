@@ -1,5 +1,5 @@
 angular.module('ionicApp')
-    .controller('AnnotationDisplayController', function ($scope, $routeParams, $location, authorization, localStorageService,  Restangular, $ionicModal, $timeout, $ionicPopup, $ionicActionSheet) {
+    .controller('AnnotationDisplayController', function ($scope, $routeParams, $location, authorization, localStorageService,  Restangular, $ionicModal, $timeout, $ionicPopup, $ionicActionSheet, $translate) {
 
         $scope.annotation = null;
 
@@ -74,8 +74,8 @@ angular.module('ionicApp')
 
         $scope.openFooterMenu = function (source, comment, comment_index){
             $scope.footerMenuButtons = [];
-            $scope.footerMenuButtons.push({text: 'Yorumu Güncelle'});
-            $scope.footerMenuButtons.push({text: 'Yorumu Sil'});
+            $scope.footerMenuButtons.push({text: $translate.instant('Yorumu Güncelle')});
+            $scope.footerMenuButtons.push({text: $translate.instant('Yorumu Sil')});
             if ($scope.user.id != comment.userId){
                 return;
             }
@@ -98,10 +98,10 @@ angular.module('ionicApp')
                         $scope.commentContentUpdate.value = comment.content;
                     } else if (index == 1) {
                         var confirmPop = $ionicPopup.confirm({
-                            title: 'Yorum Silme',
-                            template: 'Yorumunuzu silmek istiyor musunuz?',
-                            cancelText: 'Hayır',
-                            okText: 'Sil',
+                            title: $translate.instant('Yorum Silme'),
+                            template: $translate.instant('Yorumunuzu silmek istiyor musunuz?'),
+                            cancelText: $translate.instant('Hayır'),
+                            okText: $translate.instant('Sil'),
                             okType : 'button-assertive'
                         });
                         confirmPop.then(function (res) {
@@ -172,10 +172,10 @@ angular.module('ionicApp')
         $scope.deleteAnnotation = function (annotation) {
             if (config_data.isMobile) {
                 var confirmPopup = $ionicPopup.confirm({
-                    title: 'Ayet Notu Sil',
-                    template: 'Ayet notu silinecektir, onaylıyor musunuz?',
-                    cancelText: 'VAZGEC',
-                    okText: 'TAMAM',
+                    title: $translate.instant('Ayet Notu Sil'),
+                    template: $translate.instant('Ayet notu silinecektir, onaylıyor musunuz?'),
+                    cancelText: $translate.instant('VAZGEC'),
+                    okText: $translate.instant('TAMAM'),
                     okType: 'button-assertive'
                 });
                 confirmPopup.then(function(res) {
