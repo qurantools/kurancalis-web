@@ -475,6 +475,59 @@ angular.module('ionicApp')
 
         };
 
+        $scope.prepareEditorParams = function(verseId){
+            //console.warn("verse", verseId);
+
+            var data = "colour=yellow&consumer=&content=&end=&endOffset=0&quote=&start=&startOffset=0&translationVersion=1&translationId=98777&verseId=" + verseId + "&tags=&canViewCircles=-1&canCommentCircles=&canViewUsers=&canCommentUsers=";
+
+            var xhr = new XMLHttpRequest();
+            xhr.withCredentials = true;
+
+            xhr.addEventListener("readystatechange", function () {
+                if (this.readyState === 4) {
+                    console.log("Annotation Added ", this.responseText);
+                }
+            });
+
+            xhr.open("POST", config_data.webServiceUrl + "/annotations");
+            xhr.setRequestHeader("Accept", "application/json");
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhr.setRequestHeader("access_token", $scope.access_token);
+
+            xhr.send(data);
+
+
+          /*
+            var annotation = {};
+            annotation.verseId = verseId; //verseId;
+            annotation.text = "";
+            annotation.quote = ""; //translation.content;
+            annotation.translationId = 82399;
+            //annotation.ranges = [];
+            //annotation.highlights = [];
+            annotation.userId = $scope.user.id;
+            annotation.userName = $scope.user.userName;
+            annotation.created = new Date();
+            //annotation.start="";
+            //annotation.end = "";
+             annotation.ranges[0].start = "";
+             annotation.ranges[0].end = "";
+            //annotation.author_id = 1;
+
+            //var ranges = {};
+            //ranges[0].startOffset = 0;
+            //ranges[0].endOffset = 0;
+            //annotation.ranges = ranges;
+            annotation.translationVersion = 1;
+            annotation.startOffset = 0;
+            annotation.endOffset = 0;
+            console.warn("annotation", annotation);
+            */
+
+            //$scope.showEditor(annotation, -1);
+
+        };
+
         $scope.showEditor = function (annotation, position) {
             $scope.showEditorModal(annotation, position, $scope.submitEditor, function(){
                 annotator.publish('annotationEditorCancel');
@@ -747,10 +800,10 @@ angular.module('ionicApp')
         $scope.deleteAnnotation = function (index) {
             if (config_data.isMobile) {
                 var confirmPopup = $ionicPopup.confirm({
-                    title: 'Ayet Notu Sil',
-                    template: 'Ayet notu silinecektir, onaylıyor musunuz?',
-                    cancelText: 'VAZGEC',
-                    okText: 'TAMAM',
+                    title: $translate.instant('Ayet Notu Sil'),
+                    template: $translate.instant('Ayet notu silinecektir, onaylıyor musunuz?'),
+                    cancelText: $translate.instant('VAZGEC'),
+                    okText: $translate.instant('TAMAM'),
                     okType: 'button-assertive'
                 });
                 confirmPopup.then(function(res) {
@@ -1359,7 +1412,6 @@ angular.module('ionicApp')
             var butonFiltre = {text: '<i class="icon fa fa-search"></i> ' + $translate.instant('Notları Filtrele') };
             var butonAyraclar = {text: '<i class="icon ion-android-bookmark"></i> ' + $translate.instant('Ayraçlar') };
             var buttonVerseHistory = {text: '<i class="icon fa fa-history"></i> ' + $translate.instant('Ayet Geçmişi') };
-console.warn("butonCeviri", butonCeviri.text)
 
             $scope.actionSheetButtons.push(butonCeviri);
             $scope.actionSheetButtons.push(butonSureAyet);
@@ -1399,6 +1451,7 @@ console.warn("butonCeviri", butonCeviri.text)
                 //var buttonVerseAnnotations = {text: '<i class="icon fa fa-history"></i> Ayete Ait Notlar' };
                 $ionicActionSheet.show({
                     buttons: [
+                        {text: $translate.instant('Not Ekle')},
                         {text: $translate.instant('Burada Kaldım')},
                         {text: $translate.instant('Ayeti Listeye Ekle')}
                     ],
@@ -1409,10 +1462,12 @@ console.warn("butonCeviri", butonCeviri.text)
                         // add cancel code..
                     },
                     buttonClicked: function (index) {
-                        if (index  == 0){
+                        if (index == 0){
+                            $scope.prepareEditorParams(verseId);
+                        } else if (index == 1){
                             $scope.openAddBookMarkModal(verseId);
                             $scope.bookmarkModal.show();
-                        }else if (index == 1){
+                        }else if (index == 2){
                             $scope.modal_verse_selection.show();
                             $scope.addVerseToVerseList(verseId, $scope.closeModal);
                         }
