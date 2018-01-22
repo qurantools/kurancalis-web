@@ -1233,7 +1233,6 @@ app.factory('ChapterVerses', function ($resource) {
     };
 
     $scope.showEditorModal = function (annotation, position, postCallback, cancelPostBack) {
-        console.warn("index showEditorModal");
         $timeout(function(){
             $scope.$broadcast("show_editor",{annotation: annotation, position:position, postCallback: postCallback, cancelPostBack : cancelPostBack});
         });
