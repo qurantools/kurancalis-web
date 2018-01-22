@@ -475,59 +475,6 @@ angular.module('ionicApp')
 
         };
 
-        $scope.prepareEditorParams = function(verseId){
-            //console.warn("verse", verseId);
-
-            var data = "colour=yellow&consumer=&content=&end=&endOffset=0&quote=&start=&startOffset=0&translationVersion=1&translationId=98777&verseId=" + verseId + "&tags=&canViewCircles=-1&canCommentCircles=&canViewUsers=&canCommentUsers=";
-
-            var xhr = new XMLHttpRequest();
-            xhr.withCredentials = true;
-
-            xhr.addEventListener("readystatechange", function () {
-                if (this.readyState === 4) {
-                    console.log("Annotation Added ", this.responseText);
-                }
-            });
-
-            xhr.open("POST", config_data.webServiceUrl + "/annotations");
-            xhr.setRequestHeader("Accept", "application/json");
-            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            xhr.setRequestHeader("access_token", $scope.access_token);
-
-            xhr.send(data);
-
-
-          /*
-            var annotation = {};
-            annotation.verseId = verseId; //verseId;
-            annotation.text = "";
-            annotation.quote = ""; //translation.content;
-            annotation.translationId = 82399;
-            //annotation.ranges = [];
-            //annotation.highlights = [];
-            annotation.userId = $scope.user.id;
-            annotation.userName = $scope.user.userName;
-            annotation.created = new Date();
-            //annotation.start="";
-            //annotation.end = "";
-             annotation.ranges[0].start = "";
-             annotation.ranges[0].end = "";
-            //annotation.author_id = 1;
-
-            //var ranges = {};
-            //ranges[0].startOffset = 0;
-            //ranges[0].endOffset = 0;
-            //annotation.ranges = ranges;
-            annotation.translationVersion = 1;
-            annotation.startOffset = 0;
-            annotation.endOffset = 0;
-            console.warn("annotation", annotation);
-            */
-
-            //$scope.showEditor(annotation, -1);
-
-        };
-
         $scope.showEditor = function (annotation, position) {
             $scope.showEditorModal(annotation, position, $scope.submitEditor, function(){
                 annotator.publish('annotationEditorCancel');
@@ -557,7 +504,7 @@ angular.module('ionicApp')
                 queryParams.own_annotations = $scope.query_own_annotations.value;
 
                 //-----------------------------------//
-                console.warn("queryParams::",$scope.getTagsWithCommaSeparated($scope.query_circles),queryParams);
+                console.warn("queryParams::", queryParams);
                 //-----------------------------------//
 
                 annotator.setQueryParameters(queryParams);
@@ -593,6 +540,65 @@ angular.module('ionicApp')
                     $(document).unbind('mousedown');
                 }
             }
+        };
+
+        $scope.onCustomAdderClick = function (verseId, translationId) {
+
+            var annotation, cancel, cleanup, position, save;
+
+            console.log($scope, $scope.translations);
+            for(var i=0; i<$scope.translations;i++){
+                console.log($scope.translations[i]);
+            }
+            position = -1;
+            annotator.adder.hide();
+
+            var annotation = {};
+            annotation.translationId = translationId;
+            annotation.verseId = verseId;
+            annotation.authorId = 1;
+            annotation.text = "";
+            annotation.quote = "";
+            var ranges = [{}];
+            ranges[0].start = "";
+            ranges[0].end = "";
+            ranges[0].endOffset = 0;
+            ranges[0].startOffset = 0;
+            annotation.ranges = ranges;
+            annotation.translationVersion = 1;
+            annotation.canViewCircles = -1;
+            annotation.highlights = [];
+            annotation.tags = [];
+            annotation.userId = $scope.user.id;
+            annotation.userName = $scope.user.username;
+            annotation.created = new Date();
+            annotation.authorId = 1;
+
+            save = (function (annotator) {
+                return function () {
+                    return annotator.publish('annotationCreated', [annotation]);
+                };
+
+            })(annotator);
+            cancel = (function (annotator) {
+                return function () {
+                    return annotator.deleteAnnotation(annotation);
+                };
+            })(annotator);
+            cleanup = (function (annotator) {
+                return function () {
+                    annotator.unsubscribe('annotationEditorHidden', cleanup);
+                    return annotator.unsubscribe('annotationEditorSubmit', save);
+                };
+            })(annotator);
+
+            annotator.unsubscribe('annotationEditorHidden');
+            annotator.unsubscribe('annotationEditorSubmit');
+            annotator.subscribe('annotationEditorCancel', cancel);
+            annotator.subscribe('annotationEditorHidden', cleanup);
+            annotator.subscribe('annotationEditorSubmit', save);
+
+            annotator.publish("adderClicked",[annotation, position]);
         };
 
         $scope.showVerseAnnotations = function (verseId){
@@ -1442,7 +1448,7 @@ angular.module('ionicApp')
             $ionicScrollDelegate.$getByHandle(id).scrollTop();
         };
 
-        $scope.verseActionSheet = function (chapter,verse,verseId) {
+        $scope.verseActionSheet = function (translationId,chapter,verse,verseId) {
             if ($scope.user == null)
                 return;
             $timeout(function() {
@@ -1463,7 +1469,8 @@ angular.module('ionicApp')
                     },
                     buttonClicked: function (index) {
                         if (index == 0){
-                            $scope.prepareEditorParams(verseId);
+                            $("#annotationModal").show();
+                            $scope.onCustomAdderClick(verseId, translationId)
                         } else if (index == 1){
                             $scope.openAddBookMarkModal(verseId);
                             $scope.bookmarkModal.show();
