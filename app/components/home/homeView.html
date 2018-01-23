@@ -21,7 +21,7 @@
                                     <div class="translation_nav_col1" style="font-size:20px;">
                                         {{translation.chapter}}:{{translation.verse}}
                                     </div>
-                                    <div><img src="assets/img/sticky-note.png" width="20" height="20" ng-if="verseHasAnnotation(verse.id)" ng-click="showVerseAnnotations({{verse.id}})"></div>
+                                    <div><img src="assets/img/sticky-note.png" width="20" height="20" ng-if="user!=null && !show_verse_annotations || verseHasAnnotation(verse.id)" ng-click="showVerseAnnotations({{verse.id}})"></div>
                                 </div>
                                 <div class="row">
                                     <div class="translation_nav_col1">
@@ -48,7 +48,7 @@
                             </div>
                             
                             <div class="col-xs-1" ng-if="$first" style="text-align: center" ng-show="showSingleAuthor">
-                                <div class="chapter_verse_number">{{translation.chapter}}:{{translation.verse}} <img src="assets/img/sticky-note.png" width="25" height="25" ng-if="verseHasAnnotation(verse.id)" ng-click="showVerseAnnotations({{verse.id}})"></div>
+                                <div class="chapter_verse_number">{{translation.chapter}}:{{translation.verse}} <img src="assets/img/sticky-note.png" width="25" height="25" ng-if="user!=null && !show_verse_annotations || verseHasAnnotation(verse.id)" ng-click="showVerseAnnotations({{verse.id}})"></div>
                             </div>
                             <div class="col-xs-11" id="t_{{translation.id}}" style="float: right">
                                 <div class="col-xs-3 authorDiv_{{authorMap[translation.authorId].color}}"
@@ -61,6 +61,8 @@
                                     | 
                                     <a ng-click="popoveropen()" tabindex="0" role="button" data-toggle="popover"  data-content="
                                     <div class='form-control' style='width:220px; height:auto'>
+                                        <a ng-if='user!=null' href><div style='width:100%' ng-click='onCustomAdderClick({{verse.id}}, {{verse.translations[0].id}})' data-target='#annotationModal' translate>Not Ekle</div></a>
+                                        <hr ng-if='user!=null' style='width:100%' />
                                         <a href><div style='width:100%' ng-click='linkcreate({{translation.chapter}},{{translation.verse}})' data-target='#openlink' data-toggle='modal' translate>Kelime Meali</div></a>
                                         <hr style='width:100%' />
                                         <a ng-if='user!=null' href><div style='width:100%' data-target='#bookmark' data-toggle='modal' ng-click='openAddBookMarkModal({{verse.id}})' translate>Burada Kaldım</div></a>

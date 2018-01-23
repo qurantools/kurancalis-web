@@ -53,6 +53,11 @@ angular.module('ionicApp')
 
         $scope.verseAnnotationData = [];
 
+        //annotation control
+        $scope.show_annotations = false;
+        $scope.viewed_annotations = []; //seen annotations
+        $scope.isPageLoaded = false;
+
         $scope.restoreChapterViewParameters = function (localParameterData) {
             $scope.query_author_mask = localParameterData.author_mask;
             $scope.query_chapter_id = localParameterData.chapter_id;
@@ -80,6 +85,19 @@ angular.module('ionicApp')
             localParameterData.users = $scope.query_users;
 
             localStorageService.set('chapter_view_parameters', localParameterData);
+        };
+
+        $scope.restoreVerseAnnotationParameters = function (localParameterVerseAnnotation) {
+            $scope.show_annotations = localParameterVerseAnnotation.show_annotations;
+            $scope.viewed_annotations = localParameterVerseAnnotation.viewed_annotations;
+        };
+
+        $scope.storeVerseAnnotationParameters = function () {
+            var localParameterVerseAnnotation = {};
+            localParameterVerseAnnotation.show_annotations = $scope.show_annotations;
+            localParameterVerseAnnotation.viewed_annotations = $scope.viewed_annotations;
+
+            localStorageService.set('verse_annotations', localParameterVerseAnnotation);
         };
 
         $scope.searchBookMarkModal = function(){
@@ -125,7 +143,7 @@ angular.module('ionicApp')
                 ownAnnotations: $scope.query_own_annotations.value,
                 circles: Base64.encode(JSON.stringify($scope.query_circles)),
                 users: Base64.encode(JSON.stringify($scope.query_users))
-            }
+            };
             $location.path("/translations/", false).search(parameters);
         };
 
@@ -279,8 +297,7 @@ angular.module('ionicApp')
 
         $scope.toggleDetailedSearchOwnAnnotations = function () {
             $scope.query_own_annotations.value = !$scope.query_own_annotations.value;
-        }
-
+        };
 
 
         $scope.resetAnnotationFilter = function () {
@@ -498,10 +515,19 @@ angular.module('ionicApp')
                 queryParams.chapter = $scope.query_chapter_id;
                 queryParams.author_mask_on_view = $scope.query_author_mask;
                 queryParams.author_mask = MAX_AUTHOR_MASK;
-                queryParams.circles = $scope.getTagsWithCommaSeparated($scope.query_circles) || $scope.CIRCLE_PUBLIC.id;
+
+                if($scope.show_annotations || $scope.isPageLoaded) {
+                    queryParams.circles = $scope.getTagsWithCommaSeparated($scope.query_circles); // || $scope.CIRCLE_PUBLIC.id;
+                    queryParams.own_annotations = $scope.query_own_annotations.value;
+                } else {
+                    queryParams.circles = "";
+                    queryParams.own_annotations = false;
+                    $scope.isPageLoaded = true;
+                }
+
                 queryParams.users = $scope.getTagsWithCommaSeparated($scope.query_users);
                 queryParams.verses = $scope.query_verses;
-                queryParams.own_annotations = $scope.query_own_annotations.value;
+
 
                 //-----------------------------------//
                 console.warn("queryParams::", queryParams);
@@ -602,18 +628,60 @@ angular.module('ionicApp')
         };
 
         $scope.showVerseAnnotations = function (verseId){
+            //add to local storage newly getted annotations
+            //console.log("annotation verseId = ", verseId, "\nALL LOCAL ANNOTATIONS:: ", $scope.viewed_annotations,"\nchapterId",$scope.query_chapter_id,"\nverses",verseId,"\ncircles",$scope.getTagsWithCommaSeparated($scope.query_circles),"\nown",$scope.query_own_annotations.value,"\nusers",$scope.getTagsWithCommaSeparated($scope.query_users));
 
-            var arrayLength = $scope.annotations.length;
+            console.log("Count:: ",$scope.viewed_annotations.length);
+
+            if($scope.viewed_annotations.length > 0) {
+                var verseAnnotations = [];
+
+                for(var i=0; i<$scope.viewed_annotations.length; i++) {
+
+                    if($scope.viewed_annotations[i].chapter == $scope.query_chapter_id &&
+                       $scope.viewed_annotations[i].verses == verseId % 1000 &&
+                       $scope.viewed_annotations[i].circles == $scope.getTagsWithCommaSeparated($scope.query_circles) &&
+                       $scope.viewed_annotations[i].own_annotation == $scope.query_own_annotations.value &&
+                       $scope.viewed_annotations[i].users == $scope.getTagsWithCommaSeparated($scope.query_users)
+                    ){
+                        console.log("Annotation for (", verseId, ") loaded from LOCAL STORAGE");
+                        verseAnnotations.push($scope.viewed_annotations[i].annotation);
+                    }
+                }
+
+                //$timeout(function () {
+                    if (verseAnnotations.length > 0) {
+                        //it is just like clicked on annotations
+
+                        console.log("Shown Annotations: ", verseAnnotations)
+                        //$scope.annotate_it();
+                        $scope.onHighlightClicked(verseAnnotations);
+
+                    } else {
+                        //add annotation for verseId and open right sidebar
+                        $scope.query_verses = verseId % 1000;
+                        $scope.goToChapter();
+                    }
+                //},100);
+
+            } else {
+                //add annotation for verseId and open right sidebar
+                $scope.query_verses = verseId%1000;
+                $scope.goToChapter();
+            }
+
+
+           /* var arrayLength = $scope.annotations.length;
             var verseAnnotations = [];
             for (var i = 0; i < arrayLength; i++) {
 
-                if( $scope.annotations[i].verseId == verseId ){
+                if ($scope.annotations[i].verseId == verseId) {
                     verseAnnotations.push($scope.annotations[i]);
                 }
             }
 
             //it is just like clicked on annotations
-            $scope.onHighlightClicked(verseAnnotations);
+            $scope.onHighlightClicked(verseAnnotations);*/
 
         };
 
@@ -721,7 +789,6 @@ angular.module('ionicApp')
             dataProvider.listTranslations(translationParams, function(data){
                 $scope.prepareTranslationDivMap(data);
                 //mark annotations
-
                 if($scope.access_token == null){
                     $scope.$on("userInfoReady",$scope.annotate_it);
                 }
@@ -786,7 +853,43 @@ angular.module('ionicApp')
         };
 
         $scope.loadAnnotations = function (annotations) {
-            console.warn("LOAD ANNOTATIONS... ", annotations)
+
+            //add to local storage newly getted annotations
+            var localParameterVerseAnnotation = localStorageService.get('verse_annotations');
+
+            if(annotations.length > 0) {
+
+                for(var i=0; i<annotations.length; i++) {
+
+                    //for(var j=0; j<$scope.viewed_annotations.length; j++) {
+
+                      //  if ($scope.viewed_annotations[j].chapter != $scope.query_chapter_id ||
+                      //      $scope.viewed_annotations[j].verses != $scope.query_verses ||
+                      //      $scope.viewed_annotations[j].circles != $scope.getTagsWithCommaSeparated($scope.query_circles) ||
+                      //      $scope.viewed_annotations[j].own_annotation != $scope.query_own_annotations.value ||
+                      //      $scope.viewed_annotations[j].users != $scope.getTagsWithCommaSeparated($scope.query_users)
+                      //  ) {
+                            var customAnnotations = {
+                                chapter: $scope.query_chapter_id,
+                                verses: $scope.query_verses,
+                                circles: $scope.getTagsWithCommaSeparated($scope.query_circles),
+                                own_annotation: $scope.query_own_annotations.value,
+                                users: $scope.getTagsWithCommaSeparated($scope.query_users),
+                                annotation: annotations[i]
+                            };
+
+                            //console.log("Added annotation:: ", customAnnotations)
+                            localParameterVerseAnnotation.viewed_annotations.push(customAnnotations);
+                     //   }
+                    //}
+                }
+
+                localStorageService.set('verse_annotations', localParameterVerseAnnotation);
+            }
+
+            console.log("Annotation Added to Local Storage...");
+
+            console.warn("LOAD ANNOTATIONS... ", annotations);
             $scope.annotations = annotations;
             $scope.loadVerseAnnotationData();
             $scope.scopeApply();
@@ -1169,9 +1272,10 @@ angular.module('ionicApp')
 
         $scope.changeStatus = function () {
             $scope.status = !$scope.status;
-        }
+        };
 
         $scope.restoreMobileDetailedSearchCircleSelections = function(){
+            console.warn("mobil detail search")
             //restore mobile circle selections
             for (var index = 0; index < $scope.mobileDetailedSearchCircleListForSelection.length; ++index) {
                 for(var qindex = 0; qindex < $scope.query_circles.length; ++qindex){
@@ -1237,7 +1341,6 @@ angular.module('ionicApp')
             var verseNumber = 1;
             var ownAnnotations = true;
             var circles = []; //id array
-            //circles.push($scope.CIRCLE_ALL_CIRCLES);// All Circles by default
             circles.push($scope.CIRCLE_PUBLIC);// Public Circles by default
             var users = []; //id array
             var chapterFromRoute = false;
@@ -1327,6 +1430,14 @@ angular.module('ionicApp')
                 if (circlesFromRoute || !isDefined(localParameterData.circles)) {
                     localParameterData.circles = circles;
                 }
+            }
+
+            var localParameterVerseAnnotation = localStorageService.get('verse_annotations');
+
+            if (localParameterVerseAnnotation == null) {
+                $scope.storeVerseAnnotationParameters();
+            } else {
+                $scope.restoreVerseAnnotationParameters(localParameterVerseAnnotation);
             }
 
             $scope.restoreChapterViewParameters(localParameterData);
@@ -1441,6 +1552,7 @@ angular.module('ionicApp')
             }
             $scope.query_circle_dropdown = item;
 
+            $scope.query_verses = "";
             $scope.goToChapter();
         };
 
