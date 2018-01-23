@@ -317,8 +317,8 @@ angular.module('ionicApp')
             var circles = []; //id array
             circles.push(
                 {
-                    id: -2,
-                    name: "Tüm Çevrelerim"
+                    id: -1,
+                    name: "Herkes"
                 }
                 );
             var users = []; //id array

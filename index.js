@@ -883,9 +883,9 @@ app.factory('ChapterVerses', function ($resource) {
         //use http://freegeoip.net/json/ as more free service
 
         $.get("http://ipinfo.io/json", function (response) {
-            console.warn("Select Language from Visitor IP Location :: ", response.country_code, response.country_name);
+            console.warn("Select Language from Visitor IP Location :: ", response.country);
 
-            if(response.country_code == "TR" || response.country_name == "Turkey")
+            if(response.country == "TR" || response.country == "Turkey")
             {
                 language = "tr";
             } else {
@@ -1435,7 +1435,7 @@ app.factory('ChapterVerses', function ($resource) {
             $scope.circleDropdownArray.push($scope.CIRCLE_ALL_CIRCLES);
             $scope.circleDropdownArray.push({'id': '', 'name': 'Sadece Ben'});
 
-            $scope.query_circle_dropdown = $scope.circleDropdownArray[1];
+            $scope.query_circle_dropdown = $scope.circleDropdownArray[0];
             Array.prototype.push.apply($scope.circleDropdownArray, circleList);
 
             //also initialize extended circles
