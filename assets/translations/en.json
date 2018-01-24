@@ -492,5 +492,6 @@
 "Internet Bağlantısı Yok": "No Internet connection",
 "Internet baglantısı olmadığı için kullanıcı işlemleri yapılamayacaktır": "User operations will not be done because there is no Internet connection",
 "Var olan oturumuzun süresi dolmuştur. Çıkış yapılıyor.": "Your current session has expired. Signing out.",
-"Notu Silme": "Delete Note"
+"Notu Silme": "Delete Note",
+"Ayete Ait Notlar": "Notes of Verse"
 }

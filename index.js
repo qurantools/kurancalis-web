@@ -1822,8 +1822,6 @@ app.factory('ChapterVerses', function ($resource) {
     };
 
     $scope.showProgress = function(operationName) {
-
-
         $scope.progressOperation=operationName;
         if(config_data.isMobile){
             $scope.clickBlocking = true;
