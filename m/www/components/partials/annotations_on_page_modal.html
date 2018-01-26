@@ -41,7 +41,7 @@
             <div class="s_a_text">
                 <span ng-bind-html="annotation.text | newLineAllowed | to_trusted" class="s_a_text"></span>
             </div>
-            <div ng-repeat="annotationTag in annotation.tags" class="tag label label-info s_a_tag">
+            <div ng-repeat="annotationTag in annotation.tags" class="tag label label-info s_a_tag" style="white-space: normal">
                 {{annotationTag}}
             </div>
             <div class="row" style="padding:7px 3px; display: block;">
