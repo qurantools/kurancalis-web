@@ -46,6 +46,16 @@
                                 </table>
                             </div>
 
+                            <div class="well" ng-init="init()">
+                                <table>
+                                    <td>
+                                        <i class="fa fa-toggle-on aktif" ng-if="show_verse_annotations" ng-click="toggleDetailedSearchAllVersesAnnotations()"></i>
+                                        <i class="fa fa-toggle-on fa-rotate-180 inactive" ng-if="!show_verse_annotations" ng-click="toggleDetailedSearchAllVersesAnnotations()"></i>
+                                    </td>
+                                    <td align="left" style="width:100%; padding-left: 15px;" translate>Tüm Ayetlerin Notlarını Yükle</td>
+                                </table>
+                            </div>
+
                             <div class="well">
                                {{'Çevremdeki kişilere ait olan notlar' | translate}}
                                 <tags-input ng-model="query_circles" placeholder="{{'Çevre Seçiniz' | translate}}" display-property="name" replace-spaces-with-dashes="false" min-length="1" add-from-autocomplete-only="true"  add-on-blur="false">

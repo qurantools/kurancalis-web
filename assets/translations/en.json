@@ -204,6 +204,7 @@
 "Herkes": "Everyone",
 "Sadece Ben": "Only Me",
 "Referans": "Reference",
+"Fatiha":"Al-Fatihah",
 "VERSE_NAME":{
 	"Fatiha":"Al-Fatihah",
 	"Bakara":"Al-Baqarah",
@@ -493,5 +494,6 @@
 "Internet baglantısı olmadığı için kullanıcı işlemleri yapılamayacaktır": "User operations will not be done because there is no Internet connection",
 "Var olan oturumuzun süresi dolmuştur. Çıkış yapılıyor.": "Your current session has expired. Signing out.",
 "Notu Silme": "Delete Note",
-"Ayete Ait Notlar": "Notes of Verse"
+"Ayete Ait Notlar": "Notes of Verse",
+"Tüm Ayetlerin Notlarını Yükle": "Load All Verses Notes"
 }

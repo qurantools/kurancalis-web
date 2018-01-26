@@ -6,7 +6,6 @@ angular.module('ionicApp')
         $scope.index = -1;
 
         $scope.showEditor = function(annotation, position){
-            console.warn("showEditor:: ", annotation, position)
             //prepare canView circles.
             if (typeof annotation.annotationId != 'undefined') {
                 $scope.ViewCircles = [];
