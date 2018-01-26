@@ -287,6 +287,9 @@ angular.module('ionicApp')
             $scope.query_own_annotations.value = !$scope.query_own_annotations.value;
         };
 
+        $scope.toggleDetailedSearchAllVersesAnnotations = function () {
+            $scope.show_verse_annotations = !$scope.show_verse_annotations;
+        };
 
         $scope.resetAnnotationFilter = function () {
             $scope.resetFilteredAnnotations();
@@ -443,7 +446,7 @@ angular.module('ionicApp')
 
         //go to chapter / verse from navigation header
         $scope.goToVerse = function () {
-            //if chapter changed then reset annotation param
+            //if chapter changed then reset custom annotation param
             if($scope.query_chapter_id != $scope.goToVerseParameters.chapter.id){
                 $scope.loadCustomAnnotation = false; // reset param
             }
@@ -462,7 +465,6 @@ angular.module('ionicApp')
 
         //action for detailed search screen
         $scope.detailedSearch = function () {
-
             $timeout(function(){
 
                 if(isMobile()){ //set query_circles from mobile selection
@@ -497,8 +499,8 @@ angular.module('ionicApp')
                 delete annotator;
             }
             if ($scope.loggedIn) {  //giris yapilmadiysa yukleme, kavga olmasin.
-                annotator = new Annotator($('#translations'));
 
+                annotator = new Annotator($('#translations'));
                 annotator.setAccessToken($scope.access_token);
                 annotator.setTranslationDivMap($scope.translationDivMap);
 
@@ -508,7 +510,7 @@ angular.module('ionicApp')
                 queryParams.author_mask = MAX_AUTHOR_MASK;
 
                 if($scope.show_verse_annotations || $scope.loadCustomAnnotation) {
-                    queryParams.circles = $scope.getTagsWithCommaSeparated($scope.query_circles); // || $scope.CIRCLE_PUBLIC.id;
+                    queryParams.circles = $scope.getTagsWithCommaSeparated($scope.query_circles);
                     queryParams.own_annotations = $scope.query_own_annotations.value;
                 } else {
                     queryParams.circles = "";
@@ -518,6 +520,9 @@ angular.module('ionicApp')
                 queryParams.users = $scope.getTagsWithCommaSeparated($scope.query_users);
                 queryParams.verses = $scope.query_verses;
 
+                if($scope.show_verse_annotations) {
+                    queryParams.verses = "";
+                }
 
                 // Create a function, to do some cleaning of the objects.
                 var cleanObj = function(obj) {
@@ -639,12 +644,13 @@ angular.module('ionicApp')
         };
 
         $scope.showVerseAnnotations = function (verseId){
-           if(!$scope.show_verse_annotations) {
+           //if(!$scope.show_verse_annotations) {
                 $scope.loadCustomAnnotation = true;
                 $scope.query_verses = verseId % 1000;
-                $scope.goToChapter();
-                //$scope.annotate_it();
-            }
+                //$scope.goToChapter();
+                $scope.showProgress("goToChapter");
+                $scope.annotate_it();
+           // }
 
             $timeout(function () {
 
@@ -656,7 +662,7 @@ angular.module('ionicApp')
                         verseAnnotations.push($scope.annotations[i]);
                     }
                 }
-                console.warn("verseAnnotations Length", verseAnnotations.length)
+                console.warn("Verse Annotations: ", verseAnnotations.length)
                 //it is just like clicked on annotations
                 $scope.onHighlightClicked(verseAnnotations);
 
@@ -665,7 +671,6 @@ angular.module('ionicApp')
         };
 
         $scope.onHighlightClicked = function (clickedAnnotations) {
-
             //mobil theView
             $scope.filteredAnnotations = clickedAnnotations;
             $scope.filterSingleAnnotation = true;
@@ -676,7 +681,6 @@ angular.module('ionicApp')
             } else {
                 $scope.openModal('annotations_on_page');
             }
-
         };
 
         $scope.setAuthorViewAccordingToDetailedSearchAuthorSelection = function(){
@@ -832,36 +836,55 @@ angular.module('ionicApp')
         };
 
         $scope.loadAnnotations = function (annotations) {
-
-            console.warn("LOADED NEW ANNOTATIONS... ", annotations);
-
-            if(!$scope.show_verse_annotations) {
+            //if(!$scope.show_verse_annotations) {
 
                 if ($scope.filterChanged) {
-                    //remove cache data when filter changes
-                    $scope.annotations = [];
-                }
+                    //override existing records
+                    $scope.annotations = annotations;
+                } else {
 
-                for (var i = 0; i < annotations.length; i++) {
-                    for (var j = 0; j < $scope.annotations.length; j++) {
-                        if (annotations[i].annotationId == $scope.annotations[j].annotationId) {
-                            //if exist, remove it
-                            $scope.annotations.splice(j, 1);
-                            break;
+                    if($scope.annotations.length == 0){
+                        $scope.annotations = annotations;
+                    } else {
+
+                        for (var i = 0; i < annotations.length; i++) {
+                            for (var j = 0; j < $scope.annotations.length; j++) {
+                                if (annotations[i].annotationId == $scope.annotations[j].annotationId) {
+                                    //if exist, remove it
+                                    $scope.annotations.splice(j, 1);
+                                    break;
+                                }
+                            }
+
+                            $scope.addAnnotation(annotations[i]);
                         }
-                    }
 
-                    $scope.addAnnotation(annotations[i]);
+
+                       /* //do extra for data from previous load to show highlight colors
+                       //FIX HIGHLIGHT...
+                        for (var i = 0; i < $scope.annotations.length; i++) {
+                            for (var j = 0; j < annotations.length; j++) {
+                                if ($scope.annotations[i].annotationId != annotations[j].annotationId) {
+                                   annotator.setupAnnotation($scope.annotations[i]);
+                                }
+                            }
+                        }*/
+
+                        //order by verseId
+                        $scope.annotationFilterOrder($scope.filterOrderSelect);
+                    }
                 }
 
-            } else {
-                $scope.annotations = annotations;
-            }
+           // } else {
+             //   $scope.annotations = annotations;
+           // }
+
+            console.log("LOADED/ALL Annotations: ", annotations.length,"/",$scope.annotations);
 
             $scope.loadVerseAnnotationData();
             $scope.scopeApply();
             $scope.resetAnnotationFilter();
-            $scope.colorAnnotations(annotations);
+            $scope.colorAnnotations($scope.annotations);
         };
 
         //add annotation to scope
@@ -1518,10 +1541,6 @@ angular.module('ionicApp')
                 $scope.query_circles = [item];
             }
             $scope.query_circle_dropdown = item;
-
-            //annotation visibility settings
-            $scope.query_verses = "";
-            $scope.loadCustomAnnotation = true;
 
             $scope.goToChapter();
         };

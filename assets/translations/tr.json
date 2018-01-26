@@ -204,6 +204,7 @@
 "Herkes": "Herkes",
 "Sadece Ben": "Sadece Ben",
 "Referans": "Referans",
+"Fatiha":"Fatiha",
 "VERSE_NAME":{
 	"Fatiha":"Fatiha",
 	"Bakara":"Bakara",
@@ -493,5 +494,6 @@
 "Internet baglantısı olmadığı için kullanıcı işlemleri yapılamayacaktır": "Internet baglantısı olmadığı için kullanıcı işlemleri yapılamayacaktır",
 "Var olan oturumuzun süresi dolmuştur. Çıkış yapılıyor.": "Var olan oturumuzun süresi dolmuştur. Çıkış yapılıyor.",
 "Notu Silme": "Notu Silme",
-"Ayete Ait Notlar": "Ayete Ait Notlar"
+"Ayete Ait Notlar": "Ayete Ait Notlar",
+"Tüm Ayetlerin Notlarını Yükle": "Tüm Ayetlerin Notlarını Yükle"
 }

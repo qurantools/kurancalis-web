@@ -14,7 +14,7 @@
                                style="width: 150px;"
                                ng-enter=""
                             >
-                        <ui-select-match placeholder="{{'Sure' | translate}}">{{$select.selected.id}}: {{'VERSE_NAME.' + $select.selected.nameTr | translate}}
+                        <ui-select-match placeholder="{{'Sure' | translate}}">{{$select.selected.id}}: {{$select.selected.nameTr | translate}}
                         </ui-select-match>
                         <ui-select-choices
                                 repeat="chapter in chapters | selectionFilter: {id: $select.search,nameTr: $select.search,nameTr2: $select.search}">
