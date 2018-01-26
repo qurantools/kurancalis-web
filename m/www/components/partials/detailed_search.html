@@ -18,6 +18,7 @@
     <ion-content overflow-scroll="true">
         <div style="height: 65px;">&nbsp;</div>
         <ion-toggle ng-model="query_own_annotations.value" ng-checked="query_own_annotations.value">{{'Benim notlarımı göster' | translate}}</ion-toggle>
+        <ion-toggle ng-model="show_verse_annotations" ng-checked="show_verse_annotations" ng-change="toggleDetailedSearchAllVersesAnnotations()">{{'Tüm Ayetlerin Notlarını Yükle' | translate}}</ion-toggle>
         <div class="item item-divider" translate>Çevrelerin Notları</div>
         <div class="list">
             <ion-checkbox  ng-repeat="item in mobileDetailedSearchCircleListForSelection"

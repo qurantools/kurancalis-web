@@ -21,7 +21,10 @@
                                     <div class="translation_nav_col1" style="font-size:20px;">
                                         {{translation.chapter}}:{{translation.verse}}
                                     </div>
-                                    <div><img src="assets/img/sticky-note.png" width="20" height="20" ng-if="user!=null && !show_verse_annotations || verseHasAnnotation(verse.id)" ng-click="showVerseAnnotations({{verse.id}})"></div>
+                                    <div>
+                                        <div ng-if="loadingVerse == verse.id" style="text-align: center"><img src="assets/img/loading.gif" width="20" height="20"></div>
+                                        <img src="assets/img/sticky-note.png" width="20" height="20" ng-if="user!=null && !show_verse_annotations || verseHasAnnotation(verse.id)" ng-show="loadingVerse != verse.id" ng-click="showVerseAnnotations({{verse.id}})">
+                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="translation_nav_col1">
@@ -50,7 +53,11 @@
                             </div>
                             
                             <div class="col-xs-1" ng-if="$first" style="text-align: center" ng-show="showSingleAuthor">
-                                <div class="chapter_verse_number">{{translation.chapter}}:{{translation.verse}} <img src="assets/img/sticky-note.png" width="25" height="25" ng-if="user!=null && !show_verse_annotations || verseHasAnnotation(verse.id)" ng-click="showVerseAnnotations({{verse.id}})"></div>
+                                <div class="chapter_verse_number">
+                                    {{translation.chapter}}:{{translation.verse}}
+                                    <div ng-if="loadingVerse == verse.id" style="text-align: center"><img src="assets/img/loading.gif" width="25" height="25"></div>
+                                    <img src="assets/img/sticky-note.png" width="25" height="25" ng-if="user!=null && !show_verse_annotations || verseHasAnnotation(verse.id)" ng-show="loadingVerse != verse.id" ng-click="showVerseAnnotations({{verse.id}})">
+                                </div>
                             </div>
                             <div class="col-xs-11" id="t_{{translation.id}}" style="float: right">
                                 <div class="col-xs-3 authorDiv_{{authorMap[translation.authorId].color}}"
@@ -158,7 +165,7 @@
                 <div class="s_a_text">
                     <span ng-bind-html="annotation.text | newLineAllowed | to_trusted"></span>
                 </div>
-                <div ng-repeat="annotationTag in annotation.tags" class="tag label label-info s_a_tag">
+                <div ng-repeat="annotationTag in annotation.tags" class="tag label label-info s_a_tag" style="white-space: normal">
                     {{annotationTag}}
                 </div>
                 <div class="row" style="padding:0 15px">
