@@ -76,7 +76,7 @@ var tagsInput = angular.module('ngTagsInput', []);
  *    available as $tag.
  * @param {expression=} [onTagClicked=NA] Expression to evaluate upon clicking an existing tag. The clicked tag is available as $tag.
  */
-tagsInput.directive('tagsInput', ["$timeout", "$document", "$window", "tagsInputConfig", "tiUtil", function($timeout, $document, $window, tagsInputConfig, tiUtil) {
+tagsInput.directive('tagsInput', ["$timeout", "$document", "$window", "tagsInputConfig", "tiUtil", "$translate", function($timeout, $document, $window, tagsInputConfig, tiUtil, $translate) {
     function TagList(options, events, onTagAdding, onTagRemoving) {
         var self = {}, getTagText, setTagText, tagIsValid;
 
@@ -298,6 +298,9 @@ tagsInput.directive('tagsInput', ["$timeout", "$document", "$window", "tagsInput
             };
 
             scope.track = function(tag) {
+                if(tag.hasOwnProperty("name")) {
+                    tag.name = $translate.instant(tag.name);
+                }
                 return tag[options.keyProperty || options.displayProperty];
             };
 
