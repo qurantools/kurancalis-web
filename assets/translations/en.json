@@ -495,5 +495,10 @@
 "Var olan oturumuzun süresi dolmuştur. Çıkış yapılıyor.": "Your current session has expired. Signing out.",
 "Notu Silme": "Delete Note",
 "Ayete Ait Notlar": "Notes of Verse",
-"Tüm Ayetlerin Notlarını Yükle": "Load All Verses Notes"
+"Tüm Ayetlerin Notlarını Yükle": "Load All Verses Notes",
+"Everyone": "Everyone",
+"All My Circles": "All My Circles",
+"Only Me": "Only Me",
+"Reference": "Reference",
+"<strong>Not</strong> ikonuna bastığınızda <strong>Filtre Seçenekleri</strong>'nde belirttiğiniz kriterlere göre notlar görüntülenecektir.": "When you press the <strong>Note</ strong> icon, notes will be displayed according to the criteria you specified in <strong>Filter Options</ strong>."
 }

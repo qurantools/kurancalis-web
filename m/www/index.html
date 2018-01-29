@@ -38,6 +38,10 @@
 
     <link rel="stylesheet" href="../../assets/css/style.css">
 
+    <!-- Angular ngToast -->
+    <link rel="stylesheet" href="../../assets/css/ngToast.min.css">
+    <link rel="stylesheet" href="../../assets/css/ngToast-animations.min.css">
+
     <script src="../../assets/js/angular.min.js"></script>
     <script src="../../assets/js/angular-ui-router.min.js"></script>
     <script src="../../assets/js/angular-sanitize.min.js"></script>
@@ -52,7 +56,6 @@
     <script src="../../assets/js/angular-translate-loader-static-files.min.js"></script>
     <script src="../../assets/js/angular-translate-storage-cookie.min.js"></script>
     <script src="../../assets/js/angular-translate-storage-local.min.js"></script>
-
 
     <!-- ionic -->
     <link href="../../assets/libs/ionic/css/ionic.css" rel="stylesheet">
@@ -172,10 +175,13 @@
     <script src="../../assets/js/versehistory/verse_history_controller.js"></script>
     <script src="../../assets/js/annotations/annotation_display_controller.js"></script>
     <script src="../../assets/js/vote/vote_controller.js"></script>
+
+    <!-- Angular ngToast -->
+    <script src="../../assets/js/ngToast.min.js"></script>
 </head>
 
 <body>
-
+<toast></toast>
 <div id="fb-root"></div>
 <div id="theView" ng-view>
 

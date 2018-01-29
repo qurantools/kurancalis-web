@@ -1,5 +1,5 @@
 angular.module('ionicApp')
-    .controller('HomeCtrl', function ($scope, $compile, $q, $routeParams, $location, $timeout, ChapterVerses, User, Facebook, Restangular, localStorageService, $document, $filter, $rootScope, $state, $stateParams, $ionicModal, $ionicScrollDelegate, $ionicPosition, authorization,$ionicActionSheet,$ionicPopup, $sce, dataProvider, $ionicPlatform, navigationManager, $translate) {
+    .controller('HomeCtrl', function ($scope, $compile, $q, $routeParams, $location, $timeout, ChapterVerses, User, Facebook, Restangular, localStorageService, $document, $filter, $rootScope, $state, $stateParams, $ionicModal, $ionicScrollDelegate, $ionicPosition, authorization,$ionicActionSheet,$ionicPopup, $sce, dataProvider, $ionicPlatform, navigationManager, $translate, ngToast) {
 
 
         $scope.linkno="";
@@ -488,6 +488,17 @@ angular.module('ionicApp')
                 if (config_data.isMobile) {
                     $scope.closeModal('homesearch');
                 }
+
+                // create a toast with settings:
+                ngToast.create({
+                    className: 'warning',
+                    dismissButton: !config_data.isMobile,
+                    dismissOnClick: true,
+                    timeout: 5000,
+                    animation: 'fade',
+                    content: $translate.instant("<strong>Not</strong> ikonuna bastığınızda <strong>Filtre Seçenekleri</strong>'nde belirttiğiniz kriterlere göre notlar görüntülenecektir.")
+                });
+
             },350);
 
         };
