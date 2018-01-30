@@ -1,5 +1,5 @@
 angular.module('ionicApp')
-    .controller('HomeCtrl', function ($scope, $compile, $q, $routeParams, $location, $timeout, ChapterVerses, User, Facebook, Restangular, localStorageService, $document, $filter, $rootScope, $state, $stateParams, $ionicModal, $ionicScrollDelegate, $ionicPosition, authorization,$ionicActionSheet,$ionicPopup, $sce, dataProvider, $ionicPlatform, navigationManager, $translate, ngToast) {
+    .controller('HomeCtrl', function ($scope, $compile, $q, $routeParams, $location, $timeout, ChapterVerses, User, Facebook, Restangular, localStorageService, $document, $filter, $rootScope, $state, $stateParams, $ionicModal, $ionicScrollDelegate, $ionicPosition, authorization,$ionicActionSheet,$ionicPopup, $sce, dataProvider, $ionicPlatform, navigationManager, $translate, Notification) {
 
 
         $scope.linkno="";
@@ -489,14 +489,17 @@ angular.module('ionicApp')
                     $scope.closeModal('homesearch');
                 }
 
-                // create a toast with settings:
-                ngToast.create({
-                    className: 'warning',
-                    dismissButton: !config_data.isMobile,
-                    dismissOnClick: true,
-                    timeout: 5000,
-                    animation: 'fade',
-                    content: $translate.instant("<strong>Not</strong> ikonuna bastığınızda <strong>Filtre Seçenekleri</strong>'nde belirttiğiniz kriterlere göre notlar görüntülenecektir.")
+                // Message with custom delay
+                Notification.warning({
+                    message: $translate.instant("<strong>Not</strong> ikonuna bastığınızda <strong>Filtre Seçenekleri</strong>'nde belirttiğiniz kriterlere göre notlar görüntülenecektir."),
+                    delay: 8000,
+                    startTop: 20,
+                    startRight: 10,
+                    verticalSpacing: 20,
+                    horizontalSpacing: 20,
+                    positionX: 'right',
+                    positionY: 'top',
+                    closeOnClick: true
                 });
 
             },350);
