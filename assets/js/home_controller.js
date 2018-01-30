@@ -489,6 +489,9 @@ angular.module('ionicApp')
                     $scope.closeModal('homesearch');
                 }
 
+            },350);
+
+            if(!$scope.show_verse_annotations) {
                 // Message with custom delay
                 Notification.warning({
                     message: $translate.instant("<strong>Not</strong> ikonuna bastığınızda <strong>Filtre Seçenekleri</strong>'nde belirttiğiniz kriterlere göre notlar görüntülenecektir."),
@@ -501,8 +504,7 @@ angular.module('ionicApp')
                     positionY: 'top',
                     closeOnClick: true
                 });
-
-            },350);
+            }
 
         };
 
