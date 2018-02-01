@@ -875,15 +875,23 @@ angular.module('ionicApp')
                 //order by verseId
                 $scope.annotationFilterOrder($scope.filterOrderSelect);
 
-               /* //do extra for data from previous load to show highlight colors
-               //FIX HIGHLIGHT...
-                for (var i = 0; i < $scope.annotations.length; i++) {
-                    for (var j = 0; j < annotations.length; j++) {
-                        if ($scope.annotations[i].annotationId != annotations[j].annotationId) {
-                           annotator.setupAnnotation($scope.annotations[i]);
+               //Fix existing annotation highlights by calling setupAnnotations()
+                if(!angular.equals($scope.annotations, annotations)) { //if not equal, get previous annotations
+                    for (var i = 0; i < $scope.annotations.length; i++) {
+                        var exist = false;
+                        for (var j = 0; j < annotations.length; j++) {
+                            if ($scope.annotations[i].annotationId == annotations[j].annotationId) {
+                                exist = true;
+                                break;
+                            }
+                        }
+
+                        if (!exist) {
+                            //initialize previous annotations to show highlights
+                            annotator.setupAnnotation($scope.annotations[i]);
                         }
                     }
-                }*/
+                }
             }
 
             console.log("LOADED/ALL Annotations: ", annotations, annotations.length,"/",$scope.annotations.length);
@@ -980,6 +988,7 @@ angular.module('ionicApp')
                 var footnoteDivElement = document.getElementById('t_' + translation_id);
                 //don't list if already listed
                 if (!document.getElementById("fn_" + translation_id)) {
+                    var meassage = $translate.instant("Tüm Notlar");
                     var html = "<div id='fn_" + translation_id + "'>";
                     var dataLength = data.length;
                     for (index = 0; index < dataLength; ++index) {
@@ -994,7 +1003,7 @@ angular.module('ionicApp')
                                         "<div class='col-xs-1'>&nbsp;</div>" +
                                         "<div class='col-xs-11 footnotebg'>" +
                                             "<a style='float: right;' ng-href='#MainCtrl' onclick='javascript: angular.element(document.getElementById(\"MainCtrl\")).scope().openModal(\"hakki_yilmaz_notes\")'>" +
-                                                "<div style='color: #6b006d;margin-bottom: 8px;'>Tüm Notlar</div>" +
+                                                "<div style='color: #6b006d;margin-bottom: 8px;'>" + meassage + "</div>" +
                                             "</a>" +
                                         "</div>" +
                                     "</div>";
@@ -1003,7 +1012,7 @@ angular.module('ionicApp')
                                         "<div class='col-xs-1'>&nbsp;</div>" +
                                         "<div class='col-xs-11 footnotebg'>" +
                                             "<a style='float: right;'>" +
-                                                "<div style='width:100%; height: 40px; padding-top:8px;' data-target='#hakkiYilmazAllNotesModal' data-toggle='modal'>Tüm Notlar</div>" +
+                                                "<div style='width:100%; height: 40px; padding-top:8px;' data-target='#hakkiYilmazAllNotesModal' data-toggle='modal'>" + meassage + "</div>" +
                                             "</a>" +
                                         "</div>" +
                                     "</div>";
