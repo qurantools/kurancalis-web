@@ -500,5 +500,20 @@
 "All My Circles": "All My Circles",
 "Only Me": "Only Me",
 "Reference": "Reference",
-"<strong>Not</strong> ikonuna bastığınızda <strong>Filtre Seçenekleri</strong>'nde belirttiğiniz kriterlere göre notlar görüntülenecektir.": "When you press the <strong>Note</ strong> icon, notes will be displayed according to the criteria you specified in <strong>Filter Options</ strong>."
+"<strong>Not</strong> ikonuna bastığınızda <strong>Filtre Seçenekleri</strong>'nde belirttiğiniz kriterlere göre notlar görüntülenecektir.": "When you press the <strong>Note</ strong> icon, notes will be displayed according to the criteria you specified in <strong>Filter Options</ strong>.",
+"Şifre sıfırlama isteği e-posta adresinize gönderildi": "Password reset request sent to your email address",
+"Facebook hesabınız ile giriş yaparsanız arkadaşlarınızı ve çalışmalarınızı bulabilirsiniz": "If you log in with your Facebook account, you can find your friends and your work",
+"Hesap Oluştur": "Create Account",
+"İsminiz": "Your name",
+"E-posta": "Email",
+"Şifre": "Password",
+"Kuran Çalış'a üye olduğunuz için çok teşekkür ederiz.": "Thank you very much for being a member of Kuran Çalış.",
+"ACCOUNT_CREATION_INFO_MESSAGE": "Clean and level content is very important for our system to be useful. For this reason, we sent a confirmation message to your e-mail address. Please complete your registration using the link in the message.",
+"Şifremi Unuttum": "I forgot my password",
+"Sistemimizde bu e-posta adresi ile kayıt bulunmamaktadır": "There is no record in our system with this E-mail address",
+"OK": "OK",
+"Cancel": "Cancel",
+"Birlikte Dosdoğru Yolu<br>Bulmak İçin...": "To find the straight<br>path together ...",
+"ADD_VERSE_LIST":"Select the lists to which you want to add the verb <b> {{versesInfo}} </ b>.",
+"Internet bağlantınız sağlandı.": "Your Internet connection is provided."
 }
