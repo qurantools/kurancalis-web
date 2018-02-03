@@ -382,7 +382,13 @@ if (config_data.isMobile == false) { //false
                 reloadOnSearch: false,
                 pageTitle: 'Kuran Çalış - Çevre Zaman Tüneli'
             })
-            /*.when('/user/settings/', {
+            /*.when('/user/account/reset_password/', {
+                 controller: 'AccountCtrl',
+                 templateUrl: 'components/user/account_created.html',
+                 reloadOnSearch: false,
+                 pageTitle: 'Kuran Çalış - Çevre Zaman Tüneli'
+             })
+             .when('/user/settings/', {
                 controller: 'UserSettingsController',
                 templateUrl: 'components/user/settings.html',
                 reloadOnSearch: false,
@@ -985,7 +991,10 @@ app.factory('ChapterVerses', function ($resource) {
         } else if ( url == "/lists/verse"){
             retcp = "verse_lists";
         }
-        /*else if ( url == "/user/settings/"){
+        /*else if ( url == "/user/account/reset_password/"){
+         retcp = "reset_password";
+         }
+         else if ( url == "/user/settings/"){
             retcp = "user_settings";
         }*/
         else if ( url.indexOf("/profile/user/") > -1){
@@ -1056,7 +1065,7 @@ app.factory('ChapterVerses', function ($resource) {
     //sub page should write the its function if it needs custom login.
     $scope.login = function () { //new
         authorization.login($scope.onFacebookLoginSuccess);
-    }
+    };
 
     $scope.logOut = function () { //new
         if($ionicSideMenuDelegate.isOpenLeft()){
@@ -1701,7 +1710,7 @@ app.factory('ChapterVerses', function ($resource) {
         $scope.$on('onlineNetworkConnection', function() {
             $scope.internet_display_show = true;
             $scope.internet_display_style = {"background-color": "green"};
-            $scope.internet_display_message = "Internet bağlantınız sağlandı.";
+            $scope.internet_display_message = $translate.instant("Internet bağlantınız sağlandı.");
             $scope.isConnected= true;
             $timeout(function(){
                 $scope.checkUserLoginStatus();

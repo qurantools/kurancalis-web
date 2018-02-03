@@ -1,0 +1,57 @@
+<div class="modal" id="createAccountModal" ng-controller="AccountCtrl">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" translate>Hesap Oluştur</h4>
+            </div>
+            <div class="modal-body">
+                <div ng-if="!accountCreateRequestSent">
+                    <div class="row">
+                        <div class="col-xs-10 col-xs-offset-1">
+                            <p style="font-size: smaller !important" translate>Facebook hesabınız ile giriş yaparsanız arkadaşlarınızı ve çalışmalarınızı bulabilirsiniz</p>
+                            <button type="button" aria-hidden="true" class="btn btn-block" ng-click="login()" data-dismiss="modal"><img src='assets/img/fb.png' width='25' height='25'> {{'Facebook ile Giriş' | translate}}</button>
+                        </div>
+                    </div>
+                    <hr style='width:100%' />
+                    <br>
+                    <div class="row">
+                        <div class="col-xs-10 col-xs-offset-1">
+                            <form name="form" novalidate>
+                                <div class="form-group" ng-class="{ 'has-error' : form.name.$invalid && form.name.$touched }">
+                                    <input type="text" name="name" ng-model="user.name"
+                                           size="50" placeholder="{{'İsminiz' | translate}}"
+                                           class="form-control" required/>
+                                </div>
+                                <div class="form-group" ng-class="{ 'has-error' : form.email.$invalid && form.email.$touched }">
+                                    <input type="email" name="email" ng-model="user.email"
+                                           size="50" placeholder="{{'E-posta' | translate}}"
+                                           class="form-control" required/>
+                                </div>
+                                <div class="form-group" ng-class="{ 'has-error' : form.password.$invalid && form.password.$touched }">
+                                    <input type="password" name="password" ng-model="user.password"
+                                           size="50" placeholder="{{'Şifre' | translate}}"
+                                           class="form-control" required/>
+                                </div>
+                                <br>
+                                <button type="button" aria-hidden="true" class="btn btn-success btn-block" ng-click="createAccount(); resetForm(form)" translate>Hesap Oluştur</button> <!--ng-disabled="!form.$valid"-->
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div ng-if="accountCreateRequestSent">
+                    <div class="row">
+                        <div class="col-xs-10 col-xs-offset-1" style="text-align: center">
+                            <br>
+                            <div><i class="fa fa-check-circle-o" style="font-size: 6em; color:#69A74E"></i></div>
+                            <br>
+                            <p translate>Kuran Çalış'a üye olduğunuz için çok teşekkür ederiz.</p>
+                            <p translate="ACCOUNT_CREATION_INFO_MESSAGE">Sistemimizin faydalı olabilmesi için temiz ve seviyeli içerik çok önemli. Bu sebeple e-posta adresinize bir onay iletisi gönderidik. Lütfen iletideki bağlantıyı kullanarak kaydınızı tamamlayınız.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer"></div>
+        </div>
+    </div>
+</div>

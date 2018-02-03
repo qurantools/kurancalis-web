@@ -86,8 +86,9 @@
 
                 <div ng-show="facebookIsReady" class="facebook_area">
                     <div ng-if="user==null">
-                        <button type="button" id="login" ng-click="login()" class="btn btn-primary" translate="DOGRU_YOL_MESAJI"></button>
-
+                        <!--<button type="button" id="login" ng-click="login()" class="btn btn-primary" translate="DOGRU_YOL_MESAJI"></button>-->
+                        <button type="button" id="create-account" class="btn btn-primary" data-target='#createAccountModal' data-toggle='modal' translate>Hesap Oluştur</button>
+                        <button type="button" id="login" class="btn btn-primary" data-target='#loginModal' data-toggle='modal' translate>Giriş</button>
                         <select name="language-selection"
                                 ng-model="selectedLanguage"
                                 ng-options="language.name as language.label for language in languages"

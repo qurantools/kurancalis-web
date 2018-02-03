@@ -39,7 +39,7 @@
                             <a href ng-click="logOut()" onclick="closeLeftPanel()" translate>Çıkış</a>
                         </li>
                         <li ng-if="user==null">
-                            <a href ng-click="login()" onclick="closeLeftPanel()" translate>Giriş</a>
+                            <a href data-target='#loginModal' data-toggle='modal' onclick="closeLeftPanel()" translate>Giriş</a>
                         </li>
                     </ul>
                 </div>

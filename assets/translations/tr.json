@@ -500,5 +500,20 @@
 "All My Circles": "Tüm Çevrelerim",
 "Only Me": "Sadece Ben",
 "Reference": "Referans",
-"<strong>Not</strong> ikonuna bastığınızda <strong>Filtre Seçenekleri</strong>'nde belirttiğiniz kriterlere göre notlar görüntülenecektir.": "<strong>Not</strong> ikonuna bastığınızda <strong>Filtre Seçenekleri</strong>'nde belirttiğiniz kriterlere göre notlar görüntülenecektir."
+"<strong>Not</strong> ikonuna bastığınızda <strong>Filtre Seçenekleri</strong>'nde belirttiğiniz kriterlere göre notlar görüntülenecektir.": "<strong>Not</strong> ikonuna bastığınızda <strong>Filtre Seçenekleri</strong>'nde belirttiğiniz kriterlere göre notlar görüntülenecektir.",
+"Şifre sıfırlama isteği e-posta adresinize gönderildi": "Şifre sıfırlama isteği e-posta adresinize gönderildi",
+"Facebook hesabınız ile giriş yaparsanız arkadaşlarınızı ve çalışmalarınızı bulabilirsiniz": "Facebook hesabınız ile giriş yaparsanız arkadaşlarınızı ve çalışmalarınızı bulabilirsiniz",
+"Hesap Oluştur": "Hesap Oluştur",
+"İsminiz": "İsminiz",
+"E-posta": "E-posta",
+"Şifre": "Şifre",
+"Kuran Çalış'a üye olduğunuz için çok teşekkür ederiz.": "Kuran Çalış'a üye olduğunuz için çok teşekkür ederiz.",
+"ACCOUNT_CREATION_INFO_MESSAGE": "Sistemimizin faydalı olabilmesi için temiz ve seviyeli içerik çok önemli. Bu sebeple e-posta adresinize bir onay iletisi gönderidik. Lütfen iletideki bağlantıyı kullanarak kaydınızı tamamlayınız.",
+"Şifremi Unuttum": "Şifremi Unuttum",
+"Sistemimizde bu e-posta adresi ile kayıt bulunmamaktadır": "Sistemimizde bu e-posta adresi ile kayıt bulunmamaktadır",
+"OK": "Tamam",
+"Cancel": "İptal",
+"Birlikte Dosdoğru Yolu<br>Bulmak İçin...": "Birlikte Dosdoğru Yolu<br>Bulmak İçin...",
+"ADD_VERSE_LIST":"<b>{{versesInfo}}</b> ayetini eklemek istediğiniz listeleri seçiniz.",
+"Internet bağlantınız sağlandı.": "Internet bağlantınız sağlandı."
 }
