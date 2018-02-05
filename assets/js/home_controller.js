@@ -603,7 +603,7 @@ angular.module('ionicApp')
             }
         };
 
-        $scope.onCustomAdderClick = function (verseId, translationId) {
+        $scope.onCustomAdderClick = function (verseId) {
 
             var annotation, cancel, cleanup, position, save;
 
@@ -611,9 +611,9 @@ angular.module('ionicApp')
             annotator.adder.hide();
 
             var annotation = {};
-            annotation.translationId = translationId;
+            annotation.translationId = -1; // Unknown, it will be set at backend with authorId
             annotation.verseId = verseId;
-            annotation.authorId = 1;
+            annotation.authorId = 1; // used to set translationId at backend
             annotation.text = "";
             annotation.quote = "";
             var ranges = [{}];
@@ -629,7 +629,6 @@ angular.module('ionicApp')
             annotation.userId = $scope.user.id;
             annotation.userName = $scope.user.username;
             annotation.created = new Date();
-            annotation.authorId = 1;
 
             save = (function (annotator) {
                 return function () {
@@ -1592,7 +1591,7 @@ angular.module('ionicApp')
                     buttonClicked: function (index) {
                         if (index == 0){
                             $("#annotationModal").show();
-                            $scope.onCustomAdderClick(verseId, translationId)
+                            $scope.onCustomAdderClick(verseId)
                         } else if (index == 1){
                             $scope.showVerseAnnotations(verseId)
                         } else if (index == 2){

@@ -382,15 +382,15 @@ if (config_data.isMobile == false) { //false
                 reloadOnSearch: false,
                 pageTitle: 'Kuran Çalış - Çevre Zaman Tüneli'
             })
-            /*.when('/user/account/reset_password/', {
+            .when('/user/account/reset_password/', {
                  controller: 'AccountCtrl',
-                 templateUrl: 'components/user/account_created.html',
+                 templateUrl: 'app/components/user/set_password_modal.html',
                  reloadOnSearch: false,
                  pageTitle: 'Kuran Çalış - Çevre Zaman Tüneli'
              })
-             .when('/user/settings/', {
+           /*  .when('/user/settings/', {
                 controller: 'UserSettingsController',
-                templateUrl: 'components/user/settings.html',
+                templateUrl: 'app/components/user/settings.html',
                 reloadOnSearch: false,
                 pageTitle: 'Kuran Çalış - Çevre Zaman Tüneli'
             })*/
@@ -991,12 +991,12 @@ app.factory('ChapterVerses', function ($resource) {
         } else if ( url == "/lists/verse"){
             retcp = "verse_lists";
         }
-        /*else if ( url == "/user/account/reset_password/"){
+         else if ( url == "/user/account/reset_password/"){
          retcp = "reset_password";
          }
          else if ( url == "/user/settings/"){
             retcp = "user_settings";
-        }*/
+        }
         else if ( url.indexOf("/profile/user/") > -1){
             retcp = "profile_user";
         }
@@ -1013,6 +1013,7 @@ app.factory('ChapterVerses', function ($resource) {
     /* auth */
     //general login.
     $scope.onFacebookLoginSuccess = function (responseData) {
+        console.log("responseData",responseData)
         if (responseData.loggedIn == false) {
             $scope.loggedIn = false;
             $scope.logOut();

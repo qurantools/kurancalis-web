@@ -33,7 +33,7 @@
                                   <div>
                                     <a ng-click="popoveropen()" tabindex="0" role="button" data-toggle="popover"  data-content="
                                     <div class='form-control' style='width:220px; height:auto'>
-                                        <a ng-if='user!=null' href><div style='width:100%; height: 40px; padding-top:8px;' ng-click='onCustomAdderClick({{verse.id}}, {{verse.translations[0].id}})' data-target='#annotationModal' data-toggle='modal'><i class='fa fa-pencil-square-o' style='font-size: 1.3em'></i>&nbsp;&nbsp;&nbsp;&nbsp;{{'Not Ekle' | translate}}</div></a>
+                                        <a ng-if='user!=null' href><div style='width:100%; height: 40px; padding-top:8px;' ng-click='onCustomAdderClick({{verse.id}})' data-target='#annotationModal' data-toggle='modal'><i class='fa fa-pencil-square-o' style='font-size: 1.3em'></i>&nbsp;&nbsp;&nbsp;&nbsp;{{'Not Ekle' | translate}}</div></a>
                                         <hr ng-if='user!=null' style='padding: 0; margin-top:0 !important; margin-bottom:0 !important; height:1px; width:100%' />
                                         <a ng-if='user!=null' href><div style='width:100%; height: 40px; padding-top:8px;' ng-click='showVerseAnnotations({{verse.id}})'><i class='fa fa-edit' style='font-size: 1.3em'></i>&nbsp;&nbsp;&nbsp;&nbsp;{{'Ayete Ait Notlar' | translate}}</div></a>
                                         <hr ng-if='user!=null' style='padding: 0; margin-top:0 !important; margin-bottom:0 !important; height:1px; width:100%' />
@@ -70,7 +70,7 @@
                                     | 
                                     <a ng-click="popoveropen()" tabindex="0" role="button" data-toggle="popover"  data-content="
                                     <div class='form-control' style='width:220px; height:auto'>
-                                        <a ng-if='user!=null' href><div style='width:100%' ng-click='onCustomAdderClick({{verse.id}}, {{verse.translations[0].id}})' data-target='#annotationModal' translate>Not Ekle</div></a>
+                                        <a ng-if='user!=null' href><div style='width:100%' ng-click='onCustomAdderClick({{verse.id}})' data-target='#annotationModal' translate>Not Ekle</div></a>
                                         <hr ng-if='user!=null' style='width:100%' />
                                         <a ng-if='user!=null' href><div style='width:100%' ng-click='showVerseAnnotations({{verse.id}})' translate>Ayete Ait Notlar</div></a>
                                         <hr ng-if='user!=null' style='width:100%' />
@@ -122,7 +122,7 @@
 
 <div ng-include="'app/components/user/login_modal.html'"></div>
 <div ng-include="'app/components/user/create_account_modal.html'"></div>
-<div ng-include="'app/components/user/reset_password_modal.html'"></div>
+<div ng-include="'app/components/user/reset_password_request_modal.html'"></div>
 <div ng-include="'app/components/user/set_password_modal.html'"></div>
 <div ng-include="'app/components/partials/authors_modal.html'"></div>
 <div ng-include="'app/components/partials/detailed_search.html'"></div>

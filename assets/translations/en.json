@@ -515,5 +515,6 @@
 "Cancel": "Cancel",
 "Birlikte Dosdoğru Yolu<br>Bulmak İçin...": "To find the straight<br>path together ...",
 "ADD_VERSE_LIST":"Select the lists to which you want to add the verb <b> {{versesInfo}} </ b>.",
-"Internet bağlantınız sağlandı.": "Your Internet connection is provided."
+"Internet bağlantınız sağlandı.": "Your Internet connection is provided.",
+"User Already Exist": "User Already Exist"
 }
