@@ -8,17 +8,35 @@ var mymodal = angular.module('ionicApp')
         $scope.accountCreateRequestSent = false;
         $scope.resetPasswordRequestSent = false;
         $scope.isUserExist = true;
+        $scope.isPasswordChanged = false;
 
         $scope.user = {};
 
         $scope.initParams = function () {
             $scope.accountCreateRequestSent = false;
             $scope.resetPasswordRequestSent = false;
+            $scope.isUserExist = true;
+            $scope.isPasswordChanged = false;
 
             $scope.user.name = "";
             $scope.user.email = "";
             $scope.user.password = "";
             $scope.user.confirm_password = "";
+            $scope.user.activationCode = "";
+
+            console.log("path-routeParams:", $location.path(), $routeParams);
+
+            if (!config_data.isMobile && $location.path() == "/user/account/reset_password/") {
+                $scope.pagePurpose = "reset_password";
+
+                if ($routeParams.hasOwnProperty("code")) {
+                    $scope.user.activationCode = $routeParams.code;
+                    $('#setPasswordModal').show();
+                } else {
+                    console.log("code missing...")
+                }
+             }
+
         };
 
         $scope.resetForm = function (form) {
@@ -35,8 +53,8 @@ var mymodal = angular.module('ionicApp')
             var loginWithEmail = Restangular.one("users/login");
 
             loginWithEmail.customPOST(data, '', '', headers).then(function (response) {
-                console.log("result", response);
-                authorization.login($scope.onEmailLoginSuccess);
+                var responseData = { loggedIn: true, user: response.user, token: response.token };
+                $scope.onEmailLoginSuccess(responseData);
 
             }, function(error) {
                 console.log("There was an error", error);
@@ -47,20 +65,20 @@ var mymodal = angular.module('ionicApp')
 
         $scope.onEmailLoginSuccess = function (responseData) {
 
-            $scope.access_token = responseData.token;
-            $scope.user = responseData.user;
-            $scope.loggedIn = true;
+            //if(responseData.user == null){
+                $scope.access_token = responseData.token;
+                $scope.user = responseData.user;
+                $scope.loggedIn = true;
+                $scope.$broadcast('userInfoReady');
+                localStorageService.set('access_token', $scope.access_token);
+                $scope.$broadcast('login', responseData);
+                //$scope.facebookIsReady = true;
+                authorization.login($scope.onFacebookLoginSuccess);
 
-            console.log("access_token::", $scope.access_token);
+                $scope.onFacebookLoginSuccess(responseData);
+            //}
 
-            $scope.$broadcast('login', responseData);
-            $scope.$broadcast('userInfoReady');
-            console.log("location:"+$location.path() );
-            if($location.path() == "/login/"){
-                $location.path('/');
-            }
-
-        }
+        };
 
         $scope.createAccount = function () {
             var headers = {'Content-Type': 'application/x-www-form-urlencoded', 'access_token': $scope.access_token};
@@ -76,14 +94,14 @@ var mymodal = angular.module('ionicApp')
             });
         };
 
-        $scope.resetPassword = function () {
+        $scope.resetPasswordRequest = function () {
             var headers = {'Content-Type': 'application/x-www-form-urlencoded'};
             var postData = [];
             postData.push(encodeURIComponent("email") + "=" + encodeURIComponent($scope.user.email));
             var data = postData.join("&");
-            var resetPassword = Restangular.one("users/reset_password");
+            var resetPasswordRequest = Restangular.one("users/reset_password");
 
-            resetPassword.customPOST(data, '', '', headers).then(function (result) {
+            resetPasswordRequest.customPOST(data, '', '', headers).then(function (result) {
                 console.log("result", result);
                 $scope.resetPasswordRequestSent = true;
             }, function(error) {
@@ -97,22 +115,30 @@ var mymodal = angular.module('ionicApp')
             //$scope.initParams();
         };
 
-        $scope.getLoginMenu = function(){
-            $scope.item = {};
-            $scope.item.name = "";
-            var promptPopup = $ionicPopup.prompt({
-                template: '<input type="text" ng-model="item.name">',
-                title: $translate.instant('Login'),
-                scope : $scope,
-                inputType: 'text',
-                inputPlaceholder: $translate.instant('Çevre Tanımı')
-            });
+        $scope.resetPassword = function () {
+            var headers = {'Content-Type': 'application/x-www-form-urlencoded'};
+            var postData = [];
+            postData.push(encodeURIComponent("code") + "=" + encodeURIComponent($scope.user.activationCode));
+            postData.push(encodeURIComponent("password") + "=" + encodeURIComponent($scope.user.password));
+            postData.push(encodeURIComponent("password_confirm") + "=" + encodeURIComponent($scope.user.confirm_password));
+            var data = postData.join("&");
+            var resetPassword = Restangular.one("users/reset_password");
 
-            promptPopup.then(function(res) {
-                if (isDefined(res) && $scope.item.name != ""){
-                    $scope.cevrekle($scope.item.name);
-                }
+            resetPassword.customPUT(data, '', '', headers).then(function (result) {
+               console.log("result", result,$scope);
+               if(result != undefined) {
+                   $scope.isPasswordChanged = true;
+
+                   $timeout(function () {
+                       //redirect to main page
+                       $location.path("/");
+                   }, 2000);
+               }
+
+            }, function(error) {
+                console.log("There is an error", error);
             });
+            //$scope.initParams();
         };
 
         $scope.initParams();

@@ -286,6 +286,7 @@
                 postData.push(encodeURIComponent("translationVersion") + "=" + encodeURIComponent(jsonData.translationVersion));
                 postData.push(encodeURIComponent("translationId") + "=" + encodeURIComponent(jsonData.translationId));
                 postData.push(encodeURIComponent("verseId") + "=" + encodeURIComponent(jsonData.verseId));
+                postData.push(encodeURIComponent("authorId") + "=" + encodeURIComponent(jsonData.authorId));
                 var tags = jsonData.tags.join(",");
                 postData.push(encodeURIComponent("tags") + "=" + encodeURIComponent(tags));
                 

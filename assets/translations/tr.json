@@ -515,5 +515,6 @@
 "Cancel": "İptal",
 "Birlikte Dosdoğru Yolu<br>Bulmak İçin...": "Birlikte Dosdoğru Yolu<br>Bulmak İçin...",
 "ADD_VERSE_LIST":"<b>{{versesInfo}}</b> ayetini eklemek istediğiniz listeleri seçiniz.",
-"Internet bağlantınız sağlandı.": "Internet bağlantınız sağlandı."
+"Internet bağlantınız sağlandı.": "Internet bağlantınız sağlandı.",
+"User Already Exist": "Kullanıcı zaten var"
 }
