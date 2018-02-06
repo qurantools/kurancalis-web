@@ -1,30 +1,17 @@
 /**
  * Created by Erata on 30/01/18.
  */
-
 var mymodal = angular.module('ionicApp')
-    .controller('AccountCtrl', function ($rootScope,$scope,$q, $routeParams, $location, $timeout,$ionicModal, authorization, localStorageService, Restangular, $translate) {
+    .controller('AccountCtrl', function ($rootScope,$scope,$q, $routeParams, $location, $timeout,$ionicModal, authorization, localStorageService, Restangular, $translate, Notification) {
 
         $scope.accountCreateRequestSent = false;
         $scope.resetPasswordRequestSent = false;
-        $scope.isUserExist = true;
-        $scope.isPasswordChanged = false;
+        $scope.message = "";
 
         $scope.user = {};
 
-        $scope.initParams = function () {
-            $scope.accountCreateRequestSent = false;
-            $scope.resetPasswordRequestSent = false;
-            $scope.isUserExist = true;
-            $scope.isPasswordChanged = false;
-
-            $scope.user.name = "";
-            $scope.user.email = "";
-            $scope.user.password = "";
-            $scope.user.confirm_password = "";
-            $scope.user.activationCode = "";
-
-            console.log("path-routeParams:", $location.path(), $routeParams);
+        $scope.init = function () {
+            $scope.initParams();
 
             if (!config_data.isMobile && $location.path() == "/user/account/reset_password/") {
                 $scope.pagePurpose = "reset_password";
@@ -39,12 +26,30 @@ var mymodal = angular.module('ionicApp')
 
         };
 
+        $scope.initParams = function () {
+            $scope.message = "";
+
+            $scope.user.name = "";
+            $scope.user.email = "";
+            $scope.user.password = "";
+            $scope.user.confirm_password = "";
+            $scope.user.activationCode = "";
+        };
+
+        $scope.initAllParams = function () {
+            $scope.initParams();
+
+            $scope.accountCreateRequestSent = false;
+            $scope.resetPasswordRequestSent = false;
+        };
+
         $scope.resetForm = function (form) {
             form.$setPristine();
             form.$setUntouched();
+            $scope.initParams();
         };
 
-        $scope.loginWithEmail = function () {
+        $scope.loginWithEmail = function (form) {
             var headers = {'Content-Type': 'application/x-www-form-urlencoded'};
             var postData = [];
             postData.push(encodeURIComponent("email") + "=" + encodeURIComponent($scope.user.email));
@@ -53,34 +58,39 @@ var mymodal = angular.module('ionicApp')
             var loginWithEmail = Restangular.one("users/login");
 
             loginWithEmail.customPOST(data, '', '', headers).then(function (response) {
+               $('#loginModal').hide();
+
                 var responseData = { loggedIn: true, user: response.user, token: response.token };
                 $scope.onEmailLoginSuccess(responseData);
 
-            }, function(error) {
-                console.log("There was an error", error);
-            });
+                $scope.resetForm(form);
 
-            //$scope.initParams();
+            }, function(error) {
+                console.error("There was an error", error);
+
+                if(error.hasOwnProperty("data")){
+                    $scope.showMessage(error.data.description);
+                    $scope.message = "E-posta adresiniz ya da şifreniz hatalı";
+                }
+            });
         };
 
         $scope.onEmailLoginSuccess = function (responseData) {
 
-            //if(responseData.user == null){
-                $scope.access_token = responseData.token;
-                $scope.user = responseData.user;
-                $scope.loggedIn = true;
-                $scope.$broadcast('userInfoReady');
-                localStorageService.set('access_token', $scope.access_token);
-                $scope.$broadcast('login', responseData);
-                //$scope.facebookIsReady = true;
-                authorization.login($scope.onFacebookLoginSuccess);
+            $scope.access_token = responseData.token;
+            $scope.user = responseData.user;
+            $scope.loggedIn = true;
+            $scope.$broadcast('userInfoReady');
+            localStorageService.set('access_token', $scope.access_token);
+            $scope.$broadcast('login', responseData);
+            //$scope.facebookIsReady = true;
+            //authorization.login($scope.onFacebookLoginSuccess);
 
-                $scope.onFacebookLoginSuccess(responseData);
-            //}
-
+            $scope.onFacebookLoginSuccess(responseData);
         };
 
-        $scope.createAccount = function () {
+        $scope.createAccount = function (form) {
+
             var headers = {'Content-Type': 'application/x-www-form-urlencoded', 'access_token': $scope.access_token};
             var postData = [];
             postData.push(encodeURIComponent("name") + "=" + encodeURIComponent($scope.user.name));
@@ -91,7 +101,22 @@ var mymodal = angular.module('ionicApp')
 
             createUser.customPOST(data, '', '', headers).then(function (result) {
                 $scope.accountCreateRequestSent = true;
+                $scope.resetForm(form);
+
+            },function(error) {
+                console.log("There was an error", error);
+
+                if(error.hasOwnProperty("data")){
+                    $scope.showMessage(error.data.description);
+
+                    if(error.data.code == 226) {
+                        $scope.message = "Kullanıcı zaten kayıtlı";
+                    } else if(error.data.code == 203) {
+                        $scope.message = "İşlemde Hata Oluştu";
+                    }
+                }
             });
+
         };
 
         $scope.resetPasswordRequest = function () {
@@ -104,18 +129,18 @@ var mymodal = angular.module('ionicApp')
             resetPasswordRequest.customPOST(data, '', '', headers).then(function (result) {
                 console.log("result", result);
                 $scope.resetPasswordRequestSent = true;
+
             }, function(error) {
                 console.log("There was an error", error);
 
-                if(error.hasOwnProperty("data") && error.data.code == 210){
-                    $scope.isUserExist = false;
+                if(error.hasOwnProperty("data")){
+                    $scope.showMessage(error.data.description);
+                    $scope.message = "Sistemimizde bu e-posta adresi ile kayıt bulunmamaktadır";
                 }
-
             });
-            //$scope.initParams();
         };
 
-        $scope.resetPassword = function () {
+        $scope.resetPassword = function (form) {
             var headers = {'Content-Type': 'application/x-www-form-urlencoded'};
             var postData = [];
             postData.push(encodeURIComponent("code") + "=" + encodeURIComponent($scope.user.activationCode));
@@ -128,6 +153,7 @@ var mymodal = angular.module('ionicApp')
                console.log("result", result,$scope);
                if(result != undefined) {
                    $scope.isPasswordChanged = true;
+                   $scope.resetForm(form);
 
                    $timeout(function () {
                        //redirect to main page
@@ -137,10 +163,28 @@ var mymodal = angular.module('ionicApp')
 
             }, function(error) {
                 console.log("There is an error", error);
+
+                if(error.hasOwnProperty("data")){
+                    $scope.showMessage(error.data.description);
+                }
             });
-            //$scope.initParams();
         };
 
-        $scope.initParams();
+        $scope.showMessage = function(message) {
+            // Message with custom delay
+            Notification.error({
+                message: $translate.instant(message),
+                delay: 5000,
+                startTop: 20,
+                startRight: 10,
+                verticalSpacing: 20,
+                horizontalSpacing: 20,
+                positionX: 'right',
+                positionY: 'top',
+                closeOnClick: true
+            });
+        }
+
+        $scope.init();
 
     });
