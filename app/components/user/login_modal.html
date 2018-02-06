@@ -2,7 +2,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <button type="button" class="close" ng-click="initAllParams()" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title" translate>Giriş</h4>
             </div>
             <div class="modal-body">
@@ -17,6 +17,7 @@
                 <div class="row">
                     <div class="col-xs-10 col-xs-offset-1">
                         <form name="form" novalidate>
+                            <div ng-if="message"><i class="fa fa-exclamation-triangle" style="font-size: 1em; color:#FF0000"></i> <span style="font-size: smaller" class="text-danger">{{message | translate}}</span></div>
                             <div class="form-group" ng-class="{ 'has-error' : form.email.$invalid && form.email.$touched }">
                                 <input type="email" name="email" ng-model="user.email"
                                        size="50" placeholder="{{'E-posta' | translate}}"
@@ -27,10 +28,10 @@
                                        size="50" placeholder="{{'Şifre' | translate}}"
                                        class="form-control" required/>
                             </div>
-                            <button type="button" aria-hidden="true" class="btn btn-success btn-block" ng-click="loginWithEmail(); resetForm(form)" data-dismiss="modal">Giriş</button> <!--ng-disabled="form.$invalid"-->
+                            <button type="button" aria-hidden="true" class="btn btn-success btn-block" ng-click="loginWithEmail(form)" translate>Giriş</button> <!--ng-disabled="form.$invalid"-->
                             <a href><div style='width:100%; text-decoration: underline; font-size:1em; color: #0c60ee' data-target='#resetPasswordRequestModal' data-toggle='modal' data-dismiss="modal" translate>Şifremi Unuttum</div></a>
                             <div style="text-align: center">
-                                <span>Hesabınız yok mu?</span>
+                                <span translate>Hesabınız yok mu?</span>
                                 <a href><div style='width:100%; text-decoration: underline; font-size: 1.2em; color: #0c60ee' data-target='#createAccountModal' data-toggle='modal' ng-click="form.reset" data-dismiss="modal" translate>Hesap Oluştur</div></a>
                             </div>
                         </form>

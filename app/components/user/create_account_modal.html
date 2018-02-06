@@ -2,7 +2,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <button type="button" class="close" ng-click="initAllParams()" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title" translate>Hesap Oluştur</h4>
             </div>
             <div class="modal-body">
@@ -18,6 +18,7 @@
                     <div class="row">
                         <div class="col-xs-10 col-xs-offset-1">
                             <form name="form" novalidate>
+                                <div ng-if="message"><i class="fa fa-exclamation-triangle" style="font-size: 1em; color:#FF0000"></i> <span style="font-size: smaller" class="text-danger">{{message | translate}}</span></div>
                                 <div class="form-group" ng-class="{ 'has-error' : form.name.$invalid && form.name.$touched }">
                                     <input type="text" name="name" ng-model="user.name"
                                            size="50" placeholder="{{'İsminiz' | translate}}"
@@ -33,8 +34,7 @@
                                            size="50" placeholder="{{'Şifre' | translate}}"
                                            class="form-control" required/>
                                 </div>
-                                <br>
-                                <button type="button" aria-hidden="true" class="btn btn-success btn-block" ng-click="createAccount(); resetForm(form)" translate>Hesap Oluştur</button> <!--ng-disabled="!form.$valid"-->
+                                <button type="button" aria-hidden="true" class="btn btn-success btn-block" ng-click="createAccount(form)" translate>Hesap Oluştur</button> <!--ng-disabled="!form.$valid"-->
                             </form>
                         </div>
                     </div>
