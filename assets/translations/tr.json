@@ -545,5 +545,11 @@
 "No Verse Exist": "Hiç Ayet Yok",
 "No Comment Exist": "Hiç Yorum Yok",
 "No Vote Exist": "Hiç Oy Yok",
-"User Already Exist": "Kullanıcı Zaten Mevcut"
+"User Already Exist": "Kullanıcı Zaten Mevcut",
+"Şifre Sıfırlama": "Şifre Sıfırlama",
+"Yeni şifreniz": "Yeni şifreniz",
+"Yeni şifre tekrar": "Yeni şifre tekrar",
+"Şifremi değiştir": "Şifremi değiştir",
+"Şifreniz başarıyla değiştirildi": "Şifreniz başarıyla değiştirildi",
+"Şifre alanları birbiriyle eşleşmiyor ya da şifre değiştirme kodu zaten kullanılmış": "Şifre alanları birbiriyle eşleşmiyor ya da şifre değiştirme kodu zaten kullanılmış"
 }

@@ -7,6 +7,7 @@ var mymodal = angular.module('ionicApp')
         $scope.accountCreateRequestSent = false;
         $scope.resetPasswordRequestSent = false;
         $scope.message = "";
+        $scope.selectedLanguage = $translate.use();
 
         $scope.user = {};
 
@@ -166,6 +167,7 @@ var mymodal = angular.module('ionicApp')
 
                 if(error.hasOwnProperty("data")){
                     $scope.showMessage(error.data.description);
+                    $scope.message = "Şifre alanları birbiriyle eşleşmiyor ya da şifre değiştirme kodu zaten kullanılmış";
                 }
             });
         };

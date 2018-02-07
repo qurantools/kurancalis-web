@@ -545,5 +545,11 @@
 "No Verse Exist": "No Verse Exist",
 "No Comment Exist": "No Comment Exist",
 "No Vote Exist": "No Vote Exist",
-"User Already Exist": "User Already Exist"
+"User Already Exist": "User Already Exist",
+"Şifre Sıfırlama": "Reset Password",
+"Yeni şifreniz": "Your new password",
+"Yeni şifre tekrar": "Repeat the new password",
+"Şifremi değiştir": "Change my password",
+"Şifreniz başarıyla değiştirildi": "Your password has been successfully changed",
+"Şifre alanları birbiriyle eşleşmiyor ya da şifre değiştirme kodu zaten kullanılmış": "The password fields do not match with each other or the password change code has already been used"
 }
