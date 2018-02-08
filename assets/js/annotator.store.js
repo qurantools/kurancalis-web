@@ -276,6 +276,12 @@
                 opts.dataType = 'json';
 
                 var jsonData = JSON.parse(data);
+
+                //Give default value if authorId is not set yet
+                if(!jsonData.hasOwnProperty("authorId")){
+                    jsonData.authorId = 1; //default value
+                }
+
                 postData.push(encodeURIComponent("start") + "=" + encodeURIComponent(jsonData.ranges[0].start));
                 postData.push(encodeURIComponent("end") + "=" + encodeURIComponent(jsonData.ranges[0].end));
                 postData.push(encodeURIComponent("startOffset") + "=" + encodeURIComponent(jsonData.ranges[0].startOffset));
@@ -303,7 +309,7 @@
                 var canCommentUsers = jsonData.canCommentUsers.join(",");
                 postData.push(encodeURIComponent("canCommentUsers") + "=" + encodeURIComponent(canCommentUsers));
                 //
-                
+
                 data = postData.join("&");
 
             }
