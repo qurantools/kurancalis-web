@@ -1550,6 +1550,7 @@ angular.module('ionicApp')
             //reset selected verses
             $scope.loadCustomAnnotation = false;
             $scope.query_verses = "";
+            $scope.verse.number = undefined;
 
             $scope.query_own_annotations.value = true;
             if (item.id == '') {
