@@ -636,6 +636,12 @@ if (config_data.isMobile == false) { //false
                         reloadOnSearch: false,
                         pageTitle: 'Kuran Çalış - Çevre Zaman Tüneli'
                     })
+                    .when('/user/account/reset_password/', {
+                        controller: 'AccountCtrl',
+                        templateUrl: 'components/user/set_password_modal.html',
+                        reloadOnSearch: false,
+                        pageTitle: 'Kuran Çalış - Çevre Zaman Tüneli'
+                    })
                     /*.when('/user/settings/', {
                         controller: 'UserSettingsController',
                         templateUrl: 'components/user/settings.html',
@@ -990,12 +996,6 @@ app.factory('ChapterVerses', function ($resource) {
             retcp = "search_translations";
         } else if ( url == "/lists/verse"){
             retcp = "verse_lists";
-        }
-         else if ( url == "/user/account/reset_password/"){
-         retcp = "reset_password";
-         }
-         else if ( url == "/user/settings/"){
-            retcp = "user_settings";
         }
         else if ( url.indexOf("/profile/user/") > -1){
             retcp = "profile_user";
@@ -1749,6 +1749,7 @@ app.factory('ChapterVerses', function ($resource) {
             });
 
             $scope.openModal = function (id) {
+                console.log("index controller --- open modal", id )
                 if (id == 'editor') {
                     $scope.modal_editor.show();
                 } else if (id === 'hakki_yilmaz_notes'){

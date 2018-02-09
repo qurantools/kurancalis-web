@@ -1,0 +1,44 @@
+<div class="modal modal-fullscreen" id="loginModal" ng-controller="AccountCtrl">
+    <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced" align-title="center">
+        <ion-nav-buttons side="left" data-tap-disabled="true">
+            <button class="button button-icon icon-left ion-ios-arrow-back"
+                    ng-click="closeModal('user_login');"
+                    style="float: left">&nbsp;{{'Kapat' | translate}}
+            </button>
+           <!-- <button class="button button-icon icon ion-ios-arrow-left" onclick=""> Giriş</button>-->
+        </ion-nav-buttons>
+        <ion-nav-title>{{'Giriş' | translate}}</ion-nav-title>
+    </ion-nav-bar>
+    <ion-content>
+        <div style="height: 50px"></div>
+        <div class="item item-text-wrap">
+            <span class="s_a_text" style='font-size: 10pt;'>Facebook hesabınız ile giriş yaparsanız arkadaşlarınızı ve çalışmalarınızı bulabilirsiniz</span>
+            <button type="button" class="button button-block button-positive" ng-click="login()">
+                <i class="fa fa-facebook-square fa-2x" style="vertical-align: middle"></i>&nbsp; {{'Facebook ile Giriş' | translate}}
+            </button>
+        </div>
+        <hr width="100%"/>
+        <div class="item item-text-wrap">
+            <div ng-if="message">
+                <i class="fa fa-exclamation-triangle" style="font-size: large; color:#FF0000"></i>
+                <span style="font-size: smaller; color:#FF0000">{{message | translate}}</span>
+            </div>
+            <label class="item item-input" >
+                <input type="email" ng-model="user.email" size="50" placeholder="{{'E-posta' | translate}}" required/>
+            </label>
+            <label class="item item-input" >
+                <input type="password" ng-model="user.password" size="50" placeholder="{{'Şifre' | translate}}" required/>
+            </label>
+            <button class="button button-block button-balanced" ng-click="loginWithEmail()" translate>Giriş</button>
+            <a href><div style='width:100%; text-decoration: underline; font-size:medium; color: #0c60ee'
+                         ng-click="openModal('user_reset_password_request')"
+                         ng-if="isConnected==true" translate>Şifremi Unuttum</div></a>
+            <br>
+            <div style="text-align: center">
+                <span translate>Hesabınız yok mu?</span>
+                <a href><div style='width:100%; text-decoration: underline; font-size: x-large; color: #0c60ee' ng-click="openModal('user_create_account')" ng-if="isConnected==true" translate>Hesap Oluştur</div></a>
+            </div>
+        </div>
+        <div style="height:20px"></div>
+    </ion-content>
+</div>
