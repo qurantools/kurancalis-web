@@ -6,20 +6,33 @@ var mymodal = angular.module('ionicApp')
 
         $scope.accountCreateRequestSent = false;
         $scope.resetPasswordRequestSent = false;
+        $scope.isPasswordChanged = false;
         $scope.message = "";
         $scope.selectedLanguage = $translate.use();
 
         $scope.user = {};
 
+        //mobile modals
+        $scope.modal_user_create_account = null;
+        $scope.modal_user_login = null;
+        $scope.modal_user_reset_password_request = null;
+        $scope.modal_user_set_password = null;
+
+
         $scope.init = function () {
             $scope.initParams();
 
-            if (!config_data.isMobile && $location.path() == "/user/account/reset_password/") {
+            if ( $location.path() == "/user/account/reset_password/") {
                 $scope.pagePurpose = "reset_password";
-
                 if ($routeParams.hasOwnProperty("code")) {
                     $scope.user.activationCode = $routeParams.code;
-                    $('#setPasswordModal').show();
+
+                    if(!config_data.isMobile) {
+                        $('#setPasswordModal').show();
+                    } else {
+                        $scope.openModal('user_set_password')
+                    }
+
                 } else {
                     console.log("code missing...")
                 }
@@ -64,7 +77,11 @@ var mymodal = angular.module('ionicApp')
                 var responseData = { loggedIn: true, user: response.user, token: response.token };
                 $scope.onEmailLoginSuccess(responseData);
 
-                $scope.resetForm(form);
+                if(!config_data.isMobile) {
+                    $scope.resetForm(form);
+                } else {
+                    $scope.initParams();
+                }
 
             }, function(error) {
                 console.error("There was an error", error);
@@ -84,8 +101,6 @@ var mymodal = angular.module('ionicApp')
             $scope.$broadcast('userInfoReady');
             localStorageService.set('access_token', $scope.access_token);
             $scope.$broadcast('login', responseData);
-            //$scope.facebookIsReady = true;
-            //authorization.login($scope.onFacebookLoginSuccess);
 
             $scope.onFacebookLoginSuccess(responseData);
         };
@@ -102,7 +117,12 @@ var mymodal = angular.module('ionicApp')
 
             createUser.customPOST(data, '', '', headers).then(function (result) {
                 $scope.accountCreateRequestSent = true;
-                $scope.resetForm(form);
+
+                if(!config_data.isMobile) {
+                    $scope.resetForm(form);
+                } else {
+                    $scope.initParams();
+                }
 
             },function(error) {
                 console.log("There was an error", error);
@@ -154,7 +174,12 @@ var mymodal = angular.module('ionicApp')
                console.log("result", result,$scope);
                if(result != undefined) {
                    $scope.isPasswordChanged = true;
-                   $scope.resetForm(form);
+
+                   if(!config_data.isMobile) {
+                       $scope.resetForm(form);
+                   } else {
+                       $scope.initParams();
+                   }
 
                    $timeout(function () {
                        //redirect to main page

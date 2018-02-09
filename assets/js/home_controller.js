@@ -46,6 +46,10 @@ angular.module('ionicApp')
         $scope.modal_editor = null;
         $scope.modal_home_search = null;
         $scope.modal_friend_search = null;
+        $scope.modal_user_create_account = null;
+        $scope.modal_user_login = null;
+        $scope.modal_user_reset_password_request = null;
+        $scope.modal_user_set_password = null;
 
 
         //tags parameters
@@ -1211,6 +1215,36 @@ angular.module('ionicApp')
                 $scope.modal_view_user_search = modal
             });
 
+            //User Account Modals
+            $ionicModal.fromTemplateUrl('components/user/create_account_modal.html', {
+                scope: $scope,
+                animation: 'slide-in-up',
+                id: 'user_create_account'
+            }).then(function (modal) {
+                $scope.modal_user_create_account = modal
+            });
+            $ionicModal.fromTemplateUrl('components/user/login_modal.html', {
+                scope: $scope,
+                animation: 'slide-in-up',
+                id: 'user_login'
+            }).then(function (modal) {
+                $scope.modal_user_login = modal
+            });
+            $ionicModal.fromTemplateUrl('components/user/reset_password_request_modal.html', {
+                scope: $scope,
+                animation: 'slide-in-up',
+                id: 'user_reset_password_request'
+            }).then(function (modal) {
+                $scope.modal_user_reset_password_request = modal
+            });
+            $ionicModal.fromTemplateUrl('components/user/set_password_modal.html', {
+                scope: $scope,
+                animation: 'slide-in-up',
+                id: 'user_set_password'
+            }).then(function (modal) {
+                $scope.modal_user_set_password = modal
+            });
+
             $scope.openModal = function (id) {
                 if (id == 'annotations_on_page') {
                     $scope.modal_annotations_on_page.show();
@@ -1232,6 +1266,15 @@ angular.module('ionicApp')
                 } else if (id == 'tagsearch') {
                     $scope.modal_tag_search.show();
                     focusToInput('addtagtoannotation_input');
+                }
+                else if (id == 'user_create_account') {
+                    $scope.modal_user_create_account.show();
+                } else if (id == 'user_login') {
+                    $scope.modal_user_login.show();
+                } else if (id == 'user_reset_password_request') {
+                    $scope.modal_user_reset_password_request.show();
+                } else if (id == 'user_set_password') {
+                    $scope.modal_user_set_password.show();
                 }
             };
 
@@ -1260,6 +1303,16 @@ angular.module('ionicApp')
                     } else if (id == 'verselist_selection'){
                         $scope.modal_verse_selection.hide();
                     }
+                    else  if (id == 'user_create_account') {
+                        $scope.modal_user_create_account.hide();
+                    } else if (id == 'user_login') {
+                        $scope.modal_user_login.hide();
+                    } else if (id == 'user_reset_password_request') {
+                        $scope.modal_user_reset_password_request.hide();
+                    } else if (id == 'user_set_password') {
+                        $scope.modal_user_set_password.hide();
+                    }
+
                 },300);
             };
 
@@ -1269,6 +1322,10 @@ angular.module('ionicApp')
                 $scope.modal_authors_list.hide();
                 $scope.modal_annotations_on_page_sort.hide();
                 $scope.modal_editor.hide();
+                $scope.modal_user_create_account.hide();
+                $scope.modal_user_login.hide();
+                $scope.modal_user_reset_password_request.hide();
+                $scope.modal_user_set_password.hide();
             };
         }
 
