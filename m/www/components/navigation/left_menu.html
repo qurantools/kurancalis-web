@@ -12,7 +12,9 @@
             <a ng-if="user!=null" href="#/lists/verse/" class="item" menu-close="" translate>Ayet Listelerim</a>
             <a ng-if="user!=null" href="#/people/home/" class="item" menu-close="" translate>Kişiler</a>
             <a href="#/help/" class="item" menu-close="" translate>Yardım</a>
-            <div style="vertical-align: middle !important;"><a ng-if="user!=null" href ng-click="logOut()" class="item"><img ng-src="{{user.photo}}" height="34"/> {{'Çıkış' | translate}}</a></div>
+            <div style="vertical-align: middle !important;">
+                <a ng-if="user!=null" href ng-click="logOut()" class="item"><img ng-src="{{user.photo}}" height="34"/> {{'Çıkış' | translate}}</a>
+            </div>
             <a ng-if="user==null && isConnected==true" href ng-click="openModal('user_login')" class="item" menu-close translate>Giriş</a>
         </ul>
     </ion-content>
