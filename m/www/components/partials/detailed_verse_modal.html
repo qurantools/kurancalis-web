@@ -67,7 +67,7 @@
                 <div class="well translations col-xs-12" id="verseTags_{{verse.id}}" ng-show="detailedTags.length > 0">
                     <div style="font-size: 20px"><b translate>Etiketler</b></div>
                     <div class="list" style="margin-top: 10px; ">
-                        <a class="item item-icon-right" style="font-weight: bold" href=""
+                        <a class="item item-icon-right" style="font-weight: bold; white-space: normal; text-align: left;" href=""
                            ng-click="goToVerseTag(0, verse.id,verseTag, detailedVerseUsers, detailedVerseCircles)"
                            ng-repeat="verseTag in detailedTags track by $index">
                             {{verseTag}}
