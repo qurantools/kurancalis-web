@@ -21,7 +21,6 @@ var mymodal = angular.module('ionicApp')
 
         $scope.init = function () {
             $scope.initParams();
-
             if ( $location.path() == "/user/account/reset_password/") {
                 $scope.pagePurpose = "reset_password";
                 if ($routeParams.hasOwnProperty("code")) {
@@ -30,7 +29,7 @@ var mymodal = angular.module('ionicApp')
                     if(!config_data.isMobile) {
                         $('#setPasswordModal').show();
                     } else {
-                        $scope.openModal('user_set_password')
+                        //$scope.openModal('user_set_password')
                     }
 
                 } else {

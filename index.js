@@ -1058,7 +1058,8 @@ app.factory('ChapterVerses', function ($resource) {
 
 
             $scope.$broadcast('logout', responseData);
-            $location.path('/login');
+            $scope.openModal("user_login");
+            //$location.path('/login');
         }
     };
 
@@ -1780,7 +1781,6 @@ app.factory('ChapterVerses', function ($resource) {
 
 
             $scope.openModal = function (id) {
-                console.log("open modal ",id)
                 if (id == 'editor') {
                     $scope.modal_editor.show();
                 } else if (id === 'hakki_yilmaz_notes'){
@@ -1812,6 +1812,9 @@ app.factory('ChapterVerses', function ($resource) {
                         $scope.modal_user_reset_password_request.hide();
                     } else if (id == 'user_set_password') {
                         $scope.modal_user_set_password.hide();
+                        $location.search('code', null);
+                        $location.path('/');
+                        //$scope.openModal("user_login")
                     }
                 },300);
             }
