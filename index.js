@@ -1748,12 +1748,51 @@ app.factory('ChapterVerses', function ($resource) {
                 $scope.hakki_yilmaz_modal = modal
             });
 
+            //User Account Modals
+            $ionicModal.fromTemplateUrl('components/user/create_account_modal.html', {
+                scope: $scope,
+                animation: 'slide-in-up',
+                id: 'user_create_account'
+            }).then(function (modal) {
+                $scope.modal_user_create_account = modal
+            });
+            $ionicModal.fromTemplateUrl('components/user/login_modal.html', {
+                scope: $scope,
+                animation: 'slide-in-up',
+                id: 'user_login'
+            }).then(function (modal) {
+                $scope.modal_user_login = modal
+            });
+            $ionicModal.fromTemplateUrl('components/user/reset_password_request_modal.html', {
+                scope: $scope,
+                animation: 'slide-in-up',
+                id: 'user_reset_password_request'
+            }).then(function (modal) {
+                $scope.modal_user_reset_password_request = modal
+            });
+            $ionicModal.fromTemplateUrl('components/user/set_password_modal.html', {
+                scope: $scope,
+                animation: 'slide-in-up',
+                id: 'user_set_password'
+            }).then(function (modal) {
+                $scope.modal_user_set_password = modal
+            });
+
+
             $scope.openModal = function (id) {
-                console.log("index controller --- open modal", id )
+                console.log("open modal ",id)
                 if (id == 'editor') {
                     $scope.modal_editor.show();
                 } else if (id === 'hakki_yilmaz_notes'){
                     $scope.hakki_yilmaz_modal.show();
+                } else if (id == 'user_create_account') {
+                    $scope.modal_user_create_account.show();
+                } else if (id == 'user_login') {
+                    $scope.modal_user_login.show();
+                } else if (id == 'user_reset_password_request') {
+                    $scope.modal_user_reset_password_request.show();
+                } else if (id == 'user_set_password') {
+                    $scope.modal_user_set_password.show();
                 }
             };
 
@@ -1765,6 +1804,14 @@ app.factory('ChapterVerses', function ($resource) {
                         $scope.modal_editor.hide();
                     } else if (id === 'hakki_yilmaz_notes'){
                         $scope.hakki_yilmaz_modal.hide();
+                    } else  if (id == 'user_create_account') {
+                        $scope.modal_user_create_account.hide();
+                    } else if (id == 'user_login') {
+                        $scope.modal_user_login.hide();
+                    } else if (id == 'user_reset_password_request') {
+                        $scope.modal_user_reset_password_request.hide();
+                    } else if (id == 'user_set_password') {
+                        $scope.modal_user_set_password.hide();
                     }
                 },300);
             }

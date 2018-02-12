@@ -10,7 +10,7 @@
             <ion-nav-buttons data-tap-disabled="true" side="right">
                 <button data-tap-disabled="true" class="button button-icon icon ion-ios-compose-outline" ng-if="edit_user == user.id" ng-click="edit_inference()"></button>
                 <button data-tap-disabled="true" class="button button-icon icon ion-ios-trash-outline" ng-if="edit_user == user.id" ng-click="deleted()"></button>
-                <button class="button button-positive" ng-click="login()" ng-if="user==null && isConnected==true" translate>Facebook ile Giriş</button>
+                <button class="button button-positive" ng-click="openModal('user_login')" ng-if="user==null && isConnected==true" translate>Giriş</button>
             </ion-nav-buttons>
         </ion-nav-bar>
         <ion-nav-view name="appContent"></ion-nav-view>
