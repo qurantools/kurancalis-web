@@ -9,7 +9,7 @@
         </ion-nav-buttons>
         <ion-nav-title>{{'Hesap Oluştur' | translate}}</ion-nav-title>
     </ion-nav-bar>
-    <ion-content>
+    <ion-content delegate-handle="content">
         <div ng-if="!accountCreateRequestSent">
             <div style="height: 50px"></div>
             <div class="item item-text-wrap">

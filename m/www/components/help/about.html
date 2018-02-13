@@ -7,7 +7,7 @@
                 <h1 class="title" translate>Uygulama Hakkında</h1>
             </ion-nav-buttons>
             <ion-nav-buttons side="right">
-                <button class="button button-positive" ng-click="login()" ng-if="user==null && isConnected==true" translate>Facebook ile Giriş</button>
+                <button class="button button-positive" ng-click="openLoginModal('user_login')" ng-if="user==null && isConnected==true" translate>Giriş</button>
             </ion-nav-buttons>
         </ion-nav-bar>
         <ion-nav-buttons side="left">
