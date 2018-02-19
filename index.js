@@ -1058,8 +1058,7 @@ app.factory('ChapterVerses', function ($resource) {
 
 
             $scope.$broadcast('logout', responseData);
-            $scope.openModal("user_login");
-            //$location.path('/login');
+            $location.path('/');
         }
     };
 

@@ -71,7 +71,8 @@ var mymodal = angular.module('ionicApp')
             var loginWithEmail = Restangular.one("users/login");
 
             loginWithEmail.customPOST(data, '', '', headers).then(function (response) {
-               $('#loginModal').hide();
+               //$('#loginModal').hide(); // "modal" class was exist when modal closed
+                $('#loginModal').modal('toggle'); // "modal" class removed when modal closed
 
                 var responseData = { loggedIn: true, user: response.user, token: response.token };
                 $scope.onEmailLoginSuccess(responseData);
