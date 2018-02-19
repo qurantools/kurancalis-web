@@ -92,7 +92,7 @@
                             <span ng-bind-html="annotation.text | newLineAllowed | to_trusted" class="s_a_text" style="word-break: break-all"></span>
                             <div>
                                 <button ng-repeat="annotationTag in annotation.tags" class="tag label label-info s_a_tag btn btn-xs btn-info verse_tag"
-                                        style="border: 0;"
+                                        style="border: 0; white-space: normal"
                                         ng-click="goToVerseTag(annotation.author_id, annotation.verseId, annotationTag, usersForSearch, circlesForSearch)" >
                                     {{annotationTag}}
                                 </button>
