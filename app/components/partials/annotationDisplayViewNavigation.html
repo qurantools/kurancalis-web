@@ -11,7 +11,7 @@
 
                 <div ng-show="facebookIsReady" class="facebook_area">
                     <div ng-if="user==null">
-                        <button type="button" id="login" ng-click="login()" class="btn btn-primary" translate="DOGRU_YOL_MESAJI"></button>
+                        <button type="button" id="login" data-target='#loginModal' data-toggle='modal' class="btn btn-primary" translate>Giriş</button>
                     </div>
                     <div ng-if="user!=null">
                         <button class="btn btn-primary" data-target="#verseHistoryModal" data-toggle="modal" ng-click="openVerseHistory()"><i class="fa fa-history" style="font-size: 1.3em"></i></button>

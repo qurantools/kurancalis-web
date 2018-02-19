@@ -76,11 +76,12 @@ var mymodal = angular.module('ionicApp')
                 $scope.onEmailLoginSuccess(responseData);
 
                 if(!config_data.isMobile) {
-                    //"modal" class ı takılı kalıyor, onu kaldırmak için
+                    //$('#loginModal').hide();
                     $( '.modal' ).modal( 'hide' ).data( 'bs.modal', null );
                     $scope.resetForm(form);
                 } else {
-                    $('#loginModal').hide();
+                    //$('#loginModal').hide();
+                    $scope.closeModal('user_login');
                     $scope.initParams();
                 }
 
@@ -182,10 +183,10 @@ var mymodal = angular.module('ionicApp')
                        $scope.initParams();
                    }
 
-                   $timeout(function () {
+                   /*$timeout(function () {
                        //redirect to main page
                        $location.path("/");
-                   }, 2000);
+                   }, 2000);*/
                }
 
             }, function(error) {

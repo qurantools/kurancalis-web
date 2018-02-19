@@ -17,7 +17,7 @@
                 </div>
                 <div ng-show="facebookIsReady" class="facebook_area">
                     <div ng-if="user==null">
-                        <button type="button" id="login" ng-click="login()" class="btn btn-primary" translate="DOGRU_YOL_MESAJI"></button>
+                        <button type="button" id="login" data-target='#loginModal' data-toggle='modal' class="btn btn-primary" translate>Giriş</button>
                     </div>
                     <div ng-if="user!=null">
                         <a class="btn btn-primary" href="#/people/find_people/">
