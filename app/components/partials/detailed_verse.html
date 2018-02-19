@@ -66,6 +66,31 @@
                             </ul>
                         </div>
                         <div class="col-sm-9" style="max-height: calc(100vh - 212px);overflow-y: auto;">
+                            <!-- verse words-->
+                            <div>
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th translate>Arapça</th>
+                                            <th translate>Kök</th>
+                                            <th translate>Transcript</th>
+                                            <th translate>Okunuş</th>
+                                            <th translate>Türkçe</th>
+                                            <th translate>İngilizce</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="word in wordsOfVerse | orderBy : 'wordOrder'">
+                                            <td><a href ng-click="setWordParam('word',word)" data-target='#wordDetailModal' data-toggle='modal'>{{ word.arabic }}</a></td>
+                                            <td><a href ng-click="setWordParam('root',word)" data-target='#wordDetailModal' data-toggle='modal'>{{ word.rootArabic }}</a></td>
+                                            <td>{{ word.rootTranscript }}</td>
+                                            <td>{{ word.transcriptTurkish}}</td>
+                                            <td>{{ word.turkish }}</td>
+                                            <td>{{ word.english }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                             <!-- translations-->
                             <div id="detailed_translations">
                                 <div class="well translations col-xs-12" id="v_{{verse.id}}">

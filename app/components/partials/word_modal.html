@@ -1,0 +1,109 @@
+<div class="modal" id="wordDetailModal" ng-controller="DetailedVerseCtrl">
+    <div class="modal-dialog fixed-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"> Ayet ({{goToVerseParameters.chapter.id}}: {{goToVerseParameters.verse}}), Kelime {{'2'}}</h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="text-center">
+                    <span>{{selectedWord.arabic}}</span><br>
+                    <span>Kök: <a href class="getWord(selectedWord.rootArabic)">{{selectedWord.rootArabic}}</a></span><br>
+                    <span>({{selectedWord.rootTranscript | uppercase}})</span><br>
+                    <span>{{selectedWord.transcriptTurkish}}</span><br>
+                    <span>{{selectedWord.turkish}}</span><br>
+                    <span>{{selectedWord.english}}</span>
+                </div>
+                <br>
+                <select name="author-selection"
+                        ng-model="currentAuthor"
+                        ng-options="author.id as author.name for author in authors"
+                        ng-change="detailedSearchAuthorToggleSelection(author.id)"
+                        class="pull-right"
+                        style="margin-top: 10px">
+                    <option value="">Meal Seçiniz</option>
+                </select>
+                <br>
+                <div ng-if="WORD_PARAMS.type" data-ng-init="getWordsOfSameRoot()" class="row">
+                    <div>
+                        <table class="table table-striped">
+                            <tbody>
+                            <tr ng-repeat="item in wordTranslations">
+                                <td class="col-md-3">
+                                    <span><strong>{{item.wordDetail.chapter}}:{{item.wordDetail.verseId-item.wordDetail.chapter*1000}}</strong></span><br>
+                                    <span>{{ item.wordDetail.arabic }}</span><br>
+                                    <span>{{ item.wordDetail.rootArabic }}</span><br>
+                                    <span>{{ item.wordDetail.rootTranscript }}</span><br>
+                                    <!--<span>{{ item.wordDetail.transcriptTurkish}}</span><br>-->
+                                    <span>{{ item.wordDetail.turkish }}</span><br>
+                                    <!--<span>{{ item.wordDetail.english }}</span>-->
+                                </td>
+                                <td class="col-md-9">
+                                    <div style="width: 400px; word-wrap: break-word; ">
+                                        <span ng-bind-html="item.verseWords | to_trusted"></span><br>
+                                    </div>
+                                    <span>{{ item.verseTranslation }}</span><br>
+                                </td>
+                            </tr>
+                            <!--<tr ng-repeat="word in wordsOfVerse | orderBy : 'wordOrder'">
+                                <td><a href ng-click="setWordParam('word',word)" data-target='#wordDetailModal' data-toggle='modal'>{{ word.arabic }}</a></td>
+                                <td><a href ng-click="setWordParam('root',word)" data-target='#wordDetailModal' data-toggle='modal'>{{ word.rootArabic }}</a></td>
+                                <td>{{ word.rootTranscript }}</td>
+                                <td>{{ word.transcriptTurkish}}</td>
+                                <td>{{ word.turkish }}</td>
+                                <td>{{ word.english }}</td>
+                            </tr>-->
+                            </tbody>
+                        </table>
+                    </div>
+
+             <!--       <div class="col-xs-3">
+                        <div>
+                            <ul ng-repeat="word in wordsOfSameRoot">
+                                <li><strong>{{word.chapter}}:{{word.verseId-word.chapter*1000}}</strong></li>
+                                <li>{{ word.arabic }}</li>
+                                <li>{{ word.rootArabic }}</li>
+                                <li>{{ word.rootTranscript }}</li>
+                                <li>{{ word.transcriptTurkish}}</li>
+                                <li>{{ word.turkish }}</li>
+                                <li>{{ word.english }}</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xs-9">
+                        <div>
+                           <span ng-repeat="word in rootWords">
+                               <br ng-if="word.wordId==-1">
+                               <span ng-if="word.wordId!=-1"><a href="#"><b ng-if="word.arabic==selectedWord.arabic" style="color: #cb2028">{{ word.arabic }}</b><span ng-if="word.arabic!=selectedWord.arabic">{{ word.arabic }}</span></a></span>
+                               &lt;!&ndash;<span ng-if="rootTranslations[$index].id != -1">{{rootTranslations[$index].content}}</span>&ndash;&gt;
+                               &lt;!&ndash; <br ng-if="!word">&ndash;&gt;
+                            </span>
+
+                            <span ng-repeat="translation in rootTranslations">
+                                {{ translation.content }} ****
+                            </span>
+                           &lt;!&ndash;  <ul ng-repeat="item in wordsTranslationsOfSameRoot">
+                                <li>{{ item }}</li>
+                            </ul>&ndash;&gt;
+                        </div>
+                    </div>
+                </div>
+-->
+               <!--
+                ng-selected="currentAuthor == author.id"
+               <ul class="selectable_list">
+                    <li ng-repeat="author in authors"
+                        ng-click="detailedSearchAuthorToggleSelection(author.id)"
+                        ng-class="{ 'selected_list_item': detailedSearchAuthorSelection.indexOf(author.id) > -1}">
+                        {{author.name}}
+                    </li>
+                </ul>-->
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" aria-hidden="true" class="btn" translate>Vazgeç</button>
+                <a href="#" class="btn btn-primary btn-wide" data-dismiss="modal" ng-click="goToChapter()" translate>Tamam</a>
+            </div>
+        </div>
+    </div>
+</div>

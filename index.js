@@ -892,6 +892,9 @@ app.factory('ChapterVerses', function ($resource) {
     $scope.CIRCLE_ALL_CIRCLES = {'id': '-2', 'name': 'Tüm Çevrelerim'};
     $scope.CIRCLE_PUBLIC={'id': '-1', 'name': 'Herkes'};
 
+    $scope.WORD_PARAMS = { type:'', word:{} };
+    //$scope.WORD_PARAMS={'wordId': -1, 'root': '', 'word': '', 'authorId': -1};
+
     //DEFAULT LANNGUAGE SETTINGS
     var activeLanguage = $translate.use() ||
         $translate.storage().get($translate.storageKey()) ||
