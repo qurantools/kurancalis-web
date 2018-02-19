@@ -475,6 +475,7 @@ angular.module('ionicApp')
             //reset params
             $scope.loadCustomAnnotation = false;
             $scope.query_verses = "";
+            $scope.verse.number = undefined;
 
             $timeout(function(){
 
