@@ -198,6 +198,7 @@ var mymodal = angular.module('ionicApp')
             //close modal
             $( '.modal' ).modal( 'hide' ).data( 'bs.modal', null );
             $location.path('/');
+            $scope.scopeApply();
         };
 
         $scope.showMessage = function(message) {
