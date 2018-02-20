@@ -194,6 +194,12 @@ var mymodal = angular.module('ionicApp')
             });
         };
 
+        $scope.returnHome = function () {
+            //close modal
+            $( '.modal' ).modal( 'hide' ).data( 'bs.modal', null );
+            $location.path('/');
+        };
+
         $scope.showMessage = function(message) {
             // Message with custom delay
             Notification.error({
