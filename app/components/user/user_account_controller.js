@@ -173,7 +173,7 @@ var mymodal = angular.module('ionicApp')
             var resetPassword = Restangular.one("users/reset_password");
 
             resetPassword.customPUT(data, '', '', headers).then(function (result) {
-               console.log("result", result,$scope);
+               console.log("result", result);
                if(result != undefined) {
                    $scope.isPasswordChanged = true;
 
@@ -182,11 +182,6 @@ var mymodal = angular.module('ionicApp')
                    } else {
                        $scope.initParams();
                    }
-
-                   /*$timeout(function () {
-                       //redirect to main page
-                       $location.path("/");
-                   }, 2000);*/
                }
 
             }, function(error) {
