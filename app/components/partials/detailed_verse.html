@@ -67,7 +67,7 @@
                         </div>
                         <div class="col-sm-9" style="max-height: calc(100vh - 212px);overflow-y: auto;">
                             <!-- verse words-->
-                            <div>
+                            <div data-ng-init="getWordsOfVerse(verseId)">
                                 <table class="table table-striped">
                                     <thead>
                                         <tr>
@@ -212,7 +212,7 @@
                                             </td>
                                             <td>
                                                 <div style="float: right">
-                                                    <div style="text-align: center;" ><a href data-dismiss="modal" ng-click="gotoInference({{inference.id}})"><h4 style="margin-top:0;">
+                                                    <div style="text-align: center;"><a href data-dismiss="modal" ng-click="gotoInference({{inference.id}})"><h4 style="margin-top:0;">
                                                         {{inference.title}}</h4>
                                                     </a></div>
                                                     <div style="padding-left:10px;">
