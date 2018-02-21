@@ -943,7 +943,7 @@ app.factory('ChapterVerses', function ($resource) {
 
         setTimeout(function () {
             window.location.reload();
-        }, 100)
+        }, 400)
     };
 
     $scope.checkAPIVersion = function(){
@@ -1058,8 +1058,7 @@ app.factory('ChapterVerses', function ($resource) {
 
 
             $scope.$broadcast('logout', responseData);
-            $scope.openModal("user_login");
-            //$location.path('/login');
+            $location.path('/');
         }
     };
 

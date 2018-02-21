@@ -71,14 +71,17 @@ var mymodal = angular.module('ionicApp')
             var loginWithEmail = Restangular.one("users/login");
 
             loginWithEmail.customPOST(data, '', '', headers).then(function (response) {
-               $('#loginModal').hide();
 
                 var responseData = { loggedIn: true, user: response.user, token: response.token };
                 $scope.onEmailLoginSuccess(responseData);
 
                 if(!config_data.isMobile) {
+                    //$('#loginModal').hide();
+                    $( '.modal' ).modal( 'hide' ).data( 'bs.modal', null );
                     $scope.resetForm(form);
                 } else {
+                    //$('#loginModal').hide();
+                    $scope.closeModal('user_login');
                     $scope.initParams();
                 }
 
@@ -170,7 +173,7 @@ var mymodal = angular.module('ionicApp')
             var resetPassword = Restangular.one("users/reset_password");
 
             resetPassword.customPUT(data, '', '', headers).then(function (result) {
-               console.log("result", result,$scope);
+               console.log("result", result);
                if(result != undefined) {
                    $scope.isPasswordChanged = true;
 
@@ -179,11 +182,6 @@ var mymodal = angular.module('ionicApp')
                    } else {
                        $scope.initParams();
                    }
-
-                   $timeout(function () {
-                       //redirect to main page
-                       $location.path("/");
-                   }, 2000);
                }
 
             }, function(error) {
@@ -194,6 +192,13 @@ var mymodal = angular.module('ionicApp')
                     $scope.message = "Şifre alanları birbiriyle eşleşmiyor ya da şifre değiştirme kodu zaten kullanılmış";
                 }
             });
+        };
+
+        $scope.returnHome = function () {
+            //close modal
+            $( '.modal' ).modal( 'hide' ).data( 'bs.modal', null );
+            $location.path('/');
+            $scope.scopeApply();
         };
 
         $scope.showMessage = function(message) {
