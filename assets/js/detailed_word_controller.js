@@ -60,13 +60,21 @@ angular.module('ionicApp')
 
         //Get all words of verse
         $scope.getWordsOfVerse = function (verseId) {
-            console.log("-------getWordsOfVerse::")
-            Restangular.all('words').customGET("", {verse_id: verseId}, {}).then(function(data){
-                $scope.wordsOfVerse = data;
+
+            return Restangular.all('words').customGET("", {verse_id: verseId}, {}).then(function(data){
+                console.log("data::",data);
+                return data;
+                //$scope.wordsOfVerse = data;
                 //$scope.selectedWord = $scope.wordsOfVerse[0];
-                console.log("data::",data)
+
             });
         };
+
+        $scope.$on("showWordDetail", function(evt, data){
+            console.log("showWordDetail", data)
+            $scope.selectedWord = data.word;
+            $scope.scopeApply();
+        });
 
         /*//Get all words related wordId
          $scope.getWordsOfSameRoot = function (wordId) {
@@ -115,22 +123,24 @@ angular.module('ionicApp')
                         }
 
                         if(wordItems[data.words[i].verseId] == undefined){
-                            wordItems[data.words[i].verseId] = "";
+                            wordItems[data.words[i].verseId] = [];
                         }
 
-                        wordItems[data.words[i].verseId] += "<span><a href ng-click='showWordDetail(item)' style='" + style +"'>" + data.words[i].arabic + "</a></span>";
+                        wordItems[data.words[i].verseId].push(data.words[i].arabic); // += "<span><a href ng-click='showWordDetail({{item}})' style='" + style + "'>" + data.words[i].arabic + "</a></span>";
                     }
 
                 } else if (root != ""){
                     for(var i=0;i<data.words.length; i++){
+                        var style = "";
+
                         if(root == data.words[i].rootArabic) {
                             wordDetails[data.words[i].verseId] = data.words[i];
                         }
 
                         if(wordItems[data.words[i].verseId] == undefined){
-                            wordItems[data.words[i].verseId] = "";
+                            wordItems[data.words[i].verseId] = [];
                         }
-                        wordItems[data.words[i].verseId] += "<span><a href onClick='showWordDetail({{word}})'>" + data.words[i].arabic + "</a></span>";
+                        wordItems[data.words[i].verseId].push(data.words[i].rootArabic);// += "<span><a href ng-click='showWordDetail({{item}})' style='" + style + "'>" + data.words[i].rootArabic + "</a></span>";
                     }
                 }
                 console.log("--***wordItems**wordDetails**--",wordItems, wordDetails);
@@ -189,8 +199,8 @@ angular.module('ionicApp')
         };
         //----------WORD-----------------
 
-        $scope.showWordDetail = function(item){
-            console.log("-------------------------",item)
+        $scope.showWordDetail = function(item, index){
+            console.log("---------",item,index)
         };
 
 

@@ -59,6 +59,24 @@ angular.module('ionicApp')
             ]
         );
 
+
+        //Get all words of verse
+        $scope.getWordsOfVerse = function () {
+            Restangular.all('words').customGET("", {verse_id: $scope.verseId}, {}).then(function(data){
+                console.log("wordsOfVerse::",data);
+                $scope.wordsOfVerse = data;
+            });
+        };
+
+        $scope.showWordDetail = function (type, word) {
+            console.log("showWordDetail", type, word);
+            $scope.WORD_PARAMS.type = type;
+            $scope.WORD_PARAMS.word = word;
+            $scope.scopeApply();
+
+            $scope.$emit("showWordDetail", $scope.WORD_PARAMS);
+        };
+
         $scope.goToVerseDetail = function(){
             $scope.showProgress("showVerseDetails");
             $scope.goToVerseParameters.chapter = $scope.detailedChapters[Math.floor($scope.verseId/1000) -1];
@@ -66,6 +84,7 @@ angular.module('ionicApp')
             $scope.getVerseTranslations();
             $scope.get_inferences();
             $scope.addVerseToHistory($scope.verseId);
+            $scope.getWordsOfVerse();
         };
 
         $scope.verseNumberValidation = function () {
