@@ -14,7 +14,8 @@
 "Çevre Tanımı": "Circle Definition",
 "İptal": "Cancel",
 "Tamam": "Done",
-"Kelime:": "Word",
+"Kelime": "Word",
+"Kelime:": "Word:",
 "Etiket:": "Tag:",
 "Kişiler:": "Persons:",
 "Çevreler:": "Circles:",
@@ -558,5 +559,6 @@
 "Transcript": "Transcript",
 "Okunuş": "Pronunciation",
 "Türkçe": "Turkish",
-"İngilizce": "English"
+"İngilizce": "English",
+"Meal Seçiniz": "Choose Translation"
 }

@@ -68,13 +68,10 @@ angular.module('ionicApp')
             });
         };
 
-        $scope.showWordDetail = function (type, word) {
-            console.log("showWordDetail", type, word);
-            $scope.WORD_PARAMS.type = type;
-            $scope.WORD_PARAMS.word = word;
-            $scope.scopeApply();
+        $scope.openWordModal = function (type, word) {
+            var selectedItem = { type:type, word: word};
 
-            $scope.$emit("showWordDetail", $scope.WORD_PARAMS);
+            $scope.showWordDetail(selectedItem);
         };
 
         $scope.goToVerseDetail = function(){

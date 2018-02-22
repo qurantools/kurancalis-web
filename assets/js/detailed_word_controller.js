@@ -1,224 +1,142 @@
 angular.module('ionicApp')
     .controller('DetailedWordCtrl', function ($scope, $timeout, Restangular, $location, authorization, $ionicModal, $ionicActionSheet, dataProvider, $ionicScrollDelegate, $ionicPopup, localStorageService, navigationManager, $translate) {
 
-        $scope.detailedChapters = [];
-        $scope.detailedVerseCircles = [];
-        $scope.detailedVerseUsers = [];
-
-        $scope.verseId = -1;
-        $scope.goToVerseParameters = [];
-        $scope.goToVerseParameters.chapter = [];
-        $scope.goToVerseParameters.chapter.id = 0;
-        $scope.goToVerseParameters.verse = 0;
-
-        $scope.verse = [];
-
-        $scope.allInferencesParams = [];
-        $scope.allInferencesParams.own_inferences = true;
-        $scope.allInferencesParams.users = "";
-        $scope.allInferencesParams.circles = "";
-        $scope.allInferencesParams.reference_to_verse = 0;
-
-
-        $scope.detailed_query_author_mask = 0;
-        $scope.localDetailedSearchAuthorSelection = [];
-
-        $scope.detailedVerseTagContentAuthor = MAX_AUTHOR_MASK;
-        $scope.detailedVerseTagContentParams = [];
-
-
-        //show verse words
-        $scope.wordsOfVerse = [];
         $scope.wordTranslations = [];
-        $scope.rootWords = [];
-        $scope.rootTranslations = [];
         $scope.currentAuthor = "";
         $scope.selectedWord = {};
+        $scope.selectedType = "";
+        $scope.isLoading = false;
+        $scope.hasMoreData = false;
+        $scope.start = 0;
+        $scope.limit = 20; // max verse
 
-        console.log("WORD_PARAMS",$scope.WORD_PARAMS)
-        //----------WORD-----------------
+        $scope.$on("showWord", function(evt, data){
+            //{ type: type, word: word, wordId:.., arabic:..., rootArabic...}
+            $scope.start = 0;
+            $scope.wordTranslations = [];
+            $scope.selectedType = data.type;
 
-        /* $scope.$watch("showWordsOfRoot", function(newValue, oldValue){
-         console.log("showWordsOfRoot-------------",newValue, oldValue)
-         if(newValue != oldValue){
-         $scope.showWordsOfRoot = newValue;
-         $scope.getWordsOfSameRoot($scope.selectedWord.wordId)
-         }
-         });*/
-
-        $scope.setWordParam = function (param, word) {
-            $scope.WORD_PARAMS.type = "";
-            $scope.WORD_PARAMS.word = {};
-            $timeout(function () {
-                $scope.WORD_PARAMS.type = param;
-                $scope.WORD_PARAMS.word = word;
-                $scope.scopeApply();
-            })
-
-        };
-
-
-        //Get all words of verse
-        $scope.getWordsOfVerse = function (verseId) {
-
-            return Restangular.all('words').customGET("", {verse_id: verseId}, {}).then(function(data){
-                console.log("data::",data);
-                return data;
-                //$scope.wordsOfVerse = data;
-                //$scope.selectedWord = $scope.wordsOfVerse[0];
-
-            });
-        };
-
-        $scope.$on("showWordDetail", function(evt, data){
-            console.log("showWordDetail", data)
-            $scope.selectedWord = data.word;
-            $scope.scopeApply();
-        });
-
-        /*//Get all words related wordId
-         $scope.getWordsOfSameRoot = function (wordId) {
-         $scope.selectedWord = $scope.WORD_PARAMS.word;
-
-         Restangular.all('words').customGET("", {word_id: wordId}, {}).then(function(data){
-         $scope.wordsOfSameRoot = data;
-         console.log("wordsOfSameRoot::",data)
-
-         /!* $timeout(function() {
-         $("#wordDetailModal").show();
-         },2000);*!/
-         });
-
-         };*/
-
-        $scope.getWordsOfSameRoot = function () {
-            console.log("getWordsOfSameRoot::", $scope.WORD_PARAMS);
-            var word = "";
-            var root = "";
-            $scope.selectedWord = $scope.WORD_PARAMS.word;
-
-            if($scope.WORD_PARAMS.type == "word"){
-                word = $scope.WORD_PARAMS.word.arabic;
-            } else if($scope.WORD_PARAMS.type == "root") {
-                root = $scope.WORD_PARAMS.word.rootArabic;
+            if(data.hasOwnProperty("word")) {
+                $scope.selectedWord = data.word;
+            } else if(data.hasOwnProperty("wordId")) {
+                $scope.getWord(data.wordId)
             }
 
-            Restangular.one('words/translation').customGET("", {arabic:word, root_arabic:root}, {}).then(function(data){
+            $scope.scopeApply();
+            $scope.getWordsAndTranslations();
+        });
 
-                //$scope.rootWords = data.words;
-                //$scope.rootTranslations = data.translations;
-                console.log("----DATA----::",data)
+        $scope.getWord = function(wordId) {
+            Restangular.one('words/' + wordId).customGET("", "", {}).then(function (data) {
+                $scope.selectedWord = data;
 
-                $scope.wordTranslations = [];
+                $scope.scopeApply();
+                $scope.getWordsAndTranslations();
+            })
+        };
+
+        $scope.getWordsAndTranslations = function () {
+
+            if ($scope.isLoading)
+                return;
+            $scope.isLoading = true;
+
+            var word = "";
+            var root = "";
+
+            if($scope.selectedType == "word"){
+                word = $scope.selectedWord.arabic;
+            } else {
+                root = $scope.selectedWord.rootArabic;
+            }
+
+            Restangular.all('words/translation').customGET("", {arabic:word, root_arabic:root, author_id: $scope.currentAuthor, start: $scope.start, limit: $scope.limit}, {}).then(function(data){
+                console.log("word" + word, "root" + root, "author" + $scope.currentAuthor, "DATA :: " + data);
+
+                $scope.hasMoreData = data.translations.length > 0 ;
+                $scope.isLoading = false;
+                //$scope.$broadcast('scroll.infiniteWordScrollComplete');
+                //$scope.hideProgress("fetchWordsFeeds");
+
                 var wordItems = [];
                 var wordDetails = [];
 
-                if(word != ""){
-                    for(var i=0;i<data.words.length; i++) {
-                        var style = "";
+                for(var i=0;i<data.words.length; i++) {
 
-                        if (word == data.words[i].arabic) {
-                            wordDetails[data.words[i].verseId] = data.words[i];
-                            style = "color:red";
-                        }
-
-                        if(wordItems[data.words[i].verseId] == undefined){
-                            wordItems[data.words[i].verseId] = [];
-                        }
-
-                        wordItems[data.words[i].verseId].push(data.words[i].arabic); // += "<span><a href ng-click='showWordDetail({{item}})' style='" + style + "'>" + data.words[i].arabic + "</a></span>";
+                    if ($scope.selectedType == "word" && word == data.words[i].arabic) {
+                        wordDetails[data.words[i].verseId] = data.words[i];
+                    } else if ($scope.selectedType == "root" && root == data.words[i].rootArabic) {
+                        wordDetails[data.words[i].verseId] = data.words[i];
                     }
 
-                } else if (root != ""){
-                    for(var i=0;i<data.words.length; i++){
-                        var style = "";
-
-                        if(root == data.words[i].rootArabic) {
-                            wordDetails[data.words[i].verseId] = data.words[i];
-                        }
-
-                        if(wordItems[data.words[i].verseId] == undefined){
-                            wordItems[data.words[i].verseId] = [];
-                        }
-                        wordItems[data.words[i].verseId].push(data.words[i].rootArabic);// += "<span><a href ng-click='showWordDetail({{item}})' style='" + style + "'>" + data.words[i].rootArabic + "</a></span>";
+                    if(wordItems[data.words[i].verseId] == undefined){
+                        wordItems[data.words[i].verseId] = [];
                     }
+
+                    wordItems[data.words[i].verseId].push({ wordId:data.words[i].wordId, arabic: data.words[i].arabic });
                 }
-                console.log("--***wordItems**wordDetails**--",wordItems, wordDetails);
 
                 for(var i=0;i<data.translations.length; i++){
-                    $scope.wordTranslations[i] = { wordDetail: wordDetails[data.translations[i].verseId],
-                        verseWords: wordItems[data.translations[i].verseId] || "",
-                        verseTranslation: data.translations[i].content
-                    }
+                    $scope.wordTranslations[$scope.wordTranslations.length] = {
+                                                                                word: wordDetails[data.translations[i].verseId],
+                                                                                verseWords: wordItems[data.translations[i].verseId] || "",
+                                                                                verseTranslation: data.translations[i].content
+                                                                             }
                 }
 
-                console.log("----*****wordTranslations********----",$scope.wordTranslations)
+                $scope.scopeApply();
 
-                /*if($scope.WORD_PARAMS.type == "word" && $scope.WORD_PARAMS.word.arabic == data.words[i].arabic) {
-                 $scope.wordsOfSameRoot.push(data.words[i]);
-                 } else if($scope.WORD_PARAMS.type == "root" && $scope.WORD_PARAMS.word.rootArabic == word.words[i].rootArabic){
-                 $scope.wordsOfSameRoot.push(data.words[i]);
-                 }
-                 $scope.wordTranslations[data.words[i].verseId].*/
+                console.log("***wordTranslations***", $scope.wordTranslations)
 
-
-                //$scope.apply();
-                /*  console.log("$scope.getWordsOfSameRoot", $scope.wordsOfSameRoot)
-                 var chapter = -1;
-                 for(var i=0;i<data.words.length; i++){
-
-                 if(chapter != -1 && chapter != data.words[i].chapter){
-                 $scope.rootWords.push(data.words[i])
-                 } else {
-                 $scope.rootWords.push({wordId:-1, arabic:""}) //will be used in HML
-                 //$scope.rootTranslations.splice( $scope.rootWords.length-1, 0, {id: -1} );
-                 }
-
-                 chapter = data.words[i].chapter;
-                 }*/
-                //$scope.wordsTranslationsOfSameRoot = data;
-                /* var chapter = -1;
-                 var itemGroup = "";
-                 for(var i=0;i<data.length; i++){
-                 var item = "<span><a href='#' ng-click='getList(data.wordId)'>word.arabic</a></span>";
-                 console.log("item----", item)
-                 if(chapter == -1 || chapter == data[i].chapter){
-                 itemGroup += item;
-                 console.log("itemGroup----", itemGroup)
-                 } else if(chapter != data[i].chapter) {
-                 $scope.wordsTranslationsOfSameRoot.push(itemGroup);
-                 itemGroup = "";
-                 }
-
-                 chapter = data[i].chapter;
-                 }
-
-                 console.log("wordsTranslationsOfSameRoot:::::", $scope.wordsTranslationsOfSameRoot)*/
+            }, function (err){
+                $scope.isLoading = false;
+                //$scope.$broadcast('scroll.infiniteWordScrollComplete');
+                //$scope.hideProgress("fetchWordsFeeds");
             });
 
         };
-        //----------WORD-----------------
 
         $scope.showWordDetail = function(item, index){
-            console.log("---------",item,index)
+             console.log("item, index", item, index);
+
+             Restangular.one('words/' + item.wordId).customGET("", "", {}).then(function(data){
+                 console.log("data::",data);
+
+                 $scope.wordTranslations[index].word.wordId = data.wordId;
+                 $scope.wordTranslations[index].word.chapter = data.chapter;
+                 $scope.wordTranslations[index].word.verseId = data.verseId;
+                 $scope.wordTranslations[index].word.arabic = data.arabic;
+                 $scope.wordTranslations[index].word.rootArabic = data.rootArabic;
+                 $scope.wordTranslations[index].word.turkish = data.turkish;
+                 $scope.wordTranslations[index].word.transcriptTurkish = data.transcriptTurkish;
+                 $scope.wordTranslations[index].word.rootTranscript = data.rootTranscript;
+
+                 $scope.scopeApply();
+             })
+        };
+
+        $scope.changeTranslation = function () {
+            $scope.wordTranslations = [];
+
+            $scope.scopeApply();
+            $scope.getWordsAndTranslations();
+        };
+
+        $scope.loadMoreWordTranslations = function(){
+            console.warn("loadMoreWordTranslations...")
+
+            $scope.start += $scope.limit; //increase start every api call
+            $scope.getWordsAndTranslations();
         };
 
 
-        $scope.setParams = function () {
-            var chapterId = $scope.goToVerseParameters.chapter.id;
-            var verseId = $scope.goToVerseParameters.verse;
-            $scope.verseId = 1000*chapterId + (verseId == "" ? 1 : parseInt(verseId));
+        $scope.getWordswithRoot = function () {
+            $scope.selectedType = "root";
+            $scope.start = 0;
+            $scope.wordTranslations = [];
 
+            $scope.scopeApply();
+            $scope.getWordsAndTranslations();
+        }
 
-            $scope.goToVerseParameters.chapter = $scope.detailedChapters[Math.floor($scope.verseId/1000) -1];
-            $scope.goToVerseParameters.verse = $scope.verseId%1000;
-        };
-
-        $scope.initializeDetailedWordController = function () {
-            console.log("DETAILED WORDS.........")
-            $scope.setParams();
-        };
-
-        //initialization
-        $scope.initializeDetailedWordController();
     });

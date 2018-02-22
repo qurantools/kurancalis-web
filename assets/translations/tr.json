@@ -14,7 +14,8 @@
 "Çevre Tanımı": "Çevre Tanımı",
 "İptal": "İptal",
 "Tamam": "Tamam",
-"Kelime:": "Kelime",
+"Kelime": "Kelime",
+"Kelime:": "Kelime:",
 "Etiket:": "Etiket:",
 "Kişiler:": "Kişiler:",
 "Çevreler:": "Çevreler:",
@@ -558,5 +559,6 @@
 "Transcript": "Transcript",
 "Okunuş": "Okunuş",
 "Türkçe": "Türkçe",
-"İngilizce": "İngilizce"
+"İngilizce": "İngilizce",
+"Meal Seçiniz": "Meal Seçiniz"
 }
