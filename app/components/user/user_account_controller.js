@@ -196,7 +196,12 @@ var mymodal = angular.module('ionicApp')
 
         $scope.returnHome = function () {
             //close modal
-            $( '.modal' ).modal( 'hide' ).data( 'bs.modal', null );
+            if(!config_data.isMobile) {
+                $( '.modal' ).modal( 'hide' ).data( 'bs.modal', null );
+            } else {
+                $scope.closeModal('user_set_password');
+            }
+
             $location.path('/');
             $scope.scopeApply();
         };
