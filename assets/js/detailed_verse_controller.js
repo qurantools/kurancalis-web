@@ -34,6 +34,9 @@ angular.module('ionicApp')
         $scope.taggedVerseCirclesForMobileSearch = [];
         $scope.taggedVerseUsersForMobileSearch = [];
 
+        // verse words
+        $scope.wordsOfVerse = [];
+
         $scope.footerMenuButtons = [];
         var buttonSelectTranslation = {  text: $translate.instant('Çeviri Seç')  };
         var buttonAddToList = {text: $translate.instant('Listeye Ekle') };
@@ -57,6 +60,19 @@ angular.module('ionicApp')
         );
 
 
+        //Get all words of verse
+        $scope.getWordsOfVerse = function () {
+            Restangular.all('words').customGET("", {verse_id: $scope.verseId}, {}).then(function(data){
+                console.log("wordsOfVerse::",data);
+                $scope.wordsOfVerse = data;
+            });
+        };
+
+        $scope.openWordModal = function (type, word) {
+            var selectedItem = { type:type, word: word};
+
+            $scope.showWordDetail(selectedItem);
+        };
 
         $scope.goToVerseDetail = function(){
             $scope.showProgress("showVerseDetails");
@@ -65,6 +81,7 @@ angular.module('ionicApp')
             $scope.getVerseTranslations();
             $scope.get_inferences();
             $scope.addVerseToHistory($scope.verseId);
+            $scope.getWordsOfVerse();
         };
 
         $scope.verseNumberValidation = function () {

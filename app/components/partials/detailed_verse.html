@@ -66,6 +66,31 @@
                             </ul>
                         </div>
                         <div class="col-sm-9" style="max-height: calc(100vh - 212px);overflow-y: auto;">
+                            <!-- verse words-->
+                            <div>
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th translate>Arapça</th>
+                                            <th translate>Kök</th>
+                                            <th translate>Transcript</th>
+                                            <th translate>Okunuş</th>
+                                            <th translate>Türkçe</th>
+                                            <th translate>İngilizce</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="word in wordsOfVerse | orderBy : 'wordOrder'">
+                                            <td nowrap><a href ng-click="openWordModal('word',word)" data-target='#wordDetailModal' data-toggle='modal' data-dismiss="modal">{{ word.arabic }}</a></td>
+                                            <td nowrap><a href ng-click="openWordModal('root',word)" data-target='#wordDetailModal' data-toggle='modal' data-dismiss="modal">{{ word.rootArabic }}</a></td>
+                                            <td nowrap>{{ word.rootTranscript }}</td>
+                                            <td>{{ word.transcriptTurkish}}</td>
+                                            <td>{{ word.turkish }}</td>
+                                            <td>{{ word.english }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                             <!-- translations-->
                             <div id="detailed_translations">
                                 <div class="well translations col-xs-12" id="v_{{verse.id}}">
@@ -187,7 +212,7 @@
                                             </td>
                                             <td>
                                                 <div style="float: right">
-                                                    <div style="text-align: center;" ><a href data-dismiss="modal" ng-click="gotoInference({{inference.id}})"><h4 style="margin-top:0;">
+                                                    <div style="text-align: center;"><a href data-dismiss="modal" ng-click="gotoInference({{inference.id}})"><h4 style="margin-top:0;">
                                                         {{inference.title}}</h4>
                                                     </a></div>
                                                     <div style="padding-left:10px;">

@@ -946,6 +946,10 @@ app.factory('ChapterVerses', function ($resource) {
         }, 400)
     };
 
+    $scope.showWordDetail = function (selectedItem) {
+        $scope.$broadcast("showWord", selectedItem);
+    };
+
     $scope.checkAPIVersion = function(){
         var versionRestangular = Restangular.all("apiversioncompatibility");
         $scope.versionParams = [];
