@@ -23,6 +23,7 @@
 
         $scope.$on("openAddBookMarkModal", function (event, args) {
 
+            $scope.bookmark_search();
             var verseId = args.verseId;
             $scope.bookmarkParameters = {};
             $scope.bookmarkParameters.chapterinfo = Math.floor(verseId / 1000);
@@ -161,4 +162,8 @@
         });
 
 
+
+        $scope.initializeController = function(){
+
+        };
     });

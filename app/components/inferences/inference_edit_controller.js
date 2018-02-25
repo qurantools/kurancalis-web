@@ -448,19 +448,27 @@ angular.module('ionicApp')
 
 
             if(!config_data.isMobile) {
-                $scope.$on('userInfoReady', function handler() {
-                    initFileManager('theView', $scope.user.id, function () {
-                        //$('inferenceImage').onchange=
-                        $timeout(function () {
-                            angular.element($('#inferenceImage')).triggerHandler('input');
-
-                        });
-                    });
-                    console.log("Image manager initialized for: " + $scope.user.id);
-                });
+                if($scope.access_token==null || $scope.user==null) {
+                    $scope.$on('userInfoReady', $scope.initFM);
+                }
+                else{
+                    $timeout($scope.initFM,2000);
+                }
             }
 
         }
+
+        $scope.initFM = function(){
+
+            initFileManager('theView', $scope.user.id, function () {
+                //$('inferenceImage').onchange=
+                $timeout(function () {
+                    angular.element($('#inferenceImage')).triggerHandler('input');
+
+                });
+            });
+            console.log("Image manager initialized for: " + $scope.user.id);
+        };
 
         $scope.restoreInferenceEditViewParameters = function (localParameterData) {
             $scope.circlesForSearch = localParameterData.circles;

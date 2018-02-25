@@ -1,12 +1,16 @@
 <div class="modal modal-fullscreen">
     <ion-content overflow-scroll="false">
+
         <div ng-include src="menuList[selectedMenu].submenu[selectedIndex].source[0].src" ng-if="menuList[selectedMenu].submenu[selectedIndex].source[0].type.toLowerCase().indexOf('video') != 0"></div>
-        <div class="videogular-container" style="height:100%;padding:0;margin:0;" ng-if="menuList[selectedMenu].submenu[selectedIndex].source[0].type.toLowerCase().indexOf('video') == 0">
+        <div class="videogular-container" style="height:100%;padding:0;margin:0;" ng-if="menuList[selectedMenu].submenu[selectedIndex].source[0].type.toLowerCase().indexOf('video') == 0 && !playOnYoutube">
             <div style="height: 20px"></div>
-            <videogular vg-theme="config.theme"  vg-plays-inline="true" vg-auto-play="false" vg-player-ready="onPlayerReady($API)" vg-change-source="vgChangeSource($source)" class="ng-isolate-scope" >
-                <vg-media   vg-src="menuList[selectedMenu].submenu[selectedIndex].source" vg-type="video" class="ng-isolate-scope" style="background-color: grey;" vg-loop="true">
+            <videogular vg-theme="config.theme"  vg-plays-inline="false" vg-auto-play="false" vg-player-ready="onPlayerReady($API)" vg-change-source="vgChangeSource($source)" class="ng-isolate-scope" >
+                <vg-media   vg-src="menuList[selectedMenu].submenu[selectedIndex].source" vg-type="video" class="ng-isolate-scope" style="background-color: grey;" vg-loop="false">
                 </vg-media>
             </videogular>
+        </div>
+        <div ng-if="playOnYoutube" class="video-container" style="height: 600px">
+            <iframe height="100%" width="100%"  src="{{menuList[selectedMenu].submenu[selectedIndex].source[0].youtube}}" frameborder="0"></iframe>
         </div>
     </ion-content>
 

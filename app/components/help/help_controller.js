@@ -6,7 +6,9 @@ angular.module('ionicApp')
         $scope.helpController.API = null;
         $scope.appVersion = config_data.version;
         $scope.generatTurorialID="leftmenu";
-
+        $scope.playOnYoutube=false;
+        $scope.platformVersion=ionic.Platform.version();
+        $scope.youtubeParams = "?autoplay=1&rel=0&controls=0&showinfo=0";
         $scope.menuList = [
             {
                 id: "leftmenu",
@@ -17,6 +19,7 @@ angular.module('ionicApp')
                         title: $translate.instant("Sol Menü"),
                         source: [{
                             src: "../../assets/img/help/mobile/menu_icerigi.mp4",
+                            youtube: $sce.trustAsResourceUrl("http://www.youtube.com/embed/gTjX6mlExYc"+$scope.youtubeParams),
                             type: "video/mp4"
                         }]
                     },
@@ -25,6 +28,7 @@ angular.module('ionicApp')
                         title: "Intro-1",
                         source: [{
                             src: $sce.trustAsResourceUrl("../../assets/img/help/mobile/facebook_arkadaslarim.mp4"),
+                            youtube: $sce.trustAsResourceUrl("https://www.youtube.com/embed/w5K5GBRXhQg"+$scope.youtubeParams),
                             type: "video/mp4"
                         }]
                     },
@@ -41,6 +45,7 @@ angular.module('ionicApp')
                         title: "Intro-2",
                         source: [{
                             src: "../../assets/img/help/mobile/sure_alt_menu.mp4",
+                            youtube: $sce.trustAsResourceUrl("https://www.youtube.com/embed/uVoh36v59e8"+$scope.youtubeParams),
                             type: "video/mp4"
                         }]
                     },
@@ -49,6 +54,7 @@ angular.module('ionicApp')
                         title: "Intro-3",
                         source: [{
                             src: $sce.trustAsResourceUrl("../../assets/img/help/mobile/karalama.mp4"),
+                            youtube: $sce.trustAsResourceUrl("https://www.youtube.com/embed/fhgmuxmL0ns"+$scope.youtubeParams),
                             type: "video/mp4"
                         }]
                     },
@@ -57,6 +63,7 @@ angular.module('ionicApp')
                         title: "Intro-4",
                         source: [{
                             src: $sce.trustAsResourceUrl("../../assets/img/help/mobile/suredeki_ayet_notlari.mp4"),
+                            youtube: $sce.trustAsResourceUrl("https://www.youtube.com/embed/3UMaRjlrFaA"+$scope.youtubeParams),
                             type: "video/mp4"
                         }]
                     },
@@ -65,6 +72,7 @@ angular.module('ionicApp')
                         title: "Intro-5",
                         source: [{
                             src: $sce.trustAsResourceUrl("../../assets/img/help/mobile/ayet_gecmisi.mp4"),
+                            youtube: $sce.trustAsResourceUrl("https://www.youtube.com/embed/cv-H3Z0mONM"+$scope.youtubeParams),
                             type: "video/mp4"
                         }]
                     },
@@ -73,6 +81,7 @@ angular.module('ionicApp')
                         title: "Intro-6",
                         source: [{
                             src: $sce.trustAsResourceUrl("../../assets/img/help/mobile/burada_kaldim.mp4"),
+                            youtube: $sce.trustAsResourceUrl("https://www.youtube.com/embed/0-Q8JMgmrD0"+$scope.youtubeParams),
                             type: "video/mp4"
                         }]
                     }
@@ -203,6 +212,12 @@ angular.module('ionicApp')
                     console.log("on displayTutorial");
                     $scope.runHelpModal(args.id, false);
                 });
+            }
+
+            if( config_data.isNative){
+                if(ionic.Platform.isAndroid() && ionic.Platform.version() < 5){
+                    $scope.playOnYoutube=true;
+                }
             }
 
 
