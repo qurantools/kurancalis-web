@@ -101,7 +101,16 @@
                         <button id="openbtn" onclick="togglePanel()" class="btn btn-primary" ng-if="currentPage=='home'" ><i
                                 class="fa fa-edit" style="font-size: 1.3em"></i> {{'Sayfadaki Notlar' | translate}}
                         </button>
-                        <a href="#/profile/user/{{user.id}}"><img ng-src="{{user.photo}}" height="40"/></a>
+
+                        <div class="dropdown" style="display: inline-block">
+                            <img class="btn dropdown-toggle" ng-src="{{user.photo}}" alt="dropdown image" height="50px" data-toggle="dropdown">
+                            <ul class="dropdown-menu">
+                                <li><a href="#/profile/user/{{user.id}}" translate>Profilim</a></li>
+                                <li><a href="#/user/account/settings" translate>Hesabım</a></li>
+                            </ul>
+                        </div>
+
+                       <!-- <a href="#/profile/user/{{user.id}}"><img ng-src="{{user.photo}}" height="40"/></a>-->
                         <!--<span style="vertical-align: bottom;">{{user.name}}</span>-->
 
                         <select name="language-selection"

@@ -388,12 +388,12 @@ if (config_data.isMobile == false) { //false
                  reloadOnSearch: false,
                  pageTitle: 'Kuran Çalış - Çevre Zaman Tüneli'
              })
-           /*  .when('/user/settings/', {
-                controller: 'UserSettingsController',
+             .when('/user/account/settings/', {
+                controller: 'UserSettingsCtrl',
                 templateUrl: 'app/components/user/settings.html',
                 reloadOnSearch: false,
                 pageTitle: 'Kuran Çalış - Çevre Zaman Tüneli'
-            })*/
+            })
             .when('/', {
                 redirectTo: '/translations/'
             })
@@ -642,12 +642,12 @@ if (config_data.isMobile == false) { //false
                         reloadOnSearch: false,
                         pageTitle: 'Kuran Çalış - Çevre Zaman Tüneli'
                     })
-                    /*.when('/user/settings/', {
-                        controller: 'UserSettingsController',
+                    .when('/user/account/settings/', {
+                        controller: 'UserSettingsCtrl',
                         templateUrl: 'components/user/settings.html',
                         reloadOnSearch: false,
                         pageTitle: 'Kuran Çalış - Çevre Zaman Tüneli'
-                    })*/
+                    })
                     .when('/', {
                         redirectTo: '/translations/',
                         pageTitle: 'Kuran Çalış'

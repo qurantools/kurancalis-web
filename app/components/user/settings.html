@@ -1,12 +1,31 @@
-<body>
-<div class="container">
-    <div ng-include="'app/components/people/people_navigation.html'"></div>
-    <div class="nav-bottom"></div>
-    <div class="row">
-        <h1 translate>Dil Seçimi</h1>
-        <button ng-click="changeLanguage('tr')" translate>Türkçe</button>
-        <button ng-click="changeLanguage('en')" translate>İngilizce</button>
+<body ng-app="userSettings" ng-controller="UserSettingsCtrl">
+    <div ng-include="'app/components/partials/off_canvas_menu.html'"></div>
+    <div class="container">
+        <div ng-include="'app/components/partials/navigation.html'"></div>
+        <div class="nav-bottom"></div>
+        <div class="row">
+            <div align="center">
+                <br>
+                <a type="button" class="btn btn-primary btn-wide" ng-click="exportmodal()" translate>Notlarımı Dışarıya Aktar (CSV)</a>
+                <br><br>
+                <a type="button" class="btn btn-primary btn-wide" data-target="#importAnnotations" data-toggle="modal" translate>Toplu Not Ekleme</a>
+            </div>
+         </div>
     </div>
-</div>
-<div ng-include="'app/components/partials/off_canvas_menu.html'"></div>
+
+    <div class="row">
+        <exportmodal title="{{'Notları Dışarı Aktar' | translate}}" visible="showexportmodal">
+            <div class="row">
+                <label style="padding-left: 10px" translate>Tüm Notlarınız CSV dosyası olarak dışarı aktarılacaktır</label>
+                <div class="col col-xs-10 col-xs-offset-1">
+                    <label><input type="checkbox" ng-model="remove_carriage" ng-change="carriageChanged(remove_carriage)" translate> Sütun içindeki satır başı / satır besleme karakterlerini kaldır</label>
+                    <label><input type="checkbox" ng-model="columns_name" ng-change="columnsChanged(columns_name)" translate> Sütun adlarını ilk satıra koy</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-link" data-dismiss='modal' translate>Vazgeç</button>
+                <button class="btn btn-primary btn-wide" ng-click="exportAnnotations()" translate>Aktar</button>
+            </div>
+        </exportmodal>
+    </div>
 </body>
