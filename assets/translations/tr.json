@@ -562,10 +562,13 @@
 "İngilizce": "İngilizce",
 "Meal Seçiniz": "Meal Seçiniz",
 "Ana sayfa": "Ana sayfa",
-" Sütun içindeki satır başı / satır besleme karakterlerini kaldır": " Sütun içindeki satır başı / satır besleme karakterlerini kaldır",
-" Sütun adlarını ilk satıra koy": " Sütun adlarını ilk satıra koy",
+"Tüm Notlarınız CSV dosyası olarak dışarı aktarılacaktır": "Tüm Notlarınız CSV dosyası olarak dışarı aktarılacaktır",
+"Sütun içindeki satır başı / satır besleme karakterlerini kaldır": "Sütun içindeki satır başı / satır besleme karakterlerini kaldır",
+"Sütun adlarını ilk satıra koy": "Sütun adlarını ilk satıra koy",
 "Aktar": "Aktar",
 "Notları Dışarı Aktar": "Notları Dışarı Aktar",
+"Notlarımı Dışarı Aktar": "Notlarımı Dışarı Aktar",
 "Notlarımı Dışarıya Aktar (CSV)": "Notlarımı Dışarıya Aktar (CSV)",
-"Toplu Not Ekleme": "Toplu Not Ekleme"
+"Toplu Not Ekleme": "Toplu Not Ekleme",
+"Hesabım": "Hesabım"
 }

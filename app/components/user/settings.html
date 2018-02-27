@@ -14,12 +14,12 @@
     </div>
 
     <div class="row">
-        <exportmodal title="{{'Notları Dışarı Aktar' | translate}}" visible="showexportmodal">
+        <exportmodal title="{{'Notlarımı Dışarı Aktar' | translate}}" visible="showexportmodal">
             <div class="row">
-                <label style="padding-left: 10px" translate>Tüm Notlarınız CSV dosyası olarak dışarı aktarılacaktır</label>
+                <label style="padding-left: 15px">{{'Tüm Notlarınız CSV dosyası olarak dışarı aktarılacaktır' | translate}}</label>
                 <div class="col col-xs-10 col-xs-offset-1">
-                    <label><input type="checkbox" ng-model="remove_carriage" ng-change="carriageChanged(remove_carriage)" translate> Sütun içindeki satır başı / satır besleme karakterlerini kaldır</label>
-                    <label><input type="checkbox" ng-model="columns_name" ng-change="columnsChanged(columns_name)" translate> Sütun adlarını ilk satıra koy</label>
+                    <label><input type="checkbox" ng-model="remove_carriage" ng-change="carriageChanged(remove_carriage)"> {{'Sütun içindeki satır başı / satır besleme karakterlerini kaldır' | translate}}</label>
+                    <label><input type="checkbox" ng-model="columns_name" ng-change="columnsChanged(columns_name)" translate> {{'Sütun adlarını ilk satıra koy' | translate}}</label>
                 </div>
             </div>
             <div class="modal-footer">

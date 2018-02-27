@@ -562,10 +562,13 @@
 "İngilizce": "English",
 "Meal Seçiniz": "Choose Translation",
 "Ana sayfa": "Home",
-" Sütun içindeki satır başı / satır besleme karakterlerini kaldır": " Remove carriage return/line feed characters within column",
-" Sütun adlarını ilk satıra koy": " Put columns name in the first row",
+"Tüm Notlarınız CSV dosyası olarak dışarı aktarılacaktır": "All your notes will be exported as a CSV file",
+"Sütun içindeki satır başı / satır besleme karakterlerini kaldır": "Remove carriage return/line feed characters within column",
+"Sütun adlarını ilk satıra koy": "Put columns name in the first row",
 "Aktar": "Export",
 "Notları Dışarı Aktar": "Export Notes",
+"Notlarımı Dışarı Aktar": "Export My Notes",
 "Notlarımı Dışarıya Aktar (CSV)": "Export My Notes (CSV)",
-"Toplu Not Ekleme": "Bulk Note Insertion"
+"Toplu Not Ekleme": "Bulk Note Insertion",
+"Hesabım": "My Account"
 }
