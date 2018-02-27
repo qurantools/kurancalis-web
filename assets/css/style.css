@@ -371,3 +371,7 @@ div.checkbox.checkbox-input-hidden.checkbox-circle{
     padding-left: 0px;
     padding-right: 0px;
 }
+
+#loginMenu .dropdown-menu {
+    min-width: 0px !important;
+}

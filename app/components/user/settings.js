@@ -24,7 +24,11 @@ var userSettings = angular.module('ionicApp')
 
         $scope.showexportmodal = false;
         $scope.exportmodal = function () {
-            $scope.showexportmodal = !$scope.showexportmodal;
+            $scope.showexportmodal = false;
+
+            $timeout(function () {
+                $scope.showexportmodal = true;
+            },100)
         };
 
         $scope.exportAnnotations = function () {
@@ -55,7 +59,7 @@ var userSettings = angular.module('ionicApp')
 
 userSettings.directive('exportmodal', function () {
     return {
-        templateUrl: 'app/components/partials/export_annotations.html',
+        templateUrl: 'app/components/user/export_annotations.html',
         restrict: 'E',
         transclude: true,
         replace: true,
