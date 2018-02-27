@@ -9,6 +9,7 @@ angular.module('ionicApp')
         $scope.hasMoreData = false;
         $scope.start = 0;
         $scope.limit = 20; // max verse
+        $scope.titleType = "";
 
         $scope.$on("showWord", function(evt, data){
             //{ type: type, word: word, wordId:.., arabic:..., rootArabic...}
@@ -18,6 +19,7 @@ angular.module('ionicApp')
 
             if(data.hasOwnProperty("word")) {
                 $scope.selectedWord = data.word;
+                $scope.setTitleType();
             } else if(data.hasOwnProperty("wordId")) {
                 $scope.getWord(data.wordId)
             }
@@ -26,9 +28,18 @@ angular.module('ionicApp')
             $scope.getWordsAndTranslations();
         });
 
+        $scope.setTitleType = function () {
+            if($scope.selectedType == "word"){
+                $scope.titleType = "Kelime";
+            } else {
+                $scope.titleType = "Kök";
+            }
+        };
+
         $scope.getWord = function(wordId) {
             Restangular.one('words/' + wordId).customGET("", "", {}).then(function (data) {
                 $scope.selectedWord = data;
+                $scope.setTitleType();
 
                 $scope.scopeApply();
                 $scope.getWordsAndTranslations();
@@ -130,10 +141,11 @@ angular.module('ionicApp')
         };
 
 
-        $scope.getWordswithRoot = function () {
-            $scope.selectedType = "root";
+        $scope.getWordswithRoot = function (type) {
+            $scope.selectedType = type;
             $scope.start = 0;
             $scope.wordTranslations = [];
+            $scope.setTitleType();
 
             $scope.scopeApply();
             $scope.getWordsAndTranslations();

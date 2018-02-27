@@ -3,12 +3,18 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" data-dismiss="modal" aria-hidden="true" style="float:right;"><i class="fa fa-close"></i></button>
-                <h4 class="modal-title"> {{'Ayet' | translate}} ({{selectedWord.chapter}}: {{selectedWord.verseId}}), {{'Kelime' | translate}} {{selectedWord.wordId}}</h4>
+                <h4 class="modal-title"> {{'Ayet' | translate}} ({{selectedWord.chapter}}: {{selectedWord.verseId}}), {{titleType | translate}} {{selectedWord.wordId}}</h4>
             </div>
             <div class="modal-body">
                 <div class="text-center">
-                    <div ng-if="selectedWord.arabic"><span>{{ selectedWord.arabic }}</span><br></div>
-                    <div ng-if="selectedWord.rootArabic"><span>{{'Kök' | translate}}: <a href ng-click="getWordswithRoot()">{{selectedWord.rootArabic}}</a></span><br></div>
+                    <div ng-if="selectedType =='word'">
+                        <div ng-if="selectedWord.arabic"><span>{{ selectedWord.arabic }}</span><br></div>
+                        <div ng-if="selectedWord.rootArabic"><span>{{'Kök' | translate}}: <a href ng-click="getWordswithRoot('root')">{{selectedWord.rootArabic}}</a></span><br></div>
+                    </div>
+                    <div ng-if="selectedType =='root'">
+                        <div ng-if="selectedWord.rootArabic"><span>{{ selectedWord.rootArabic }}</span><br></div>
+                        <div ng-if="selectedWord.arabic"><span>{{'Kelime' | translate}}: <a href ng-click="getWordswithRoot('word')">{{selectedWord.arabic}}</a></span><br></div>
+                    </div>
                     <div ng-if="selectedWord.rootTranscript"><span>({{selectedWord.rootTranscript | uppercase}})</span><br></div>
                     <div ng-if="selectedWord.transcriptTurkish"><span>{{ selectedWord.transcriptTurkish}}</span><br></div>
                     <div ng-if="selectedWord.turkish"><span>{{ selectedWord.turkish }}</span><br></div>
