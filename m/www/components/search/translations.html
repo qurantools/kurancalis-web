@@ -6,6 +6,9 @@
                 <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
             </ion-nav-buttons>
             <ion-nav-title>{{'Kelime ile Ayet Arama' | translate}}</ion-nav-title>
+            <ion-nav-buttons side="right">
+                <button class="button button-positive" ng-click="openModal('user_login')" ng-if="user==null && isConnected==true" translate>Giriş</button>
+            </ion-nav-buttons>
         </ion-nav-bar>
         <!-- end of side menu part 1 -->
         <ion-nav-view id="content" cache-view="true">
