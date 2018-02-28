@@ -375,3 +375,12 @@ div.checkbox.checkbox-input-hidden.checkbox-circle{
 #loginMenu .dropdown-menu {
     min-width: 0px !important;
 }
+
+
+/* mouse over link */
+#wordDetailModal a:hover,
+#wordDetailModal span a:hover {
+    color: #0000ff !important;
+}
+
+

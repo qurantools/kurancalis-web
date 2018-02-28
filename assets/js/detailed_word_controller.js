@@ -1,15 +1,15 @@
 angular.module('ionicApp')
-    .controller('DetailedWordCtrl', function ($scope, $timeout, Restangular, $location, authorization, $ionicModal, $ionicActionSheet, dataProvider, $ionicScrollDelegate, $ionicPopup, localStorageService, navigationManager, $translate) {
+    .controller('DetailedWordCtrl', function ($scope, $timeout, Restangular, $window, $location, authorization, $ionicModal, $ionicActionSheet, dataProvider, $ionicScrollDelegate, $ionicPopup, localStorageService, navigationManager, $translate) {
 
         $scope.wordTranslations = [];
         $scope.currentAuthor = "";
         $scope.selectedWord = {};
+        $scope.selectedItem = { arabic: "", rootArabic: "" };
         $scope.selectedType = "";
         $scope.isLoading = false;
         $scope.hasMoreData = false;
         $scope.start = 0;
         $scope.limit = 20; // max verse
-        $scope.titleType = "";
 
         $scope.$on("showWord", function(evt, data){
             //{ type: type, word: word, wordId:.., arabic:..., rootArabic...}
@@ -19,27 +19,23 @@ angular.module('ionicApp')
 
             if(data.hasOwnProperty("word")) {
                 $scope.selectedWord = data.word;
-                $scope.setTitleType();
+                $scope.selectedItem.arabic = data.word.arabic;
+                $scope.selectedItem.rootArabic = data.word.rootArabic;
+
+                $scope.scopeApply();
+                $scope.getWordsAndTranslations();
+
             } else if(data.hasOwnProperty("wordId")) {
                 $scope.getWord(data.wordId)
             }
 
-            $scope.scopeApply();
-            $scope.getWordsAndTranslations();
         });
-
-        $scope.setTitleType = function () {
-            if($scope.selectedType == "word"){
-                $scope.titleType = "Kelime";
-            } else {
-                $scope.titleType = "Kök";
-            }
-        };
 
         $scope.getWord = function(wordId) {
             Restangular.one('words/' + wordId).customGET("", "", {}).then(function (data) {
                 $scope.selectedWord = data;
-                $scope.setTitleType();
+                $scope.selectedItem.arabic = data.word.arabic;
+                $scope.selectedItem.rootArabic = data.word.rootArabic;
 
                 $scope.scopeApply();
                 $scope.getWordsAndTranslations();
@@ -56,9 +52,9 @@ angular.module('ionicApp')
             var root = "";
 
             if($scope.selectedType == "word"){
-                word = $scope.selectedWord.arabic;
+                word = $scope.selectedItem.arabic;
             } else {
-                root = $scope.selectedWord.rootArabic;
+                root = $scope.selectedItem.rootArabic;
             }
 
             Restangular.all('words/translation').customGET("", {arabic:word, root_arabic:root, author_id: $scope.currentAuthor, start: $scope.start, limit: $scope.limit}, {}).then(function(data){
@@ -141,14 +137,42 @@ angular.module('ionicApp')
         };
 
 
-        $scope.getWordswithRoot = function (type) {
+        $scope.getWords = function (type, word) {
             $scope.selectedType = type;
+
+            if ($scope.selectedType == "word"){
+                $scope.selectedItem.arabic = word;
+            } else {
+                $scope.selectedItem.rootArabic = word;
+            }
+
             $scope.start = 0;
             $scope.wordTranslations = [];
-            $scope.setTitleType();
 
+            console.warn(type, word,$scope.selectedItem)
             $scope.scopeApply();
             $scope.getWordsAndTranslations();
         }
+
+        $scope.linkcreate = function(letters){
+            var link = "http://m.kuranmeali.eu/Mufredat/index.php?t=" + letters.toUpperCase();
+            $window.open(link, '_blank');
+        };
+
+
+        $scope.getStyle = function (wordItem, leftItem) {
+
+            if($scope.selectedType =='root' && wordItem.arabic == leftItem.arabic) {
+                return {"color": "red"};
+
+            } else if($scope.selectedType =='word' && wordItem.arabic == $scope.selectedWord.arabic){
+                //initial color
+                return {"color": "red"}
+
+            } else if($scope.selectedType =='word' && wordItem.arabic == leftItem.arabic){
+                // after click
+                return {"color": "#800000"}
+            }
+        };
 
     });

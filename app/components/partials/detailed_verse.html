@@ -67,10 +67,11 @@
                         </div>
                         <div class="col-sm-9" style="max-height: calc(100vh - 212px);overflow-y: auto;">
                             <!-- verse words-->
-                            <div>
-                                <table class="table table-striped">
+                            <div class="table-responsive">
+                                <table class="table table-xs table-striped ">
                                     <thead>
                                         <tr>
+                                            <th translate>#</th>
                                             <th translate>Arapça</th>
                                             <th translate>Kök</th>
                                             <th translate>Transcript</th>
@@ -81,6 +82,7 @@
                                     </thead>
                                     <tbody>
                                         <tr ng-repeat="word in wordsOfVerse | orderBy : 'wordOrder'">
+                                            <td nowrap>{{ word.wordOrder }}</td>
                                             <td nowrap><a href ng-click="openWordModal('word',word)" data-target='#wordDetailModal' data-toggle='modal' data-dismiss="modal">{{ word.arabic }}</a></td>
                                             <td nowrap><a href ng-click="openWordModal('root',word)" data-target='#wordDetailModal' data-toggle='modal' data-dismiss="modal">{{ word.rootArabic }}</a></td>
                                             <td nowrap>{{ word.rootTranscript }}</td>
@@ -91,6 +93,7 @@
                                     </tbody>
                                 </table>
                             </div>
+                            <br>
                             <!-- translations-->
                             <div id="detailed_translations">
                                 <div class="well translations col-xs-12" id="v_{{verse.id}}">
