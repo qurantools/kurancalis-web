@@ -675,6 +675,11 @@ angular.module('ionicApp')
             //scroll to clicked verse
             $scope.scrollToVerse(verseId);
 
+            var timeoutTime = 600;
+            if (config_data.isMobile) {
+                timeoutTime = 1000;
+            }
+
             $timeout(function () {
                 var arrayLength = $scope.annotations.length;
                 var verseAnnotations = [];
@@ -689,7 +694,7 @@ angular.module('ionicApp')
                 $scope.onHighlightClicked(verseAnnotations);
 
                 $scope.loadingVerse = -1;
-            }, 600);
+            }, timeoutTime);
 
         };
 
