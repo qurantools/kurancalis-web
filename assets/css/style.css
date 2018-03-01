@@ -383,4 +383,7 @@ div.checkbox.checkbox-input-hidden.checkbox-circle{
     color: #0000ff !important;
 }
 
-
+.label-dipnot {
+    background-color: #757575;
+    color: #fff;
+}
