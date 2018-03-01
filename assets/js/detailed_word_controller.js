@@ -9,7 +9,8 @@ angular.module('ionicApp')
         $scope.isLoading = false;
         $scope.hasMoreData = false;
         $scope.start = 0;
-        $scope.limit = 20; // max verse
+        $scope.limit = 50; // max verse
+        $scope.selectedLanguage = $translate.use();
 
         $scope.$on("showWord", function(evt, data){
             //{ type: type, word: word, wordId:.., arabic:..., rootArabic...}
@@ -58,9 +59,9 @@ angular.module('ionicApp')
             }
 
             Restangular.all('words/translation').customGET("", {arabic:word, root_arabic:root, author_id: $scope.currentAuthor, start: $scope.start, limit: $scope.limit}, {}).then(function(data){
-                console.log("word" + word, "root" + root, "author" + $scope.currentAuthor, "DATA :: " + data);
+                console.log("translations length:  ", data.translations.length, "root" + root, "author" + $scope.currentAuthor, "DATA :: " + data);
 
-                $scope.hasMoreData = data.translations.length > 0 ;
+                $scope.hasMoreData = data.translations.length > 0 && data.translations.length == $scope.limit ;
                 $scope.isLoading = false;
                 //$scope.$broadcast('scroll.infiniteWordScrollComplete');
                 //$scope.hideProgress("fetchWordsFeeds");
@@ -102,7 +103,7 @@ angular.module('ionicApp')
 
                 $scope.scopeApply();
 
-                console.log("***wordTranslations***", $scope.wordTranslations)
+                //console.log("***wordTranslations***", $scope.wordTranslations)
 
             }, function (err){
                 $scope.isLoading = false;
