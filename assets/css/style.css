@@ -376,7 +376,6 @@ div.checkbox.checkbox-input-hidden.checkbox-circle{
     min-width: 0px !important;
 }
 
-
 /* mouse over link */
 #wordDetailModal a:hover,
 #wordDetailModal span a:hover {
@@ -386,4 +385,13 @@ div.checkbox.checkbox-input-hidden.checkbox-circle{
 .label-dipnot {
     background-color: #757575;
     color: #fff;
+}
+
+/* fix modal-backdrop see details
+https://github.com/angular-ui/bootstrap/issues/2970,
+https://github.com/twbs/bootstrap/issues/10493
+*/
+.modal-backdrop {
+    position: fixed !important;;
+    bottom: 0;
 }
