@@ -10,7 +10,7 @@
                 <div class="text-center">
                     <div ng-if="selectedType =='word'">
                         <div ng-if="selectedWord.arabic"><span>{{ selectedWord.arabic }}</span><br></div>
-                        <div ng-if="selectedWord.rootArabic"><span>{{'Kök' | translate}}: <a href ng-click="getWords('root', selectedWord.rootArabic)">{{selectedWord.rootArabic}}</a></span><br></div>
+                        <div ng-if="selectedWord.rootArabic"><span>{{'Kök' | translate}}: <a href ng-click="getWords('root', selectedWord)">{{selectedWord.rootArabic}}</a></span><br></div>
                         <div ng-if="selectedWord.rootTranscript"><span><a target="_blank" href="" ng-click="linkcreate(selectedWord.rootTranscript)">({{selectedWord.rootTranscript | uppercase}})</a></span><br></div>
                         <div ng-if="selectedWord.transcriptTurkish"><span>{{ selectedWord.transcriptTurkish}}</span><br></div>
                         <div ng-if="selectedLanguage == 'tr' && selectedWord.turkish"><span>{{ selectedWord.turkish }}</span><br></div>
@@ -43,11 +43,11 @@
                                                 <h6 class="ng-binding">{{item.word.chapter}}:{{item.word.verseId-item.word.chapter*1000}}</h6>
                                             </a>
                                         </div>
-                                        <span ng-if="item.word.arabic"><a href ng-click="getWords('word', item.word.arabic)">{{ item.word.arabic }}</a></span>
+                                        <span ng-if="item.word.arabic"><a href ng-click="getWords('word', item.word)">{{ item.word.arabic }}</a></span>
                                         <span ng-if="item.word.arabic && item.word.transcriptTurkish">  |  </span>
                                         <br ng-if="item.word.arabic && !item.word.transcriptTurkish">
                                         <span ng-if="item.word.transcriptTurkish">{{ item.word.transcriptTurkish}}<br></span>
-                                        <span ng-if="item.word.rootArabic"><a href ng-click="getWords('root', item.word.rootArabic)">{{ item.word.rootArabic }}</a></span>
+                                        <span ng-if="item.word.rootArabic"><a href ng-click="getWords('root', item.word)">{{ item.word.rootArabic }}</a></span>
                                         <span ng-if="item.word.rootArabic && item.word.rootTranscript">  |  </span>
                                         <br ng-if="item.word.rootArabic && !item.word.rootTranscript">
                                         <span ng-if="item.word.rootTranscript">{{ item.word.rootTranscript }}<br></span>

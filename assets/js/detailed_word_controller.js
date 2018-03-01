@@ -33,14 +33,19 @@ angular.module('ionicApp')
         });
 
         $scope.getWord = function(wordId) {
+            console.warn(wordId)
             Restangular.one('words/' + wordId).customGET("", "", {}).then(function (data) {
                 $scope.selectedWord = data;
-                $scope.selectedItem.arabic = data.word.arabic;
-                $scope.selectedItem.rootArabic = data.word.rootArabic;
+                $scope.selectedItem.arabic = data.arabic;
+                $scope.selectedItem.rootArabic = data.rootArabic;
 
                 $scope.scopeApply();
                 $scope.getWordsAndTranslations();
-            })
+
+                }, function (err){
+                console.err(err)
+            });
+
         };
 
         $scope.getWordsAndTranslations = function () {
@@ -48,6 +53,7 @@ angular.module('ionicApp')
             if ($scope.isLoading)
                 return;
             $scope.isLoading = true;
+            $scope.hasMoreData = true;
 
             var word = "";
             var root = "";
@@ -148,19 +154,12 @@ angular.module('ionicApp')
 
 
         $scope.getWords = function (type, word) {
+            $scope.selectedWord = word;
             $scope.selectedType = type;
-
-            if ($scope.selectedType == "word"){
-                $scope.selectedItem.arabic = word;
-            } else {
-                $scope.selectedItem.rootArabic = word;
-            }
-
             $scope.start = 0;
             $scope.wordTranslations = [];
-
-            console.warn(type, word,$scope.selectedItem)
             $scope.scopeApply();
+
             $scope.getWordsAndTranslations();
         };
 
