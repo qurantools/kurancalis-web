@@ -70,17 +70,26 @@ angular.module('ionicApp')
 
                 for(var i=0;i<data.words.length; i++) {
 
+                    var item = {};
+
                     if ($scope.selectedType == "word" && word == data.words[i].arabic) {
                         wordDetails[data.words[i].verseId] = data.words[i];
+                        item = { wordId:data.words[i].wordId, arabic: data.words[i].arabic, highlight: true };
+
                     } else if ($scope.selectedType == "root" && root == data.words[i].rootArabic) {
                         wordDetails[data.words[i].verseId] = data.words[i];
+                        item = { wordId:data.words[i].wordId, arabic: data.words[i].arabic, highlight: true };
                     }
 
                     if(wordItems[data.words[i].verseId] == undefined){
                         wordItems[data.words[i].verseId] = [];
                     }
 
-                    wordItems[data.words[i].verseId].push({ wordId:data.words[i].wordId, arabic: data.words[i].arabic });
+                    if(angular.equals(item, {})) { // if empty
+                        item = { wordId:data.words[i].wordId, arabic: data.words[i].arabic, highlight: false };
+                    }
+
+                    wordItems[data.words[i].verseId].push(item);
                 }
 
                 for(var i=0;i<data.translations.length; i++){
@@ -104,10 +113,10 @@ angular.module('ionicApp')
         };
 
         $scope.showWordDetail = function(item, index){
-             console.log("item, index", item, index);
+             //console.log("item, index", item, index);
 
              Restangular.one('words/' + item.wordId).customGET("", "", {}).then(function(data){
-                 console.log("data::",data);
+                 //console.log("data::",data);
 
                  $scope.wordTranslations[index].word.wordId = data.wordId;
                  $scope.wordTranslations[index].word.chapter = data.chapter;
@@ -152,7 +161,7 @@ angular.module('ionicApp')
             console.warn(type, word,$scope.selectedItem)
             $scope.scopeApply();
             $scope.getWordsAndTranslations();
-        }
+        };
 
         $scope.linkcreate = function(letters){
             var link = "http://m.kuranmeali.eu/Mufredat/index.php?t=" + letters.toUpperCase();
@@ -160,18 +169,16 @@ angular.module('ionicApp')
         };
 
 
-        $scope.getStyle = function (wordItem, leftItem) {
+        $scope.getItemColor = function (wordItem, leftItem) {
 
-            if($scope.selectedType =='root' && wordItem.arabic == leftItem.arabic) {
-                return {"color": "red"};
-
-            } else if($scope.selectedType =='word' && wordItem.arabic == $scope.selectedWord.arabic){
-                //initial color
-                return {"color": "red"}
-
-            } else if($scope.selectedType =='word' && wordItem.arabic == leftItem.arabic){
-                // after click
-                return {"color": "#800000"}
+            if(wordItem.highlight) {
+                return 'red';
+            }
+            else if($scope.selectedType =='root' && wordItem.arabic == leftItem.arabic) {
+                return "#800000";
+            }
+            else if($scope.selectedType =='word' && wordItem.arabic == leftItem.arabic){
+                return  "#800000";
             }
         };
 

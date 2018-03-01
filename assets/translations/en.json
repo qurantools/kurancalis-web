@@ -22,6 +22,7 @@
 "Yazar:": "Writer:",
 "Yorum Yaz": "Write a comment",
 "Daha fazla": "More",
+"Daha Fazla": "More",
 "Filtre seçenekleri": "Filter options",
 "Yazarlar": "Writers",
 "Benim notlarımı göster": "Show my notes",
@@ -570,5 +571,8 @@
 "Notlarımı Dışarı Aktar": "Export My Notes",
 "Notlarımı Dışarıya Aktar (CSV)": "Export My Notes (CSV)",
 "Toplu Not Ekleme": "Bulk Note Insertion",
-"Hesabım": "My Account"
+"Hesabım": "My Account",
+"Kök Ayrıntı": "Root Detail",
+"Kökün Kullanıldığı Ayetler": "Verses used in the root",
+"Kök harflerini müfredatta ara": "Search root letters in the curriculum"
 }

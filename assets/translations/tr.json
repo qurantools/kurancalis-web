@@ -22,6 +22,7 @@
 "Yazar:": "Yazar:",
 "Yorum Yaz": "Yorum Yaz",
 "Daha fazla": "Daha fazla",
+"Daha Fazla": "Daha Fazla",
 "Filtre seçenekleri": "Filtre seçenekleri",
 "Yazarlar": "Yazarlar",
 "Benim notlarımı göster": "Benim notlarımı göster",
@@ -570,5 +571,8 @@
 "Notlarımı Dışarı Aktar": "Notlarımı Dışarı Aktar",
 "Notlarımı Dışarıya Aktar (CSV)": "Notlarımı Dışarıya Aktar (CSV)",
 "Toplu Not Ekleme": "Toplu Not Ekleme",
-"Hesabım": "Hesabım"
+"Hesabım": "Hesabım",
+"Kök Ayrıntı": "Kök Ayrıntı",
+"Kökün Kullanıldığı Ayetler": "Kökün Kullanıldığı Ayetler",
+"Kök harflerini müfredatta ara": "Kök harflerini müfredatta ara"
 }

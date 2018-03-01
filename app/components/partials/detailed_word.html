@@ -19,11 +19,11 @@
                     <div ng-if="selectedType =='root'">
                         <div ng-if="selectedWord.arabic"><span>{{ selectedWord.arabic }}</span><br></div>
                         <div ng-if="selectedWord.transcriptTurkish"><span>{{ selectedWord.rootTranscript}}</span><br></div>
-                        <div ng-if="selectedWord.rootTranscript"><span><a target="_blank" href="" ng-click="linkcreate(selectedWord.rootTranscript)">{{selectedWord.rootTranscript | uppercase}} Kök harflerini müfredatta ara</a></span><br></div>
+                        <div ng-if="selectedWord.rootTranscript"><span><a target="_blank" href="" ng-click="linkcreate(selectedWord.rootTranscript)">{{selectedWord.rootTranscript | uppercase}} {{'Kök harflerini müfredatta ara' | translate}}</a></span><br></div>
                     </div>
                 </div>
                 <br><br>
-                <span ng-if="selectedType =='root'" style="margin-left: 5%"><b>Kökün Kullanıldığı Ayetler</b></span>
+                <span ng-if="selectedType =='root'" style="margin-left: 5%"><b translate>Kökün Kullanıldığı Ayetler</b></span>
                 <select name="author-selection"
                         ng-model="currentAuthor"
                         ng-options="author.id as author.name for author in authors"
@@ -53,7 +53,7 @@
                                     <div style="width: 400px; word-wrap: break-word; ">
                                         <span ng-repeat="wordItem in item.verseWords">
                                             <a href ng-click="showWordDetail(wordItem, parentIndex)"
-                                               ng-style="getStyle(wordItem, item.word)"
+                                               ng-style="{color: getItemColor(wordItem, item.word)}"
                                                style="font-size: 24px">{{wordItem.arabic}}</a>
                                         </span>
                                     </div>
