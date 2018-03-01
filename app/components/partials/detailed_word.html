@@ -13,8 +13,8 @@
                         <div ng-if="selectedWord.rootArabic"><span>{{'Kök' | translate}}: <a href ng-click="getWords('root', selectedWord)">{{selectedWord.rootArabic}}</a></span><br></div>
                         <div ng-if="selectedWord.rootTranscript"><span><a target="_blank" href="" ng-click="linkcreate(selectedWord.rootTranscript)">({{selectedWord.rootTranscript | uppercase}})</a></span><br></div>
                         <div ng-if="selectedWord.transcriptTurkish"><span>{{ selectedWord.transcriptTurkish}}</span><br></div>
-                        <div ng-if="selectedLanguage == 'tr' && selectedWord.turkish"><span>{{ selectedWord.turkish }}</span><br></div>
-                        <div ng-if="selectedLanguage == 'en' && selectedWord.english"><span>{{ selectedWord.english }}</span></div>
+                        <div ng-if="selectedLanguage == 'tr' && selectedWord.turkish"><span>{{ selectedWord.turkish | removeQuotes }}</span><br></div>
+                        <div ng-if="selectedLanguage == 'en' && selectedWord.english"><span>{{ selectedWord.english | removeQuotes }}</span></div>
                     </div>
                     <div ng-if="selectedType =='root'">
                         <div ng-if="selectedWord.arabic"><span>{{ selectedWord.arabic }}</span><br></div>
@@ -51,8 +51,8 @@
                                         <span ng-if="item.word.rootArabic && item.word.rootTranscript">  |  </span>
                                         <br ng-if="item.word.rootArabic && !item.word.rootTranscript">
                                         <span ng-if="item.word.rootTranscript">{{ item.word.rootTranscript }}<br></span>
-                                        <div ng-if="selectedLanguage == 'tr' && item.word.turkish"><span>{{ item.word.turkish }}</span><br></div>
-                                        <div ng-if="selectedLanguage == 'en' && item.word.english"><span>{{ item.word.english }}</span></div>
+                                        <div ng-if="selectedLanguage == 'tr' && item.word.turkish"><span>{{ item.word.turkish | removeQuotes }}</span><br></div>
+                                        <div ng-if="selectedLanguage == 'en' && item.word.english"><span>{{ item.word.english | removeQuotes }}</span></div>
                                     </td>
                                     <td class="col-md-10 col-sm-9">
                                         <div style="word-wrap: break-word; "> <!--width: 400px;  -->

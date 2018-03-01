@@ -65,7 +65,7 @@ angular.module('ionicApp')
             }
 
             Restangular.all('words/translation').customGET("", {arabic:word, root_arabic:root, author_id: $scope.currentAuthor, start: $scope.start, limit: $scope.limit}, {}).then(function(data){
-                console.log("translations length:  ", data.translations.length, "root" + root, "author" + $scope.currentAuthor, "DATA :: " + data);
+                //console.log("translations length:  ", data.translations.length, "root" + root, "author" + $scope.currentAuthor, "DATA :: " + data);
 
                 $scope.hasMoreData = data.translations.length > 0 && data.translations.length == $scope.limit ;
                 $scope.isLoading = false;
@@ -133,6 +133,7 @@ angular.module('ionicApp')
                  $scope.wordTranslations[index].word.turkish = data.turkish;
                  $scope.wordTranslations[index].word.transcriptTurkish = data.transcriptTurkish;
                  $scope.wordTranslations[index].word.rootTranscript = data.rootTranscript;
+                 $scope.wordTranslations[index].word.english = data.english;
 
                  $scope.scopeApply();
              })
@@ -181,5 +182,14 @@ angular.module('ionicApp')
                 return  "#800000";
             }
         };
+
+    }).filter('removeQuotes', function() {
+
+        // remove multiple quute chars
+        return function(string) {
+
+            return string.replace(/(""|"""|""""|"""""|"""""")/g, '');
+
+        }
 
     });
