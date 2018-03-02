@@ -550,6 +550,11 @@
               flags.sdk = true;
             };
 
+            script.onerror = function() {
+                console.warn("Facebook could not initialized...");
+                flags.sdk = true;
+            };
+
             // Fix for IE < 9, and yet supported by latest browsers
             document.getElementsByTagName('head')[0].appendChild(script);
           })();
