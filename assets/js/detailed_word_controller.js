@@ -156,6 +156,8 @@ angular.module('ionicApp')
 
         $scope.getWords = function (type, word) {
             $scope.selectedWord = word;
+            $scope.selectedItem.arabic = word.arabic;
+            $scope.selectedItem.rootArabic = word.rootArabic;
             $scope.selectedType = type;
             $scope.start = 0;
             $scope.wordTranslations = [];
