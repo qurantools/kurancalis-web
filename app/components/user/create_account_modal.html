@@ -9,8 +9,14 @@
                 <div ng-if="!accountCreateRequestSent">
                     <div class="row">
                         <div class="col-xs-10 col-xs-offset-1">
-                            <p style="font-size: smaller !important" translate>Facebook hesabınız ile giriş yaparsanız arkadaşlarınızı ve çalışmalarınızı bulabilirsiniz</p>
-                            <button type="button" aria-hidden="true" class="btn btn-block" ng-click="login()" data-dismiss="modal"><img src='assets/img/fb.png' width='25' height='25'> {{'Facebook ile Giriş' | translate}}</button>
+                            <div ng-if="facebookIsReady">
+                                <p style="font-size: smaller !important" translate>Facebook hesabınız ile giriş yaparsanız arkadaşlarınızı ve çalışmalarınızı bulabilirsiniz</p>
+                                <button type="button" aria-hidden="true" class="btn btn-block" ng-click="login()" data-dismiss="modal"><img src='assets/img/fb.png' width='25' height='25'> {{'Facebook ile Giriş' | translate}}</button>
+                            </div>
+                            <div ng-if="!facebookIsReady">
+                                <i class="fa fa-exclamation-triangle" style="font-size: 1em; color:#FF0000"></i>
+                                <span style="font-size: large" class="text-danger" translate>Facebook erişiminiz yok</span>
+                            </div>
                         </div>
                     </div>
                     <hr style='width:100%' />
