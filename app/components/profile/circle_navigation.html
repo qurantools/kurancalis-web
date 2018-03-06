@@ -22,7 +22,23 @@
                     <div ng-if="user!=null">
                         <a class="btn btn-primary" href="#/people/find_people/">
                             <i class="fa fa-user-plus"></i> {{'Kullanıcı Bul' | translate}}</a>
-                        <a href="#/profile/user/{{user.id}}"><img ng-src="{{user.photo}}" height="40"/></a>
+                        <!-- <a href="#/profile/user/{{user.id}}"><img ng-src="{{user.photo}}" height="40"/></a> -->
+                        <div id="loginMenu" class="dropdown" style="display: inline-block">
+                            <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                                <img ng-src="{{user.photo}}" height="35px" alt="dropdown">
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li class="btn-default"><a href="#/profile/user/{{user.id}}" translate>Profilim</a></li>
+                                <li class="btn-default"><a href="#/user/account/settings" translate>Hesabım</a></li>
+                            </ul>
+                        </div>
+                        <select name="language-selection"
+                                ng-model="selectedLanguage"
+                                ng-options="language.name as language.label for language in languages"
+                                ng-selected="selectedLanguage==language.name"
+                                ng-change="changeLanguage(selectedLanguage)">
+                        </select>
                     </div>
                 </div>
             </div>
