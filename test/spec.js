@@ -17,7 +17,7 @@ describe('ceviri gosterimi', function() {
     var tmpautid3;
 
     beforeEach(function() {
-        browser.get(baseAddress + '/#/chapter/1/author/1040/verse/1');
+        browser.get(baseAddress + '/#!/chapter/1/author/1040/verse/1');
 
         //browser.sleep(50000); // if your test is outrunning the browser
         // browser.waitForAngular();

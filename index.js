@@ -274,7 +274,7 @@ var app = angular.module('ionicApp', requiredModules)
 
 if (config_data.isMobile == false) { //false
     //desktop version
-    app.config(function ($routeProvider, FacebookProvider, RestangularProvider, localStorageServiceProvider, $httpProvider, $translateProvider, NotificationProvider) {
+    app.config(function ($routeProvider, $locationProvider, FacebookProvider, RestangularProvider, localStorageServiceProvider, $httpProvider, $translateProvider, NotificationProvider) {
         RestangularProvider.setBaseUrl(config_data.webServiceUrl);
         localStorageServiceProvider.setStorageCookie(0, '/');
 
@@ -419,6 +419,10 @@ if (config_data.isMobile == false) { //false
                 redirectTo: '/translations/'
             });
 
+        //$locationProvider.html5Mode(true).hashPrefix('!');
+        //$locationProvider.html5Mode(true);
+        $locationProvider.hashPrefix('!');
+
 //        var $route = $routeProvider.$get[$routeProvider.$get.length-1]({$on:function(){}});
 //        $route.routes['/:chapter/:verse'].regexp = /^\/(?:artist\/(\d+))$/
 
@@ -475,7 +479,7 @@ if (config_data.isMobile == false) { //false
 
     });
 } else {
-    app.config(function ($routeProvider, FacebookProvider, RestangularProvider, localStorageServiceProvider, $stateProvider, $urlRouterProvider, $httpProvider, $compileProvider, $translateProvider, NotificationProvider) {
+    app.config(function ($routeProvider, $locationProvider, FacebookProvider, RestangularProvider, localStorageServiceProvider, $stateProvider, $urlRouterProvider, $httpProvider, $compileProvider, $translateProvider, NotificationProvider) {
             console.log("mobile version");
             $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|chrome-extension|qurantools):/);
             //redirect / to /m/www/
@@ -667,7 +671,10 @@ if (config_data.isMobile == false) { //false
              // gcm_id: 'YOUR_GCM_ID'
              });
              */
-            FacebookProvider.init(config_data.FBAppID);
+
+        $locationProvider.hashPrefix('!');
+
+        FacebookProvider.init(config_data.FBAppID);
 
         NotificationProvider.setOptions({
             delay: 10000,

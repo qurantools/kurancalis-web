@@ -438,7 +438,7 @@ var mymodal = angular.module('ionicApp')
             $scope.checkUserLoginStatus();
             if ($scope.loggedIn == false) {
                 //redirect to home page
-                window.location.href = '#/';
+                window.location.href = '#!/';
             }
             $scope.cevreadlar = cevrelisteac();
             if (config_data.isMobile){

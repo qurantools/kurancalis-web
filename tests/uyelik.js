@@ -20,7 +20,7 @@ var uyelik = (function () {
 
     uyelik.prototype.cikis = function () {
 
-        browser.get(baseAddress+'/m/www/#/inference/new/');
+        browser.get(baseAddress+'/m/www/#!/inference/new/');
         browser.sleep('1000');
         element(by.css('[onclick="toggleLeftPanel()"]')).click();
 

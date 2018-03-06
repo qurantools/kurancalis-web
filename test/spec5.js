@@ -5,7 +5,7 @@ var uyelik = require('./uyelik');
 describe('ceviri gosterimi', function() {
 
 	 beforeEach(function() {
-	       browser.get(baseAddress + '/#/chapter/1/author/1040/verse/1');
+	       browser.get(baseAddress + '/#!/chapter/1/author/1040/verse/1');
 	 });
      
 	 function not_yaz_yeni(not_deger) {

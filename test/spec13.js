@@ -22,7 +22,7 @@ describe('ceviri gosterimi', function() {
 		browser.sleep(3000);
 		element(by.css('[ng-class="{active: currentPage == \'people\'}"]')).click();
 		browser.sleep(3000);
-		element(by.css('[href="#/people/circles/"]')).click();
+		element(by.css('[href="#!/people/circles/"]')).click();
 		
 		//3 Adet Çevre Eklenir.
 		element(by.css('[ng-click="toggleModal()"]')).click();
@@ -171,14 +171,14 @@ describe('ceviri gosterimi', function() {
     	});    	
     	
     	//Sayfa yenileniyor.
-    	browser.get(baseAddress + '/#/chapter/1/author/1040/verse/1');
+    	browser.get(baseAddress + '/#!/chapter/1/author/1040/verse/1');
     	browser.sleep(3000);
     	
 		element(by.css('[onclick="toggleLeftPanel()"]')).click();
 		browser.sleep(3000);
 		element(by.css('[ng-class="{active: currentPage == \'people\'}"]')).click();
 		browser.sleep(3000);
-		element(by.css('[href="#/people/circles/"]')).click();
+		element(by.css('[href="#!/people/circles/"]')).click();
 		
 		browser.sleep(2000);
 		element(by.repeater('item in cevreadlar').row(1)).element(by.model('kisicnt')).getText().then(function(text) {
@@ -220,14 +220,14 @@ describe('ceviri gosterimi', function() {
     	});
     	
     	//Sayfa yenileniyor.
-    	browser.get(baseAddress + '/#/chapter/1/author/1040/verse/1');
+    	browser.get(baseAddress + '/#!/chapter/1/author/1040/verse/1');
     	browser.sleep(3000);
     	
 		element(by.css('[onclick="toggleLeftPanel()"]')).click();
 		browser.sleep(3000);
 		element(by.css('[ng-class="{active: currentPage == \'people\'}"]')).click();
 		browser.sleep(3000);
-		element(by.css('[href="#/people/circles/"]')).click();
+		element(by.css('[href="#!/people/circles/"]')).click();
 		
 		browser.sleep(2000);
 		

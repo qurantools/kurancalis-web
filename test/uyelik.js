@@ -20,7 +20,7 @@ var uyelik = (function () {
 
     uyelik.prototype.cikis = function () {
 
-        browser.get(baseAddress+'/#/chapter/1/author/1040/verse/1');
+        browser.get(baseAddress+'/#!/chapter/1/author/1040/verse/1');
         browser.sleep('1000');
         element(by.css('[onclick="toggleLeftPanel()"]')).click();
 

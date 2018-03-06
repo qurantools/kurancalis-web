@@ -4,14 +4,14 @@
     </ion-header-bar>
     <ion-content>
         <ul class="list">
-            <a ng-if="user!=null" href="#/profile/circle/-1/" class="item" menu-close="" translate>Haber Kaynağı</a>
-            <a href="#/translations/" class="item" menu-close="" translate>Sureler</a>
-            <a href="#/search_translations/" class="item" menu-close="" translate>Meallerde Arama</a>
-            <a ng-if="user!=null" href="#/annotations/" class="item" menu-close="" translate>Ayet Notları</a>
-            <a ng-if="user!=null" href="#/inferences/" class="item" menu-close="" translate>Çıkarım Notları</a>
-            <a ng-if="user!=null" href="#/lists/verse/" class="item" menu-close="" translate>Ayet Listelerim</a>
-            <a ng-if="user!=null" href="#/people/home/" class="item" menu-close="" translate>Kişiler</a>
-            <a href="#/help/" class="item" menu-close="" translate>Yardım</a>
+            <a ng-if="user!=null" href="#!/profile/circle/-1/" class="item" menu-close="" translate>Haber Kaynağı</a>
+            <a href="#!/translations/" class="item" menu-close="" translate>Sureler</a>
+            <a href="#!/search_translations/" class="item" menu-close="" translate>Meallerde Arama</a>
+            <a ng-if="user!=null" href="#!/annotations/" class="item" menu-close="" translate>Ayet Notları</a>
+            <a ng-if="user!=null" href="#!/inferences/" class="item" menu-close="" translate>Çıkarım Notları</a>
+            <a ng-if="user!=null" href="#!/lists/verse/" class="item" menu-close="" translate>Ayet Listelerim</a>
+            <a ng-if="user!=null" href="#!/people/home/" class="item" menu-close="" translate>Kişiler</a>
+            <a href="#!/help/" class="item" menu-close="" translate>Yardım</a>
             <div style="vertical-align: middle !important;">
                 <a ng-if="user!=null" href ng-click="logOut()" class="item"><img ng-src="{{user.photo}}" height="34"/> {{'Çıkış' | translate}}</a>
             </div>

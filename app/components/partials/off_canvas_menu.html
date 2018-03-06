@@ -9,28 +9,28 @@
                 <div class="side-menu-container">
                     <ul class="nav navbar-nav">
                         <li ng-class="{active: currentPage == 'profile_circle'}" ng-if="user!=null">
-                            <a href="#/profile/circle/-1/" class="leftMenuLink" translate>Haber Kaynağı</a>
+                            <a href="#!/profile/circle/-1/" class="leftMenuLink" translate>Haber Kaynağı</a>
                         </li>
                         <li ng-class="{active: currentPage == 'home'}">
-                            <a href="#/translations/" class="leftMenuLink" translate>Sureler</a>
+                            <a href="#!/translations/" class="leftMenuLink" translate>Sureler</a>
                         </li>
                         <li ng-class="{active: currentPage == 'search_on_translations'}">
-                            <a href="#/search_translations/" class="leftMenuLink" translate>Meallerde Ara</a>
+                            <a href="#!/search_translations/" class="leftMenuLink" translate>Meallerde Ara</a>
                         </li>
                         <li ng-class="{active: currentPage == 'annotations'}" ng-if="user!=null">
-                            <a href="#/annotations/" translate>Ayet notları</a>
+                            <a href="#!/annotations/" translate>Ayet notları</a>
                         </li>
                         <!-- <li ng-class="{active: currentPage == 'help'}">
                              <a href="#/help/" ng-click="" onclick="">Yardım</a>
                          </li> -->
                          <li ng-class="{active: currentPage.search('inference')==0}" ng-if="user!=null">
-                            <a href="#/inferences/" translate>Çıkarım Notları</a>
+                            <a href="#!/inferences/" translate>Çıkarım Notları</a>
                         </li>
                         <li ng-class="{active: currentPage.search('people')==0}" ng-if="user!=null">
-                            <a href="#/people/circles/" translate>Kişiler</a>
+                            <a href="#!/people/circles/" translate>Kişiler</a>
                         </li>
                         <li ng-class="{active: currentPage == 'verse_lists'}" ng-if="user!=null">
-                            <a href="#/lists/verse" translate>Ayet Listelerim</a>
+                            <a href="#!/lists/verse" translate>Ayet Listelerim</a>
                         </li>
                         <!-- <li ng-class="{active: currentPage == 'user_settings'}" ng-if="user!=null">
                             <a href="#/user/settings/" translate>Ayarlar</a>

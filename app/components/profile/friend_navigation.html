@@ -12,7 +12,7 @@
                         <button type="button" id="login" data-target='#loginModal' data-toggle='modal' class="btn btn-primary" translate>Giriş</button>
                     </div>
                     <div ng-if="user!=null">
-                        <a class="btn btn-primary" href="#/people/find_people/">
+                        <a class="btn btn-primary" href="#!/people/find_people/">
                             <i class="fa fa-user-plus"></i> {{'Kullanıcı Bul' | translate}}</a>
                         </a>
                         <!-- <a href="#/profile/user/{{user.id}}"><img ng-src="{{user.photo}}" height="40"/></a> -->
@@ -22,8 +22,8 @@
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu">
-                                <li class="btn-default"><a href="#/profile/user/{{user.id}}" translate>Profilim</a></li>
-                                <li class="btn-default"><a href="#/user/account/settings" translate>Hesabım</a></li>
+                                <li class="btn-default"><a href="#!/profile/user/{{user.id}}" translate>Profilim</a></li>
+                                <li class="btn-default"><a href="#!/user/account/settings" translate>Hesabım</a></li>
                             </ul>
                         </div>
                         <select name="language-selection"

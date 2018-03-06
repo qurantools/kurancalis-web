@@ -20,7 +20,7 @@ var sureler = (function () {
 	}
 
 	sureler.prototype.sayfa = function () {
-		browser.get(baseAddress + '/m/www/#/inference/new/');
+		browser.get(baseAddress + '/m/www/#!/inference/new/');
 	};
 
 	sureler.prototype.sureyegit = function (sure) {

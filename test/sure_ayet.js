@@ -20,7 +20,7 @@ var sureler = (function () {
 	}
 
 	sureler.prototype.sayfa = function () {
-		browser.get(baseAddress + '/#/chapter/1/author/1040/verse/1');
+		browser.get(baseAddress + '/#!/chapter/1/author/1040/verse/1');
 	};
 
 	sureler.prototype.sureyegit = function (sure) {

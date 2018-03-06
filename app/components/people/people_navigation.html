@@ -5,11 +5,11 @@
                     class="fa fa-bars"></i> {{'MENÜ' | translate}}
             </button>
 
-            <a href="#/people/find_people/" id="fp" ng-class="{back_orange: currentPage == 'people_find'}" class="btn btn-primary" translate>Kullanıcı Bul</a>
+            <a href="#!/people/find_people/" id="fp" ng-class="{back_orange: currentPage == 'people_find'}" class="btn btn-primary" translate>Kullanıcı Bul</a>
 
-            <a href="#/people/people_have_you/" id="phy" ng-class="{back_orange: currentPage == 'people_have_you'}" class="btn btn-primary" translate>Takipçilerim</a>
+            <a href="#!/people/people_have_you/" id="phy" ng-class="{back_orange: currentPage == 'people_have_you'}" class="btn btn-primary" translate>Takipçilerim</a>
 
-            <a href="#/people/circles/" id="crcl" ng-class="{back_orange: currentPage == 'people_circle'}" class="btn btn-primary" translate>Çevrelerim</a>
+            <a href="#!/people/circles/" id="crcl" ng-class="{back_orange: currentPage == 'people_circle'}" class="btn btn-primary" translate>Çevrelerim</a>
 <!--
             <a href="#/people/explore/" id="exp" class="btn btn-primary">Keşfet
             </a>
@@ -24,12 +24,12 @@
                 <!-- <img ng-src="{{user.photo}}" height="30"/> -->
                 <div id="loginMenu" class="dropdown" style="display: inline-block">
                     <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-                        <img ng-src="{{user.photo}}" height="30px" alt="dropdown">
+                        <img ng-src="{{user.photo}}" height="34px" alt="dropdown">
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu">
-                        <li class="btn-default"><a href="#/profile/user/{{user.id}}" translate>Profilim</a></li>
-                        <li class="btn-default"><a href="#/user/account/settings" translate>Hesabım</a></li>
+                        <li class="btn-default"><a href="#!/profile/user/{{user.id}}" translate>Profilim</a></li>
+                        <li class="btn-default"><a href="#!/user/account/settings" translate>Hesabım</a></li>
                     </ul>
                 </div>
                 <span style="vertical-align: middle;">{{user.name}} &nbsp;</span>
