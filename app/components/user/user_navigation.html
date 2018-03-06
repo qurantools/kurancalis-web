@@ -18,12 +18,21 @@
                     </div>
                     <div ng-if="user!=null">
                         <div id="loginMenu" class="dropdown" style="display: inline-block">
-                            <img class="btn dropdown-toggle" ng-src="{{user.photo}}" alt="dropdown image" height="50px" data-toggle="dropdown">
+                            <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                                <img ng-src="{{user.photo}}" height="40px" alt="dropdown">
+                                <span class="caret"></span>
+                            </button>
                             <ul class="dropdown-menu">
-                                <li><a href="#/profile/user/{{user.id}}" translate>Profilim</a></li>
-                                <li><a href="#/user/account/settings" translate>Hesabım</a></li>
+                                <li class="btn-default"><a href="#/profile/user/{{user.id}}" translate>Profilim</a></li>
+                                <li class="btn-default"><a href="#/user/account/settings" translate>Hesabım</a></li>
                             </ul>
                         </div>
+                        <select name="language-selection"
+                                ng-model="selectedLanguage"
+                                ng-options="language.name as language.label for language in languages"
+                                ng-selected="selectedLanguage==language.name"
+                                ng-change="changeLanguage(selectedLanguage)">
+                        </select>
                     </div>
                 </div>
             </div>

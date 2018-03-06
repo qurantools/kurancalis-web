@@ -376,6 +376,14 @@ div.checkbox.checkbox-input-hidden.checkbox-circle{
     min-width: 0px !important;
 }
 
+#loginMenu .btn-default{
+    padding: 5px 10px;
+}
+
+#loginMenu .dropdown-toggle .caret{
+    margin-left: 2px;
+}
+
 /* mouse over link */
 #wordDetailModal a:hover,
 #wordDetailModal span a:hover {
