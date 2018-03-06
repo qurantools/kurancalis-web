@@ -16,7 +16,23 @@
                     <div ng-if="user!=null">
                         <button class="btn btn-primary" data-target="#verseHistoryModal" data-toggle="modal" ng-click="openVerseHistory()"><i class="fa fa-history" style="font-size: 1.3em"></i></button>
 
-                        <a href="#/profile/user/{{user.id}}"><img ng-src="{{user.photo}}" height="40"/></a>
+                        <!-- <a href="#/profile/user/{{user.id}}"><img ng-src="{{user.photo}}" height="40"/></a> -->
+                        <div id="loginMenu" class="dropdown" style="display: inline-block">
+                            <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                                <img ng-src="{{user.photo}}" height="34px" alt="dropdown">
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li class="btn-default"><a href="#/profile/user/{{user.id}}" translate>Profilim</a></li>
+                                <li class="btn-default"><a href="#/user/account/settings" translate>Hesabım</a></li>
+                            </ul>
+                        </div>
+                        <select name="language-selection"
+                                ng-model="selectedLanguage"
+                                ng-options="language.name as language.label for language in languages"
+                                ng-selected="selectedLanguage==language.name"
+                                ng-change="changeLanguage(selectedLanguage)">
+                        </select>
                         <!--<span style="vertical-align: bottom;">{{user.name}}</span>-->
                     </div>
                 </div>
