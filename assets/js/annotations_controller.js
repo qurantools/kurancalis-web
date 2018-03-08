@@ -688,6 +688,6 @@ angular.module('ionicApp')
         };
 
         $scope.initAnnotationsParameters();
-        $scope.displayTutorial("annotations");
+        //$scope.displayTutorial("annotations");
 
     });
