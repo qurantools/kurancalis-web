@@ -1,0 +1,50 @@
+<body ng-app="bulkEdit" ng-controller="BulkEditCtrl">
+<div ng-include="'app/components/partials/off_canvas_menu.html'"></div>
+<div class="container">
+    <div ng-include="'app/components/user/edit_batch_notes_navigation.html'"></div>
+    <div class="nav-bottom"></div>
+    <div class="row">
+        <div align="center">
+            <br>
+            <div class="col-xs-12">
+                <table class="table table-xs table-condensed table-striped">
+                    <tr>
+                        <th></th>
+                        <th class="col-xs-1" translate>Ayet</th>
+                        <th class="col-xs-1" translate>Renk</th>
+                        <th class="col-xs-1" translate>Tarih</th>
+                        <th class="col-xs-3" translate>Not</th>
+                        <th class="col-xs-2" translate>Etiketler</th>
+                        <th class="col-xs-2" translate>Paylaşılan Çevreler</th>
+                        <th class="col-xs-2" translate>Paylaşılan Kişiler</th>
+                    </tr>
+                    <tr ng-class="{'danger':  isChecked}" ng-repeat="annotation in annotations">
+                        <td><input type="checkbox" ng-click="selectedAnnotation(annotation.annotationId, isChecked)" ng-model="isChecked"></td>
+                        <td style="white-space: nowrap">{{annotation.verseId / 1000 | number : 0}}: {{annotation.verseId % 1000}}</td>
+                        <td><span class="tag_colour a_hl_{{annotation.colour}}"></span></td>
+                        <td style="white-space: nowrap">{{annotation.created | date: "yyyy.MM.dd"}}</td>
+                        <td>{{annotation.quote}}</td>
+                        <td>
+                            <span ng-repeat="annotationTag in annotation.tags">{{annotationTag}}{{$last ? '' : ', '}}</span>
+                        </td>
+                        <td><span ng-repeat="circle in annotation.permissions.canViewCircles">{{circle.name}}{{$last ? '' : ', '}}</span></td>
+                        <td><span ng-repeat="user in annotation.permissions.canViewUsers">{{user.name}}{{$last ? '' : ', '}}</span></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div>
+    <coklunotsilmodal title="{{'Çoklu Not Sil' | translate}}" visible="showdeletebulknotes">
+        <div>
+            <label>{{'Seçili notlar silinecektir. Onaylıyor musunuz?' | translate}}</label>
+        </div>
+        <div class="modal-footer">
+            <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal" translate>İptal</a>
+            <a class="btn btn-primary btn-wide" ng-click="removeSelectedAnnotations()" data-dismiss="modal" translate>Tamam</a>
+        </div>
+    </coklunotsilmodal>
+</div>
+</body>

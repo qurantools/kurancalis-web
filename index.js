@@ -394,6 +394,12 @@ if (config_data.isMobile == false) { //false
                 reloadOnSearch: false,
                 pageTitle: 'Kuran Çalış - Çevre Zaman Tüneli'
             })
+            .when('/user/account/edit_batch_notes/', {
+                controller: 'BulkEditCtrl',
+                templateUrl: 'app/components/user/edit_batch_notes.html',
+                reloadOnSearch: false,
+                pageTitle: 'Kuran Çalış - Çevre Zaman Tüneli'
+            })
             .when('/', {
                 redirectTo: '/translations/'
             })
@@ -649,6 +655,12 @@ if (config_data.isMobile == false) { //false
                     .when('/user/account/settings/', {
                         controller: 'UserSettingsCtrl',
                         templateUrl: 'components/user/settings.html',
+                        reloadOnSearch: false,
+                        pageTitle: 'Kuran Çalış - Çevre Zaman Tüneli'
+                    })
+                    .when('/user/account/edit_batch_notes/', {
+                        controller: 'BulkEditCtrl',
+                        templateUrl: 'components/user/edit_batch_notes.html',
                         reloadOnSearch: false,
                         pageTitle: 'Kuran Çalış - Çevre Zaman Tüneli'
                     })
