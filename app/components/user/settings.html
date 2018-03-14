@@ -8,7 +8,7 @@
                 <br>
                 <a type="button" class="btn btn-primary btn-wide" ng-click="exportmodal()" translate>Notlarımı Dışarıya Aktar (CSV)</a>
                 <br><br>
-                <a type="button" class="btn btn-primary btn-wide" data-target="#importAnnotations" data-toggle="modal" translate>Toplu Not Ekleme</a>
+                <a type="button" class="btn btn-primary btn-wide" ng-click="bulkinsertmodal()" translate>Toplu Not Ekleme</a>
                 <br><br>
                 <a type="button" href="#!/user/account/edit_batch_notes" class="btn btn-primary btn-wide"  translate>Toplu Not Düzenleme</a>
             </div>
@@ -29,5 +29,70 @@
                 <button class="btn btn-primary btn-wide" ng-click="exportAnnotations()" translate>Aktar</button>
             </div>
         </exportmodal>
+    </div>
+
+    <div class="row">
+        <bulkinsertmodal title="{{'Toplu Not Ekleme' | translate}}" visible="showbulkinsertmodal">
+            <div class="row" style="padding: 0 15px">
+                <p translate="SAMPLE_FILE">Daha önce elinizde olan notlarınızı <a href data-target="#sample_csv_file" data-toggle="modal">örnek dosyadaki</a> gibi CSV dosya haline getiriniz.</p>
+                <ul>
+                    <li translate="START_WITH_QUTOTE">Her kolon çift tırnak(") ile başlayıp bitmeli</li>
+                    <li translate>Notlarınızın içerisinde çift tırnak geçmemelidir.</li>
+                </ul>
+                <strong translate>Kolon İçerikleri</strong>
+                <div translate>1. chapter: sure numarası</div>
+                <div translate>2. verse: ayet numarası</div>
+                <div translate>3. content: not içeriği</div>
+                <div translate>4. tags: virgülle ayrılmış etiketler</div>
+                <div translate>5. id: sistemdeki ID numarası. Boş bırakılabilir, dikkate alınmamaktadır.</div>
+                <div translate="AUTHOR_LIST">6. author id: Notun alındığı meal numarası. <a href data-target="#author_list" data-toggle="modal">Listeden</a> uygun olanı kullanınız. Boş olursa Arapça meal kullnılacaktır</div>
+                <div translate>7. color: red, green, yellow değerlerinden birisi kullanılmalı. Boş ise yellow kullanılır.</div>
+                <div translate>8. start: karalamanın başlangıcı. Eğer daha önce sistemden export aldıysanız aynen kalabilir, aksi durumda boş bırakınız.</div>
+                <div translate>9. end: karalamanın bitişi. Eğer daha önce sistemden export aldıysanız aynen kalabilir, aksi durumda boş bırakınız.</div>
+                <div translate>10. quote: karalama yapılan metin. Eğer daha önce sistemden export aldıysanız aynen kalabilir, aksi durumda boş bırakınız.</div>
+                <br>
+                <div translate="SAVE_AS_CSV">*Notlarınızı excel de düzenledikten sonra CSV dosyası olarak kaydedebilirsiniz. Bunun için şu ayarları yapmalısınız: (, ile ayrılmış, " ile kapatılmış, '\r\n' ile yeni satır.)</div>
+                <div translate>Daha sonra bu dosyayı sisteme yükleyerek ayet notlarınızı oluşturabilirsiniz.</div>
+                <br>
+                <div translate>Paylaşmak istediğiniz çevreleri belirleyiniz. Tüm notlar bu çevre ile paylaşılacaktır.</div>
+                <br>
+                <div class="col col-lg-10 col-lg-offset-1 col-md-12">
+                    <div class="row flexbox-container">
+                        <span class="col col-xs-5" translate>Paylaşmak istediğiniz çevre:</span>
+                        <div class="col col-xs-7">
+                            <tags-input ng-model="taggedVerseCircles" placeholder="{{'Çevre Seçiniz' | translate}}"
+                                        display-property="name" replace-spaces-with-dashes="false" min-length="1"
+                                        add-from-autocomplete-only="true" add-on-blur="false">
+                                <auto-complete source="cevrelisteleForSearch()" load-on-empty="true"
+                                               load-on-focus="true"></auto-complete>
+                            </tags-input>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="clearfix"></div>
+
+                    <div class="row">
+                        <label>
+                            <input type="checkbox" ng-model="columns_name" ng-change="columnsChanged(columns_name)">
+                            {{'İlk satır kolon başlıklarını içeriyor' | translate}}
+                        </label>
+                    </div>
+                    <div class="row flexbox-container">
+                        <span class="col-xs-2" translate>Dosya:</span>
+                        <input type = "text" class="col-xs-8" readonly ng-model="f.name"/>
+                        <button type="file" class="col-xs-2"
+                                ngf-select="uploadFiles($file, $invalidFiles)"
+                                accept=".csv"
+                                translate>Araştır</button>
+                    </div>
+                    <div style="font-size:smaller" class="text-danger text-center" translate>{{errorMsg}}</span></div>
+                    <div style="font-size:smaller" class="text-success text-center" translate>{{successMsg}}</span></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-link" data-dismiss='modal' translate>İptal</button>
+                <button class="btn btn-primary btn-wide" ng-click="exportAnnotations()" translate>Gönder</button>
+            </div>
+        </bulkinsertmodal>
     </div>
 </body>

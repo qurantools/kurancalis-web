@@ -1,4 +1,4 @@
-var requiredModules = ['ionic', 'ngResource', 'ngRoute', 'facebook', 'restangular', 'LocalStorageModule', 'ngTagsInput', 'duScroll', 'directives.showVerse', 'directives.repeatCompleted', 'ui.select', 'myConfig', 'authorizationModule','djds4rce.angular-socialshare', 'ngSanitize', 'com.2fdevs.videogular','com.2fdevs.videogular.plugins.controls','com.2fdevs.videogular.plugins.overlayplay','com.2fdevs.videogular.plugins.poster', 'ngCordova','ui.tinymce', 'ui.bootstrap', 'ion-affix', 'infinite-scroll', 'ngCordova.plugins.appAvailability', 'pascalprecht.translate', 'ngCookies', 'ui-notification'];
+var requiredModules = ['ionic', 'ngResource', 'ngRoute', 'facebook', 'restangular', 'LocalStorageModule', 'ngTagsInput', 'duScroll', 'directives.showVerse', 'directives.repeatCompleted', 'ui.select', 'myConfig', 'authorizationModule','djds4rce.angular-socialshare', 'ngSanitize', 'com.2fdevs.videogular','com.2fdevs.videogular.plugins.controls','com.2fdevs.videogular.plugins.overlayplay','com.2fdevs.videogular.plugins.poster', 'ngCordova','ui.tinymce', 'ui.bootstrap', 'ion-affix', 'infinite-scroll', 'ngCordova.plugins.appAvailability', 'pascalprecht.translate', 'ngCookies', 'ui-notification', 'ngFileUpload'];
 
 if (config_data.isMobile) {
     var mobileModules = [];//'ionic'
@@ -778,7 +778,7 @@ app.factory('ChapterVerses', function ($resource) {
             }
         }
     );
-}).controller('MainCtrl', function ($scope, $q, $routeParams, $ionicSideMenuDelegate, $location, $timeout, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService, $document, $filter, $rootScope, $state, $stateParams, $ionicModal, $ionicScrollDelegate, $ionicPosition, $ionicLoading, authorization,$rootScope, $ionicPopup, dataProvider, $cordovaAppAvailability, $translate, Notification) {
+}).controller('MainCtrl', function ($scope, $q, $routeParams, $ionicSideMenuDelegate, $location, $timeout, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService, $document, $filter, $rootScope, $state, $stateParams, $ionicModal, $ionicScrollDelegate, $ionicPosition, $ionicLoading, authorization,$rootScope, $ionicPopup, dataProvider, $cordovaAppAvailability, $translate, Notification, Upload) {
     console.log("MainCtrl");
 
     //all root scope parameters should be defined and documented here

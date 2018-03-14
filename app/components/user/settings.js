@@ -1,17 +1,22 @@
 /**
  * Created by Erata 26/02/18.
  */
+
 var userSettings = angular.module('ionicApp')
-    .controller('UserSettingsCtrl', function ($rootScope,$scope,$q, $routeParams, $location, $timeout,$ionicModal, authorization, localStorageService, Restangular, $translate, Notification) {
+    .controller('UserSettingsCtrl', function ($rootScope,$scope,$q, $routeParams, $location, $timeout,$ionicModal, authorization, localStorageService, Restangular, Upload, $sce, $translate, Notification) {
 
         $scope.message = "";
         $scope.remove_carriage = false;
         $scope.column_name = false;
+        $scope.taggedVerseCircles = [];
 
         $scope.init = function () {
             if ( $location.path() == "/user/account/settings/") {
                 $scope.pagePurpose = "settings";
             }
+
+            $scope.errorMsg = "";
+            $scope.successMsg = "";
         };
 
         $scope.carriageChanged = function (value) {
@@ -20,6 +25,7 @@ var userSettings = angular.module('ionicApp')
 
         $scope.columnsChanged = function (value) {
             $scope.column_name = value;
+            console.log("$scope.column_name",$scope.column_name)
         };
 
         $scope.showexportmodal = false;
@@ -28,6 +34,15 @@ var userSettings = angular.module('ionicApp')
 
             $timeout(function () {
                 $scope.showexportmodal = true;
+            },100)
+        };
+
+        $scope.showbulkinsertmodal = false;
+        $scope.bulkinsertmodal = function () {
+            $scope.showbulkinsertmodal = false;
+
+            $timeout(function () {
+                $scope.showbulkinsertmodal = true;
             },100)
         };
 
@@ -53,6 +68,72 @@ var userSettings = angular.module('ionicApp')
             });
         };
 
+        //tags input auto complete
+        $scope.cevrelisteleForSearch = function () {
+            return $scope.extendedCirclesForSearch;
+        };
+
+        $scope.uploadFiles = function(file, errFiles) {
+            $scope.f = file;
+            $scope.errFile = errFiles && errFiles[0];
+            $scope.errorMsg = "";
+            $scope.successMsg = "";
+
+            console.log(file, errFiles)
+
+
+            var hasError = false;
+            if (file.size > 10*1024*1024) {
+                $scope.errorMsg = "Dosya boyutu en fazla 10MB olabilir.";
+                hasError = true;
+            }
+
+            var match = (/\.(csv)$/i).test(file.name);
+            console.log("file type match: " + match);
+
+            if (!match) {
+                hasError = true;
+
+                if($scope.errorMsg)
+                    $scope.errorMsg += " Dosya boyutu en fazla 10MB ve tipi *.csv olmalıdır.";
+                else
+                    $scope.errorMsg = "Dosya tipi *.csv olmalıdır";
+            }
+
+            $timeout(function () {
+
+                if (!hasError && file) {
+                    file.upload = Upload.upload({
+                        headers: {
+                            'Content-Type' : file.type,
+                            'access_token': $scope.access_token
+                        },
+                        method: "POST",
+                        url: config_data.webServiceUrl + '/annotations/import?headerName=' + $scope.column_name + '&canViewCircles=' + $scope.getTagsWithCommaSeparated($scope.taggedVerseCircles),
+                        data: {file: file}
+                    }).progress(function(evt){
+                        file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+                        console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total, 10), $scope.f);
+                    })
+                    .success(function(data, status, headers, config){
+                        $scope.successMsg = "Dosya başarılı bir şekilde yüklendi";
+                        console.log('file ' + config.data.file.name + ' is uploaded successfully. Response: ');
+                    })
+                    .error(function(err){
+                        $scope.errorMsg = "Hata oluştu, dosya içeriğiğini kontrol ediniz : { " + err.code + ': ' + err.description + " }";
+                        console.log("ERROR: ",err);
+                    });
+                }
+
+            })
+
+        };
+
+        $scope.navigateToProfile = function () {
+           $location.path("/user/account/settings/");
+           $scope.bulkinsertmodal()
+        };
+
         $scope.init();
 
     });
@@ -60,6 +141,40 @@ var userSettings = angular.module('ionicApp')
 userSettings.directive('exportmodal', function () {
     return {
         templateUrl: 'app/components/user/export_annotations.html',
+        restrict: 'E',
+        transclude: true,
+        replace: true,
+        scope: false,
+        link: function postLink(scope, element, attrs) {
+            scope.title = attrs.title;
+            scope.remove_carriage = false;
+            scope.column_name = false;
+
+            scope.$watch(attrs.visible, function (value) {
+                if (value == true)
+                    $(element).modal('show');
+                else
+                    $(element).modal('hide');
+            });
+
+            $(element).on('shown.bs.modal', function () {
+                scope.$apply(function () {
+                    scope.$parent[attrs.visible] = true;
+                });
+            });
+
+            $(element).on('hidden.bs.modal', function () {
+                scope.$apply(function () {
+                    scope.$parent[attrs.visible] = false;
+                });
+            });
+        }
+    };
+});
+
+userSettings.directive('bulkinsertmodal', function () {
+    return {
+        templateUrl: 'app/components/user/bulk_insert_annotations.html',
         restrict: 'E',
         transclude: true,
         replace: true,
