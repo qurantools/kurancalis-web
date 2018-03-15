@@ -26,9 +26,6 @@ angular.module('ionicApp')
 
         $scope.annotationSearchAuthorSelection = $scope.selection;
 
-        $scope.shareUrl =  config_data.webAddress + "/#!/annotations";
-        $scope.shareTitle = "Ayet Notlarını Paylaşma";
-
         $scope.localStorageManager = new LocalStorageManager("annotations", localStorageService,
             [
                 {

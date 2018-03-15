@@ -20,8 +20,11 @@ angular.module('ionicApp')
         $scope.commentContent.value = "";
         $scope.commentContentUpdate = {};
         $scope.commentContentUpdate.value = "";
+        $scope.shareUrl = "";
+        $scope.shareTitle = "Ayet Notu Paylaşma";
 
         $scope.annotation_info = function(annotationId) {
+            $scope.shareUrl =  config_data.webAddress + "/#!/annotation/display/" + annotationId;
             var annotationRestangular = Restangular.one("annotations", annotationId);
             annotationRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (data) {
                 $scope.authorizedAnnotationDisplay = 1;
