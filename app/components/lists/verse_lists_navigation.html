@@ -13,6 +13,12 @@
                         <!--a class="btn btn-primary fa fa-bookmark" ng-click="openBulkInsertTagsModal()" ng-disabled="localVerseListSelection.length == 0">&nbsp;&nbsp;&nbsp;Listedeki Ayetleri Etiketle</a-->
                         <a href class="btn btn-primary" ng-click='showVerseDetail(1001)' data-target='#detailedVerseModal' data-toggle='modal'><i class="fa fa-eye"></i> {{'Ayet İnceleme' | translate}}</a>
                         <a href class="btn btn-primary" ng-click="openNewVerseListModal()"><i class="fa fa-plus"> </i>  {{'Yeni Liste' | translate}}</a>
+                        <select name="language-selection"
+                                ng-model="selectedLanguage"
+                                ng-options="language.name as language.label for language in languages"
+                                ng-selected="selectedLanguage==language.name"
+                                ng-change="changeLanguage(selectedLanguage)">
+                        </select>
                 </div>
             </div>
         </form>
