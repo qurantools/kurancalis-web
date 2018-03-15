@@ -35,7 +35,10 @@
                         </button>
                         <div class="small_space">&nbsp;</div>
                         <div class="row" style="padding:0 15px">
-                            <div style="float: left"><span ng-bind-html="feed.updated | time_in_string | to_trusted"></span></div>
+                            <div style="float: left">
+                                <span ng-bind-html="feed.updated | time_in_string | to_trusted"></span>
+                                <!--<span style="margin-left: 10px"><a  href="" ng-click="navigateTo('/annotation/display/{{annotation.userId}}/')" style="color: #00f"><i class="fa fa-eye"></i> {{'Not Detayı' | translate}}</a></span>-->
+                            </div>
                             <div style="float: right">
                                 <span ng-click="addToStorageForFocus2Comment();navigateTo('/annotation/display/{{feed.id}}/')" style="margin-right: 10px;" class="make_comment">
                                     <span style="color: #00f;margin-right: 10px;">Yorum Yaz</span><i class="fa fa-comment"></i> {{feed.commentCount}}
