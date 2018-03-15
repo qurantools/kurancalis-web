@@ -92,7 +92,19 @@
                     <button type="button" class="btn btn-danger btn-xs" ng-click="deleteAnnotation(annotation)"
                             ng-if="annotation.userId==user.id"><i
                             class="fa fa-trash-o"></i></button>
+                    <span class="flexbox-container pull-right" style="margin-left: 30px; margin-top: -5px;">
+                        <a id="url" class="btn btn-primary btn-xs" ng-click="kopyala(shareUrl)" style="margin-right: 5px"><i class="fa fa-link"></i> {{'Linki Kopyala' | translate}}</a>
+                        <a facebook class="facebookShare" data-url='{{shareUrl}}' data-size="tall" style="margin-right: 5px"></a>
+                        <a twitter  data-lang="tr" data-count='horizontal' data-url='{{shareUrl}}' data-via='kurancalis' data-size="tall" data-text="Kuran Çalış - {{title}}" style="margin-right: 5px; margin-top: 7px"></a>
+                        <div gplus class="g-plus" data-height="24" data-annotation="none" data-href='{{shareUrl}}' data-action='share' style="margin-top:3px;"></div>
+                    </span>
                 </div>
+               <!-- <div align="right" style="padding-right : 75px;">
+                    <a id="url" class="btn btn-primary btn-xs" ng-click="kopyala(shareUrl)" style="margin-bottom: 11px;"><i class="fa fa-link"></i> {{'Linki Kopyala' | translate}}</a>
+                    <a facebook class="facebookShare" data-url='{{shareUrl}}' data-size="tall"></a>
+                    <a twitter  data-lang="tr" data-count='horizontal' data-url='{{shareUrl}}' data-via='kurancalis' data-size="tall" data-text="Kuran Çalış - {{title}}" ></a>
+                    <div gplus class="g-plus" data-height="24" data-annotation="none" data-href='{{shareUrl}}' data-action='share' style="margin-top:2px;"></div>
+                </div>-->
             </div>
 
         </div>
