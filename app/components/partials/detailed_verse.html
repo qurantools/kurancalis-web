@@ -155,8 +155,11 @@
                             <div ng-show="detailedAnnotations.length > 0" style="margin-top: 5px;">
                                 <div style="font-size: 20px"><i class='fa' style='font-size: 1.3em;margin-right: 10px;'></i><br><b translate>Ayet Notları</b></div>
                                 <div ng-repeat="annotation in detailedAnnotations | filter:{annotationId:'!!'}" class="box">
-                                    <div class="s_a_header">
-                                        <div style="float:left"><span ng-bind-html="annotation.updated | time_in_string | to_trusted"></span></div>
+                                    <div class="s_a_header flexbox-container">
+                                        <div style="float:left">
+                                            <span ng-bind-html="annotation.updated | time_in_string | to_trusted"></span>
+                                            <span ng-if="annotation.userId==user.id" style="margin-left: 10px"><a  href="" ng-click="navigateTo('/annotation/display/{{annotation.userId}}/')" data-dismiss="modal" style="color: #00f"><i class="fa fa-eye"></i> {{'Not Detayı' | translate}}</a></span>
+                                        </div>
                                         <div style="float:right;">{{annotation.userName | limitTo: 25}}</div>
                                     </div>
                                     <div class="small_space" style="height: 20px;">&nbsp;</div>

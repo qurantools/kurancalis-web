@@ -158,8 +158,9 @@
                  class="sidebar_annotation box"
                  ng-click="scrollToElmnt('t_'+annotation.translationId)">
                 <!-- s_a -->
-                <div class="s_a_header">
-                    {{annotation.verseId / 1000 | number:0}}:{{annotation.verseId % 1000}}
+                <div class="s_a_header flexbox-container">
+                    <div ng-if="annotation.userId!=user.id">{{annotation.verseId / 1000 | number:0}}:{{annotation.verseId % 1000}}</div>
+                    <div ng-if="annotation.userId==user.id"><a  href="" ng-click="navigateTo('/annotation/display/{{annotation.userId}}/')" style="float:left; color: darkblue;">{{annotation.verseId / 1000 | number:0}}:{{annotation.verseId % 1000}}</a></div>
                     <div style="float:right;"><a  href="" ng-click="navigateTo('/profile/user/{{annotation.userId}}/')" style="color: darkblue;">{{annotation.userName | limitTo: 25}}</a></div>
                 </div>
                 <div>
