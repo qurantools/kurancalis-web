@@ -6,15 +6,17 @@
     <div ng-include="'app/components/partials/detailed_verse.html'"></div>
     <div class="nav-bottom"></div>
 
-    <div style="float: left;margin-left: 100px;" data-placement="bottom">
-        <input type="text" ng-model="verseSearchText"
-               size="50" placeholder="{{'Meallerde ara' | translate}}"
-               class="form-control" ng-enter="searchTranslations()"
-               ng-change="searchTextChange(verseSearchText)"
-               min-length="3"/>
+    <div class="row">
+        <div class="col-xs-6" style="margin-left: 100px;" data-placement="bottom">
+            <input type="text" ng-model="verseSearchText"
+                   size="50" placeholder="{{'Meallerde ara' | translate}}"
+                   class="form-control" ng-enter="searchTranslations()"
+                   ng-change="searchTextChange(verseSearchText)"
+                   min-length="3"/>
+        </div>
     </div>
-
-    <div style="float: left;margin-left: 20px;">
+    <br>
+    <div style="float: left;margin-left: 100px;">
         <select ng-model="searchTranslationsAuthor"
                 ng-options="author.value as author.text | translate for author in searchAuthorMap"
                 ng-change="searchTranslationsAuthorChanged(searchTranslationsAuthor)"
@@ -24,16 +26,26 @@
     </div>
 
     <div style="float: left;margin-left: 20px;">
+        <select name="author-selection"
+                ng-model="currentAuthor"
+                ng-options="author.id as author.name for author in authors | filter : authorsByLanguage()"
+                class="form-control">
+            <option value="" translate>Tüm Mealler</option>
+        </select>
+    </div>
+
+    <!--<div style="float: left;margin-left: 20px;">
+        <button ng-click="expandAllTranslations()" class="btn btn-primary">
+            {{'Tüm mealleri aç' | translate}}
+        </button>
+    </div>-->
+
+    <div style="float: left;margin-left: 20px;">
         <a class="btn btn-primary" ng-click="searchTranslations()">
             <i class="fa fa-search" style="font-size: 1.3em"></i>
         </a>
     </div>
 
-    <div style="float: right;margin-right: 10px;">
-        <button ng-click="expandAllTranslations()" class="btn btn-primary">
-            {{'Tüm mealleri aç' | translate}}
-        </button>
-    </div>
     <div style="height: 40px;"></div>
     <div class="row" style="margin-top: 25px;">
         <div class="col-xs-12" id="translations">

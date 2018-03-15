@@ -13,6 +13,7 @@ angular.module('ionicApp').controller('SearchTranslationsController', function (
     $scope.verseSearchText = "";
     $scope.verseSearchedText = "";
     $scope.verses = [];
+    $scope.currentAuthor = "";
     $scope.searchTranslationsAuthor = {};
 
     $scope.searchTranslationsAuthorChanged = function (value){
@@ -43,6 +44,7 @@ angular.module('ionicApp').controller('SearchTranslationsController', function (
         var translationParams = [];
         translationParams.language = $scope.searchTranslationsAuthor;
         translationParams.keyword = $scope.verseSearchText;
+        translationParams.author = $scope.currentAuthor;
 
         dataProvider.searchTranslationByKeyword(translationParams, function(data){
             var d =$scope.verseSearchText;
@@ -69,5 +71,16 @@ angular.module('ionicApp').controller('SearchTranslationsController', function (
         $scope.searchTranslationsAuthor = $scope.searchAuthorMap[0].value;
     };
 
+    $scope.authorsByLanguage = function () {
+        return function (item) {
+            if ($scope.searchTranslationsAuthor === undefined)
+                return true;
+            else if (item.language == $scope.searchTranslationsAuthor)
+                return true;
+            return false;
+        };
+    };
+
     $scope.initSearchTranslationController();
+
 });
