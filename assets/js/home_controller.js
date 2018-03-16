@@ -453,18 +453,30 @@ angular.module('ionicApp')
 
         //go to chapter / verse from navigation header
         $scope.goToVerse = function () {
+            var isSameChapter = true;
+
             //if chapter changed then reset custom annotation param
             if($scope.query_chapter_id != $scope.goToVerseParameters.chapter.id){
                 $scope.loadCustomAnnotation = false; // reset param
+                isSameChapter = false;
             }
 
             $scope.query_chapter_id = $scope.goToVerseParameters.chapter.id;
             $scope.verse.number = $scope.goToVerseParameters.verse;
             $scope.queryVerse.keyword = ""; //reset keyword because we need the chapter.
-            $scope.goToChapter();
+
+            //if not same chapter or undefined toToChapter
+            if(!isSameChapter) {
+                $scope.goToChapter();
+            }
+
             var verseId = parseInt($scope.query_chapter_id * 1000);
-            if (typeof $scope.verse.number != 'undefined') {
+            if (typeof $scope.verse.number != 'undefined' && isSameChapter) {
                 verseId += parseInt($scope.verse.number);
+
+                //if same chapter scroll
+                $scope.storeChapterViewParameters();
+                $scope.scrollToVerse(verseId);
             }
             $scope.addVerseToHistory(verseId);
         };
