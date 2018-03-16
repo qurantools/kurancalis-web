@@ -84,7 +84,7 @@ var userSettings = angular.module('ionicApp')
 
             var hasError = false;
             if (file.size > 10*1024*1024) {
-                $scope.errorMsg = "Dosya boyutu en fazla 10MB olabilir.";
+                $scope.errorMsg = $translate.instant("Dosya boyutu en fazla 10MB olabilir.");
                 hasError = true;
             }
 
@@ -95,9 +95,9 @@ var userSettings = angular.module('ionicApp')
                 hasError = true;
 
                 if($scope.errorMsg)
-                    $scope.errorMsg += " Dosya boyutu en fazla 10MB ve tipi *.csv olmalıdır.";
+                    $scope.errorMsg = $translate.instant("Dosya boyutu en fazla 10MB ve tipi *.csv olmalıdır.");
                 else
-                    $scope.errorMsg = "Dosya tipi *.csv olmalıdır";
+                    $scope.errorMsg = $translate.instant("Dosya tipi *.csv olmalıdır.");
             }
 
             $timeout(function () {
@@ -116,12 +116,12 @@ var userSettings = angular.module('ionicApp')
                         console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total, 10), $scope.f);
                     })
                     .success(function(data, status, headers, config){
-                        $scope.successMsg = "Dosya başarılı bir şekilde yüklendi";
+                        $scope.successMsg = $translate.instant("Dosya başarılı bir şekilde yüklendi.");
                         console.log('file ' + config.data.file.name + ' is uploaded successfully. Response: ');
                     })
                     .error(function(err){
-                        $scope.errorMsg = "Hata oluştu, dosya içeriğiğini kontrol ediniz : { " + err.code + ': ' + err.description + " }";
-                        console.log("ERROR: ",err);
+                        $scope.errorMsg = err.code + " - " + $translate.instant(err.description) + $translate.instant(": Dosya içeriğini kontrol ediniz. İlk satır kolon başlıklarını içeriyor ya da kolon sayıları uyuşmuyor olabilir.");
+                        console.log("ERROR: ",err, $scope.errorMsg);
                     });
                 }
 

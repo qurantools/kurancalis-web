@@ -418,3 +418,12 @@ https://github.com/twbs/bootstrap/issues/10493
 
     justify-content: space-between;
 }
+
+#authors thead tr {background-color: ActiveCaption; color: CaptionText;}
+#authors th, #authors td {vertical-align: top; font-family: "Tahoma", Arial, Helvetica, sans-serif; font-size: 10pt; padding: 3px; }
+#authors table, #authors td {border: 1px solid silver;}
+#authors table {border-collapse: collapse;}
+#authors thead .col0 {width: 128px;}
+#authors .col0 {text-align: right;}
+#authors thead .col1 {width: 212px;}
+#authors thead .col2 {width: 141px;}
