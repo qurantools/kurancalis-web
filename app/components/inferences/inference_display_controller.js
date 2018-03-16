@@ -271,7 +271,7 @@ var angularModule=angular.module('ionicApp');
                 $scope.inference_info(inferenceId);
             });
 
-            $scope.shareUrl =  config_data.webAddress + "/__/inference/display/" + $scope.inferenceId;
+            $scope.shareUrl =  config_data.webAddress + "/#!/inference/display/" + $scope.inferenceId;
             $scope.new_comment = '';
             $scope.isNative = document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1;
             $scope.shareTitle = "Çıkarım Paylaşma";
