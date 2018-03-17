@@ -9,14 +9,12 @@ var userSettings = angular.module('ionicApp')
         $scope.remove_carriage = false;
         $scope.column_name = false;
         $scope.taggedVerseCircles = [];
+        $scope.suitToUpload = false;
 
         $scope.init = function () {
             if ( $location.path() == "/user/account/settings/") {
                 $scope.pagePurpose = "settings";
             }
-
-            $scope.errorMsg = "";
-            $scope.successMsg = "";
         };
 
         $scope.carriageChanged = function (value) {
@@ -73,60 +71,52 @@ var userSettings = angular.module('ionicApp')
             return $scope.extendedCirclesForSearch;
         };
 
-        $scope.uploadFiles = function(file, errFiles) {
-            $scope.f = file;
+        $scope.checkFile = function(file, errFiles) {
+            $scope.csvFile = file;
             $scope.errFile = errFiles && errFiles[0];
             $scope.errorMsg = "";
             $scope.successMsg = "";
 
-            console.log(file, errFiles)
+            console.log(file, errFiles);
 
-
-            var hasError = false;
-            if (file.size > 10*1024*1024) {
+            if (file && file.size > 10*1024*1024) {
                 $scope.errorMsg = $translate.instant("Dosya boyutu en fazla 10MB olabilir.");
-                hasError = true;
             }
 
-            var match = (/\.(csv)$/i).test(file.name);
-            console.log("file type match: " + match);
+            if(file) {
+                var match = (/\.(csv)$/i).test(file.name);
+                console.log("file type match: " + match);
 
-            if (!match) {
-                hasError = true;
-
-                if($scope.errorMsg)
-                    $scope.errorMsg = $translate.instant("Dosya boyutu en fazla 10MB ve tipi *.csv olmalıdır.");
-                else
-                    $scope.errorMsg = $translate.instant("Dosya tipi *.csv olmalıdır.");
-            }
-
-            $timeout(function () {
-
-                if (!hasError && file) {
-                    file.upload = Upload.upload({
-                        headers: {
-                            'Content-Type' : file.type,
-                            'access_token': $scope.access_token
-                        },
-                        method: "POST",
-                        url: config_data.webServiceUrl + '/annotations/import?headerName=' + $scope.column_name + '&canViewCircles=' + $scope.getTagsWithCommaSeparated($scope.taggedVerseCircles),
-                        data: {file: file}
-                    }).progress(function(evt){
-                        file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
-                        console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total, 10), $scope.f);
-                    })
-                    .success(function(data, status, headers, config){
-                        $scope.successMsg = $translate.instant("Dosya başarılı bir şekilde yüklendi.");
-                        console.log('file ' + config.data.file.name + ' is uploaded successfully. Response: ');
-                    })
-                    .error(function(err){
-                        $scope.errorMsg = err.code + " - " + $translate.instant(err.description) + $translate.instant(": Dosya içeriğini kontrol ediniz. İlk satır kolon başlıklarını içeriyor ya da kolon sayıları uyuşmuyor olabilir.");
-                        console.log("ERROR: ",err, $scope.errorMsg);
-                    });
+                if (!match) {
+                    if ($scope.errorMsg)
+                        $scope.errorMsg = $translate.instant("Dosya boyutu en fazla 10MB ve tipi *.csv olmalıdır.");
+                    else
+                        $scope.errorMsg = $translate.instant("Dosya tipi *.csv olmalıdır.");
                 }
+            }
+        };
 
+        $scope.uploadFile = function(file) {
+            file.upload = Upload.upload({
+                headers: {
+                    'Content-Type' : file.type,
+                    'access_token': $scope.access_token
+                },
+                method: "POST",
+                url: config_data.webServiceUrl + '/annotations/import?headerName=' + $scope.column_name + '&canViewCircles=' + $scope.getTagsWithCommaSeparated($scope.taggedVerseCircles),
+                data: {file: file}
+            }).progress(function(evt){
+                file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+                console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total, 10), $scope.csvFile);
             })
-
+            .success(function(data, status, headers, config){
+                $scope.successMsg = $translate.instant("Dosya başarılı bir şekilde yüklendi.");
+                console.log('file ' + config.data.file.name + ' is uploaded successfully. Response: ');
+            })
+            .error(function(err){
+                $scope.errorMsg = err.code + " - " + $translate.instant(err.description) + $translate.instant(": Dosya içeriğini kontrol ediniz. İlk satır kolon başlıklarını içeriyor ya da kolon sayıları uyuşmuyor olabilir.");
+                console.log("ERROR: ",err, $scope.errorMsg);
+            });
         };
 
         $scope.navigateToProfile = function () {

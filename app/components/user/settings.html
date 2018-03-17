@@ -79,12 +79,13 @@
                     </div>
                     <div class="row flexbox-container">
                         <span class="col-xs-2" translate>Dosya:</span>
-                        <input type = "text" class="col-xs-8" readonly ng-model="f.name"/>
+                        <input type = "text" class="col-xs-8" readonly ng-model="csvFile.name"/>
                         <button type="file" class="col-xs-2"
-                                ngf-select="uploadFiles($file, $invalidFiles)"
+                                ng-model="csvFile"
+                                ngf-select="checkFile($file, $invalidFiles)"
                                 accept=".csv"
                                 translate>Araştır</button>
-                    </div>
+                     </div>
                     <br>
                     <div style="font-size:smaller" class="text-danger text-center">{{errorMsg}}</span></div>
                     <div style="font-size:smaller" class="text-success text-center">{{successMsg}}</span></div>
@@ -92,7 +93,7 @@
             </div>
             <div class="modal-footer">
                 <button class="btn btn-link" data-dismiss='modal' translate>İptal</button>
-                <button class="btn btn-primary btn-wide" ng-click="exportAnnotations()" translate>Gönder</button>
+                <button class="btn btn-primary btn-wide" ng-disabled="!csvFile || errorMsg" ng-click="uploadFile(csvFile)" translate>Gönder</button>
             </div>
         </bulkinsertmodal>
     </div>
