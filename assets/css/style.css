@@ -420,7 +420,7 @@ https://github.com/twbs/bootstrap/issues/10493
 }
 
 #authors thead tr {background-color: ActiveCaption; color: CaptionText;}
-#authors th, #authors td {vertical-align: top; font-family: "Tahoma", Arial, Helvetica, sans-serif; font-size: 10pt; padding: 3px; }
+#authors th, #authors td {vertical-align: top; font-family: "Tahoma", Arial, Helvetica, sans-serif; font-size: 10pt; padding: 4px; }
 #authors table, #authors td {border: 1px solid silver;}
 #authors table {border-collapse: collapse;}
 #authors thead .col0 {width: 128px;}
