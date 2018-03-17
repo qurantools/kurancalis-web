@@ -130,9 +130,36 @@ var userSettings = angular.module('ionicApp')
                 console.log('file ' + config.data.file.name + ' is uploaded successfully. Response: ');
             })
             .error(function(err){
-                $scope.errorMsg = err.code + " - " + $translate.instant(err.description) + $translate.instant(": Dosya içeriğini kontrol ediniz. İlk satır kolon başlıklarını içeriyor ya da kolon sayıları uyuşmuyor olabilir.");
+                if(err.code == "299" && err.description == "There is an error at line 1")
+                {
+                    $scope.errorMsg = $scope.getErrorTranslation(err.description) + $translate.instant(": Dosya içeriğini kontrol ediniz. İlk satır kolon başlıklarını içeriyor olabilir.");
+                } else if(err.code == "297" || err.code == "298" || err.code == "299") {
+                    $scope.errorMsg = $scope.getErrorTranslation(err.description);
+                } else {
+                    $scope.errorMsg = err.code + $translate.instant(err.description);
+                }
                 console.log("ERROR: ",err, $scope.errorMsg);
             });
+
+
+        };
+
+        $scope.getErrorTranslation = function (str) {
+
+            if($scope.language == "en")
+                return str;
+            else if($scope.language == "tr")
+            {
+                var text = str.substring(0,str.length - 1);
+                var lastChar = str.charAt(str.length - 1);
+                console.log(text,lastChar)
+                if(text == "Author number is not valid at line ")
+                    return lastChar + ". satırdaki yazar numarası geçersiz";
+                else if("Row column number is not suit at line ")
+                    return lastChar + ". satırındaki kolon sayısı uygun değil";
+                else if("There is an error at line ")
+                    return lastChar + ". satırda hata var";
+            }
         };
 
         $scope.navigateToProfile = function () {
