@@ -94,6 +94,8 @@ var userSettings = angular.module('ionicApp')
                         $scope.errorMsg = $translate.instant("Dosya tipi *.csv olmalıdır.");
                 }
             }
+
+            $scope.scopeApply();
         };
 
         $scope.uploadFile = function(file) {
