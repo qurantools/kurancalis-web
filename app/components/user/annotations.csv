@@ -1,20 +1,13 @@
-<div style="font-size:small">
-chapter,verse,content,tags,id,author id,color,start,end,quote<br>
-1,5,,ibadet,22252,,yellow,0,52,"Ancak sana hizmet eder, ancak senden yardım dileriz."<br>
-1,2,,övgü,22254,4,yellow,0,34,"Övgü, evrenlerin Rabbi ALLAH'adır."<br>
-113,1,,sığınma,22351,16384,yellow,0,44,De ki: “Ben ağaran sabahın Rabbine sığınırım<br>
-114,2,,,22354,16384,yellow,0,0,<br>
-114,1,"De ki:<br>
-Allah’a sığınırım","sığınma, Allah’a sığınma",22355,16384,yellow,0,39,De ki: Sığınırım ben insanların Rabbine<br>
-7,2,"şüphe<br>
-duyması","şüphe, duymasın",22456,274877906944,yellow,6,136,"kendisiyle insanları uyarman, inananlara öğüt vermen için sana indirilen bir kitaptır. Artık bu hususta kalbinde bir şüphe olmasın"<br>
-1,7,test content,gazap,22601,274877906944,yellow,0,40,Gazaba uğrayanların ve sapmışların değil<br>
-1,7,"Kendilerine lütuf<br>
-ve<br>
-ikramda “bulunduğun<br>
-kimselerin yolu",kendilerine,22902,8192,red,0,25,"Kendilerine lütuf ve ikramda, bulunduğun kimselerin yolu"<br>
-111,1,Ebu Leheb,,23017,8192,green,0,40,Ebu Leheb'in iki eli kurusun! Kurudu da.<br>
-111,2,,,23018,262144,yellow,0,39,Malı ve kazandıkları ona fayda vermedi.<br>
-111,3,,cehennemlikler,23019,262144,yellow,0,29,"O, alevli bir ateşte yanacak."<br>
-112,1,"Tek olma, biricik olma",tevhid,23020,262144,green,0,23,"De ki: O, Allah birdir."<br>
-</div>
+"chapter","verse","content","tags","id","author id","color","start","end","quote"
+"1","1","bismillah","besmele","23251","8192","yellow","0","41","Rahman (ve) rahim (olan) Allah'ın adıyla."
+"1","7","Kendilerine lütuf ve ikramda 
+bulunduğun kimselerin yolu","lütuf ve ikram","23252","8192","yellow","0","55","Kendilerine lütuf ve ikramda bulunduğun kimselerin yolu"
+"114","6","","vesvese, sığınma","23253","8192","yellow","0","89","Gerek cinlerden, gerek insanlardan(olan bütün vesvesecilerin şerrinden Allah'a sığınırım!"
+"112","3","Varlığı kendindendir","","23254","8192","yellow","0","29","O, doğurmamış ve doğmamıştır."
+"103","3","","salih mümin","23255","8192","red","0","119","Bundan ancak iman edip iyi ameller işleyenler, birbirlerine hakkı tavsiye edenler ve sabrı tavsiye edenler müstesnadır."
+"5","7","duyduk ve itaat ettik ahdi","ahit","23256","16384","green","0","193","Allah'ın, üzerinizdeki nimetini ve ""İşittik, itaat ettik"" dediğinizde sizden aldığı ve kendisiyle sizi bağladığı ahdini hatırlayın. Allah'tan korkun, çünkü Allah göğüslerin özünü çok iyi bilir."
+"85","11","Nasıl cennete gidilir tarif edilmiş","cennet","23257","16384","red","0","102","İnanan ve iyi amel yapanlar için de altından ırmaklar akan cennetler vardır. İşte büyük kurtuluş odur."
+"1","5","","ibadet","23401","1","yellow","0","52","Ancak sana hizmet eder, ancak senden yardım dileriz."
+"1","2","","övgü","23402","16384","red","0","34","Övgü, evrenlerin Rabbi ALLAH'adır."
+"113","1","","sığınma","23403","16384","green","0","44","De ki: “Ben ağaran sabahın Rabbine sığınırım"
+"112","1","Tek olma, biricik olma","tevhid","23412","16384","green","0","23","De ki: O, Allah birdir."

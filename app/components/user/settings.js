@@ -10,6 +10,7 @@ var userSettings = angular.module('ionicApp')
         $scope.column_name = false;
         $scope.taggedVerseCircles = [];
         $scope.suitToUpload = false;
+        $scope.language = $translate.use();
 
         $scope.init = function () {
             if ( $location.path() == "/user/account/settings/") {
@@ -64,6 +65,19 @@ var userSettings = angular.module('ionicApp')
                     $scope.showMessage(error.data.description);
                 }
             });
+        };
+
+        $scope.downloadSampleFile = function() {
+            var downloadPath = 'annotations.csv';
+            window.open(downloadPath, '_blank', '');
+            var blob = new Blob([data]);
+            var url = URL.createObjectURL(blob);
+            var a = document.createElement('a');
+            a.href = url;
+            a.download = 'annotations.csv';
+            a.target = '_blank';
+            a.click();
+
         };
 
         //tags input auto complete

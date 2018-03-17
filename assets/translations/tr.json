@@ -602,7 +602,6 @@
 "START_WITH_QUTOTE": "Her kolon çift tırnak(\") ile başlayıp bitmeli",
 "Dosya:":"Dosya:",
 "AUTHOR_LIST": "6. author id: Notun alındığı meal numarası. <a href data-target='#author_list' data-toggle='modal'>Listeden</a> uygun olanı kullanınız. Boş olursa Arapça meal kullnılacaktır",
-"SAMPLE_FILE": "Daha önce elinizde olan notlarınızı <a href data-target='#sample_csv_file' data-toggle='modal'>örnek dosyadaki</a> gibi CSV dosya haline getiriniz.",
 "Not Detayı": "Not Detayı",
 "Missing row column": "Eksik satır sütunu",
 "Dosya boyutu en fazla 10MB olabilir.": "Dosya boyutu en fazla 10MB olabilir.",

@@ -34,7 +34,9 @@
     <div class="row">
         <bulkinsertmodal title="{{'Toplu Not Ekleme' | translate}}" visible="showbulkinsertmodal">
             <div class="row" style="padding: 0 15px">
-                <p translate="SAMPLE_FILE">Daha önce elinizde olan notlarınızı <a href data-target="#sample_csv_file" data-toggle="modal">örnek dosyadaki</a> gibi CSV dosya haline getiriniz.</p>
+
+                <p ng-if="language=='tr'">Daha önce elinizde olan notlarınızı <a ng-href="app/components/user/annotations.csv" download="sample-file.csv">örnek dosyadaki</a> gibi CSV dosya haline getiriniz.</p>
+                <p ng-if="language=='en'">Turn your notes into a CSV file like <a ng-href="app/components/user/annotations.csv" download="sample-file.csv">sample file</a> which you have previously.</p>
                 <ul>
                     <li translate="START_WITH_QUTOTE">Her kolon çift tırnak(") ile başlayıp bitmeli</li>
                     <li translate>Notlarınızın içerisinde çift tırnak geçmemelidir.</li>

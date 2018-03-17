@@ -602,12 +602,11 @@
 "START_WITH_QUTOTE": "Each column must begin with a double quotation mark (\")",
 "Dosya:":"File:",
 "AUTHOR_LIST": "6. author id: The number of the translation author. Select one from the <a href data-target='#author_list' data-toggle='modal'>List</a>. If empty, Arabic translation will be used",
-"SAMPLE_FILE": "Turn your notes into a CSV file like <a href data-target='#sample_csv_file'data-toggle='modal'> sample file </a> which you have previously.",
 "Not Detayı": "Note Detail",
 "Missing row column": "Missing row column",
 "Dosya boyutu en fazla 10MB olabilir.": "The file size can be up to 10MB.",
 "Dosya boyutu en fazla 10MB ve tipi *.csv olmalıdır.": "The file size should be at most 10MB and type * .csv.",
 "Dosya tipi *.csv olmalıdır.": "The file type should be * .csv.",
 "Dosya başarılı bir şekilde yüklendi.": "The file has been successfully uploaded.",
-": Dosya içeriğini kontrol ediniz. İlk satır kolon başlıklarını içeriyor ya da kolon sayıları uyuşmuyor olabilir.": "Check the file content. The first row may contain column headers, or the column numbers may be inconsistent."
+": Dosya içeriğini kontrol ediniz. İlk satır kolon başlıklarını içeriyor ya da kolon sayıları uyuşmuyor olabilir.": ": Check the file content. The first row may contain column headers, or the column numbers may be inconsistent."
 }
