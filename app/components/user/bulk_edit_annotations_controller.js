@@ -6,6 +6,8 @@ var bulkEdit = angular.module('ionicApp')
 
         $scope.selectedIDs = [];
         $scope.showdeletebulknotes = [];
+        $scope.isSelected = [];
+        $scope.isSelectAll = false;
 
         $scope.init = function () {
             if ( $location.path() == "/user/account/edit_batch_notes/") {
@@ -23,35 +25,56 @@ var bulkEdit = angular.module('ionicApp')
             });
         };
 
-        $scope.selectedAnnotation = function (id, value) {
+        $scope.selectAnnotation = function (id, value) {
             if($scope.selectedIDs.includes(id))
             {
                 var index = $scope.selectedIDs.indexOf(id);
                 $scope.selectedIDs.splice(index, 1);
+                $scope.isSelectAll = false;
 
             } else if(value) {
-                $scope.selectedIDs.push(id)
+                $scope.selectedIDs.push(id);
+
+                if($scope.selectedIDs.length == $scope.annotations.length){
+                    $scope.isSelectAll = true;
+                }
             }
-            //console.log($scope.selectedIDs, value)
+        };
+
+        $scope.selectAlldAnnotation = function (isSelectAll) {
+            $scope.selectedIDs = [];
+
+            for (var i = 0; i < $scope.annotations.length; i++){
+                if(isSelectAll) {
+                    $scope.selectedIDs.push($scope.annotations[i].annotationId);
+                }
+                $scope.isSelected[i] = isSelectAll;
+            }
         };
 
         $scope.removeSelectedAnnotations = function () {
             Restangular.all("annotations").customDELETE("", {annotations: $scope.selectedIDs.join(",")}, {'access_token': authorization.getAccessToken()}).then(function (result) {
-                console.log("Silme Başarılı ",$scope.selectedIDs)
+                console.log("Silme Başarılı ",$scope.selectedIDs);
+
                 for(var i=0; i<$scope.selectedIDs.length; i++)
                 {
-                    console.log("forr ",$scope.selectedIDs[i])
                     var item = $scope.annotations.filter(function(item) {
                         return item.annotationId == $scope.selectedIDs[i];
                     })[0];
 
-                    $scope.annotations.splice($scope.annotations.indexOf(item), 1);
+                    var index = $scope.annotations.indexOf(item);
+                    $scope.annotations.splice(index, 1);
+                    $scope.isSelected.splice(index, 1);
+                    //console.log("annotations", $scope.annotations.length);
                 }
 
                 $timeout(function () {
                     $scope.selectedIDs = [];
+                    $scope.isSelectAll = false;
+                    $scope.isSelected = [];
+
                     $scope.scopeApply();
-                })
+                },100)
 
             });
         };

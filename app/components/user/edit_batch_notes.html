@@ -9,7 +9,7 @@
             <div class="col-xs-12">
                 <table class="table table-xs table-condensed table-striped">
                     <tr>
-                        <th></th>
+                        <th><input type="checkbox" ng-click="selectAlldAnnotation(isSelectAll)" ng-model="isSelectAll"></th>
                         <th class="col-xs-1" translate>Ayet</th>
                         <th class="col-xs-1" translate>Renk</th>
                         <th class="col-xs-1" translate>Tarih</th>
@@ -18,8 +18,8 @@
                         <th class="col-xs-2" translate>Paylaşılan Çevreler</th>
                         <th class="col-xs-2" translate>Paylaşılan Kişiler</th>
                     </tr>
-                    <tr ng-class="{'danger':  isChecked}" ng-repeat="annotation in annotations">
-                        <td><input type="checkbox" ng-click="selectedAnnotation(annotation.annotationId, isChecked)" ng-model="isChecked"></td>
+                    <tr ng-class="{'danger':  isSelected[$index]}" ng-repeat="annotation in annotations">
+                        <td><input type="checkbox" ng-click="selectAnnotation(annotation.annotationId, isSelected[$index])" ng-model="isSelected[$index]"></td>
                         <td style="white-space: nowrap">{{annotation.verseId / 1000 | number : 0}}: {{annotation.verseId % 1000}}</td>
                         <td><span class="tag_colour a_hl_{{annotation.colour}}"></span></td>
                         <td style="white-space: nowrap">{{annotation.created | date: "yyyy.MM.dd"}}</td>

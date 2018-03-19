@@ -61,7 +61,7 @@ var userSettings = angular.module('ionicApp')
             console.warn("carriage: " + $scope.remove_carriage, "\ncolumn: "+ $scope.column_name);
 
             Restangular.one('annotations/export').customGET("", {remove_carriage:$scope.remove_carriage.toString(), column_name:$scope.column_name.toString()}, {'access_token': $scope.access_token}).then(function (data) {
-                console.log("Downloading...\n", data);
+                //console.log("Downloading...\n", data);
                 var blob = new Blob([data]);
                 var url = URL.createObjectURL(blob);
                 var a = document.createElement('a');
@@ -135,7 +135,7 @@ var userSettings = angular.module('ionicApp')
                 data: {file: file}
             }).progress(function(evt){
                 file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
-                console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total, 10), $scope.csvFile);
+                //console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total, 10), $scope.csvFile);
             })
             .success(function(data, status, headers, config){
                 $scope.successMsg = $translate.instant("Dosya başarılı bir şekilde yüklendi.");
