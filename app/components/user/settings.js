@@ -150,9 +150,8 @@ var userSettings = angular.module('ionicApp')
                 } else {
                     $scope.errorMsg = err.code + $translate.instant(err.description);
                 }
-                console.log("ERROR: ",err, $scope.errorMsg);
+                //console.log("ERROR: ",err, $scope.errorMsg);
             });
-
 
         };
 
@@ -162,15 +161,16 @@ var userSettings = angular.module('ionicApp')
                 return str;
             else if($scope.language == "tr")
             {
-                var text = str.substring(0,str.length - 1);
-                var lastChar = str.charAt(str.length - 1);
-                console.log(text,lastChar)
-                if(text == "Author number is not valid at line ")
-                    return lastChar + ". satırdaki yazar numarası geçersiz";
-                else if("Row column number is not suit at line ")
-                    return lastChar + ". satırındaki kolon sayısı uygun değil";
-                else if("There is an error at line ")
-                    return lastChar + ". satırda hata var";
+                var res = str.split("line");
+                var text = res[0] + "line";
+                var number = res[1];
+
+                if(text == "Author number is not valid at line")
+                    return number + ". satırdaki yazar numarası geçersiz";
+                else if(text =="Row column number is not suit at line")
+                    return number + ". satırındaki kolon sayısı uygun değil";
+                else if(text == "There is an error at line")
+                    return number + ". satırda hata var";
             }
         };
 
