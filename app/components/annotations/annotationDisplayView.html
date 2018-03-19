@@ -35,24 +35,25 @@
                               ng-click="doVote(annotation,'annotations', 0)">
                             <i class="fa fa-thumbs-down"></i> {{annotation.voteRates.dislike}}
                         </span>
-                        <button type="button" class="btn btn-primary btn-xs"
+                        <button type="button" class="btn btn-primary btn-xs" style="margin-right: 15px"
                                 ng-click="showVoteResults(annotation, 'annotations')"
                                 ng-disabled="(annotation.voteRates.dislike + annotation.voteRates.like) == 0">
                             {{'Değerlendirenler' | translate}}
                         </button>
-                        <button type="button" class="btn btn-primary btn-xs" ng-click="showEditor(annotation)"
+
+                        <a id="url" class="btn btn-primary btn-xs" style="margin-right: 5px;" ng-click="kopyala(shareUrl)"><i class="fa fa-link"></i> {{'Linki Kopyala' | translate}}</a>
+                        <span style="display: inline-flex">
+                            <a facebook class="facebookShare" style="margin-right: 5px;" data-url='{{shareUrl}}' data-size="tall"></a>
+                            <a twitter style="margin-right: 5px" data-lang="tr" data-count='horizontal' data-url='{{shareUrl}}' data-via='kurancalis' data-size="tall" data-text="Kuran Çalış - {{title}}"></a>
+                            <div gplus class="g-plus" data-height="24" data-annotation="none" data-href='{{shareUrl}}' data-action='share'></div>
+                        </span>
+                        <button type="button" class="btn btn-primary btn-xs" style="margin-left: 15px" ng-click="showEditor(annotation)"
                                 ng-if="annotation.userId==user.id"><i
-                                class="fa fa-pencil-square-o "></i>
+                                class="fa fa-pencil-square-o"></i>
                         </button>
-                        <button type="button" class="btn btn-danger btn-xs" ng-click="deleteAnnotation(annotation)"
+                        <button type="button" class="btn btn-danger btn-xs" style="margin-right: 5px" ng-click="deleteAnnotation(annotation)"
                                 ng-if="annotation.userId==user.id"><i
                                 class="fa fa-trash-o"></i></button>
-                        <span class="flexbox-container pull-right" style="margin-left: 30px; margin-top: -5px;">
-                                <a id="url" class="btn btn-primary btn-xs" ng-click="kopyala(shareUrl)" style="margin-right: 5px"><i class="fa fa-link"></i> {{'Linki Kopyala' | translate}}</a>
-                                <a facebook class="facebookShare" data-url='{{shareUrl}}' data-size="tall" style="margin-right: 5px"></a>
-                                <a twitter  data-lang="tr" data-count='horizontal' data-url='{{shareUrl}}' data-via='kurancalis' data-size="tall" data-text="Kuran Çalış - {{title}}" style="margin-right: 5px; margin-top: 7px"></a>
-                                <div gplus class="g-plus" data-height="24" data-annotation="none" data-href='{{shareUrl}}' data-action='share' style="margin-top:3px;"></div>
-                        </span>
                     </div>
                 </div>
             </div>
