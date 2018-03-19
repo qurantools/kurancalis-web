@@ -1,19 +1,12 @@
-<div class="modal" ng-controller="UserSettingsCtrl" id="author_list" >
-    <div style="width:92%" class="modal-dialog fixed-dialog">
+<div class="modal fade" id="authorlist">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" ng-click="navigateToProfile()" data-dismiss="modal" aria-hidden="true" style="float:right;"><i
-                        class="fa fa-close"></i></button>
-                <h4 class="modal-title" translate>Yazar Listesi</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h2 class="modal-title">{{ title }}</h2>
             </div>
-
-            <div class="modal-body" style="align-items: center">
-                <br>
-                <center>
-                 <div autoscroll="true" ng-include="'app/components/user/authors.html'" style="width:100%; height: 100%"></div>
-                </center>
-                <br>
-            </div>
+            <div class="modal-body" ng-transclude>
+                &nbsp;</div>
         </div>
     </div>
 </div>

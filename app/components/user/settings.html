@@ -47,7 +47,8 @@
                 <div translate>3. content: not içeriği</div>
                 <div translate>4. tags: virgülle ayrılmış etiketler</div>
                 <div translate>5. id: sistemdeki ID numarası. Boş bırakılabilir, dikkate alınmamaktadır.</div>
-                <div translate="AUTHOR_LIST">6. author id: Notun alındığı meal numarası. <a href data-target="#author_list" data-toggle="modal">Listeden</a> uygun olanı kullanınız. Boş olursa Arapça meal kullnılacaktır</div>
+                <div ng-if="language=='tr'">6. author id: Notun alındığı meal numarası. <a href ng-click="authorlistmodal()" translate>Listeden</a> uygun olanı kullanınız. Boş olursa Arapça meal kullnılacaktır</div>
+                <div ng-if="language=='en'">6. author id: The number of the translation author. Use one from the <a href ng-click="authorlistmodal()" translate>author list</a>. If empty, Arabic translation will be used</div>
                 <div translate>7. color: red, green, yellow değerlerinden birisi kullanılmalı. Boş ise yellow kullanılır.</div>
                 <div translate>8. start: karalamanın başlangıcı. Eğer daha önce sistemden export aldıysanız aynen kalabilir, aksi durumda boş bırakınız.</div>
                 <div translate>9. end: karalamanın bitişi. Eğer daha önce sistemden export aldıysanız aynen kalabilir, aksi durumda boş bırakınız.</div>
@@ -98,5 +99,18 @@
                 <button class="btn btn-primary btn-wide" ng-disabled="!csvFile || errorMsg" ng-click="uploadFile(csvFile)" translate>Gönder</button>
             </div>
         </bulkinsertmodal>
+    </div>
+
+    <div class="row">
+        <authorlistmodal title="{{'Yazar Listesi' | translate}}" visible="showauthorlistmodal">
+            <div class="row" style="padding: 0 15px">
+                <center>
+                    <div ng-include="'app/components/user/authors.html'"></div>
+                </center>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary btn-wide" data-dismiss='modal' translate>Kapat</button>
+            </div>
+        </authorlistmodal>
     </div>
 </body>

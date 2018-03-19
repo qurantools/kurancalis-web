@@ -601,7 +601,6 @@
 "Gönder": "Send",
 "START_WITH_QUTOTE": "Each column must begin with a double quotation mark (\")",
 "Dosya:":"File:",
-"AUTHOR_LIST": "6. author id: The number of the translation author. Select one from the <a href data-target='#author_list' data-toggle='modal'>List</a>. If empty, Arabic translation will be used",
 "Not Detayı": "Note Detail",
 "Missing row column": "Missing row column",
 "Dosya boyutu en fazla 10MB olabilir.": "The file size can be up to 10MB.",

@@ -45,6 +45,18 @@ var userSettings = angular.module('ionicApp')
             },100)
         };
 
+        $scope.showauthorlistmodal = false;
+        $scope.authorlistmodal = function () {
+            console.log("showauthorlistmodal")
+           /* $location.path("/user/account/settings/");*/
+            $scope.showauthorlistmodal = false;
+
+            $timeout(function () {
+                console.log("showauthorlistmodal iç")
+                $scope.showauthorlistmodal = true;
+            },100)
+        };
+
         $scope.exportAnnotations = function () {
             console.warn("carriage: " + $scope.remove_carriage, "\ncolumn: "+ $scope.column_name);
 
@@ -208,6 +220,40 @@ userSettings.directive('exportmodal', function () {
 userSettings.directive('bulkinsertmodal', function () {
     return {
         templateUrl: 'app/components/user/bulk_insert_annotations.html',
+        restrict: 'E',
+        transclude: true,
+        replace: true,
+        scope: false,
+        link: function postLink(scope, element, attrs) {
+            scope.title = attrs.title;
+            scope.remove_carriage = false;
+            scope.column_name = false;
+
+            scope.$watch(attrs.visible, function (value) {
+                if (value == true)
+                    $(element).modal('show');
+                else
+                    $(element).modal('hide');
+            });
+
+            $(element).on('shown.bs.modal', function () {
+                scope.$apply(function () {
+                    scope.$parent[attrs.visible] = true;
+                });
+            });
+
+            $(element).on('hidden.bs.modal', function () {
+                scope.$apply(function () {
+                    scope.$parent[attrs.visible] = false;
+                });
+            });
+        }
+    };
+});
+
+userSettings.directive('authorlistmodal', function () {
+    return {
+        templateUrl: 'app/components/user/author_list.html',
         restrict: 'E',
         transclude: true,
         replace: true,
