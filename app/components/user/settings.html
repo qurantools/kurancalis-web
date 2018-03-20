@@ -57,6 +57,8 @@
                 <div translate="SAVE_AS_CSV">*Notlarınızı excel de düzenledikten sonra CSV dosyası olarak kaydedebilirsiniz. Bunun için şu ayarları yapmalısınız: (, ile ayrılmış, " ile kapatılmış, '\r\n' ile yeni satır.)</div>
                 <div translate>Daha sonra bu dosyayı sisteme yükleyerek ayet notlarınızı oluşturabilirsiniz.</div>
                 <br>
+                <div><a href data-target="#libre_office_usage" data-toggle="modal" translate>{{'LibreOffice Kurulumu ve Örnek Dosya Yüklenmesi için tıklayınız' | translate}}</a></div>
+                <br>
                 <div translate>Paylaşmak istediğiniz çevreleri belirleyiniz. Tüm notlar bu çevre ile paylaşılacaktır.</div>
                 <br>
                 <div class="col col-lg-10 col-lg-offset-1 col-md-12">
@@ -102,7 +104,7 @@
     </div>
 
     <div class="row">
-        <authorlistmodal title="{{'Yazar Listesi' | translate}}" visible="showauthorlistmodal">
+        <authorlistmodal visible="showauthorlistmodal">
             <div class="row" style="padding: 0 15px">
                 <center>
                     <div ng-include="'app/components/user/authors.html'"></div>

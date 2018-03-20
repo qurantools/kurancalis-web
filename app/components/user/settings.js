@@ -259,9 +259,6 @@ userSettings.directive('authorlistmodal', function () {
         replace: true,
         scope: false,
         link: function postLink(scope, element, attrs) {
-            scope.title = attrs.title;
-            scope.remove_carriage = false;
-            scope.column_name = false;
 
             scope.$watch(attrs.visible, function (value) {
                 if (value == true)
