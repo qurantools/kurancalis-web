@@ -200,6 +200,15 @@ angular.module('ionicApp')
             }
         };
 
+        $scope.mdeleteAnnotation = function (annotation) {
+            var annotationRestangular = Restangular.one("annotations", annotation.id);
+            annotationRestangular.customDELETE("", {}, {'access_token': $scope.access_token}).then(function (result) {
+                if (result.code == '200') {
+                    window.history.back();
+                }
+            });
+        };
+
         //update  annotation fro Annotations page
         $scope.updateAnnotation = function (annotation) {
             var headers = {'Content-Type': 'application/x-www-form-urlencoded', 'access_token': $scope.access_token};
