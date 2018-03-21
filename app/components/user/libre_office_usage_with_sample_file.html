@@ -8,8 +8,8 @@
             <div class="modal-body">
                 <h6>Libreoffice Kurulumu</h6>
                 <p>
-                    Libreoffice kurulumu için gerekli <a href="https://tr.libreoffice.org/yardim-alin/sistem-gereksinimleri/" target="_blank">Sistem Gereksinimleri</a>
-                    sağlamanız durumunda kurulum işlemi için <a href="https://www.libreoffice.org/get-help/install-howto/" target="_blank">Kurulum Talimatları</a>nı takip ediniz.
+                    Size uygun Libreoffice programını edinmek için <a href="https://tr.libreoffice.org/indir/libreoffice-kararli-surum/" target="_blank">indirme sayfası</a>nı ziyaret ediniz.
+                    Gerektiğinde  <a href="https://www.libreoffice.org/get-help/install-howto/" target="_blank">Kurulum Talimatları</a>ndan faydalanabilirsiniz.
                 </p>
                 <h6>Örnek Dosyanin İndirilmesi ve LibreOffice'te Açılması</h6>
                 <p>
@@ -24,7 +24,7 @@
                     <br><br>
                     <img src="assets/img/help/libreoffice/LibreOffice-csv-file-settings.png" style="border: solid 1px gray" alt="CSV File Settings">
                     <br><br>
-                    Burada <strong>dikkat edilmesi gerekenler</strong> kısaca şöyledir:<br><br>
+                    Burada dikkat edilmesi gerekenler kısaca şöyledir:<br><br>
                     <strong>İçeri Aktarım</strong> bölümündeki <strong>Karakter Kümesi:</strong> <strong>Unicode(UTF-8)</strong>, <strong>Dil:</strong> <strong>Türkçe</strong>,
                     <strong>Satırdan:</strong> <strong>1</strong> (Not: eğer hazırlamış olduğunuz dosyanın 1. satırında kolon adları bölümü yok ise 0) olmalıdır.
                     <br><br>
@@ -33,13 +33,21 @@
                 </p>
                 <h6>Gerekli Düzenlemelerin Yapılması, Doldurulmasına Gerek Olmayan Alanlar vs.</h6>
                 <p>
-                    <strong>Toplu Not Ekleme</strong> ekranında dikkat edilmesi gereken kıstaslar verilmiştir.
+                    <strong>Toplu Not Ekleme</strong> ekranında dikkat edilmesi gereken kıstaslar verilmiştir: <br><br>
+                    * Her kolon çift tırnak(") ile başlayıp bitmeli, notlarınızın içerisinde çift tırnak geçmemelidir.<br>
+                    * chapter: sure numarasını, verse: ayet numarasını, id: sistemdeki not numarasını, author id yazar numarasını, start ve end karalama yapılan bölgeyi ifade eden
+                    sayısal değer girilmesi gereken alanlardır. id, author id, start ve end alanlarını boş bırakabilirsiniz.<br>
+                    * content: not içeriğini ifade eden metin içerikli bir alandır, boş bırakabilirsiniz.<br>
+                    * tags: virgülle ayrılmış etiketleri ifade etmektedir.<br>
+                    * color: renk alanıdır ve red, green, yellow (yani kırmızı, yeşil ve sarı) olmak üzere üç renkten biri olmadır ya da boş bırakabilirsiniz,
+                    bu durumda sistem otomatik olarak yellow (sarı) rengi seçecektir.<br><br>
+
                     Hatalı işlem yapmamak adına ek olarak şunlara dikkat etmeniz faydalı olabilir:<br><br>
                     * Tüm satırların kolon sayılarını aynı olmalı, yani 10 olmalı. Eksik ya da fazla kolon olması hataya neden olur.<br>
                     * <strong>chapter</strong> ve <strong>verse</strong> doldurulması gereken zorunlu alanlardır.
                     Diğer alanlar boş bırakılabir alanlardır. Boş bırakılabilir alanlardan "id" alanı etkisiz alandır,
                     "id" alanı hariç diğer boş bırakılabilir alanları doldurmanız notunuzun detaylandırılması için yararlı olacaktır.<br>
-                    * <strong>author id</strong> alanını ya boş bırakınız ya da <a href ng-click="authorlistmodal()" translate>yazar listesi</a>nden uygun "author id" ile doldurunuz.
+                    * <strong>author id</strong> alanını ya boş bırakınız ya da <a href data-target="#authorlist" data-toggle="modal" ng-click="authorlistmodal()" data-dismiss="modal" translate>yazar listesi</a>nden uygun "author id" ile doldurunuz.
                     Listede olmayan bir "author id" kullanımı hataya yol açacaktır.<br>
                     * İndirdiğiniz örnek dosyayı yüklerken ilk satır kolon adlarını içerdiği için <strong>İlk satır kolon başlıklarını içeriyor</strong> alanını işaretlemeniz gerekmektedir.
                      Sizin kendi hazırladığınız dosyanızda ilk satır kolon başlıklarını içermiyorsa bu alanı işaretlemeyiniz.
