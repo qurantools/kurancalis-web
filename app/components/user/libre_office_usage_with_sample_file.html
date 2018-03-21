@@ -1,98 +1,85 @@
-<div class="modal fade" id="libre_office_usage" ng-controller="UserSettingsCtrl">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h2 class="modal-title">LibreOffice ile Örnek CSV Dosyanın Yüklenmesi</h2>
-            </div>
-            <div class="modal-body">
-                <h6>Libreoffice Kurulumu</h6>
-                <p>
-                    Size uygun Libreoffice programını edinmek için <a href="https://tr.libreoffice.org/indir/libreoffice-kararli-surum/" target="_blank">indirme sayfası</a>nı ziyaret ediniz.
-                    Gerektiğinde  <a href="https://www.libreoffice.org/get-help/install-howto/" target="_blank">Kurulum Talimatları</a>ndan faydalanabilirsiniz.
-                </p>
-                <h6>Örnek Dosyanin İndirilmesi ve LibreOffice'te Açılması</h6>
-                <p>
-                    <img src="assets/img/help/libreoffice/LibreOffice-open-file.png" style="border: solid 1px gray" alt="Open LibreOffice" style="margin-right: 10px">
-                    <img src="assets/img/help/libreoffice/LibreOffice-open-file-alternative.png" style="border: solid 1px gray" alt="Open LibreOffice">
-                    <br><br>
-                    <a ng-href="app/components/user/annotations.csv" download="sample-file.csv">Örnek dosya</a> bağlantısına tıklayarak örnek dosyayı sisteminize indiriniz.
-                    Daha sonra LibreOffice'i çalıştırarak programın sol üst köşesinde yer alan <strong>Dosya</strong> -> <strong>Aç...</strong> menüsü ile ya da
-                    yine programın sol üst köşesinde yer alan <strong>Dosya Aç</strong> düğmesi ile açılan dosya gezgininden daha önce indirmiş olduğunuz örnek dosyayı seçiniz.
-                    <br><br>
-                    Dosyayı seçince <strong>Metni İçe Aktar</strong> ekranı karşınıza çıkacaktır.
-                    <br><br>
-                    <img src="assets/img/help/libreoffice/LibreOffice-csv-file-settings.png" style="border: solid 1px gray" alt="CSV File Settings">
-                    <br><br>
-                    Burada dikkat edilmesi gerekenler kısaca şöyledir:<br><br>
-                    <strong>İçeri Aktarım</strong> bölümündeki <strong>Karakter Kümesi:</strong> <strong>Unicode(UTF-8)</strong>, <strong>Dil:</strong> <strong>Türkçe</strong>,
-                    <strong>Satırdan:</strong> <strong>1</strong> (Not: eğer hazırlamış olduğunuz dosyanın 1. satırında kolon adları bölümü yok ise 0) olmalıdır.
-                    <br><br>
-                    <strong>Ayraç Seçenekleri</strong> bölümünde <strong>Ayıran</strong> seçeneği seçilerek <strong>Sekme</strong>, <strong>Virgül</strong> ve <strong>Noktalı Virgül</strong> işaretlenmelidir.<br>
-                    <strong>Metin Sınırlandırıcı</strong> olarak Çift Tırnak yani <strong>"</strong> seçilmelidir.
-                </p>
-                <h6>Gerekli Düzenlemelerin Yapılması, Doldurulmasına Gerek Olmayan Alanlar vs.</h6>
-                <p>
-                    <strong>Toplu Not Ekleme</strong> ekranında dikkat edilmesi gereken kıstaslar verilmiştir: <br><br>
-                    * Her kolon çift tırnak(") ile başlayıp bitmeli, notlarınızın içerisinde çift tırnak geçmemelidir.<br>
-                    * chapter: sure numarasını, verse: ayet numarasını, id: sistemdeki not numarasını, author id yazar numarasını, start ve end karalama yapılan bölgeyi ifade eden
-                    sayısal değer girilmesi gereken alanlardır. id, author id, start ve end alanlarını boş bırakabilirsiniz.<br>
-                    * content: not içeriğini ifade eden metin içerikli bir alandır, boş bırakabilirsiniz.<br>
-                    * tags: virgülle ayrılmış etiketleri ifade etmektedir.<br>
-                    * color: renk alanıdır ve red, green, yellow (yani kırmızı, yeşil ve sarı) olmak üzere üç renkten biri olmadır ya da boş bırakabilirsiniz,
-                    bu durumda sistem otomatik olarak yellow (sarı) rengi seçecektir.<br><br>
+<div>
+    <h6>Libreoffice Kurulumu</h6>
+    <p>
+        Size uygun Libreoffice programını edinmek için <a href="https://tr.libreoffice.org/indir/libreoffice-kararli-surum/" target="_blank">indirme sayfası</a>nı ziyaret ediniz.
+        Gerektiğinde  <a href="https://www.libreoffice.org/get-help/install-howto/" target="_blank">Kurulum Talimatları</a>ndan faydalanabilirsiniz.
+    </p>
+    <h6>Örnek Dosyanin İndirilmesi ve LibreOffice'te Açılması</h6>
+    <p>
+        <img src="assets/img/help/libreoffice/LibreOffice-open-file.png" style="border: solid 1px gray" alt="Open LibreOffice" style="margin-right: 10px">
+        <img src="assets/img/help/libreoffice/LibreOffice-open-file-alternative.png" style="border: solid 1px gray" alt="Open LibreOffice">
+        <br><br>
+        <a ng-href="app/components/user/annotations.csv" download="sample-file.csv">Örnek dosya</a> bağlantısına tıklayarak örnek dosyayı sisteminize indiriniz.
+        Daha sonra LibreOffice'i çalıştırarak programın sol üst köşesinde yer alan <strong>Dosya</strong> -> <strong>Aç...</strong> menüsü ile ya da
+        yine programın sol üst köşesinde yer alan <strong>Dosya Aç</strong> düğmesi ile açılan dosya gezgininden daha önce indirmiş olduğunuz örnek dosyayı seçiniz.
+        <br><br>
+        Dosyayı seçince <strong>Metni İçe Aktar</strong> ekranı karşınıza çıkacaktır.
+        <br><br>
+        <img src="assets/img/help/libreoffice/LibreOffice-csv-file-settings.png" style="border: solid 1px gray" alt="CSV File Settings">
+        <br><br>
+        Burada dikkat edilmesi gerekenler kısaca şöyledir:<br><br>
+        <strong>İçeri Aktarım</strong> bölümündeki <strong>Karakter Kümesi:</strong> <strong>Unicode(UTF-8)</strong>, <strong>Dil:</strong> <strong>Türkçe</strong>,
+        <strong>Satırdan:</strong> <strong>1</strong> (Not: eğer hazırlamış olduğunuz dosyanın 1. satırında kolon adları bölümü yok ise 0) olmalıdır.
+        <br><br>
+        <strong>Ayraç Seçenekleri</strong> bölümünde <strong>Ayıran</strong> seçeneği seçilerek <strong>Sekme</strong>, <strong>Virgül</strong> ve <strong>Noktalı Virgül</strong> işaretlenmelidir.<br>
+        <strong>Metin Sınırlandırıcı</strong> olarak Çift Tırnak yani <strong>"</strong> seçilmelidir.
+    </p>
+    <h6>Gerekli Düzenlemelerin Yapılması, Doldurulmasına Gerek Olmayan Alanlar vs.</h6>
+    <p>
+        <strong>Toplu Not Ekleme</strong> ekranında dikkat edilmesi gereken kıstaslar verilmiştir: <br><br>
+        * Her kolon çift tırnak(") ile başlayıp bitmeli, notlarınızın içerisinde çift tırnak geçmemelidir.<br>
+        * chapter: sure numarasını, verse: ayet numarasını, id: sistemdeki not numarasını, author id yazar numarasını, start ve end karalama yapılan bölgeyi ifade eden
+        sayısal değer girilmesi gereken alanlardır. id, author id, start ve end alanlarını boş bırakabilirsiniz.<br>
+        * content: not içeriğini ifade eden metin içerikli bir alandır, boş bırakabilirsiniz.<br>
+        * tags: virgülle ayrılmış etiketleri ifade etmektedir.<br>
+        * color: renk alanıdır ve red, green, yellow (yani kırmızı, yeşil ve sarı) olmak üzere üç renkten biri olmadır ya da boş bırakabilirsiniz,
+        bu durumda sistem otomatik olarak yellow (sarı) rengi seçecektir.<br><br>
 
-                    Hatalı işlem yapmamak adına ek olarak şunlara dikkat etmeniz faydalı olabilir:<br><br>
-                    * Tüm satırların kolon sayılarını aynı olmalı, yani 10 olmalı. Eksik ya da fazla kolon olması hataya neden olur.<br>
-                    * <strong>chapter</strong> ve <strong>verse</strong> doldurulması gereken zorunlu alanlardır.
-                    Diğer alanlar boş bırakılabir alanlardır. Boş bırakılabilir alanlardan "id" alanı etkisiz alandır,
-                    "id" alanı hariç diğer boş bırakılabilir alanları doldurmanız notunuzun detaylandırılması için yararlı olacaktır.<br>
-                    * <strong>author id</strong> alanını ya boş bırakınız ya da <a href data-target="#authorlist" data-toggle="modal" ng-click="authorlistmodal()" data-dismiss="modal" translate>yazar listesi</a>nden uygun "author id" ile doldurunuz.
-                    Listede olmayan bir "author id" kullanımı hataya yol açacaktır.<br>
-                    * İndirdiğiniz örnek dosyayı yüklerken ilk satır kolon adlarını içerdiği için <strong>İlk satır kolon başlıklarını içeriyor</strong> alanını işaretlemeniz gerekmektedir.
-                     Sizin kendi hazırladığınız dosyanızda ilk satır kolon başlıklarını içermiyorsa bu alanı işaretlemeyiniz.
-                </p>
-                <h6>Yeni Notlarin Eklenmesi (Varsa yapiştırılması)</h6>
-                <p>
-                    CSV dosyanıza yeni not eklerken nota ait içerikler <strong>soldan sağa doğru</strong> şu sırayı takip etmelidir:<br>
-                    <strong>chapter, verse, content, tags, id, author id, color, start, end, quote</strong>
-                    <br><br>
-                    Eğer csv dosyasındaki bazı notları kopyalamak isterseniz <strong>Ctrl tuşu</strong> basılı iken Fare (mouse) yardımı ile ilgili notların bulunduğu satırlardaki satır numaralarına tıklayınız.
-                    <br><br>
-                    <img src="assets/img/help/libreoffice/LibreOffice-copy-rows.png" style="border: solid 1px gray" alt="Copy Rows">
-                    <br><br>
-                    Daha sonra fare ile sağ tıklayarak açılan menüdeki <strong>Kopyala</strong> seçeneğine tıklayınız.
-                    <br><br>
-                    CSV dosyasına daha önce koplamış olduğunuz bazı notları yapıştırmak isterseniz dosyanın sol alt tarafındaki ilk boş satıra sağ tıklayarak <strong>Yapıştır</strong> seşeneğine tıklayınız.
-                    <br><br>
-                    <img src="assets/img/help/libreoffice/LibreOffice-paste-rows.png" style="border: solid 1px gray" alt="Paste Rows">
-                </p>
-                <h6>Yeni Dosya Oluşturma/Kaydetme</h6>
-                <p>
-                    LibreOffice de yeni bir Hesap Tablosu (excell) dosyası oluşturmak için sol üst köşeden <strong>Dosya</strong> -> <strong>Yeni</strong> -> <strong>Hesap Tablosu</strong> yolunu takip ediniz<br><br>
-                    Yeni oluşturduğunuz bu dosyayı *.csv formatında kaydetmek için klavyeden <strong>Ctrl + S</strong> tuşlarına basarak yada  <strong>Dosya</strong> -> <strong>Kaydet</strong> seçimi ile açılan <strong>Farklı Kaydet</strong>
-                    ekranında <strong>Kayıt Türü</strong> için <strong>Metin CSV (.csv)(*.csv)</strong>, <strong>Dosya Adı</strong> için ise istediğiniz bir isim vererek onaylayınız.<br><br>
-                    <img src="assets/img/help/libreoffice/LibreOffice-save-file.png" style="border: solid 1px gray" alt="Save File"><br><br>
-                    Mevcut csv dosyanızı farklı bir isimle kaydetmek için ise <strong>Dosya</strong> -> <strong>Farklı Kaydet</strong> yolunu takip ederek bir önceki adımdaki işlemleri yapınız.
-                </p>
-                <h6>Notların Sisteme Yüklenmesi</h6>
-                <p>
-                    CSV dosyanızdaki notları sisteme yüklemek için <strong>Toplu Not Ekleme</strong> penceresinin alt kısmındaki <strong>Araştır</strong> düğmesine tıklayınız.
-                    Açılan dosya seçim penceresi yardımıyla dosyanızı seçiniz. Eğer dosyanızın ilk satırı sütün kolon bilgisi içeriyorsa <strong>İlk satır kolon başlıklarını içeriyor</strong> alanını işaretleyiniz.
-                    Notlarınızı herhangi bir/birçok çevre ile paylaşmak istiyorsanız <strong>Çevre Seçiniz</strong> bölümünden ilgili çevre(ler)i seçiniz.
-                    En son olarak sağ altta yer alan <strong>Gönder</strong> tuşuna basarak dosyayı sisteme yükleyiniz. <strong>Gönder</strong> tuşuna basıldıktan sonra sistem
-                    işlemin sonucuna göre kırmızı ve yeşil renkli bildirim mesajı verecektir. Kırmızı mesaj işlemde hata olduğunu ve hatanın neden olduğunu, yeşil mesaj ise işlemin başarılı bir şekilde
-                    gerçekleştirğini bildirmektedir.<br><br>
-                    Dosyanın Sisteme Başarılı bir şekilde yüklendi ise:<br><br>
-                    <img src="assets/img/help/libreoffice/LibreOffice-upload-succes.png" style="border: solid 1px gray" alt="Upload Successful">
-                    <br><br>
-                    Dosyanın Sisteme yüklenmesi sırasında bir hata varsa (Örneğin dosyanın ilk satırı kolon adlarını içeriyorsa ve ilgili alan işaretlenmemişse):<br><br>
-                    <img src="assets/img/help/libreoffice/LibreOffice-upload-error.png" style="border: solid 1px gray" alt="Upload Successful">
-                 </p>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-primary btn-wide" data-dismiss='modal' translate>Kapat</button>
-            </div>
-        </div>
-    </div>
+        Hatalı işlem yapmamak adına ek olarak şunlara dikkat etmeniz faydalı olabilir:<br><br>
+        * Tüm satırların kolon sayılarını aynı olmalı, yani 10 olmalı. Eksik ya da fazla kolon olması hataya neden olur.<br>
+        * <strong>chapter</strong> ve <strong>verse</strong> doldurulması gereken zorunlu alanlardır.
+        Diğer alanlar boş bırakılabir alanlardır. Boş bırakılabilir alanlardan "id" alanı etkisiz alandır,
+        "id" alanı hariç diğer boş bırakılabilir alanları doldurmanız notunuzun detaylandırılması için yararlı olacaktır.<br>
+        * <strong>author id</strong> alanını ya boş bırakınız ya da <a href ng-click="authorlistmodal()" data-dismiss="modal" translate>yazar listesi</a>nden uygun "author id" ile doldurunuz.
+        Listede olmayan bir "author id" kullanımı hataya yol açacaktır.<br>
+        * İndirdiğiniz örnek dosyayı yüklerken ilk satır kolon adlarını içerdiği için <strong>İlk satır kolon başlıklarını içeriyor</strong> alanını işaretlemeniz gerekmektedir.
+         Sizin kendi hazırladığınız dosyanızda ilk satır kolon başlıklarını içermiyorsa bu alanı işaretlemeyiniz.
+    </p>
+    <h6>Yeni Notlarin Eklenmesi (Varsa yapiştırılması)</h6>
+    <p>
+        CSV dosyanıza yeni not eklerken nota ait içerikler <strong>soldan sağa doğru</strong> şu sırayı takip etmelidir:<br>
+        <strong>chapter, verse, content, tags, id, author id, color, start, end, quote</strong>
+        <br><br>
+        Eğer csv dosyasındaki bazı notları kopyalamak isterseniz <strong>Ctrl tuşu</strong> basılı iken Fare (mouse) yardımı ile ilgili notların bulunduğu satırlardaki satır numaralarına tıklayınız.
+        <br><br>
+        <img src="assets/img/help/libreoffice/LibreOffice-copy-rows.png" style="border: solid 1px gray; width: 100%; height: auto;" alt="Copy Rows">
+        <br><br>
+        Daha sonra fare ile sağ tıklayarak açılan menüdeki <strong>Kopyala</strong> seçeneğine tıklayınız.
+        <br><br>
+        CSV dosyasına daha önce koplamış olduğunuz bazı notları yapıştırmak isterseniz dosyanın sol alt tarafındaki ilk boş satıra sağ tıklayarak <strong>Yapıştır</strong> seşeneğine tıklayınız.
+        <br><br>
+        <img src="assets/img/help/libreoffice/LibreOffice-paste-rows.png" style="border: solid 1px gray; width: 100%; height: auto;" alt="Paste Rows">
+    </p>
+    <h6>Yeni Dosya Oluşturma/Kaydetme</h6>
+    <p>
+        LibreOffice de yeni bir Hesap Tablosu (excell) dosyası oluşturmak için sol üst köşeden <strong>Dosya</strong> -> <strong>Yeni</strong> -> <strong>Hesap Tablosu</strong> yolunu takip ediniz<br><br>
+        Yeni oluşturduğunuz bu dosyayı *.csv formatında kaydetmek için klavyeden <strong>Ctrl + S</strong> tuşlarına basarak yada  <strong>Dosya</strong> -> <strong>Kaydet</strong> seçimi ile açılan <strong>Farklı Kaydet</strong>
+        ekranında <strong>Kayıt Türü</strong> için <strong>Metin CSV (.csv)(*.csv)</strong>, <strong>Dosya Adı</strong> için ise istediğiniz bir isim vererek onaylayınız.<br><br>
+        <img src="assets/img/help/libreoffice/LibreOffice-save-file.png" style="border: solid 1px gray; width: 90%; height: auto;" alt="Save File"><br><br>
+        Mevcut csv dosyanızı farklı bir isimle kaydetmek için ise <strong>Dosya</strong> -> <strong>Farklı Kaydet</strong> yolunu takip ederek bir önceki adımdaki işlemleri yapınız.
+    </p>
+    <h6>Notların Sisteme Yüklenmesi</h6>
+    <p>
+        CSV dosyanızdaki notları sisteme yüklemek için <strong>Toplu Not Ekleme</strong> penceresinin alt kısmındaki <strong>Araştır</strong> düğmesine tıklayınız.
+        Açılan dosya seçim penceresi yardımıyla dosyanızı seçiniz. Eğer dosyanızın ilk satırı sütün kolon bilgisi içeriyorsa <strong>İlk satır kolon başlıklarını içeriyor</strong> alanını işaretleyiniz.
+        Notlarınızı herhangi bir/birçok çevre ile paylaşmak istiyorsanız <strong>Çevre Seçiniz</strong> bölümünden ilgili çevre(ler)i seçiniz.
+        En son olarak sağ altta yer alan <strong>Gönder</strong> tuşuna basarak dosyayı sisteme yükleyiniz. <strong>Gönder</strong> tuşuna basıldıktan sonra sistem
+        işlemin sonucuna göre kırmızı ve yeşil renkli bildirim mesajı verecektir. Kırmızı mesaj işlemde hata olduğunu ve hatanın neden olduğunu, yeşil mesaj ise işlemin başarılı bir şekilde
+        gerçekleştirğini bildirmektedir.<br><br>
+        Dosyanın Sisteme Başarılı bir şekilde yüklendi ise:<br><br>
+        <img src="assets/img/help/libreoffice/LibreOffice-upload-succes.png" style="border: solid 1px gray; width: 100%; height: auto;" alt="Upload Successful">
+        <br><br>
+        Dosyanın Sisteme yüklenmesi sırasında bir hata varsa (Örneğin dosyanın ilk satırı kolon adlarını içeriyorsa ve ilgili alan işaretlenmemişse):<br><br>
+        <img src="assets/img/help/libreoffice/LibreOffice-upload-error.png" style="border: solid 1px gray; width: 100%; height: auto;" alt="Upload Successful">
+     </p>
 </div>

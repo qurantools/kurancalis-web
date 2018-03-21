@@ -607,6 +607,5 @@
 "Dosya boyutu en fazla 10MB ve tipi *.csv olmalıdır.": "The file size should be at most 10MB and type * .csv.",
 "Dosya tipi *.csv olmalıdır.": "The file type should be * .csv.",
 "Dosya başarılı bir şekilde yüklendi.": "The file has been successfully uploaded.",
-": Dosya içeriğini kontrol ediniz. İlk satır kolon başlıklarını içeriyor olabilir.": ": Check the file content. The first row may contain column headers.",
-"LibreOffice Kurulumu ve Örnek Dosya Yüklenmesi için tıklayınız": "Click for LibreOffice Setup and Sample File Upload"
+": Dosya içeriğini kontrol ediniz. İlk satır kolon başlıklarını içeriyor olabilir.": ": Check the file content. The first row may contain column headers."
 }

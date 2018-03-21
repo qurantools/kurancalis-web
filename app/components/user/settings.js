@@ -47,13 +47,19 @@ var userSettings = angular.module('ionicApp')
 
         $scope.showauthorlistmodal = false;
         $scope.authorlistmodal = function () {
-            console.log("showauthorlistmodal")
-           /* $location.path("/user/account/settings/");*/
             $scope.showauthorlistmodal = false;
 
             $timeout(function () {
-                console.log("showauthorlistmodal iç")
                 $scope.showauthorlistmodal = true;
+            },100)
+        };
+
+        $scope.showlibreofficemodal = false;
+        $scope.libreofficemodal = function () {
+            $scope.showlibreofficemodal = false;
+
+            $timeout(function () {
+                $scope.showlibreofficemodal = true;
             },100)
         };
 
@@ -254,6 +260,37 @@ userSettings.directive('bulkinsertmodal', function () {
 userSettings.directive('authorlistmodal', function () {
     return {
         templateUrl: 'app/components/user/author_list.html',
+        restrict: 'E',
+        transclude: true,
+        replace: true,
+        scope: false,
+        link: function postLink(scope, element, attrs) {
+
+            scope.$watch(attrs.visible, function (value) {
+                if (value == true)
+                    $(element).modal('show');
+                else
+                    $(element).modal('hide');
+            });
+
+            $(element).on('shown.bs.modal', function () {
+                scope.$apply(function () {
+                    scope.$parent[attrs.visible] = true;
+                });
+            });
+
+            $(element).on('hidden.bs.modal', function () {
+                scope.$apply(function () {
+                    scope.$parent[attrs.visible] = false;
+                });
+            });
+        }
+    };
+});
+
+userSettings.directive('libreofficemodal', function () {
+    return {
+        templateUrl: 'app/components/user/libre_office_usage.html',
         restrict: 'E',
         transclude: true,
         replace: true,

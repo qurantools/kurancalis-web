@@ -57,7 +57,8 @@
                 <div translate="SAVE_AS_CSV">*Notlarınızı excel de düzenledikten sonra CSV dosyası olarak kaydedebilirsiniz. Bunun için şu ayarları yapmalısınız: (, ile ayrılmış, " ile kapatılmış, '\r\n' ile yeni satır.)</div>
                 <div translate>Daha sonra bu dosyayı sisteme yükleyerek ayet notlarınızı oluşturabilirsiniz.</div>
                 <br>
-                <div><a href data-target="#libre_office_usage" data-toggle="modal" translate>{{'LibreOffice Kurulumu ve Örnek Dosya Yüklenmesi için tıklayınız' | translate}}</a></div>
+                <div ng-if="language=='tr'"><a href ng-click="libreofficemodal()">LibreOffice Kurulumu ve Örnek Dosya Yüklenmesi için tıklayınız</a></div>
+                <div ng-if="language=='en'"><a href ng-click="libreofficemodal()">Click for LibreOffice Setup and Sample File Upload</a></div>
                 <br>
                 <div translate>Paylaşmak istediğiniz çevreleri belirleyiniz. Tüm notlar bu çevre ile paylaşılacaktır.</div>
                 <br>
@@ -114,5 +115,14 @@
                 <button class="btn btn-primary btn-wide" data-dismiss='modal' translate>Kapat</button>
             </div>
         </authorlistmodal>
+    </div>
+
+    <div class="row">
+        <libreofficemodal visible="showlibreofficemodal">
+            <div ng-if="showlibreofficemodal" ng-include="'app/components/user/libre_office_usage_with_sample_file.html'"></div>
+            <div class="modal-footer">
+                <button class="btn btn-primary btn-wide" data-dismiss='modal' translate>Kapat</button>
+            </div>
+        </libreofficemodal>
     </div>
 </body>

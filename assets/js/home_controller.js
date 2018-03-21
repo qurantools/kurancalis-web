@@ -51,6 +51,9 @@ angular.module('ionicApp')
         $scope.modal_user_reset_password_request = null;
         $scope.modal_user_set_password = null;
 
+        //include tutorial or not
+        $scope.isTutorialActive = false;
+
 
         //tags parameters
         $scope.mobil_tagsearched = "";
