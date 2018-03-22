@@ -183,7 +183,9 @@ angular.module('ionicApp')
                 });
                 confirmPopup.then(function(res) {
                     if(res) {
-                        var annotationRestangular = Restangular.one("annotations", annotation.id);
+                        $scope.mdeleteAnnotation(annotation);
+
+                        /*var annotationRestangular = Restangular.one("annotations", annotation.id);
                         annotationRestangular.customDELETE("", {}, {'access_token': $scope.access_token}).then(function (result) {
                             if (result.code == '200') {
                                 var annotationIndex = $scope.getIndexOfArrayByElement($scope.feeds, 'id', annotation.id);
@@ -191,7 +193,7 @@ angular.module('ionicApp')
                                     $scope.feeds.splice(annotationIndex, 1);
                                 }
                             }
-                        });
+                        });*/
                     } else {
                     }
                 });
