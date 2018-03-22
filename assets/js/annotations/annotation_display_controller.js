@@ -203,9 +203,8 @@ angular.module('ionicApp')
         $scope.mdeleteAnnotation = function (annotation) {
             var annotationRestangular = Restangular.one("annotations", annotation.id);
             annotationRestangular.customDELETE("", {}, {'access_token': $scope.access_token}).then(function (result) {
-                if (result.code == '200') {
-                    window.history.back();
-                }
+                $scope.annotation = null;
+                $scope.annotationRemoved = true;
             });
         };
 

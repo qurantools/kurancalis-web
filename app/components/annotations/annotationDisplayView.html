@@ -3,192 +3,205 @@
     <div class="container">
         <div ng-include="'app/components/partials/annotationDisplayViewNavigation.html'"></div>
         <div ng-if="authorizedAnnotationDisplay == 1" style="margin-top: 60px">
-            <div class="box" ng-if="annotation != null">
-                <div class="s_a_header">
-                    <a href='' ng-click="showVerseDetail(annotation.verseId, [], [])" data-target='#detailedVerseModal' data-dismiss='modal' data-toggle='modal'>{{annotation.verseId / 1000 | number:0}}:{{annotation.verseId % 1000}}</a> <span style="font-size: small">({{authorMap[annotation.author_id].name}})</span>
-                    <div style="float:right;"><a  href="" ng-click="navigateTo('/profile/user/{{annotation.userId}}/')" style="color: darkblue;">{{annotation.userName | limitTo: 25}}</a></div>
-                </div>
-                <div class="small_space">&nbsp;</div>
-                <div>
-                    <blockquote
-                            ng-bind-html="annotation.translation_content | mark_verse_annotation:annotation:1 | newLineAllowed | to_trusted"></blockquote>
-                </div>
-                <div class="small_space">&nbsp;</div>
-                <div class="s_a_text">
-                    <span ng-bind-html="annotation.text | newLineAllowed | to_trusted"></span>
-                </div>
-                <div class="small_space">&nbsp;</div>
-                <button ng-repeat="annotationTag in annotation.tags" class="btn btn-xs btn-info verse_tag"
-                        ng-click="goToVerseTag(annotation.author_id, annotation.verseId, annotationTag, [], [])" data-target='#taggedVerseModal' data-dismiss='modal'
-                        data-toggle='modal'>
-                    {{annotationTag}}
-                </button>
-                <div class="small_space">&nbsp;</div>
-                <div class="row" style="padding:0 15px">
-                    <div style="float: left"><span ng-bind-html="annotation.updated | time_in_string | to_trusted"></span></div>
-                    <div style="float: right">
-                        <span ng-class="{'voted-like': (annotation.vote != null && annotation.vote.content == 1), 'unvoted' : !(annotation.vote != null && annotation.vote.content == 1)}"
-                              ng-click="doVote(annotation,'annotations', 1)">
-                            <i class="fa fa-thumbs-up"></i> {{annotation.voteRates.like}}
-                        </span>
-                        <span ng-class="{'voted-dislike': (annotation.vote != null && annotation.vote.content == 0), 'unvoted' : !(annotation.vote != null && annotation.vote.content == 0)}"
-                              ng-click="doVote(annotation,'annotations', 0)">
-                            <i class="fa fa-thumbs-down"></i> {{annotation.voteRates.dislike}}
-                        </span>
-                        <button type="button" class="btn btn-primary btn-xs" style="margin-right: 15px"
-                                ng-click="showVoteResults(annotation, 'annotations')"
-                                ng-disabled="(annotation.voteRates.dislike + annotation.voteRates.like) == 0">
-                            {{'Değerlendirenler' | translate}}
-                        </button>
-
-                        <a id="url" class="btn btn-primary btn-xs" style="margin-right: 5px;" ng-click="kopyala(shareUrl)"><i class="fa fa-link"></i> {{'Linki Kopyala' | translate}}</a>
-                        <span style="display: inline-flex">
-                            <a facebook class="facebookShare" style="margin-right: 5px;" data-url='{{shareUrl}}' data-size="tall"></a>
-                            <a twitter style="margin-right: 5px" data-lang="tr" data-count='horizontal' data-url='{{shareUrl}}' data-via='kurancalis' data-size="tall" data-text="Kuran Çalış - {{title}}"></a>
-                            <div gplus class="g-plus" data-height="24" data-annotation="none" data-href='{{shareUrl}}' data-action='share'></div>
-                        </span>
-                        <button type="button" class="btn btn-primary btn-xs" style="margin-left: 15px" ng-click="showEditor(annotation)"
-                                ng-if="annotation.userId==user.id"><i
-                                class="fa fa-pencil-square-o"></i>
-                        </button>
-                        <button type="button" class="btn btn-danger btn-xs" style="margin-right: 5px" ng-click="deleteAnnotation(annotation)"
-                                ng-if="annotation.userId==user.id"><i
-                                class="fa fa-trash-o"></i></button>
+            <div ng-if="annotation != null">
+                <div class="box">
+                    <div class="s_a_header">
+                        <a href='' ng-click="showVerseDetail(annotation.verseId, [], [])" data-target='#detailedVerseModal' data-dismiss='modal' data-toggle='modal'>{{annotation.verseId / 1000 | number:0}}:{{annotation.verseId % 1000}}</a> <span style="font-size: small">({{authorMap[annotation.author_id].name}})</span>
+                        <div style="float:right;"><a  href="" ng-click="navigateTo('/profile/user/{{annotation.userId}}/')" style="color: darkblue;">{{annotation.userName | limitTo: 25}}</a></div>
                     </div>
-                </div>
-            </div>
-            <h6 align="left" style="width: 1024px" translate>Yorumlar</h6>
-            <div ng-repeat="comment in annotation.comments" style="width: 100%;border-radius: 15px;padding-top: 10px !important;" align="left" class="row well">
-                <div class="col-lg-1">
-                    <a href="" ng-click="navigateTo('/profile/user/{{comment.owner.user_id}}/')">
-                        <img style="max-width: 80px; max-height: 60px;border-radius: 50%;" ng-src="{{comment.owner.photo}}"><br/>
-                    </a>
-                </div>
-                <div  class="col-lg-11">
-                    <span>
-                        <a href="" ng-click="navigateTo('/profile/user/{{comment.owner.user_id}}/')">
-                            {{comment.owner.name}}
-                        </a>
-                        <span ng-bind-html="comment.comment.content | display_comment | to_trusted"></span>
-                    </span>
-                    <div id="footer_area" class="row" style="margin-top: 15px;">
-                        <div class="col-xs-10" style="float: left">
-                            <span ng-class="{ 'voted-like': (comment.vote != null && comment.vote.content == 1), 'unvoted' : !(comment.vote != null && comment.vote.content == 1)}"
-                                  ng-click="doVoteForComment(comment, comment.comment.annotationId, 'annotations',1)">
-                                <i class="fa fa-thumbs-up"></i> {{comment.voteRates.like}}
+                    <div class="small_space">&nbsp;</div>
+                    <div>
+                        <blockquote
+                                ng-bind-html="annotation.translation_content | mark_verse_annotation:annotation:1 | newLineAllowed | to_trusted"></blockquote>
+                    </div>
+                    <div class="small_space">&nbsp;</div>
+                    <div class="s_a_text">
+                        <span ng-bind-html="annotation.text | newLineAllowed | to_trusted"></span>
+                    </div>
+                    <div class="small_space">&nbsp;</div>
+                    <button ng-repeat="annotationTag in annotation.tags" class="btn btn-xs btn-info verse_tag"
+                            ng-click="goToVerseTag(annotation.author_id, annotation.verseId, annotationTag, [], [])" data-target='#taggedVerseModal' data-dismiss='modal'
+                            data-toggle='modal'>
+                        {{annotationTag}}
+                    </button>
+                    <div class="small_space">&nbsp;</div>
+                    <div class="row" style="padding:0 15px">
+                        <div style="float: left"><span ng-bind-html="annotation.updated | time_in_string | to_trusted"></span></div>
+                        <div style="float: right">
+                            <span ng-class="{'voted-like': (annotation.vote != null && annotation.vote.content == 1), 'unvoted' : !(annotation.vote != null && annotation.vote.content == 1)}"
+                                  ng-click="doVote(annotation,'annotations', 1)">
+                                <i class="fa fa-thumbs-up"></i> {{annotation.voteRates.like}}
                             </span>
-                            <span ng-class="{'voted-dislike': (comment.vote != null && comment.vote.content == 0), 'unvoted' : !(comment.vote != null && comment.vote.content == 0)}"
-                                  style="margin-top: 10px;"
-                                  ng-click="doVoteForComment(comment, comment.comment.annotationId, 'annotations',0)">
-                                <i class="fa fa-thumbs-down"></i> {{comment.voteRates.dislike}}
+                            <span ng-class="{'voted-dislike': (annotation.vote != null && annotation.vote.content == 0), 'unvoted' : !(annotation.vote != null && annotation.vote.content == 0)}"
+                                  ng-click="doVote(annotation,'annotations', 0)">
+                                <i class="fa fa-thumbs-down"></i> {{annotation.voteRates.dislike}}
                             </span>
-                            <span>
-                                <a class="make_comment" ng-class="{'disabled' : (comment.voteRates.dislike + comment.voteRates.like) == 0}"
-                                   ng-click="showVoteResults(comment, 'annotations', true, comment.comment.annotationId)" translate>Değerlendirenler</a>
-                            </span>
-                            <span class="make_comment"
-                                  ng-click="comment.showChild=true;
-                                      comment.showChilds=true;
-                                      focusToCommentArea('comment_textarea_annotation_{{comment.comment.id}}')"
-                                  ng-init="comment.showChild = false">
-                                <a translate>Yanıtla</a>
-                            </span>
-                            <span ng-bind-html="comment.comment.created | time_in_string | to_trusted"></span>
-                            <span ng-if="comment.comment.childs.length > 2 && !comment.showChilds" ng-click="comment.showChilds=true">
-                                <i class="fa fa-mail-forward"></i> <span style="color:blue">{{comment.comment.childs.length}} {{'Yanıt' | translate}}</span>
-                            </span>
-                        </div>
-                        <div class="col-xs-2" align="right">
-                            <button type="button" class="btn btn-primary btn-xs" ng-click="displayCommentUpdateModal(annotation.comments, comment.comment, $index)"
-                                    ng-if="comment.owner.user_id==user.id"><i
-                                    class="fa fa-pencil-square-o "></i>
+                            <button type="button" class="btn btn-primary btn-xs" style="margin-right: 15px"
+                                    ng-click="showVoteResults(annotation, 'annotations')"
+                                    ng-disabled="(annotation.voteRates.dislike + annotation.voteRates.like) == 0">
+                                {{'Değerlendirenler' | translate}}
                             </button>
-                            <button type="button" class="btn btn-danger btn-xs" ng-click="displayCommentDeleteModal(annotation.comments, comment.comment.id, $index)"
-                                    ng-if="comment.owner.user_id==user.id"><i
+
+                            <a id="url" class="btn btn-primary btn-xs" style="margin-right: 5px;" ng-click="kopyala(shareUrl)"><i class="fa fa-link"></i> {{'Linki Kopyala' | translate}}</a>
+                            <span style="display: inline-flex">
+                                <a facebook class="facebookShare" style="margin-right: 5px;" data-url='{{shareUrl}}' data-size="tall"></a>
+                                <a twitter style="margin-right: 5px" data-lang="tr" data-count='horizontal' data-url='{{shareUrl}}' data-via='kurancalis' data-size="tall" data-text="Kuran Çalış - {{title}}"></a>
+                                <div gplus class="g-plus" data-height="24" data-annotation="none" data-href='{{shareUrl}}' data-action='share'></div>
+                            </span>
+                            <button type="button" class="btn btn-primary btn-xs" style="margin-left: 15px" ng-click="showEditor(annotation)"
+                                    ng-if="annotation.userId==user.id"><i
+                                    class="fa fa-pencil-square-o"></i>
+                            </button>
+                            <button type="button" class="btn btn-danger btn-xs" style="margin-right: 5px" ng-click="deleteAnnotation(annotation)"
+                                    ng-if="annotation.userId==user.id"><i
                                     class="fa fa-trash-o"></i></button>
                         </div>
                     </div>
-                    <div ng-repeat="child_comment in comment.comment.childs" style="width: 100%;border-radius: 15px;padding-top: 10px !important;margin-top: 10px;" align="left" class="row well" ng-if="comment.showChilds">
-                        <div class="col-lg-1">
-                            <a href="" ng-click="navigateTo('/profile/user/{{child_comment.owner.user_id}}/')">
-                                <img style="max-width: 80px; max-height: 60px;border-radius: 50%;" ng-src="{{child_comment.owner.photo}}"><br/>
+                </div>
+                <h6 align="left" style="width: 1024px" translate>Yorumlar</h6>
+                <div ng-repeat="comment in annotation.comments" style="width: 100%;border-radius: 15px;padding-top: 10px !important;" align="left" class="row well">
+                    <div class="col-lg-1">
+                        <a href="" ng-click="navigateTo('/profile/user/{{comment.owner.user_id}}/')">
+                            <img style="max-width: 80px; max-height: 60px;border-radius: 50%;" ng-src="{{comment.owner.photo}}"><br/>
+                        </a>
+                    </div>
+                    <div  class="col-lg-11">
+                        <span>
+                            <a href="" ng-click="navigateTo('/profile/user/{{comment.owner.user_id}}/')">
+                                {{comment.owner.name}}
                             </a>
+                            <span ng-bind-html="comment.comment.content | display_comment | to_trusted"></span>
+                        </span>
+                        <div id="footer_area" class="row" style="margin-top: 15px;">
+                            <div class="col-xs-10" style="float: left">
+                                <span ng-class="{ 'voted-like': (comment.vote != null && comment.vote.content == 1), 'unvoted' : !(comment.vote != null && comment.vote.content == 1)}"
+                                      ng-click="doVoteForComment(comment, comment.comment.annotationId, 'annotations',1)">
+                                    <i class="fa fa-thumbs-up"></i> {{comment.voteRates.like}}
+                                </span>
+                                <span ng-class="{'voted-dislike': (comment.vote != null && comment.vote.content == 0), 'unvoted' : !(comment.vote != null && comment.vote.content == 0)}"
+                                      style="margin-top: 10px;"
+                                      ng-click="doVoteForComment(comment, comment.comment.annotationId, 'annotations',0)">
+                                    <i class="fa fa-thumbs-down"></i> {{comment.voteRates.dislike}}
+                                </span>
+                                <span>
+                                    <a class="make_comment" ng-class="{'disabled' : (comment.voteRates.dislike + comment.voteRates.like) == 0}"
+                                       ng-click="showVoteResults(comment, 'annotations', true, comment.comment.annotationId)" translate>Değerlendirenler</a>
+                                </span>
+                                <span class="make_comment"
+                                      ng-click="comment.showChild=true;
+                                          comment.showChilds=true;
+                                          focusToCommentArea('comment_textarea_annotation_{{comment.comment.id}}')"
+                                      ng-init="comment.showChild = false">
+                                    <a translate>Yanıtla</a>
+                                </span>
+                                <span ng-bind-html="comment.comment.created | time_in_string | to_trusted"></span>
+                                <span ng-if="comment.comment.childs.length > 2 && !comment.showChilds" ng-click="comment.showChilds=true">
+                                    <i class="fa fa-mail-forward"></i> <span style="color:blue">{{comment.comment.childs.length}} {{'Yanıt' | translate}}</span>
+                                </span>
+                            </div>
+                            <div class="col-xs-2" align="right">
+                                <button type="button" class="btn btn-primary btn-xs" ng-click="displayCommentUpdateModal(annotation.comments, comment.comment, $index)"
+                                        ng-if="comment.owner.user_id==user.id"><i
+                                        class="fa fa-pencil-square-o "></i>
+                                </button>
+                                <button type="button" class="btn btn-danger btn-xs" ng-click="displayCommentDeleteModal(annotation.comments, comment.comment.id, $index)"
+                                        ng-if="comment.owner.user_id==user.id"><i
+                                        class="fa fa-trash-o"></i></button>
+                            </div>
                         </div>
-                        <div  class="col-lg-11">
-                            <span>
+                        <div ng-repeat="child_comment in comment.comment.childs" style="width: 100%;border-radius: 15px;padding-top: 10px !important;margin-top: 10px;" align="left" class="row well" ng-if="comment.showChilds">
+                            <div class="col-lg-1">
                                 <a href="" ng-click="navigateTo('/profile/user/{{child_comment.owner.user_id}}/')">
-                                    {{child_comment.owner.name}}
+                                    <img style="max-width: 80px; max-height: 60px;border-radius: 50%;" ng-src="{{child_comment.owner.photo}}"><br/>
                                 </a>
-                                <span ng-bind-html="child_comment.comment.content | display_comment | to_trusted"></span>
-                            </span>
-                            <div id="footer_area_child" class="row" style="margin-top: 15px;">
-                                <div class="col-xs-10" style="float: left">
-                                    <span ng-class="{ 'voted-like': (child_comment.vote != null && child_comment.vote.content == 1), 'unvoted' : !(child_comment.vote != null && child_comment.vote.content == 1)}"
-                                          ng-click="doVoteForComment(child_comment, child_comment.comment.annotationId, 'annotations',1)">
-                                    <i class="fa fa-thumbs-up"></i> {{child_comment.voteRates.like}}
-                                    </span>
-                                    <span ng-class="{'voted-dislike': (child_comment.vote != null && child_comment.vote.content == 0), 'unvoted' : !(child_comment.vote != null && child_comment.vote.content == 0)}"
-                                          style="margin-top: 10px;"
-                                          ng-click="doVoteForComment(child_comment, child_comment.comment.annotationId, 'annotations',0)">
-                                        <i class="fa fa-thumbs-down"></i> {{child_comment.voteRates.dislike}}
-                                    </span>
-                                    <span>
-                                        <a class="make_comment" ng-class="{'disabled' : (child_comment.voteRates.dislike + child_comment.voteRates.like) == 0}"
-                                           ng-click="showVoteResults(child_comment, 'annotations', true, child_comment.comment.annotationId)" translate>Değerlendirenler</a>
-                                    </span>
-                                    <span class="make_comment"
-                                          ng-click="comment.showChild = true;focusToCommentArea('comment_textarea_annotation_{{comment.comment.id}}')">
-                                        <a translate>Yanıtla</a>
-                                    </span>
-                                    <span ng-bind-html="child_comment.comment.created | time_in_string | to_trusted"></span>
-                                </div>
-                                <div class="col-xs-2" align="right">
-                                    <button type="button" class="btn btn-primary btn-xs" ng-click="displayCommentUpdateModal(comment.comment.childs, child_comment.comment, $index)"
-                                            ng-if="child_comment.owner.user_id==user.id"><i
-                                            class="fa fa-pencil-square-o "></i>
-                                    </button>
-                                    <button type="button" class="btn btn-danger btn-xs" ng-click="displayCommentDeleteModal(comment.comment.childs, child_comment.comment.id, $index)"
-                                            ng-if="child_comment.owner.user_id==user.id"><i
-                                            class="fa fa-trash-o"></i></button>
+                            </div>
+                            <div  class="col-lg-11">
+                                <span>
+                                    <a href="" ng-click="navigateTo('/profile/user/{{child_comment.owner.user_id}}/')">
+                                        {{child_comment.owner.name}}
+                                    </a>
+                                    <span ng-bind-html="child_comment.comment.content | display_comment | to_trusted"></span>
+                                </span>
+                                <div id="footer_area_child" class="row" style="margin-top: 15px;">
+                                    <div class="col-xs-10" style="float: left">
+                                        <span ng-class="{ 'voted-like': (child_comment.vote != null && child_comment.vote.content == 1), 'unvoted' : !(child_comment.vote != null && child_comment.vote.content == 1)}"
+                                              ng-click="doVoteForComment(child_comment, child_comment.comment.annotationId, 'annotations',1)">
+                                        <i class="fa fa-thumbs-up"></i> {{child_comment.voteRates.like}}
+                                        </span>
+                                        <span ng-class="{'voted-dislike': (child_comment.vote != null && child_comment.vote.content == 0), 'unvoted' : !(child_comment.vote != null && child_comment.vote.content == 0)}"
+                                              style="margin-top: 10px;"
+                                              ng-click="doVoteForComment(child_comment, child_comment.comment.annotationId, 'annotations',0)">
+                                            <i class="fa fa-thumbs-down"></i> {{child_comment.voteRates.dislike}}
+                                        </span>
+                                        <span>
+                                            <a class="make_comment" ng-class="{'disabled' : (child_comment.voteRates.dislike + child_comment.voteRates.like) == 0}"
+                                               ng-click="showVoteResults(child_comment, 'annotations', true, child_comment.comment.annotationId)" translate>Değerlendirenler</a>
+                                        </span>
+                                        <span class="make_comment"
+                                              ng-click="comment.showChild = true;focusToCommentArea('comment_textarea_annotation_{{comment.comment.id}}')">
+                                            <a translate>Yanıtla</a>
+                                        </span>
+                                        <span ng-bind-html="child_comment.comment.created | time_in_string | to_trusted"></span>
+                                    </div>
+                                    <div class="col-xs-2" align="right">
+                                        <button type="button" class="btn btn-primary btn-xs" ng-click="displayCommentUpdateModal(comment.comment.childs, child_comment.comment, $index)"
+                                                ng-if="child_comment.owner.user_id==user.id"><i
+                                                class="fa fa-pencil-square-o "></i>
+                                        </button>
+                                        <button type="button" class="btn btn-danger btn-xs" ng-click="displayCommentDeleteModal(comment.comment.childs, child_comment.comment.id, $index)"
+                                                ng-if="child_comment.owner.user_id==user.id"><i
+                                                class="fa fa-trash-o"></i></button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <div style="width: 100%;border-radius: 15px;padding-top: 10px !important;margin-top: 3px;" align="left" class="row well" ng-if="comment.showChild">
+                            <div class="col-lg-1">
+                                <a href="" ng-click="navigateTo('/profile/user/{{user.id}}/')">
+                                    <img style="max-width: 80px; max-height: 60px;border-radius: 50%;" ng-src="{{user.photo}}"><br/>
+                                </a>
+                            </div>
+                            <div  class="col-lg-10">
+                                <textarea id="comment_textarea_annotation_{{comment.comment.id}}"  ng-model="commentContent.value"  style="margin-top: 1%;width: 100%;height: 51px;border-radius: 9px;background-color: white;"/>
+                            </div>
+                            <div class="col-lg-1">
+                                <button type="button" class="btn btn-primary btn-xs"
+                                        ng-click="createComment(annotation, 'annotations', annotation.id, 'comment_textarea_annotation_{{comment.comment.id}}', comment.comment.id, $index)">
+                                    {{'Tamam' | translate}}
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                    <div style="width: 100%;border-radius: 15px;padding-top: 10px !important;margin-top: 3px;" align="left" class="row well" ng-if="comment.showChild">
-                        <div class="col-lg-1">
-                            <a href="" ng-click="navigateTo('/profile/user/{{user.id}}/')">
-                                <img style="max-width: 80px; max-height: 60px;border-radius: 50%;" ng-src="{{user.photo}}"><br/>
-                            </a>
-                        </div>
-                        <div  class="col-lg-10">
-                            <textarea id="comment_textarea_annotation_{{comment.comment.id}}"  ng-model="commentContent.value"  style="margin-top: 1%;width: 100%;height: 51px;border-radius: 9px;background-color: white;"/>
-                        </div>
-                        <div class="col-lg-1">
-                            <button type="button" class="btn btn-primary btn-xs"
-                                    ng-click="createComment(annotation, 'annotations', annotation.id, 'comment_textarea_annotation_{{comment.comment.id}}', comment.comment.id, $index)">
-                                {{'Tamam' | translate}}
-                            </button>
-                        </div>
+                </div>
+
+                <!-- new or update comment area-->
+                <div style="width: 100%;border-radius: 15px;padding-top: 10px !important;" align="left" class="row well" ng-if="user!=null">
+                    <div class="col-lg-1">
+                        <a href="" ng-click="navigateTo('/profile/user/{{user.id}}/')">
+                            <img style="max-width: 80px; max-height: 60px;border-radius: 50%;" ng-src="{{user.photo}}"><br/>
+                        </a>
+                    </div>
+                    <div  class="col-lg-10">
+                        <textarea id="comment_textarea_annotation" ng-model="commentContent.value" style="margin-top: 1%;width: 100%;height: 51px;border-radius: 9px;background-color: white;"/>
+                    </div>
+                    <div class="col-lg-1">
+                        <button type="button" class="btn btn-primary btn-xs"
+                                ng-click="createComment(annotation, 'annotations', annotation.id, 'comment_textarea_annotation', null, null)">
+                            {{'Tamam' | translate}}
+                        </button>
                     </div>
                 </div>
             </div>
-            <!-- new or update comment area-->
-            <div style="width: 100%;border-radius: 15px;padding-top: 10px !important;" align="left" class="row well" ng-if="user!=null">
-                <div class="col-lg-1">
-                    <a href="" ng-click="navigateTo('/profile/user/{{user.id}}/')">
-                        <img style="max-width: 80px; max-height: 60px;border-radius: 50%;" ng-src="{{user.photo}}"><br/>
-                    </a>
-                </div>
-                <div  class="col-lg-10">
-                    <textarea id="comment_textarea_annotation" ng-model="commentContent.value" style="margin-top: 1%;width: 100%;height: 51px;border-radius: 9px;background-color: white;"/>
-                </div>
-                <div class="col-lg-1">
-                    <button type="button" class="btn btn-primary btn-xs"
-                            ng-click="createComment(annotation, 'annotations', annotation.id, 'comment_textarea_annotation', null, null)">
-                        {{'Tamam' | translate}}
-                    </button>
-                </div>
-            </div>
+        </div>
+        <div style="margin-top: 80px;" align="center" class="row" ng-if="annotationRemoved">
+            <table cellpadding="0" cellspacing="0">
+                <tr>
+                    <td align="center" style="padding-right: 15px; padding-left: 15px; padding-bottom: 15px;
+                    width: 1050px; padding-top: 15px; background-color:#fff6dc">
+                        <strong translate>Not silindi</strong>
+                    </td>
+                </tr>
+            </table>
         </div>
         <div style="margin-top: 80px;" align="center" class="row" ng-if="authorizedAnnotationDisplay == 2">
             <table cellpadding="0" cellspacing="0">
