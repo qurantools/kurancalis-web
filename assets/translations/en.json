@@ -608,5 +608,7 @@
 "Dosya tipi *.csv olmalıdır.": "The file type should be * .csv.",
 "Dosya başarılı bir şekilde yüklendi.": "The file has been successfully uploaded.",
 ": Dosya içeriğini kontrol ediniz. İlk satır kolon başlıklarını içeriyor olabilir.": ": Check the file content. The first row may contain column headers.",
-"Not silindi": "Note removed"
+"Not silindi": "Note removed",
+"Kaldır": "Remove",
+"Tümünü Gör": "See All"
 }

@@ -78,9 +78,11 @@ angular.module('ionicApp')
         };
 
         $scope.fetchUserRecommendations = function(){
+            var limit =  config_data.isMobile ? 3 : 6;
+
             var userRestangular = Restangular.one("users/recommendations");
             $scope.recommendations = [];
-            userRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (data) {
+            userRestangular.customGET("", {limit: limit}, {'access_token': $scope.access_token}).then(function (data) {
                 $scope.recommendations = data;
             }, function (err){
 

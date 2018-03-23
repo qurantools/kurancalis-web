@@ -4,6 +4,24 @@
     <div ng-include="'app/components/profile/circle_navigation.html'"></div>
     <div class="nav-bottom"></div>
 
+    <div ng-controller="ProfileController">
+        <div class="well">
+            <br>
+            <div class="item item-divider" style="">
+                <span style="font-size:larger"><strong>{{'Öneriler - Kimleri eklemeli' | translate}}</strong></span>
+                <button class="btn btn-primary btn-xs" style="float: right" ng-click="navigateTo('/people/find_people/')" translate>Tümünü Gör</button>
+            </div>
+            <hr>
+            <div ng-repeat="recommendedUser in recommendations" class="item-icon-right" style="min-height: 40px; padding-top: 2px; padding-bottom: 2px; vertical-align: middle" item-height="10" ng-style="{'height': '10px'}" >
+
+                <img style="max-height: 30px; max-width: 30px" ng-src="{{recommendedUser.photo}}" ng-click="navigateTo('/profile/user/{{recommendedUser.id}}')">
+                <a  href="" ng-click="navigateTo('/profile/user/{{recommendedUser.username}}/')" style="color: darkblue;text-decoration: none;">{{recommendedUser.name  | limitTo: 20}}</a>
+
+                <button class="btn btn-primary btn-xs" style="float: right; margin-left: 10px" ng-click="hideRecommendation(recommendedUser.id)"><i class="fa fa-close"></i> {{'Kaldır' | translate}}</button>
+                <button class="btn btn-primary btn-xs" style="float: right" ng-click="addRecommendationToCircle(recommendedUser.id)" translate>Çevreye Ekle</button>
+            </div>
+        </div>
+    </div>
     <div class="row" style="margin-top: 10px;">
         <div infinite-scroll='loadMoreCirclesFeeds()' infinite-scroll-disabled='isLoading' infinite-scroll-immediate-check="false">
             <div ng-repeat="feed in feeds">
