@@ -1,5 +1,5 @@
 angular.module('ionicApp')
-    .controller('DetailedVerseCtrl', function ($scope, $timeout, Restangular, $location, authorization, $ionicModal, $ionicActionSheet, dataProvider, $ionicScrollDelegate, $ionicPopup, localStorageService, navigationManager, $translate) {
+    .controller('DetailedVerseCtrl', function ($scope, $timeout, $routeParams, Restangular, $location, authorization, $ionicModal, $ionicActionSheet, dataProvider, $ionicScrollDelegate, $ionicPopup, localStorageService, navigationManager, $translate) {
 
         $scope.detailedChapters = [];
         $scope.detailedVerseCircles = [];
@@ -33,6 +33,9 @@ angular.module('ionicApp')
         //mobile parameters
         $scope.taggedVerseCirclesForMobileSearch = [];
         $scope.taggedVerseUsersForMobileSearch = [];
+
+        //show modal title or not
+        $scope.isVerseDetail = true;
 
         // verse words
         $scope.wordsOfVerse = [];
@@ -509,6 +512,12 @@ angular.module('ionicApp')
         };
 
         $scope.initializeDetailedVerseController = function () {
+            if ( $location.path().indexOf("/verse/display/") > -1) {
+                if ($routeParams.hasOwnProperty("verseId")) {
+                    $scope.isVerseDetail = false;
+                }
+            }
+
             if (config_data.isMobile) {
                 $ionicModal.fromTemplateUrl('components/partials/tagged_verse_modal.html', {
                     scope: $scope,

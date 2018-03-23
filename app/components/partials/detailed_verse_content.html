@@ -1,0 +1,260 @@
+<div class="modal-content well">
+    <div class="modal-header" style="height: 60px;">
+        <!-- navigation-->
+        <div ng-if="isVerseDetail" style="float: left;font-size: 26px;">
+            <b translate>Ayet İnceleme</b>
+        </div>
+        <!-- search header-->
+        <div style="margin-top: -10px;position: absolute;left: 43%">
+            <div align="center" style="position: relative;left: -50%;">
+                <div style="float: left;">
+                    <ui-select ng-model="goToVerseParameters.chapter"
+                               theme="bootstrap"
+                               reset-search-input="false"
+                               style="width: 150px;"
+                               ng-enter="">
+                        <ui-select-match placeholder="{{'Sure' | translate}}">{{$select.selected.nameTr | translate}} - {{$select.selected.id}}</ui-select-match>
+                        <ui-select-choices repeat="chapter in detailedChapters | selectionFilter: {id: $select.search,nameTr: $select.search,nameTr2: $select.search}">
+                            {{chapter.id}}: {{'VERSE_NAME.' + chapter.nameTr | translate}} / {{'VERSE_DESCRIPTION.' + chapter.nameTr2 | translate}}
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+                <div style="float: left" data-placement="bottom">
+                    <input type="text" ng-model="goToVerseParameters.verse" size="3" ng-enter="verseNumberValidation()" placeholder="{{'Ayet' | translate}}" class="form-control"/>
+                </div>
+                <div style="float: left">
+                    <input type="hidden" ng-model="goToVerseParameters.chapter"/>
+                </div>
+
+                <div style="float: left; ">
+                    <button type="button" ng-click="verseNumberValidation()"
+                            class="btn btn-primary">
+                        <i class="fa fa-arrow-right" style="font-size: 1.3em"></i>
+                    </button>
+                </div>
+                <div style="float: left;">
+                    <div class="translation_nav_col1">
+                        <a href ng-click="gotoPrev()"><i class="fa fa-caret-left fa-3x"></i></a>
+                    </div>
+                    <div class="translation_nav_col1">
+                        <a href ng-click="gotoNext()"><i class="fa fa-caret-right fa-3x"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- right buttons-->
+        <div style="float: right;margin-top: -10px;">
+            <button class="btn btn-primary" data-target="#verseHistoryModal" data-toggle="modal" ng-click="openVerseHistory()"><i class="fa fa-history" style="font-size: 1.3em"></i></button>
+            <button type="button" data-dismiss="modal" aria-hidden="true" class="btn" translate>Tamam</button>
+        </div>
+    </div>
+    <div class="modal-body">
+        <!-- body-->
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="col-sm-3">
+                    <a ng-if='user!=null' href><div style='width:100%; height: 40px; padding-left: 40px;' data-target='#bookmark' data-dismiss="modal" data-toggle='modal' ng-click="openAddBookMarkModal(verse.id)"><i class='fa fa-bookmark' style='font-size: 1.3em'></i>&nbsp;&nbsp;&nbsp;&nbsp;{{'Burada Kaldım' | translate}}</div></a>
+                    <a ng-if='user!=null' href><div style='width:100%; height: 40px; padding-left: 40px;' data-target='#addVerseToVerseListModal' data-toggle='modal' ng-click='addVerseToVerseList(verse.id)'><i class='fa fa-plus-circle' style='font-size: 1.3em'></i>&nbsp;&nbsp;&nbsp;&nbsp;{{'Ayeti Listeye Ekle' | translate}}</div></a>
+                    <ul class="selectable_list">
+                        <li ng-repeat="author in authors"
+                            ng-click="detailedSearchAuthorToggleSelection(author.id)"
+                            ng-class="{ 'selected_list_item': localDetailedSearchAuthorSelection.indexOf(author.id) > -1}">
+                            {{author.name}}
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-sm-9" style="max-height: calc(100vh - 212px);overflow-y: auto;">
+                    <!-- verse words-->
+                    <div class="table-responsive col-xs-12">
+                        <table class="table table-xs table-striped table-condensed">
+                            <thead>
+                            <tr>
+                                <th translate>#</th>
+                                <th class="col-xs-1" translate>Arapça</th>
+                                <th class="col-xs-1" translate>Kök</th>
+                                <th class="col-xs-1" translate>Transcript</th>
+                                <th class="col-xs-3" translate>Okunuş</th>
+                                <th class="col-xs-3" translate>Türkçe</th>
+                                <th class="col-xs-3" translate>İngilizce</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="word in wordsOfVerse | orderBy : 'wordOrder'">
+                                <td nowrap>{{ word.wordOrder }}</td>
+                                <td nowrap><a href ng-click="openWordModal('word',word)" data-target='#wordDetailModal' data-toggle='modal' data-dismiss="modal" style="font-size: larger">{{ word.arabic }}</a></td>
+                                <td nowrap><a href ng-click="openWordModal('root',word)" data-target='#wordDetailModal' data-toggle='modal' data-dismiss="modal" style="font-size: larger">{{ word.rootArabic }}</a></td>
+                                <td nowrap>{{ word.rootTranscript }}</td>
+                                <td>{{ word.transcriptTurkish}}</td>
+                                <td>{{ word.turkish }}</td>
+                                <td>{{ word.english }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <br>
+                    <!-- translations-->
+                    <div id="detailed_translations">
+                        <div class="well translations col-xs-12" id="v_{{verse.id}}">
+                            <div class="row">
+                                <div ng-repeat="translation in verse.translations">
+                                    <div class="col-xs-11" id="detail_t_{{translation.id}}">
+                                        <div class="authorDiv_{{authorMap[translation.authorId].color}}">
+                                            {{authorMap[translation.authorId].name}}
+                                        </div>
+                                        <div id="tt_{{translation.id}}"
+                                             ng-class="{translation_rtl: authorMap[translation.authorId].language=='ar', translation_content: authorMap[translation.authorId].language!='ar'}"><span
+                                                ng-bind-html="translation.content | with_detailed_footnote_link:translation.id:translation.authorId | to_trusted"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- circle and user search area-->
+                    <div>
+                        <table style="width: 100%;margin-top: -20px;">
+                            <col width="45%">
+                            <col width="45%">
+                            <col width="10%">
+                            <tr>
+                                <td style="padding: 4px;">
+                                    <tags-input ng-model="detailedVerseUsers" placeholder="{{'Kişi Seçiniz' | translate}}" display-property="name"
+                                                replace-spaces-with-dashes="false" min-length="2">
+                                        <auto-complete source="kisilistele($query)" min-length="2"></auto-complete>
+                                    </tags-input>
+                                </td>
+                                <td style="padding: 4px;">
+                                    <tags-input ng-model="detailedVerseCircles" placeholder="{{'Çevre Seçiniz' | translate}}"
+                                                display-property="name" replace-spaces-with-dashes="false" min-length="1"
+                                                add-from-autocomplete-only="true" add-on-blur="false">
+                                        <auto-complete source="cevrelisteleForSearch()" load-on-empty="true"
+                                                       load-on-focus="true"></auto-complete>
+                                    </tags-input>
+                                </td>
+                                <td style="padding: 4px;">
+                                    <button type="button" ng-click="goToVerseDetail()"
+                                            class="btn btn-primary">
+                                        <i class="fa fa-search" style="font-size: 1.3em"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <!-- tags-->
+                    <div id="verseTags_{{verse.id}}" style="width:100%;margin-top: 5px" ng-show="detailedTags.length > 0">
+                        <div style="font-size: 20px"><i class='fa' style='font-size: 1.3em;margin-right: 10px;'></i><b translate>Etiketler</b></div>
+                        <div style="text-align: right;">
+                            <button ng-repeat="verseTag in detailedTags track by $index" class="btn btn-xs btn-info verse_tag"
+                                    ng-click="goToVerseTag(0, verse.id,verseTag, detailedVerseUsers, detailedVerseCircles)" data-target='#taggedVerseModal' data-dismiss="modal" data-toggle='modal'>
+                                {{verseTag}}</button>
+                        </div>
+                    </div>
+                    <!-- annotations-->
+                    <div ng-show="detailedAnnotations.length > 0" style="margin-top: 5px;">
+                        <div style="font-size: 20px"><i class='fa' style='font-size: 1.3em;margin-right: 10px;'></i><br><b translate>Ayet Notları</b></div>
+                        <div ng-repeat="annotation in detailedAnnotations | filter:{annotationId:'!!'}" class="box">
+                            <div class="s_a_header flexbox-container">
+                                <div style="float:left">
+                                    <span ng-bind-html="annotation.updated | time_in_string | to_trusted"></span>
+                                    <span style="margin-left: 10px"><a  href="" ng-click="navigateTo('/annotation/display/{{annotation.annotationId}}/')" data-dismiss="modal" style="color: #00f"><i class="fa fa-eye"></i> {{'Not Detayı' | translate}}</a></span>
+                                </div>
+                                <div style="float:right;">{{annotation.userName | limitTo: 25}}</div>
+                            </div>
+                            <div class="small_space" style="height: 20px;">&nbsp;</div>
+                            <div>
+                                <blockquote
+                                        ng-bind-html="annotation.translation_content | mark_verse_annotation:annotation:1 | newLineAllowed | to_trusted"></blockquote>
+                            </div>
+                            <div class="s_a_text">
+                                <span ng-bind-html="annotation.text | newLineAllowed | to_trusted"></span>
+                            </div>
+                            <div class="small_space" style="height: 5px;">&nbsp;</div>
+                            <div style="float: right">
+                                <button ng-repeat="annotationTag in annotation.tags" class="btn btn-xs btn-info verse_tag"
+                                        ng-click="goToVerseTag(0, annotation.verseId, annotationTag, detailedVerseUsers, detailedVerseCircles)" data-target='#taggedVerseModal' data-dismiss="modal" data-toggle='modal'>
+                                    {{annotationTag}}
+                                </button>
+                                <span ng-class="{ 'voted-like': (annotation.vote != null && annotation.vote.content == 1), 'unvoted' : !(annotation.vote != null && annotation.vote.content == 1)}"
+                                      ng-click="doVote(annotation,'annotations', 1)">
+                                            <i class="fa fa-thumbs-up"></i> {{annotation.voteRates.like}}
+                                        </span>
+                                <span ng-class="{'voted-dislike': (annotation.vote != null && annotation.vote.content == 0), 'unvoted' : !(annotation.vote != null && annotation.vote.content == 0)}"
+                                      ng-click="doVote(annotation,'annotations', 0)">
+                                            <i class="fa fa-thumbs-down"></i> {{annotation.voteRates.dislike}}
+                                        </span>
+                                <button type="button" class="btn btn-primary btn-xs"
+                                        ng-disabled="(annotation.voteRates.dislike + annotation.voteRates.like) == 0"
+                                        ng-click="showVoteResults(annotation, 'annotations')">
+                                    {{'Değerlendirenler' | translate}}
+                                </button>
+                                <button type="button" class="btn btn-primary btn-xs" ng-click="editAnnotation($index)"
+                                        ng-if="annotation.userId==user.id"><i
+                                        class="fa fa-pencil-square-o"></i>
+                                </button>
+                                <button type="button" class="btn btn-danger btn-xs" ng-click="deleteAnnotation($index)"
+                                        ng-if="annotation.userId==user.id"><i
+                                        class="fa fa-trash-o"></i></button>
+                            </div>
+                            <div class="small_space" style="height: 20px">&nbsp;</div>
+                        </div>
+                    </div>
+                    <!-- inferences-->
+                    <div ng-show="inferences.length > 0" style="margin-top: 5px;">
+                        <div style="font-size: 20px"><i class='fa' style='font-size: 1.3em;margin-right: 10px;'></i><br><b translate>Referanslar Veren Çıkarım Notları</b></div>
+                        <div ng-repeat="inference in inferences" class="well box">
+                            <div class="s_a_header">
+                                <div style="float:right;">{{inference.userName | limitTo: 25}}</div>
+                            </div>
+                            <div class="small_space">&nbsp;</div>
+                            <div>
+                                <table style="width: 100%;">
+                                    <tr>
+                                        <td>
+                                            <div style="float: left; width:200px; height:150px">
+                                                <a href ng-click="gotoInference({{inference.id}})" data-dismiss="modal"><img style="max-width: 200px; max-height: 150px" src="{{inference.image}}"></a>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div style="float: right">
+                                                <div style="text-align: center;"><a href data-dismiss="modal" ng-click="gotoInference({{inference.id}})"><h4 style="margin-top:0;">
+                                                    {{inference.title}}</h4>
+                                                </a></div>
+                                                <div style="padding-left:10px;">
+                                                    <span ng-bind-html="inference.brief | to_trusted"></span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div style="clear: both"></div>
+                            <div class="has-footer small_space">&nbsp;</div>
+                            <div ng-repeat="inferenceTag in inference.tags" class="tag label label-info s_a_tag">
+                                {{inferenceTag}}
+                            </div>
+                            <div class="small_space">&nbsp;</div>
+                            <div class="row" style="padding:0 15px">
+                                <div style="float: left"><span ng-bind-html="inference.updated | time_in_string | to_trusted"></span></div>
+                                <div style="float: right">
+                                        <span ng-class="{ 'voted-like': (inference.vote != null && inference.vote.content == 1), 'unvoted' : !(inference.vote != null && inference.vote.content == 1)}"
+                                              ng-click="doVote(inference,'inferences', 1)">
+                                            <i class="fa fa-thumbs-up"></i> {{inference.voteRates.like}}
+                                        </span>
+                                    <span ng-class="{'voted-dislike': (inference.vote != null && inference.vote.content == 0), 'unvoted' : !(inference.vote != null && inference.vote.content == 0)}"
+                                          ng-click="doVote(inference,'inferences', 0)">
+                                            <i class="fa fa-thumbs-down"></i> {{inference.voteRates.dislike}}
+                                        </span>
+                                    <button type="button" class="btn btn-primary btn-xs"
+                                            ng-disabled="(inference.voteRates.dislike + inference.voteRates.like) == 0"
+                                            ng-click="showVoteResults(inference, 'inferences')">
+                                        {{'Değerlendirenler' | translate}}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

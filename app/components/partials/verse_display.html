@@ -1,0 +1,8 @@
+<body ng-app="userSettings" ng-controller="VerseDisplayCtrl">
+    <div ng-include="'app/components/partials/off_canvas_menu.html'"></div>
+    <div class="container">
+        <div ng-include="'app/components/partials/verse_display_navigation.html'"></div>
+        <div class="nav-bottom"></div>
+        <div id="verseDisplay" ng-include="'app/components/partials/detailed_verse_content.html'" ng-controller="DetailedVerseCtrl"></div>
+    </div>
+</body>

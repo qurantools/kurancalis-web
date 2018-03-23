@@ -358,6 +358,12 @@ if (config_data.isMobile == false) { //false
                 reloadOnSearch: false,
                 pageTitle: 'Ayet Listelerim'
             })
+            .when('/verse/display/:verseId/', {
+                controller: 'VerseDisplayCtrl',
+                templateUrl: 'app/components/partials/verse_display.html',
+                reloadOnSearch: false,
+                pageTitle: 'Kuran Çalış - Ayet İnceleme'
+            })
             .when('/profile/user/', {
                 controller: 'ProfileController',
                 templateUrl: 'app/components/profile/friend.html',
@@ -386,19 +392,19 @@ if (config_data.isMobile == false) { //false
                  controller: 'AccountCtrl',
                  templateUrl: 'app/components/user/set_password_modal.html',
                  reloadOnSearch: false,
-                 pageTitle: 'Kuran Çalış - Çevre Zaman Tüneli'
+                 pageTitle: 'Kuran Çalış - Şifre Sıfırlama'
              })
              .when('/user/account/settings/', {
                 controller: 'UserSettingsCtrl',
                 templateUrl: 'app/components/user/settings.html',
                 reloadOnSearch: false,
-                pageTitle: 'Kuran Çalış - Çevre Zaman Tüneli'
+                pageTitle: 'Kuran Çalış - Kullanıcı Ayarları'
             })
             .when('/user/account/edit_batch_notes/', {
                 controller: 'BulkEditCtrl',
                 templateUrl: 'app/components/user/edit_batch_notes.html',
                 reloadOnSearch: false,
-                pageTitle: 'Kuran Çalış - Çevre Zaman Tüneli'
+                pageTitle: 'Kuran Çalış - Toplu Not Düzenleme'
             })
             .when('/', {
                 redirectTo: '/translations/'
@@ -650,19 +656,19 @@ if (config_data.isMobile == false) { //false
                         controller: 'AccountCtrl',
                         templateUrl: 'components/user/set_password_modal.html',
                         reloadOnSearch: false,
-                        pageTitle: 'Kuran Çalış - Çevre Zaman Tüneli'
+                        pageTitle: 'Kuran Çalış - Şifre Sıfırlama'
                     })
                     .when('/user/account/settings/', {
                         controller: 'UserSettingsCtrl',
                         templateUrl: 'components/user/settings.html',
                         reloadOnSearch: false,
-                        pageTitle: 'Kuran Çalış - Çevre Zaman Tüneli'
+                        pageTitle: 'Kuran Çalış - Kullanıcı Ayarları'
                     })
                     .when('/user/account/edit_batch_notes/', {
                         controller: 'BulkEditCtrl',
                         templateUrl: 'components/user/edit_batch_notes.html',
                         reloadOnSearch: false,
-                        pageTitle: 'Kuran Çalış - Çevre Zaman Tüneli'
+                        pageTitle: 'Kuran Çalış - Toplu Not Düzenleme'
                     })
                     .when('/', {
                         redirectTo: '/translations/',
@@ -1004,7 +1010,7 @@ app.factory('ChapterVerses', function ($resource) {
         var retcp = "";
 
         url = $location.path();
-        console.warn("URL: ",url)
+        console.warn("URL: ",url);
         if ( url == '/annotations/') {
             retcp = 'annotations';
         } else if ( url == "/people/circles/"){
