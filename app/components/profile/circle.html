@@ -1,10 +1,10 @@
-<body>
+<body ng-app="mymodal">
 <div class="container">
     <div ng-include="'app/components/partials/off_canvas_menu.html'"></div>
     <div ng-include="'app/components/profile/circle_navigation.html'"></div>
     <div class="nav-bottom"></div>
 
-    <div ng-controller="ProfileController">
+    <div>
         <div class="well">
             <br>
             <div class="item item-divider" style="">
@@ -18,7 +18,7 @@
                 <a  href="" ng-click="navigateTo('/profile/user/{{recommendedUser.username}}/')" style="color: darkblue;text-decoration: none;">{{recommendedUser.name  | limitTo: 20}}</a>
 
                 <button class="btn btn-primary btn-xs" style="float: right; margin-left: 10px" ng-click="hideRecommendation(recommendedUser.id)"><i class="fa fa-close"></i> {{'Kaldır' | translate}}</button>
-                <button class="btn btn-primary btn-xs" style="float: right" ng-click="addRecommendationToCircle(recommendedUser.id)" translate>Çevreye Ekle</button>
+                <button class="btn btn-primary btn-xs" style="float: right" ng-click="othercirclemodal(recommendedUser.id)" translate>Çevreye Ekle</button>
             </div>
         </div>
     </div>
@@ -138,4 +138,27 @@
     <!-- /row-->
 </div>
 <!-- /container-->
+
+<div align="center">
+    <othercirclemodal title="{{'Kişileri Başka Çevreye Ekle' | translate}}" visible="othercircle">
+        <div align="left">
+            <label>{{'Seçtiğiniz kişileri ayrıca aşağıdaki çevreye de ekleyebilirsiniz.' | translate}}</label>
+            <table>
+                <tr ng-repeat="item in cevreadlar">
+                    <td style="width:30px">
+                        <input type="radio" ng-model="csecim" value="false" name="groupA"
+                               ng-click="cevreadd('{{item.id}}')"/>
+                    </td>
+                    <td>
+                        {{item.name}}
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="modal-footer">
+            <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal" translate>Vazgeç</a>
+            <a class="btn btn-primary btn-wide btn-info" ng-click="kisiekcevre()" data-dismiss="modal" translate>Çevreye Ekle</a>
+        </div>
+    </othercirclemodal>
+</div>
 </body>
