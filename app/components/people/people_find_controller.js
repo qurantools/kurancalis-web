@@ -86,6 +86,11 @@ angular.module('ionicApp')
         };
 
         $scope.kisilistele = function (kisiad) {
+            if (kisiad == ""  || kisiad.length < 2){
+                $scope.kisiliste = [];
+                return;
+            }
+
             var kisilisteRestangular = Restangular.all("users/search");
             $scope.usersParams = [];
             $scope.usersParams.search_query = kisiad;
