@@ -155,7 +155,6 @@
                         <div ng-repeat="annotation in detailedAnnotations | filter:{annotationId:'!!'}" class="box">
                             <div class="s_a_header flexbox-container">
                                 <div style="float:left">
-                                    <span ng-bind-html="annotation.updated | time_in_string | to_trusted"></span>
                                     <span style="margin-left: 10px"><a  href="" ng-click="navigateTo('/annotation/display/{{annotation.annotationId}}/')" data-dismiss="modal" style="color: #00f"><i class="fa fa-eye"></i> {{'Not Detayı' | translate}}</a></span>
                                 </div>
                                 <div style="float:right;">{{annotation.userName | limitTo: 25}}</div>
@@ -169,11 +168,15 @@
                                 <span ng-bind-html="annotation.text | newLineAllowed | to_trusted"></span>
                             </div>
                             <div class="small_space" style="height: 5px;">&nbsp;</div>
+                            <button style="margin-top: 5px" ng-repeat="annotationTag in annotation.tags" class="btn btn-xs btn-info verse_tag"
+                                         ng-click="goToVerseTag(0, annotation.verseId, annotationTag, detailedVerseUsers, detailedVerseCircles)" data-target='#taggedVerseModal' data-dismiss="modal" data-toggle='modal'>
+                                {{annotationTag}}
+                            </button>
+                            <div class="small_space" style="height: 5px;">&nbsp;</div>
+                            <div style="float:left">
+                                <span ng-bind-html="annotation.updated | time_in_string | to_trusted"></span>
+                            </div>
                             <div style="float: right">
-                                <button ng-repeat="annotationTag in annotation.tags" class="btn btn-xs btn-info verse_tag"
-                                        ng-click="goToVerseTag(0, annotation.verseId, annotationTag, detailedVerseUsers, detailedVerseCircles)" data-target='#taggedVerseModal' data-dismiss="modal" data-toggle='modal'>
-                                    {{annotationTag}}
-                                </button>
                                 <span ng-class="{ 'voted-like': (annotation.vote != null && annotation.vote.content == 1), 'unvoted' : !(annotation.vote != null && annotation.vote.content == 1)}"
                                       ng-click="doVote(annotation,'annotations', 1)">
                                             <i class="fa fa-thumbs-up"></i> {{annotation.voteRates.like}}
