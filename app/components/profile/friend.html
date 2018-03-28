@@ -136,6 +136,16 @@
         </div>
     </div>
     <!-- /row-->
+    <div align="center" class="row" ng-if="user==null">
+        <table cellpadding="0" cellspacing="0">
+            <tr>
+                <td align="center" style="padding-right: 15px; padding-left: 15px; padding-bottom: 15px;
+                    width: 1050px; padding-top: 15px; background-color:#fff6dc">
+                    <strong translate>Bu kullanıcıyı görüntüleme yetkisine sahip değilsiniz! <br> Henüz giriş yapmadınız</strong>
+                </td>
+            </tr>
+        </table>
+    </div>
 </div>
 <div align="center">
     <digercevremodal title="{{'Çevreye Seçiniz' | translate}}" visible="select_circle">

@@ -610,5 +610,6 @@
 ": Dosya içeriğini kontrol ediniz. İlk satır kolon başlıklarını içeriyor olabilir.": ": Dosya içeriğini kontrol ediniz. İlk satır kolon başlıklarını içeriyor olabilir.",
 "Not silindi": "Not silindi",
 "Kaldır": "Kaldır",
-"Tümünü Gör": "Tümünü Gör"
+"Tümünü Gör": "Tümünü Gör",
+"Bu kullanıcıyı görüntüleme yetkisine sahip değilsiniz! <br> Henüz giriş yapmadınız": "Bu kullanıcıyı görüntüleme yetkisine sahip değilsiniz! <br> Henüz giriş yapmadınız"
 }
