@@ -516,6 +516,7 @@ mymodal = angular.module('ionicApp')
             if ( $location.path().indexOf("/verse/display/") > -1) {
                 if ($routeParams.hasOwnProperty("verseId")) {
                     $scope.idAttr = "verse_display";
+                    $scope.isVerseDetail = false;
                 } else {
                     console.log("VerseId is missing...")
                 }
@@ -583,6 +584,7 @@ mymodal = angular.module('ionicApp')
             $scope.$on('open_verse_detail', function(event, args) {
                 if ( $location.path().indexOf("/verse/display/") == -1) {
                      $scope.idAttr =  "detailed_translations";
+                    $scope.isVerseDetail = true;
                 }
 
                 $scope.verseId = parseInt(args.chapterVerse);
