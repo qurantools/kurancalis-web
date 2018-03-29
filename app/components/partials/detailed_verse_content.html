@@ -45,7 +45,7 @@
         <!-- right buttons-->
         <div style="float: right;margin-top: -10px;">
             <button class="btn btn-primary" data-target="#verseHistoryModal" data-toggle="modal" ng-click="openVerseHistory()"><i class="fa fa-history" style="font-size: 1.3em"></i></button>
-            <button type="button" data-dismiss="modal" aria-hidden="true" class="btn" translate>Tamam</button>
+            <button ng-if="isVerseDetail" type="button" data-dismiss="modal" aria-hidden="true" class="btn" translate>Tamam</button>
         </div>
     </div>
     <div class="modal-body">
@@ -93,7 +93,7 @@
                     </div>
                     <br>
                     <!-- translations-->
-                    <div id="detailed_translations">
+                    <div ng-attr-id="{{  idAttr }}">
                         <div class="well translations col-xs-12" id="v_{{verse.id}}">
                             <div class="row">
                                 <div ng-repeat="translation in verse.translations">

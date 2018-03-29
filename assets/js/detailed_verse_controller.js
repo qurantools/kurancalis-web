@@ -1,4 +1,4 @@
-angular.module('ionicApp')
+mymodal = angular.module('ionicApp')
     .controller('DetailedVerseCtrl', function ($scope, $timeout, $routeParams, Restangular, $location, authorization, $ionicModal, $ionicActionSheet, dataProvider, $ionicScrollDelegate, $ionicPopup, localStorageService, navigationManager, $translate) {
 
         $scope.detailedChapters = [];
@@ -36,6 +36,7 @@ angular.module('ionicApp')
 
         //show modal title or not
         $scope.isVerseDetail = true;
+        $scope.idAttr;
 
         // verse words
         $scope.wordsOfVerse = [];
@@ -66,7 +67,7 @@ angular.module('ionicApp')
         //Get all words of verse
         $scope.getWordsOfVerse = function () {
             Restangular.all('words').customGET("", {verse_id: $scope.verseId}, {}).then(function(data){
-                console.log("wordsOfVerse::",data);
+                //console.log("wordsOfVerse::",data);
                 $scope.wordsOfVerse = data;
             });
         };
@@ -184,7 +185,7 @@ angular.module('ionicApp')
                 delete detailedAnnotator;
             }
 
-            detailedAnnotator = new Annotator($('#detailed_translations'));
+            detailedAnnotator = new Annotator($('#' + $scope.idAttr));
             detailedAnnotator.setTranslationDivMap($scope.translationDivMap);
             detailedAnnotator.setAccessToken($scope.access_token);
 
@@ -514,7 +515,9 @@ angular.module('ionicApp')
         $scope.initializeDetailedVerseController = function () {
             if ( $location.path().indexOf("/verse/display/") > -1) {
                 if ($routeParams.hasOwnProperty("verseId")) {
-                    $scope.isVerseDetail = false;
+                    $scope.idAttr = "verse_display";
+                } else {
+                    console.log("VerseId is missing...")
                 }
             }
 
@@ -578,6 +581,10 @@ angular.module('ionicApp')
             };
 
             $scope.$on('open_verse_detail', function(event, args) {
+                if ( $location.path().indexOf("/verse/display/") == -1) {
+                     $scope.idAttr =  "detailed_translations";
+                }
+
                 $scope.verseId = parseInt(args.chapterVerse);
                 $scope.detailedVerseCircles = args.circles;
                 $scope.detailedVerseUsers = args.users;
