@@ -1,3 +1,4 @@
+<script src="assets/js/social-share-additional.js"></script>
 <div class="modal-content well">
     <div class="modal-header" style="height: 60px;">
         <!-- navigation-->
@@ -55,6 +56,22 @@
                 <div class="col-sm-3">
                     <a ng-if='user!=null' href><div style='width:100%; height: 40px; padding-left: 40px;' data-target='#bookmark' data-dismiss="modal" data-toggle='modal' ng-click="openAddBookMarkModal(verse.id)"><i class='fa fa-bookmark' style='font-size: 1.3em'></i>&nbsp;&nbsp;&nbsp;&nbsp;{{'Burada Kaldım' | translate}}</div></a>
                     <a ng-if='user!=null' href><div style='width:100%; height: 40px; padding-left: 40px;' data-target='#addVerseToVerseListModal' data-toggle='modal' ng-click='addVerseToVerseList(verse.id)'><i class='fa fa-plus-circle' style='font-size: 1.3em'></i>&nbsp;&nbsp;&nbsp;&nbsp;{{'Ayeti Listeye Ekle' | translate}}</div></a>
+
+                    <a ng-if='user!=null' href ng-click="popoveropen()" tabindex="0" role="button" data-toggle="popover" style="padding-left: 40px;" data-content="
+                           <div class='form-control' style='width:130px; height:auto; text-align=center'>
+                                <a id='url' class='btn btn-primary btn-xs' ng-click='kopyala(shareUrl)'><i class='fa fa-link'></i>&nbsp;&nbsp;{{'Linki Kopyala' | translate}}</a>
+                                <hr style='padding: 0; margin-top: 4px !important; margin-bottom:3px !important; height:1px; width:100%' />
+                                <a facebook class='facebookShare' data-url='{{shareUrl}}' data-size='tall'></a>
+                                <hr style='padding: 0; margin-top: 0 !important; margin-bottom:3px !important; height:1px; width:100%' />
+                                <a twitter data-lang='tr' data-count='horizontal' data-url='{{shareUrl}}' data-via='kurancalis' data-size='tall' data-text='Kuran Çalış - {{title}}'></a>
+                                <hr style='padding: 0; margin-top: 0 !important; margin-bottom:3px !important; height:1px; width:100%' />
+                                <a gplus class='g-plus' data-height='24' data-annotation='none' data-href='{{shareUrl}}' data-action='share' ng-click='popoverclose()'></a>
+                            </div>
+                            " data-html="true">
+                            <i data-toggle="popover" class="fa fa-share-alt large_icon"></i>&nbsp;&nbsp;&nbsp;&nbsp;Ayeti Paylaş
+                    </a>
+                    <br><br>
+
                     <ul class="selectable_list">
                         <li ng-repeat="author in authors"
                             ng-click="detailedSearchAuthorToggleSelection(author.id)"

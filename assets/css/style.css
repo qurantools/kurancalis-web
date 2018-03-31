@@ -427,3 +427,8 @@ https://github.com/twbs/bootstrap/issues/10493
 #authors .col0 {text-align: right;}
 #authors thead .col1 {width: 212px;}
 #authors thead .col2 {width: 141px;}
+
+#verse_detail_dropdown .dropdown-menu {
+    top: 0;
+    left: 100%;
+}

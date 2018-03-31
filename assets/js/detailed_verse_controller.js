@@ -1,5 +1,5 @@
 mymodal = angular.module('ionicApp')
-    .controller('DetailedVerseCtrl', function ($scope, $timeout, $routeParams, Restangular, $location, authorization, $ionicModal, $ionicActionSheet, dataProvider, $ionicScrollDelegate, $ionicPopup, localStorageService, navigationManager, $translate) {
+    .controller('DetailedVerseCtrl', function ($scope, $compile, $timeout, $routeParams, Restangular, $location, authorization, $ionicModal, $ionicActionSheet, dataProvider, $ionicScrollDelegate, $ionicPopup, localStorageService, navigationManager, $translate) {
 
         $scope.detailedChapters = [];
         $scope.detailedVerseCircles = [];
@@ -37,6 +37,8 @@ mymodal = angular.module('ionicApp')
         //show modal title or not
         $scope.isVerseDetail = true;
         $scope.idAttr;
+        $scope.shareUrl = "";
+        $scope.shareTitle = "Ayet Paylaşma";
 
         // verse words
         $scope.wordsOfVerse = [];
@@ -63,20 +65,20 @@ mymodal = angular.module('ionicApp')
             ]
         );
 
-
-        //Get all words of verse
-        $scope.getWordsOfVerse = function () {
-            Restangular.all('words').customGET("", {verse_id: $scope.verseId}, {}).then(function(data){
-                //console.log("wordsOfVerse::",data);
-                $scope.wordsOfVerse = data;
-            });
+        $scope.popoveropen=function(){
+            $compile($('.popover.in').contents())($scope);
+            $('body').on('click', $scope.popoverclose);
         };
 
-        $scope.openWordModal = function (type, word) {
-            var selectedItem = { type:type, word: word};
-
-            $scope.showWordDetail(selectedItem);
+        $scope.popoverclose= function(e){
+            //clicking on popover toggle button is processed itself. Any other place hides the popover
+            if ($(e.target).data('toggle') !== 'popover'
+            ){
+                $('[data-toggle="popover"]').popover('hide');
+                $('body').unbind('click',$scope.popoverclose);
+            }
         };
+
 
         $scope.goToVerseDetail = function(){
             $scope.showProgress("showVerseDetails");
@@ -86,6 +88,8 @@ mymodal = angular.module('ionicApp')
             $scope.get_inferences();
             $scope.addVerseToHistory($scope.verseId);
             $scope.getWordsOfVerse();
+
+            $scope.shareUrl =  config_data.webAddress + "/#!/verse/display/" + $scope.verseId;
         };
 
         $scope.verseNumberValidation = function () {
@@ -582,6 +586,21 @@ mymodal = angular.module('ionicApp')
             };
 
             $scope.$on('open_verse_detail', function(event, args) {
+
+                //Get all words of verse
+                $scope.getWordsOfVerse = function () {
+                    Restangular.all('words').customGET("", {verse_id: $scope.verseId}, {}).then(function(data){
+                        //console.log("wordsOfVerse::",data);
+                        $scope.wordsOfVerse = data;
+                    });
+                };
+
+                $scope.openWordModal = function (type, word) {
+                    var selectedItem = { type:type, word: word};
+
+                    $scope.showWordDetail(selectedItem);
+                };
+
                 if ( $location.path().indexOf("/verse/display/") == -1) {
                      $scope.idAttr =  "detailed_translations";
                     $scope.isVerseDetail = true;
