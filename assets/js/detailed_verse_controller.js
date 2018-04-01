@@ -80,7 +80,7 @@ mymodal = angular.module('ionicApp')
         };
 
         $scope.setShareUrl = function () {
-            $scope.shareUrl =  config_data.webAddress + "/#!/verse/display/" + $scope.verseId + "?author=" + $scope.detailed_query_author_mask;
+            $scope.shareUrl =  config_data.webAddress + "/__/verse/display/" + $scope.verseId + "?author=" + $scope.detailed_query_author_mask;
             $scope.scopeApply();
         };
 
