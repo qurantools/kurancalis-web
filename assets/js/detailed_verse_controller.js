@@ -331,6 +331,8 @@ mymodal = angular.module('ionicApp')
                 $scope.localStorageManager.storeVariables($scope);
                 $scope.getVerseTranslations();
             }
+
+            $scope.setShareUrl();
         };
 
         $scope.setDetailedSearchAuthorSelection = function (authorMask) {
@@ -343,8 +345,6 @@ mymodal = angular.module('ionicApp')
             }
             $scope.detailed_query_author_mask = mask.value;
             $scope.localStorageManager.storeVariables($scope);
-
-            $scope.setShareUrl();
         };
 
         $scope.updateAuthors = function () {
