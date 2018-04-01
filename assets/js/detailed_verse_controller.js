@@ -79,6 +79,11 @@ mymodal = angular.module('ionicApp')
             }
         };
 
+        $scope.setShareUrl = function () {
+            $scope.shareUrl =  config_data.webAddress + "/#!/verse/display/" + $scope.verseId + "?author=" + $scope.detailed_query_author_mask;
+            $scope.scopeApply();
+        };
+
 
         $scope.goToVerseDetail = function(){
             $scope.showProgress("showVerseDetails");
@@ -89,7 +94,7 @@ mymodal = angular.module('ionicApp')
             $scope.addVerseToHistory($scope.verseId);
             $scope.getWordsOfVerse();
 
-            $scope.shareUrl =  config_data.webAddress + "/#!/verse/display/" + $scope.verseId;
+            $scope.setShareUrl();
         };
 
         $scope.verseNumberValidation = function () {
@@ -338,6 +343,8 @@ mymodal = angular.module('ionicApp')
             }
             $scope.detailed_query_author_mask = mask.value;
             $scope.localStorageManager.storeVariables($scope);
+
+            $scope.setShareUrl();
         };
 
         $scope.updateAuthors = function () {
@@ -523,6 +530,11 @@ mymodal = angular.module('ionicApp')
                     $scope.isVerseDetail = false;
                 } else {
                     console.log("VerseId is missing...")
+                }
+
+                if ($routeParams.hasOwnProperty("author")) {
+                    $scope.detailed_query_author_mask = $routeParams.author;
+                    $scope.setDetailedSearchAuthorSelection($scope.detailed_query_author_mask);
                 }
             }
 
