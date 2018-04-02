@@ -13,6 +13,10 @@ else if($pageExist && $_GET['page'] == "annotation"){
     $jsonData = getAnnotation($SITE_ROOT);
     makeAnnotationPage($jsonData, $SITE_ROOT);
 }
+else if($pageExist && $_GET['page'] == "verse") {
+    $jsonData = getVerseDetails($SITE_ROOT);
+    makeVerseDetailsPage($jsonData, $SITE_ROOT);
+}
 else{
 	$jsonData = getInference($SITE_ROOT);
 	makePage($jsonData, $SITE_ROOT);
@@ -27,6 +31,14 @@ function getInference($siteRoot) {
 function getAnnotation($siteRoot) {
     $id = ctype_digit($_GET['id']) ? $_GET['id'] : 1;
     $rawData = file_get_contents($siteRoot.'annotations/'.$id);
+    return json_decode($rawData);
+}
+//TODO: update
+function getVerseDetails($siteRoot) {
+    $id = ctype_digit($_GET['id']) ? $_GET['id'] : 1;
+    $chapter = floor( $_GET['verse']/1000 );
+    $verse = $_GET['verse']%1000;
+    $rawData = file_get_contents($siteRoot.'translations/?chapter='.$chapter.'&verse='.$verse);
     return json_decode($rawData);
 }
 
@@ -123,6 +135,39 @@ function showChapter($chapter, $author, $content){
     </body>
     </html>
 <?php
+}
+
+function makeVerseDetailsPage($data, $siteRoot) {
+    $title = $data[0]->chapter.' : '.$data[0]->verse." Ayet Detayı";
+    $verseId = $_GET['verse'];
+    ?>
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+
+        <meta charset="utf-8" />
+        <meta property="fb:app_id" content="295857580594128" />
+        <meta property="og:url"    content="http://kurancalis.com/__/verse/display/<?php echo $verseId; ?>" />
+        <meta property="og:title" content="<?php echo addslashes(title); ?>" />
+        <meta property="og:description" content="<?php echo $data[0]->content; ?>" />
+        <meta property="og:image" content="<?php echo $data->image; ?>" />
+        <meta property="og:type"   content="website" />
+    </head>
+    <body>
+    <h1><?php echo addslashes($title); ?></h1>
+    <strong>Not: </strong>
+    <?php
+        $length = sizeof($data);
+        for($i = 0; $i<$length; $i++){
+            echo $data[$i]->content."</br>";
+        }
+    ?>
+    <a href="http://kurancalis.com">kurancalis.com</a>
+    </body>
+    </html>
+
+    <?php
 }
 
 

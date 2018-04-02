@@ -4,6 +4,8 @@ RewriteRule __/inference/display/(\d*)$ /#!/inference/display/$1 [NE,R]
 RewriteRule __/annotation/display/(\d*)$ /#!/annotation/display/$1 [NE,R]
 RewriteRule __/translations/yazar/(\d*)/sure/(\d*) /#!/translations/?author=$1&chapter=$2 [NE,R]
 RewriteRule __/translations /#!/translations [NE,R]
+RewriteRule __/verse/display/(\d*)/ /#!/verse/display/$1/ [NE,R]
+RewriteRule __/verse/display/(\d*) /#!/verse/display/$1 [NE,R]
 
 
 # allow social media crawlers to work by redirecting them to a server-rendered static version on the page
@@ -12,6 +14,9 @@ RewriteRule inference/display/(\d*)$ /assets/php/static_view.php?id=$1 [P]
 
 RewriteCond %{HTTP_USER_AGENT} (facebookexternalhit/[0-9]|Twitterbot|Pinterest|Googlebot)
 RewriteRule annotation/display/(\d*)$ /assets/php/static_view.php?page=annotation&id=$1 [P]
+
+RewriteCond %{HTTP_USER_AGENT} (facebookexternalhit/[0-9]|Twitterbot|Pinterest|Googlebot)
+RewriteRule verse/display/(\d*)\?authors=(\d*)$ /assets/php/static_view.php?page=verse&verse=$1&authors=$2 [P]
 
 RewriteCond %{HTTP_USER_AGENT} (facebookexternalhit/[0-9]|Twitterbot|Pinterest|Googlebot)
 RewriteRule translations/yazar/(\d*)/sure/(\d*)$ /assets/php/static_view.php?page=translations&author=$1&chapter=$2 [P]
