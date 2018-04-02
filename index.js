@@ -1092,6 +1092,10 @@ app.factory('ChapterVerses', function ($resource) {
     };
 
 
+    $scope.openPopover = function (verseId) {
+        $scope.$broadcast('social_share_verse_id', verseId);
+    };
+
     //sub page should write the its function if it needs custom login.
     $scope.login = function () { //new
         authorization.login($scope.onFacebookLoginSuccess);

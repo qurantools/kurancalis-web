@@ -67,7 +67,6 @@ angular.module('ionicApp')
         $scope.filterChanged = false;
         $scope.loadingVerse = -1;
 
-
         $scope.restoreChapterViewParameters = function (localParameterData) {
             $scope.query_author_mask = localParameterData.author_mask;
             $scope.query_chapter_id = localParameterData.chapter_id;

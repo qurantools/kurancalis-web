@@ -117,7 +117,6 @@
 
     <script src="http://platform.twitter.com/widgets.js"></script>
 
-
     <script src="assets/libs/videogular/videogular.js"></script>
     <script src="assets/libs/videogular/vg-controls.js"></script>
     <script src="assets/libs/videogular/vg-overlay-play.js"></script>
@@ -137,6 +136,8 @@
     <script src="assets/js/profile/profile_controller.js"></script>
     <script src="assets/js/versehistory/verse_history_controller.js"></script>
     <script src="assets/js/vote/vote_controller.js"></script>
+    <script src="assets/js/social_share.js"></script>
+
 
     <!-- angular-ui-notification -->
     <script src="assets/js/angular-ui-notification.min.js"></script>
@@ -148,6 +149,7 @@
 
 </div>
 <!-- All partial screens/components what are used commony on many pages -->
+<div ng-include="'app/components/partials/social_share_modal.html'"></div>
 <div ng-include="'app/components/partials/detailed_word.html'"></div>
 <div ng-include="'app/components/user/login_modal.html'"></div>
 <div ng-include="'app/components/user/create_account_modal.html'"></div>
