@@ -79,7 +79,7 @@
                         </li>
                     </ul>
                 </div>
-                <div class="col-sm-9" style="max-height: calc(100vh - 212px);overflow-y: auto;">
+                <div class="col-sm-9" ng-style="{'max-height': isVerseDetail ? 'calc(100vh - 212px)' : '', 'overflow-y': isVerseDetail ? 'auto' : '' }">
                     <!-- verse words-->
                     <div class="table-responsive col-xs-12">
                         <table class="table table-xs table-striped table-condensed">
