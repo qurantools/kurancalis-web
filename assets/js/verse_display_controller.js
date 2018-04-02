@@ -17,7 +17,7 @@ angular.module('ionicApp')
                 if(!$scope.loggedIn && $scope.user == null){
                     $("#loginModal").modal("show");
                 }
-            },1000)
+            },3000)
         }
     };
 
