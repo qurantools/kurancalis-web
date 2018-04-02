@@ -1,6 +1,6 @@
 <script src="assets/js/social_share_additional.js"></script>
 <div class="modal" id="social_share_modal" ng-controller="SocialShareCtrl">
-    <div class="modal-dialog modal-xs">
+    <div class="modal-dialog" style="width: 270px">
         <div class="modal-content">
             <div class="modal-header">
 
@@ -19,14 +19,14 @@
                     <!--<a gplus class='g-plus' data-height='24' data-annotation='none' data-href='{{shareUrl}}' data-action='share'></a>-->
                 <!--</div>-->
 
-                <div class='form-control' style="height: auto">
-                    <a ng-if='user!=null' id='url' ng-click='kopyala(shareUrl)' href='javascript:void(0)' data-dismiss="modal"><div style='width:100%; height: 40px; padding-top:8px;'><i class='fa fa-link' style='font-size: 1.3em'></i>&nbsp;&nbsp;&nbsp;&nbsp;{{'Linki Kopyala' | translate}}</div></a>
-                    <hr ng-if='user!=null' style='padding: 0; margin-top:0 !important; margin-bottom:0 !important; height:1px; width:100%' />
-                    <a class='js-social-share' data-dismiss="modal" href='https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F{{url}}%3A63342%2Fkurancalis-web%2F__%2Fverse%2Fdisplay%2F{{verseId}}'><div style='width:100%; height: 40px; padding-top:8px;' target='_parent'><i class='fa fa-facebook-f' style='font-size: 1.3em; color: #3A589B'></i>&nbsp;&nbsp;&nbsp;&nbsp; Facebook</div></a>
+                <div class='form-control' style="height: auto; text-align: center">
+                    <a ng-if='user!=null' id='url' ng-click='kopyala(shareUrl)' href='javascript:void(0)' data-dismiss="modal"><div style='width:100%; height: 40px; padding-top:8px;'><span style='font-size: 1.4em'><i class='fa fa-link'></i>&nbsp;&nbsp;&nbsp;&nbsp;{{'Linki Kopyala' | translate}}</span></div></a>
+                    <hr ng-if='user!=null' style='padding: 0; margin-top:5px !important; margin-bottom:0 !important; height:1px; width:100%' />
+                    <a class='js-social-share' data-dismiss="modal" href='https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F{{url}}%3A63342%2Fkurancalis-web%2F__%2Fverse%2Fdisplay%2F{{verseId}}'><div style='width:100%; height: 40px; padding-top:8px;' target='_parent'><span style='font-size: 1.4em; color: #3A589B'><i class='fa fa-facebook-f'></i>&nbsp;&nbsp;&nbsp;&nbsp; Facebook</span></div></a>
                     <hr ng-if='user!=null' style='padding: 0; margin-ntop:0 !important; margin-bottom:0 !important; height:1px; width:100%' />
-                    <a data-dismiss="modal" href='https://twitter.com/intent/tweet?original_referer=http%3A%2F%2F{{url}}%3A63342%2Fkurancalis-web%2F&ref_src=twsrc%5Etfw&text=Kuran%20%C3%87al%C4%B1%C5%9F%20-%20&tw_p=tweetbutton&url=http%3A%2F%2F{{url}}%3A63342%2Fkurancalis-web%2F__%2Fverse%2Fdisplay%2F{{verseId}}&via=kurancalis' target='_parent'><div style='width:100%; height: 40px; padding-top:8px;'><i class='fa fa-twitter' style='font-size: 1.3em; color: #A6D2F5'></i>&nbsp;&nbsp;&nbsp;&nbsp; Twitter</div></a>
-                    <hr ng-if='user!=null' style='padding: 0; margin-top:0 !important; margin-bottom:0 !important; height:1px; width:100%' />
-                    <a class='js-social-share' data-dismiss="modal" href='https://plus.google.com/share?app=110&url=http%3A%2F%2F{{url}}%3A63342%2Fkurancalis-web%2F__%2Fverse%2Fdisplay%2F{{verseId}}&via=kurancalis' target='_parent'><div style='width:100%; height: 40px; padding-top:8px;'><i class='fa fa-google' style='font-size: 1.3em; color: #D34338'></i>&nbsp;&nbsp;&nbsp;&nbsp; Google+</div></a>
+                    <a data-dismiss="modal" href='https://twitter.com/intent/tweet?original_referer=http%3A%2F%2F{{url}}%3A63342%2Fkurancalis-web%2F&ref_src=twsrc%5Etfw&text=Kuran%20%C3%87al%C4%B1%C5%9F%20-%20&tw_p=tweetbutton&url=http%3A%2F%2F{{url}}%3A63342%2Fkurancalis-web%2F__%2Fverse%2Fdisplay%2F{{verseId}}&via=kurancalis' target='_parent'><div style='width:100%; height: 40px; padding-top:8px;'><span style='font-size: 1.4em; color: #A6D2F5'><i class='fa fa-twitter'></i>&nbsp;&nbsp;&nbsp;&nbsp; Twitter</span></div></a>
+                    <hr ng-if='user!=null' style='padding: 0; margin-top:5px !important; margin-bottom:0 !important; height:1px; width:100%' />
+                    <a class='js-social-share' data-dismiss="modal" href='https://plus.google.com/share?app=110&url=http%3A%2F%2F{{url}}%3A63342%2Fkurancalis-web%2F__%2Fverse%2Fdisplay%2F{{verseId}}&via=kurancalis' target='_parent'><div style='width:100%; height: 40px; padding-top:8px;'><span style='font-size: 1.4em; color: #D34338'><i class='fa fa-google'></i>&nbsp;&nbsp;&nbsp;&nbsp; Google+</span></div></a>
                 </div>
             </div>
 
