@@ -162,8 +162,9 @@ angular.module('ionicApp')
         //selected authors
         $scope.setDetailedSearchAuthorSelection = function (authorMask) {
             $scope.detailedSearchAuthorSelection = [];
+            var mask = bigInt(authorMask);
             for (var index in $scope.authorMap) {
-                if (authorMask & $scope.authorMap[index].id) {
+                if (mask.and($scope.authorMap[index].id).value != 0) {
                     $scope.detailedSearchAuthorSelection.push($scope.authorMap[index].id);
                 }
             }
