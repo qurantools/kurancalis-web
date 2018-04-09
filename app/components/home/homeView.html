@@ -160,7 +160,7 @@
                  ng-click="scrollToElmnt('t_'+annotation.translationId)">
                 <!-- s_a -->
                 <div class="s_a_header flexbox-container">
-                    <div><a  href="" ng-click="navigateTo('/annotation/display/{{annotation.annotationId}}/')" style="float:left; color: darkblue;">{{annotation.verseId / 1000 | number:0}}:{{annotation.verseId % 1000}}</a></div>
+                    <div><a  href="" ng-click="showVerseDetail(annotation.verseId, [], [])" data-target="#detailedVerseModal" data-dismiss="modal" data-toggle="modal" style="float:left; color: darkblue;">{{annotation.verseId / 1000 | number:0}}:{{annotation.verseId % 1000}}</a></div>
                     <div style="float:right;"><a  href="" ng-click="navigateTo('/profile/user/{{annotation.userId}}/')" style="color: darkblue;">{{annotation.userName | limitTo: 25}}</a></div>
                 </div>
                 <div>
@@ -170,13 +170,18 @@
                     <span ng-bind-html="annotation.text | newLineAllowed | to_trusted"></span>
                 </div>
                 <div ng-repeat="annotationTag in annotation.tags" class="tag label label-info s_a_tag" style="white-space: normal">
-                    {{annotationTag}}
+                    <a  href="" ng-click="goToVerseTag(0, annotation.verseId, annotationTag, query_users, query_circles)" data-target="#taggedVerseModal" data-dismiss="modal" data-toggle="modal" style="background-color: #3498DB; color: white">{{annotationTag}}</a>
                 </div>
                 <div class="row" style="padding:0 15px">
                     <div style="float: left"><span ng-bind-html="annotation.updated | time_in_string | to_trusted"></span></div>
                     <div style="float: right">
+                        <!--
                         <span ng-click="addToStorageForFocus2Comment();navigateTo('/annotation/display/{{annotation.id}}/')" style="margin-right: 10px;" class="make_comment">
                             <span style="color: #00f;margin-right: 10px;" translate>Yorum Yaz</span><i class="fa fa-comment"></i> {{annotation.commentCount}}
+                        </span>
+                        -->
+                        <span>
+                            <a  href="" ng-click="navigateTo('/annotation/display/{{annotation.annotationId}}/')" style="margin-right: 10px; color: darkblue;" translate>Nota Git</a>
                         </span>
                         <span ng-class="{'voted-like': (annotation.vote != null && annotation.vote.content == 1), 'unvoted' : !(annotation.vote != null && annotation.vote.content == 1)}"
                               ng-click="doVote(annotation,'annotations', 1)">
