@@ -8,14 +8,14 @@ angular.module('ionicApp').factory("localDataProvider", function (Restangular, $
         var dbName = "kurancalis.db";
         window.plugins.sqlDB.copy(dbName, 0, function () {
             console.log("DB copied");
-            factory.db = $cordovaSQLite.openDB(dbName);
+            factory.db = $cordovaSQLite.openDB({ "name":dbName , location: 'default'});
             rt.$broadcast('db.init.finish');
             rt.sqliteDbInit = true;
         }, function (error) {
             console.log("Error on copy. May be already exist");
             //may be already exists
             //if it is old, update it
-            factory.db = $cordovaSQLite.openDB(dbName);
+            factory.db = $cordovaSQLite.openDB({ "name":dbName , location: 'default'});
             //check version
 
             var resultSet = [];
