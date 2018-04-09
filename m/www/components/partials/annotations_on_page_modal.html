@@ -60,7 +60,7 @@
                               ng-click="showVoteResults(annotation, 'annotations');$event.stopPropagation()">
                             <i class="fa fa-pie-chart"></i> {{(annotation.voteRates.dislike + annotation.voteRates.like)}} {{'Oy' | translate}}
                         </span>
-                        <span ng-click="navigateTo('/annotation/display/{{annotation.id}}/');closeModal('annotations_on_page');" style="text-align: right" class="make_comment">
+                        <span ng-click="navigateTo('/annotation/display/{{annotation.id}}/');closeModal('annotations_on_page');" style="text-align: right; color: darkblue;" class="make_comment">
                             <i class="fa fa-comment"></i> {{annotation.commentCount}} &nbsp; {{'Nota Git' | translate}}
                         </span>
                     </div>
@@ -69,7 +69,7 @@
                           ng-click="showVoteResults(annotation, 'annotations');$event.stopPropagation()">
                             <i class="fa fa-pie-chart"></i> {{(annotation.voteRates.dislike + annotation.voteRates.like)}} {{'Oy' | translate}}
                         </span>
-                        <span ng-click="navigateTo('/annotation/display/{{annotation.id}}/');closeModal('annotations_on_page');" style="text-align: right" class="make_comment">
+                        <span ng-click="navigateTo('/annotation/display/{{annotation.id}}/');closeModal('annotations_on_page');" style="text-align: right; color: darkblue;" class="make_comment">
                             <i class="fa fa-comment"></i> {{annotation.commentCount}} &nbsp; {{'Nota Git' | translate}}
                         </span>
                         <div style="float: right">
