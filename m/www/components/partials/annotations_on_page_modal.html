@@ -60,13 +60,8 @@
                               ng-click="showVoteResults(annotation, 'annotations');$event.stopPropagation()">
                             <i class="fa fa-pie-chart"></i> {{(annotation.voteRates.dislike + annotation.voteRates.like)}} {{'Oy' | translate}}
                         </span>
-                        <!--
-                        <span ng-click="navigateTo('/annotation/display/{{annotation.id}}/');closeModal('annotations_on_page');" style="margin-right: 10px;" class="make_comment">
-                            <i class="fa fa-comment"></i> {{annotation.commentCount}} {{'Yorum' | translate}}
-                        </span>
-                        -->
-                        <span ng-click="navigateTo('/annotation/display/{{annotation.id}}/');closeModal('annotations_on_page')" style="margin-right: 10px; color: darkblue;">
-                            {{'Nota Git' | translate}}
+                        <span ng-click="navigateTo('/annotation/display/{{annotation.id}}/');closeModal('annotations_on_page');" style="text-align: right" class="make_comment">
+                            <i class="fa fa-comment"></i> {{annotation.commentCount}} &nbsp; {{'Nota Git' | translate}}
                         </span>
                     </div>
                     <div ng-if="user.id==annotation.userId" class="fit-content">
@@ -74,13 +69,8 @@
                           ng-click="showVoteResults(annotation, 'annotations');$event.stopPropagation()">
                             <i class="fa fa-pie-chart"></i> {{(annotation.voteRates.dislike + annotation.voteRates.like)}} {{'Oy' | translate}}
                         </span>
-                        <!--
-                        <span ng-click="navigateTo('/annotation/display/{{annotation.id}}/');closeModal('annotations_on_page');" style="margin-right: 10px;" class="make_comment">
-                            <i class="fa fa-comment"></i> {{annotation.commentCount}} {{'Yorum' | translate}}
-                        </span>
-                        -->
-                        <span ng-click="navigateTo('/annotation/display/{{annotation.id}}/');closeModal('annotations_on_page')" style="margin-right: 10px; color: darkblue;">
-                            {{'Nota Git' | translate}}
+                        <span ng-click="navigateTo('/annotation/display/{{annotation.id}}/');closeModal('annotations_on_page');" style="text-align: right" class="make_comment">
+                            <i class="fa fa-comment"></i> {{annotation.commentCount}} &nbsp; {{'Nota Git' | translate}}
                         </span>
                         <div style="float: right">
                             <button type="button"
