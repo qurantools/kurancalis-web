@@ -1,5 +1,5 @@
 angular.module('ionicApp')
-    .controller('AnnotationDisplayController', function ($scope, $routeParams, $location, authorization, localStorageService,  Restangular, $ionicModal, $timeout, $ionicPopup, $ionicActionSheet, $translate) {
+    .controller('AnnotationDisplayController', function ($scope, $routeParams, $location, authorization, localStorageService,  Restangular, $ionicModal, $timeout, $ionicPopup, $ionicActionSheet, $cordovaSocialSharing, $translate) {
 
         $scope.annotation = null;
 
@@ -25,6 +25,8 @@ angular.module('ionicApp')
 
         $scope.annotation_info = function(annotationId) {
             $scope.shareUrl =  config_data.webAddress + "/__/annotation/display/" + annotationId;
+            $scope.isNative = document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1;
+
             var annotationRestangular = Restangular.one("annotations", annotationId);
             annotationRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (data) {
                 $scope.authorizedAnnotationDisplay = 1;
@@ -307,6 +309,24 @@ angular.module('ionicApp')
         if($scope.access_token == null){
             $scope.$on("userInfoReady",$scope.initializeAnnotationController);
         }
+
+        $scope.shareInference = function(){
+            $cordovaSocialSharing.share($scope.title, $scope.shareTitle, null, $scope.shareUrl);
+        };
+
+        $scope.callUrlCopied = function(){
+
+            var infoPopup = $ionicPopup.alert({
+                title: 'Url Bilgisi Kopyalandı.',
+                template: '',
+                buttons: []
+            });
+
+            $timeout(function() {
+                infoPopup.close(); //close the popup after 3 seconds for some reason
+            }, 1700);
+        };
+
 
         //in case of no access_token
         $scope.initializeAnnotationController();
