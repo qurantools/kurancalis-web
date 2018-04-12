@@ -28,8 +28,8 @@
                 <div class="col-xs-2">
                     <div class="well col" style="text-align: center;padding-top: 11px !important;padding: 0px;margin-bottom: 0px;">
                         <a  href="" ng-click="navigateTo('/profile/user/{{feed.owner_id}}/')">
-                            <img style="max-width: 120px; max-height: 90px;border-radius: 50%;" ng-if="!(feed.owner_photo === 'null' || feed.owner_photo === 'undefined')" ng-src="{{feed.owner_photo}}">
-                            <span style="max-width: 120px; max-height: 90px;border-radius: 50%;" ng-if="feed.owner_photo === 'null' || feed.owner_photo === 'undefined'"><i class='fa fa-user' style='font-size: 4em'></i></span>
+                            <img style="max-width: 120px; max-height: 90px;border-radius: 50%;" ng-if="feed.owner_photo" ng-src="{{feed.owner_photo}}">
+                            <span style="max-width: 120px; max-height: 90px;border-radius: 50%;" ng-if="!feed.owner_photo"><i class='fa fa-user' style='font-size: 4em'></i></span>
                             <br/>
                         </a>
                         <a ng-href="#!/profile/user/{{feed.owner_id}}/"><div>{{feed.owner_name | limitTo: 25}}</div></a>
