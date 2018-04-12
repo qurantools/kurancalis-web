@@ -9,7 +9,9 @@
             <div style="visibility: hidden;height: 10px;"></div>
             <div style="visibility: hidden;height: 10px;"></div>
             <div>
-                <img style="max-width: 160px; max-height: 120px;" ng-src="http://graph.facebook.com/{{profiledUser.fbId}}/picture?type=large"><br/>
+                <img ng-if="profiledUser.fbId" style="max-width: 160px; max-height: 120px;" ng-src="http://graph.facebook.com/{{profiledUser.fbId}}/picture?type=large">
+                <span ng-if="!profiledUser.fbId" style="max-width: 160px; max-height: 120px"><i class='fa fa-user' style='font-size: 4em'></i></span>
+                <br/>
                 <div><b>{{profiledUser.username}}</b></div>
             </div>
             <div style="visibility: hidden;height: 10px;"></div>
