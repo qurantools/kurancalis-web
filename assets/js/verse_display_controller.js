@@ -15,7 +15,11 @@ angular.module('ionicApp')
             $timeout(function(){
                 //show login panel if user not login yet
                 if(!$scope.loggedIn && $scope.user == null){
-                    $("#loginModal").modal("show");
+                    if(!config_data.isMobile) {
+                        $("#loginModal").modal("show");
+                    } else {
+                        $scope.openModal('user_login')
+                    }
                 }
             },3000)
         }

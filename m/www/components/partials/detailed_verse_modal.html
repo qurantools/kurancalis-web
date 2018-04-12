@@ -1,9 +1,12 @@
 <div class="modal modal-fullscreen" id="detailedVerseModal">
+    <ion-side-menus>
+        <ion-side-menu-content drag-content="false">
     <ion-nav-bar animation="nav-title-slide-ios7" class="bar-balanced" align-title="center">
         <ion-nav-buttons side="left" data-tap-disabled="true">
-            <button class="button button-icon icon-left ion-close-circled"
+            <button ng-if="isVerseDetail" class="button button-icon icon-left ion-close-circled"
                     ng-click="closeModal('detailed_verse_modal');"
                     style="float: left"/>
+            <button ng-if="!isVerseDetail" menu-toggle="left" class="button button-icon icon ion-navicon"></button>
             <button class="button button-icon icon ion-plus" onclick="detailedAnnotator.checkForStartSelection({ pageX : 300, pageY: 300});detailedAnnotator.checkForEndSelection({ pageX : 300, pageY: 300});"></button>
         </ion-nav-buttons>
         <ion-nav-title>{{'Ayet inceleme' | translate}}</ion-nav-title>
@@ -198,4 +201,7 @@
             </button>
         </div>
     </ion-footer-bar-->
+        </ion-side-menu-content>
+        <div ng-if="!isVerseDetail" ng-include="'components/navigation/left_menu.html'"></div>
+    </ion-side-menus>
 </div>

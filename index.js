@@ -628,6 +628,12 @@ if (config_data.isMobile == false) { //false
                         reloadOnSearch: false,
                         pageTitle: 'Ayet Listelerim'
                     })
+                    .when('/verse/display/:verseId/', {
+                        controller: 'VerseDisplayCtrl',
+                        templateUrl: 'components/partials/verse_display.html',
+                        reloadOnSearch: false,
+                        pageTitle: 'Kuran Çalış - Ayet İnceleme'
+                    })
                     .when('/profile/user/', {
                         controller: 'ProfileController',
                         templateUrl: 'components/profile/friend.html',

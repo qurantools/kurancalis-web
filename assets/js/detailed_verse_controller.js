@@ -1,5 +1,5 @@
 mymodal = angular.module('ionicApp')
-    .controller('DetailedVerseCtrl', function ($scope, $compile, $timeout, $routeParams, Restangular, $location, authorization, $ionicModal, $ionicActionSheet, dataProvider, $ionicScrollDelegate, $ionicPopup, localStorageService, navigationManager, $translate) {
+    .controller('DetailedVerseCtrl', function ($scope, $compile, $timeout, $routeParams, Restangular, $location, authorization, $ionicModal, $ionicActionSheet, dataProvider, $ionicScrollDelegate, $ionicPopup, localStorageService, navigationManager, $cordovaSocialSharing, $translate) {
 
         $scope.detailedChapters = [];
         $scope.detailedVerseCircles = [];
@@ -39,6 +39,7 @@ mymodal = angular.module('ionicApp')
         $scope.idAttr;
         $scope.shareUrl = "";
         $scope.shareTitle = "Ayet Paylaşma";
+        $scope.isNative = document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1;
 
         // verse words
         $scope.wordsOfVerse = [];
@@ -50,6 +51,8 @@ mymodal = angular.module('ionicApp')
         var buttonGotoVerse = {text: $translate.instant('Sure İçerisinde Gör') };
         var buttonBookmark = {text: $translate.instant('Burada Kaldım') };
         var buttonVerseHistory = {text: $translate.instant('Ayet Geçmişi') };
+        var copyLinkText = $scope.isNative ? $translate.instant('Paylaş') : $translate.instant('Linki Kopyala');
+        var copyLink =  {text: copyLinkText };
 
         $scope.localStorageManager = new LocalStorageManager("detailed_verse",localStorageService,
             [
@@ -82,6 +85,23 @@ mymodal = angular.module('ionicApp')
         $scope.setShareUrl = function () {
             $scope.shareUrl =  config_data.webAddress + "/__/verse/display/" + $scope.verseId + "?author=" + $scope.detailed_query_author_mask;
             $scope.scopeApply();
+        };
+
+        $scope.shareInference = function(){
+            $cordovaSocialSharing.share($scope.title, $scope.shareTitle, null, $scope.shareUrl);
+        };
+
+        $scope.callUrlCopied = function(){
+
+            var infoPopup = $ionicPopup.alert({
+                title: 'Url Bilgisi Kopyalandı.',
+                template: '',
+                buttons: []
+            });
+
+            $timeout(function() {
+                infoPopup.close(); //close the popup after 3 seconds for some reason
+            }, 1700);
         };
 
 
@@ -482,6 +502,7 @@ mymodal = angular.module('ionicApp')
                 $scope.footerMenuButtons.push(buttonAddToList);
                 $scope.footerMenuButtons.push(buttonBookmark);
                 $scope.footerMenuButtons.push(buttonVerseHistory);
+                $scope.footerMenuButtons.push(copyLink);
             }
             $ionicActionSheet.show({
                 buttons: $scope.footerMenuButtons,
@@ -503,6 +524,13 @@ mymodal = angular.module('ionicApp')
                         $scope.openModal('bookmark');
                     } else if (index == 5){
                         $scope.openVerseHistory();
+                    } else if (index == 6) {
+                        if($scope.isNative){
+                            $scope.shareInference();
+                        } else {
+                            $scope.kopyala($scope.shareUrl);
+                            $scope.callUrlCopied();
+                        }
                     }
                     return true;
                 }
