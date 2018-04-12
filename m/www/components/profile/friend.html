@@ -17,8 +17,7 @@
                          style="margin-top:66px;">
                 <div class="col-xs-3 well" style="text-align: center" ng-show="profiledUser != null">
                     <div>
-                        <img ng-if="profiledUser.fbId" style="max-width: 160px; max-height: 120px;" ng-src="http://graph.facebook.com/{{profiledUser.fbId}}/picture?type=large">
-                        <span ng-if="!profiledUser.fbId" style="max-width: 160px; max-height: 120px"><i class='fa fa-user' style='font-size: 3em'></i></span>
+                        <img style="max-width: 160px; max-height: 120px;" ng-src="http://graph.facebook.com/{{profiledUser.fbId}}/picture?type=large">
                         <div><b>{{profiledUser.username}}</b></div>
                     </div>
                     <div style="visibility: hidden;height: 10px;"></div>
