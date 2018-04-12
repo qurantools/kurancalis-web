@@ -32,6 +32,7 @@ var mymodal = angular.module('ionicApp')
             feedRestangular.customGET("", $scope.feedParams, {'access_token': $scope.access_token}).then(function (data) {
                 $scope.hasMoreData = data.length == 0 ? false : true;
                 $scope.feeds = $scope.feeds.concat(data);
+                console.warn($scope.feeds)
                 $scope.isLoading = false;
                 $scope.$broadcast('scroll.infiniteScrollComplete');
                 $scope.hideProgress("fetchFriendFeeds");
@@ -54,6 +55,7 @@ var mymodal = angular.module('ionicApp')
             feedRestangular.customGET("", $scope.feedParams, {'access_token': $scope.access_token}).then(function (data) {
                 $scope.hasMoreData = data.length == 0 ? false : true;
                 $scope.feeds = $scope.feeds.concat(data);
+                console.warn($scope.feeds)
                 $scope.isLoading = false;
                 $scope.$broadcast('scroll.infiniteScrollComplete');
                 $scope.hideProgress("fetchCircleFeeds");
