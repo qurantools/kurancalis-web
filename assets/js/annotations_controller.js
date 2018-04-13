@@ -23,6 +23,7 @@ angular.module('ionicApp')
         $scope.sureler = "";
         $scope.ayetler = "";
         $scope.pagePurpose = "annotations"; //may be annotations or inferences
+        $scope.showNoAnnoationMessage = false;
 
         $scope.annotationSearchAuthorSelection = $scope.selection;
 
@@ -239,26 +240,29 @@ angular.module('ionicApp')
             $scope.showProgress("get_all_annotations");
 
             usersRestangular.customGET("", $scope.allAnnotationsParams, {'access_token': authorization.getAccessToken()}).then(function (annotations) {
-
-                    if ($scope.allAnnotationsParams.start == 0) {
-                        $scope.annotations = [];
-                    }
-                    if (annotations != "") {
-                        $scope.annotations = $scope.annotations.concat(annotations)
-                        $scope.allAnnotationsOpts.start += $scope.allAnnotationsOpts.limit;
-
-                        if (annotations.length < $scope.allAnnotationsOpts.limit) {
-                            $scope.allAnnotationsOpts.hasMore = false;
-                        } else {
-                            $scope.allAnnotationsOpts.hasMore = true;
-                        }
-                    } else {
-                        $scope.allAnnotationsOpts.hasMore = false;
-                    }
-
-                    $scope.showProgress("get_all_annotations");
+                if ($scope.allAnnotationsParams.start == 0) {
+                    $scope.annotations = [];
+                    $scope.showNoAnnoationMessage = false;
                 }
-            );
+                if (annotations != "") {
+                    $scope.annotations = $scope.annotations.concat(annotations)
+                    $scope.allAnnotationsOpts.start += $scope.allAnnotationsOpts.limit;
+
+                    if (annotations.length < $scope.allAnnotationsOpts.limit) {
+                        $scope.allAnnotationsOpts.hasMore = false;
+                    } else {
+                        $scope.allAnnotationsOpts.hasMore = true;
+                    }
+                } else {
+                    $scope.allAnnotationsOpts.hasMore = false;
+                }
+
+                if($scope.annotations.length==0){
+                    $scope.showNoAnnoationMessage = true;
+                }
+
+                $scope.showProgress("get_all_annotations");
+            });
 
             $scope.setAnnotationsPageURL();
             $scope.storeAnnotationsViewParameters();

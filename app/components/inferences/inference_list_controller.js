@@ -20,6 +20,7 @@ angular.module('ionicApp')
         $scope.allInferencesOpts.keyword = "";
         $scope.sureler = "";
         $scope.ayetler = "";
+        $scope.showNoInferenceMessage = false;
 
         $scope.inferenceSearchAuthorSelection = $scope.selection;
 
@@ -168,6 +169,7 @@ angular.module('ionicApp')
             usersRestangular.customGET("", $scope.allInferencesParams, { 'access_token': authorization.getAccessToken() }).then(function (inferences) {
                 if ($scope.allInferencesParams.start == 0) {
                     $scope.inferences = [];
+                    $scope.showNoInferenceMessage = false;
                 }
                 if (inferences != "") {
                     $scope.inferences = $scope.inferences.concat(inferences)
@@ -180,6 +182,10 @@ angular.module('ionicApp')
                     }
                 } else {
                     $scope.allInferencesOpts.hasMore = false;
+                }
+
+                if($scope.inferences.length==0){
+                    $scope.showNoInferenceMessage = true;
                 }
             }
             );

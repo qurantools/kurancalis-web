@@ -82,7 +82,7 @@
                 <div style="text-align: center; padding-top:10px;" ng-if="allInferencesOpts.hasMore==true">
                     <button ng-click="get_all_inferences()" class="btn btn-info btn-hg" translate>Daha fazla</button>
                 </div>
-                <div ng-if="inferences.length==0" style="margin-top:30px; padding: 10px 10px; background-color:#fff6dc">
+                <div ng-if="showNoInferenceMessage" style="margin-top:30px; padding: 10px 10px; background-color:#fff6dc">
                     <strong translate>Hiç notunuz yok. Yeni not oluşturabilirsiniz ya da çevrenize yeni kişiler ekleyip onların notlarını inceleyebilirsiniz.</strong>
                 </div>
                 <div style="height: 40px"></div>

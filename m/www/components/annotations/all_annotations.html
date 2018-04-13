@@ -113,7 +113,7 @@
                     <div style="text-align: center; padding-top:10px;" ng-if="allAnnotationsOpts.hasMore==true">
                         <button ng-click="get_all_annotations()" class="btn btn-info btn-hg" translate>Daha fazla</button>
                     </div>
-                    <div ng-if="annotations.length==0" style="margin-top:10px; padding: 10px 10px; background-color:#fff6dc">
+                    <div ng-if="showNoAnnoationMessage" style="margin-top:10px; padding: 10px 10px; background-color:#fff6dc">
                         <strong translate>Hiç notunuz yok. Yeni not oluşturabilirsiniz ya da çevrenize yeni kişiler ekleyip onların notlarını inceleyebilirsiniz.</strong>
                     </div>
                 </div>
