@@ -30,6 +30,16 @@
                                 <option style="display:none" value="" translate>Meal Seç</option>
                             </select>
                         </div>
+
+                        <div class="item item-input item-select" style="margin-top: 5px;border-width: 1px;border-style: solid;font-size: larger">
+                            <div class="input-label" translate>Tüm Mealler</div>
+                            <select ng-model="currentAuthor"
+                                    ng-options="author.id as author.name for author in authors | filter : authorsByLanguage()"
+                                    class="form-control">
+                                <option style="display:none" value="" translate>Meal Seç</option>
+                            </select>
+                        </div>
+
                         <button style="font-size: large" class="button button-block button-positive" ng-click="searchTranslations()">
                             <i class="icon ion-search"></i>
                             {{'Ara' | translate}}
