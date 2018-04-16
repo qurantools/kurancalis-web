@@ -1606,8 +1606,9 @@ app.factory('ChapterVerses', function ($resource) {
     //selected authors
     $scope.setAuthors = function (authorMask) {
         $scope.selection = [];
+        var mask = bigInt(authorMask);
         for (var index in $scope.authorMap) {
-            if (authorMask & $scope.authorMap[index].id) {
+            if (mask.and($scope.authorMap[index].id).value != 0) {
                 $scope.selection.push($scope.authorMap[index].id);
             }
         }
@@ -1625,10 +1626,11 @@ app.factory('ChapterVerses', function ($resource) {
         else {
             $scope.selection.push(author_id);
         }
-        $scope.author_mask = 0;
+        $scope.author_mask = bigInt(0);
         for (var index in $scope.selection) {
-            $scope.author_mask = $scope.author_mask | $scope.selection[index];
+            $scope.author_mask = $scope.author_mask.or($scope.selection[index]);
         }
+        $scope.author_mask = $scope.author_mask.value;
         //$scope.setAuthorMask();
         //localStorageService.set('author_mask', $scope.author_mask);
     };

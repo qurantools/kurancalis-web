@@ -165,25 +165,26 @@ angular.module('ionicApp')
         //selected authors
         $scope.setAnnotationSearchAuthorSelection = function (authorMask) {
             $scope.annotationSearchAuthorSelection = [];
+            var mask = bigInt(authorMask.value || authorMask);
+
             for (var index in $scope.authorMap) {
-                if (authorMask & $scope.authorMap[index].id) {
+                if (mask.and($scope.authorMap[index].id).value != 0) {
                     $scope.annotationSearchAuthorSelection.push($scope.authorMap[index].id);
                 }
             }
         };
 
         $scope.getAnnotationSearchAuthorMask = function () {
-            var authorMask = 0;
+            var authorMask = bigInt(0);
             for (var index in $scope.annotationSearchAuthorSelection) {
-                authorMask = authorMask | $scope.annotationSearchAuthorSelection[index];
+                authorMask = authorMask.or($scope.annotationSearchAuthorSelection[index]);
             }
 
-            if (authorMask == 0) { //no author filter
+            if (authorMask.value == 0) { //no author filter
                 authorMask = "67108863";
             }
 
-            return authorMask;
-
+            return authorMask.value || authorMask;
         };
 
 
@@ -288,9 +289,9 @@ angular.module('ionicApp')
             else {
                 $scope.annotationSearchAuthorSelection.push(author_id);
             }
-            $scope.annotationSearchAuthorMask = 0;
+            $scope.annotationSearchAuthorMask = bigInt(0);
             for (var index in $scope.annotationSearchAuthorSelection) {
-                $scope.annotationSearchAuthorMask = $scope.annotationSearchAuthorMask | $scope.annotationSearchAuthorSelection[index];
+                $scope.annotationSearchAuthorMask = $scope.annotationSearchAuthorMask.or($scope.annotationSearchAuthorSelection[index]);
             }
         };
 
