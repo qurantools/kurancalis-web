@@ -18,13 +18,36 @@
 
     <ion-content overflow-scroll="true">
         <div style="height: 70px"></div>
+        <ion-toggle ng-model="allAnnotationsOpts.own_annotations" ng-checked="allAnnotationsOpts.own_annotations">{{'Benim notlarımı göster' | translate}}</ion-toggle>
         <div>
             <label class="item item-input" >
                 <input type="text" ng-model="allAnnotationsOpts.keyword" size="15"
                        placeholder="{{'Not içeriğinde aranacak kelime' | translate}}"/>
             </label>
         </div>
-        <ion-toggle ng-model="allAnnotationsOpts.own_annotations" ng-checked="allAnnotationsOpts.own_annotations">{{'Benim notlarımı göster' | translate}}</ion-toggle>
+
+        <div class="item item-divider" translate>Çevrelerin Notları</div>
+        <div class="list">
+            <ion-checkbox  ng-repeat="item in mobileAllAnnotationsSearchCircleListForSelection"
+                           ng-model="mobileAllAnnotationsSearchCircleListForSelection[$index].selected"
+                           ng-checked="mobileAllAnnotationsSearchCircleListForSelection[$index].selected"
+            >
+                {{item.name}}
+            </ion-checkbox>
+        </div>
+
+        <div class="item item-divider" translate>Kişilerin Notları</div>
+        <ion-list show-delete=true>
+            <ion-item ng-repeat="item in usersForSearch">
+                <ion-delete-button class="ion-minus-circled"
+                                   ng-click="usersForSearch.splice($index, 1)">
+                </ion-delete-button>
+                {{item.name}}
+
+            </ion-item>
+        </ion-list>
+        <button class="button button-block button-positive" ng-click="openModal('addUserToAllAnnotationsSearch');" translate>Kişi Ekle</button>
+
         <div class="item item-divider" translate>Etiketler</div>
         <div>
             <ion-list show-delete=true>
@@ -39,30 +62,24 @@
 
         </div>
         <button class="button button-block button-positive" ng-click="openModal('addtagtosearch');" translate>Etiket Ekle</button>
-        <div class="item item-divider" translate>Çevrelerin Notları</div>
 
-        <div class="list">
-            <ion-checkbox  ng-repeat="item in mobileAllAnnotationsSearchCircleListForSelection"
-                           ng-model="mobileAllAnnotationsSearchCircleListForSelection[$index].selected"
-                           ng-checked="mobileAllAnnotationsSearchCircleListForSelection[$index].selected"
-                    >
-                {{item.name}}
-            </ion-checkbox>
+        <div class="item item-divider" translate>Renk</div>
+
+        <!-- colors-->
+        <div style="margin: 10px 0 5px 0; min-height: 52px; text-align: center" class="fit-content">
+            <div style="padding-top:5px; min-width: 70px; height: 40px; background-color: yellow" ng-click="colors.yellow=!colors.yellow">
+                <input ng-show="false" type="checkbox" ng-click="colors.yellow=!colors.yellow" ng-checked="colors.yellow" ng-model="colors.yellow">
+                <span style="font-size: x-large" ng-class="{'button-icon icon-left ion-checkmark': colors.yellow}"></span>
+            </div>
+            <div style="padding-top:5px; min-width: 70px; height: 40px; background-color: green" ng-click="colors.green=!colors.green">
+                <input ng-show="false" type="checkbox" ng-click="colors.green=!colors.green" ng-checked="colors.green" ng-model="colors.green">
+                <span style="font-size: x-large" ng-class="{'button-icon icon-left ion-checkmark': colors.green}"></span>
+            </div>
+            <div style="padding-top:5px; min-width: 70px; height: 40px; background-color: red" ng-click="colors.red=!colors.red">
+                <input ng-show="false" type="checkbox" ng-click="colors.red=!colors.red" ng-checked="colors.red" ng-model="colors.red">
+                <span style="font-size: x-large" ng-class="{'button-icon icon-left ion-checkmark': colors.red}"></span>
+            </div>
         </div>
-        <div class="item item-divider" translate>Kişilerin Notları</div>
-
-        <ion-list show-delete=true>
-            <ion-item ng-repeat="item in usersForSearch">
-                <ion-delete-button class="ion-minus-circled"
-                                   ng-click="usersForSearch.splice($index, 1)">
-                </ion-delete-button>
-                {{item.name}}
-
-            </ion-item>
-        </ion-list>
-
-
-        <button class="button button-block button-positive" ng-click="openModal('addUserToAllAnnotationsSearch');" translate>Kişi Ekle</button>
 <!-- yazar seçimi iptal
         <ul class="list">
             <li class="item item-checkbox" ng-repeat="author in authors">

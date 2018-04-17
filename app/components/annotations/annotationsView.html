@@ -159,25 +159,41 @@
                                         <td align="left" style="width:100%; padding-left: 15px;" translate>Benim notlarımı göster</td>
                                     </table>
                                 </div>
+                                {{'Çevremdeki kişilere ait olan notlar' | translate}}
+                                <tags-input ng-model="circlesForSearch" placeholder="{{'Çevre Seçiniz' | translate}}"
+                                            display-property="name" replace-spaces-with-dashes="false" min-length="1"
+                                            add-from-autocomplete-only="true" add-on-blur="false">
+                                    <auto-complete source="cevrelisteleForSearch()" load-on-empty="true"
+                                                   load-on-focus="true"></auto-complete>
+                                </tags-input>
+                                <br/>
+                                {{'Kişilere ait olan notlar' | translate}}
+                                <tags-input ng-model="usersForSearch" placeholder="{{'Kişi Seçiniz' | translate}}" display-property="name"
+                                            replace-spaces-with-dashes="false" min-length="2">
+                                    <auto-complete source="kisilistele($query)" min-length="2"></auto-complete>
+                                </tags-input>
+                                <br/>
                                 <div>
                                     <input type="text" ng-model="allAnnotationsOpts.keyword" size="12"
                                            class="form-control" placeholder="{{'Aranacak kelime' | translate}}"/>
                                 </div>
                                 <br/>
-                                <table style="width: 100%">
-                                    <tr>
-                                        <td align="left" style="width: 30px" translate>Sure</td>
-                                        <td align="left" style="width: 120px">
-                                            <input style="width:60px" type="text" ng-model="sureler" size="12"
-                                                   class="form-control"/>
-                                        </td>
-                                        <td align="left" style="width: 30px" translate>Ayet</td>
-                                        <td align="left" style="width: 120px">
-                                            <input style="width:60px" type="text" ng-model="ayetler" size="12"
-                                                   class="form-control"/>
-                                        </td>
-                                    </tr>
-                                </table>
+                                <!-- colors-->
+                                <div>
+                                    <span style="margin-right: 35px">{{'Renk' | translate}}</span>
+                                    <label class="btn btn-sm btn-warning" style="min-width: 80px; min-height: 35.26px; margin-right: 35px" ng-click="colors.yellow=!colors.yellow">
+                                        <input ng-show="false" type="checkbox" ng-click="colors.yellow=!colors.yellow" ng-checked="colors.yellow" ng-model="colors.yellow">
+                                        <span ng-class="{'glyphicon glyphicon-ok': colors.yellow}"></span>
+                                    </label>
+                                    <label class="btn btn-sm btn-success" style="min-width: 80px; min-height: 35.26px; margin-right: 35px" ng-click="colors.green=!colors.green">
+                                        <input ng-show="false" type="checkbox" ng-click="colors.green=!colors.green" ng-checked="colors.green" ng-model="colors.green">
+                                        <span ng-class="{'glyphicon glyphicon-ok': colors.green}"></span>
+                                    </label>
+                                    <label class="btn btn-sm btn-danger" style="min-width: 80px; min-height: 35.26px" ng-click="colors.red=!colors.red">
+                                        <input ng-show="false" type="checkbox" ng-click="colors.red=!colors.red" ng-checked="colors.red" ng-model="colors.red">
+                                        <span ng-class="{'glyphicon glyphicon-ok': colors.red}"></span>
+                                    </label>
+                                </div>
                                 <br/>
                                 <div>
                                     {{'Etikete sahip olan notlar' | translate}}
@@ -188,28 +204,27 @@
                                                        select-first-match="false"></auto-complete>
                                     </tags-input>
                                 </div>
-
                                 <br/>
-                                {{'Kişilere ait olan notlar' | translate}}
-                                <tags-input ng-model="usersForSearch" placeholder="{{'Kişi Seçiniz' | translate}}" display-property="name"
-                                            replace-spaces-with-dashes="false" min-length="2">
-                                    <auto-complete source="kisilistele($query)" min-length="2"></auto-complete>
-                                </tags-input>
-
-                                <br/>
-                                {{'Çevremdeki kişilere ait olan notlar' | translate}}
-                                <tags-input ng-model="circlesForSearch" placeholder="{{'Çevre Seçiniz' | translate}}"
-                                            display-property="name" replace-spaces-with-dashes="false" min-length="1"
-                                            add-from-autocomplete-only="true" add-on-blur="false">
-                                    <auto-complete source="cevrelisteleForSearch()" load-on-empty="true"
-                                                   load-on-focus="true"></auto-complete>
-                                </tags-input>
-
+                                <table style="width: 100%">
+                                    <tr>
+                                        <td align="left" style="width: 30px" translate>Sure</td>
+                                        <td align="left" style="width: 120px">
+                                            <input style="width:90px" type="text" ng-model="sureler" size="12"
+                                                   class="form-control"/>
+                                        </td>
+                                        <td align="right" style="width: 90px; " translate>Ayet</td>
+                                        <td align="right" style="width: 90px">
+                                            <input style="width:90px" type="text" ng-model="ayetler" size="12"
+                                                   class="form-control"/>
+                                        </td>
+                                    </tr>
+                                </table>
                             </td>
                         </tr>
                     </table>
                 </div>
                 <div class="modal-footer">
+                    <a href="#" class="btn btn-default btn-wide" data-dismiss="modal" translate>Vazgeç</a>
                     <a href="#" class="btn btn-primary btn-wide" data-dismiss="modal"
                        ng-click="search_all_annotations()" translate>Tamam</a>
                 </div>

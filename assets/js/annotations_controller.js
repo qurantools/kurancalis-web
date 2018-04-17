@@ -20,6 +20,10 @@ angular.module('ionicApp')
         $scope.allAnnotationsOpts.limit = 10;
         $scope.allAnnotationsOpts.own_annotations = true;
         $scope.allAnnotationsOpts.keyword = "";
+        $scope.colors = {};
+        $scope.colors.yellow = true;
+        $scope.colors.green = true;
+        $scope.colors.red = true;
         $scope.sureler = "";
         $scope.ayetler = "";
         $scope.pagePurpose = "annotations"; //may be annotations or inferences
@@ -174,6 +178,20 @@ angular.module('ionicApp')
             }
         };
 
+
+        //selected colors
+        $scope.getAnnotationSearchHighlightColors = function () {
+            var highlightColors = [];
+            if($scope.colors.yellow)
+                highlightColors.push("yellow");
+            if($scope.colors.green)
+                highlightColors.push("green");
+            if($scope.colors.red)
+                highlightColors.push("red");
+
+            return highlightColors;
+        };
+
         $scope.getAnnotationSearchAuthorMask = function () {
             var authorMask = bigInt(0);
             for (var index in $scope.annotationSearchAuthorSelection) {
@@ -184,7 +202,7 @@ angular.module('ionicApp')
                 authorMask = "67108863";
             }
 
-            return authorMask.value || authorMask;
+            return authorMask.value;
         };
 
 
@@ -237,6 +255,15 @@ angular.module('ionicApp')
 
 
             $scope.allAnnotationsParams.orderby = $scope.allAnnotationsOrderBy;
+
+            var colors = "";
+            var selectedColors = $scope.getAnnotationSearchHighlightColors();
+            for (var i = 0; i < selectedColors.length; i++) {
+                if (i != 0)colors += ",";
+                colors += selectedColors[i];
+            }
+
+            $scope.allAnnotationsParams.colors = colors;
 
             $scope.showProgress("get_all_annotations");
 
