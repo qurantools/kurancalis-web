@@ -179,7 +179,8 @@ mymodal = angular.module('ionicApp')
             $scope.verse = [];
             dataProvider.listTranslations(translationParams, function(data){
                 $scope.prepareTranslationDivMap(data);
-                $scope.annotate_it();
+                if($scope.access_token)
+                    $scope.annotate_it();
                 $scope.hideProgress("showVerseDetails");
             });
         };

@@ -21,7 +21,20 @@ angular.module('ionicApp')
                         $scope.openModal('user_login')
                     }
                 }
-            },3000)
+            },2000);
+
+            $scope.$on('login', function handler() {
+                $scope.showVerseDetail($routeParams.verseId, [], [$scope.CIRCLE_PUBLIC]);
+            });
+
+            $scope.$on('userInfoReady', function handler() {
+                if(!config_data.isMobile) {
+                    $("#loginModal").modal("hide");
+                } else {
+                    $scope.closeModal('user_login')
+                }
+            });
+
         }
     };
 
