@@ -222,7 +222,13 @@
         language = localStorage.getItem("NG_TRANSLATE_LANG_KEY");
     }
 
-    var textMessage = language == 'tr' ? 'Birlikte Dosdoğru Yolu<br>Bulmak İçin...' : 'To find the straight<br>path together ...';
+    var textMessage = 'Birlikte Dosdoğru Yolu<br>Bulmak İçin...';
+    var buttonText = 'Aç';
+
+    if(language=='en'){
+        textMessage = 'To find the straight<br>path together ...'
+        buttonText = 'Open';
+    }
 
     new SmartBanner({
         daysHidden: 15,
@@ -230,7 +236,7 @@
         appStoreLanguage: 'tr',
         title: 'Kuran Çalış',
         author: textMessage,
-        button: 'Aç',
+        button: buttonText,
         store: {
             ios: 'On the App Store',
             android: 'In Google Play'
