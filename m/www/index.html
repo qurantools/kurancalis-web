@@ -119,8 +119,9 @@
 
     <script src="../../assets/js/ng-cordova.js"></script>
     <script src="../../assets/js/ng-infinite-scroll.min.js"></script>
-    <!-- cordova script (this will be a 404 during development) -->
+    <!-- cordova script (this will be a 404 during development)
     <script src="../../cordova.js"></script>
+    -->
 
     <!-- videogular -->
     <link rel="stylesheet" href="../../assets/libs/videogular/videogular.min.css">
@@ -204,12 +205,31 @@
 
 <script src="js/smart-app-banner.js"></script>
 <script type="text/javascript">
+    // Get browser language
+    var language = window.navigator.language.split('-')[0]; // use navigator lang if available
+
+    if (language == null || language === undefined || language == "") {
+        language = "tr";  // as default language assignment
+    } else {
+        language = /(tr|en)/gi.test(language) ? language : 'tr'; // add new language as |de|fr|...
+    }
+
+    //if first load, we check language also with ip adress at below
+    if (localStorage.getItem("NG_TRANSLATE_LANG_KEY") === null ||
+        localStorage.getItem("NG_TRANSLATE_LANG_KEY") === undefined) {
+        localStorage.setItem("FIRST_LOAD", "true");
+    } else {
+        language = localStorage.getItem("NG_TRANSLATE_LANG_KEY");
+    }
+
+    var textMessage = language == 'tr' ? 'Birlikte Dosdoğru Yolu<br>Bulmak İçin...' : 'To find the straight<br>path together ...';
+
     new SmartBanner({
         daysHidden: 15,
         daysReminder: 90,
         appStoreLanguage: 'tr',
         title: 'Kuran Çalış',
-        author: $translate.instant('Birlikte Dosdoğru Yolu<br>Bulmak İçin...'),
+        author: textMessage,
         button: 'Aç',
         store: {
             ios: 'On the App Store',
