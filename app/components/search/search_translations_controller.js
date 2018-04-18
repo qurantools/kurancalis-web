@@ -13,7 +13,7 @@ angular.module('ionicApp').controller('SearchTranslationsController', function (
     $scope.verseSearchText = "";
     $scope.verseSearchedText = "";
     $scope.verses = [];
-    $scope.currentAuthor = "";
+    $scope.currentAuthor;
     $scope.searchTranslationsAuthor = {};
 
     $scope.searchTranslationsAuthorChanged = function (value){
