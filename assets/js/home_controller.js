@@ -1624,7 +1624,7 @@ angular.module('ionicApp')
 
             navigationManager.reset();
             $scope.initializeActionSheetButtons();
-            //$scope.displayTutorial("chapter");
+            $scope.displayTutorial("chapter");
 
         };
 

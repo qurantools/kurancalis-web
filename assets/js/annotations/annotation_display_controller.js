@@ -161,7 +161,7 @@ angular.module('ionicApp')
             if (!isDefined($routeParams.annotationId))
                 return;
             $scope.annotation_info($routeParams.annotationId);
-            //$scope.displayTutorial("annotation");
+            $scope.displayTutorial("annotation");
         };
 
         $scope.showEditor = function(annotation){

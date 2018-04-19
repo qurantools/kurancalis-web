@@ -1,6 +1,6 @@
-angular.module('ionicApp')
+var helpmodal = angular.module('ionicApp')
     .controller('HelpController', function ($scope, $routeParams, $location, $timeout, authorization,
-                                            localStorageService, Restangular, $ionicModal, $sce, $translate) {
+                                            localStorageService, Restangular, $ionicModal, $sce, $ionicPopup, $translate) {
         $scope.title = "Yardım";
         $scope.helpController = this;
         $scope.helpController.API = null;
@@ -150,7 +150,6 @@ angular.module('ionicApp')
         $scope.selectedMenu = -1;
 
         $scope.runHelpModal = function (id, isCallFromHelpMenu) {
-
             //if (!config_data.isNative && !isCallFromHelpMenu) {
             //    return;
             //}
@@ -186,7 +185,26 @@ angular.module('ionicApp')
             }
             $scope.selectedIndex = -1;
             $scope.scopeApply();
-            $scope.help_modal.show();
+
+            if(isCallFromHelpMenu) {
+                $scope.help_modal.show();
+            } else {
+                var confirmPop = $ionicPopup.confirm({
+                    title: $translate.instant('Yardım'),
+                    template: $translate.instant("Uygulamanin nasil kullanildigini görmek ister misiniz?"),
+                    cancelText: $translate.instant('Hayır'),
+                    okText: $translate.instant('Evet'),
+                    okType: 'button-positive'
+                });
+
+                confirmPop.then(function (res) {
+                    console.log(isCallFromHelpMenu)
+                    if (res) {
+                        $scope.help_modal.show();
+                    }
+                });
+            }
+
             $timeout(function(){
                 $scope.selectedIndex++;
             },900);
@@ -209,7 +227,6 @@ angular.module('ionicApp')
                 });
 
                 $scope.$on("displayTutorial", function (event, args) {
-                    console.log("on displayTutorial");
                     $scope.runHelpModal(args.id, false);
                 });
             }
