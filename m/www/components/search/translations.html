@@ -35,6 +35,7 @@
                             <div class="input-label" translate>Tüm Mealler</div>
                             <select ng-model="currentAuthor"
                                     ng-options="author.id as author.name for author in authors | filter : authorsByLanguage()"
+                                    ng-change="searchAuthorChanged(currentAuthor)"
                                     class="form-control">
                                 <option style="display:none" value="" translate>Meal Seç</option>
                             </select>

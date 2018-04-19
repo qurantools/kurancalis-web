@@ -24,6 +24,10 @@ angular.module('ionicApp').controller('SearchTranslationsController', function (
         $scope.verseSearchText = value;
     };
 
+    $scope.searchAuthorChanged = function(value){
+        $scope.currentAuthor = value;
+    };
+
     $scope.singleAuthorView = function (author, verse) {
         $scope.verses[verse].showSingleAuthor = true;
         $scope.verses[verse].selectedSingleAuthor = author;
