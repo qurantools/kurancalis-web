@@ -199,7 +199,7 @@ angular.module('ionicApp')
             }
 
             if (authorMask.value == 0) { //no author filter
-                authorMask = "67108863";
+                authorMask = "962074247163";
             }
 
             return authorMask.value;
@@ -453,7 +453,7 @@ angular.module('ionicApp')
 
         $scope.initAnnotationsParameters = function () {
             var orderby = "verse";
-            var authorMask = 67108863;
+            var authorMask = 962074247163;
             var chapters = "";
             var verseKeyword = "";
             var verses = "";
