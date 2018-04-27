@@ -12,21 +12,14 @@
             <a ng-if="user!=null" href="#!/lists/verse/" class="item" menu-close="" translate>Ayet Listelerim</a>
             <a ng-if="user!=null" href="#!/people/home/" class="item" menu-close="" translate>Kişiler</a>
             <a href="#!/help/" class="item" menu-close="" translate>Yardım</a>
-            <div class="item item-input item-select">
-                <div class="input-label" style="color: #000" translate>Dil Seçimi</div>
-                <select ng-model="selectedLanguage"
-                        ng-options="language.name as language.label for language in languages"
-                        ng-selected="selectedLanguage==language.name"
-                        ng-change="changeLanguage(selectedLanguage)"
-                        style="color: #000"
-                        >
-                    <option style="display:none;color: #000" value="" translate>Dil Seçiniz</option>
-                </select>
-            </div>
             <div style="vertical-align: middle !important;">
                 <a ng-if="user!=null" href ng-click="logOut()" class="item"><img ng-src="{{user.photo}}" height="34"/> {{'Çıkış' | translate}}</a>
             </div>
             <a ng-if="user==null && isConnected==true" href ng-click="openModal('user_login')" class="item" menu-close translate>Giriş</a>
+            <a  href class="item" ng-click="openLangMenuModal()">
+                <span style="float: left"><img ng-src="../../assets/img/flag_{{selectedLanguage}}.png" alt="Flag of Country" /></span>
+                <span style="float: right; line-height: 32px">{{ selectedLanguage == 'tr' ? 'Türkçe' : 'İngilizce' | translate}}</span>
+            </a>
         </ul>
     </ion-content>
 </ion-side-menu>

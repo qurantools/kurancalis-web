@@ -790,7 +790,7 @@ app.factory('ChapterVerses', function ($resource) {
             }
         }
     );
-}).controller('MainCtrl', function ($scope, $q, $routeParams, $ionicSideMenuDelegate, $location, $timeout, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService, $document, $filter, $rootScope, $state, $stateParams, $ionicModal, $ionicScrollDelegate, $ionicPosition, $ionicLoading, authorization,$rootScope, $ionicPopup, dataProvider, $cordovaAppAvailability, $translate, Notification, Upload) {
+}).controller('MainCtrl', function ($scope, $q, $routeParams, $ionicSideMenuDelegate, $location, $timeout, ChapterVerses, User, Footnotes, Facebook, Restangular, localStorageService, $document, $filter, $rootScope, $state, $stateParams, $ionicModal, $ionicScrollDelegate, $ionicPosition, $ionicLoading, authorization,$rootScope, $ionicPopup, dataProvider, $cordovaAppAvailability, $translate, $ionicActionSheet, Notification, Upload) {
     console.log("MainCtrl");
 
     //all root scope parameters should be defined and documented here
@@ -1915,6 +1915,38 @@ app.factory('ChapterVerses', function ($resource) {
 
     };//end of init controller
 
+    $scope.initializeLanguageButtons = function(){
+        //initialize action sheets
+        $scope.langActionSheetButtons = [];
+        var butonLangTR = {  text: '<img src="../../assets/img/flag_tr.png" alt="Flag" /> ' + $translate.instant('Türkçe') };
+        var butonLangEN = {  text: '<img src="../../assets/img/flag_en.png" alt="Flag" /> ' + $translate.instant('İngilizce')  };
+
+        $scope.langActionSheetButtons.push(butonLangTR);
+        $scope.langActionSheetButtons.push(butonLangEN);
+    };
+
+    $scope.openLangMenuModal = function () {
+        $scope.initializeLanguageButtons();
+        $timeout(function() {
+            $ionicActionSheet.show({
+                buttons: $scope.langActionSheetButtons,
+                destructiveText: '',
+                titleText: '',
+                cancelText: $translate.instant('Kapat'),
+                cancel: function () {
+                    // add cancel code..home_controller
+                },
+                buttonClicked: function (index) {
+                    if (index == 0) {
+                        $scope.changeLanguage("tr")
+                    } else if (index == 1) {
+                        $scope.changeLanguage("en")
+                    }
+                    return true;
+                }
+            });
+        },350);
+    };
 
     $scope.checkGeneralTutorial = function () {
         var oldVersion=localStorageService.get("appVersion");
