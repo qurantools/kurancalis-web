@@ -13,6 +13,9 @@ var mymodal = angular.module('ionicApp')
         $scope.selectedUsers = [];
         $scope.recommendations = [];
         $scope.selectedUser;
+        $scope.showImageText = false;
+        $scope.profileImage = "";
+        $scope.isClickable=true;
          var csec;
 
         $scope.fetchFriendFeeds = function(friendName, start){
@@ -157,6 +160,18 @@ var mymodal = angular.module('ionicApp')
             annotationRestangular.customPUT(data, '', '', headers).then(function(data){
                 annotation.content = data.text;
                 annotation.colour = data.colour;
+            });
+        };
+
+        $scope.updateUserPhoto = function () {
+            var headers = {'Content-Type': 'application/x-www-form-urlencoded', 'access_token': $scope.access_token};
+            var postData = [];
+            postData.push(encodeURIComponent("photo") + "=" + encodeURIComponent($scope.profileImage));
+
+            var data = postData.join("&");
+            var userInfoRestangular = Restangular.one("/users/" + $scope.user.id + "/change_photo");
+            userInfoRestangular.customPUT(data, '', '', headers).then(function(data){
+               console.log("Profile Image changed successfully....", data)
             });
         };
 
@@ -332,6 +347,15 @@ var mymodal = angular.module('ionicApp')
         };
 
         $scope.initializeProfileController = function () {
+            if(!config_data.isMobile) {
+                if($scope.access_token==null || $scope.user==null) {
+                    $scope.$on('userInfoReady', $scope.initFM);
+                }
+                else{
+                    $timeout($scope.initFM,2000);
+                }
+            }
+
             //View circles
             var view_circleRestangular = Restangular.all("circles");
              view_circleRestangular.customGET("", {}, {'access_token': $scope.access_token}).then(function (circles) {
@@ -379,8 +403,24 @@ var mymodal = angular.module('ionicApp')
                 return;
             }
 
-
         };
+
+        $scope.initFM = function(){
+            initFileManager('theView', $scope.profiledUser.id, function () {
+                //$('inferenceImage').onchange=
+                $timeout(function () {
+                    angular.element($('#profileImage')).triggerHandler('input');
+
+                });
+            });
+            console.log("Image manager initialized for: " + $scope.profiledUser.id);
+        };
+
+        $scope.$watch('profileImage', function() {
+            if($scope.profileImage != ""){
+                $scope.updateUserPhoto();
+            }
+        });
 
         if($scope.access_token==null){
             $scope.$on("userInfoReady",$scope.initializeProfileController);

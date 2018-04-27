@@ -432,3 +432,41 @@ https://github.com/twbs/bootstrap/issues/10493
     top: 0;
     left: 100%;
 }
+
+/*#profile-image  {box-sizing: border-box}*/
+
+/* Container needed to position the overlay. Adjust the width as needed */
+#profile-image .image-container {
+    position: relative;
+    width: 160px;
+    max-width: 160px;
+    margin: 0 auto;
+}
+
+/* Make the image to responsive */
+#profile-image .image {
+    display: block;
+    width: 160px;
+    height: auto;
+}
+
+/* The overlay effect - lays on top of the container and over the image */
+#profile-image .overlay {
+    position: absolute;
+    bottom: 0;
+    background: rgb(0, 0, 0);
+    background: rgba(0, 0, 0, 0.5); /* Black see-through */
+    color: #f1f1f1;
+    max-width: 160px;
+    transition: .5s ease;
+    opacity:0;
+    color: white;
+    font-size: 12px;
+    padding: 8px;
+    text-align: center;
+}
+
+/* When you mouse over the container, fade in the overlay title */
+#profile-image .image-container:hover .overlay {
+    opacity: 1;
+}

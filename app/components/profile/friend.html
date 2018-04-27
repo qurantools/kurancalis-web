@@ -8,9 +8,20 @@
         <div class="col-xs-3 well" style="text-align: center" ng-show="profiledUser != null">
             <div style="visibility: hidden;height: 10px;"></div>
             <div style="visibility: hidden;height: 10px;"></div>
-            <div>
-                <img style="max-width: 160px; max-height: 120px;" ng-src="http://graph.facebook.com/{{profiledUser.fbId}}/picture?type=large"><br/>
-                <div><b>{{profiledUser.username}}</b></div>
+            <div ng-mouseleave="showImageText = false">
+                <div id="profile-image">
+                    <a ng-href="{{isClickable ? 'http://www.facebook.com/' + profiledUser.fbId : '' }}" target="_blank" ng-mouseover="showImageText = true">
+                        <div class="image-container">
+                            <img class="image" style="max-width: 160px; max-height: 120px;"
+                                 ng-src="{{ user.photo || 'http://graph.facebook.com/' + profiledUser.fbId + '/picture?type=large' }}">
+                            <div ng-show="profiledUser.id == user.id" class="overlay file-manager-linked" data-input-id="profileImage" ng-mouseover="isClickable = false" ng-mouseleave="isClickable=true">
+                                <i class="fa fa-camera"></i>&nbsp;&nbsp;{{'Profil Resmini Güncelle' | translate}}
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <br/>
+                <div><b>{{profiledUser.username}}</b>&nbsp;&nbsp;<span ng-if="profiledUser.id == user.id && showImageText" style="font-size: smaller; color: green"  class="file-manager-linked" data-input-id="profileImage">değiştir</span></div>
             </div>
             <div style="visibility: hidden;height: 10px;"></div>
             <div ng-show="profiledUser.id != user.id">
