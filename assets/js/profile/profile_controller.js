@@ -163,7 +163,13 @@ var mymodal = angular.module('ionicApp')
             });
         };
 
+        function changePhoto() {
+            console.log("changePhoto called ");
+            console.log("Change user photo...")
+        }
+
         $scope.updateUserPhoto = function () {
+            console.log("updateUserPhoto called ");
             var headers = {'Content-Type': 'application/x-www-form-urlencoded', 'access_token': $scope.access_token};
             var postData = [];
             postData.push(encodeURIComponent("photo") + "=" + encodeURIComponent($scope.profileImage));
@@ -409,15 +415,18 @@ var mymodal = angular.module('ionicApp')
             initFileManager('theView', $scope.profiledUser.id, function () {
                 //$('inferenceImage').onchange=
                 $timeout(function () {
-                    angular.element($('#profileImage')).triggerHandler('input');
+                    console.log("initFileManager inside")
+                    angular.element($('#profileImage')).triggerHandler(changePhoto);
 
                 });
             });
             console.log("Image manager initialized for: " + $scope.profiledUser.id);
         };
 
-        $scope.$watch('profileImage', function() {
-            if($scope.profileImage != ""){
+        $scope.$watch('profileImage', function (newValue, oldValue) {
+            console.log("watch profileImage",newValue, oldValue)
+            if ((newValue != oldValue) && newValue) {
+                console.log("watch profileImage inside",newValue, oldValue)
                 $scope.updateUserPhoto();
             }
         });
