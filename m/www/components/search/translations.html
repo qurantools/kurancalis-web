@@ -32,12 +32,12 @@
                         </div>
 
                         <div class="item item-input item-select" style="margin-top: 5px;border-width: 1px;border-style: solid;font-size: larger">
-                            <div class="input-label" translate>Tüm Mealler</div>
+                            <div class="input-label" translate>Meal Seç</div>
                             <select ng-model="currentAuthor"
                                     ng-options="author.id as author.name for author in authors | filter : authorsByLanguage()"
                                     ng-change="searchAuthorChanged(currentAuthor)"
                                     class="form-control">
-                                <option style="display:none" value="" translate>Meal Seç</option>
+                                <option style="display:none" value="" translate>Tüm Mealler</option>
                             </select>
                         </div>
 
