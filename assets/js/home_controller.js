@@ -1631,8 +1631,8 @@ angular.module('ionicApp')
         $scope.initializeLanguageButtons = function(){
             //initialize action sheets
             $scope.langActionSheetButtons = [];
-            var butonLangTR = {  text: '<img src="../../assets/img/flag_tr.png" alt="Flag" /> ' + $translate.instant('Türkçe') };
-            var butonLangEN = {  text: '<img src="../../assets/img/flag_en.png" alt="Flag" /> ' + $translate.instant('İngilizce')  };
+            var butonLangTR = {  text: '<img src="../../assets/img/flag_tr.png" height="17" alt="Flag" /> ' + $translate.instant('Türkçe') };
+            var butonLangEN = {  text: '<img src="../../assets/img/flag_en.png" height="17" alt="Flag" /> ' + $translate.instant('İngilizce')  };
 
             $scope.langActionSheetButtons.push(butonLangTR);
             $scope.langActionSheetButtons.push(butonLangEN);
