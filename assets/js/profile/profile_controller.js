@@ -15,6 +15,7 @@ var mymodal = angular.module('ionicApp')
         $scope.selectedUser;
         $scope.showImageText = false;
         $scope.isClickable=true;
+        $scope.currentUser = { username : ""};
          var csec;
 
         $scope.fetchFriendFeeds = function(friendName, start){
@@ -78,6 +79,7 @@ var mymodal = angular.module('ionicApp')
 
             userRestangular.customGET("", $scope.userParams, {'access_token': $scope.access_token}).then(function (data) {
                 $scope.profiledUser = data;
+                console.log(data)
 
                 if(!config_data.isMobile) {
                     if($scope.access_token==null || $scope.user==null) {
@@ -198,6 +200,20 @@ var mymodal = angular.module('ionicApp')
             });
         };
 
+        $scope.changeUserName = function () {
+            var headers = {'Content-Type': 'application/x-www-form-urlencoded', 'access_token': $scope.access_token};
+            var postData = [];
+
+            postData.push(encodeURIComponent("name") + "=" + encodeURIComponent($scope.currentUser.username));
+            var data = postData.join("&");
+            var userInfoRestangular = Restangular.one("users");
+            userInfoRestangular.customPUT(data, '', '', headers).then(function(data){
+                //update user name
+                $scope.profiledUser.username = $scope.currentUser.username;
+                $scope.user.name = $scope.currentUser.username;
+            });
+        }
+
         $scope.deleteAnnotation = function (annotation) {
             if (config_data.isMobile) {
                 var confirmPopup = $ionicPopup.confirm({
@@ -266,6 +282,11 @@ var mymodal = angular.module('ionicApp')
         $scope.othercirclemodal = function (user_id) {
              $scope.othercircle = !$scope.othercircle
              $scope.selectedUser = user_id;
+        };
+
+        $scope.change_username = false;
+        $scope.changeProfileName = function (user_id) {
+            $scope.change_username = !$scope.change_username
         };
 
         $scope.cevreadd = function (csecim) {
@@ -446,6 +467,38 @@ var mymodal = angular.module('ionicApp')
 mymodal.directive('othercirclemodal', function () {
     return {
         templateUrl: 'app/components/partials/circle_digercevre.htm',
+        restrict: 'E',
+        transclude: true,
+        replace: true,
+        scope: true,
+        link: function postLink(scope, element, attrs) {
+            scope.title = attrs.title;
+
+            scope.$watch(attrs.visible, function (value) {
+                if (value == true)
+                    $(element).modal('show');
+                else
+                    $(element).modal('hide');
+            });
+
+            $(element).on('shown.bs.modal', function () {
+                scope.$apply(function () {
+                    scope.$parent[attrs.visible] = true;
+                });
+            });
+
+            $(element).on('hidden.bs.modal', function () {
+                scope.$apply(function () {
+                    scope.$parent[attrs.visible] = false;
+                });
+            });
+        }
+    };
+});
+
+mymodal.directive('changeprofilename', function () {
+    return {
+        templateUrl: 'app/components/partials/update_profile.html',
         restrict: 'E',
         transclude: true,
         replace: true,
