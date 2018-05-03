@@ -1045,6 +1045,7 @@ app.factory('ChapterVerses', function ($resource) {
     };
 
 
+
     /* auth */
     //general login.
     $scope.onFacebookLoginSuccess = function (responseData) {
@@ -1913,7 +1914,26 @@ app.factory('ChapterVerses', function ($resource) {
 
         $scope.checkUserLoginStatus();
 
+        if(config_data.isNative) {
+            //open login screen on native apps if not login in yet
+            $scope.openLoginModalforNativeApps();
+        }
+
     };//end of init controller
+
+    $scope.openLoginModalforNativeApps = function () {
+        $timeout(function () {
+            //show login panel if user not login yet
+            if (!$scope.loggedIn && $scope.user == null) {
+                $scope.openModal('user_login')
+            }
+        }, 2000);
+
+        $scope.$on('userInfoReady', function handler() {
+            $scope.closeModal('user_login')
+        });
+    };
+
 
     $scope.initializeLanguageButtons = function(){
         //initialize action sheets
