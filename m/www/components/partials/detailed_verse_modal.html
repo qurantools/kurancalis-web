@@ -34,7 +34,7 @@
         <div class="row" id="detailed_verse_content">
             <div class="col-xs-12 bb">
                 <!-- translations-->
-                <div id="detailed_translations">
+                <div ng-attr-id="{{  idAttr }}">
                     <div class="well translations col-xs-12" id="v_{{verse.id}}">
                         <div ng-repeat="translation in verse.translations" class="selectable">
                             <div class="col-xs-11" id="detail_t_{{translation.id}}">
