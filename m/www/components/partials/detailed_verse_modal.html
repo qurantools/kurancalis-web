@@ -202,6 +202,34 @@
         </div>
     </ion-footer-bar-->
         </ion-side-menu-content>
-        <div ng-if="!isVerseDetail" ng-include="'components/navigation/left_menu.html'"></div>
+       <!-- <div ng-if="!isVerseDetail" ng-include="'components/navigation/left_menu.html'"></div>-->
+
+        <ion-side-menu side="left">
+            <ion-header-bar class="bar-assertive">
+                <h1 class="title" translate>MENÜ</h1>
+            </ion-header-bar>
+            <ion-content>
+                <ul class="list">
+                    <a ng-if="user!=null" href="#!/profile/circle/-1/" ng-click="detailed_verse_modal.hide()" class="item" menu-close="" translate>Haber Kaynağı</a>
+                    <a href="#!/translations/" class="item" menu-close="" translate>Sureler</a>
+                    <a href="#!/search_translations/" ng-click="detailed_verse_modal.hide()" class="item" menu-close="" translate>Meallerde Arama</a>
+                    <a ng-if="user!=null" href="#!/annotations/" ng-click="detailed_verse_modal.hide()" class="item" menu-close="" translate>Ayet Notları</a>
+                    <a ng-if="user!=null" href="#!/inferences/" ng-click="detailed_verse_modal.hide()" class="item" menu-close="" translate>Çıkarım Notları</a>
+                    <a ng-if="user!=null" href="#!/lists/verse/" ng-click="detailed_verse_modal.hide()" class="item" menu-close="" translate>Ayet Listelerim</a>
+                    <a ng-if="user!=null" href="#!/people/home/" ng-click="detailed_verse_modal.hide()" class="item" menu-close="" translate>Kişiler</a>
+                    <a href="#!/help/" ng-click="detailed_verse_modal.hide()" class="item" menu-close="" translate>Yardım</a>
+                    <a ng-if="user!=null" href ng-click="logOut()" class="item">
+                        <span style="float: left"><img ng-src="{{user.photo}}" height="34"/></span>
+                        <span style="margin-left: 10px; line-height: 36px">{{'Çıkış' | translate}}</span>
+                    </a>
+                    <a ng-if="user==null && isConnected==true" href ng-click="openModal('user_login')" class="item" menu-close translate>Giriş</a>
+                    <a  href class="item" ng-click="openLangMenuModal()">
+                        <span style="float: left"><img ng-src="../../assets/img/flag_{{selectedLanguage}}.png" alt="Flag of Country" /></span>
+                        <span style="float: right; line-height: 36px">{{ selectedLanguage == 'tr' ? 'Türkçe' : 'İngilizce' | translate}}</span>
+                    </a>
+                </ul>
+            </ion-content>
+        </ion-side-menu>
+
     </ion-side-menus>
 </div>
