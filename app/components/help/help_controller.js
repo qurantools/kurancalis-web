@@ -186,9 +186,11 @@ var helpmodal = angular.module('ionicApp')
             $scope.selectedIndex = -1;
             $scope.scopeApply();
 
-            if(isCallFromHelpMenu) {
+            var isRunBefore = localStorageService.get('help_modal_tutorial_chapter');
+
+            if($location.path() == "/help/") {
                 $scope.help_modal.show();
-            } else {
+            } else if(!isRunBefore) {
                 var confirmPop = $ionicPopup.confirm({
                     title: $translate.instant('Yardım'),
                     template: $translate.instant("Uygulamanin nasil kullanildigini görmek ister misiniz?"),
