@@ -8,7 +8,7 @@ var mymodal = angular.module('ionicApp')
         $scope.profiledUser = null;
         $scope.isLoading = false;
         $scope.select_circle = false;
-        $scope.hasMoreData = false;
+        $scope.hasMoreData = true;
         $scope.selectedCircles = [];
         $scope.selectedUsers = [];
         $scope.recommendations = [];
@@ -19,7 +19,7 @@ var mymodal = angular.module('ionicApp')
          var csec;
 
         $scope.fetchFriendFeeds = function(friendName, start){
-            if ($scope.isLoading)
+            if ($scope.isLoading || !$scope.hasMoreData)
                 return;
             $scope.isLoading = true;
             var feedRestangular = Restangular.one("feed/user/");
@@ -35,7 +35,7 @@ var mymodal = angular.module('ionicApp')
             feedRestangular.customGET("", $scope.feedParams, {'access_token': $scope.access_token}).then(function (data) {
                 $scope.hasMoreData = data.length == 0 ? false : true;
                 $scope.feeds = $scope.feeds.concat(data);
-                console.warn($scope.feeds)
+                //console.warn($scope.feeds)
                 $scope.isLoading = false;
                 $scope.$broadcast('scroll.infiniteScrollComplete');
                 $scope.hideProgress("fetchFriendFeeds");
@@ -47,7 +47,7 @@ var mymodal = angular.module('ionicApp')
         };
 
         $scope.fetchCircleFeeds = function(circleId, start){
-            if ($scope.isLoading)
+            if ($scope.isLoading || !$scope.hasMoreData)
                 return;
             $scope.isLoading = true;
             var feedRestangular = Restangular.one("feed/circle/"+ circleId);
@@ -58,6 +58,7 @@ var mymodal = angular.module('ionicApp')
             feedRestangular.customGET("", $scope.feedParams, {'access_token': $scope.access_token}).then(function (data) {
                 $scope.hasMoreData = data.length == 0 ? false : true;
                 $scope.feeds = $scope.feeds.concat(data);
+                //console.warn($scope.feeds)
                 $scope.isLoading = false;
                 $scope.$broadcast('scroll.infiniteScrollComplete');
                 $scope.hideProgress("fetchCircleFeeds");
