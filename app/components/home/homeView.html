@@ -18,7 +18,7 @@
                                     <div></div>
                                 </div>
                                 <div class="row">
-                                    <div class="translation_nav_col1" style="font-size:20px;">
+                                    <div class="translation_nav_col1" style="font-size: 20px">
                                         {{translation.chapter}}:{{translation.verse}}
                                     </div>
                                     <div>
@@ -88,8 +88,9 @@
                                 </div>
                                 <div id="tt_{{translation.id}}" ng-show="selectedSingleAuthor==translation.authorId || !showSingleAuthor"
                                      class="col-xs-9"
-                                     ng-class="{translation_rtl: authorMap[translation.authorId].language=='ar', translation_content: authorMap[translation.authorId].language!='ar'}"><span
-                                        ng-bind-html="translation.content | with_footnote_link:translation.id:translation.authorId | to_trusted"></span>
+                                     ng-class="{translation_rtl: authorMap[translation.authorId].language=='ar', translation_content: authorMap[translation.authorId].language!='ar'}"
+                                     ng-style="{'font-size': currentFontSize}">
+                                    <span ng-bind-html="translation.content | with_footnote_link:translation.id:translation.authorId | to_trusted"></span>
                                 </div>
                             </div>
 

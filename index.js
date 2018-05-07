@@ -923,6 +923,9 @@ app.factory('ChapterVerses', function ($resource) {
     $scope.CIRCLE_ALL_CIRCLES = {'id': '-2', 'name': 'Tüm Çevrelerim'};
     $scope.CIRCLE_PUBLIC={'id': '-1', 'name': 'Herkes'};
 
+    $scope.fontSizes = { S: "small", M: "medium", L: "large" };
+    $scope.currentFontSize = $scope.fontSizes.M;
+
     //DEFAULT LANNGUAGE SETTINGS
     var activeLanguage = $translate.use() ||
         $translate.storage().get($translate.storageKey()) ||
@@ -975,6 +978,29 @@ app.factory('ChapterVerses', function ($resource) {
         setTimeout(function () {
             window.location.reload();
         }, 400)
+    };
+
+    if (localStorage.getItem("font_size") !== null){
+        var font = localStorage.getItem("font_size");
+        $scope.currentFontSize = $scope.fontSizes[font];
+    }
+
+    $scope.decreaseFontSize = function () {
+        if($scope.currentFontSize == 'large')
+            $scope.currentFontSize = $scope.fontSizes.M;
+        else
+            $scope.currentFontSize = $scope.fontSizes.S;
+
+        localStorage.setItem("font_size", $scope.currentFontSize.charAt(0).toUpperCase());
+    };
+
+    $scope.increaseFontSize = function () {
+        if($scope.currentFontSize == 'small')
+            $scope.currentFontSize = $scope.fontSizes.M;
+        else
+            $scope.currentFontSize = $scope.fontSizes.L;
+
+        localStorage.setItem("font_size", $scope.currentFontSize.charAt(0).toUpperCase());
     };
 
     $scope.showWordDetail = function (selectedItem) {
