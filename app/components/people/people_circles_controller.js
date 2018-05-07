@@ -125,6 +125,7 @@ var mymodal = angular.module('ionicApp')
         };
 
         $scope.cevrekle = function (cevread) {
+            $("#circleadd .close").click();
 
             var headers = {'Content-Type': 'application/x-www-form-urlencoded', 'access_token': $scope.access_token};
             var jsonData = cevread;

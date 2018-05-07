@@ -30,7 +30,9 @@
                                        class="form-control" required/>
                             </div>
                             <div class="form-group" ng-class="{ 'has-error' : form.password.$invalid && form.password.$touched }">
-                                <input type="password" name="password" ng-model="user.password"
+                                <input type="password" name="password"
+                                       ng-model="user.password"
+                                       ng-enter="loginWithEmail(form)"
                                        size="50" placeholder="{{'Şifre' | translate}}"
                                        class="form-control" required/>
                             </div>

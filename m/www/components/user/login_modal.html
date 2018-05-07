@@ -27,7 +27,7 @@
                 <input type="email" ng-model="user.email" size="50" placeholder="{{'E-posta' | translate}}" required/>
             </label>
             <label class="item item-input" >
-                <input type="password" ng-model="user.password" size="50" placeholder="{{'Şifre' | translate}}" required/>
+                <input type="password" ng-model="user.password" ng-enter="loginWithEmail()" size="50" placeholder="{{'Şifre' | translate}}" required/>
             </label>
             <button class="button button-block button-balanced" ng-click="loginWithEmail()" translate>Giriş</button>
             <a href><div style='width:100%; text-decoration: underline; font-size:medium; color: #0c60ee'

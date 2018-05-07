@@ -64,7 +64,7 @@
 <div>
     <modal title="{{'Yeni Ayet Listesi Ekleme' | translate}}" visible="newVerseListModal">
         <div class="form-group">
-            <input type="text" class="form-control" ng-model="newVerseList.name" placeholder="{{'Ayet Listesi Tanımı' | translate}}"/>
+            <input type="text" class="form-control" ng-model="newVerseList.name" ng-enter="addVerseList(newVerseList.name)" placeholder="{{'Ayet Listesi Tanımı' | translate}}"/>
         </div>
         <div class="modal-footer">
             <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal" translate>İptal</a>
@@ -91,7 +91,7 @@
     <modal title="{{'Toplu Ayet Ekleme' | translate}}" visible="bulkInsertVerseToVerseListFlag">
         <div class="form-group">
             <div translate="ENTER_VERSES_AS"><b>{{selectedVerseList.name}}</b> listesine eklemek istediğiniz ayetleri "34:5 23:10 19:78" şeklinde arada boşluklar olacak şekilde giriniz.</div>
-            <input type="text" class="form-control" ng-model="versesForBulkInsert"/>
+            <input type="text" class="form-control" ng-model="versesForBulkInsert" ng-enter="bulkInsertVerse(selectedVerseList,versesForBulkInsert)"/>
         </div>
         <div class="modal-footer">
             <a type="button" class="btn btn-primary btn-wide" data-dismiss="modal" translate>İptal</a>

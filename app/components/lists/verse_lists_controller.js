@@ -103,6 +103,8 @@ angular.module('ionicApp').controller('VerseListController', function ($scope, $
     };
 
     $scope.addVerseList = function(newList){
+        $("#circleadd .close").click();
+
         var headers = {'Content-Type': 'application/x-www-form-urlencoded', 'access_token': $scope.access_token};
         var jsonData = newList;
         var postData = [];
@@ -191,6 +193,7 @@ angular.module('ionicApp').controller('VerseListController', function ($scope, $
     };
 
     $scope.bulkInsertVerse = function(verselist, versesAsString){
+        $("#circleadd .close").click();
 
         var verses = versesAsString.split(" ");
         var headers = {'Content-Type': 'application/x-www-form-urlencoded', 'access_token': $scope.access_token};
