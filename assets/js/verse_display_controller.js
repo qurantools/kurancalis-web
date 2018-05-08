@@ -24,7 +24,8 @@ angular.module('ionicApp')
             },2000);
 
             $scope.$on('login', function handler() {
-                $scope.showVerseDetail($routeParams.verseId, [], [$scope.CIRCLE_PUBLIC]);
+                window.location.reload();
+                //$scope.showVerseDetail($routeParams.verseId, [], [$scope.CIRCLE_PUBLIC]);
             });
 
             $scope.$on('userInfoReady', function handler() {
