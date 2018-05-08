@@ -69,6 +69,7 @@ angular.module('ionicApp')
         $scope.shareUrl = "";
         $scope.shareTitle = "Ayet Paylaşma";
         $scope.isNative = document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1;
+        $scope.showedVerses = [];
 
 
         $scope.restoreChapterViewParameters = function (localParameterData) {
@@ -739,6 +740,8 @@ angular.module('ionicApp')
                 }, timeoutTime);
             }
 
+            //to remove tag icon if annotations shown before
+            $scope.showedVerses.push(verseId);
         };
 
         $scope.onHighlightClicked = function (clickedAnnotations) {
