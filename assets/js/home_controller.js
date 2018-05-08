@@ -701,12 +701,13 @@ angular.module('ionicApp')
             annotator.publish("adderClicked",[annotation, position]);
         };
 
-        $scope.showVerseAnnotations = function (verseId){
+        $scope.showVerseAnnotations = function (verseId, showNotePanel){
             //show in progress loading icon
             $scope.loadingVerse = verseId;
 
             $scope.loadCustomAnnotation = true;
             $scope.query_verses = verseId % 1000;
+
             //$scope.goToChapter();
             $scope.showProgress("goToChapter");
             $scope.annotate_it();
@@ -714,26 +715,29 @@ angular.module('ionicApp')
             //scroll to clicked verse
             $scope.scrollToVerse(verseId);
 
-            var timeoutTime = 600;
-            if (config_data.isMobile) {
-                timeoutTime = 1000;
-            }
+            if(showNotePanel) {
 
-            $timeout(function () {
-                var arrayLength = $scope.annotations.length;
-                var verseAnnotations = [];
-                for (var i = 0; i < arrayLength; i++) {
-
-                    if ($scope.annotations[i].verseId == verseId) {
-                        verseAnnotations.push($scope.annotations[i]);
-                    }
+                var timeoutTime = 600;
+                if (config_data.isMobile) {
+                    timeoutTime = 1000;
                 }
-                console.warn("Verse Annotations: ", verseAnnotations.length);
-                //it is just like clicked on annotations
-                $scope.onHighlightClicked(verseAnnotations);
 
-                $scope.loadingVerse = -1;
-            }, timeoutTime);
+                $timeout(function () {
+                    var arrayLength = $scope.annotations.length;
+                    var verseAnnotations = [];
+                    for (var i = 0; i < arrayLength; i++) {
+
+                        if ($scope.annotations[i].verseId == verseId) {
+                            verseAnnotations.push($scope.annotations[i]);
+                        }
+                    }
+                    console.warn("Verse Annotations: ", verseAnnotations.length);
+                    //it is just like clicked on annotations
+                    $scope.onHighlightClicked(verseAnnotations);
+
+                    $scope.loadingVerse = -1;
+                }, timeoutTime);
+            }
 
         };
 
@@ -1733,7 +1737,7 @@ angular.module('ionicApp')
                             $("#annotationModal").show();
                             $scope.onCustomAdderClick(verseId)
                         } else if (index == 1){
-                            $scope.showVerseAnnotations(verseId)
+                            $scope.showVerseAnnotations(verseId, true)
                         } else if (index == 2){
                             $scope.openAddBookMarkModal(verseId);
                             $scope.bookmarkModal.show();

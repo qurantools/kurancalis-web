@@ -36,7 +36,7 @@
                                 <div ng-repeat="translation in verse.translations" class="selectable">
                                     <div ng-if="$first">
                                             <a href style="margin-left:4px; font-weight:bold; font-size:20px; text-decoration: none !important;" ng-click='showVerseDetail({{verse.id}}, {{query_users}}, {{query_circles}})'>{{translation.chapter}}:{{translation.verse}}</a>
-                                            <img style="margin-left: 10px;" src="../../assets/img/sticky-note.png" width="25" height="23" ng-if="user!=null && !show_verse_annotations || verseHasAnnotation(verse.id)" ng-click="showVerseAnnotations({{verse.id}})">
+                                            <img style="margin-left: 10px;" src="../../assets/img/sticky-note.png" width="25" height="23" ng-if="user!=null && !show_verse_annotations || verseHasAnnotation(verse.id)" ng-click="showVerseAnnotations({{verse.id}}, true)">
                                             <button style="height: 100% !important;;width: 40px;" ng-if="user!=null" class="button button-balanced button-bookmark large_icon" ng-click="verseActionSheet({{verse.translations[0].id}}, {{translation.chapter}},{{translation.verse}},{{verse.id}})">
                                                 <i class="icon ionicons ion-ios-more"></i>
                                             </button>
@@ -57,6 +57,7 @@
                                     </div>
                                 </div>
                                 <hr style="height:1px;border:none;color:#333;background-color:#333;margin-top: 3px !important;margin-bottom: 3px !important;width: 90% !important" />
+                                <i class="ion-ios-pricetags-outline" style="float: right; font-size: 14pt;  margin-right: 5%" ng-click="showVerseAnnotations(verse.id, false)"></i>
                                 <div ng-if="verseTagsJSON[verse.id].tags.length>0" style="text-align: right;width: 100% !important">
                                     <button ng-repeat="verseTag in verseTagsJSON[verse.id].tags"
                                             class="tag label label-info s_a_tag btn btn-xs btn-info verse_tag"
