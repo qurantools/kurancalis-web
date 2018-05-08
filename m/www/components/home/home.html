@@ -57,7 +57,7 @@
                                     </div>
                                 </div>
                                 <hr style="height:1px;border:none;color:#333;background-color:#333;margin-top: 3px !important;margin-bottom: 3px !important;width: 90% !important" />
-                                <i ng-if="showedVerses.indexOf(verse.id) == -1" class="ion-ios-pricetags-outline" style="float: right; font-size: 14pt;  margin-right: 5%" ng-click="showVerseAnnotations(verse.id, false)"></i>
+                                <i ng-if="user!=null && showedVerses.indexOf(verse.id) == -1" class="ion-ios-pricetags-outline" style="float: right; font-size: 14pt;  margin-right: 5%" ng-click="showVerseAnnotations(verse.id, false)"></i>
                                 <div ng-if="verseTagsJSON[verse.id].tags.length>0" style="text-align: right;width: 100% !important">
                                     <button ng-repeat="verseTag in verseTagsJSON[verse.id].tags"
                                             class="tag label label-info s_a_tag btn btn-xs btn-info verse_tag"
