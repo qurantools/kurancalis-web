@@ -923,7 +923,7 @@ app.factory('ChapterVerses', function ($resource) {
     $scope.CIRCLE_ALL_CIRCLES = {'id': '-2', 'name': 'Tüm Çevrelerim'};
     $scope.CIRCLE_PUBLIC={'id': '-1', 'name': 'Herkes'};
 
-    $scope.fontSizes = { S: "small", M: "medium", L: "large" };
+    $scope.fontSizes = { S: "small", M: "medium", L: "large", XL: 'x-large', XXL: 'xx-large' };
     $scope.currentFontSize = $scope.fontSizes.M;
 
     //DEFAULT LANNGUAGE SETTINGS
@@ -986,21 +986,43 @@ app.factory('ChapterVerses', function ($resource) {
     }
 
     $scope.decreaseFontSize = function () {
-        if($scope.currentFontSize == 'large')
+        if($scope.currentFontSize == $scope.fontSizes.XXL)
+            $scope.currentFontSize = $scope.fontSizes.XL;
+        else if($scope.currentFontSize == $scope.fontSizes.XL)
+            $scope.currentFontSize = $scope.fontSizes.L;
+        else if($scope.currentFontSize == $scope.fontSizes.L)
             $scope.currentFontSize = $scope.fontSizes.M;
         else
             $scope.currentFontSize = $scope.fontSizes.S;
 
-        localStorage.setItem("font_size", $scope.currentFontSize.charAt(0).toUpperCase());
+        var key = $scope.keyByValue($scope.fontSizes, $scope.currentFontSize)
+
+        localStorage.setItem("font_size", key);
     };
 
     $scope.increaseFontSize = function () {
-        if($scope.currentFontSize == 'small')
+        if($scope.currentFontSize == $scope.fontSizes.S)
             $scope.currentFontSize = $scope.fontSizes.M;
-        else
+        else if($scope.currentFontSize == $scope.fontSizes.M)
             $scope.currentFontSize = $scope.fontSizes.L;
+        else if($scope.currentFontSize == $scope.fontSizes.L)
+            $scope.currentFontSize = $scope.fontSizes.XL;
+        else
+            $scope.currentFontSize = $scope.fontSizes.XXL;
 
-        localStorage.setItem("font_size", $scope.currentFontSize.charAt(0).toUpperCase());
+        var key = $scope.keyByValue($scope.fontSizes, $scope.currentFontSize);
+
+        localStorage.setItem("font_size", key);
+    };
+
+
+    $scope.keyByValue = function(array, value) {
+        for (var key in array) {
+            if(array[key] == value){
+                return key;
+            }
+        }
+        return false;
     };
 
     $scope.showWordDetail = function (selectedItem) {
