@@ -269,7 +269,7 @@ angular.module('ionicApp').controller('VerseListController', function ($scope, $
         $scope.item = {};
         $scope.item.name = "";
         var promptPopup = $ionicPopup.prompt({
-            template: '<input type="text" ng-model="item.name">',
+            template: '<input type="text" ng-enter="runProcess()" ng-model="item.name">',
             title: $translate.instant('Yeni Liste Oluştur'),
             scope : $scope,
             inputType: 'text',
@@ -281,6 +281,13 @@ angular.module('ionicApp').controller('VerseListController', function ($scope, $
                 $scope.addVerseList($scope.item.name);
             }
         });
+
+        $scope.runProcess = function () {
+            if($scope.item.name != "") {
+                $scope.addVerseList($scope.item.name);
+                promptPopup.close();
+            }
+        }
     };
 
     $scope.closeModal = function (item){

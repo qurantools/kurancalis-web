@@ -388,7 +388,7 @@ var mymodal = angular.module('ionicApp')
             $scope.item = {};
             $scope.item.name = "";
             var promptPopup = $ionicPopup.prompt({
-                template: '<input type="text" ng-model="item.name">',
+                template: '<input type="text" ng-enter="runProcess()" ng-model="item.name">',
                 title: $translate.instant('Yeni Çevre Oluştur'),
                 scope : $scope,
                 inputType: 'text',
@@ -400,6 +400,13 @@ var mymodal = angular.module('ionicApp')
                     $scope.cevrekle($scope.item.name);
                 }
             });
+
+            $scope.runProcess = function () {
+                if($scope.item.name != "") {
+                    $scope.cevrekle($scope.item.name);
+                    promptPopup.close();
+                }
+            }
         };
 
         $scope.deleteCircle = function(item){
