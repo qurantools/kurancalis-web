@@ -499,12 +499,13 @@ mymodal = angular.module('ionicApp')
             $scope.footerMenuButtons.push(buttonSelectTranslation);
             $scope.footerMenuButtons.push(buttonGotoVerseInternal);
             $scope.footerMenuButtons.push(buttonGotoVerse);
+            $scope.footerMenuButtons.push(copyLink);
             if ($scope.user){
                 $scope.footerMenuButtons.push(buttonAddToList);
                 $scope.footerMenuButtons.push(buttonBookmark);
                 $scope.footerMenuButtons.push(buttonVerseHistory);
-                $scope.footerMenuButtons.push(copyLink);
             }
+
             $ionicActionSheet.show({
                 buttons: $scope.footerMenuButtons,
                 destructiveText: '',
@@ -520,18 +521,18 @@ mymodal = angular.module('ionicApp')
                     } else if (index == 2) {
                         $scope.openModal('go_to_verse');
                     } else if (index == 3) {
-                        $scope.openModal('add_to_list');
-                    } else if (index == 4) {
-                        $scope.openModal('bookmark');
-                    } else if (index == 5){
-                        $scope.openVerseHistory();
-                    } else if (index == 6) {
                         if($scope.isNative){
                             $scope.shareInference();
                         } else {
                             $scope.kopyala($scope.shareUrl);
                             $scope.callUrlCopied();
                         }
+                    } else if (index == 4) {
+                        $scope.openModal('add_to_list');
+                    } else if (index == 5) {
+                        $scope.openModal('bookmark');
+                    } else if (index == 6){
+                        $scope.openVerseHistory();
                     }
                     return true;
                 }
