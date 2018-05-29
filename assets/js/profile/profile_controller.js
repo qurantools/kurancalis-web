@@ -41,6 +41,7 @@ var mymodal = angular.module('ionicApp')
                 $scope.hideProgress("fetchFriendFeeds");
             }, function (err){
                 $scope.isLoading = false;
+                $scope.hasMoreData = false;
                 $scope.$broadcast('scroll.infiniteScrollComplete');
                 $scope.hideProgress("fetchFriendFeeds");
             });
@@ -64,6 +65,7 @@ var mymodal = angular.module('ionicApp')
                 $scope.hideProgress("fetchCircleFeeds");
             }, function (err){
                 $scope.isLoading = false;
+                $scope.hasMoreData = false;
                 $scope.$broadcast('scroll.infiniteScrollComplete');
                 $scope.hideProgress("fetchCircleFeeds");
             });
