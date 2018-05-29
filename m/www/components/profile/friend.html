@@ -82,7 +82,7 @@
                                 </span>
                                 <span ng-disabled="(feed.voteRates.dislike + feed.voteRates.like) == 0"
                                       ng-click="showVoteResults(feed, 'annotations')">
-                                    <i class="fa fa-pie-chart"></i> {{(feed.voteRates.dislike + feed.voteRates.like)}} Oy
+                                    <i class="fa fa-pie-chart"></i> {{(feed.voteRates.dislike + feed.voteRates.like)}} {{'Oy' | translate}}
                                 </span>
                                 <span ng-click="navigateTo('/annotation/display/{{feed.id}}/')" style="margin-right: 10px;" class="make_comment">
                                     <i class="fa fa-comment"></i> {{feed.commentCount}} {{'Yorum' | translate}}
