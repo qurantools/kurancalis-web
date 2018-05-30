@@ -975,9 +975,11 @@ app.factory('ChapterVerses', function ($resource) {
         console.warn("Selected Language :: ", langKey);
         $rootScope.$broadcast('languageChanged', langKey);
 
-        setTimeout(function () {
-            window.location.reload();
-        }, 400)
+        if(!config_data.isNative) {
+            setTimeout(function () {
+                window.location.reload(true);
+            }, 400)
+        }
     };
 
     if (localStorage.getItem("font_size") !== null){
