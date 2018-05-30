@@ -132,7 +132,7 @@
                             <col width="45%">
                             <col width="45%">
                             <col width="10%">
-                            <tr>
+                            <tr ng-if="user!=null">
                                 <td style="padding: 4px;">
                                     <tags-input ng-model="detailedVerseUsers" placeholder="{{'Kişi Seçiniz' | translate}}" display-property="name"
                                                 replace-spaces-with-dashes="false" min-length="2">
