@@ -919,6 +919,9 @@ app.factory('ChapterVerses', function ($resource) {
 
     $scope.currentPageUrl = "";
 
+    //show tutorial after login or when close modal
+    $scope.isSuitToShowTotorial = false;
+
     //Some Constants:
     $scope.CIRCLE_ALL_CIRCLES = {'id': '-2', 'name': 'Tüm Çevrelerim'};
     $scope.CIRCLE_PUBLIC={'id': '-1', 'name': 'Herkes'};
@@ -1107,6 +1110,7 @@ app.factory('ChapterVerses', function ($resource) {
             $scope.access_token = responseData.token;
             $scope.user = responseData.user;
             $scope.loggedIn = true;
+            $scope.isSuitToShowTotorial = true;
 
             console.log("access_token::", $scope.access_token);
 
@@ -1899,6 +1903,7 @@ app.factory('ChapterVerses', function ($resource) {
                         $scope.modal_user_create_account.hide();
                     } else if (id == 'user_login') {
                         $scope.modal_user_login.hide();
+                        $scope.isSuitToShowTotorial = true;
                     } else if (id == 'user_reset_password_request') {
                         $scope.modal_user_reset_password_request.hide();
                     } else if (id == 'user_set_password') {

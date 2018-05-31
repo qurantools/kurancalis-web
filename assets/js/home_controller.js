@@ -70,6 +70,7 @@ angular.module('ionicApp')
         $scope.shareTitle = "Ayet Paylaşma";
         $scope.isNative = document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1;
         $scope.showedVerses = [];
+        $scope.isSuitToShowTotorial = false;
 
 
         $scope.restoreChapterViewParameters = function (localParameterData) {
@@ -1358,6 +1359,7 @@ angular.module('ionicApp')
                     else  if (id == 'user_create_account') {
                         $scope.modal_user_create_account.hide();
                     } else if (id == 'user_login') {
+                        $scope.isSuitToShowTotorial = true;
                         $scope.modal_user_login.hide();
                     } else if (id == 'user_reset_password_request') {
                         $scope.modal_user_reset_password_request.hide();

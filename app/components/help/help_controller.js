@@ -1,6 +1,7 @@
 var helpmodal = angular.module('ionicApp')
     .controller('HelpController', function ($scope, $routeParams, $location, $timeout, authorization,
                                             localStorageService, Restangular, $ionicModal, $sce, $ionicPopup, $translate) {
+        $scope.showConfirmPopup = false;
         $scope.title = "Yardım";
         $scope.helpController = this;
         $scope.helpController.API = null;
@@ -191,25 +192,32 @@ var helpmodal = angular.module('ionicApp')
             if($location.path() == "/help/") {
                 $scope.help_modal.show();
             } else if(!isRunBefore) {
-                var confirmPop = $ionicPopup.confirm({
-                    title: $translate.instant('Yardım'),
-                    template: $translate.instant("Uygulamanin nasil kullanildigini görmek ister misiniz?"),
-                    cancelText: $translate.instant('Hayır'),
-                    okText: $translate.instant('Evet'),
-                    okType: 'button-positive'
-                });
+                $scope.showConfirmPopup = true;
 
-                confirmPop.then(function (res) {
-                    console.log(isCallFromHelpMenu)
-                    if (res) {
-                        $scope.help_modal.show();
-                    }
-                });
+                if($scope.isSuitToShowTotorial) {
+                    $scope.showPopup();
+                }
             }
 
             $timeout(function(){
                 $scope.selectedIndex++;
             },900);
+        };
+
+        $scope.showPopup = function () {
+            var confirmPop = $ionicPopup.confirm({
+                title: $translate.instant('Yardım'),
+                template: $translate.instant("Uygulamanin nasil kullanildigini görmek ister misiniz?"),
+                cancelText: $translate.instant('Hayır'),
+                okText: $translate.instant('Evet'),
+                okType: 'button-positive'
+            });
+
+            confirmPop.then(function (res) {
+                if (res) {
+                    $scope.help_modal.show();
+                }
+            });
         };
 
         $scope.closeModal = function () {
@@ -239,6 +247,16 @@ var helpmodal = angular.module('ionicApp')
                 }
             }
 
+            var unbindWatch = $scope.$watch('isSuitToShowTotorial', function(newValue, oldValue) {
+
+                if(newValue != oldValue && newValue && $scope.showConfirmPopup)
+                {
+                    setTimeout(function() {
+                        $scope.showPopup();
+                        unbindWatch();
+                    }, 1000);
+                }
+            });
 
         };
 
