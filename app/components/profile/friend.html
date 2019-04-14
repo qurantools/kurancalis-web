@@ -10,7 +10,7 @@
             <div style="visibility: hidden;height: 10px;"></div>
             <div ng-mouseleave="showImageText = false" ng-init="showNameText=false">
                 <div id="profile-image">
-                    <a ng-href="{{isClickable && profiledUser.fbId ? 'http://www.facebook.com/' + profiledUser.fbId : '' }}" target="_blank" ng-mouseover="showImageText = true">
+                    <a ng-href="{{isClickable && profiledUser.fbId ? 'https://www.facebook.com/' + profiledUser.fbId : '' }}" target="_blank" ng-mouseover="showImageText = true">
                         <div class="image-container">
                             <img class="image" style="max-width: 160px; max-height: 120px;"
                                  ng-src="{{ profiledUser.photo }}">
@@ -29,8 +29,8 @@
             </div>
             <div style="visibility: hidden;height: 10px;"></div>
             <div ng-show="profiledUser.id != user.id">
-                <div><a href="http://www.facebook.com/{{profiledUser.fbId}}" target="_blank"><img src="assets/img/fb.png" width="40" height="40"/></a></div>
-                <div><a href="http://www.facebook.com/{{profiledUser.fbId}}" target="_blank" translate>Facebook Profilini Gör</a></div>
+                <div><a href="https://www.facebook.com/{{profiledUser.fbId}}" target="_blank"><img src="assets/img/fb.png" width="40" height="40"/></a></div>
+                <div><a href="https://www.facebook.com/{{profiledUser.fbId}}" target="_blank" translate>Facebook Profilini Gör</a></div>
             </div>
             <div style="visibility: hidden;height: 10px;"></div>
             <div ng-show="profiledUser.id != user.id" ng-click="showCircleSelectionModal()">

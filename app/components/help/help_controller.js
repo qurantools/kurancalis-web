@@ -277,7 +277,7 @@ var helpmodal = angular.module('ionicApp')
         $scope.config = {
             theme: "../../../assets/lib/videogular/videogular.css",
             plugins: {
-                poster: "http://www.videogular.com/assets/images/videogular.png"
+                poster: "https://www.videogular.com/assets/images/videogular.png"
             }
         };
 

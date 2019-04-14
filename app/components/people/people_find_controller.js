@@ -109,7 +109,7 @@ angular.module('ionicApp')
 
             var options = {
                 method: "apprequests",
-                message: $translate.instant("Dosdoğru yolu BİRLİKTE bulmak için Kuran Çalışalım: http://kurancalis.com")
+                message: $translate.instant("Dosdoğru yolu BİRLİKTE bulmak için Kuran Çalışalım: https://kurancalis.com")
             };
             if (config_data.isNative){
                 facebookConnectPlugin.showDialog(options, function(resp){
